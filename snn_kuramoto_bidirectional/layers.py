@@ -1,8 +1,8 @@
 import torch
 import torch.nn as nn
-from SNN.SNN_layers.kuramoto_layer import graphVectorKuramoto
-from SNN.SNN_layers.spike_rnn import Rhy_spike_rnn_test_denri_wotanh_new
-from SNN.SNN_layers.spike_dense import spike_dense_test_origin
+from kuramoto_layer import graphVectorKuramoto
+from dendric_layer import DendricLayer
+from membrane_layer import MembraneLayer
 
 class GraphVectorKuramoto(nn.Module):
     """Wrapper for the Vector Kuramoto implementation."""
@@ -24,26 +24,24 @@ class RegionAlignedSNN(nn.Module):
         super().__init__()
         self.input_adapter = nn.Linear(input_feat_dim, 1)
         
-        # The core SNN layer that supports "external_masks" (gating signals)
-        self.rnn_layer = Rhy_spike_rnn_test_denri_wotanh_new(
+        self.dendric_layer = DendricLayer(
             input_dim=num_regions, 
             output_dim=num_regions, 
-            tau_minitializer='uniform', low_m=0, high_m=4,
             tau_ninitializer='uniform', low_n=low_n, high_n=high_n, 
-            vth=0.5, branch=branch, dt=1, device=device, bias=True
+            branch=branch, device=device, bias=True
         )
-        
-        self.readout_layer = spike_dense_test_origin(
-            input_dim=num_regions, 
-            output_dim=num_classes,
-            vth=0.5, dt=1, device=device, bias=True
+        self.membrane_layer = MembraneLayer(
+            output_dim=num_regions,
+            readout_dim=num_classes,
+            tau_minitializer='uniform', low_m=0, high_m=4,
+            vth=0.5, dt=1, device=device
         )
         self.device = device
 
     def forward(self, input_4d_seq, gating_signals):
         batch_size, seq_num, _, _ = input_4d_seq.shape
-        self.rnn_layer.set_neuron_state(batch_size)
-        self.readout_layer.set_neuron_state(batch_size)
+        self.dendric_layer.set_neuron_state(batch_size)
+        self.membrane_layer.set_neuron_state(batch_size)
         
         outputs = []
         spikes_hist = [] 
@@ -56,11 +54,11 @@ class RegionAlignedSNN(nn.Module):
             # Rhythm modulation (gating) applied here
             # See Eq. 6: U_i(t) = (1-g_i(t))*U + g_i(t)*V
             g_t = gating_signals[:, i, :]
-            
-            _, spike_t = self.rnn_layer.forward(currents, g_t)
+
+            l_input, mask = self.dendric_layer(currents, self.membrane_layer.spike, g_t)
+            mem_readout, spike_t = self.membrane_layer(l_input, mask)
             spikes_hist.append(spike_t) 
 
-            mem_readout, _ = self.readout_layer.forward(spike_t)
             outputs.append(mem_readout)
             
         outputs = torch.stack(outputs).permute(1, 2, 0) # [B, Classes, T]
