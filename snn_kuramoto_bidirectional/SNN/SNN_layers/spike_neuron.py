@@ -75,3 +75,5 @@ def mem_update_pra_rhythm(inputs, mem, spike, v_th, tau_m, mask, dt=1,device=Non
     inputs_ = mem - v_th
     spike = act_fun_adp(inputs_) * mask
     return mem, spike
+
+

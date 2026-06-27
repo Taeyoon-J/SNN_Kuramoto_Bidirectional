@@ -1,4 +1,4 @@
-# SNN/SNN_layers/vector_kuramoto.py
+# SNN/SNN_layers/kuramoto_layer.py
 
 import torch
 import torch.nn as nn

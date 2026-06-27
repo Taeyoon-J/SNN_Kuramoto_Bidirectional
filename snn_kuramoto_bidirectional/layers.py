@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-from SNN.SNN_layers.vector_kuramoto import graphVectorKuramoto
+from SNN.SNN_layers.kuramoto_layer import graphVectorKuramoto
 from SNN.SNN_layers.spike_rnn import Rhy_spike_rnn_test_denri_wotanh_new
 from SNN.SNN_layers.spike_dense import spike_dense_test_origin
 
