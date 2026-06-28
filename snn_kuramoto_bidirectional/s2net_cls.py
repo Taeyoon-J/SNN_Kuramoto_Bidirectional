@@ -1,6 +1,8 @@
 import torch
 import torch.nn as nn
-from layers import GraphVectorKuramoto, RegionAlignedSNN
+from kuramoto_layer import graphVectorKuramoto
+from dendric_layer import DendricLayer
+from membrane_layer import MembraneLayer
 from sinusoidal_gating import sinusoidal_gating
 
 class S2NetClassifier(nn.Module):
@@ -33,18 +35,30 @@ class S2NetClassifier(nn.Module):
             nn.Dropout(0.2)
         )
 
-        self.kuramoto = GraphVectorKuramoto(
-            N=self.in_dim, D=self.osc_dim, K=args.k, dt=args.dt, device=device
+        self.kuramoto = graphVectorKuramoto(
+            N=self.in_dim, D=self.osc_dim, K=args.k, dt=args.dt, alpha_scale=1.0, device=device
         )
 
-        self.core = RegionAlignedSNN(
-            T=T, 
-            num_regions=self.in_dim, 
-            input_feat_dim=self.osc_dim, 
-            num_classes=num_classes,
-            low_n=args.low_n, 
-            high_n=args.high_n, 
-            branch=args.branch, 
+        self.core = nn.Module()
+        self.core.input_adapter = nn.Linear(self.osc_dim, 1)
+        self.core.dendric_layer = DendricLayer(
+            input_dim=self.in_dim,
+            output_dim=self.in_dim,
+            tau_ninitializer='uniform',
+            low_n=args.low_n,
+            high_n=args.high_n,
+            branch=args.branch,
+            device=device,
+            bias=True
+        )
+        self.core.membrane_layer = MembraneLayer(
+            output_dim=self.in_dim,
+            readout_dim=num_classes,
+            tau_minitializer='uniform',
+            low_m=0,
+            high_m=4,
+            vth=0.5,
+            dt=1,
             device=device
         )
         
@@ -73,7 +87,29 @@ class S2NetClassifier(nn.Module):
         core_input = torch.cat(feats_list, dim=1)            
         all_hidden_masks = torch.stack(mask_hidden_list, dim=1) 
 
-        core_out, spikes = self.core(core_input, gating_signals=all_hidden_masks)
+        batch_size, seq_num, _, _ = core_input.shape
+        self.core.dendric_layer.set_neuron_state(batch_size)
+        self.core.membrane_layer.set_neuron_state(batch_size)
+
+        outputs = []
+        spikes_hist = []
+
+        for i in range(seq_num):
+            input_t = core_input[:, i, :, :]
+            currents = self.core.input_adapter(input_t).squeeze(-1)
+            g_t = all_hidden_masks[:, i, :]
+
+            l_input, mask = self.core.dendric_layer(
+                currents,
+                self.core.membrane_layer.spike,
+                g_t
+            )
+            mem_readout, spike_t = self.core.membrane_layer(l_input, mask)
+            spikes_hist.append(spike_t)
+            outputs.append(mem_readout)
+
+        core_out = torch.stack(outputs).permute(1, 2, 0)
+        spikes = torch.stack(spikes_hist).permute(1, 2, 0)
         
         # === 3. Temporal Pooling (For Subject Classification) ===
         # Pooling: [Batch, Classes, Time] -> [Batch, Classes]
