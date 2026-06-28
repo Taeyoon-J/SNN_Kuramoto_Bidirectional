@@ -94,4 +94,4 @@ class MembraneLayer(nn.Module):
         self.readout_mem = self.readout_mem * readout_alpha  + (1 - readout_alpha) * R_m * d_input-self.readout_v_th*self.readout_spike
         readout_inputs = self.readout_mem - self.readout_v_th
         self.readout_spike = act_fun_adp(readout_inputs)
-        return self.readout_mem,self.spike
+        return self.readout_mem, self.spike

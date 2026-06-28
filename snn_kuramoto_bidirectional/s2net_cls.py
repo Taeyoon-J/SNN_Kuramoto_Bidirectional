@@ -4,6 +4,8 @@ from kuramoto_layer import graphVectorKuramoto
 from dendric_layer import DendricLayer
 from membrane_layer import MembraneLayer
 from sinusoidal_gating import sinusoidal_gating
+from input_layer_generator import CNNFeatureEncoder
+from gamma_initializer import FeatureMapCNNEncoder
 
 class S2NetClassifier(nn.Module):
     """
@@ -19,20 +21,17 @@ class S2NetClassifier(nn.Module):
         self.in_dim = int(num_regions)
         self.osc_dim = 4
         self.phase_delay_steps = 2
-        self.latent_dim = args.hidden
 
-        # --- Top-Down Pathway (Kuramoto) ---
-        self.enc = nn.Linear(self.latent_dim, self.in_dim)
-        
-        # Enhanced Projection Head (as per your snippet)
-        self.f_proj = nn.Sequential(
-            nn.Linear(self.in_dim, self.latent_dim),
-            nn.LayerNorm(self.latent_dim),
-            nn.LeakyReLU(0.1),
-            nn.Linear(self.latent_dim, self.latent_dim),
-            nn.LayerNorm(self.latent_dim),
-            nn.LeakyReLU(0.1),
-            nn.Dropout(0.2)
+        self.input_layer = CNNFeatureEncoder(
+            num_kernels=self.T,
+            kernel_size=getattr(args, "kernel_size", 3),
+            in_channels=getattr(args, "in_channels", 1),
+            bias=True,
+        )
+        self.gamma_initializer = FeatureMapCNNEncoder(
+            num_osci=self.in_dim,
+            in_channels=1,
+            dropout=getattr(args, "gamma_dropout", 0.0),
         )
 
         self.kuramoto = graphVectorKuramoto(
@@ -40,7 +39,6 @@ class S2NetClassifier(nn.Module):
         )
 
         self.core = nn.Module()
-        self.core.input_adapter = nn.Linear(self.osc_dim, 1)
         self.core.dendric_layer = DendricLayer(
             input_dim=self.in_dim,
             output_dim=self.in_dim,
@@ -49,7 +47,8 @@ class S2NetClassifier(nn.Module):
             high_n=args.high_n,
             branch=args.branch,
             device=device,
-            bias=True
+            bias=True,
+            input_vector_dim=self.osc_dim,
         )
         self.core.membrane_layer = MembraneLayer(
             output_dim=self.in_dim,
@@ -66,20 +65,25 @@ class S2NetClassifier(nn.Module):
         self.device = device
 
     def forward(self, x, sc):
-        B, T, N = x.shape
         x = x.to(self.device)
         sc = sc.to(self.device)
+        feature_maps = self._image_to_feature_maps(x)
+        B, T, height, width = feature_maps.shape
+        gamma_seq = self.gamma_initializer(
+            feature_maps.reshape(B * T, 1, height, width)
+        ).view(B, T, self.in_dim)
 
         theta = torch.zeros(B, self.in_dim, self.osc_dim, device=self.device)
         # === 1. Dual-Stream Dynamics ===
+        theta_hist = []
+        for t in range(T):
+            gamma_t = gamma_seq[:, t, :]
+            theta = self.kuramoto(theta, gamma_t, A=sc)
+            theta_hist.append(theta)
+
         feats_list, mask_hidden_list = sinusoidal_gating(
-            x,
+            theta_hist,
             T,
-            self.f_proj,
-            self.enc,
-            self.kuramoto,
-            theta,
-            sc,
             self.phase_delay_steps,
         )
 
@@ -96,11 +100,10 @@ class S2NetClassifier(nn.Module):
 
         for i in range(seq_num):
             input_t = core_input[:, i, :, :]
-            currents = self.core.input_adapter(input_t).squeeze(-1)
             g_t = all_hidden_masks[:, i, :]
 
             l_input, mask = self.core.dendric_layer(
-                currents,
+                input_t,
                 self.core.membrane_layer.spike,
                 g_t
             )
@@ -116,3 +119,13 @@ class S2NetClassifier(nn.Module):
         logits_pooled = torch.mean(core_out, dim=2) 
         
         return self.logsoftmax(logits_pooled), spikes
+
+    def _image_to_feature_maps(self, x):
+        if x.dim() == 2:
+            x = x.unsqueeze(0).unsqueeze(0)
+        elif x.dim() == 3:
+            x = x.unsqueeze(1)
+        elif x.dim() != 4:
+            raise ValueError("x must have shape [H, W], [B, H, W], or [B, C, H, W].")
+
+        return self.input_layer(x)
