@@ -108,8 +108,7 @@ def train_gamma_initializer(
 
     Args:
         feature_maps:
-            [H, W], [D, H, W], or [B, D, H, W].
-            D feature maps are treated as D training samples.
+            [B, T, H, W]. Each feature map is treated as one training sample.
         num_osci:
             Length of the output vector for each feature map.
 
@@ -117,6 +116,7 @@ def train_gamma_initializer(
         trained_encoder, autoencoder, loss_history
     """
     samples, _ = _prepare_feature_maps(feature_maps)
+    samples = samples.detach()
     device = _resolve_device(device, samples)
     samples = samples.to(device)
 
@@ -162,9 +162,7 @@ def feature_maps_to_vectors(feature_maps, encoder, device=None):
     Convert feature maps to vectors with a trained FeatureMapCNNEncoder.
 
     Shape behavior:
-        [H, W]       -> [num_osci]
-        [D, H, W]    -> [D, num_osci]
-        [B, D, H, W] -> [B, D, num_osci]
+        [B, T, H, W] -> [B, T, num_osci]
     """
     samples, restore_shape = _prepare_feature_maps(feature_maps)
     device = _resolve_device(device, samples, encoder)
@@ -173,10 +171,6 @@ def feature_maps_to_vectors(feature_maps, encoder, device=None):
     encoder.eval()
 
     vectors = encoder(samples).cpu()
-    if restore_shape["kind"] == "single":
-        return vectors.squeeze(0)
-    if restore_shape["kind"] == "maps":
-        return vectors
     batch_size = restore_shape["batch_size"]
     num_maps = restore_shape["num_maps"]
     return vectors.view(batch_size, num_maps, -1)
@@ -187,17 +181,13 @@ def _prepare_feature_maps(feature_maps):
         feature_maps = torch.as_tensor(feature_maps, dtype=torch.float32)
     feature_maps = feature_maps.float()
 
-    if feature_maps.dim() == 2:
-        return feature_maps.unsqueeze(0).unsqueeze(0), {"kind": "single"}
-    if feature_maps.dim() == 3:
-        return feature_maps.unsqueeze(1), {"kind": "maps"}
     if feature_maps.dim() == 4:
         batch_size, num_maps, height, width = feature_maps.shape
         return (
             feature_maps.reshape(batch_size * num_maps, 1, height, width),
-            {"kind": "batched", "batch_size": batch_size, "num_maps": num_maps},
+            {"batch_size": batch_size, "num_maps": num_maps},
         )
-    raise ValueError("feature_maps must have shape [H, W], [D, H, W], or [B, D, H, W].")
+    raise ValueError("feature_maps must have shape [B, T, H, W]. Use B=1 for one sample.")
 
 
 def _resolve_device(device, tensor, module=None):
@@ -211,7 +201,7 @@ def _resolve_device(device, tensor, module=None):
 if __name__ == "__main__":
     D, height, width = 6, 24, 24
     num_osci = 8
-    feature_maps = torch.randn(D, height, width)
+    feature_maps = torch.randn(1, D, height, width)
 
     encoder, autoencoder, losses = train_gamma_initializer(
         feature_maps,
@@ -221,7 +211,8 @@ if __name__ == "__main__":
         batch_size=3,
     )
     vectors = feature_maps_to_vectors(feature_maps, encoder)
-    reconstruction = autoencoder(feature_maps.unsqueeze(1)).detach().cpu()
+    samples, _ = _prepare_feature_maps(feature_maps)
+    reconstruction = autoencoder(samples).detach().cpu()
 
     print(f"initial-to-final reconstruction loss: {losses[0]:.6f} -> {losses[-1]:.6f}")
     print(f"input feature maps: {feature_maps.shape}")

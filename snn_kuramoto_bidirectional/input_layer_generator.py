@@ -8,11 +8,10 @@ class CNNFeatureEncoder(nn.Module):
     Independent CNN-style image encoder.
 
     Given D kernels of size N x N, this returns D valid-convolution feature
-    matrices. For a single-channel image of shape W x H, each feature matrix is
-    (W - N + 1) x (H - N + 1).
+    maps for RGB image batches shaped [B, 3, H, W].
     """
 
-    def __init__(self, num_kernels, kernel_size, in_channels=1, bias=True):
+    def __init__(self, num_kernels, kernel_size, in_channels=3, bias=True):
         super().__init__()
         if num_kernels <= 0:
             raise ValueError("num_kernels must be positive.")
@@ -42,26 +41,20 @@ class CNNFeatureEncoder(nn.Module):
         """
         Args:
             image:
-                Tensor shaped [W, H], [C, W, H], or [B, C, W, H].
+                Tensor shaped [B, 3, H, W].
 
         Returns:
-            Tensor shaped [D, W-N+1, H-N+1] for one image, or
-            [B, D, W-N+1, H-N+1] for a batch.
+            Tensor shaped [B, D, H-N+1, W-N+1].
         """
-        image, single_image = self._prepare_image(image)
+        image = self._prepare_image(image)
         self._validate_image_size(image)
 
-        features = F.conv2d(image, self.kernels, bias=self.bias, stride=1, padding=0)
-        return features.squeeze(0) if single_image else features
+        return F.conv2d(image, self.kernels, bias=self.bias, stride=1, padding=0)
 
     def _prepare_image(self, image):
-        if image.dim() == 2:
-            return image.unsqueeze(0).unsqueeze(0), True
-        if image.dim() == 3:
-            return image.unsqueeze(0), True
         if image.dim() == 4:
-            return image, False
-        raise ValueError("image must have shape [W, H], [C, W, H], or [B, C, W, H].")
+            return image
+        raise ValueError("image must have shape [B, C, H, W]. Use B=1 for one image.")
 
     def _validate_image_size(self, image):
         _, channels, width, height = image.shape
@@ -80,10 +73,10 @@ class CNNFeatureDecoder(nn.Module):
     Decoder paired with CNNFeatureEncoder.
 
     Given D feature matrices of shape (W - N + 1) x (H - N + 1), this returns a
-    reconstructed single-channel image of shape W x H.
+    reconstructed image batch of shape [B, C, H, W].
     """
 
-    def __init__(self, num_kernels, kernel_size, out_channels=1, bias=True):
+    def __init__(self, num_kernels, kernel_size, out_channels=3, bias=True):
         super().__init__()
         if num_kernels <= 0:
             raise ValueError("num_kernels must be positive.")
@@ -106,16 +99,13 @@ class CNNFeatureDecoder(nn.Module):
         )
 
     def forward(self, features):
-        features, single_image = self._prepare_features(features)
-        reconstruction = self.deconv(features)
-        return reconstruction.squeeze(0) if single_image else reconstruction
+        features = self._prepare_features(features)
+        return self.deconv(features)
 
     def _prepare_features(self, features):
-        if features.dim() == 3:
-            return features.unsqueeze(0), True
         if features.dim() == 4:
-            return features, False
-        raise ValueError("features must have shape [D, W, H] or [B, D, W, H].")
+            return features
+        raise ValueError("features must have shape [B, D, H, W].")
 
 
 class CNNAutoEncoder(nn.Module):
@@ -127,7 +117,7 @@ class CNNAutoEncoder(nn.Module):
         minimize reconstruction error between reconstructed image and input image.
     """
 
-    def __init__(self, num_kernels, kernel_size, channels=1, bias=True):
+    def __init__(self, num_kernels, kernel_size, channels=3, bias=True):
         super().__init__()
         self.encoder = CNNFeatureEncoder(
             num_kernels=num_kernels,
@@ -143,8 +133,7 @@ class CNNAutoEncoder(nn.Module):
         )
 
     def forward(self, image):
-        original_dim = image.dim()
-        image, _ = self.encoder._prepare_image(image)
+        image = self.encoder._prepare_image(image)
         self.encoder._validate_image_size(image)
 
         features = F.conv2d(
@@ -154,12 +143,7 @@ class CNNAutoEncoder(nn.Module):
             stride=1,
             padding=0,
         )
-        reconstruction = self.decoder(features)
-        if original_dim == 2:
-            return reconstruction.squeeze(0).squeeze(0)
-        if original_dim == 3:
-            return reconstruction.squeeze(0)
-        return reconstruction
+        return self.decoder(features)
 
     def encode(self, image):
         return self.encoder(image)
@@ -169,7 +153,7 @@ def train_autoencoder(
     images,
     num_kernels,
     kernel_size,
-    channels=1,
+    channels=3,
     epochs=500,
     lr=1e-3,
     bias=True,
@@ -179,7 +163,7 @@ def train_autoencoder(
 
     Args:
         images:
-            Tensor shaped [W, H], [C, W, H], or [B, C, W, H].
+            Tensor shaped [B, 3, H, W].
 
     Returns:
         trained_encoder, autoencoder, loss_history
@@ -190,7 +174,7 @@ def train_autoencoder(
         channels=channels,
         bias=bias,
     )
-    target, _ = autoencoder.encoder._prepare_image(images)
+    target = autoencoder.encoder._prepare_image(images)
     autoencoder.encoder._validate_image_size(target)
 
     optimizer = torch.optim.Adam(autoencoder.parameters(), lr=lr)
@@ -213,7 +197,7 @@ if __name__ == "__main__":
     W, H = 8, 10
     D, N = 4, 3
 
-    image = torch.randn(W, H)
+    image = torch.randn(1, 3, W, H)
     encoder, autoencoder, losses = train_autoencoder(
         image,
         num_kernels=D,
