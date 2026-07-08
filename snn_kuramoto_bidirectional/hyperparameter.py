@@ -40,6 +40,16 @@ class S2NetHyperparameters:
     high_n: float = 4.0
     branch: int = 4
 
+    # Object-group based classification
+    spike_classify_method: str = "spike_rhythm"
+    spike_rhythm_threshold: float = 0.8
+    spike_rhythm_min_group_size: int = 2
+    spike_rhythm_return_all_groups: bool = False
+    spike_interval_size: int = 1
+    spike_interval_threshold: float = 0.5
+    spike_interval_min_group_size: int = 1
+    spike_interval_include_partial: bool = True
+
     def validate(self):
         if self.num_feature_maps <= 0:
             raise ValueError("num_feature_maps must be positive.")
@@ -53,6 +63,14 @@ class S2NetHyperparameters:
             raise ValueError("kernel_size must be positive.")
         if self.gamma_order_method not in {"auto", "exact", "local_search"}:
             raise ValueError('gamma_order_method must be "auto", "exact", or "local_search".')
+        if self.spike_classify_method not in {"spike_rhythm", "spike_interval"}:
+            raise ValueError('spike_classify_method must be "spike_rhythm" or "spike_interval".')
+        if self.spike_rhythm_min_group_size < 2:
+            raise ValueError("spike_rhythm_min_group_size must be at least 2.")
+        if self.spike_interval_size <= 0:
+            raise ValueError("spike_interval_size must be positive.")
+        if self.spike_interval_min_group_size <= 0:
+            raise ValueError("spike_interval_min_group_size must be positive.")
         return self
 
 

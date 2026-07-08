@@ -29,12 +29,8 @@ def spike_rhythm(
             Numerical stability value for cosine similarity.
 
     Returns:
-        A dictionary:
-            similarity:
-                Tensor shaped [B, num_oscillators, num_oscillators].
-            groups:
-                List with length B. Each item is a list of tuples containing
-                oscillator indices that form one object group.
+        List with length B. Each item is a list of tuples containing
+        oscillator indices that form one object group.
     """
     if spikes.dim() != 3:
         raise ValueError("spikes must have shape [B, num_oscillators, T]. Use B=1 for one sample.")
@@ -53,10 +49,7 @@ def spike_rhythm(
         for b in range(spikes.size(0))
     ]
 
-    return {
-        "similarity": similarity,
-        "groups": groups,
-    }
+    return groups
 
 
 def spike_interval(
@@ -86,15 +79,8 @@ def spike_interval(
             by interval_size. If False, discard it.
 
     Returns:
-        A dictionary:
-            interval_means:
-                Tensor shaped [B, num_intervals, num_oscillators].
-            groups:
-                List with length B. Each item is a list of tuples. The i-th
-                tuple contains oscillator indices active in interval i.
-            intervals:
-                List of (start, end) index pairs for each interval. End is
-                exclusive.
+        List with length B. Each item is a list of unique tuples containing
+        oscillator indices that form one object group.
     """
     if core_out.dim() != 3:
         raise ValueError("core_out must have shape [B, num_oscillators, T]. Use B=1 for one sample.")
@@ -111,12 +97,7 @@ def spike_interval(
     )
 
     if not intervals:
-        empty_means = core_out.new_empty(core_out.size(0), 0, core_out.size(1))
-        return {
-            "interval_means": empty_means,
-            "groups": [[] for _ in range(core_out.size(0))],
-            "intervals": [],
-        }
+        return [[] for _ in range(core_out.size(0))]
 
     interval_means = torch.stack(
         [
@@ -130,22 +111,19 @@ def spike_interval(
     groups = []
     for batch_idx in range(core_out.size(0)):
         batch_groups = []
+        seen_groups = set()
         for interval_idx in range(len(intervals)):
             active_indices = torch.nonzero(
                 active_mask[batch_idx, interval_idx],
                 as_tuple=False,
             ).flatten().tolist()
-            if len(active_indices) >= int(min_group_size):
-                batch_groups.append(tuple(active_indices))
-            else:
-                batch_groups.append(tuple())
+            group = tuple(active_indices)
+            if len(group) >= int(min_group_size) and group not in seen_groups:
+                batch_groups.append(group)
+                seen_groups.add(group)
         groups.append(batch_groups)
 
-    return {
-        "interval_means": interval_means,
-        "groups": groups,
-        "intervals": intervals,
-    }
+    return groups
 
 
 def _pairwise_cosine_similarity(spikes, eps=1e-8):

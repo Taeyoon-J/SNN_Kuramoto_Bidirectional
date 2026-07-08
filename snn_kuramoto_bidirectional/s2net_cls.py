@@ -7,6 +7,7 @@ from sinusoidal_gating import sinusoidal_gating
 from input_layer_generator import CNNFeatureEncoder
 from gamma_initializer import FeatureMapCNNEncoder
 from gamma_ordering import order_gammas
+from spike_classifier import spike_interval, spike_rhythm
 
 class GammaGenerator(nn.Module):
     """Generate gamma sequences from input images."""
@@ -56,6 +57,14 @@ class S2NetCore(nn.Module):
         self.osc_dim = 4
         self.phase_delay_steps = 2
         self.device = device
+        self.spike_classify_method = hparams.spike_classify_method
+        self.spike_rhythm_threshold = hparams.spike_rhythm_threshold
+        self.spike_rhythm_min_group_size = hparams.spike_rhythm_min_group_size
+        self.spike_rhythm_return_all_groups = hparams.spike_rhythm_return_all_groups
+        self.spike_interval_size = hparams.spike_interval_size
+        self.spike_interval_threshold = hparams.spike_interval_threshold
+        self.spike_interval_min_group_size = hparams.spike_interval_min_group_size
+        self.spike_interval_include_partial = hparams.spike_interval_include_partial
 
         self.kuramoto = graphVectorKuramoto(
             N=self.in_dim, D=self.osc_dim, K=hparams.k, dt=hparams.dt, alpha_scale=1.0, device=device
@@ -82,9 +91,6 @@ class S2NetCore(nn.Module):
             dt=1,
             device=device
         )
-
-        self.logsoftmax = nn.LogSoftmax(dim=1)
-
     def forward(self, gamma_seq, sc):
         gamma_seq = gamma_seq.to(self.device)
         sc = sc.to(self.device)
@@ -130,9 +136,27 @@ class S2NetCore(nn.Module):
 
         core_out = torch.stack(outputs).permute(1, 2, 0)
         spikes = torch.stack(spikes_hist).permute(1, 2, 0)
-        logits_pooled = torch.mean(core_out, dim=2)
+        object_groups = self._detect_object_groups(core_out, spikes)
 
-        return self.logsoftmax(logits_pooled), spikes
+        return object_groups, spikes
+
+    def _detect_object_groups(self, core_out, spikes):
+        if self.spike_classify_method == "spike_rhythm":
+            return spike_rhythm(
+                spikes,
+                threshold=self.spike_rhythm_threshold,
+                min_group_size=self.spike_rhythm_min_group_size,
+                return_all_groups=self.spike_rhythm_return_all_groups,
+            )
+        if self.spike_classify_method == "spike_interval":
+            return spike_interval(
+                core_out,
+                interval_size=self.spike_interval_size,
+                threshold=self.spike_interval_threshold,
+                min_group_size=self.spike_interval_min_group_size,
+                include_partial=self.spike_interval_include_partial,
+            )
+        raise ValueError(f"Unsupported spike_classify_method: {self.spike_classify_method}")
 
 
 class S2NetClassifier(nn.Module):
