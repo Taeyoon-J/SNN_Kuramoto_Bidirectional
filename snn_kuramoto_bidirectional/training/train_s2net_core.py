@@ -1,6 +1,7 @@
 import torch
-import torch.nn as nn
 from pathlib import Path
+
+from loss_function import UnsupervisedS2NetLoss
 
 
 def train_s2net_core(
@@ -14,22 +15,22 @@ def train_s2net_core(
     save_path=None,
 ):
     """
-    Train only S2NetCore from precomputed gamma sequences.
+    Train only S2NetCore from precomputed gamma sequences with an unsupervised
+    spike/object-group loss.
 
     Each dataloader batch must be:
-        gamma_seq, sc, labels
+        gamma_seq, sc
 
     Expected shapes:
         gamma_seq: [B, T, num_regions]
         sc:        [num_regions, num_regions] or [B, num_regions, num_regions]
-        labels:    [B]
 
     Returns:
         core, loss_history
     """
     device = _resolve_device(device, core)
     core = core.to(device)
-    criterion = criterion if criterion is not None else nn.NLLLoss()
+    criterion = criterion if criterion is not None else UnsupervisedS2NetLoss()
     optimizer = optimizer if optimizer is not None else torch.optim.Adam(core.parameters(), lr=lr)
     loss_history = []
 
@@ -37,19 +38,23 @@ def train_s2net_core(
     for _ in range(int(epochs)):
         epoch_loss = 0.0
         sample_count = 0
-        for gamma_seq, sc, labels in dataloader:
+        for batch in dataloader:
+            gamma_seq, sc = _unpack_unsupervised_batch(batch)
             gamma_seq = gamma_seq.to(device)
             sc = sc.to(device)
-            labels = labels.to(device).long()
 
-            log_probs, _ = core(gamma_seq, sc)
-            loss = criterion(log_probs, labels)
+            object_groups, spikes = core(gamma_seq, sc)
+            loss, _ = criterion(
+                spikes=spikes,
+                object_groups=object_groups,
+                sc=sc,
+            )
 
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
 
-            batch_size = labels.size(0)
+            batch_size = gamma_seq.size(0)
             epoch_loss += loss.item() * batch_size
             sample_count += batch_size
         loss_history.append(epoch_loss / sample_count)
@@ -62,33 +67,42 @@ def train_s2net_core(
 
 @torch.no_grad()
 def evaluate_s2net_core(core, dataloader, criterion=None, device=None):
-    """Evaluate S2NetCore on batches of gamma_seq, sc, labels."""
+    """Evaluate S2NetCore on unsupervised batches of gamma_seq, sc."""
     device = _resolve_device(device, core)
     core = core.to(device)
-    criterion = criterion if criterion is not None else nn.NLLLoss()
+    criterion = criterion if criterion is not None else UnsupervisedS2NetLoss()
 
     core.eval()
     total_loss = 0.0
-    total_correct = 0
     total_count = 0
-    for gamma_seq, sc, labels in dataloader:
+    last_parts = None
+    for batch in dataloader:
+        gamma_seq, sc = _unpack_unsupervised_batch(batch)
         gamma_seq = gamma_seq.to(device)
         sc = sc.to(device)
-        labels = labels.to(device).long()
 
-        log_probs, _ = core(gamma_seq, sc)
-        loss = criterion(log_probs, labels)
-        predictions = log_probs.argmax(dim=1)
+        object_groups, spikes = core(gamma_seq, sc)
+        loss, parts = criterion(
+            spikes=spikes,
+            object_groups=object_groups,
+            sc=sc,
+        )
 
-        batch_size = labels.size(0)
+        batch_size = gamma_seq.size(0)
         total_loss += loss.item() * batch_size
-        total_correct += (predictions == labels).sum().item()
         total_count += batch_size
+        last_parts = {name: value.item() for name, value in parts.items()}
 
     return {
         "loss": total_loss / total_count,
-        "accuracy": total_correct / total_count,
+        "parts": last_parts,
     }
+
+
+def _unpack_unsupervised_batch(batch):
+    if len(batch) < 2:
+        raise ValueError("Each batch must contain at least gamma_seq and sc.")
+    return batch[0], batch[1]
 
 
 def _resolve_device(device, module):
