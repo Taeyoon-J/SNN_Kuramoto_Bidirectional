@@ -1,7 +1,5 @@
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
-from torch.utils.data import DataLoader, TensorDataset
 
 
 class FeatureMapCNNEncoder(nn.Module):
@@ -92,70 +90,6 @@ class FeatureMapAutoEncoder(nn.Module):
         return self.encoder(feature_maps)
 
 
-def train_gamma_initializer(
-    feature_maps,
-    num_osci,
-    hidden_channels=(16, 32, 64),
-    decoder_hidden_dim=256,
-    epochs=200,
-    lr=1e-3,
-    batch_size=32,
-    dropout=0.0,
-    device=None,
-):
-    """
-    Train one CNN model that converts each feature map into a feature vector.
-
-    Args:
-        feature_maps:
-            [B, T, H, W]. Each feature map is treated as one training sample.
-        num_osci:
-            Length of the output vector for each feature map.
-
-    Returns:
-        trained_encoder, autoencoder, loss_history
-    """
-    samples, _ = _prepare_feature_maps(feature_maps)
-    samples = samples.detach()
-    device = _resolve_device(device, samples)
-    samples = samples.to(device)
-
-    autoencoder = FeatureMapAutoEncoder(
-        input_size=samples.shape[-2:],
-        num_osci=num_osci,
-        hidden_channels=hidden_channels,
-        decoder_hidden_dim=decoder_hidden_dim,
-        dropout=dropout,
-    ).to(device)
-
-    dataset = TensorDataset(samples)
-    loader = DataLoader(
-        dataset,
-        batch_size=min(int(batch_size), len(dataset)),
-        shuffle=True,
-    )
-    optimizer = torch.optim.Adam(autoencoder.parameters(), lr=lr)
-    loss_history = []
-
-    autoencoder.train()
-    for _ in range(int(epochs)):
-        total_loss = 0.0
-        total_count = 0
-        for (batch,) in loader:
-            reconstruction = autoencoder(batch)
-            loss = F.mse_loss(reconstruction, batch)
-
-            optimizer.zero_grad()
-            loss.backward()
-            optimizer.step()
-
-            total_loss += loss.item() * batch.size(0)
-            total_count += batch.size(0)
-        loss_history.append(total_loss / total_count)
-
-    return autoencoder.encoder, autoencoder, loss_history
-
-
 @torch.no_grad()
 def feature_maps_to_vectors(feature_maps, encoder, device=None):
     """
@@ -196,25 +130,3 @@ def _resolve_device(device, tensor, module=None):
     if module is not None:
         return next(module.parameters()).device
     return tensor.device
-
-
-if __name__ == "__main__":
-    D, height, width = 6, 24, 24
-    num_osci = 8
-    feature_maps = torch.randn(1, D, height, width)
-
-    encoder, autoencoder, losses = train_gamma_initializer(
-        feature_maps,
-        num_osci=num_osci,
-        epochs=20,
-        lr=1e-3,
-        batch_size=3,
-    )
-    vectors = feature_maps_to_vectors(feature_maps, encoder)
-    samples, _ = _prepare_feature_maps(feature_maps)
-    reconstruction = autoencoder(samples).detach().cpu()
-
-    print(f"initial-to-final reconstruction loss: {losses[0]:.6f} -> {losses[-1]:.6f}")
-    print(f"input feature maps: {feature_maps.shape}")
-    print(f"feature vectors: {vectors.shape}")
-    print(f"reconstruction: {reconstruction.shape}")
