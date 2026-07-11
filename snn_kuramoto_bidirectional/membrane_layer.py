@@ -45,53 +45,35 @@ act_fun_adp = ActFun_adp.apply
 
 
 class MembraneLayer(nn.Module):
-    def __init__(self, output_dim, readout_dim, tau_minitializer='uniform', low_m=0, high_m=4,
-                 vth=0.5, dt=4, device='cpu', bias=True):
+    def __init__(self, output_dim, tau_minitializer='uniform', low_m=0, high_m=4,
+                 vth=0.5, dt=4, device='cpu'):
         super(MembraneLayer, self).__init__()
         self.output_dim = output_dim
-        self.readout_dim = readout_dim
         self.device = device
         self.vth = vth
         self.dt = dt
 
         self.tau_m = nn.Parameter(torch.Tensor(self.output_dim))
-        self.readout_dense = nn.Linear(output_dim,readout_dim)
-        self.readout_tau_m = nn.Parameter(torch.Tensor(self.readout_dim))
 
         if tau_minitializer == 'uniform':
             nn.init.uniform_(self.tau_m, low_m, high_m)
-            nn.init.uniform_(self.readout_tau_m,low_m,high_m)
         elif tau_minitializer == 'constant':
             nn.init.constant_(self.tau_m, low_m)
-            nn.init.constant_(self.readout_tau_m,low_m)
 
         self.mem = None
         self.spike = None
-        self.readout_mem = None
-        self.readout_spike = None
 
     def set_neuron_state(self, batch_size):
         self.mem = torch.rand(batch_size, self.output_dim).to(self.device)
         self.spike = torch.rand(batch_size, self.output_dim).to(self.device)
         self.v_th = torch.ones(batch_size, self.output_dim).to(self.device) * self.vth
-        self.readout_mem = torch.rand(batch_size,self.readout_dim).to(self.device)
-        self.readout_spike = torch.rand(batch_size,self.readout_dim).to(self.device)
-        self.readout_v_th = torch.ones(batch_size,self.readout_dim).to(self.device)*self.vth
 
-    def forward(self, inputs, mask):
+    def forward(self, h_wave_t, g_wave_t):
         alpha = torch.sigmoid(self.tau_m)
-        mask = mask.expand(self.mem.size(0), -1)
+        g_wave_t = g_wave_t.expand(self.mem.size(0), -1)
         pre_mem = self.mem
-        self.mem = self.mem * alpha  + (1 - alpha) * R_m * inputs-self.v_th*self.spike
-        self.mem = torch.where(mask == 0, pre_mem, self.mem)
+        self.mem = self.mem * alpha  + (1 - alpha) * R_m * h_wave_t-self.v_th*self.spike
+        self.mem = torch.where(g_wave_t == 0, pre_mem, self.mem)
         inputs_ = self.mem - self.v_th
-        self.spike = act_fun_adp(inputs_) * mask
-
-        k_input = self.spike.float()
-
-        d_input = self.readout_dense(k_input)
-        readout_alpha = torch.sigmoid(self.readout_tau_m)
-        self.readout_mem = self.readout_mem * readout_alpha  + (1 - readout_alpha) * R_m * d_input-self.readout_v_th*self.readout_spike
-        readout_inputs = self.readout_mem - self.readout_v_th
-        self.readout_spike = act_fun_adp(readout_inputs)
-        return self.readout_mem, self.spike
+        self.spike = act_fun_adp(inputs_) * g_wave_t
+        return self.mem, self.spike

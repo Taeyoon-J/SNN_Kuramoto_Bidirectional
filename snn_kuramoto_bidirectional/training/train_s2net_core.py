@@ -18,12 +18,11 @@ def train_s2net_core(
     Train only S2NetCore from precomputed gamma sequences with an unsupervised
     spike/object-group loss.
 
-    Each dataloader batch must be:
-        gamma_seq, sc
+    Each dataloader batch must contain gamma_seq. The fixed SC is read from
+    core.sc.
 
     Expected shapes:
         gamma_seq: [B, T, num_regions]
-        sc:        [num_regions, num_regions] or [B, num_regions, num_regions]
 
     Returns:
         core, loss_history
@@ -39,15 +38,14 @@ def train_s2net_core(
         epoch_loss = 0.0
         sample_count = 0
         for batch in dataloader:
-            gamma_seq, sc = _unpack_unsupervised_batch(batch)
+            gamma_seq = _unpack_gamma_batch(batch)
             gamma_seq = gamma_seq.to(device)
-            sc = sc.to(device)
 
-            object_groups, spikes = core(gamma_seq, sc)
+            object_groups, spikes = core(gamma_seq)
             loss, _ = criterion(
                 spikes=spikes,
                 object_groups=object_groups,
-                sc=sc,
+                sc=core.sc,
             )
 
             optimizer.zero_grad()
@@ -67,7 +65,7 @@ def train_s2net_core(
 
 @torch.no_grad()
 def evaluate_s2net_core(core, dataloader, criterion=None, device=None):
-    """Evaluate S2NetCore on unsupervised batches of gamma_seq, sc."""
+    """Evaluate S2NetCore using its fixed SC and precomputed gamma sequences."""
     device = _resolve_device(device, core)
     core = core.to(device)
     criterion = criterion if criterion is not None else UnsupervisedS2NetLoss()
@@ -77,15 +75,14 @@ def evaluate_s2net_core(core, dataloader, criterion=None, device=None):
     total_count = 0
     last_parts = None
     for batch in dataloader:
-        gamma_seq, sc = _unpack_unsupervised_batch(batch)
+        gamma_seq = _unpack_gamma_batch(batch)
         gamma_seq = gamma_seq.to(device)
-        sc = sc.to(device)
 
-        object_groups, spikes = core(gamma_seq, sc)
+        object_groups, spikes = core(gamma_seq)
         loss, parts = criterion(
             spikes=spikes,
             object_groups=object_groups,
-            sc=sc,
+            sc=core.sc,
         )
 
         batch_size = gamma_seq.size(0)
@@ -99,10 +96,12 @@ def evaluate_s2net_core(core, dataloader, criterion=None, device=None):
     }
 
 
-def _unpack_unsupervised_batch(batch):
-    if len(batch) < 2:
-        raise ValueError("Each batch must contain at least gamma_seq and sc.")
-    return batch[0], batch[1]
+def _unpack_gamma_batch(batch):
+    if torch.is_tensor(batch):
+        return batch
+    if len(batch) < 1:
+        raise ValueError("Each batch must contain gamma_seq.")
+    return batch[0]
 
 
 def _resolve_device(device, module):

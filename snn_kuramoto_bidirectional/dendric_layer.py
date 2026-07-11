@@ -26,40 +26,33 @@ class DendricLayer(nn.Module):
         elif tau_ninitializer == 'constant':
             nn.init.constant_(self.tau_n, low_n)
 
-        self.d_input = None
+        self.h = None
 
     def set_neuron_state(self, batch_size):
-        self.d_input = torch.zeros(batch_size, self.output_dim, self.branch).to(self.device)
+        self.h = torch.zeros(batch_size, self.output_dim, self.branch).to(self.device)
 
-    def forward(self, input_spike, prev_spike, external_rhythm_mask=None):
+    def forward(self, gamma_wave, prev_spike):
         """
         Args:
-            input_spike: [Batch, Output_Dim, Input_Vector_Dim]
-            external_rhythm_mask: [Batch, Output_Dim]
+            gamma_wave: [Batch, Output_Dim, Input_Vector_Dim]
         """
         # 1. Dendritic Integration
         beta = torch.sigmoid(self.tau_n)
 
-        next_d_input = []
+        next_h = []
         for i in range(self.output_dim):
             k_input = torch.cat(
                 (
-                    input_spike[:, i, :].float(),
+                    gamma_wave[:, i, :].float(),
                     prev_spike[:, i:i + 1],
                 ),
                 dim=1,
             )
             dense_i = self.oscillator_dense(k_input)
-            d_input_i = beta[i] * self.d_input[:, i, :] + (1 - beta[i]) * dense_i
-            next_d_input.append(d_input_i)
+            h_i = beta[i] * self.h[:, i, :] + (1 - beta[i]) * dense_i
+            next_h.append(h_i)
 
-        self.d_input = torch.stack(next_d_input, dim=1)
-        l_input = self.d_input.sum(dim=2, keepdim=False)
+        self.h = torch.stack(next_h, dim=1)
+        h_wave = self.h.sum(dim=2, keepdim=False)
 
-        # 2. Somatic Update
-        if external_rhythm_mask is None:
-            mask = torch.ones_like(prev_spike)
-        else:
-            mask = external_rhythm_mask
-
-        return l_input, mask
+        return h_wave

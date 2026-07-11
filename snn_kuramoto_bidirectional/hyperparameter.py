@@ -17,6 +17,9 @@ class S2NetHyperparameters:
     num_regions: int = 90
     num_classes: int = 2
 
+    # Fixed region-to-region connectivity matrix [num_regions, num_regions]
+    sc: object = None
+
     # RGB input -> feature maps
     in_channels: int = 3
     kernel_size: int = 3

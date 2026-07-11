@@ -66,6 +66,18 @@ class S2NetCore(nn.Module):
         self.spike_interval_min_group_size = hparams.spike_interval_min_group_size
         self.spike_interval_include_partial = hparams.spike_interval_include_partial
 
+        if hparams.sc is None:
+            raise ValueError(
+                "hparams.sc must be generated before constructing S2NetCore."
+            )
+        sc = torch.as_tensor(hparams.sc, dtype=torch.float32)
+        expected_shape = (self.in_dim, self.in_dim)
+        if tuple(sc.shape) != expected_shape:
+            raise ValueError(
+                f"hparams.sc must have shape {expected_shape}, but got {tuple(sc.shape)}."
+            )
+        self.register_buffer("sc", sc.clone().detach())
+
         self.kuramoto = graphVectorKuramoto(
             N=self.in_dim, D=self.osc_dim, K=hparams.k, dt=hparams.dt, alpha_scale=1.0, device=device
         )
@@ -83,7 +95,6 @@ class S2NetCore(nn.Module):
         )
         self.membrane_layer = MembraneLayer(
             output_dim=self.in_dim,
-            readout_dim=hparams.num_classes,
             tau_minitializer='uniform',
             low_m=0,
             high_m=4,
@@ -91,12 +102,12 @@ class S2NetCore(nn.Module):
             dt=1,
             device=device
         )
-    def forward(self, gamma_seq, sc):
+    def forward(self, gamma_seq):
         gamma_seq = gamma_seq.to(self.device)
-        sc = sc.to(self.device)
         if gamma_seq.dim() != 3:
             raise ValueError("gamma_seq must have shape [B, T, num_regions]. Use B=1 for one sample.")
         B, T, _ = gamma_seq.shape
+        sc = self.sc.to(gamma_seq.device).unsqueeze(0).expand(B, -1, -1)
 
         theta = torch.zeros(B, self.in_dim, self.osc_dim, device=self.device)
         theta_hist = []
@@ -111,10 +122,10 @@ class S2NetCore(nn.Module):
             self.phase_delay_steps,
         )
 
-        core_input = torch.cat(feats_list, dim=1)
-        all_hidden_masks = torch.stack(mask_hidden_list, dim=1)
+        all_feats = torch.cat(feats_list, dim=1)
+        all_mask_hidden = torch.stack(mask_hidden_list, dim=1)
 
-        batch_size, seq_num, _, _ = core_input.shape
+        batch_size, seq_num, _, _ = all_feats.shape
         self.dendric_layer.set_neuron_state(batch_size)
         self.membrane_layer.set_neuron_state(batch_size)
 
@@ -122,17 +133,16 @@ class S2NetCore(nn.Module):
         spikes_hist = []
 
         for i in range(seq_num):
-            input_t = core_input[:, i, :, :]
-            g_t = all_hidden_masks[:, i, :]
+            gamma_wave_t = all_feats[:, i, :, :]
+            g_wave_t = all_mask_hidden[:, i, :]
 
-            l_input, mask = self.dendric_layer(
-                input_t,
-                self.membrane_layer.spike,
-                g_t
+            h_wave_t = self.dendric_layer(
+                gamma_wave_t,
+                self.membrane_layer.spike
             )
-            mem_readout, spike_t = self.membrane_layer(l_input, mask)
+            mem_t, spike_t = self.membrane_layer(h_wave_t, g_wave_t)
             spikes_hist.append(spike_t)
-            outputs.append(mem_readout)
+            outputs.append(mem_t)
 
         core_out = torch.stack(outputs).permute(1, 2, 0)
         spikes = torch.stack(spikes_hist).permute(1, 2, 0)
@@ -180,10 +190,10 @@ class S2NetClassifier(nn.Module):
         """Build S2NetClassifier from S2NetHyperparameters."""
         return cls(hparams, device=device)
 
-    def forward(self, x, sc):
+    def forward(self, x):
         gamma_seq = self.gamma_generator(x)
         ordered_gamma_seq, _, _ = self.order_gamma_sequence(gamma_seq)
-        return self.core(ordered_gamma_seq, sc)
+        return self.core(ordered_gamma_seq)
 
     def order_gamma_sequence(self, gamma_seq):
         """Order generated gamma sequences before feeding S2NetCore."""
