@@ -8,6 +8,7 @@ from pathlib import Path
 
 import torch
 import torch.nn.functional as F
+import h5py
 from PIL import Image
 from torch.utils.data import DataLoader, Dataset
 from torchvision import transforms
@@ -37,11 +38,51 @@ class ImagePathDataset(Dataset):
             return self.transform(image.convert("RGB"))
 
 
+class HDF5ImageDataset(Dataset):
+    def __init__(self, hdf5_path, indices, image_size, dataset_key="image"):
+        self.hdf5_path = str(hdf5_path)
+        self.indices = list(indices)
+        self.dataset_key = dataset_key
+        self._file = None
+        self.transform = transforms.Compose(
+            [
+                transforms.Resize((image_size, image_size)),
+                transforms.ToTensor(),
+            ]
+        )
+
+    def __len__(self):
+        return len(self.indices)
+
+    def __getitem__(self, index):
+        if self._file is None:
+            self._file = h5py.File(self.hdf5_path, "r")
+        image = self._file[self.dataset_key][self.indices[index]]
+        return self.transform(Image.fromarray(image).convert("RGB"))
+
+    def __getstate__(self):
+        state = self.__dict__.copy()
+        state["_file"] = None
+        return state
+
+    def __del__(self):
+        if self._file is not None:
+            self._file.close()
+
+
 def parse_args():
     parser = argparse.ArgumentParser(
         description="Train CNNFeatureEncoder and its decoder on image files."
     )
-    parser.add_argument("--dataset-dir", type=Path, required=True)
+    parser.add_argument(
+        "--dataset-path",
+        "--dataset-dir",
+        dest="dataset_path",
+        type=Path,
+        required=True,
+        help="Image directory or an HDF5 file containing images.",
+    )
+    parser.add_argument("--hdf5-key", default="image")
     parser.add_argument("--output-dir", type=Path, default=Path("server_train/outputs"))
     parser.add_argument("--num-images", type=int, default=500)
     parser.add_argument("--image-size", type=int, default=224)
@@ -79,6 +120,39 @@ def find_image_paths(dataset_dir, num_images, seed):
     return paths[:num_images], len(paths)
 
 
+def build_dataset(dataset_path, num_images, image_size, seed, hdf5_key):
+    if dataset_path.is_file() and dataset_path.suffix.lower() in {".h5", ".hdf5"}:
+        with h5py.File(dataset_path, "r") as file:
+            if hdf5_key not in file:
+                raise KeyError(
+                    f"HDF5 key '{hdf5_key}' was not found in {dataset_path}."
+                )
+            image_data = file[hdf5_key]
+            if image_data.ndim != 4 or image_data.shape[-1] not in {1, 3, 4}:
+                raise ValueError(
+                    f"HDF5 '{hdf5_key}' must have shape [N, H, W, C], "
+                    f"but got {image_data.shape}."
+                )
+            total_images = int(image_data.shape[0])
+        if total_images < num_images:
+            raise ValueError(
+                f"HDF5 contains {total_images} images, but {num_images} were requested."
+            )
+        indices = random.Random(seed).sample(range(total_images), num_images)
+        return (
+            HDF5ImageDataset(dataset_path, indices, image_size, hdf5_key),
+            total_images,
+            [f"{hdf5_key}[{index}]" for index in indices],
+        )
+
+    selected_paths, total_images = find_image_paths(dataset_path, num_images, seed)
+    return (
+        ImagePathDataset(selected_paths, image_size),
+        total_images,
+        [str(path.resolve()) for path in selected_paths],
+    )
+
+
 def train(args):
     random.seed(args.seed)
     torch.manual_seed(args.seed)
@@ -89,10 +163,13 @@ def train(args):
         raise RuntimeError("CUDA was requested, but PyTorch cannot access a CUDA GPU.")
     device = torch.device(args.device)
 
-    selected_paths, total_images = find_image_paths(
-        args.dataset_dir, args.num_images, args.seed
+    dataset, total_images, selected_samples = build_dataset(
+        args.dataset_path,
+        args.num_images,
+        args.image_size,
+        args.seed,
+        args.hdf5_key,
     )
-    dataset = ImagePathDataset(selected_paths, args.image_size)
     loader = DataLoader(
         dataset,
         batch_size=min(args.batch_size, len(dataset)),
@@ -111,8 +188,8 @@ def train(args):
     optimizer = torch.optim.Adam(model.parameters(), lr=args.learning_rate)
     loss_history = []
 
-    print(f"Dataset directory: {args.dataset_dir}", flush=True)
-    print(f"Selected images: {len(selected_paths)} / {total_images}", flush=True)
+    print(f"Dataset: {args.dataset_path}", flush=True)
+    print(f"Selected images: {len(dataset)} / {total_images}", flush=True)
     print(f"Device: {device}", flush=True)
     if device.type == "cuda":
         print(f"Visible GPU: {torch.cuda.get_device_name(0)}", flush=True)
@@ -156,7 +233,8 @@ def train(args):
     with config_path.open("w", encoding="utf-8") as file:
         json.dump(
             {
-                "dataset_dir": str(args.dataset_dir.resolve()),
+                "dataset_path": str(args.dataset_path.resolve()),
+                "hdf5_key": args.hdf5_key,
                 "num_images": args.num_images,
                 "image_size": args.image_size,
                 "num_kernels": args.num_kernels,
@@ -172,7 +250,7 @@ def train(args):
             indent=2,
         )
     with selected_paths_file.open("w", encoding="utf-8") as file:
-        file.write("\n".join(str(path.resolve()) for path in selected_paths))
+        file.write("\n".join(selected_samples))
 
     print(f"Encoder: {encoder_path}", flush=True)
     print(f"Decoder: {decoder_path}", flush=True)
