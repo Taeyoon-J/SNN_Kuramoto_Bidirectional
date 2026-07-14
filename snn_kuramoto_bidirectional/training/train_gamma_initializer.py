@@ -22,6 +22,7 @@ def train_gamma_initializer(
     device=None,
     optimizer_cls=torch.optim.Adam,
     save_path=None,
+    decoder_save_path=None,
 ):
     """
     Pretrain FeatureMapCNNEncoder with its paired decoder.
@@ -33,6 +34,11 @@ def train_gamma_initializer(
     Args:
         feature_maps:
             Tensor shaped [B, T, H, W].
+        save_path:
+            Encoder checkpoint path. When provided, the decoder is also saved.
+        decoder_save_path:
+            Optional decoder checkpoint path. If omitted while save_path is
+            provided, ``<encoder_stem>_decoder<suffix>`` is used.
 
     Returns:
         trained_encoder, autoencoder, loss_history
@@ -77,6 +83,11 @@ def train_gamma_initializer(
 
     if save_path is not None:
         save_gamma_initializer(autoencoder.encoder, save_path)
+        if decoder_save_path is None:
+            decoder_save_path = _decoder_path_from_encoder_path(save_path)
+        save_gamma_decoder(autoencoder.decoder, decoder_save_path)
+    elif decoder_save_path is not None:
+        save_gamma_decoder(autoencoder.decoder, decoder_save_path)
 
     return autoencoder.encoder, autoencoder, loss_history
 
@@ -92,6 +103,21 @@ def save_gamma_initializer(encoder, save_path):
     save_path = Path(save_path)
     save_path.parent.mkdir(parents=True, exist_ok=True)
     torch.save(encoder.state_dict(), save_path)
+
+
+def save_gamma_decoder(decoder, save_path):
+    """Save a trained FeatureMapAutoEncoder decoder state_dict."""
+    save_path = Path(save_path)
+    save_path.parent.mkdir(parents=True, exist_ok=True)
+    torch.save(decoder.state_dict(), save_path)
+
+
+def _decoder_path_from_encoder_path(encoder_path):
+    """Derive a decoder checkpoint path next to the encoder checkpoint."""
+    encoder_path = Path(encoder_path)
+    return encoder_path.with_name(
+        f"{encoder_path.stem}_decoder{encoder_path.suffix}"
+    )
 
 
 def load_gamma_initializer(
