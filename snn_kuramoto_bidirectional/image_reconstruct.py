@@ -1,7 +1,22 @@
 import torch
 import torch.nn as nn
+import sys
+from pathlib import Path
 
-from snn_kuramoto_bidirectional.gamma_initializer import FeatureMapCNNEncoder
+PROJECT_ROOT = Path(__file__).resolve().parent
+PACKAGE_ROOT = PROJECT_ROOT.parent
+for path in (PROJECT_ROOT, PACKAGE_ROOT):
+    path = str(path)
+    if path not in sys.path:
+        sys.path.insert(0, path)
+
+try:
+    from snn_kuramoto_bidirectional.gamma_initializer import (
+        FeatureMapAutoEncoder,
+        FeatureMapCNNEncoder,
+    )
+except ModuleNotFoundError:
+    from gamma_initializer import FeatureMapAutoEncoder, FeatureMapCNNEncoder
 
 
 @torch.no_grad()
@@ -174,6 +189,81 @@ def decode_oscillator_features_from_checkpoint(
         device=device,
         **decode_kwargs,
     )
+
+
+def decode_oscillator_features_from_autoencoder_checkpoint(
+    autoencoder_checkpoint_path,
+    gamma_samples,
+    device=None,
+    **decode_kwargs,
+):
+    """Load a full ``FeatureMapAutoEncoder`` checkpoint and decode features.
+
+    Supports checkpoints saved either as:
+        {"state_dict": ..., "input_size": ..., "num_osci": ...}
+
+    or plain ``FeatureMapAutoEncoder.state_dict()`` when ``input_size`` and
+    ``num_osci`` are inferable from decoder/encoder weights.
+    """
+    device = torch.device(
+        device
+        if device is not None
+        else ("cuda" if torch.cuda.is_available() else "cpu")
+    )
+    checkpoint = torch.load(autoencoder_checkpoint_path, map_location=device)
+    if not isinstance(checkpoint, dict):
+        raise ValueError("The checkpoint must be a dictionary.")
+
+    if "state_dict" in checkpoint:
+        state_dict = checkpoint["state_dict"]
+        input_size = checkpoint["input_size"]
+        num_osci = int(checkpoint["num_osci"])
+        hidden_channels = tuple(checkpoint.get("hidden_channels", (16, 32, 64)))
+        decoder_hidden_dim = int(checkpoint.get("decoder_hidden_dim", 256))
+        dropout = float(checkpoint.get("dropout", 0.0))
+    else:
+        state_dict = checkpoint
+        decoder_first_weight = state_dict.get("decoder.0.weight")
+        decoder_output_weight = state_dict.get("decoder.2.weight")
+        projection_weight = state_dict.get("encoder.projection.2.weight")
+        if decoder_first_weight is None or decoder_output_weight is None or projection_weight is None:
+            raise ValueError("The checkpoint does not match a FeatureMapAutoEncoder.")
+        num_osci = int(projection_weight.shape[0])
+        decoder_hidden_dim = int(decoder_first_weight.shape[0])
+        flat_output = int(decoder_output_weight.shape[0])
+        side = int(flat_output ** 0.5)
+        if side * side != flat_output:
+            raise ValueError("Cannot infer square decoder output size from checkpoint.")
+        input_size = (side, side)
+        hidden_channels = _infer_hidden_channels_from_autoencoder_state_dict(state_dict)
+        dropout = 0.0
+
+    autoencoder = FeatureMapAutoEncoder(
+        input_size=input_size,
+        num_osci=num_osci,
+        hidden_channels=hidden_channels,
+        decoder_hidden_dim=decoder_hidden_dim,
+        dropout=dropout,
+    ).to(device)
+    autoencoder.load_state_dict(state_dict)
+    autoencoder.eval()
+    return decode_oscillator_features(
+        autoencoder.decoder,
+        gamma_samples=gamma_samples,
+        device=device,
+        **decode_kwargs,
+    )
+
+
+def _infer_hidden_channels_from_autoencoder_state_dict(state_dict):
+    conv_weights = [
+        value
+        for key, value in state_dict.items()
+        if key.startswith("encoder.cnn.") and key.endswith(".weight") and value.dim() == 4
+    ]
+    if not conv_weights:
+        return (16, 32, 64)
+    return tuple(int(weight.shape[0]) for weight in conv_weights)
 
 
 def _validate_decoded_feature_maps(feature_maps, expected_batch_size):
@@ -376,3 +466,76 @@ def _total_variation(images):
     vertical = images[:, :, 1:, :] - images[:, :, :-1, :]
     horizontal = images[:, :, :, 1:] - images[:, :, :, :-1]
     return vertical.abs().mean() + horizontal.abs().mean()
+
+
+def save_decoded_feature_images(decoded, output_dir, max_dims=None):
+    """Save decoded oscillator feature maps as PNG files."""
+    import matplotlib.pyplot as plt
+
+    output_dir = Path(output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    one_hot = decoded["one_hot_feature_maps"].squeeze(1)
+    num_dims = one_hot.size(0) if max_dims is None else min(int(max_dims), one_hot.size(0))
+    for dim in range(num_dims):
+        fig, ax = plt.subplots(figsize=(4, 4))
+        im = ax.imshow(one_hot[dim].numpy(), cmap="viridis")
+        ax.set_title(f"one-hot gamma dim {dim}")
+        ax.axis("off")
+        fig.colorbar(im, ax=ax, fraction=0.045, pad=0.03)
+        fig.tight_layout()
+        fig.savefig(output_dir / f"gamma_dim_{dim:03d}_one_hot.png", dpi=160)
+        plt.close(fig)
+
+    cols = min(10, num_dims)
+    rows = (num_dims + cols - 1) // cols
+    fig, axes = plt.subplots(rows, cols, figsize=(cols * 2, rows * 2), squeeze=False)
+    for idx, ax in enumerate(axes.flat):
+        ax.axis("off")
+        if idx >= num_dims:
+            continue
+        ax.imshow(one_hot[idx].numpy(), cmap="viridis")
+        ax.set_title(str(idx), fontsize=8)
+    fig.tight_layout()
+    fig.savefig(output_dir / "gamma_one_hot_grid.png", dpi=160)
+    plt.close(fig)
+
+    mean_feature = decoded["mean_feature_map"].squeeze(0)
+    fig, ax = plt.subplots(figsize=(4, 4))
+    im = ax.imshow(mean_feature.numpy(), cmap="viridis")
+    ax.set_title("decoded mean gamma")
+    ax.axis("off")
+    fig.colorbar(im, ax=ax, fraction=0.045, pad=0.03)
+    fig.tight_layout()
+    fig.savefig(output_dir / "gamma_mean_feature_map.png", dpi=160)
+    plt.close(fig)
+
+
+def main():
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Decode gamma autoencoder dimensions into feature-map images.")
+    parser.add_argument("--autoencoder-path", required=True)
+    parser.add_argument("--gamma-seq-path", required=True)
+    parser.add_argument("--output-dir", required=True)
+    parser.add_argument("--max-dims", type=int, default=None)
+    parser.add_argument("--device", default="cuda" if torch.cuda.is_available() else "cpu")
+    args = parser.parse_args()
+
+    gamma_seq = torch.load(args.gamma_seq_path, map_location="cpu").float()
+    decoded = decode_oscillator_features_from_autoencoder_checkpoint(
+        args.autoencoder_path,
+        gamma_samples=gamma_seq,
+        device=args.device,
+    )
+    save_decoded_feature_images(
+        decoded,
+        output_dir=args.output_dir,
+        max_dims=args.max_dims,
+    )
+    print(f"decoded gamma dimensions from: {args.autoencoder_path}")
+    print(f"saved images to: {args.output_dir}")
+
+
+if __name__ == "__main__":
+    main()
