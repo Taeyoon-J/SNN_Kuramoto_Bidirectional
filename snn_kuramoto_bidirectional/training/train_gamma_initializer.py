@@ -23,6 +23,7 @@ def train_gamma_initializer(
     optimizer_cls=torch.optim.Adam,
     save_path=None,
     decoder_save_path=None,
+    verbose=False,
 ):
     """
     Pretrain FeatureMapCNNEncoder with its paired decoder.
@@ -66,7 +67,7 @@ def train_gamma_initializer(
     loss_history = []
 
     autoencoder.train()
-    for _ in range(int(epochs)):
+    for epoch in range(1, int(epochs) + 1):
         epoch_loss = 0.0
         sample_count = 0
         for (batch,) in loader:
@@ -79,7 +80,13 @@ def train_gamma_initializer(
 
             epoch_loss += loss.item() * batch.size(0)
             sample_count += batch.size(0)
-        loss_history.append(epoch_loss / sample_count)
+        mean_loss = epoch_loss / sample_count
+        loss_history.append(mean_loss)
+        if verbose:
+            print(
+                f"Epoch {epoch:04d}/{int(epochs):04d} | loss={mean_loss:.8f}",
+                flush=True,
+            )
 
     if save_path is not None:
         save_gamma_initializer(autoencoder.encoder, save_path)
