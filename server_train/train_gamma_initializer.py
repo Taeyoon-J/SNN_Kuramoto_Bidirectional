@@ -129,7 +129,7 @@ def train(args):
     encoder_path = args.output_dir / "gamma_initializer_encoder.pt"
     decoder_path = args.output_dir / "gamma_initializer_decoder.pt"
 
-    _, _, loss_history = train_gamma_initializer(
+    trained_encoder, _, loss_history = train_gamma_initializer(
         feature_maps=feature_maps,
         num_osci=args.num_osci,
         hidden_channels=tuple(args.hidden_channels),
@@ -147,6 +147,19 @@ def train(args):
     loss_path = args.output_dir / "gamma_initializer_loss.csv"
     config_path = args.output_dir / "gamma_initializer_config.json"
     selected_path = args.output_dir / "selected_images.txt"
+    gamma_sequences_path = args.output_dir / "gamma_sequences.pt"
+
+    trained_encoder.eval()
+    gamma_batches = []
+    flat_feature_maps = feature_maps.reshape(-1, 1, *feature_maps.shape[-2:])
+    with torch.no_grad():
+        for start in range(0, flat_feature_maps.size(0), 256):
+            batch = flat_feature_maps[start : start + 256].to(device)
+            gamma_batches.append(trained_encoder(batch).cpu())
+    gamma_sequences = torch.cat(gamma_batches, dim=0).reshape(
+        feature_maps.size(0), feature_maps.size(1), args.num_osci
+    )
+    torch.save(gamma_sequences, gamma_sequences_path)
     with loss_path.open("w", newline="", encoding="utf-8") as file:
         writer = csv.writer(file)
         writer.writerow(["epoch", "mse_loss"])
@@ -170,6 +183,7 @@ def train(args):
                 "learning_rate": args.learning_rate,
                 "seed": args.seed,
                 "feature_map_shape": list(feature_maps.shape),
+                "gamma_sequence_shape": list(gamma_sequences.shape),
                 "initial_loss": loss_history[0],
                 "final_loss": loss_history[-1],
             },
@@ -182,6 +196,7 @@ def train(args):
     print(f"Decoder: {decoder_path}", flush=True)
     print(f"Loss: {loss_path}", flush=True)
     print(f"Config: {config_path}", flush=True)
+    print(f"Gamma sequences: {gamma_sequences_path}", flush=True)
 
 
 def main():

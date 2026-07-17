@@ -511,30 +511,122 @@ def save_decoded_feature_images(decoded, output_dir, max_dims=None):
     plt.close(fig)
 
 
+def save_feature_map_grid(feature_maps, output_path, title, columns=10):
+    """Save all oscillator feature maps in one signed-color grid PNG."""
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+
+    if not torch.is_tensor(feature_maps):
+        feature_maps = torch.as_tensor(feature_maps)
+    feature_maps = feature_maps.detach().cpu().float()
+    if feature_maps.dim() == 4 and feature_maps.size(1) == 1:
+        feature_maps = feature_maps.squeeze(1)
+    if feature_maps.dim() != 3:
+        raise ValueError("feature_maps must have shape [D, H, W] or [D, 1, H, W].")
+
+    num_dims = feature_maps.size(0)
+    columns = min(int(columns), num_dims)
+    rows = (num_dims + columns - 1) // columns
+    fig, axes = plt.subplots(
+        rows,
+        columns,
+        figsize=(columns * 2.1, rows * 2.1),
+        squeeze=False,
+    )
+    for dim, ax in enumerate(axes.flat):
+        ax.axis("off")
+        if dim >= num_dims:
+            continue
+        values = feature_maps[dim].numpy()
+        limit = max(float(abs(values).max()), 1e-8)
+        ax.imshow(values, cmap="coolwarm", vmin=-limit, vmax=limit)
+        ax.set_title(f"dim {dim}", fontsize=8)
+
+    fig.suptitle(title, fontsize=16)
+    fig.tight_layout(rect=(0, 0, 1, 0.98))
+    output_path = Path(output_path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    fig.savefig(output_path, dpi=180, bbox_inches="tight")
+    plt.close(fig)
+    return output_path
+
+
+def save_all_dimension_visualizations(
+    encoder_checkpoint_path,
+    decoder_checkpoint_path,
+    gamma_samples,
+    input_size,
+    output_dir,
+    sigma_step=2.0,
+    activation_steps=500,
+    activation_lr=0.05,
+    device=None,
+):
+    """Save one 90-dim grid for each of the two visualization methods."""
+    output_dir = Path(output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    activation_maps = maximize_oscillator_images_from_checkpoint(
+        checkpoint_path=encoder_checkpoint_path,
+        input_size=input_size,
+        steps=activation_steps,
+        lr=activation_lr,
+        device=device,
+    )
+    activation_path = save_feature_map_grid(
+        activation_maps,
+        output_dir / "activation_maximization_all_dimensions.png",
+        title="Activation maximization: all gamma dimensions",
+    )
+
+    decoded = decode_oscillator_features_from_checkpoint(
+        decoder_checkpoint_path=decoder_checkpoint_path,
+        input_size=input_size,
+        gamma_samples=gamma_samples,
+        sigma_steps=(float(sigma_step),),
+        device=device,
+    )
+    difference_maps = decoded["difference_from_mean"][:, 0]
+    decoder_path = save_feature_map_grid(
+        difference_maps,
+        output_dir / "decoder_difference_all_dimensions.png",
+        title=f"Decoder difference from mean: +{float(sigma_step):g} sigma",
+    )
+    return activation_path, decoder_path
+
+
 def main():
     import argparse
 
-    parser = argparse.ArgumentParser(description="Decode gamma autoencoder dimensions into feature-map images.")
-    parser.add_argument("--autoencoder-path", required=True)
+    parser = argparse.ArgumentParser(
+        description="Visualize all gamma dimensions in two grid PNG files."
+    )
+    parser.add_argument("--encoder-path", required=True)
+    parser.add_argument("--decoder-path", required=True)
     parser.add_argument("--gamma-seq-path", required=True)
     parser.add_argument("--output-dir", required=True)
-    parser.add_argument("--max-dims", type=int, default=None)
+    parser.add_argument("--input-size", type=int, nargs=2, required=True)
+    parser.add_argument("--sigma-step", type=float, default=2.0)
+    parser.add_argument("--activation-steps", type=int, default=500)
+    parser.add_argument("--activation-lr", type=float, default=0.05)
     parser.add_argument("--device", default="cuda" if torch.cuda.is_available() else "cpu")
     args = parser.parse_args()
 
     gamma_seq = torch.load(args.gamma_seq_path, map_location="cpu").float()
-    decoded = decode_oscillator_features_from_autoencoder_checkpoint(
-        args.autoencoder_path,
+    activation_path, decoder_path = save_all_dimension_visualizations(
+        encoder_checkpoint_path=args.encoder_path,
+        decoder_checkpoint_path=args.decoder_path,
         gamma_samples=gamma_seq,
+        input_size=tuple(args.input_size),
+        output_dir=args.output_dir,
+        sigma_step=args.sigma_step,
+        activation_steps=args.activation_steps,
+        activation_lr=args.activation_lr,
         device=args.device,
     )
-    save_decoded_feature_images(
-        decoded,
-        output_dir=args.output_dir,
-        max_dims=args.max_dims,
-    )
-    print(f"decoded gamma dimensions from: {args.autoencoder_path}")
-    print(f"saved images to: {args.output_dir}")
+    print(f"Activation maximization grid: {activation_path}")
+    print(f"Decoder difference grid: {decoder_path}")
 
 
 if __name__ == "__main__":
