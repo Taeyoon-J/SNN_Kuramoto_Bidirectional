@@ -40,34 +40,41 @@ class ImagePathDataset(Dataset):
 
 class HDF5ImageDataset(Dataset):
     def __init__(self, hdf5_path, indices, image_size, dataset_key="image"):
-        self.hdf5_path = str(hdf5_path)
         self.indices = list(indices)
         self.dataset_key = dataset_key
-        self._file = None
-        self.transform = transforms.Compose(
-            [
-                transforms.Resize((image_size, image_size)),
-                transforms.ToTensor(),
-            ]
-        )
+        if not self.indices:
+            raise ValueError("indices must not be empty.")
+
+        # The CLEVR HDF5 file is chunked across thousands of images. Reading
+        # individual random images repeatedly forces gzip to decompress the
+        # same large chunks every epoch. Load one contiguous selection once
+        # and keep the resulting image tensors in memory instead.
+        expected = list(range(self.indices[0], self.indices[0] + len(self.indices)))
+        if self.indices != expected:
+            raise ValueError("HDF5 indices must form one contiguous range.")
+        with h5py.File(hdf5_path, "r") as file:
+            images = file[dataset_key][self.indices[0] : self.indices[-1] + 1]
+
+        images = torch.from_numpy(images)
+        if images.shape[-1] == 1:
+            images = images.repeat(1, 1, 1, 3)
+        elif images.shape[-1] == 4:
+            images = images[..., :3]
+        images = images.permute(0, 3, 1, 2).contiguous().float().div_(255.0)
+        if tuple(images.shape[-2:]) != (image_size, image_size):
+            images = F.interpolate(
+                images,
+                size=(image_size, image_size),
+                mode="bilinear",
+                align_corners=False,
+            )
+        self.images = images
 
     def __len__(self):
         return len(self.indices)
 
     def __getitem__(self, index):
-        if self._file is None:
-            self._file = h5py.File(self.hdf5_path, "r")
-        image = self._file[self.dataset_key][self.indices[index]]
-        return self.transform(Image.fromarray(image).convert("RGB"))
-
-    def __getstate__(self):
-        state = self.__dict__.copy()
-        state["_file"] = None
-        return state
-
-    def __del__(self):
-        if self._file is not None:
-            self._file.close()
+        return self.images[index]
 
 
 def parse_args():
@@ -138,7 +145,9 @@ def build_dataset(dataset_path, num_images, image_size, seed, hdf5_key):
             raise ValueError(
                 f"HDF5 contains {total_images} images, but {num_images} were requested."
             )
-        indices = random.Random(seed).sample(range(total_images), num_images)
+        max_start = total_images - num_images
+        start = random.Random(seed).randrange(max_start + 1)
+        indices = list(range(start, start + num_images))
         return (
             HDF5ImageDataset(dataset_path, indices, image_size, hdf5_key),
             total_images,
