@@ -126,6 +126,52 @@ def spike_interval(
     return groups
 
 
+def soft_classifier(spikes, num_intervals):
+    """
+    Average each oscillator's spike values over evenly divided time intervals.
+
+    Unlike ``spike_interval``, this function does not threshold the interval
+    means or convert them to Python index groups. The returned continuous
+    tensor can therefore be used as soft object-membership vectors for a
+    differentiable decoder.
+
+    Args:
+        spikes:
+            Tensor shaped [B, num_oscillators, T].
+        num_intervals:
+            Number of temporal intervals and therefore the number of returned
+            soft membership vectors. For example, T=5 and num_intervals=5
+            produces five intervals containing one time step each.
+
+    Returns:
+        Tensor shaped [B, num_intervals, num_oscillators].
+    """
+    if spikes.dim() != 3:
+        raise ValueError(
+            "spikes must have shape [B, num_oscillators, T]. "
+            "Use B=1 for one sample."
+        )
+
+    num_intervals = int(num_intervals)
+    num_steps = spikes.size(2)
+    if num_intervals <= 0:
+        raise ValueError("num_intervals must be positive.")
+    if num_intervals > num_steps:
+        raise ValueError(
+            "num_intervals must not exceed the number of time steps T."
+        )
+
+    interval_spikes = torch.tensor_split(
+        spikes.float(),
+        num_intervals,
+        dim=2,
+    )
+    return torch.stack(
+        [interval.mean(dim=2) for interval in interval_spikes],
+        dim=1,
+    )
+
+
 def _pairwise_cosine_similarity(spikes, eps=1e-8):
     left = spikes.unsqueeze(2)
     right = spikes.unsqueeze(1)

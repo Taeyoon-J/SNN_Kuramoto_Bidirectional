@@ -292,8 +292,9 @@ def maximize_oscillator_images_from_checkpoint(
 ):
     """Load a saved gamma initializer and maximize all oscillator activations.
 
-    ``checkpoint_path`` must contain the encoder ``state_dict`` saved by
-    ``save_gamma_initializer``. Model dimensions are inferred from its weights.
+    ``checkpoint_path`` must contain the direct-linear encoder ``state_dict``
+    saved by ``save_gamma_initializer``. Model dimensions are inferred from
+    its projection weight and checked against ``input_size``.
     Remaining keyword arguments are forwarded to
     :func:`maximize_oscillator_images`.
     """
@@ -306,24 +307,26 @@ def maximize_oscillator_images_from_checkpoint(
     if not isinstance(state_dict, dict):
         raise ValueError("The checkpoint must contain an encoder state_dict.")
 
-    conv_weights = [
-        value
-        for key, value in state_dict.items()
-        if key.startswith("cnn.") and key.endswith(".weight") and value.dim() == 4
-    ]
     projection_weight = state_dict.get("projection.2.weight")
-    if not conv_weights or projection_weight is None:
+    if projection_weight is None or projection_weight.dim() != 2:
         raise ValueError(
-            "The checkpoint does not match a FeatureMapCNNEncoder state_dict."
+            "The checkpoint does not match a direct-linear gamma encoder "
+            "state_dict."
         )
 
-    hidden_channels = tuple(int(weight.shape[0]) for weight in conv_weights)
-    in_channels = int(conv_weights[0].shape[1])
     num_osci = int(projection_weight.shape[0])
+    height, width = _validate_input_size(input_size)
+    expected_features = height * width
+    if int(projection_weight.shape[1]) != expected_features:
+        raise ValueError(
+            f"input_size {(height, width)} requires {expected_features} linear "
+            f"features, but the checkpoint expects {projection_weight.shape[1]}."
+        )
+
     model = FeatureMapCNNEncoder(
         num_osci=num_osci,
-        in_channels=in_channels,
-        hidden_channels=hidden_channels,
+        in_channels=1,
+        input_size=(height, width),
     ).to(device)
     model.load_state_dict(state_dict)
 

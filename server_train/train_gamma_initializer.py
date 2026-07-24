@@ -29,7 +29,13 @@ def parse_args():
     parser.add_argument("--num-kernels", type=int, default=8)
     parser.add_argument("--kernel-size", type=int, default=3)
     parser.add_argument("--num-osci", type=int, default=90)
-    parser.add_argument("--hidden-channels", type=int, nargs="+", default=(16, 32, 64))
+    parser.add_argument(
+        "--hidden-channels",
+        type=int,
+        nargs="+",
+        default=(16, 32, 64),
+        help="Deprecated compatibility option; ignored by the direct-linear encoder.",
+    )
     parser.add_argument("--decoder-hidden-dim", type=int, default=256)
     parser.add_argument("--dropout", type=float, default=0.0)
     parser.add_argument("--epochs", type=int, default=200)
@@ -175,6 +181,7 @@ def train(args):
                 "num_kernels": args.num_kernels,
                 "kernel_size": args.kernel_size,
                 "num_osci": args.num_osci,
+                "gamma_encoder_type": "direct_linear",
                 "hidden_channels": list(args.hidden_channels),
                 "decoder_hidden_dim": args.decoder_hidden_dim,
                 "dropout": args.dropout,

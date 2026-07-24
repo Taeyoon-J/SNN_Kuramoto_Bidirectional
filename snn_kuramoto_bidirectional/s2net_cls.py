@@ -1,256 +1,390 @@
+"""Complete end-to-end S2Net object-centric autoencoder.
+
+Model path:
+    image
+      -> CNNFeatureEncoder
+      -> FeatureMapCNNEncoder
+      -> S2NetCore
+      -> soft_classifier
+      -> SpatialBroadcastDecoder
+      -> reconstructed image and object masks
+"""
+
+from __future__ import annotations
+
+from typing import NamedTuple
+
 import torch
-import torch.nn as nn
-from kuramoto_layer import graphVectorKuramoto
-from dendric_layer import DendricLayer
-from membrane_layer import MembraneLayer
-from sinusoidal_gating import sinusoidal_gating
-from input_layer_generator import CNNFeatureEncoder
-from gamma_initializer import FeatureMapCNNEncoder
-from gamma_ordering import order_gammas
-from spike_classifier import spike_interval, spike_rhythm
+from torch import Tensor, nn
+import torch.nn.functional as F
+
+try:
+    from .decoder import DecoderOutput, SpatialBroadcastDecoder
+    from .dendric_layer import DendricLayer
+    from .gamma_initializer import FeatureMapCNNEncoder
+    from .input_layer_generator import CNNFeatureEncoder
+    from .kuramoto_layer import graphVectorKuramoto
+    from .membrane_layer import MembraneLayer
+    from .sc_generator import DynamicSCGenerator
+    from .sinusoidal_gating import sinusoidal_gating
+    from .spike_classifier import soft_classifier
+except ImportError:
+    # Retain support for running this file directly from the package folder.
+    from decoder import DecoderOutput, SpatialBroadcastDecoder
+    from dendric_layer import DendricLayer
+    from gamma_initializer import FeatureMapCNNEncoder
+    from input_layer_generator import CNNFeatureEncoder
+    from kuramoto_layer import graphVectorKuramoto
+    from membrane_layer import MembraneLayer
+    from sc_generator import DynamicSCGenerator
+    from sinusoidal_gating import sinusoidal_gating
+    from spike_classifier import soft_classifier
+
+
+class CoreOutput(NamedTuple):
+    """Continuous outputs of the SNN core."""
+
+    membrane: Tensor
+    spikes: Tensor
+
+
+class S2NetOutput(NamedTuple):
+    """All outputs required for training and inspecting the complete model."""
+
+    reconstruction: Tensor
+    masks: Tensor
+    object_rgb: Tensor
+    mask_logits: Tensor
+    object_vectors: Tensor
+    spikes: Tensor
+    membrane: Tensor
+    gamma: Tensor
+    feature_maps: Tensor
+    sc: Tensor
+    batch_sc: Tensor
+    running_sc: Tensor
+
 
 class GammaGenerator(nn.Module):
-    """Generate gamma sequences from input images."""
+    """Generate one independent gamma vector from every feature map."""
 
-    def __init__(self, hparams, device="cuda"):
+    def __init__(self, hparams) -> None:
         super().__init__()
-        self.T = int(hparams.num_feature_maps)
-        self.in_dim = int(hparams.num_regions)
-        self.device = device
+        self.num_feature_maps = int(hparams.num_feature_maps)
+        self.num_oscillators = int(hparams.num_regions)
 
         self.input_layer = CNNFeatureEncoder(
-            num_kernels=self.T,
+            num_kernels=self.num_feature_maps,
             kernel_size=hparams.kernel_size,
             in_channels=hparams.in_channels,
             bias=True,
         )
         self.gamma_initializer = FeatureMapCNNEncoder(
-            num_osci=self.in_dim,
+            num_osci=self.num_oscillators,
             in_channels=1,
             dropout=hparams.gamma_dropout,
         )
 
-    def forward(self, x):
-        x = x.to(self.device)
-        feature_maps = self._image_to_feature_maps(x)
-        B, T, height, width = feature_maps.shape
-        return self.gamma_initializer(
-            feature_maps.reshape(B * T, 1, height, width)
-        ).view(B, T, self.in_dim)
+    def forward(self, images: Tensor) -> tuple[Tensor, Tensor]:
+        """Return ``gamma [B,T,N]`` and feature maps ``[B,T,H',W']``."""
 
-    def _image_to_feature_maps(self, x):
-        if x.dim() != 4:
-            raise ValueError("x must have shape [B, 3, H, W]. Use B=1 for one image.")
-        if x.size(1) != 3:
-            raise ValueError(f"Expected RGB input with 3 channels, but got {x.size(1)}.")
+        self._validate_images(images)
+        feature_maps = self.input_layer(images)
+        batch_size, num_maps, height, width = feature_maps.shape
 
-        return self.input_layer(x)
+        independent_maps = feature_maps.reshape(
+            batch_size * num_maps,
+            1,
+            height,
+            width,
+        )
+        gamma = self.gamma_initializer(independent_maps).view(
+            batch_size,
+            num_maps,
+            self.num_oscillators,
+        )
+        return gamma, feature_maps
+
+    @staticmethod
+    def _validate_images(images: Tensor) -> None:
+        if images.ndim != 4:
+            raise ValueError("images must have shape [B, 3, H, W].")
+        if images.shape[1] != 3:
+            raise ValueError(
+                f"Expected RGB images with 3 channels, got {images.shape[1]}."
+            )
+        if not images.is_floating_point():
+            raise TypeError("images must be floating-point tensors.")
 
 
 class S2NetCore(nn.Module):
-    """Classifier core driven by externally generated gamma sequences."""
+    """Convert gamma sequences into differentiable membrane and spike traces."""
 
-    def __init__(self, hparams, device="cuda"):
+    def __init__(self, hparams, device=None) -> None:
         super().__init__()
-        self.T = int(hparams.num_feature_maps)
-        self.in_dim = int(hparams.num_regions)
-        self.osc_dim = 4
+        self.num_steps = int(hparams.num_feature_maps)
+        self.num_oscillators = int(hparams.num_regions)
+        self.oscillator_vector_dim = 4
         self.phase_delay_steps = 2
-        self.device = device
-        self.spike_classify_method = hparams.spike_classify_method
-        self.spike_rhythm_threshold = hparams.spike_rhythm_threshold
-        self.spike_rhythm_min_group_size = hparams.spike_rhythm_min_group_size
-        self.spike_rhythm_return_all_groups = hparams.spike_rhythm_return_all_groups
-        self.spike_interval_size = hparams.spike_interval_size
-        self.spike_interval_threshold = hparams.spike_interval_threshold
-        self.spike_interval_min_group_size = hparams.spike_interval_min_group_size
-        self.spike_interval_include_partial = hparams.spike_interval_include_partial
+        self.requested_device = None if device is None else torch.device(device)
 
-        if hparams.sc is None:
-            raise ValueError(
-                "hparams.sc must be generated before constructing S2NetCore."
-            )
-        sc = torch.as_tensor(hparams.sc, dtype=torch.float32)
-        expected_shape = (self.in_dim, self.in_dim)
-        if tuple(sc.shape) != expected_shape:
-            raise ValueError(
-                f"hparams.sc must have shape {expected_shape}, but got {tuple(sc.shape)}."
-            )
-        self.register_buffer("sc", sc.clone().detach())
-
-        self.kuramoto = graphVectorKuramoto(
-            N=self.in_dim, D=self.osc_dim, K=hparams.k, dt=hparams.dt, alpha_scale=1.0, device=device
+        module_device = (
+            str(self.requested_device)
+            if self.requested_device is not None
+            else "cpu"
         )
-
+        self.kuramoto = graphVectorKuramoto(
+            N=self.num_oscillators,
+            D=self.oscillator_vector_dim,
+            K=hparams.k,
+            dt=hparams.dt,
+            alpha_scale=1.0,
+            device=module_device,
+        )
         self.dendric_layer = DendricLayer(
-            input_dim=self.in_dim,
-            output_dim=self.in_dim,
-            tau_ninitializer='uniform',
+            input_dim=self.num_oscillators,
+            output_dim=self.num_oscillators,
+            tau_ninitializer="uniform",
             low_n=hparams.low_n,
             high_n=hparams.high_n,
             branch=hparams.branch,
-            device=device,
+            device=module_device,
             bias=True,
-            input_vector_dim=self.osc_dim,
+            input_vector_dim=self.oscillator_vector_dim,
         )
         self.membrane_layer = MembraneLayer(
-            output_dim=self.in_dim,
-            tau_minitializer='uniform',
+            output_dim=self.num_oscillators,
+            tau_minitializer="uniform",
             low_m=0,
             high_m=4,
             vth=0.5,
             dt=1,
-            device=device
+            device=module_device,
         )
-    def forward(self, gamma_seq):
-        gamma_seq = gamma_seq.to(self.device)
-        if gamma_seq.dim() != 3:
-            raise ValueError("gamma_seq must have shape [B, T, num_regions]. Use B=1 for one sample.")
-        B, T, _ = gamma_seq.shape
-        sc = self.sc.to(gamma_seq.device).unsqueeze(0).expand(B, -1, -1)
 
-        theta = torch.zeros(B, self.in_dim, self.osc_dim, device=self.device)
-        theta_hist = []
-        for t in range(T):
-            gamma_t = gamma_seq[:, t, :]
-            theta = self.kuramoto(theta, gamma_t, A=sc)
-            theta_hist.append(theta)
+    def forward(self, gamma: Tensor, sc: Tensor) -> CoreOutput:
+        """Process ``gamma [B,T,N]`` and return traces ``[B,N,T]``."""
 
-        feats_list, mask_hidden_list = sinusoidal_gating(
-            theta_hist,
-            T,
+        self._validate_gamma(gamma)
+        self._validate_sc(sc)
+        batch_size, num_steps, _ = gamma.shape
+        device = gamma.device
+
+        # State-creating legacy layers use their ``device`` attributes.
+        self.dendric_layer.device = device
+        self.membrane_layer.device = device
+
+        sc = sc.to(device=device, dtype=gamma.dtype)
+        if sc.ndim == 2:
+            sc = sc.unsqueeze(0).expand(batch_size, -1, -1)
+        theta = gamma.new_zeros(
+            batch_size,
+            self.num_oscillators,
+            self.oscillator_vector_dim,
+        )
+
+        theta_history = []
+        for step in range(num_steps):
+            theta = self.kuramoto(theta, gamma[:, step], A=sc)
+            theta_history.append(theta)
+
+        gated_features, hidden_masks = sinusoidal_gating(
+            theta_history,
+            num_steps,
             self.phase_delay_steps,
         )
+        all_features = torch.cat(gated_features, dim=1)
+        all_hidden_masks = torch.stack(hidden_masks, dim=1)
 
-        all_feats = torch.cat(feats_list, dim=1)
-        all_mask_hidden = torch.stack(mask_hidden_list, dim=1)
-
-        batch_size, seq_num, _, _ = all_feats.shape
         self.dendric_layer.set_neuron_state(batch_size)
         self.membrane_layer.set_neuron_state(batch_size)
 
-        outputs = []
-        spikes_hist = []
-
-        for i in range(seq_num):
-            gamma_wave_t = all_feats[:, i, :, :]
-            g_wave_t = all_mask_hidden[:, i, :]
-
-            h_wave_t = self.dendric_layer(
-                gamma_wave_t,
-                self.membrane_layer.spike
+        membrane_history = []
+        spike_history = []
+        for step in range(all_features.shape[1]):
+            dendritic = self.dendric_layer(
+                all_features[:, step],
+                self.membrane_layer.spike,
             )
-            mem_t, spike_t = self.membrane_layer(h_wave_t, g_wave_t)
-            spikes_hist.append(spike_t)
-            outputs.append(mem_t)
-
-        core_out = torch.stack(outputs).permute(1, 2, 0)
-        spikes = torch.stack(spikes_hist).permute(1, 2, 0)
-        object_groups = self._detect_object_groups(core_out, spikes)
-
-        return object_groups, spikes
-
-    def _detect_object_groups(self, core_out, spikes):
-        if self.spike_classify_method == "spike_rhythm":
-            return spike_rhythm(
-                spikes,
-                threshold=self.spike_rhythm_threshold,
-                min_group_size=self.spike_rhythm_min_group_size,
-                return_all_groups=self.spike_rhythm_return_all_groups,
+            membrane, spike = self.membrane_layer(
+                dendritic,
+                all_hidden_masks[:, step],
             )
-        if self.spike_classify_method == "spike_interval":
-            return spike_interval(
-                core_out,
-                interval_size=self.spike_interval_size,
-                threshold=self.spike_interval_threshold,
-                min_group_size=self.spike_interval_min_group_size,
-                include_partial=self.spike_interval_include_partial,
+            membrane_history.append(membrane)
+            spike_history.append(spike)
+
+        return CoreOutput(
+            membrane=torch.stack(membrane_history, dim=2),
+            spikes=torch.stack(spike_history, dim=2),
+        )
+
+    def _validate_gamma(self, gamma: Tensor) -> None:
+        if gamma.ndim != 3:
+            raise ValueError(
+                "gamma must have shape [B, num_steps, num_oscillators]."
             )
-        raise ValueError(f"Unsupported spike_classify_method: {self.spike_classify_method}")
+        if gamma.shape[1] != self.num_steps:
+            raise ValueError(
+                f"Expected {self.num_steps} gamma steps, got {gamma.shape[1]}."
+            )
+        if gamma.shape[2] != self.num_oscillators:
+            raise ValueError(
+                f"Expected {self.num_oscillators} oscillators, "
+                f"got {gamma.shape[2]}."
+            )
+
+    def _validate_sc(self, sc: Tensor) -> None:
+        expected_matrix = (self.num_oscillators, self.num_oscillators)
+        if sc.ndim == 2 and tuple(sc.shape) == expected_matrix:
+            return
+        if (
+            sc.ndim == 3
+            and tuple(sc.shape[1:]) == expected_matrix
+        ):
+            return
+        raise ValueError(
+            "sc must have shape [N,N] or [B,N,N], where N is the "
+            f"number of oscillators ({self.num_oscillators})."
+        )
 
 
 class S2NetClassifier(nn.Module):
-    """End-to-end wrapper: input image -> gamma sequence -> ordered classifier core."""
+    """End-to-end object-centric image autoencoder.
 
-    def __init__(self, hparams, device="cuda"):
+    ``num_objects`` controls how many temporal intervals are interpreted as
+    object vectors. It must not exceed ``hparams.num_feature_maps``, because
+    that value currently also determines the S2Net temporal sequence length.
+    """
+
+    def __init__(
+        self,
+        hparams,
+        device=None,
+        num_objects=None,
+        image_size=(128, 128),
+        decoder_broadcast_size=(8, 8),
+        decoder_hidden_channels=(64, 64, 64, 64, 64),
+        rgb_activation="sigmoid",
+        sc_momentum=0.99,
+        sc_eps=1e-8,
+    ) -> None:
         super().__init__()
         hparams.validate()
+
         self.hparams = hparams
-        self.device = device
-        self.gamma_order_lambda = hparams.gamma_order_lambda
-        self.gamma_order_mu = hparams.gamma_order_mu
-        self.gamma_order_method = hparams.gamma_order_method
-        self.gamma_order_exact_max_steps = hparams.gamma_order_exact_max_steps
-        self.gamma_order_local_search_passes = hparams.gamma_order_local_search_passes
-        self.gamma_generator = GammaGenerator(hparams, device=device)
+        self.num_steps = int(hparams.num_feature_maps)
+        self.num_oscillators = int(hparams.num_regions)
+        self.num_objects = int(
+            self.num_steps if num_objects is None else num_objects
+        )
+
+        if self.num_objects <= 0:
+            raise ValueError("num_objects must be positive.")
+        if self.num_objects > self.num_steps:
+            raise ValueError(
+                "num_objects cannot exceed hparams.num_feature_maps because "
+                "soft_classifier cannot create more intervals than spike "
+                "time steps."
+            )
+
+        self.gamma_generator = GammaGenerator(hparams)
+        self.sc_generator = DynamicSCGenerator(
+            num_oscillators=self.num_oscillators,
+            momentum=sc_momentum,
+            eps=sc_eps,
+        )
         self.core = S2NetCore(hparams, device=device)
+        self.decoder = SpatialBroadcastDecoder(
+            object_dim=self.num_oscillators,
+            image_size=image_size,
+            broadcast_size=decoder_broadcast_size,
+            hidden_channels=decoder_hidden_channels,
+            rgb_activation=rgb_activation,
+        )
+
+        if device is not None:
+            self.to(torch.device(device))
 
     @classmethod
-    def from_hyperparameters(cls, hparams, device="cuda"):
-        """Build S2NetClassifier from S2NetHyperparameters."""
-        return cls(hparams, device=device)
+    def from_hyperparameters(cls, hparams, device=None, **kwargs):
+        """Build the complete model from ``S2NetHyperparameters``."""
 
-    def forward(self, x):
-        gamma_seq = self.gamma_generator(x)
-        ordered_gamma_seq, _, _ = self.order_gamma_sequence(gamma_seq)
-        return self.core(ordered_gamma_seq)
+        return cls(hparams, device=device, **kwargs)
 
-    def order_gamma_sequence(self, gamma_seq):
-        """Order generated gamma sequences before feeding S2NetCore."""
-        return order_gammas(
-            gamma_seq,
-            lambda_smooth=self.gamma_order_lambda,
-            mu_similarity=self.gamma_order_mu,
-            method=self.gamma_order_method,
-            exact_max_steps=self.gamma_order_exact_max_steps,
-            local_search_passes=self.gamma_order_local_search_passes,
+    def forward(self, images: Tensor) -> S2NetOutput:
+        gamma, feature_maps = self.gamma_generator(images)
+        sc_output = self.sc_generator(gamma)
+        core_output = self.core(gamma, sc=sc_output.sc)
+        object_vectors = soft_classifier(
+            core_output.spikes,
+            num_intervals=self.num_objects,
+        )
+        decoder_output: DecoderOutput = self.decoder(object_vectors)
+
+        return S2NetOutput(
+            reconstruction=decoder_output.reconstruction,
+            masks=decoder_output.masks,
+            object_rgb=decoder_output.object_rgb,
+            mask_logits=decoder_output.mask_logits,
+            object_vectors=object_vectors,
+            spikes=core_output.spikes,
+            membrane=core_output.membrane,
+            gamma=gamma,
+            feature_maps=feature_maps,
+            sc=sc_output.sc,
+            batch_sc=sc_output.batch_sc,
+            running_sc=sc_output.running_sc,
+        )
+
+    def reconstruction_loss(
+        self,
+        images: Tensor,
+        output: S2NetOutput | None = None,
+        reduction: str = "mean",
+    ) -> Tensor:
+        """Compute pixel MSE between input images and reconstruction."""
+
+        if output is None:
+            output = self(images)
+        if tuple(images.shape) != tuple(output.reconstruction.shape):
+            raise ValueError(
+                "images and reconstruction must have the same shape, "
+                f"got {tuple(images.shape)} and "
+                f"{tuple(output.reconstruction.shape)}."
+            )
+        return F.mse_loss(
+            output.reconstruction,
+            images,
+            reduction=reduction,
         )
 
     def load_input_layer(self, checkpoint_path, map_location=None):
-        """Load pretrained GammaGenerator.input_layer parameters."""
-        state_dict = torch.load(
-            checkpoint_path,
-            map_location=self._checkpoint_device(map_location),
-        )
+        state_dict = torch.load(checkpoint_path, map_location=map_location)
         self.gamma_generator.input_layer.load_state_dict(state_dict)
         return self
 
     def load_gamma_initializer(self, checkpoint_path, map_location=None):
-        """Load pretrained GammaGenerator.gamma_initializer parameters."""
-        state_dict = torch.load(
-            checkpoint_path,
-            map_location=self._checkpoint_device(map_location),
-        )
+        state_dict = torch.load(checkpoint_path, map_location=map_location)
         self.gamma_generator.gamma_initializer.load_state_dict(state_dict)
         return self
 
     def load_core(self, checkpoint_path, map_location=None):
-        """Load pretrained S2NetCore parameters."""
-        state_dict = torch.load(
-            checkpoint_path,
-            map_location=self._checkpoint_device(map_location),
-        )
+        state_dict = torch.load(checkpoint_path, map_location=map_location)
         self.core.load_state_dict(state_dict)
         return self
 
-    def load_checkpoints(
-        self,
-        input_layer_path=None,
-        gamma_initializer_path=None,
-        core_path=None,
-        map_location=None,
-        eval_mode=True,
-    ):
-        """Load any available pretrained component checkpoints."""
-        if input_layer_path is not None:
-            self.load_input_layer(input_layer_path, map_location=map_location)
-        if gamma_initializer_path is not None:
-            self.load_gamma_initializer(gamma_initializer_path, map_location=map_location)
-        if core_path is not None:
-            self.load_core(core_path, map_location=map_location)
-        if eval_mode:
-            self.eval()
+    def load_decoder(self, checkpoint_path, map_location=None):
+        state_dict = torch.load(checkpoint_path, map_location=map_location)
+        self.decoder.load_state_dict(state_dict)
         return self
 
-    def _checkpoint_device(self, map_location):
-        return map_location if map_location is not None else torch.device(self.device)
+    def load_model(self, checkpoint_path, map_location=None):
+        """Load one checkpoint containing the complete end-to-end model."""
+
+        state_dict = torch.load(checkpoint_path, map_location=map_location)
+        self.load_state_dict(state_dict)
+        return self
+
+
+# The architecture is now an autoencoder, but retain the old public class name.
+S2NetAutoEncoder = S2NetClassifier
