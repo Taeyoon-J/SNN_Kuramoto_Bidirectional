@@ -297,6 +297,7 @@ class S2NetClassifier(nn.Module):
             history_length=self.num_steps,
             embedding_dim=hparams.classifier_embedding_dim,
             num_iterations=hparams.classifier_num_iterations,
+            temperature=hparams.classifier_temperature,
         )
         self.decoder = SpatialBroadcastDecoder(
             object_dim=self.num_oscillators,

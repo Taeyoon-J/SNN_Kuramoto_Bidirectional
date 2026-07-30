@@ -56,6 +56,15 @@ class S2NetHyperparameters:
     # Differentiable membrane-history clustering
     classifier_embedding_dim: int = 16
     classifier_num_iterations: int = 3
+    classifier_temperature: float = 0.2
+
+    # End-to-end autoencoder loss
+    normal_reconstruction_loss_weight: float = 1.0
+    weighted_reconstruction_loss_weight: float = 0.5
+    mask_diversity_loss_weight: float = 0.02
+    mask_entropy_loss_weight: float = 0.01
+    membrane_consistency_loss_weight: float = 0.05
+    edge_scale: float = 3.0
 
     def validate(self):
         if self.num_feature_maps <= 0:
@@ -82,6 +91,8 @@ class S2NetHyperparameters:
             raise ValueError("classifier_embedding_dim must be positive.")
         if self.classifier_num_iterations <= 0:
             raise ValueError("classifier_num_iterations must be positive.")
+        if self.classifier_temperature <= 0.0:
+            raise ValueError("classifier_temperature must be positive.")
         return self
 
 

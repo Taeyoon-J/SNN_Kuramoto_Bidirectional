@@ -6,6 +6,8 @@ import torch
 from torch import Tensor
 import torch.nn.functional as F
 
+from .hyperparameter import S2NetHyperparameters
+
 
 def normal_rec_loss(
     reconstruction: Tensor,
@@ -179,3 +181,60 @@ def membrane_membership_consistency_loss(
     difference = history_similarity - membership_similarity
 
     return difference[:, off_diagonal].square().mean()
+
+
+def s2net_total_loss(
+    reconstruction: Tensor,
+    target_image: Tensor,
+    masks: Tensor,
+    membrane_history: Tensor,
+    object_vectors: Tensor,
+    hparams: S2NetHyperparameters,
+) -> Tensor:
+    """Return one weighted scalar sum of the five S2Net losses.
+
+    Args:
+        reconstruction:
+            Reconstructed RGB images shaped ``[B, 3, H, W]``.
+        target_image:
+            Original RGB target images shaped ``[B, 3, H, W]``.
+        masks:
+            Softmax-normalized decoder masks shaped ``[B, K, 1, H, W]``.
+        membrane_history:
+            Oscillator membrane histories shaped ``[B, N, T]``.
+        object_vectors:
+            Soft oscillator memberships shaped ``[B, K, N]``.
+        hparams:
+            S2Net loss weights and edge scale configuration.
+
+    Returns:
+        Scalar weighted sum of the five component losses.
+    """
+
+    normal_loss = normal_rec_loss(
+        reconstruction,
+        target_image,
+    )
+    weighted_loss = weighted_reconstruction_loss(
+        reconstruction,
+        target_image,
+        edge_scale=hparams.edge_scale,
+    )
+    diversity_loss = mask_diversity_loss(
+        masks,
+    )
+    entropy_loss = mask_entropy_loss(
+        masks,
+    )
+    consistency_loss = membrane_membership_consistency_loss(
+        membrane_history,
+        object_vectors,
+    )
+
+    return (
+        hparams.normal_reconstruction_loss_weight * normal_loss
+        + hparams.weighted_reconstruction_loss_weight * weighted_loss
+        + hparams.mask_diversity_loss_weight * diversity_loss
+        + hparams.mask_entropy_loss_weight * entropy_loss
+        + hparams.membrane_consistency_loss_weight * consistency_loss
+    )

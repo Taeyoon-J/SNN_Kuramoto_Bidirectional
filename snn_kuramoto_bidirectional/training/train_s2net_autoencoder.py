@@ -23,8 +23,8 @@ from torch import Tensor
 import torch.nn.functional as F
 from torch.utils.data import DataLoader, Dataset, Subset
 
-from ..hyperparameter import S2NetHyperparameters
-from ..loss_function import normal_rec_loss
+from ..hyperparameter import DEFAULT_HYPERPARAMETERS, S2NetHyperparameters
+from ..loss_function import s2net_total_loss
 from ..s2net_cls import S2NetClassifier, S2NetOutput
 
 
@@ -106,23 +106,59 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--validation-fraction", type=float, default=0.1)
 
     # Model dimensions
-    parser.add_argument("--num-feature-maps", type=int, default=8)
-    parser.add_argument("--num-oscillators", type=int, default=90)
+    parser.add_argument(
+        "--num-feature-maps",
+        type=int,
+        default=DEFAULT_HYPERPARAMETERS.num_feature_maps,
+    )
+    parser.add_argument(
+        "--num-oscillators",
+        type=int,
+        default=DEFAULT_HYPERPARAMETERS.num_regions,
+    )
     parser.add_argument(
         "--num-objects",
         type=int,
         default=None,
         help="Number of soft object vectors. Defaults to num-feature-maps.",
     )
-    parser.add_argument("--kernel-size", type=int, default=3)
-    parser.add_argument("--gamma-dropout", type=float, default=0.0)
+    parser.add_argument(
+        "--kernel-size",
+        type=int,
+        default=DEFAULT_HYPERPARAMETERS.kernel_size,
+    )
+    parser.add_argument(
+        "--gamma-dropout",
+        type=float,
+        default=DEFAULT_HYPERPARAMETERS.gamma_dropout,
+    )
 
     # Kuramoto and SNN
-    parser.add_argument("--kuramoto-k", type=float, default=1.0)
-    parser.add_argument("--kuramoto-dt", type=float, default=0.1)
-    parser.add_argument("--dendritic-low", type=float, default=0.0)
-    parser.add_argument("--dendritic-high", type=float, default=4.0)
-    parser.add_argument("--dendritic-branches", type=int, default=4)
+    parser.add_argument(
+        "--kuramoto-k",
+        type=float,
+        default=DEFAULT_HYPERPARAMETERS.k,
+    )
+    parser.add_argument(
+        "--kuramoto-dt",
+        type=float,
+        default=DEFAULT_HYPERPARAMETERS.dt,
+    )
+    parser.add_argument(
+        "--dendritic-low",
+        type=float,
+        default=DEFAULT_HYPERPARAMETERS.low_n,
+    )
+    parser.add_argument(
+        "--dendritic-high",
+        type=float,
+        default=DEFAULT_HYPERPARAMETERS.high_n,
+    )
+    parser.add_argument(
+        "--dendritic-branches",
+        type=int,
+        default=DEFAULT_HYPERPARAMETERS.branch,
+    )
 
     # Dynamic SC
     parser.add_argument("--sc-momentum", type=float, default=0.99)
@@ -196,10 +232,11 @@ def validate_args(args: argparse.Namespace) -> None:
     if args.num_objects is not None:
         if args.num_objects <= 0:
             raise ValueError("--num-objects must be positive.")
-        if args.num_objects > args.num_feature_maps:
+        if args.num_objects > args.num_oscillators:
             raise ValueError(
-                "--num-objects cannot exceed --num-feature-maps with the "
-                "current soft-classifier design."
+                "--num-objects cannot exceed --num-oscillators because "
+                "classifier centers are initialized from oscillator "
+                "embeddings."
             )
     if args.image_size < args.kernel_size:
         raise ValueError("--image-size must be at least --kernel-size.")
@@ -351,7 +388,14 @@ def train_one_epoch(
     for images in loader:
         images = images.to(device, non_blocking=True)
         output = model(images)
-        loss = normal_rec_loss(output.reconstruction, images)
+        loss = s2net_total_loss(
+            reconstruction=output.reconstruction,
+            target_image=images,
+            masks=output.masks,
+            membrane_history=output.membrane,
+            object_vectors=output.object_vectors,
+            hparams=model.hparams,
+        )
 
         optimizer.zero_grad(set_to_none=True)
         loss.backward()
@@ -378,7 +422,14 @@ def evaluate(
     for images in loader:
         images = images.to(device, non_blocking=True)
         output = model(images)
-        loss = normal_rec_loss(output.reconstruction, images)
+        loss = s2net_total_loss(
+            reconstruction=output.reconstruction,
+            target_image=images,
+            masks=output.masks,
+            membrane_history=output.membrane,
+            object_vectors=output.object_vectors,
+            hparams=model.hparams,
+        )
         loss_sum += loss.item() * images.shape[0]
         sample_count += images.shape[0]
 
