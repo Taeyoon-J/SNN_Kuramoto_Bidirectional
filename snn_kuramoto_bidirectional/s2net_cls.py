@@ -5,7 +5,7 @@ Model path:
       -> CNNFeatureEncoder
       -> FeatureMapCNNEncoder
       -> S2NetCore
-      -> soft_classifier
+      -> SoftMembraneClassifier
       -> SpatialBroadcastDecoder
       -> reconstructed image and object masks
 """
@@ -16,7 +16,6 @@ from typing import NamedTuple
 
 import torch
 from torch import Tensor, nn
-import torch.nn.functional as F
 
 try:
     from .decoder import DecoderOutput, SpatialBroadcastDecoder
@@ -27,7 +26,7 @@ try:
     from .membrane_layer import MembraneLayer
     from .sc_generator import DynamicSCGenerator
     from .sinusoidal_gating import sinusoidal_gating
-    from .spike_classifier import soft_classifier
+    from .spike_classifier import SoftMembraneClassifier
 except ImportError:
     # Retain support for running this file directly from the package folder.
     from decoder import DecoderOutput, SpatialBroadcastDecoder
@@ -38,7 +37,7 @@ except ImportError:
     from membrane_layer import MembraneLayer
     from sc_generator import DynamicSCGenerator
     from sinusoidal_gating import sinusoidal_gating
-    from spike_classifier import soft_classifier
+    from spike_classifier import SoftMembraneClassifier
 
 
 class CoreOutput(NamedTuple):
@@ -51,6 +50,7 @@ class CoreOutput(NamedTuple):
 class S2NetOutput(NamedTuple):
     """All outputs required for training and inspecting the complete model."""
 
+    core_output: CoreOutput
     reconstruction: Tensor
     masks: Tensor
     object_rgb: Tensor
@@ -251,9 +251,8 @@ class S2NetCore(nn.Module):
 class S2NetClassifier(nn.Module):
     """End-to-end object-centric image autoencoder.
 
-    ``num_objects`` controls how many temporal intervals are interpreted as
-    object vectors. It must not exceed ``hparams.num_feature_maps``, because
-    that value currently also determines the S2Net temporal sequence length.
+    ``num_objects`` controls how many soft oscillator groups are produced by
+    differentiable clustering of complete membrane histories.
     """
 
     def __init__(
@@ -280,11 +279,11 @@ class S2NetClassifier(nn.Module):
 
         if self.num_objects <= 0:
             raise ValueError("num_objects must be positive.")
-        if self.num_objects > self.num_steps:
+        if self.num_objects > self.num_oscillators:
             raise ValueError(
-                "num_objects cannot exceed hparams.num_feature_maps because "
-                "soft_classifier cannot create more intervals than spike "
-                "time steps."
+                "num_objects cannot exceed hparams.num_regions because "
+                "clustering centers are initialized from oscillator "
+                "embeddings."
             )
 
         self.gamma_generator = GammaGenerator(hparams)
@@ -294,6 +293,11 @@ class S2NetClassifier(nn.Module):
             eps=sc_eps,
         )
         self.core = S2NetCore(hparams, device=device)
+        self.classifier = SoftMembraneClassifier(
+            history_length=self.num_steps,
+            embedding_dim=hparams.classifier_embedding_dim,
+            num_iterations=hparams.classifier_num_iterations,
+        )
         self.decoder = SpatialBroadcastDecoder(
             object_dim=self.num_oscillators,
             image_size=image_size,
@@ -315,13 +319,14 @@ class S2NetClassifier(nn.Module):
         gamma, feature_maps = self.gamma_generator(images)
         sc_output = self.sc_generator(gamma)
         core_output = self.core(gamma, sc=sc_output.sc)
-        object_vectors = soft_classifier(
-            core_output.spikes,
-            num_intervals=self.num_objects,
+        object_vectors = self.classifier(
+            core_output.membrane,
+            num_centers=self.num_objects,
         )
         decoder_output: DecoderOutput = self.decoder(object_vectors)
 
         return S2NetOutput(
+            core_output=core_output,
             reconstruction=decoder_output.reconstruction,
             masks=decoder_output.masks,
             object_rgb=decoder_output.object_rgb,
@@ -334,28 +339,6 @@ class S2NetClassifier(nn.Module):
             sc=sc_output.sc,
             batch_sc=sc_output.batch_sc,
             running_sc=sc_output.running_sc,
-        )
-
-    def reconstruction_loss(
-        self,
-        images: Tensor,
-        output: S2NetOutput | None = None,
-        reduction: str = "mean",
-    ) -> Tensor:
-        """Compute pixel MSE between input images and reconstruction."""
-
-        if output is None:
-            output = self(images)
-        if tuple(images.shape) != tuple(output.reconstruction.shape):
-            raise ValueError(
-                "images and reconstruction must have the same shape, "
-                f"got {tuple(images.shape)} and "
-                f"{tuple(output.reconstruction.shape)}."
-            )
-        return F.mse_loss(
-            output.reconstruction,
-            images,
-            reduction=reduction,
         )
 
     def load_input_layer(self, checkpoint_path, map_location=None):

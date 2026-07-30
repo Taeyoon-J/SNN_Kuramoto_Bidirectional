@@ -1,232 +1,181 @@
+"""Loss functions for the end-to-end S2Net autoencoder."""
+
+from __future__ import annotations
+
 import torch
-import torch.nn as nn
+from torch import Tensor
 import torch.nn.functional as F
 
 
-def spike_rate_loss(spikes, target_rate=0.1, reduction="mean"):
-    """
-    Keep unsupervised spiking activity near a target firing rate.
+def normal_rec_loss(
+    reconstruction: Tensor,
+    target: Tensor,
+    reduction: str = "mean",
+) -> Tensor:
+    """Calculate pixel-wise RGB mean squared reconstruction error.
 
     Args:
-        spikes:
-            Tensor shaped [B, N, T].
+        reconstruction:
+            Reconstructed RGB images shaped ``[B, 3, H, W]``.
+        target:
+            Original RGB images with the same shape as ``reconstruction``.
+        reduction:
+            Reduction passed directly to :func:`torch.nn.functional.mse_loss`.
+
+    Returns:
+        Pixel-wise RGB mean squared reconstruction error.
     """
-    if spikes.dim() != 3:
-        raise ValueError("spikes must have shape [B, N, T].")
 
-    rate = spikes.float().mean(dim=(1, 2))
-    loss = (rate - float(target_rate)).pow(2)
-    return _reduce(loss, reduction)
-
-
-def spike_temporal_smoothness_loss(spikes, reduction="mean"):
-    """Discourage abrupt frame-to-frame changes in spike histories."""
-    if spikes.dim() != 3:
-        raise ValueError("spikes must have shape [B, N, T].")
-    if spikes.size(2) < 2:
-        return spikes.new_zeros(())
-
-    loss = (spikes[:, :, 1:] - spikes[:, :, :-1]).pow(2).mean(dim=(1, 2))
-    return _reduce(loss, reduction)
+    return F.mse_loss(
+        reconstruction,
+        target,
+        reduction=reduction,
+    )
 
 
-def spike_diversity_loss(spikes, reduction="mean", eps=1e-8):
-    """
-    Decorrelation loss across oscillators.
+def mask_diversity_loss(
+    masks: Tensor,
+    eps: float = 1e-8,
+) -> Tensor:
+    """Calculate mean pairwise cosine similarity between distinct masks."""
 
-    This keeps every oscillator from learning the same spike train.
-    """
-    if spikes.dim() != 3:
-        raise ValueError("spikes must have shape [B, N, T].")
+    flattened_masks = masks.flatten(start_dim=2)
+    normalized_masks = F.normalize(
+        flattened_masks,
+        p=2,
+        dim=2,
+        eps=eps,
+    )
+    pairwise_similarity = (
+        normalized_masks @ normalized_masks.transpose(1, 2)
+    )
 
-    similarity = _pairwise_cosine(spikes.float(), eps=eps)
-    off_diag = _off_diagonal(similarity)
-    loss = off_diag.pow(2).mean(dim=1)
-    return _reduce(loss, reduction)
+    num_masks = masks.shape[1]
+    off_diagonal = ~torch.eye(
+        num_masks,
+        dtype=torch.bool,
+        device=masks.device,
+    )
+    return pairwise_similarity[:, off_diagonal].mean()
 
 
-def structural_consistency_loss(spikes, sc, reduction="mean", eps=1e-8):
-    """
-    Match spike-rhythm similarity to structural connectivity.
+def generate_edge_map(
+    target: Tensor,
+    eps: float = 1e-8,
+) -> Tensor:
+    """Generate a per-image normalized edge-strength map from RGB targets."""
+
+    horizontal_diff = (
+        target[:, :, :, 1:] - target[:, :, :, :-1]
+    ).abs().mean(dim=1, keepdim=True)
+    vertical_diff = (
+        target[:, :, 1:, :] - target[:, :, :-1, :]
+    ).abs().mean(dim=1, keepdim=True)
+
+    horizontal_diff = F.pad(horizontal_diff, (0, 1, 0, 0))
+    vertical_diff = F.pad(vertical_diff, (0, 0, 0, 1))
+    edge_map = horizontal_diff + vertical_diff
+
+    edge_max = edge_map.amax(dim=(2, 3), keepdim=True)
+    return edge_map / edge_max.clamp_min(eps)
+
+
+def weighted_reconstruction_loss(
+    reconstruction: Tensor,
+    target: Tensor,
+    edge_scale: float = 3.0,
+) -> Tensor:
+    """Calculate edge-weighted pixel-wise RGB reconstruction error.
+
+    An edge map is generated only from the target image and converted into
+    spatial weights ranging approximately from ``1`` to ``1 + edge_scale``.
+    The same weight is broadcast across all RGB channels. The weighted squared
+    error is normalized by the total spatial weight and channel count to
+    retain mean-style reduction.
 
     Args:
-        spikes:
-            Tensor shaped [B, N, T].
-        sc:
-            Tensor shaped [N, N] or [B, N, N].
+        reconstruction:
+            Reconstructed RGB images shaped ``[B, 3, H, W]``.
+        target:
+            Original RGB target images with the same shape.
+        edge_scale:
+            Additional weight assigned in proportion to target edge strength.
+
+    Returns:
+        Normalized edge-weighted RGB reconstruction error.
     """
-    if spikes.dim() != 3:
-        raise ValueError("spikes must have shape [B, N, T].")
 
-    spike_similarity = _pairwise_cosine(spikes.float(), eps=eps)
-    sc = _prepare_sc(sc, batch_size=spikes.size(0), device=spikes.device, dtype=spikes.dtype)
-    sc = _minmax_normalize(sc, eps=eps)
+    edge_map = generate_edge_map(target)
+    weights = 1.0 + float(edge_scale) * edge_map
+    squared_error = (reconstruction - target).pow(2)
+    weighted_error = squared_error * weights
 
-    loss = (_off_diagonal(spike_similarity) - _off_diagonal(sc)).pow(2).mean(dim=1)
-    return _reduce(loss, reduction)
+    return weighted_error.sum() / (
+        weights.sum() * reconstruction.shape[1]
+    )
 
 
-def object_overlap_loss(object_groups, num_oscillators=None, reduction="mean", device=None):
-    """
-    Penalize one oscillator being assigned to multiple detected objects.
+def mask_entropy_loss(
+    masks: Tensor,
+    eps: float = 1e-8,
+) -> Tensor:
+    """Calculate mean pixel-wise entropy across softmax-normalized masks."""
+
+    log_masks = torch.log(masks.clamp_min(eps))
+    entropy = -(masks * log_masks).sum(dim=1)
+    return entropy.mean()
+
+
+def membrane_membership_consistency_loss(
+    membrane_history: Tensor,
+    object_vectors: Tensor,
+    eps: float = 1e-8,
+) -> Tensor:
+    """Match pairwise membrane-history and soft-membership similarities.
 
     Args:
-        object_groups:
-            List with length B. Each item is a list of tuples/lists containing
-            oscillator indices for detected objects.
-        num_oscillators:
-            Optional total number of oscillators. If omitted, it is inferred
-            from the largest oscillator index in object_groups.
+        membrane_history:
+            Oscillator membrane histories shaped ``[B, N, T]``.
+        object_vectors:
+            Soft object-membership vectors shaped ``[B, K, N]``.
+        eps:
+            Numerical stability value.
 
-    Note:
-        This term is computed from discrete object groups, so it is useful as
-        an objective value/selection pressure but does not provide gradients
-        through the grouping operation itself.
-    """
-    if object_groups is None:
-        raise ValueError("object_groups must not be None.")
-    if not isinstance(object_groups, (list, tuple)):
-        raise ValueError("object_groups must be a list with length B.")
-
-    device = torch.device("cpu") if device is None else torch.device(device)
-    if num_oscillators is None:
-        max_index = -1
-        for batch_groups in object_groups:
-            for group in batch_groups:
-                if len(group) > 0:
-                    max_index = max(max_index, max(int(index) for index in group))
-        num_oscillators = max_index + 1
-
-    if int(num_oscillators) <= 0:
-        losses = torch.zeros(len(object_groups), device=device)
-        return _reduce(losses, reduction)
-
-    losses = []
-    for batch_groups in object_groups:
-        counts = torch.zeros(int(num_oscillators), device=device)
-        for group in batch_groups:
-            if len(group) == 0:
-                continue
-            indices = torch.as_tensor(group, device=device, dtype=torch.long)
-            counts.index_add_(0, indices, torch.ones_like(indices, dtype=counts.dtype))
-        duplicate_counts = F.relu(counts - 1.0)
-        losses.append(duplicate_counts.pow(2).mean())
-
-    return _reduce(torch.stack(losses), reduction)
-
-
-class UnsupervisedS2NetLoss(nn.Module):
-    """
-    Weighted unsupervised objective for the spike classifier side of S2Net.
-
-    Expected inputs to forward:
-        spikes:    [B, N, T]
-        object_groups:
-            list length B. Each item contains object oscillator-index groups.
-        sc:        [N, N] or [B, N, N]
-
-    Any input can be omitted; its corresponding weighted term is skipped.
+    Returns:
+        Scalar consistency loss.
     """
 
-    def __init__(
-        self,
-        spike_rate_weight=1.0,
-        spike_smooth_weight=0.1,
-        spike_diversity_weight=0.1,
-        structural_weight=0.1,
-        object_overlap_weight=1.0,
-        spike_target_rate=0.1,
-    ):
-        super().__init__()
-        self.spike_rate_weight = float(spike_rate_weight)
-        self.spike_smooth_weight = float(spike_smooth_weight)
-        self.spike_diversity_weight = float(spike_diversity_weight)
-        self.structural_weight = float(structural_weight)
-        self.object_overlap_weight = float(object_overlap_weight)
-        self.spike_target_rate = float(spike_target_rate)
+    centered_history = (
+        membrane_history
+        - membrane_history.mean(dim=2, keepdim=True)
+    )
 
-    def forward(self, spikes=None, object_groups=None, sc=None):
-        device, dtype = _infer_device_dtype(spikes, sc)
-        total = torch.zeros((), device=device, dtype=dtype)
-        parts = {}
+    normalized_history = F.normalize(
+        centered_history,
+        p=2,
+        dim=2,
+        eps=eps,
+    )
 
-        if spikes is not None:
-            parts["spike_rate"] = spike_rate_loss(
-                spikes,
-                target_rate=self.spike_target_rate,
-            )
-            parts["spike_smooth"] = spike_temporal_smoothness_loss(spikes)
-            parts["spike_diversity"] = spike_diversity_loss(spikes)
+    history_similarity = (
+        normalized_history
+        @ normalized_history.transpose(1, 2)
+    )
+    history_similarity = (history_similarity + 1.0) / 2.0
 
-        if spikes is not None and sc is not None:
-            parts["structural"] = structural_consistency_loss(spikes, sc)
+    membership_similarity = (
+        object_vectors.transpose(1, 2)
+        @ object_vectors
+    )
 
-        if object_groups is not None:
-            parts["object_overlap"] = object_overlap_loss(
-                object_groups,
-                num_oscillators=spikes.size(1) if spikes is not None else None,
-                device=device,
-            )
+    num_oscillators = membrane_history.shape[1]
 
-        weights = {
-            "spike_rate": self.spike_rate_weight,
-            "spike_smooth": self.spike_smooth_weight,
-            "spike_diversity": self.spike_diversity_weight,
-            "structural": self.structural_weight,
-            "object_overlap": self.object_overlap_weight,
-        }
-        for name, value in parts.items():
-            total = total + weights[name] * value
+    off_diagonal = ~torch.eye(
+        num_oscillators,
+        dtype=torch.bool,
+        device=membrane_history.device,
+    )
 
-        parts["total"] = total
-        return total, parts
+    difference = history_similarity - membership_similarity
 
-
-def _pairwise_cosine(values, eps=1e-8):
-    left = values.unsqueeze(2)
-    right = values.unsqueeze(1)
-    return F.cosine_similarity(left, right, dim=-1, eps=eps)
-
-
-def _off_diagonal(matrix):
-    if matrix.dim() != 3:
-        raise ValueError("matrix must have shape [B, N, N].")
-
-    n = matrix.size(-1)
-    mask = ~torch.eye(n, device=matrix.device, dtype=torch.bool)
-    return matrix[:, mask].view(matrix.size(0), n * (n - 1))
-
-
-def _prepare_sc(sc, batch_size, device, dtype):
-    if sc.dim() == 2:
-        sc = sc.unsqueeze(0).expand(batch_size, -1, -1)
-    elif sc.dim() != 3:
-        raise ValueError("sc must have shape [N, N] or [B, N, N].")
-
-    if sc.size(0) != batch_size:
-        raise ValueError(f"sc batch size {sc.size(0)} does not match spikes batch size {batch_size}.")
-    return sc.to(device=device, dtype=dtype)
-
-
-def _minmax_normalize(values, eps=1e-8):
-    flat = values.flatten(start_dim=1)
-    min_value = flat.min(dim=1, keepdim=True)[0].view(-1, 1, 1)
-    max_value = flat.max(dim=1, keepdim=True)[0].view(-1, 1, 1)
-    return (values - min_value) / (max_value - min_value + eps)
-
-
-def _reduce(loss, reduction):
-    if reduction == "none":
-        return loss
-    if reduction == "mean":
-        return loss.mean()
-    if reduction == "sum":
-        return loss.sum()
-    raise ValueError('reduction must be one of "none", "mean", or "sum".')
-
-
-def _infer_device_dtype(*values):
-    for value in values:
-        if torch.is_tensor(value):
-            return value.device, value.dtype if value.is_floating_point() else torch.float32
-    return torch.device("cpu"), torch.float32
+    return difference[:, off_diagonal].square().mean()

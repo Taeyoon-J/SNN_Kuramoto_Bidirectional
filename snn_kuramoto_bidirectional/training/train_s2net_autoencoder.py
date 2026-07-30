@@ -24,6 +24,7 @@ import torch.nn.functional as F
 from torch.utils.data import DataLoader, Dataset, Subset
 
 from ..hyperparameter import S2NetHyperparameters
+from ..loss_function import normal_rec_loss
 from ..s2net_cls import S2NetClassifier, S2NetOutput
 
 
@@ -350,7 +351,7 @@ def train_one_epoch(
     for images in loader:
         images = images.to(device, non_blocking=True)
         output = model(images)
-        loss = model.reconstruction_loss(images, output)
+        loss = normal_rec_loss(output.reconstruction, images)
 
         optimizer.zero_grad(set_to_none=True)
         loss.backward()
@@ -377,7 +378,7 @@ def evaluate(
     for images in loader:
         images = images.to(device, non_blocking=True)
         output = model(images)
-        loss = model.reconstruction_loss(images, output)
+        loss = normal_rec_loss(output.reconstruction, images)
         loss_sum += loss.item() * images.shape[0]
         sample_count += images.shape[0]
 

@@ -13,7 +13,7 @@ class S2NetHyperparameters:
     """
 
     # Model dimensions
-    num_feature_maps: int = 8
+    num_feature_maps: int = 15
     num_regions: int = 90
     num_classes: int = 2
 
@@ -53,6 +53,10 @@ class S2NetHyperparameters:
     spike_interval_min_group_size: int = 1
     spike_interval_include_partial: bool = True
 
+    # Differentiable membrane-history clustering
+    classifier_embedding_dim: int = 16
+    classifier_num_iterations: int = 3
+
     def validate(self):
         if self.num_feature_maps <= 0:
             raise ValueError("num_feature_maps must be positive.")
@@ -74,6 +78,10 @@ class S2NetHyperparameters:
             raise ValueError("spike_interval_size must be positive.")
         if self.spike_interval_min_group_size <= 0:
             raise ValueError("spike_interval_min_group_size must be positive.")
+        if self.classifier_embedding_dim <= 0:
+            raise ValueError("classifier_embedding_dim must be positive.")
+        if self.classifier_num_iterations <= 0:
+            raise ValueError("classifier_num_iterations must be positive.")
         return self
 
 
