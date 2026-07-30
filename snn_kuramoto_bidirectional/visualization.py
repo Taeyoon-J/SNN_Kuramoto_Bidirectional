@@ -106,6 +106,12 @@ def _build_model(
         low_n=float(config["dendritic_low"]),
         high_n=float(config["dendritic_high"]),
         branch=int(config["dendritic_branches"]),
+        classifier_temperature=float(
+            config.get("classifier_temperature", 0.2)
+        ),
+        classifier_embedding_dim=int(
+            config.get("classifier_embedding_dim", 16)
+        ),
     )
     return S2NetClassifier(
         hparams=hparams,

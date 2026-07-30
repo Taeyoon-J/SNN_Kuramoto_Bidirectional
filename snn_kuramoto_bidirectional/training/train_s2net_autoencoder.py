@@ -132,6 +132,16 @@ def parse_args() -> argparse.Namespace:
         type=float,
         default=DEFAULT_HYPERPARAMETERS.gamma_dropout,
     )
+    parser.add_argument(
+        "--classifier-temperature",
+        type=float,
+        default=DEFAULT_HYPERPARAMETERS.classifier_temperature,
+    )
+    parser.add_argument(
+        "--classifier-embedding-dim",
+        type=int,
+        default=DEFAULT_HYPERPARAMETERS.classifier_embedding_dim,
+    )
 
     # Kuramoto and SNN
     parser.add_argument(
@@ -216,6 +226,7 @@ def validate_args(args: argparse.Namespace) -> None:
         "image_size",
         "num_feature_maps",
         "num_oscillators",
+        "classifier_embedding_dim",
         "kernel_size",
         "dendritic_branches",
         "decoder_broadcast_size",
@@ -238,6 +249,8 @@ def validate_args(args: argparse.Namespace) -> None:
                 "classifier centers are initialized from oscillator "
                 "embeddings."
             )
+    if args.classifier_temperature <= 0.0:
+        raise ValueError("--classifier-temperature must be positive.")
     if args.image_size < args.kernel_size:
         raise ValueError("--image-size must be at least --kernel-size.")
     if not 0.0 < args.validation_fraction < 1.0:
@@ -357,6 +370,8 @@ def build_model(args: argparse.Namespace, device: torch.device) -> S2NetClassifi
         low_n=args.dendritic_low,
         high_n=args.dendritic_high,
         branch=args.dendritic_branches,
+        classifier_temperature=args.classifier_temperature,
+        classifier_embedding_dim=args.classifier_embedding_dim,
     )
     return S2NetClassifier(
         hparams=hparams,
