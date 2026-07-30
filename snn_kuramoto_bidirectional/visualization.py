@@ -194,6 +194,7 @@ def _sample_sheet(
     display_objects: Tensor,
     sample_index: int,
     dataset_index: int,
+    experiment_label: str,
 ) -> Image.Image:
     num_objects = output.masks.shape[1]
     tile_width = original.shape[-1]
@@ -250,7 +251,7 @@ def _sample_sheet(
     )
     ImageDraw.Draw(sheet).text(
         (4, 9),
-        f"Dataset image {dataset_index} | "
+        f"{experiment_label} | Dataset image {dataset_index} | "
         "mask labels show raw min/mean/max; images are display-normalized",
         fill="black",
     )
@@ -292,6 +293,12 @@ def visualize(args: argparse.Namespace) -> None:
     ).to(device)
     output = model(images)
     display_masks, display_objects = _display_outputs(output, args.eps)
+    experiment_label = (
+        f"temperature={config.get('classifier_temperature', 0.2)}, "
+        f"T={config['num_feature_maps']}, "
+        f"oscillators={config['num_oscillators']}, "
+        f"embedding={config.get('classifier_embedding_dim', 16)}"
+    )
 
     args.output_dir.mkdir(parents=True, exist_ok=True)
     sample_sheets = []
@@ -304,6 +311,7 @@ def visualize(args: argparse.Namespace) -> None:
             display_objects=display_objects,
             sample_index=sample_index,
             dataset_index=dataset_index,
+            experiment_label=experiment_label,
         )
         sheet.save(
             args.output_dir / f"sample_{dataset_index:06d}.png"
@@ -327,6 +335,7 @@ def visualize(args: argparse.Namespace) -> None:
     print(f"Checkpoint: {args.checkpoint_path}")
     print(f"Images: {images.shape[0]}")
     print(f"Inference seed: {seed}")
+    print(f"Experiment: {experiment_label}")
     print(f"Visualization: {combined_path}")
 
 
