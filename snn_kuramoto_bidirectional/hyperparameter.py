@@ -25,7 +25,12 @@ class S2NetHyperparameters:
     kernel_size: int = 3
 
     # Feature map -> gamma vector
+    gamma_mode: str = "autoencoder"
     gamma_dropout: float = 0.0
+    gamma_patch_grid_size: object = None
+    gamma_patch_size: object = None
+    gamma_patch_stride: object = None
+    gamma_patch_reduction: str = "mean"
 
     # Gamma ordering loss
     gamma_order_lambda: float = 1.0
@@ -66,6 +71,12 @@ class S2NetHyperparameters:
             raise ValueError("kernel_size must be positive.")
         if self.gamma_order_method not in {"auto", "exact", "local_search"}:
             raise ValueError('gamma_order_method must be "auto", "exact", or "local_search".')
+        if self.gamma_mode not in {"autoencoder", "patch"}:
+            raise ValueError('gamma_mode must be "autoencoder" or "patch".')
+        if self.gamma_patch_reduction not in {"mean", "max"}:
+            raise ValueError('gamma_patch_reduction must be "mean" or "max".')
+        if self.gamma_mode == "patch" and self.gamma_patch_grid_size is None and self.gamma_patch_size is None:
+            raise ValueError("gamma_patch_grid_size or gamma_patch_size is required when gamma_mode is patch.")
         if self.spike_classify_method not in {"spike_rhythm", "spike_interval"}:
             raise ValueError('spike_classify_method must be "spike_rhythm" or "spike_interval".')
         if self.spike_rhythm_min_group_size < 2:

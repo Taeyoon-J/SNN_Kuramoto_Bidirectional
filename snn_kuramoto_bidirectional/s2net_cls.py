@@ -5,7 +5,7 @@ from dendric_layer import DendricLayer
 from membrane_layer import MembraneLayer
 from sinusoidal_gating import sinusoidal_gating
 from input_layer_generator import CNNFeatureEncoder
-from gamma_initializer import FeatureMapCNNEncoder
+from gamma_initializer import FeatureMapCNNEncoder, FeaturePatchGammaInitializer
 from gamma_ordering import order_gammas
 from spike_classifier import spike_interval, spike_rhythm
 
@@ -17,6 +17,7 @@ class GammaGenerator(nn.Module):
         self.T = int(hparams.num_feature_maps)
         self.in_dim = int(hparams.num_regions)
         self.device = device
+        self.gamma_mode = hparams.gamma_mode
 
         self.input_layer = CNNFeatureEncoder(
             num_kernels=self.T,
@@ -24,15 +25,31 @@ class GammaGenerator(nn.Module):
             in_channels=hparams.in_channels,
             bias=True,
         )
-        self.gamma_initializer = FeatureMapCNNEncoder(
-            num_osci=self.in_dim,
-            in_channels=1,
-            dropout=hparams.gamma_dropout,
-        )
+        if self.gamma_mode == "patch":
+            self.gamma_initializer = FeaturePatchGammaInitializer(
+                grid_size=hparams.gamma_patch_grid_size,
+                patch_size=hparams.gamma_patch_size,
+                stride=hparams.gamma_patch_stride,
+                reduction=hparams.gamma_patch_reduction,
+            )
+        else:
+            self.gamma_initializer = FeatureMapCNNEncoder(
+                num_osci=self.in_dim,
+                in_channels=1,
+                dropout=hparams.gamma_dropout,
+            )
 
     def forward(self, x):
         x = x.to(self.device)
         feature_maps = self._image_to_feature_maps(x)
+        if self.gamma_mode == "patch":
+            gamma_seq = self.gamma_initializer(feature_maps)
+            if gamma_seq.size(-1) != self.in_dim:
+                raise ValueError(
+                    f"Patch gamma produced {gamma_seq.size(-1)} oscillators, "
+                    f"but hparams.num_regions is {self.in_dim}."
+                )
+            return gamma_seq
         B, T, height, width = feature_maps.shape
         return self.gamma_initializer(
             feature_maps.reshape(B * T, 1, height, width)
@@ -217,6 +234,8 @@ class S2NetClassifier(nn.Module):
 
     def load_gamma_initializer(self, checkpoint_path, map_location=None):
         """Load pretrained GammaGenerator.gamma_initializer parameters."""
+        if self.hparams.gamma_mode == "patch":
+            return self
         state_dict = torch.load(
             checkpoint_path,
             map_location=self._checkpoint_device(map_location),
