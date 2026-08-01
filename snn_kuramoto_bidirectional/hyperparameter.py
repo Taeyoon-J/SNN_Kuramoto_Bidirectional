@@ -57,6 +57,11 @@ class S2NetHyperparameters:
     spike_interval_threshold: float = 0.5
     spike_interval_min_group_size: int = 1
     spike_interval_include_partial: bool = True
+    spike_spatial_grid_size: object = None
+    spike_spatial_threshold: float = 0.5
+    spike_spatial_min_group_size: int = 2
+    spike_spatial_activity_source: str = "sigmoid_membrane"
+    spike_spatial_time_aggregate: str = "mean"
 
     def validate(self):
         if self.num_feature_maps <= 0:
@@ -77,14 +82,22 @@ class S2NetHyperparameters:
             raise ValueError('gamma_patch_reduction must be "mean" or "max".')
         if self.gamma_mode == "patch" and self.gamma_patch_grid_size is None and self.gamma_patch_size is None:
             raise ValueError("gamma_patch_grid_size or gamma_patch_size is required when gamma_mode is patch.")
-        if self.spike_classify_method not in {"spike_rhythm", "spike_interval"}:
-            raise ValueError('spike_classify_method must be "spike_rhythm" or "spike_interval".')
+        if self.spike_classify_method not in {"spike_rhythm", "spike_interval", "spatial_components"}:
+            raise ValueError('spike_classify_method must be "spike_rhythm", "spike_interval", or "spatial_components".')
         if self.spike_rhythm_min_group_size < 2:
             raise ValueError("spike_rhythm_min_group_size must be at least 2.")
         if self.spike_interval_size <= 0:
             raise ValueError("spike_interval_size must be positive.")
         if self.spike_interval_min_group_size <= 0:
             raise ValueError("spike_interval_min_group_size must be positive.")
+        if self.spike_classify_method == "spatial_components" and self.spike_spatial_grid_size is None:
+            raise ValueError("spike_spatial_grid_size is required when spike_classify_method is spatial_components.")
+        if self.spike_spatial_min_group_size <= 0:
+            raise ValueError("spike_spatial_min_group_size must be positive.")
+        if self.spike_spatial_activity_source not in {"spikes", "membrane", "sigmoid_membrane"}:
+            raise ValueError('spike_spatial_activity_source must be "spikes", "membrane", or "sigmoid_membrane".')
+        if self.spike_spatial_time_aggregate not in {"max", "mean"}:
+            raise ValueError('spike_spatial_time_aggregate must be "max" or "mean".')
         return self
 
 

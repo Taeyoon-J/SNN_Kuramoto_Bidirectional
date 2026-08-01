@@ -66,6 +66,71 @@ def structural_consistency_loss(spikes, sc, reduction="mean", eps=1e-8):
     return _reduce(loss, reduction)
 
 
+def sample_activity_diversity_loss(activity, reduction="mean", eps=1e-8):
+    """
+    Penalize different samples producing the same activity mask.
+
+    Args:
+        activity:
+            Tensor shaped [B, N, T].
+    """
+    if activity.dim() != 3:
+        raise ValueError("activity must have shape [B, N, T].")
+    if activity.size(0) < 2:
+        return activity.new_zeros(())
+
+    flat = activity.float().flatten(start_dim=1)
+    flat = flat - flat.mean(dim=1, keepdim=True)
+    similarity = F.cosine_similarity(
+        flat.unsqueeze(1),
+        flat.unsqueeze(0),
+        dim=-1,
+        eps=eps,
+    )
+    off_diag = similarity[~torch.eye(activity.size(0), device=activity.device, dtype=torch.bool)]
+    return _reduce(off_diag.pow(2), reduction)
+
+
+def spatial_compactness_loss(activity, patch_grid_size, reduction="mean"):
+    """
+    Encourage spatially adjacent patch oscillators to form smooth components.
+
+    This is a differentiable total-variation style term on the temporally
+    averaged patch activity.
+    """
+    if activity.dim() != 3:
+        raise ValueError("activity must have shape [B, N, T].")
+    grid_h, grid_w = _parse_grid_size(patch_grid_size)
+    if activity.size(1) != grid_h * grid_w:
+        raise ValueError(
+            f"activity has {activity.size(1)} oscillators, but grid "
+            f"{grid_h}x{grid_w} has {grid_h * grid_w}."
+        )
+
+    grid = activity.float().mean(dim=2).view(activity.size(0), grid_h, grid_w)
+    vertical = (grid[:, 1:, :] - grid[:, :-1, :]).abs().mean(dim=(1, 2))
+    horizontal = (grid[:, :, 1:] - grid[:, :, :-1]).abs().mean(dim=(1, 2))
+    return _reduce(vertical + horizontal, reduction)
+
+
+def temporal_activity_balance_loss(activity, reduction="mean"):
+    """
+    Penalize global activity monotonically collapsing or saturating over time.
+
+    It compares the mean activity per time step to each sample's average
+    activity over the full sequence.
+    """
+    if activity.dim() != 3:
+        raise ValueError("activity must have shape [B, N, T].")
+    if activity.size(2) < 2:
+        return activity.new_zeros(())
+
+    activity_by_time = activity.float().mean(dim=1)
+    target = activity_by_time.mean(dim=1, keepdim=True)
+    loss = (activity_by_time - target).pow(2).mean(dim=1)
+    return _reduce(loss, reduction)
+
+
 def object_overlap_loss(object_groups, num_oscillators=None, reduction="mean", device=None):
     """
     Penalize one oscillator being assigned to multiple detected objects.
@@ -134,8 +199,12 @@ class UnsupervisedS2NetLoss(nn.Module):
         spike_smooth_weight=0.1,
         spike_diversity_weight=0.1,
         structural_weight=0.1,
-        object_overlap_weight=1.0,
+        object_overlap_weight=0.0,
+        sample_diversity_weight=0.0,
+        spatial_compactness_weight=0.0,
+        temporal_balance_weight=0.0,
         spike_target_rate=0.1,
+        patch_grid_size=None,
     ):
         super().__init__()
         self.spike_rate_weight = float(spike_rate_weight)
@@ -143,7 +212,11 @@ class UnsupervisedS2NetLoss(nn.Module):
         self.spike_diversity_weight = float(spike_diversity_weight)
         self.structural_weight = float(structural_weight)
         self.object_overlap_weight = float(object_overlap_weight)
+        self.sample_diversity_weight = float(sample_diversity_weight)
+        self.spatial_compactness_weight = float(spatial_compactness_weight)
+        self.temporal_balance_weight = float(temporal_balance_weight)
         self.spike_target_rate = float(spike_target_rate)
+        self.patch_grid_size = patch_grid_size
 
     def forward(self, spikes=None, object_groups=None, sc=None):
         device, dtype = _infer_device_dtype(spikes, sc)
@@ -161,6 +234,15 @@ class UnsupervisedS2NetLoss(nn.Module):
         if spikes is not None and sc is not None:
             parts["structural"] = structural_consistency_loss(spikes, sc)
 
+        if spikes is not None:
+            parts["sample_diversity"] = sample_activity_diversity_loss(spikes)
+            parts["temporal_balance"] = temporal_activity_balance_loss(spikes)
+            if self.patch_grid_size is not None:
+                parts["spatial_compactness"] = spatial_compactness_loss(
+                    spikes,
+                    patch_grid_size=self.patch_grid_size,
+                )
+
         if object_groups is not None:
             parts["object_overlap"] = object_overlap_loss(
                 object_groups,
@@ -174,6 +256,9 @@ class UnsupervisedS2NetLoss(nn.Module):
             "spike_diversity": self.spike_diversity_weight,
             "structural": self.structural_weight,
             "object_overlap": self.object_overlap_weight,
+            "sample_diversity": self.sample_diversity_weight,
+            "spatial_compactness": self.spatial_compactness_weight,
+            "temporal_balance": self.temporal_balance_weight,
         }
         for name, value in parts.items():
             total = total + weights[name] * value
@@ -213,6 +298,19 @@ def _minmax_normalize(values, eps=1e-8):
     min_value = flat.min(dim=1, keepdim=True)[0].view(-1, 1, 1)
     max_value = flat.max(dim=1, keepdim=True)[0].view(-1, 1, 1)
     return (values - min_value) / (max_value - min_value + eps)
+
+
+def _parse_grid_size(value):
+    if isinstance(value, int):
+        if value <= 0:
+            raise ValueError("patch_grid_size must be positive.")
+        return int(value), int(value)
+    if isinstance(value, (tuple, list)) and len(value) == 2:
+        height, width = int(value[0]), int(value[1])
+        if height <= 0 or width <= 0:
+            raise ValueError("patch_grid_size values must be positive.")
+        return height, width
+    raise ValueError("patch_grid_size must be an int or a pair of ints.")
 
 
 def _reduce(loss, reduction):

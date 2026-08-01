@@ -7,7 +7,7 @@ from sinusoidal_gating import sinusoidal_gating
 from input_layer_generator import CNNFeatureEncoder
 from gamma_initializer import FeatureMapCNNEncoder, FeaturePatchGammaInitializer
 from gamma_ordering import order_gammas
-from spike_classifier import spike_interval, spike_rhythm
+from spike_classifier import spike_interval, spike_rhythm, spike_spatial_components
 
 class GammaGenerator(nn.Module):
     """Generate gamma sequences from input images."""
@@ -82,6 +82,11 @@ class S2NetCore(nn.Module):
         self.spike_interval_threshold = hparams.spike_interval_threshold
         self.spike_interval_min_group_size = hparams.spike_interval_min_group_size
         self.spike_interval_include_partial = hparams.spike_interval_include_partial
+        self.spike_spatial_grid_size = hparams.spike_spatial_grid_size
+        self.spike_spatial_threshold = hparams.spike_spatial_threshold
+        self.spike_spatial_min_group_size = hparams.spike_spatial_min_group_size
+        self.spike_spatial_activity_source = hparams.spike_spatial_activity_source
+        self.spike_spatial_time_aggregate = hparams.spike_spatial_time_aggregate
 
         if hparams.sc is None:
             raise ValueError(
@@ -119,7 +124,7 @@ class S2NetCore(nn.Module):
             dt=1,
             device=device
         )
-    def forward(self, gamma_seq):
+    def forward(self, gamma_seq, return_core_out=False):
         gamma_seq = gamma_seq.to(self.device)
         if gamma_seq.dim() != 3:
             raise ValueError("gamma_seq must have shape [B, T, num_regions]. Use B=1 for one sample.")
@@ -165,6 +170,8 @@ class S2NetCore(nn.Module):
         spikes = torch.stack(spikes_hist).permute(1, 2, 0)
         object_groups = self._detect_object_groups(core_out, spikes)
 
+        if return_core_out:
+            return object_groups, spikes, core_out
         return object_groups, spikes
 
     def _detect_object_groups(self, core_out, spikes):
@@ -182,6 +189,21 @@ class S2NetCore(nn.Module):
                 threshold=self.spike_interval_threshold,
                 min_group_size=self.spike_interval_min_group_size,
                 include_partial=self.spike_interval_include_partial,
+            )
+        if self.spike_classify_method == "spatial_components":
+            if self.spike_spatial_activity_source == "spikes":
+                activity = spikes
+            elif self.spike_spatial_activity_source == "membrane":
+                activity = core_out
+            else:
+                activity = torch.sigmoid(core_out)
+            return spike_spatial_components(
+                activity,
+                patch_grid_size=self.spike_spatial_grid_size,
+                threshold=self.spike_spatial_threshold,
+                min_group_size=self.spike_spatial_min_group_size,
+                activity_source=self.spike_spatial_activity_source,
+                time_aggregate=self.spike_spatial_time_aggregate,
             )
         raise ValueError(f"Unsupported spike_classify_method: {self.spike_classify_method}")
 

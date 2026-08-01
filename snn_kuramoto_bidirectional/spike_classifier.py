@@ -126,6 +126,75 @@ def spike_interval(
     return groups
 
 
+def spike_spatial_components(
+    activity,
+    patch_grid_size,
+    threshold=0.5,
+    min_group_size=2,
+    activity_source="spikes",
+    time_aggregate="max",
+):
+    """
+    Detect object-like groups as spatial connected components on a patch grid.
+
+    Args:
+        activity:
+            Tensor shaped [B, num_oscillators, T]. This can be binary spikes,
+            membrane values, or sigmoid-normalized membrane activity.
+        patch_grid_size:
+            Integer grid size or (height, width). The product must equal
+            num_oscillators.
+        threshold:
+            Active threshold after temporal aggregation.
+        min_group_size:
+            Minimum connected-component size.
+        activity_source:
+            Metadata only; accepted for API symmetry with visualization.
+        time_aggregate:
+            "max" marks a patch active if it is active at any time.
+            "mean" marks a patch active by its mean activity over time.
+
+    Returns:
+        List with length B. Each item is a list of tuples containing oscillator
+        indices for spatially contiguous active patch components.
+    """
+    if activity.dim() != 3:
+        raise ValueError("activity must have shape [B, num_oscillators, T].")
+    if min_group_size <= 0:
+        raise ValueError("min_group_size must be positive.")
+    if activity_source not in {"spikes", "membrane", "sigmoid_membrane"}:
+        raise ValueError('activity_source must be "spikes", "membrane", or "sigmoid_membrane".')
+    if time_aggregate not in {"max", "mean"}:
+        raise ValueError('time_aggregate must be "max" or "mean".')
+
+    grid_h, grid_w = _parse_grid_size(patch_grid_size)
+    if activity.size(1) != grid_h * grid_w:
+        raise ValueError(
+            f"activity has {activity.size(1)} oscillators, but patch grid "
+            f"{grid_h}x{grid_w} has {grid_h * grid_w}."
+        )
+
+    activity = activity.float()
+    if time_aggregate == "max":
+        patch_scores = activity.max(dim=2).values
+    else:
+        patch_scores = activity.mean(dim=2)
+    active = patch_scores >= float(threshold)
+
+    groups = []
+    for batch_idx in range(active.size(0)):
+        mask = active[batch_idx].view(grid_h, grid_w)
+        components = _spatial_components(mask)
+        batch_groups = []
+        for component in components:
+            if len(component) < int(min_group_size):
+                continue
+            indices = tuple(sorted(row * grid_w + col for row, col in component))
+            batch_groups.append(indices)
+        groups.append(batch_groups)
+    return groups
+
+
 def _pairwise_cosine_similarity(spikes, eps=1e-8):
     left = spikes.unsqueeze(2)
     right = spikes.unsqueeze(1)
@@ -141,6 +210,49 @@ def _make_intervals(num_steps, interval_size, include_partial):
     if include_partial and full_end < num_steps:
         intervals.append((full_end, num_steps))
     return intervals
+
+
+def _parse_grid_size(value):
+    if isinstance(value, int):
+        if value <= 0:
+            raise ValueError("patch_grid_size must be positive.")
+        return int(value), int(value)
+    if isinstance(value, (tuple, list)) and len(value) == 2:
+        height, width = int(value[0]), int(value[1])
+        if height <= 0 or width <= 0:
+            raise ValueError("patch_grid_size values must be positive.")
+        return height, width
+    raise ValueError("patch_grid_size must be an int or a pair of ints.")
+
+
+def _spatial_components(mask):
+    height, width = mask.shape
+    visited = torch.zeros_like(mask, dtype=torch.bool)
+    components = []
+    for row in range(height):
+        for col in range(width):
+            if visited[row, col] or not bool(mask[row, col]):
+                continue
+            stack = [(row, col)]
+            visited[row, col] = True
+            component = []
+            while stack:
+                cur_row, cur_col = stack.pop()
+                component.append((cur_row, cur_col))
+                for next_row, next_col in (
+                    (cur_row - 1, cur_col),
+                    (cur_row + 1, cur_col),
+                    (cur_row, cur_col - 1),
+                    (cur_row, cur_col + 1),
+                ):
+                    if next_row < 0 or next_row >= height or next_col < 0 or next_col >= width:
+                        continue
+                    if visited[next_row, next_col] or not bool(mask[next_row, next_col]):
+                        continue
+                    visited[next_row, next_col] = True
+                    stack.append((next_row, next_col))
+            components.append(component)
+    return sorted(components, key=len, reverse=True)
 
 
 def _find_similarity_groups(

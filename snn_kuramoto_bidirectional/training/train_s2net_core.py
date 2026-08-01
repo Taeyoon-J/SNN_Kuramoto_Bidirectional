@@ -31,6 +31,8 @@ def train_s2net_core(
     optimizer=None,
     device=None,
     save_path=None,
+    loss_signal="sigmoid_membrane",
+    grad_clip_norm=1.0,
     verbose=False,
 ):
     """
@@ -51,34 +53,54 @@ def train_s2net_core(
     criterion = criterion if criterion is not None else UnsupervisedS2NetLoss()
     optimizer = optimizer if optimizer is not None else torch.optim.Adam(core.parameters(), lr=lr)
     loss_history = []
+    parts_history = []
 
     core.train()
     for epoch in range(1, int(epochs) + 1):
         epoch_loss = 0.0
         sample_count = 0
+        epoch_parts = {}
         for batch in dataloader:
             gamma_seq = _unpack_gamma_batch(batch)
             gamma_seq = gamma_seq.to(device)
 
-            object_groups, spikes = core(gamma_seq)
-            loss, _ = criterion(
+            object_groups, spikes, core_out = core(gamma_seq, return_core_out=True)
+            loss_values = _select_loss_signal(
                 spikes=spikes,
+                core_out=core_out,
+                loss_signal=loss_signal,
+            )
+            loss, parts = criterion(
+                spikes=loss_values,
                 object_groups=object_groups,
                 sc=core.sc,
             )
 
             optimizer.zero_grad()
             loss.backward()
+            if grad_clip_norm is not None and float(grad_clip_norm) > 0:
+                torch.nn.utils.clip_grad_norm_(core.parameters(), float(grad_clip_norm))
             optimizer.step()
 
             batch_size = gamma_seq.size(0)
             epoch_loss += loss.item() * batch_size
             sample_count += batch_size
+            for name, value in parts.items():
+                epoch_parts[name] = epoch_parts.get(name, 0.0) + value.item() * batch_size
         mean_loss = epoch_loss / sample_count
+        mean_parts = {
+            name: value / sample_count
+            for name, value in epoch_parts.items()
+        }
         loss_history.append(mean_loss)
+        parts_history.append(mean_parts)
         if verbose:
+            parts_text = " ".join(
+                f"{name}={value:.6f}"
+                for name, value in mean_parts.items()
+            )
             print(
-                f"Epoch {epoch:04d}/{int(epochs):04d} | loss={mean_loss:.8f}",
+                f"Epoch {epoch:04d}/{int(epochs):04d} | loss={mean_loss:.8f} | {parts_text}",
                 flush=True,
             )
 
@@ -103,9 +125,14 @@ def evaluate_s2net_core(core, dataloader, criterion=None, device=None):
         gamma_seq = _unpack_gamma_batch(batch)
         gamma_seq = gamma_seq.to(device)
 
-        object_groups, spikes = core(gamma_seq)
-        loss, parts = criterion(
+        object_groups, spikes, core_out = core(gamma_seq, return_core_out=True)
+        loss_values = _select_loss_signal(
             spikes=spikes,
+            core_out=core_out,
+            loss_signal="sigmoid_membrane",
+        )
+        loss, parts = criterion(
+            spikes=loss_values,
             object_groups=object_groups,
             sc=core.sc,
         )
@@ -119,6 +146,31 @@ def evaluate_s2net_core(core, dataloader, criterion=None, device=None):
         "loss": total_loss / total_count,
         "parts": last_parts,
     }
+
+
+def _select_loss_signal(spikes, core_out, loss_signal):
+    if loss_signal == "spikes":
+        return spikes
+    if loss_signal == "membrane":
+        return core_out
+    if loss_signal == "sigmoid_membrane":
+        return torch.sigmoid(core_out)
+    raise ValueError('loss_signal must be "spikes", "membrane", or "sigmoid_membrane".')
+
+
+def _parse_pair_arg(value, name):
+    if value is None:
+        return None
+    if len(value) == 1:
+        if value[0] <= 0:
+            raise ValueError(f"{name} must be positive.")
+        return int(value[0])
+    if len(value) == 2:
+        first, second = int(value[0]), int(value[1])
+        if first <= 0 or second <= 0:
+            raise ValueError(f"{name} values must be positive.")
+        return (first, second)
+    raise ValueError(f"{name} must receive one int or two ints.")
 
 
 def _unpack_gamma_batch(batch):
@@ -172,7 +224,7 @@ def main():
     parser.add_argument("--low-n", type=float, default=0.0)
     parser.add_argument("--high-n", type=float, default=4.0)
     parser.add_argument("--branch", type=int, default=4)
-    parser.add_argument("--spike-classify-method", default="spike_interval", choices=["spike_rhythm", "spike_interval"])
+    parser.add_argument("--spike-classify-method", default="spike_interval", choices=["spike_rhythm", "spike_interval", "spatial_components"])
     parser.add_argument("--spike-rhythm-threshold", type=float, default=0.8)
     parser.add_argument("--spike-rhythm-min-group-size", type=int, default=2)
     parser.add_argument("--spike-rhythm-return-all-groups", action="store_true")
@@ -180,12 +232,23 @@ def main():
     parser.add_argument("--spike-interval-threshold", type=float, default=0.5)
     parser.add_argument("--spike-interval-min-group-size", type=int, default=1)
     parser.add_argument("--no-spike-interval-include-partial", action="store_true")
+    parser.add_argument("--spike-spatial-grid-size", type=int, nargs="+", default=None)
+    parser.add_argument("--spike-spatial-threshold", type=float, default=0.5)
+    parser.add_argument("--spike-spatial-min-group-size", type=int, default=2)
+    parser.add_argument("--spike-spatial-activity-source", default="sigmoid_membrane", choices=["spikes", "membrane", "sigmoid_membrane"])
+    parser.add_argument("--spike-spatial-time-aggregate", default="mean", choices=["max", "mean"])
     parser.add_argument("--spike-rate-weight", type=float, default=1.0)
     parser.add_argument("--spike-smooth-weight", type=float, default=0.1)
     parser.add_argument("--spike-diversity-weight", type=float, default=0.1)
     parser.add_argument("--structural-weight", type=float, default=0.1)
-    parser.add_argument("--object-overlap-weight", type=float, default=1.0)
+    parser.add_argument("--object-overlap-weight", type=float, default=0.0)
+    parser.add_argument("--sample-diversity-weight", type=float, default=0.0)
+    parser.add_argument("--spatial-compactness-weight", type=float, default=0.0)
+    parser.add_argument("--temporal-balance-weight", type=float, default=0.0)
+    parser.add_argument("--loss-patch-grid-size", type=int, nargs="+", default=None)
     parser.add_argument("--spike-target-rate", type=float, default=0.1)
+    parser.add_argument("--loss-signal", default="sigmoid_membrane", choices=["spikes", "membrane", "sigmoid_membrane"])
+    parser.add_argument("--grad-clip-norm", type=float, default=1.0)
     parser.add_argument("--verbose", action="store_true")
     args = parser.parse_args()
 
@@ -231,6 +294,11 @@ def main():
         spike_interval_threshold=args.spike_interval_threshold,
         spike_interval_min_group_size=args.spike_interval_min_group_size,
         spike_interval_include_partial=not args.no_spike_interval_include_partial,
+        spike_spatial_grid_size=_parse_pair_arg(args.spike_spatial_grid_size, "spike-spatial-grid-size"),
+        spike_spatial_threshold=args.spike_spatial_threshold,
+        spike_spatial_min_group_size=args.spike_spatial_min_group_size,
+        spike_spatial_activity_source=args.spike_spatial_activity_source,
+        spike_spatial_time_aggregate=args.spike_spatial_time_aggregate,
     )
     hparams.validate()
 
@@ -246,7 +314,15 @@ def main():
         spike_diversity_weight=args.spike_diversity_weight,
         structural_weight=args.structural_weight,
         object_overlap_weight=args.object_overlap_weight,
+        sample_diversity_weight=args.sample_diversity_weight,
+        spatial_compactness_weight=args.spatial_compactness_weight,
+        temporal_balance_weight=args.temporal_balance_weight,
         spike_target_rate=args.spike_target_rate,
+        patch_grid_size=(
+            _parse_pair_arg(args.loss_patch_grid_size, "loss-patch-grid-size")
+            if args.loss_patch_grid_size is not None
+            else _parse_pair_arg(args.spike_spatial_grid_size, "spike-spatial-grid-size")
+        ),
     )
 
     _, losses = train_s2net_core(
@@ -257,6 +333,8 @@ def main():
         criterion=criterion,
         device=args.device,
         save_path=args.save_path,
+        loss_signal=args.loss_signal,
+        grad_clip_norm=args.grad_clip_norm,
         verbose=args.verbose,
     )
     print(f"trained S2NetCore: {args.save_path}")

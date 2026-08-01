@@ -64,8 +64,8 @@ class MembraneLayer(nn.Module):
         self.spike = None
 
     def set_neuron_state(self, batch_size):
-        self.mem = torch.rand(batch_size, self.output_dim).to(self.device)
-        self.spike = torch.rand(batch_size, self.output_dim).to(self.device)
+        self.mem = torch.zeros(batch_size, self.output_dim).to(self.device)
+        self.spike = torch.zeros(batch_size, self.output_dim).to(self.device)
         self.v_th = torch.ones(batch_size, self.output_dim).to(self.device) * self.vth
 
     def forward(self, h_wave_t, g_wave_t):
