@@ -1,11 +1,13 @@
 import torch
 import torch.nn as nn
+from dataclasses import dataclass
 from kuramoto_layer import graphVectorKuramoto
 from dendric_layer import DendricLayer
 from membrane_layer import MembraneLayer
 from sinusoidal_gating import sinusoidal_gating
 from input_layer_generator import CNNFeatureEncoder
 from gamma_initializer import FeaturePatchGammaInitializer
+from sc_generator import generate_sc
 from spike_classifier import spike_interval, spike_rhythm, spike_spatial_components
 
 class GammaGenerator(nn.Module):
@@ -50,7 +52,7 @@ class GammaGenerator(nn.Module):
 
 
 class S2NetCore(nn.Module):
-    """Classifier core driven by externally generated gamma sequences."""
+    """Classifier core driven by gamma and batch-specific connectivity."""
 
     def __init__(self, hparams, device="cuda"):
         super().__init__()
@@ -72,18 +74,6 @@ class S2NetCore(nn.Module):
         self.spike_spatial_min_group_size = hparams.spike_spatial_min_group_size
         self.spike_spatial_activity_source = hparams.spike_spatial_activity_source
         self.spike_spatial_time_aggregate = hparams.spike_spatial_time_aggregate
-
-        if hparams.sc is None:
-            raise ValueError(
-                "hparams.sc must be generated before constructing S2NetCore."
-            )
-        sc = torch.as_tensor(hparams.sc, dtype=torch.float32)
-        expected_shape = (self.in_dim, self.in_dim)
-        if tuple(sc.shape) != expected_shape:
-            raise ValueError(
-                f"hparams.sc must have shape {expected_shape}, but got {tuple(sc.shape)}."
-            )
-        self.register_buffer("sc", sc.clone().detach())
 
         self.kuramoto = graphVectorKuramoto(
             N=self.in_dim, D=self.osc_dim, K=hparams.k, dt=hparams.dt, alpha_scale=1.0, device=device
@@ -109,12 +99,22 @@ class S2NetCore(nn.Module):
             dt=1,
             device=device
         )
-    def forward(self, gamma_seq, return_core_out=False):
+    def forward(self, gamma_seq, sc, return_core_out=False):
         gamma_seq = gamma_seq.to(self.device)
+        sc = sc.to(device=gamma_seq.device, dtype=gamma_seq.dtype)
         if gamma_seq.dim() != 3:
             raise ValueError("gamma_seq must have shape [B, T, num_regions]. Use B=1 for one sample.")
-        B, T, _ = gamma_seq.shape
-        sc = self.sc.to(gamma_seq.device).unsqueeze(0).expand(B, -1, -1)
+        B, T, N = gamma_seq.shape
+        if T != self.T or N != self.in_dim:
+            raise ValueError(
+                f"gamma_seq must have shape [B, {self.T}, {self.in_dim}], "
+                f"but got {tuple(gamma_seq.shape)}."
+            )
+        if tuple(sc.shape) != (B, self.in_dim, self.in_dim):
+            raise ValueError(
+                f"sc must have shape {(B, self.in_dim, self.in_dim)}, "
+                f"but got {tuple(sc.shape)}."
+            )
 
         theta = torch.zeros(B, self.in_dim, self.osc_dim, device=self.device)
         theta_hist = []
@@ -193,6 +193,17 @@ class S2NetCore(nn.Module):
         raise ValueError(f"Unsupported spike_classify_method: {self.spike_classify_method}")
 
 
+@dataclass
+class S2NetOutput:
+    """Detailed outputs from one image-conditioned S2Net forward pass."""
+
+    object_groups: list
+    spikes: torch.Tensor
+    core_out: torch.Tensor
+    gamma_seq: torch.Tensor
+    sc: torch.Tensor
+
+
 class S2NetClassifier(nn.Module):
     """End-to-end wrapper: image -> spatial patch gamma -> classifier core."""
 
@@ -201,6 +212,7 @@ class S2NetClassifier(nn.Module):
         hparams.validate()
         self.hparams = hparams
         self.device = device
+        self.patch_grid_size = hparams.gamma_patch_grid_size
         self.gamma_generator = GammaGenerator(hparams, device=device)
         self.core = S2NetCore(hparams, device=device)
 
@@ -209,9 +221,30 @@ class S2NetClassifier(nn.Module):
         """Build S2NetClassifier from S2NetHyperparameters."""
         return cls(hparams, device=device)
 
-    def forward(self, x):
+    def forward(self, x, return_details=False):
+        x = x.to(self.device)
         gamma_seq = self.gamma_generator(x)
-        return self.core(gamma_seq)
+        sc = generate_sc(
+            x,
+            self.patch_grid_size,
+            sigma_color=self.hparams.sc_sigma_color,
+            m_min=self.hparams.sc_m_min,
+            self_connectivity=self.hparams.sc_self_connectivity,
+        )
+        object_groups, spikes, core_out = self.core(
+            gamma_seq,
+            sc=sc,
+            return_core_out=True,
+        )
+        if return_details:
+            return S2NetOutput(
+                object_groups=object_groups,
+                spikes=spikes,
+                core_out=core_out,
+                gamma_seq=gamma_seq,
+                sc=sc,
+            )
+        return object_groups, spikes
 
     def load_input_layer(self, checkpoint_path, map_location=None):
         """Load pretrained GammaGenerator.input_layer parameters."""

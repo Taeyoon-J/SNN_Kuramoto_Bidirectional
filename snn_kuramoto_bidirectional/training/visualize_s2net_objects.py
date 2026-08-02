@@ -16,10 +16,12 @@ for path in (PROJECT_ROOT, PACKAGE_ROOT):
 
 try:
     from snn_kuramoto_bidirectional.hyperparameter import S2NetHyperparameters
-    from snn_kuramoto_bidirectional.s2net_cls import S2NetCore
+    from snn_kuramoto_bidirectional.s2net_cls import S2NetClassifier
+    from snn_kuramoto_bidirectional.training.train_gamma_initializer import load_image_folder
 except ModuleNotFoundError:
     from hyperparameter import S2NetHyperparameters
-    from s2net_cls import S2NetCore
+    from s2net_cls import S2NetClassifier
+    from training.train_gamma_initializer import load_image_folder
 
 
 def list_image_paths(image_dir, max_images=None):
@@ -72,23 +74,25 @@ def infer_patch_grid_size(num_regions):
 
 
 @torch.no_grad()
-def predict_groups(core, gamma_seq, sample_indices, batch_size, device):
-    core.eval()
+def predict_groups(model, images, sample_indices, batch_size, device):
+    model.eval()
     results = {}
     for start in range(0, len(sample_indices), int(batch_size)):
         indices = sample_indices[start:start + int(batch_size)]
-        batch = gamma_seq[indices].to(device)
-        object_groups, spikes, core_out = core(batch, return_core_out=True)
-        spikes = spikes.detach().cpu()
-        core_out = core_out.detach().cpu()
+        batch = images[indices].to(device)
+        output = model(batch, return_details=True)
+        spikes = output.spikes.detach().cpu()
+        core_out = output.core_out.detach().cpu()
+        sc = output.sc.detach().cpu()
         for local_idx, sample_idx in enumerate(indices):
             results[int(sample_idx)] = {
                 "object_groups": [
                     [int(index) for index in group]
-                    for group in object_groups[local_idx]
+                    for group in output.object_groups[local_idx]
                 ],
                 "spikes": spikes[local_idx],
                 "core_out": core_out[local_idx],
+                "sc": sc[local_idx],
             }
     return results
 
@@ -520,8 +524,7 @@ def main():
         description="Visualize original CLEVR images with S2NetCore detected oscillator groups."
     )
     parser.add_argument("--image-dir", required=True)
-    parser.add_argument("--gamma-seq-path", required=True)
-    parser.add_argument("--sc-path", required=True)
+    parser.add_argument("--input-encoder-path", required=True)
     parser.add_argument("--checkpoint-path", required=True)
     parser.add_argument("--output-dir", required=True)
     parser.add_argument("--image-size", type=int, default=128)
@@ -538,6 +541,10 @@ def main():
     parser.add_argument("--max-components", type=int, default=8)
     parser.add_argument("--device", default="cuda" if torch.cuda.is_available() else "cpu")
     parser.add_argument("--kernel-size", type=int, default=3)
+    parser.add_argument("--num-feature-maps", type=int, default=8)
+    parser.add_argument("--sc-sigma-color", type=float, default=0.25)
+    parser.add_argument("--sc-m-min", type=float, default=0.5)
+    parser.add_argument("--sc-self-connectivity", type=float, default=0.0)
     parser.add_argument("--k", type=float, default=1.0)
     parser.add_argument("--dt", type=float, default=0.1)
     parser.add_argument("--low-n", type=float, default=0.0)
@@ -559,21 +566,13 @@ def main():
     args = parser.parse_args()
 
     device = torch.device(args.device)
-    gamma_seq = torch.load(args.gamma_seq_path, map_location="cpu").float()
-    if gamma_seq.dim() != 3:
-        raise ValueError(f"gamma_seq must have shape [B, T, N], but got {tuple(gamma_seq.shape)}.")
-    sc = torch.load(args.sc_path, map_location="cpu").float()
     image_paths = list_image_paths(args.image_dir, max_images=args.max_images)
-
-    dataset_size = min(len(image_paths), gamma_seq.size(0))
-    if dataset_size == 0:
-        raise ValueError("No aligned image/gamma samples found.")
-    image_paths = image_paths[:dataset_size]
-    gamma_seq = gamma_seq[:dataset_size]
+    images = load_image_folder(args.image_dir, args.image_size, args.max_images)
+    dataset_size = len(image_paths)
     sample_indices = parse_indices(args.sample_indices, args.num_samples, dataset_size)
     patch_grid_size = parse_pair_arg(args.patch_grid_size, "patch-grid-size")
     if patch_grid_size is None:
-        patch_grid_size = infer_patch_grid_size(gamma_seq.size(2))
+        patch_grid_size = (8, 8)
     spike_spatial_grid_size = parse_pair_arg(args.spike_spatial_grid_size, "spike-spatial-grid-size")
     if spike_spatial_grid_size is None and args.spike_classify_method == "spatial_components":
         spike_spatial_grid_size = patch_grid_size
@@ -584,10 +583,13 @@ def main():
     )
 
     hparams = S2NetHyperparameters(
-        num_feature_maps=gamma_seq.size(1),
-        num_regions=gamma_seq.size(2),
+        num_feature_maps=args.num_feature_maps,
+        num_regions=patch_grid_size[0] * patch_grid_size[1],
         kernel_size=args.kernel_size,
-        sc=sc,
+        gamma_patch_grid_size=patch_grid_size,
+        sc_sigma_color=args.sc_sigma_color,
+        sc_m_min=args.sc_m_min,
+        sc_self_connectivity=args.sc_self_connectivity,
         k=args.k,
         dt=args.dt,
         low_n=args.low_n,
@@ -609,14 +611,14 @@ def main():
     )
     hparams.validate()
 
-    core = S2NetCore(hparams, device=device).to(device)
-    state_dict = torch.load(args.checkpoint_path, map_location=device)
-    core.load_state_dict(state_dict)
+    model = S2NetClassifier(hparams, device=device).to(device)
+    model.load_input_layer(args.input_encoder_path, map_location=device)
+    model.load_core(args.checkpoint_path, map_location=device)
 
     output_dir = Path(args.output_dir)
     predictions = predict_groups(
-        core,
-        gamma_seq,
+        model,
+        images,
         sample_indices=sample_indices,
         batch_size=args.batch_size,
         device=device,

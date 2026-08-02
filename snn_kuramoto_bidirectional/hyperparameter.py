@@ -17,9 +17,6 @@ class S2NetHyperparameters:
     num_regions: int = 64
     num_classes: int = 2
 
-    # Fixed region-to-region connectivity matrix [num_regions, num_regions]
-    sc: object = None
-
     # RGB input -> feature maps
     in_channels: int = 3
     kernel_size: int = 3
@@ -29,6 +26,11 @@ class S2NetHyperparameters:
     gamma_patch_size: object = None
     gamma_patch_stride: object = None
     gamma_patch_reduction: str = "mean"
+
+    # Online image-conditioned structural connectivity
+    sc_sigma_color: float = 0.25
+    sc_m_min: float = 0.5
+    sc_self_connectivity: float = 0.0
 
     # Kuramoto dynamics
     k: float = 1.0
@@ -71,6 +73,15 @@ class S2NetHyperparameters:
             raise ValueError("gamma_patch_grid_size or gamma_patch_size is required.")
         if self.gamma_patch_grid_size is not None and self.gamma_patch_size is not None:
             raise ValueError("Use gamma_patch_grid_size or gamma_patch_size, not both.")
+        if self.gamma_patch_grid_size is None:
+            raise ValueError(
+                "Online SC requires gamma_patch_grid_size so gamma and SC use "
+                "the same patch indexing."
+            )
+        if self.sc_sigma_color <= 0:
+            raise ValueError("sc_sigma_color must be positive.")
+        if not 0.0 <= self.sc_m_min <= 1.0:
+            raise ValueError("sc_m_min must be between 0 and 1.")
         if self.spike_classify_method not in {"spike_rhythm", "spike_interval", "spatial_components"}:
             raise ValueError('spike_classify_method must be "spike_rhythm", "spike_interval", or "spatial_components".')
         if self.spike_rhythm_min_group_size < 2:

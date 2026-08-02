@@ -1,113 +1,134 @@
+"""Generate image-specific structural connectivity for patch oscillators."""
+
+import math
+from typing import TypeAlias
+
 import torch
+import torch.nn.functional as F
+from torch import Tensor
 
-from .gamma_initializer import FeaturePatchGammaInitializer
-from .input_layer_generator import CNNFeatureEncoder
+
+GridSize: TypeAlias = int | tuple[int, int]
 
 
-@torch.no_grad()
-def gamma_sampes(
-    images,
-    hparams,
-    input_layer_path,
-    device=None,
-):
-    """Create one flat collection of gamma vectors from a batch of images.
+def generate_fixed_connectivity(
+    grid_size: GridSize,
+    *,
+    self_connectivity: float = 0.0,
+    device: torch.device | str | None = None,
+    dtype: torch.dtype | None = None,
+) -> Tensor:
+    """Create deterministic distance-decayed patch connectivity ``[N, N]``.
 
-    Args:
-        images:
-            RGB image tensor shaped [num_images, 3, H, W].
-        hparams:
-            Hyperparameters used to construct the two pretrained encoders.
-        input_layer_path:
-            Checkpoint containing the trained CNNFeatureEncoder state_dict.
-        device:
-            Device on which inference is performed. Defaults to CUDA when
-            available, otherwise CPU.
-
-    Returns:
-        Tensor shaped [num_images * num_feature_maps, num_regions]. Image and
-        feature-map boundaries are intentionally flattened into one gamma
-        sample dimension.
+    Patch indices use row-major order. The decay is calibrated so axial
+    neighbors have connectivity 1.0 and diagonal neighbors have connectivity
+    0.7. ``self_connectivity`` makes the diagonal convention explicit.
     """
-    if not torch.is_tensor(images):
-        images = torch.as_tensor(images, dtype=torch.float32)
-    images = images.float()
-    if images.dim() != 4:
-        raise ValueError("images must have shape [num_images, 3, H, W].")
+    grid_h, grid_w = _parse_grid_size(grid_size)
+    dtype = torch.get_default_dtype() if dtype is None else dtype
+    if not dtype.is_floating_point:
+        raise ValueError("dtype must be a floating-point dtype.")
+    if self_connectivity < 0.0:
+        raise ValueError("self_connectivity must be nonnegative.")
 
-    device = torch.device(
-        device if device is not None else ("cuda" if torch.cuda.is_available() else "cpu")
+    rows = torch.arange(grid_h, device=device, dtype=dtype)
+    columns = torch.arange(grid_w, device=device, dtype=dtype)
+    row_grid, column_grid = torch.meshgrid(rows, columns, indexing="ij")
+    coordinates = torch.stack(
+        (row_grid.reshape(-1), column_grid.reshape(-1)),
+        dim=1,
+    )
+    distances = torch.cdist(coordinates, coordinates, p=2)
+
+    decay_rate = -math.log(0.7) / (math.sqrt(2.0) - 1.0)
+    connectivity = torch.exp(
+        -decay_rate * (distances - 1.0).clamp_min(0.0)
     )
 
-    input_layer = CNNFeatureEncoder(
-        num_kernels=hparams.num_feature_maps,
-        kernel_size=hparams.kernel_size,
-        in_channels=hparams.in_channels,
-        bias=True,
-    ).to(device)
-    input_layer.load_state_dict(torch.load(input_layer_path, map_location=device))
-
-    gamma_initializer = FeaturePatchGammaInitializer(
-        grid_size=hparams.gamma_patch_grid_size,
-        patch_size=hparams.gamma_patch_size,
-        stride=hparams.gamma_patch_stride,
-        reduction=hparams.gamma_patch_reduction,
-    ).to(device)
-
-    input_layer.eval()
-    gamma_initializer.eval()
-
-    feature_maps = input_layer(images.to(device))
-    num_images, num_feature_maps, _, _ = feature_maps.shape
-    gamma_seq = gamma_initializer(feature_maps)
-    if gamma_seq.size(-1) != hparams.num_regions:
-        raise ValueError(
-            f"Patch gamma produced {gamma_seq.size(-1)} oscillators, "
-            f"but hparams.num_regions is {hparams.num_regions}."
-        )
-    gamma_samples = gamma_seq.reshape(
-        num_images * num_feature_maps,
-        hparams.num_regions,
+    diagonal = torch.eye(
+        grid_h * grid_w,
+        device=device,
+        dtype=torch.bool,
     )
-    return gamma_samples.cpu()
+    diagonal_values = torch.full_like(connectivity, float(self_connectivity))
+    return torch.where(diagonal, diagonal_values, connectivity)
 
 
-def pearson_cor_sc(gamma_samples, hparams=None, eps=1e-8):
-    """Build an absolute Pearson-correlation SC matrix from gamma samples.
+def generate_image_modulation(
+    image: Tensor,
+    grid_size: GridSize,
+    *,
+    sigma_color: float = 0.25,
+    m_min: float = 0.5,
+) -> Tensor:
+    """Create RGB-similarity modulation ``[B, N, N]`` from original images.
 
-    Args:
-        gamma_samples:
-            Tensor shaped [num_gamma_samples, num_regions]. Each column
-            represents one brain region.
-        eps:
-            Small value used to safely handle a region with no variation.
-        hparams:
-            Optional hyperparameter object. When provided, the generated SC is
-            stored in ``hparams.sc`` for later model construction.
-
-    Returns:
-        Symmetric tensor shaped [num_regions, num_regions], with values in
-        [0, 1]. Positive and negative correlations both become connectivity
-        strength through the absolute value.
+    Images are adaptively averaged onto the patch grid. Pairwise patch-color
+    distances are converted to Gaussian similarities and rescaled to
+    ``[m_min, 1]``.
     """
-    if not torch.is_tensor(gamma_samples):
-        gamma_samples = torch.as_tensor(gamma_samples, dtype=torch.float32)
-    if not gamma_samples.is_floating_point():
-        gamma_samples = gamma_samples.float()
-    if gamma_samples.dim() != 2:
-        raise ValueError(
-            "gamma_samples must have shape [num_gamma_samples, num_regions]."
-        )
-    if gamma_samples.size(0) < 2:
-        raise ValueError("At least two gamma samples are required.")
+    if image.ndim != 4:
+        raise ValueError("image must have shape [B, 3, H, W].")
+    if image.shape[1] != 3:
+        raise ValueError("image must contain exactly three RGB channels.")
+    grid_h, grid_w = _parse_grid_size(grid_size)
+    if sigma_color <= 0.0:
+        raise ValueError("sigma_color must be positive.")
+    if not 0.0 <= m_min <= 1.0:
+        raise ValueError("m_min must be in [0, 1].")
 
-    centered = gamma_samples - gamma_samples.mean(dim=0, keepdim=True)
-    column_norms = torch.linalg.vector_norm(centered, dim=0, keepdim=True)
-    normalized = centered / column_norms.clamp_min(float(eps))
+    working_image = (
+        image
+        if image.is_floating_point()
+        else image.to(dtype=torch.get_default_dtype())
+    )
+    pooled = F.adaptive_avg_pool2d(working_image, (grid_h, grid_w))
+    patch_rgb = pooled.permute(0, 2, 3, 1).reshape(image.shape[0], -1, 3)
 
-    correlation = normalized.transpose(0, 1) @ normalized
-    sc = correlation.abs().clamp(0.0, 1.0)
-    sc = sc.detach().cpu()
-    if hparams is not None:
-        hparams.sc = sc
-    return sc
+    color_difference = patch_rgb.unsqueeze(2) - patch_rgb.unsqueeze(1)
+    squared_distance = color_difference.square().sum(dim=-1)
+    similarity = torch.exp(
+        -squared_distance / (2.0 * float(sigma_color) ** 2)
+    )
+    similarity = 0.5 * (similarity + similarity.transpose(1, 2))
+    return float(m_min) + (1.0 - float(m_min)) * similarity
+
+
+def generate_sc(
+    image: Tensor,
+    grid_size: GridSize,
+    *,
+    sigma_color: float = 0.25,
+    m_min: float = 0.5,
+    self_connectivity: float = 0.0,
+) -> Tensor:
+    """Generate image-specific patch connectivity ``[B, N, N]``.
+
+    The result is the element-wise product of fixed spatial connectivity and
+    original-image RGB modulation.
+    """
+    modulation = generate_image_modulation(
+        image,
+        grid_size,
+        sigma_color=sigma_color,
+        m_min=m_min,
+    )
+    fixed_connectivity = generate_fixed_connectivity(
+        grid_size,
+        self_connectivity=self_connectivity,
+        device=modulation.device,
+        dtype=modulation.dtype,
+    )
+    return fixed_connectivity.unsqueeze(0) * modulation
+
+
+def _parse_grid_size(grid_size: GridSize) -> tuple[int, int]:
+    if isinstance(grid_size, int):
+        grid_h = grid_w = int(grid_size)
+    elif isinstance(grid_size, tuple) and len(grid_size) == 2:
+        grid_h, grid_w = int(grid_size[0]), int(grid_size[1])
+    else:
+        raise ValueError("grid_size must be a positive int or a pair of ints.")
+    if grid_h <= 0 or grid_w <= 0:
+        raise ValueError("grid dimensions must be positive.")
+    return grid_h, grid_w
