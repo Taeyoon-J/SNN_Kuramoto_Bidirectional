@@ -5,8 +5,7 @@ from dendric_layer import DendricLayer
 from membrane_layer import MembraneLayer
 from sinusoidal_gating import sinusoidal_gating
 from input_layer_generator import CNNFeatureEncoder
-from gamma_initializer import FeatureMapCNNEncoder, FeaturePatchGammaInitializer
-from gamma_ordering import order_gammas
+from gamma_initializer import FeaturePatchGammaInitializer
 from spike_classifier import spike_interval, spike_rhythm, spike_spatial_components
 
 class GammaGenerator(nn.Module):
@@ -17,43 +16,29 @@ class GammaGenerator(nn.Module):
         self.T = int(hparams.num_feature_maps)
         self.in_dim = int(hparams.num_regions)
         self.device = device
-        self.gamma_mode = hparams.gamma_mode
-
         self.input_layer = CNNFeatureEncoder(
             num_kernels=self.T,
             kernel_size=hparams.kernel_size,
             in_channels=hparams.in_channels,
             bias=True,
         )
-        if self.gamma_mode == "patch":
-            self.gamma_initializer = FeaturePatchGammaInitializer(
-                grid_size=hparams.gamma_patch_grid_size,
-                patch_size=hparams.gamma_patch_size,
-                stride=hparams.gamma_patch_stride,
-                reduction=hparams.gamma_patch_reduction,
-            )
-        else:
-            self.gamma_initializer = FeatureMapCNNEncoder(
-                num_osci=self.in_dim,
-                in_channels=1,
-                dropout=hparams.gamma_dropout,
-            )
+        self.gamma_initializer = FeaturePatchGammaInitializer(
+            grid_size=hparams.gamma_patch_grid_size,
+            patch_size=hparams.gamma_patch_size,
+            stride=hparams.gamma_patch_stride,
+            reduction=hparams.gamma_patch_reduction,
+        )
 
     def forward(self, x):
         x = x.to(self.device)
         feature_maps = self._image_to_feature_maps(x)
-        if self.gamma_mode == "patch":
-            gamma_seq = self.gamma_initializer(feature_maps)
-            if gamma_seq.size(-1) != self.in_dim:
-                raise ValueError(
-                    f"Patch gamma produced {gamma_seq.size(-1)} oscillators, "
-                    f"but hparams.num_regions is {self.in_dim}."
-                )
-            return gamma_seq
-        B, T, height, width = feature_maps.shape
-        return self.gamma_initializer(
-            feature_maps.reshape(B * T, 1, height, width)
-        ).view(B, T, self.in_dim)
+        gamma_seq = self.gamma_initializer(feature_maps)
+        if gamma_seq.size(-1) != self.in_dim:
+            raise ValueError(
+                f"Patch gamma produced {gamma_seq.size(-1)} oscillators, "
+                f"but hparams.num_regions is {self.in_dim}."
+            )
+        return gamma_seq
 
     def _image_to_feature_maps(self, x):
         if x.dim() != 4:
@@ -209,18 +194,13 @@ class S2NetCore(nn.Module):
 
 
 class S2NetClassifier(nn.Module):
-    """End-to-end wrapper: input image -> gamma sequence -> ordered classifier core."""
+    """End-to-end wrapper: image -> spatial patch gamma -> classifier core."""
 
     def __init__(self, hparams, device="cuda"):
         super().__init__()
         hparams.validate()
         self.hparams = hparams
         self.device = device
-        self.gamma_order_lambda = hparams.gamma_order_lambda
-        self.gamma_order_mu = hparams.gamma_order_mu
-        self.gamma_order_method = hparams.gamma_order_method
-        self.gamma_order_exact_max_steps = hparams.gamma_order_exact_max_steps
-        self.gamma_order_local_search_passes = hparams.gamma_order_local_search_passes
         self.gamma_generator = GammaGenerator(hparams, device=device)
         self.core = S2NetCore(hparams, device=device)
 
@@ -231,19 +211,7 @@ class S2NetClassifier(nn.Module):
 
     def forward(self, x):
         gamma_seq = self.gamma_generator(x)
-        ordered_gamma_seq, _, _ = self.order_gamma_sequence(gamma_seq)
-        return self.core(ordered_gamma_seq)
-
-    def order_gamma_sequence(self, gamma_seq):
-        """Order generated gamma sequences before feeding S2NetCore."""
-        return order_gammas(
-            gamma_seq,
-            lambda_smooth=self.gamma_order_lambda,
-            mu_similarity=self.gamma_order_mu,
-            method=self.gamma_order_method,
-            exact_max_steps=self.gamma_order_exact_max_steps,
-            local_search_passes=self.gamma_order_local_search_passes,
-        )
+        return self.core(gamma_seq)
 
     def load_input_layer(self, checkpoint_path, map_location=None):
         """Load pretrained GammaGenerator.input_layer parameters."""
@@ -252,17 +220,6 @@ class S2NetClassifier(nn.Module):
             map_location=self._checkpoint_device(map_location),
         )
         self.gamma_generator.input_layer.load_state_dict(state_dict)
-        return self
-
-    def load_gamma_initializer(self, checkpoint_path, map_location=None):
-        """Load pretrained GammaGenerator.gamma_initializer parameters."""
-        if self.hparams.gamma_mode == "patch":
-            return self
-        state_dict = torch.load(
-            checkpoint_path,
-            map_location=self._checkpoint_device(map_location),
-        )
-        self.gamma_generator.gamma_initializer.load_state_dict(state_dict)
         return self
 
     def load_core(self, checkpoint_path, map_location=None):
@@ -277,7 +234,6 @@ class S2NetClassifier(nn.Module):
     def load_checkpoints(
         self,
         input_layer_path=None,
-        gamma_initializer_path=None,
         core_path=None,
         map_location=None,
         eval_mode=True,
@@ -285,8 +241,6 @@ class S2NetClassifier(nn.Module):
         """Load any available pretrained component checkpoints."""
         if input_layer_path is not None:
             self.load_input_layer(input_layer_path, map_location=map_location)
-        if gamma_initializer_path is not None:
-            self.load_gamma_initializer(gamma_initializer_path, map_location=map_location)
         if core_path is not None:
             self.load_core(core_path, map_location=map_location)
         if eval_mode:

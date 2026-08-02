@@ -1,6 +1,6 @@
 import torch
 
-from .gamma_initializer import FeatureMapCNNEncoder, FeaturePatchGammaInitializer
+from .gamma_initializer import FeaturePatchGammaInitializer
 from .input_layer_generator import CNNFeatureEncoder
 
 
@@ -9,7 +9,6 @@ def gamma_sampes(
     images,
     hparams,
     input_layer_path,
-    gamma_initializer_path=None,
     device=None,
 ):
     """Create one flat collection of gamma vectors from a batch of images.
@@ -21,9 +20,6 @@ def gamma_sampes(
             Hyperparameters used to construct the two pretrained encoders.
         input_layer_path:
             Checkpoint containing the trained CNNFeatureEncoder state_dict.
-        gamma_initializer_path:
-            Checkpoint containing the trained FeatureMapCNNEncoder state_dict.
-            Not required when ``hparams.gamma_mode == "patch"``.
         device:
             Device on which inference is performed. Defaults to CUDA when
             available, otherwise CPU.
@@ -51,42 +47,28 @@ def gamma_sampes(
     ).to(device)
     input_layer.load_state_dict(torch.load(input_layer_path, map_location=device))
 
-    if hparams.gamma_mode == "patch":
-        gamma_initializer = FeaturePatchGammaInitializer(
-            grid_size=hparams.gamma_patch_grid_size,
-            patch_size=hparams.gamma_patch_size,
-            stride=hparams.gamma_patch_stride,
-            reduction=hparams.gamma_patch_reduction,
-        ).to(device)
-    else:
-        if gamma_initializer_path is None:
-            raise ValueError("gamma_initializer_path is required for autoencoder gamma mode.")
-        gamma_initializer = FeatureMapCNNEncoder(
-            num_osci=hparams.num_regions,
-            in_channels=1,
-            dropout=hparams.gamma_dropout,
-        ).to(device)
-        gamma_initializer.load_state_dict(
-            torch.load(gamma_initializer_path, map_location=device)
-        )
+    gamma_initializer = FeaturePatchGammaInitializer(
+        grid_size=hparams.gamma_patch_grid_size,
+        patch_size=hparams.gamma_patch_size,
+        stride=hparams.gamma_patch_stride,
+        reduction=hparams.gamma_patch_reduction,
+    ).to(device)
 
     input_layer.eval()
     gamma_initializer.eval()
 
     feature_maps = input_layer(images.to(device))
-    num_images, num_feature_maps, height, width = feature_maps.shape
-    if hparams.gamma_mode == "patch":
-        gamma_seq = gamma_initializer(feature_maps)
-        if gamma_seq.size(-1) != hparams.num_regions:
-            raise ValueError(
-                f"Patch gamma produced {gamma_seq.size(-1)} oscillators, "
-                f"but hparams.num_regions is {hparams.num_regions}."
-            )
-        gamma_samples = gamma_seq.reshape(num_images * num_feature_maps, hparams.num_regions)
-    else:
-        gamma_samples = gamma_initializer(
-            feature_maps.reshape(num_images * num_feature_maps, 1, height, width)
+    num_images, num_feature_maps, _, _ = feature_maps.shape
+    gamma_seq = gamma_initializer(feature_maps)
+    if gamma_seq.size(-1) != hparams.num_regions:
+        raise ValueError(
+            f"Patch gamma produced {gamma_seq.size(-1)} oscillators, "
+            f"but hparams.num_regions is {hparams.num_regions}."
         )
+    gamma_samples = gamma_seq.reshape(
+        num_images * num_feature_maps,
+        hparams.num_regions,
+    )
     return gamma_samples.cpu()
 
 

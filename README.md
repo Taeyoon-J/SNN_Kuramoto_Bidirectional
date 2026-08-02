@@ -69,15 +69,7 @@ The trained encoder is reused for later stages.
 
 ### `gamma_initializer.py`
 
-Contains two gamma-generation paths.
-
-The older path:
-
-```text
-feature map -> FeatureMapCNNEncoder -> learned gamma vector
-```
-
-The current patch path:
+Contains the patch-based gamma-generation path:
 
 ```text
 feature map -> FeaturePatchGammaInitializer -> patch gamma vector
@@ -85,7 +77,8 @@ feature map -> FeaturePatchGammaInitializer -> patch gamma vector
 
 `FeaturePatchGammaInitializer` uses either adaptive grid pooling or fixed patch
 pooling. For the current `8 x 8` experiment, each feature map is pooled into 64
-spatial patch values. Those 64 values become oscillator gamma inputs.
+spatial patch values. Those 64 values become oscillator gamma inputs. There is
+no learned gamma autoencoder in this branch.
 
 ### `sc_generator.py`
 
@@ -223,7 +216,6 @@ maps directly into patch oscillator gamma values.
 
 ```bash
 python training/train_gamma_initializer.py \
-  --gamma-mode patch \
   --image-dir /work/USERS/tkim1/clevr/CLEVR_1k/CLEVR_v1.0/images/train \
   --input-encoder-path /work/USERS/tkim1/checkpoints/input_encoder_k8_ks3_img128.pt \
   --save-path /work/USERS/tkim1/checkpoints/patch_gamma_config_k8_grid8_img128.pt \
