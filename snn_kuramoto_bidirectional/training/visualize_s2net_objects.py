@@ -572,7 +572,12 @@ def main():
     sample_indices = parse_indices(args.sample_indices, args.num_samples, dataset_size)
     patch_grid_size = parse_pair_arg(args.patch_grid_size, "patch-grid-size")
     if patch_grid_size is None:
-        patch_grid_size = (8, 8)
+        default_grid_size = S2NetHyperparameters().gamma_patch_grid_size
+        patch_grid_size = (
+            (default_grid_size, default_grid_size)
+            if isinstance(default_grid_size, int)
+            else tuple(default_grid_size)
+        )
     spike_spatial_grid_size = parse_pair_arg(args.spike_spatial_grid_size, "spike-spatial-grid-size")
     if spike_spatial_grid_size is None and args.spike_classify_method == "spatial_components":
         spike_spatial_grid_size = patch_grid_size

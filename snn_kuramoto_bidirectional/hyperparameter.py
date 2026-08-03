@@ -14,7 +14,7 @@ class S2NetHyperparameters:
 
     # Model dimensions
     num_feature_maps: int = 8
-    num_regions: int = 64
+    num_regions: int = 1024
     num_classes: int = 2
 
     # RGB input -> feature maps
@@ -22,7 +22,7 @@ class S2NetHyperparameters:
     kernel_size: int = 3
 
     # Feature map -> spatial patch gamma vector
-    gamma_patch_grid_size: object = 8
+    gamma_patch_grid_size: object = 32
     gamma_patch_size: object = None
     gamma_patch_stride: object = None
     gamma_patch_reduction: str = "mean"
@@ -50,7 +50,7 @@ class S2NetHyperparameters:
     spike_interval_threshold: float = 0.5
     spike_interval_min_group_size: int = 1
     spike_interval_include_partial: bool = True
-    spike_spatial_grid_size: object = 8
+    spike_spatial_grid_size: object = 32
     spike_spatial_threshold: float = 0.45
     spike_spatial_min_group_size: int = 2
     spike_spatial_activity_source: str = "sigmoid_membrane"
