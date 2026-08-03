@@ -55,7 +55,7 @@ def train_s2net_core(
         epoch_parts = {}
         for batch in dataloader:
             images = _unpack_image_batch(batch).to(device)
-            output = model(images, return_details=True)
+            output = model(images, return_details=True, classify=False)
             loss_values = _select_loss_signal(
                 spikes=output.spikes,
                 core_out=output.core_out,
@@ -63,8 +63,10 @@ def train_s2net_core(
             )
             loss, parts = criterion(
                 spikes=loss_values,
-                object_groups=output.object_groups,
+                object_groups=None,
                 sc=output.sc,
+                core_out=output.core_out,
+                images=images,
             )
 
             optimizer.zero_grad()
@@ -116,6 +118,8 @@ def evaluate_s2net_core(model, dataloader, criterion=None, device=None):
             spikes=torch.sigmoid(output.core_out),
             object_groups=output.object_groups,
             sc=output.sc,
+            core_out=output.core_out,
+            images=images,
         )
         total_loss += loss.item() * images.size(0)
         total_count += images.size(0)
@@ -197,12 +201,18 @@ def main():
     parser.add_argument("--sc-sigma-color", type=float, default=defaults.sc_sigma_color)
     parser.add_argument("--sc-m-min", type=float, default=defaults.sc_m_min)
     parser.add_argument("--sc-self-connectivity", type=float, default=defaults.sc_self_connectivity)
-    parser.add_argument("--spike-classify-method", default="spatial_components", choices=["spike_rhythm", "spike_interval", "spatial_components"])
+    parser.add_argument("--spike-classify-method", default=defaults.spike_classify_method, choices=["spike_rhythm", "spike_interval", "spatial_components"])
     parser.add_argument("--spike-spatial-threshold", type=float, default=defaults.spike_spatial_threshold)
-    parser.add_argument("--spike-rate-weight", type=float, default=1.0)
-    parser.add_argument("--spike-smooth-weight", type=float, default=0.1)
-    parser.add_argument("--spike-diversity-weight", type=float, default=0.1)
-    parser.add_argument("--structural-weight", type=float, default=0.1)
+    parser.add_argument("--spike-rate-weight", type=float, default=defaults.spike_rate_weight)
+    parser.add_argument("--spike-smooth-weight", type=float, default=defaults.spike_smooth_weight)
+    parser.add_argument("--spike-diversity-weight", type=float, default=defaults.spike_diversity_weight)
+    parser.add_argument("--structural-weight", type=float, default=defaults.structural_weight)
+    parser.add_argument("--object-overlap-weight", type=float, default=defaults.object_overlap_weight)
+    parser.add_argument("--sample-diversity-weight", type=float, default=defaults.sample_diversity_weight)
+    parser.add_argument("--spatial-compactness-weight", type=float, default=defaults.spatial_compactness_weight)
+    parser.add_argument("--temporal-balance-weight", type=float, default=defaults.temporal_balance_weight)
+    parser.add_argument("--edge-membrane-weight", type=float, default=defaults.edge_membrane_weight)
+    parser.add_argument("--edge-membrane-margin", type=float, default=defaults.edge_membrane_margin)
     parser.add_argument("--loss-signal", default="sigmoid_membrane", choices=["spikes", "membrane", "sigmoid_membrane"])
     parser.add_argument("--grad-clip-norm", type=float, default=1.0)
     parser.add_argument("--verbose", action="store_true")
@@ -242,6 +252,12 @@ def main():
         spike_smooth_weight=args.spike_smooth_weight,
         spike_diversity_weight=args.spike_diversity_weight,
         structural_weight=args.structural_weight,
+        object_overlap_weight=args.object_overlap_weight,
+        sample_diversity_weight=args.sample_diversity_weight,
+        spatial_compactness_weight=args.spatial_compactness_weight,
+        temporal_balance_weight=args.temporal_balance_weight,
+        edge_membrane_weight=args.edge_membrane_weight,
+        edge_membrane_margin=args.edge_membrane_margin,
         patch_grid_size=grid_size,
     )
     _, losses = train_s2net_core(

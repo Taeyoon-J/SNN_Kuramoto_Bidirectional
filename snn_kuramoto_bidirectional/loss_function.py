@@ -2,6 +2,11 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+try:
+    from .hyperparameter import DEFAULT_HYPERPARAMETERS
+except ImportError:
+    from hyperparameter import DEFAULT_HYPERPARAMETERS
+
 
 def spike_rate_loss(spikes, target_rate=0.1, reduction="mean"):
     """
@@ -113,6 +118,109 @@ def spatial_compactness_loss(activity, patch_grid_size, reduction="mean"):
     return _reduce(vertical + horizontal, reduction)
 
 
+def edge_membrane_separation_loss(
+    core_out,
+    images,
+    grid_size,
+    margin=0.3,
+    eps=1e-8,
+):
+    """Separate adjacent membrane patterns across strong RGB boundaries.
+
+    Args:
+        core_out:
+            Membrane histories shaped [B, N, T].
+        images:
+            Original RGB images shaped [B, 3, H, W].
+        grid_size:
+            Row-major oscillator grid whose product equals N. Boundary weights
+            compare RGB pixels directly across each shared patch boundary.
+        margin:
+            Centered cosine similarities above this value are penalized.
+
+    Returns:
+        Scalar RGB-weighted membrane separation loss.
+    """
+    if core_out.dim() != 3:
+        raise ValueError("core_out must have shape [B, N, T].")
+    if images.dim() != 4 or images.size(1) != 3:
+        raise ValueError("images must have shape [B, 3, H, W].")
+    if images.size(0) != core_out.size(0):
+        raise ValueError("images and core_out must have the same batch size.")
+
+    grid_h, grid_w = _parse_grid_size(grid_size)
+    if core_out.size(1) != grid_h * grid_w:
+        raise ValueError(
+            f"core_out has {core_out.size(1)} oscillators, but grid "
+            f"{grid_h}x{grid_w} requires {grid_h * grid_w}."
+        )
+
+    image_h, image_w = images.shape[-2:]
+    if grid_h > image_h or grid_w > image_w:
+        raise ValueError("grid_size cannot exceed the image spatial dimensions.")
+
+    centered = core_out - core_out.mean(dim=2, keepdim=True)
+    normalized = F.normalize(centered, p=2, dim=2, eps=float(eps))
+    membrane_grid = normalized.reshape(
+        core_out.size(0), grid_h, grid_w, core_out.size(2)
+    )
+    horizontal_similarity = (
+        membrane_grid[:, :, :-1, :] * membrane_grid[:, :, 1:, :]
+    ).sum(dim=-1)
+    vertical_similarity = (
+        membrane_grid[:, :-1, :, :] * membrane_grid[:, 1:, :, :]
+    ).sum(dim=-1)
+
+    with torch.no_grad():
+        boundary_images = images.detach().to(
+            device=core_out.device,
+            dtype=core_out.dtype,
+        )
+
+        horizontal_distances = torch.linalg.vector_norm(
+            boundary_images[:, :, :, 1:] - boundary_images[:, :, :, :-1],
+            ord=2,
+            dim=1,
+        )
+        horizontal_columns = torch.div(
+            torch.arange(1, grid_w, device=core_out.device) * image_w,
+            grid_w,
+            rounding_mode="floor",
+        )
+        horizontal_boundaries = horizontal_distances[
+            :, :, horizontal_columns - 1
+        ]
+        horizontal_weights = F.adaptive_avg_pool1d(
+            horizontal_boundaries.permute(0, 2, 1).reshape(-1, 1, image_h),
+            grid_h,
+        ).reshape(core_out.size(0), grid_w - 1, grid_h).transpose(1, 2)
+
+        vertical_distances = torch.linalg.vector_norm(
+            boundary_images[:, :, 1:, :] - boundary_images[:, :, :-1, :],
+            ord=2,
+            dim=1,
+        )
+        vertical_rows = torch.div(
+            torch.arange(1, grid_h, device=core_out.device) * image_h,
+            grid_h,
+            rounding_mode="floor",
+        )
+        vertical_boundaries = vertical_distances[:, vertical_rows - 1, :]
+        vertical_weights = F.adaptive_avg_pool1d(
+            vertical_boundaries.reshape(-1, 1, image_w),
+            grid_w,
+        ).reshape(core_out.size(0), grid_h - 1, grid_w)
+
+    horizontal_penalty = F.relu(horizontal_similarity - float(margin))
+    vertical_penalty = F.relu(vertical_similarity - float(margin))
+    weighted_penalty = (
+        (horizontal_weights * horizontal_penalty).sum()
+        + (vertical_weights * vertical_penalty).sum()
+    )
+    total_boundary_weight = horizontal_weights.sum() + vertical_weights.sum()
+    return weighted_penalty / (total_boundary_weight + float(eps))
+
+
 def temporal_activity_balance_loss(activity, reduction="mean"):
     """
     Penalize global activity monotonically collapsing or saturating over time.
@@ -195,14 +303,16 @@ class UnsupervisedS2NetLoss(nn.Module):
 
     def __init__(
         self,
-        spike_rate_weight=1.0,
-        spike_smooth_weight=0.1,
-        spike_diversity_weight=0.1,
-        structural_weight=0.1,
-        object_overlap_weight=0.0,
-        sample_diversity_weight=0.0,
-        spatial_compactness_weight=0.0,
-        temporal_balance_weight=0.0,
+        spike_rate_weight=DEFAULT_HYPERPARAMETERS.spike_rate_weight,
+        spike_smooth_weight=DEFAULT_HYPERPARAMETERS.spike_smooth_weight,
+        spike_diversity_weight=DEFAULT_HYPERPARAMETERS.spike_diversity_weight,
+        structural_weight=DEFAULT_HYPERPARAMETERS.structural_weight,
+        object_overlap_weight=DEFAULT_HYPERPARAMETERS.object_overlap_weight,
+        sample_diversity_weight=DEFAULT_HYPERPARAMETERS.sample_diversity_weight,
+        spatial_compactness_weight=DEFAULT_HYPERPARAMETERS.spatial_compactness_weight,
+        temporal_balance_weight=DEFAULT_HYPERPARAMETERS.temporal_balance_weight,
+        edge_membrane_weight=DEFAULT_HYPERPARAMETERS.edge_membrane_weight,
+        edge_membrane_margin=DEFAULT_HYPERPARAMETERS.edge_membrane_margin,
         spike_target_rate=0.1,
         patch_grid_size=None,
     ):
@@ -215,10 +325,19 @@ class UnsupervisedS2NetLoss(nn.Module):
         self.sample_diversity_weight = float(sample_diversity_weight)
         self.spatial_compactness_weight = float(spatial_compactness_weight)
         self.temporal_balance_weight = float(temporal_balance_weight)
+        self.edge_membrane_weight = float(edge_membrane_weight)
+        self.edge_membrane_margin = float(edge_membrane_margin)
         self.spike_target_rate = float(spike_target_rate)
         self.patch_grid_size = patch_grid_size
 
-    def forward(self, spikes=None, object_groups=None, sc=None):
+    def forward(
+        self,
+        spikes=None,
+        object_groups=None,
+        sc=None,
+        core_out=None,
+        images=None,
+    ):
         device, dtype = _infer_device_dtype(spikes, sc)
         total = torch.zeros((), device=device, dtype=dtype)
         parts = {}
@@ -250,6 +369,14 @@ class UnsupervisedS2NetLoss(nn.Module):
                 device=device,
             )
 
+        if core_out is not None and images is not None and self.patch_grid_size is not None:
+            parts["edge_membrane"] = edge_membrane_separation_loss(
+                core_out=core_out,
+                images=images,
+                grid_size=self.patch_grid_size,
+                margin=self.edge_membrane_margin,
+            )
+
         weights = {
             "spike_rate": self.spike_rate_weight,
             "spike_smooth": self.spike_smooth_weight,
@@ -259,6 +386,7 @@ class UnsupervisedS2NetLoss(nn.Module):
             "sample_diversity": self.sample_diversity_weight,
             "spatial_compactness": self.spatial_compactness_weight,
             "temporal_balance": self.temporal_balance_weight,
+            "edge_membrane": self.edge_membrane_weight,
         }
         for name, value in parts.items():
             total = total + weights[name] * value

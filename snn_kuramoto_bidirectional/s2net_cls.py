@@ -61,19 +61,6 @@ class S2NetCore(nn.Module):
         self.osc_dim = 4
         self.phase_delay_steps = 2
         self.device = device
-        self.spike_classify_method = hparams.spike_classify_method
-        self.spike_rhythm_threshold = hparams.spike_rhythm_threshold
-        self.spike_rhythm_min_group_size = hparams.spike_rhythm_min_group_size
-        self.spike_rhythm_return_all_groups = hparams.spike_rhythm_return_all_groups
-        self.spike_interval_size = hparams.spike_interval_size
-        self.spike_interval_threshold = hparams.spike_interval_threshold
-        self.spike_interval_min_group_size = hparams.spike_interval_min_group_size
-        self.spike_interval_include_partial = hparams.spike_interval_include_partial
-        self.spike_spatial_grid_size = hparams.spike_spatial_grid_size
-        self.spike_spatial_threshold = hparams.spike_spatial_threshold
-        self.spike_spatial_min_group_size = hparams.spike_spatial_min_group_size
-        self.spike_spatial_activity_source = hparams.spike_spatial_activity_source
-        self.spike_spatial_time_aggregate = hparams.spike_spatial_time_aggregate
 
         self.kuramoto = graphVectorKuramoto(
             N=self.in_dim, D=self.osc_dim, K=hparams.k, dt=hparams.dt, alpha_scale=1.0, device=device
@@ -99,7 +86,7 @@ class S2NetCore(nn.Module):
             dt=1,
             device=device
         )
-    def forward(self, gamma_seq, sc, return_core_out=False):
+    def forward(self, gamma_seq, sc):
         gamma_seq = gamma_seq.to(self.device)
         sc = sc.to(device=gamma_seq.device, dtype=gamma_seq.dtype)
         if gamma_seq.dim() != 3:
@@ -153,10 +140,77 @@ class S2NetCore(nn.Module):
 
         core_out = torch.stack(outputs).permute(1, 2, 0)
         spikes = torch.stack(spikes_hist).permute(1, 2, 0)
-        object_groups = self._detect_object_groups(core_out, spikes)
+        return spikes, core_out
 
-        if return_core_out:
-            return object_groups, spikes, core_out
+
+@dataclass
+class S2NetOutput:
+    """Detailed outputs from one image-conditioned S2Net forward pass."""
+
+    object_groups: list | None
+    spikes: torch.Tensor
+    core_out: torch.Tensor
+    gamma_seq: torch.Tensor
+    sc: torch.Tensor
+
+
+class S2NetClassifier(nn.Module):
+    """End-to-end wrapper: image -> spatial patch gamma -> classifier core."""
+
+    def __init__(self, hparams, device="cuda"):
+        super().__init__()
+        hparams.validate()
+        self.hparams = hparams
+        self.device = device
+        self.patch_grid_size = hparams.gamma_patch_grid_size
+        self.spike_classify_method = hparams.spike_classify_method
+        self.spike_rhythm_threshold = hparams.spike_rhythm_threshold
+        self.spike_rhythm_min_group_size = hparams.spike_rhythm_min_group_size
+        self.spike_rhythm_return_all_groups = hparams.spike_rhythm_return_all_groups
+        self.spike_interval_size = hparams.spike_interval_size
+        self.spike_interval_threshold = hparams.spike_interval_threshold
+        self.spike_interval_min_group_size = hparams.spike_interval_min_group_size
+        self.spike_interval_include_partial = hparams.spike_interval_include_partial
+        self.spike_spatial_grid_size = hparams.spike_spatial_grid_size
+        self.spike_spatial_threshold = hparams.spike_spatial_threshold
+        self.spike_spatial_min_group_size = hparams.spike_spatial_min_group_size
+        self.spike_spatial_activity_source = hparams.spike_spatial_activity_source
+        self.spike_spatial_time_aggregate = hparams.spike_spatial_time_aggregate
+        self.gamma_generator = GammaGenerator(hparams, device=device)
+        self.core = S2NetCore(hparams, device=device)
+
+    @classmethod
+    def from_hyperparameters(cls, hparams, device="cuda"):
+        """Build S2NetClassifier from S2NetHyperparameters."""
+        return cls(hparams, device=device)
+
+    def forward(self, x, return_details=False, classify=True):
+        x = x.to(self.device)
+        gamma_seq = self.gamma_generator(x)
+        sc = generate_sc(
+            x,
+            self.patch_grid_size,
+            sigma_color=self.hparams.sc_sigma_color,
+            m_min=self.hparams.sc_m_min,
+            self_connectivity=self.hparams.sc_self_connectivity,
+        )
+        spikes, core_out = self.core(
+            gamma_seq,
+            sc=sc,
+        )
+        object_groups = (
+            self._detect_object_groups(core_out, spikes)
+            if classify
+            else None
+        )
+        if return_details:
+            return S2NetOutput(
+                object_groups=object_groups,
+                spikes=spikes,
+                core_out=core_out,
+                gamma_seq=gamma_seq,
+                sc=sc,
+            )
         return object_groups, spikes
 
     def _detect_object_groups(self, core_out, spikes):
@@ -191,60 +245,6 @@ class S2NetCore(nn.Module):
                 time_aggregate=self.spike_spatial_time_aggregate,
             )
         raise ValueError(f"Unsupported spike_classify_method: {self.spike_classify_method}")
-
-
-@dataclass
-class S2NetOutput:
-    """Detailed outputs from one image-conditioned S2Net forward pass."""
-
-    object_groups: list
-    spikes: torch.Tensor
-    core_out: torch.Tensor
-    gamma_seq: torch.Tensor
-    sc: torch.Tensor
-
-
-class S2NetClassifier(nn.Module):
-    """End-to-end wrapper: image -> spatial patch gamma -> classifier core."""
-
-    def __init__(self, hparams, device="cuda"):
-        super().__init__()
-        hparams.validate()
-        self.hparams = hparams
-        self.device = device
-        self.patch_grid_size = hparams.gamma_patch_grid_size
-        self.gamma_generator = GammaGenerator(hparams, device=device)
-        self.core = S2NetCore(hparams, device=device)
-
-    @classmethod
-    def from_hyperparameters(cls, hparams, device="cuda"):
-        """Build S2NetClassifier from S2NetHyperparameters."""
-        return cls(hparams, device=device)
-
-    def forward(self, x, return_details=False):
-        x = x.to(self.device)
-        gamma_seq = self.gamma_generator(x)
-        sc = generate_sc(
-            x,
-            self.patch_grid_size,
-            sigma_color=self.hparams.sc_sigma_color,
-            m_min=self.hparams.sc_m_min,
-            self_connectivity=self.hparams.sc_self_connectivity,
-        )
-        object_groups, spikes, core_out = self.core(
-            gamma_seq,
-            sc=sc,
-            return_core_out=True,
-        )
-        if return_details:
-            return S2NetOutput(
-                object_groups=object_groups,
-                spikes=spikes,
-                core_out=core_out,
-                gamma_seq=gamma_seq,
-                sc=sc,
-            )
-        return object_groups, spikes
 
     def load_input_layer(self, checkpoint_path, map_location=None):
         """Load pretrained GammaGenerator.input_layer parameters."""

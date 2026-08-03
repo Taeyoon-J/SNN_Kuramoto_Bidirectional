@@ -14,7 +14,7 @@ class S2NetHyperparameters:
 
     # Model dimensions
     num_feature_maps: int = 8
-    num_regions: int = 1024
+    num_regions: int = 256
     num_classes: int = 2
 
     # RGB input -> feature maps
@@ -22,7 +22,7 @@ class S2NetHyperparameters:
     kernel_size: int = 3
 
     # Feature map -> spatial patch gamma vector
-    gamma_patch_grid_size: object = 32
+    gamma_patch_grid_size: object = 16
     gamma_patch_size: object = None
     gamma_patch_stride: object = None
     gamma_patch_reduction: str = "mean"
@@ -42,7 +42,7 @@ class S2NetHyperparameters:
     branch: int = 4
 
     # Object-group based classification
-    spike_classify_method: str = "spatial_components"
+    spike_classify_method: str = "spike_rhythm"
     spike_rhythm_threshold: float = 0.8
     spike_rhythm_min_group_size: int = 2
     spike_rhythm_return_all_groups: bool = False
@@ -50,11 +50,23 @@ class S2NetHyperparameters:
     spike_interval_threshold: float = 0.5
     spike_interval_min_group_size: int = 1
     spike_interval_include_partial: bool = True
-    spike_spatial_grid_size: object = 32
+    spike_spatial_grid_size: object = 16
     spike_spatial_threshold: float = 0.45
     spike_spatial_min_group_size: int = 2
     spike_spatial_activity_source: str = "sigmoid_membrane"
     spike_spatial_time_aggregate: str = "mean"
+
+    # Unsupervised training loss weights
+    spike_rate_weight: float = 0.20
+    spike_smooth_weight: float = 0.10
+    spike_diversity_weight: float = 0.05
+    structural_weight: float = 0.03
+    object_overlap_weight: float = 0.00
+    sample_diversity_weight: float = 0.20
+    spatial_compactness_weight: float = 0.10
+    temporal_balance_weight: float = 0.50
+    edge_membrane_weight: float = 0.05
+    edge_membrane_margin: float = 0.30
 
     def validate(self):
         if self.num_feature_maps <= 0:
