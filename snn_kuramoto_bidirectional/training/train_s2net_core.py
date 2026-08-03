@@ -17,12 +17,12 @@ try:
     from snn_kuramoto_bidirectional.hyperparameter import S2NetHyperparameters
     from snn_kuramoto_bidirectional.loss_function import UnsupervisedS2NetLoss
     from snn_kuramoto_bidirectional.s2net_cls import S2NetClassifier
-    from snn_kuramoto_bidirectional.training.train_gamma_initializer import load_image_folder
+    from snn_kuramoto_bidirectional.training.train_input_layer_generator import load_training_images
 except ModuleNotFoundError:
     from hyperparameter import S2NetHyperparameters
     from loss_function import UnsupervisedS2NetLoss
     from s2net_cls import S2NetClassifier
-    from training.train_gamma_initializer import load_image_folder
+    from training.train_input_layer_generator import load_training_images
 
 
 def train_s2net_core(
@@ -180,7 +180,10 @@ def main():
     parser = argparse.ArgumentParser(
         description="Train patch S2NetCore from images with online batch-specific SC."
     )
-    parser.add_argument("--image-dir", required=True)
+    source = parser.add_mutually_exclusive_group(required=True)
+    source.add_argument("--image-dir")
+    source.add_argument("--dataset-path")
+    parser.add_argument("--hdf5-key", default="image")
     parser.add_argument("--input-encoder-path", required=True)
     parser.add_argument("--save-path", required=True)
     parser.add_argument("--image-size", type=int, default=128)
@@ -221,7 +224,13 @@ def main():
     grid_size = _parse_pair_arg(args.patch_grid_size, "patch-grid-size")
     grid_pair = (grid_size, grid_size) if isinstance(grid_size, int) else grid_size
     num_regions = grid_pair[0] * grid_pair[1]
-    images = load_image_folder(args.image_dir, args.image_size, args.max_images)
+    images = load_training_images(
+        image_dir=args.image_dir,
+        dataset_path=args.dataset_path,
+        hdf5_key=args.hdf5_key,
+        image_size=args.image_size,
+        max_images=args.max_images,
+    )
 
     hparams = S2NetHyperparameters(
         num_feature_maps=args.num_feature_maps,
