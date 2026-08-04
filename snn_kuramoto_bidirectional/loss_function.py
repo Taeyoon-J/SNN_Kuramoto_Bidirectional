@@ -313,7 +313,7 @@ class UnsupervisedS2NetLoss(nn.Module):
         temporal_balance_weight=DEFAULT_HYPERPARAMETERS.temporal_balance_weight,
         edge_membrane_weight=DEFAULT_HYPERPARAMETERS.edge_membrane_weight,
         edge_membrane_margin=DEFAULT_HYPERPARAMETERS.edge_membrane_margin,
-        spike_target_rate=0.1,
+        spike_target_rate=0.25,
         patch_grid_size=None,
     ):
         super().__init__()
