@@ -1,0 +1,108 @@
+# Training configuration for the completed patch_grid16_target025 experiment.
+# This records the effective values, including defaults omitted from the CLI.
+
+experiment:
+  name: patch_grid16_target025
+  branch: patch_sw
+  task: train_s2net_core
+
+paths:
+  server_project: /Data0/kevinswk/patch_sw
+  dataset: /Data0/kevinswk/datasets/object_centric_data/clevr_10-full.hdf5
+  hdf5_key: image
+  input_encoder_checkpoint: /Data0/kevinswk/patch_sw/trained_models/patch_grid16/input_encoder.pt
+  output_core_checkpoint: /Data0/kevinswk/patch_sw/trained_models/patch_grid16_target025/s2net_core.pt
+  training_log: /Data0/kevinswk/patch_sw/trained_models/patch_grid16_target025/training.log
+
+data:
+  image_size: 128
+  max_images: 1000
+  input_range: [0.0, 1.0]
+  batch_size: 16
+  shuffle: true
+
+input_encoder:
+  status: pretrained_and_frozen_during_core_training
+  in_channels: 3
+  num_feature_maps: 8
+  kernel_size: 3
+  expected_feature_shape: "[B, 8, 126, 126]"
+
+gamma:
+  patch_grid_size: 16
+  num_regions: 256
+  patch_reduction: mean
+  expected_gamma_shape: "[B, 8, 256]"
+
+structural_connectivity:
+  mode: online_image_conditioned_per_batch
+  sigma_color: 0.25
+  m_min: 0.5
+  self_connectivity: 0.0
+
+core:
+  time_steps: 8
+  kuramoto_k: 1.0
+  kuramoto_dt: 0.1
+  dendritic_low_n: 0.0
+  dendritic_high_n: 4.0
+  dendritic_branches: 4
+  membrane_vth: 0.5
+
+optimization:
+  epochs: 50
+  learning_rate: 0.001
+  optimizer: Adam
+  gradient_clip_norm: 1.0
+  device: cuda
+  cuda_visible_devices: 1
+
+loss:
+  signal: sigmoid_membrane
+  spike_target_rate: 0.25
+  spike_rate_weight: 0.20
+  spike_smooth_weight: 0.10
+  spike_diversity_weight: 0.05
+  structural_weight: 0.03
+  object_overlap_weight: 0.00
+  sample_diversity_weight: 0.20
+  spatial_compactness_weight: 0.10
+  temporal_balance_weight: 0.50
+  edge_membrane_weight: 0.05
+  edge_membrane_margin: 0.30
+  note: >-
+    spike_target_rate is applied to sigmoid(membrane), because loss_signal is
+    sigmoid_membrane. It is not a target imposed directly on binary spikes.
+
+classification:
+  during_training: false
+  default_method: spike_rhythm
+  spike_rhythm_threshold: 0.8
+  spike_rhythm_min_group_size: 2
+  spatial_components_threshold: 0.45
+  spatial_components_min_group_size: 2
+  spatial_activity_source: sigmoid_membrane
+  spatial_time_aggregate: mean
+  note: classifier settings do not contribute to this core-training loss
+
+observed_after_training:
+  actual_spike_rate_on_three_visualized_samples: 0.0
+  membrane_min: -0.026445448398590088
+  membrane_mean: -0.001108782016672194
+  membrane_max: 0.03574453666806221
+  sigmoid_membrane_mean: 0.49972283840179443
+
+command: >-
+  cd /Data0/kevinswk/patch_sw && mkdir -p
+  /Data0/kevinswk/patch_sw/trained_models/patch_grid16_target025 &&
+  CUDA_VISIBLE_DEVICES=1 nohup python -u -m
+  snn_kuramoto_bidirectional.training.train_s2net_core
+  --dataset-path /Data0/kevinswk/datasets/object_centric_data/clevr_10-full.hdf5
+  --hdf5-key image
+  --input-encoder-path /Data0/kevinswk/patch_sw/trained_models/patch_grid16/input_encoder.pt
+  --save-path /Data0/kevinswk/patch_sw/trained_models/patch_grid16_target025/s2net_core.pt
+  --image-size 128 --max-images 1000 --num-feature-maps 8
+  --patch-grid-size 16 --kernel-size 3 --epochs 50 --batch-size 16
+  --lr 1e-3 --loss-signal sigmoid_membrane --device cuda --verbose
+  > /Data0/kevinswk/patch_sw/trained_models/patch_grid16_target025/training.log
+  2>&1 & echo $!

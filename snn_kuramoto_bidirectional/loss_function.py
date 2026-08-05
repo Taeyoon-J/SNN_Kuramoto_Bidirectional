@@ -8,19 +8,28 @@ except ImportError:
     from hyperparameter import DEFAULT_HYPERPARAMETERS
 
 
-def spike_rate_loss(spikes, target_rate=0.1, reduction="mean"):
+def spike_rate_loss(
+    core_out,
+    target_rate=0.25,
+    v_th=0.5,
+    temperature=0.1,
+    reduction="mean",
+):
     """
-    Keep unsupervised spiking activity near a target firing rate.
+    Keep threshold-aware soft spiking activity near a target firing rate.
 
     Args:
-        spikes:
-            Tensor shaped [B, N, T].
+        core_out:
+            Raw membrane history shaped [B, N, T].
     """
-    if spikes.dim() != 3:
-        raise ValueError("spikes must have shape [B, N, T].")
+    if core_out.dim() != 3:
+        raise ValueError("core_out must have shape [B, N, T].")
 
-    rate = spikes.float().mean(dim=(1, 2))
-    loss = (rate - float(target_rate)).pow(2)
+    soft_spikes = torch.sigmoid(
+        (core_out.float() - float(v_th)) / float(temperature)
+    )
+    soft_rate = soft_spikes.mean()
+    loss = (soft_rate - float(target_rate)).pow(2)
     return _reduce(loss, reduction)
 
 
@@ -294,6 +303,7 @@ class UnsupervisedS2NetLoss(nn.Module):
 
     Expected inputs to forward:
         spikes:    [B, N, T]
+        core_out:  raw membrane history [B, N, T]
         object_groups:
             list length B. Each item contains object oscillator-index groups.
         sc:        [N, N] or [B, N, N]
@@ -314,6 +324,8 @@ class UnsupervisedS2NetLoss(nn.Module):
         edge_membrane_weight=DEFAULT_HYPERPARAMETERS.edge_membrane_weight,
         edge_membrane_margin=DEFAULT_HYPERPARAMETERS.edge_membrane_margin,
         spike_target_rate=0.25,
+        spike_v_th=0.5,
+        spike_temperature=0.1,
         patch_grid_size=None,
     ):
         super().__init__()
@@ -328,6 +340,8 @@ class UnsupervisedS2NetLoss(nn.Module):
         self.edge_membrane_weight = float(edge_membrane_weight)
         self.edge_membrane_margin = float(edge_membrane_margin)
         self.spike_target_rate = float(spike_target_rate)
+        self.spike_v_th = float(spike_v_th)
+        self.spike_temperature = float(spike_temperature)
         self.patch_grid_size = patch_grid_size
 
     def forward(
@@ -338,15 +352,19 @@ class UnsupervisedS2NetLoss(nn.Module):
         core_out=None,
         images=None,
     ):
-        device, dtype = _infer_device_dtype(spikes, sc)
+        device, dtype = _infer_device_dtype(spikes, sc, core_out)
         total = torch.zeros((), device=device, dtype=dtype)
         parts = {}
 
-        if spikes is not None:
+        if core_out is not None:
             parts["spike_rate"] = spike_rate_loss(
-                spikes,
+                core_out,
                 target_rate=self.spike_target_rate,
+                v_th=self.spike_v_th,
+                temperature=self.spike_temperature,
             )
+
+        if spikes is not None:
             parts["spike_smooth"] = spike_temporal_smoothness_loss(spikes)
             parts["spike_diversity"] = spike_diversity_loss(spikes)
 

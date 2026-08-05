@@ -41,7 +41,9 @@ def train_s2net_core(
     """Train S2NetCore while generating gamma and SC from each image batch."""
     device = _resolve_device(device, model)
     model = model.to(device)
-    criterion = criterion if criterion is not None else UnsupervisedS2NetLoss()
+    criterion = criterion if criterion is not None else UnsupervisedS2NetLoss(
+        spike_v_th=model.core.membrane_layer.vth,
+    )
     optimizer = optimizer if optimizer is not None else torch.optim.Adam(
         model.core.parameters(), lr=lr
     )
@@ -106,7 +108,9 @@ def evaluate_s2net_core(model, dataloader, criterion=None, device=None):
     """Evaluate the image-driven model using freshly generated batch SC."""
     device = _resolve_device(device, model)
     model = model.to(device)
-    criterion = criterion if criterion is not None else UnsupervisedS2NetLoss()
+    criterion = criterion if criterion is not None else UnsupervisedS2NetLoss(
+        spike_v_th=model.core.membrane_layer.vth,
+    )
     model.eval()
     total_loss = 0.0
     total_count = 0
@@ -267,6 +271,7 @@ def main():
         temporal_balance_weight=args.temporal_balance_weight,
         edge_membrane_weight=args.edge_membrane_weight,
         edge_membrane_margin=args.edge_membrane_margin,
+        spike_v_th=model.core.membrane_layer.vth,
         patch_grid_size=grid_size,
     )
     _, losses = train_s2net_core(
