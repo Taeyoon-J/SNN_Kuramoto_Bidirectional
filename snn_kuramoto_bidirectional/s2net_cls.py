@@ -76,6 +76,7 @@ class S2NetCore(nn.Module):
             device=device,
             bias=True,
             input_vector_dim=self.osc_dim,
+            aggregation_mode=hparams.dendritic_aggregation,
         )
         self.membrane_layer = MembraneLayer(
             output_dim=self.in_dim,

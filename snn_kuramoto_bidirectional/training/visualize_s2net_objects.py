@@ -550,6 +550,11 @@ def main():
     parser.add_argument("--low-n", type=float, default=0.0)
     parser.add_argument("--high-n", type=float, default=4.0)
     parser.add_argument("--branch", type=int, default=4)
+    parser.add_argument(
+        "--dendritic-aggregation",
+        default="sum",
+        choices=["sum", "relu_sum", "abs_sum"],
+    )
     parser.add_argument("--spike-classify-method", default="spike_interval", choices=["spike_rhythm", "spike_interval", "spatial_components"])
     parser.add_argument("--spike-rhythm-threshold", type=float, default=0.8)
     parser.add_argument("--spike-rhythm-min-group-size", type=int, default=2)
@@ -600,6 +605,7 @@ def main():
         low_n=args.low_n,
         high_n=args.high_n,
         branch=args.branch,
+        dendritic_aggregation=args.dendritic_aggregation,
         spike_classify_method=args.spike_classify_method,
         spike_rhythm_threshold=args.spike_rhythm_threshold,
         spike_rhythm_min_group_size=args.spike_rhythm_min_group_size,

@@ -1,11 +1,13 @@
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 
 
 class DendricLayer(nn.Module):
     def __init__(self, input_dim, output_dim,
                  tau_ninitializer='uniform', low_n=0, high_n=4, branch=4,
-                 device='cpu', bias=True, input_vector_dim=1):
+                 device='cpu', bias=True, input_vector_dim=1,
+                 aggregation_mode='sum'):
         """
         Rhythm-Modulated Recurrent SNN Layer (External Gating Version)
         """
@@ -14,6 +16,11 @@ class DendricLayer(nn.Module):
         self.output_dim = output_dim
         self.device = device
         self.input_vector_dim = int(input_vector_dim)
+        if aggregation_mode not in {'sum', 'relu_sum', 'abs_sum'}:
+            raise ValueError(
+                'aggregation_mode must be "sum", "relu_sum", or "abs_sum".'
+            )
+        self.aggregation_mode = aggregation_mode
 
         # Dendritic Parameters
         self.oscillator_dense = nn.Linear(self.input_vector_dim + 1, branch, bias=bias)
@@ -53,6 +60,12 @@ class DendricLayer(nn.Module):
             next_h.append(h_i)
 
         self.h = torch.stack(next_h, dim=1)
-        h_wave = self.h.sum(dim=2, keepdim=False)
+        branch_dim = self.h.dim() - 1
+        if self.aggregation_mode == 'sum':
+            h_wave = self.h.sum(dim=branch_dim, keepdim=False)
+        elif self.aggregation_mode == 'relu_sum':
+            h_wave = F.relu(self.h).sum(dim=branch_dim, keepdim=False)
+        else:
+            h_wave = self.h.abs().sum(dim=branch_dim, keepdim=False)
 
         return h_wave

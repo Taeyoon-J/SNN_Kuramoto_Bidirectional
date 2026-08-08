@@ -40,6 +40,7 @@ class S2NetHyperparameters:
     low_n: float = 0.0
     high_n: float = 4.0
     branch: int = 4
+    dendritic_aggregation: str = "sum"
 
     # Object-group based classification
     spike_classify_method: str = "spike_rhythm"
@@ -94,6 +95,10 @@ class S2NetHyperparameters:
             raise ValueError("sc_sigma_color must be positive.")
         if not 0.0 <= self.sc_m_min <= 1.0:
             raise ValueError("sc_m_min must be between 0 and 1.")
+        if self.dendritic_aggregation not in {"sum", "relu_sum", "abs_sum"}:
+            raise ValueError(
+                'dendritic_aggregation must be "sum", "relu_sum", or "abs_sum".'
+            )
         if self.spike_classify_method not in {"spike_rhythm", "spike_interval", "spatial_components"}:
             raise ValueError('spike_classify_method must be "spike_rhythm", "spike_interval", or "spatial_components".')
         if self.spike_rhythm_min_group_size < 2:
