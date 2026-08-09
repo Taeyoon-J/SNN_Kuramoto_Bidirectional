@@ -33,6 +33,34 @@ def spike_rate_loss(
     return _reduce(loss, reduction)
 
 
+def dense_magnitude_loss(dense_i, target_magnitude=0.05):
+    """Prevent local oscillator-dense output magnitude from collapsing."""
+    magnitude = dense_i.abs().mean()
+    return F.relu(float(target_magnitude) - magnitude).pow(2)
+
+
+def dendritic_cancellation_loss(
+    h,
+    target_retained_fraction=0.5,
+    branch_dim=-1,
+    eps=1e-8,
+):
+    """Penalize excessive signed cancellation across dendritic branches.
+
+    Completely inactive branch sets have retained fraction one via symmetric
+    epsilon stabilization, so zero activity is not treated as cancellation.
+    """
+    total_branch_activity = h.abs().sum(dim=branch_dim)
+    retained_activity = h.sum(dim=branch_dim).abs()
+    retained_fraction = (
+        retained_activity + float(eps)
+    ) / (
+        total_branch_activity + float(eps)
+    )
+    penalty = F.relu(float(target_retained_fraction) - retained_fraction)
+    return penalty.pow(2).mean()
+
+
 def spike_temporal_smoothness_loss(spikes, reduction="mean"):
     """Discourage abrupt frame-to-frame changes in spike histories."""
     if spikes.dim() != 3:
@@ -323,6 +351,8 @@ class UnsupervisedS2NetLoss(nn.Module):
         temporal_balance_weight=DEFAULT_HYPERPARAMETERS.temporal_balance_weight,
         edge_membrane_weight=DEFAULT_HYPERPARAMETERS.edge_membrane_weight,
         edge_membrane_margin=DEFAULT_HYPERPARAMETERS.edge_membrane_margin,
+        dense_magnitude_weight=DEFAULT_HYPERPARAMETERS.dense_magnitude_weight,
+        dendritic_cancellation_weight=DEFAULT_HYPERPARAMETERS.dendritic_cancellation_weight,
         spike_target_rate=0.25,
         spike_v_th=0.5,
         spike_temperature=0.1,
@@ -339,6 +369,8 @@ class UnsupervisedS2NetLoss(nn.Module):
         self.temporal_balance_weight = float(temporal_balance_weight)
         self.edge_membrane_weight = float(edge_membrane_weight)
         self.edge_membrane_margin = float(edge_membrane_margin)
+        self.dense_magnitude_weight = float(dense_magnitude_weight)
+        self.dendritic_cancellation_weight = float(dendritic_cancellation_weight)
         self.spike_target_rate = float(spike_target_rate)
         self.spike_v_th = float(spike_v_th)
         self.spike_temperature = float(spike_temperature)
@@ -351,8 +383,12 @@ class UnsupervisedS2NetLoss(nn.Module):
         sc=None,
         core_out=None,
         images=None,
+        dense_i=None,
+        dendritic_h=None,
     ):
-        device, dtype = _infer_device_dtype(spikes, sc, core_out)
+        device, dtype = _infer_device_dtype(
+            spikes, sc, core_out, dense_i, dendritic_h
+        )
         total = torch.zeros((), device=device, dtype=dtype)
         parts = {}
 
@@ -395,6 +431,15 @@ class UnsupervisedS2NetLoss(nn.Module):
                 margin=self.edge_membrane_margin,
             )
 
+        if self.dense_magnitude_weight > 0.0 and dense_i is not None:
+            parts["dense_magnitude_loss"] = dense_magnitude_loss(dense_i)
+
+        if self.dendritic_cancellation_weight > 0.0 and dendritic_h is not None:
+            parts["dendritic_cancellation_loss"] = dendritic_cancellation_loss(
+                dendritic_h,
+                branch_dim=-1,
+            )
+
         weights = {
             "spike_rate": self.spike_rate_weight,
             "spike_smooth": self.spike_smooth_weight,
@@ -405,6 +450,8 @@ class UnsupervisedS2NetLoss(nn.Module):
             "spatial_compactness": self.spatial_compactness_weight,
             "temporal_balance": self.temporal_balance_weight,
             "edge_membrane": self.edge_membrane_weight,
+            "dense_magnitude_loss": self.dense_magnitude_weight,
+            "dendritic_cancellation_loss": self.dendritic_cancellation_weight,
         }
         for name, value in parts.items():
             total = total + weights[name] * value

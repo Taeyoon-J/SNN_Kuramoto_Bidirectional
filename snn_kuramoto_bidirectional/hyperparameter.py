@@ -68,6 +68,8 @@ class S2NetHyperparameters:
     temporal_balance_weight: float = 0.50
     edge_membrane_weight: float = 0.05
     edge_membrane_margin: float = 0.30
+    dense_magnitude_weight: float = 0.5
+    dendritic_cancellation_weight: float = 0.05
 
     def validate(self):
         if self.num_feature_maps <= 0:

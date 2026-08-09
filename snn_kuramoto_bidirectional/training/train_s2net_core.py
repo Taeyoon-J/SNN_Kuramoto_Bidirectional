@@ -69,6 +69,8 @@ def train_s2net_core(
                 sc=output.sc,
                 core_out=output.core_out,
                 images=images,
+                dense_i=output.dense_i,
+                dendritic_h=output.dendritic_h,
             )
 
             optimizer.zero_grad()
@@ -124,6 +126,8 @@ def evaluate_s2net_core(model, dataloader, criterion=None, device=None):
             sc=output.sc,
             core_out=output.core_out,
             images=images,
+            dense_i=output.dense_i,
+            dendritic_h=output.dendritic_h,
         )
         total_loss += loss.item() * images.size(0)
         total_count += images.size(0)
@@ -220,6 +224,8 @@ def main():
     parser.add_argument("--temporal-balance-weight", type=float, default=defaults.temporal_balance_weight)
     parser.add_argument("--edge-membrane-weight", type=float, default=defaults.edge_membrane_weight)
     parser.add_argument("--edge-membrane-margin", type=float, default=defaults.edge_membrane_margin)
+    parser.add_argument("--dense-magnitude-weight", type=float, default=defaults.dense_magnitude_weight)
+    parser.add_argument("--dendritic-cancellation-weight", type=float, default=defaults.dendritic_cancellation_weight)
     parser.add_argument("--loss-signal", default="sigmoid_membrane", choices=["spikes", "membrane", "sigmoid_membrane"])
     parser.add_argument("--grad-clip-norm", type=float, default=1.0)
     parser.add_argument("--verbose", action="store_true")
@@ -271,6 +277,8 @@ def main():
         temporal_balance_weight=args.temporal_balance_weight,
         edge_membrane_weight=args.edge_membrane_weight,
         edge_membrane_margin=args.edge_membrane_margin,
+        dense_magnitude_weight=args.dense_magnitude_weight,
+        dendritic_cancellation_weight=args.dendritic_cancellation_weight,
         spike_v_th=model.core.membrane_layer.vth,
         patch_grid_size=grid_size,
     )

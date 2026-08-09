@@ -34,6 +34,7 @@ class DendricLayer(nn.Module):
             nn.init.constant_(self.tau_n, low_n)
 
         self.h = None
+        self.dense_i = None
 
     def set_neuron_state(self, batch_size):
         self.h = torch.zeros(batch_size, self.output_dim, self.branch).to(self.device)
@@ -47,6 +48,7 @@ class DendricLayer(nn.Module):
         beta = torch.sigmoid(self.tau_n)
 
         next_h = []
+        dense_outputs = []
         for i in range(self.output_dim):
             k_input = torch.cat(
                 (
@@ -56,9 +58,11 @@ class DendricLayer(nn.Module):
                 dim=1,
             )
             dense_i = self.oscillator_dense(k_input)
+            dense_outputs.append(dense_i)
             h_i = beta[i] * self.h[:, i, :] + (1 - beta[i]) * dense_i
             next_h.append(h_i)
 
+        self.dense_i = torch.stack(dense_outputs, dim=1)
         self.h = torch.stack(next_h, dim=1)
         branch_dim = self.h.dim() - 1
         if self.aggregation_mode == 'sum':

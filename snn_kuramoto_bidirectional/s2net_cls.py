@@ -87,6 +87,8 @@ class S2NetCore(nn.Module):
             dt=1,
             device=device
         )
+        self.dense_history = None
+        self.dendritic_history = None
     def forward(self, gamma_seq, sc):
         gamma_seq = gamma_seq.to(self.device)
         sc = sc.to(device=gamma_seq.device, dtype=gamma_seq.dtype)
@@ -126,6 +128,8 @@ class S2NetCore(nn.Module):
 
         outputs = []
         spikes_hist = []
+        dense_history = []
+        dendritic_history = []
 
         for i in range(seq_num):
             gamma_wave_t = all_feats[:, i, :, :]
@@ -135,12 +139,16 @@ class S2NetCore(nn.Module):
                 gamma_wave_t,
                 self.membrane_layer.spike
             )
+            dense_history.append(self.dendric_layer.dense_i)
+            dendritic_history.append(self.dendric_layer.h)
             mem_t, spike_t = self.membrane_layer(h_wave_t, g_wave_t)
             spikes_hist.append(spike_t)
             outputs.append(mem_t)
 
         core_out = torch.stack(outputs).permute(1, 2, 0)
         spikes = torch.stack(spikes_hist).permute(1, 2, 0)
+        self.dense_history = torch.stack(dense_history, dim=2)
+        self.dendritic_history = torch.stack(dendritic_history, dim=2)
         return spikes, core_out
 
 
@@ -153,6 +161,8 @@ class S2NetOutput:
     core_out: torch.Tensor
     gamma_seq: torch.Tensor
     sc: torch.Tensor
+    dense_i: torch.Tensor | None = None
+    dendritic_h: torch.Tensor | None = None
 
 
 class S2NetClassifier(nn.Module):
@@ -211,6 +221,8 @@ class S2NetClassifier(nn.Module):
                 core_out=core_out,
                 gamma_seq=gamma_seq,
                 sc=sc,
+                dense_i=self.core.dense_history,
+                dendritic_h=self.core.dendritic_history,
             )
         return object_groups, spikes
 
