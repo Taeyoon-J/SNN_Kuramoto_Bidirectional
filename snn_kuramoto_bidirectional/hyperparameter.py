@@ -59,13 +59,13 @@ class S2NetHyperparameters:
 
     # Unsupervised training loss weights
     spike_rate_weight: float = 0.20
-    spike_smooth_weight: float = 0.10
-    spike_diversity_weight: float = 0.05
+    spike_smooth_weight: float = 0.00
+    spike_diversity_weight: float = 0.00
     structural_weight: float = 0.03
     object_overlap_weight: float = 0.00
     sample_diversity_weight: float = 0.20
-    spatial_compactness_weight: float = 0.10
-    temporal_balance_weight: float = 0.50
+    spatial_compactness_weight: float = 0.00
+    temporal_balance_weight: float = 0.00
     edge_membrane_weight: float = 0.05
     edge_membrane_margin: float = 0.30
     dense_magnitude_weight: float = 0.5
