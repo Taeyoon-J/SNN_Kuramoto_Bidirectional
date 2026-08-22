@@ -43,6 +43,7 @@ def train_s2net_core(
     gradient_diagnostic_epochs=None,
     gradient_diagnostic_images=None,
     gradient_diagnostic_output_dir=None,
+    epoch_metrics_path=None,
 ):
     """Train S2NetCore while generating gamma and SC from each image batch."""
     device = _resolve_device(device, model)
@@ -58,6 +59,7 @@ def train_s2net_core(
         int(epoch) for epoch in (gradient_diagnostic_epochs or [])
     }
     diagnostic_rows = []
+    epoch_metrics = []
     if diagnostic_epochs:
         if gradient_diagnostic_images is None:
             raise ValueError(
@@ -74,9 +76,13 @@ def train_s2net_core(
         epoch_loss = 0.0
         sample_count = 0
         epoch_parts = {}
+        epoch_spike_nonzero = 0
+        epoch_spike_elements = 0
         for batch in dataloader:
             images = _unpack_image_batch(batch).to(device)
             output = model(images, return_details=True, classify=False)
+            epoch_spike_nonzero += int(torch.count_nonzero(output.spikes.detach()))
+            epoch_spike_elements += output.spikes.numel()
             loss_values = _select_loss_signal(
                 spikes=output.spikes,
                 core_out=output.core_out,
@@ -107,7 +113,29 @@ def train_s2net_core(
                 epoch_parts[name] = epoch_parts.get(name, 0.0) + value.item() * batch_size
 
         mean_loss = epoch_loss / sample_count
+        actual_spike_rate = (
+            epoch_spike_nonzero / epoch_spike_elements
+            if epoch_spike_elements > 0
+            else 0.0
+        )
         loss_history.append(mean_loss)
+        metric_row = {
+            "epoch": int(epoch),
+            "total_loss": float(mean_loss),
+            "actual_spike_rate": float(actual_spike_rate),
+            "spike_nonzero_count": int(epoch_spike_nonzero),
+            "spike_element_count": int(epoch_spike_elements),
+        }
+        weights = _loss_weights(criterion)
+        for name, value in epoch_parts.items():
+            if name == "total":
+                continue
+            raw_value = value / sample_count
+            metric_row[f"raw_{name}"] = float(raw_value)
+            metric_row[f"weighted_{name}"] = float(weights[name] * raw_value)
+        epoch_metrics.append(metric_row)
+        if epoch_metrics_path is not None:
+            _save_epoch_metrics(epoch_metrics, epoch_metrics_path)
         if verbose:
             parts_text = " ".join(
                 f"{name}={value / sample_count:.6f}"
@@ -115,7 +143,8 @@ def train_s2net_core(
             )
             print(
                 f"Epoch {epoch:04d}/{int(epochs):04d} | "
-                f"loss={mean_loss:.8f} | {parts_text}",
+                f"loss={mean_loss:.8f} | "
+                f"actual_spike_rate={actual_spike_rate:.8f} | {parts_text}",
                 flush=True,
             )
 
@@ -187,6 +216,8 @@ def _measure_loss_gradients(model, images, criterion, loss_signal, epoch):
         torch.zeros_like(parameter),
     )
     dense_norm = dense_gradient.norm()
+    actual_spike_rate = float((output.spikes.detach() != 0).float().mean())
+    dense_abs_mean = float(output.dense_i.detach().abs().mean())
 
     def cosine_with_dense(value):
         value_norm = value.norm()
@@ -216,6 +247,8 @@ def _measure_loss_gradients(model, images, criterion, loss_signal, epoch):
             "raw_gradient_norm": float(raw_gradient.norm()),
             "weighted_gradient_norm": float(weighted_gradient.norm()),
             "cosine_with_dense_gradient": cosine_with_dense(weighted_gradient),
+            "actual_spike_rate": actual_spike_rate,
+            "dense_abs_mean": dense_abs_mean,
         })
 
     total_gradient = gradient(total_loss)
@@ -228,6 +261,8 @@ def _measure_loss_gradients(model, images, criterion, loss_signal, epoch):
         "raw_gradient_norm": float(total_gradient.norm()),
         "weighted_gradient_norm": float(total_gradient.norm()),
         "cosine_with_dense_gradient": cosine_with_dense(total_gradient),
+        "actual_spike_rate": actual_spike_rate,
+        "dense_abs_mean": dense_abs_mean,
     })
     return rows
 
@@ -260,6 +295,8 @@ def _save_gradient_diagnostics(rows, output_dir):
         "raw_gradient_norm",
         "weighted_gradient_norm",
         "cosine_with_dense_gradient",
+        "actual_spike_rate",
+        "dense_abs_mean",
     ]
     with (output_dir / "loss_gradient_diagnostics.csv").open(
         "w", newline="", encoding="utf-8"
@@ -271,6 +308,20 @@ def _save_gradient_diagnostics(rows, output_dir):
         "w", encoding="utf-8"
     ) as file:
         json.dump(rows, file, indent=2)
+
+
+def _save_epoch_metrics(rows, output_path):
+    output_path = Path(output_path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    columns = []
+    for row in rows:
+        for name in row:
+            if name not in columns:
+                columns.append(name)
+    with output_path.open("w", newline="", encoding="utf-8") as file:
+        writer = csv.DictWriter(file, fieldnames=columns)
+        writer.writeheader()
+        writer.writerows(rows)
 
 
 @torch.no_grad()
@@ -398,6 +449,7 @@ def main():
     parser.add_argument("--grad-clip-norm", type=float, default=1.0)
     parser.add_argument("--gradient-diagnostic-epochs", type=int, nargs="+", default=None)
     parser.add_argument("--gradient-diagnostic-output-dir", default=None)
+    parser.add_argument("--epoch-metrics-path", default=None)
     parser.add_argument("--verbose", action="store_true")
     args = parser.parse_args()
 
@@ -470,6 +522,7 @@ def main():
         gradient_diagnostic_epochs=args.gradient_diagnostic_epochs,
         gradient_diagnostic_images=diagnostic_images,
         gradient_diagnostic_output_dir=diagnostic_output_dir,
+        epoch_metrics_path=args.epoch_metrics_path,
     )
     print(f"trained S2NetCore: {args.save_path}")
     print(f"loss: {losses[0]:.6f} -> {losses[-1]:.6f}")
