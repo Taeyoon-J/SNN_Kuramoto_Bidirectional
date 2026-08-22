@@ -63,10 +63,10 @@ class S2NetHyperparameters:
     spike_diversity_weight: float = 0.00
     structural_weight: float = 0.03
     object_overlap_weight: float = 0.00
-    sample_diversity_weight: float = 0.20
+    sample_diversity_weight: float = 0.04
     spatial_compactness_weight: float = 0.00
     temporal_balance_weight: float = 0.00
-    edge_membrane_weight: float = 0.05
+    edge_membrane_weight: float = 0.01
     edge_membrane_margin: float = 0.30
     dense_magnitude_weight: float = 0.5
     dendritic_cancellation_weight: float = 0.05
