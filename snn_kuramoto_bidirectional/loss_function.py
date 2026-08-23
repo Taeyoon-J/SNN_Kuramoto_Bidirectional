@@ -33,7 +33,7 @@ def spike_rate_loss(
     return _reduce(loss, reduction)
 
 
-def dense_magnitude_loss(dense_i, target_magnitude=0.08):
+def dense_magnitude_loss(dense_i, target_magnitude=4.0):
     """Prevent local oscillator-dense output magnitude from collapsing."""
     magnitude = dense_i.abs().mean()
     return F.relu(float(target_magnitude) - magnitude).pow(2)

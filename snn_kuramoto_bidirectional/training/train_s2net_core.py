@@ -78,11 +78,23 @@ def train_s2net_core(
         epoch_parts = {}
         epoch_spike_nonzero = 0
         epoch_spike_elements = 0
+        epoch_active_oscillators = 0
+        epoch_dense_sum = 0.0
+        epoch_dense_abs_sum = 0.0
+        epoch_dense_elements = 0
         for batch in dataloader:
             images = _unpack_image_batch(batch).to(device)
             output = model(images, return_details=True, classify=False)
-            epoch_spike_nonzero += int(torch.count_nonzero(output.spikes.detach()))
-            epoch_spike_elements += output.spikes.numel()
+            detached_spikes = output.spikes.detach()
+            detached_dense = output.dense_i.detach()
+            epoch_spike_nonzero += int(torch.count_nonzero(detached_spikes))
+            epoch_spike_elements += detached_spikes.numel()
+            epoch_active_oscillators += int(
+                (detached_spikes != 0).any(dim=2).sum()
+            )
+            epoch_dense_sum += float(detached_dense.sum())
+            epoch_dense_abs_sum += float(detached_dense.abs().sum())
+            epoch_dense_elements += detached_dense.numel()
             loss_values = _select_loss_signal(
                 spikes=output.spikes,
                 core_out=output.core_out,
@@ -118,6 +130,12 @@ def train_s2net_core(
             if epoch_spike_elements > 0
             else 0.0
         )
+        total_spike_count_per_image = epoch_spike_nonzero / sample_count
+        active_oscillator_count_per_image = (
+            epoch_active_oscillators / sample_count
+        )
+        mean_dense = epoch_dense_sum / epoch_dense_elements
+        absolute_mean_dense = epoch_dense_abs_sum / epoch_dense_elements
         loss_history.append(mean_loss)
         metric_row = {
             "epoch": int(epoch),
@@ -125,6 +143,12 @@ def train_s2net_core(
             "actual_spike_rate": float(actual_spike_rate),
             "spike_nonzero_count": int(epoch_spike_nonzero),
             "spike_element_count": int(epoch_spike_elements),
+            "total_spike_count_per_image": float(total_spike_count_per_image),
+            "active_oscillator_count_per_image": float(
+                active_oscillator_count_per_image
+            ),
+            "mean_dense": float(mean_dense),
+            "absolute_mean_dense": float(absolute_mean_dense),
         }
         weights = _loss_weights(criterion)
         for name, value in epoch_parts.items():
@@ -144,7 +168,13 @@ def train_s2net_core(
             print(
                 f"Epoch {epoch:04d}/{int(epochs):04d} | "
                 f"loss={mean_loss:.8f} | "
-                f"actual_spike_rate={actual_spike_rate:.8f} | {parts_text}",
+                f"actual_spike_rate={actual_spike_rate:.8f} | "
+                f"spikes_per_image={total_spike_count_per_image:.4f} | "
+                f"active_oscillators_per_image="
+                f"{active_oscillator_count_per_image:.4f} | "
+                f"mean_dense={mean_dense:.8f} | "
+                f"absolute_mean_dense={absolute_mean_dense:.8f} | "
+                f"{parts_text}",
                 flush=True,
             )
 
