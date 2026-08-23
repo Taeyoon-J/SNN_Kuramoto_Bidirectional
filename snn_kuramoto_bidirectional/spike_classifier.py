@@ -305,7 +305,19 @@ def _bron_kerbosch(current, candidates, excluded, neighbors, cliques):
         cliques.append(current)
         return
 
-    for node in list(candidates):
+    pivot_candidates = candidates | excluded
+    pivot = max(
+        pivot_candidates,
+        key=lambda node: len(candidates & neighbors[node]),
+        default=None,
+    )
+    unexplored = (
+        candidates - neighbors[pivot]
+        if pivot is not None
+        else set(candidates)
+    )
+
+    for node in list(unexplored):
         _bron_kerbosch(
             current=current | {node},
             candidates=candidates & neighbors[node],
