@@ -61,50 +61,57 @@ def dendritic_cancellation_loss(
     return penalty.pow(2).mean()
 
 
-def spike_temporal_smoothness_loss(spikes, reduction="mean"):
-    """Discourage abrupt frame-to-frame changes in spike histories."""
-    if spikes.dim() != 3:
-        raise ValueError("spikes must have shape [B, N, T].")
-    if spikes.size(2) < 2:
-        return spikes.new_zeros(())
+def spike_temporal_smoothness_loss(activity, reduction="mean"):
+    """Discourage abrupt frame-to-frame changes in activity histories."""
+    if activity.dim() != 3:
+        raise ValueError("activity must have shape [B, N, T].")
+    if activity.size(2) < 2:
+        return activity.new_zeros(())
 
-    loss = (spikes[:, :, 1:] - spikes[:, :, :-1]).pow(2).mean(dim=(1, 2))
+    loss = (activity[:, :, 1:] - activity[:, :, :-1]).pow(2).mean(dim=(1, 2))
     return _reduce(loss, reduction)
 
 
-def spike_diversity_loss(spikes, reduction="mean", eps=1e-8):
+def spike_diversity_loss(activity, reduction="mean", eps=1e-8):
     """
     Decorrelation loss across oscillators.
 
-    This keeps every oscillator from learning the same spike train.
+    This keeps every oscillator from learning the same activity history.
     """
-    if spikes.dim() != 3:
-        raise ValueError("spikes must have shape [B, N, T].")
+    if activity.dim() != 3:
+        raise ValueError("activity must have shape [B, N, T].")
 
-    similarity = _pairwise_cosine(spikes.float(), eps=eps)
+    similarity = _pairwise_cosine(activity.float(), eps=eps)
     off_diag = _off_diagonal(similarity)
     loss = off_diag.pow(2).mean(dim=1)
     return _reduce(loss, reduction)
 
 
-def structural_consistency_loss(spikes, sc, reduction="mean", eps=1e-8):
+def structural_consistency_loss(activity, sc, reduction="mean", eps=1e-8):
     """
     Match spike-rhythm similarity to structural connectivity.
 
     Args:
-        spikes:
+        activity:
             Tensor shaped [B, N, T].
         sc:
             Tensor shaped [N, N] or [B, N, N].
     """
-    if spikes.dim() != 3:
-        raise ValueError("spikes must have shape [B, N, T].")
+    if activity.dim() != 3:
+        raise ValueError("activity must have shape [B, N, T].")
 
-    spike_similarity = _pairwise_cosine(spikes.float(), eps=eps)
-    sc = _prepare_sc(sc, batch_size=spikes.size(0), device=spikes.device, dtype=spikes.dtype)
+    activity_similarity = _pairwise_cosine(activity.float(), eps=eps)
+    sc = _prepare_sc(
+        sc,
+        batch_size=activity.size(0),
+        device=activity.device,
+        dtype=activity.dtype,
+    )
     sc = _minmax_normalize(sc, eps=eps)
 
-    loss = (_off_diagonal(spike_similarity) - _off_diagonal(sc)).pow(2).mean(dim=1)
+    loss = (
+        _off_diagonal(activity_similarity) - _off_diagonal(sc)
+    ).pow(2).mean(dim=1)
     return _reduce(loss, reduction)
 
 
@@ -386,8 +393,11 @@ class UnsupervisedS2NetLoss(nn.Module):
         dense_i=None,
         dendritic_h=None,
     ):
+        # ``spikes`` is the legacy public keyword for the selected loss signal.
+        # Internally it may contain spikes, membrane, or sigmoid membrane.
+        activity = spikes
         device, dtype = _infer_device_dtype(
-            spikes, sc, core_out, dense_i, dendritic_h
+            activity, sc, core_out, dense_i, dendritic_h
         )
         total = torch.zeros((), device=device, dtype=dtype)
         parts = {}
@@ -400,26 +410,28 @@ class UnsupervisedS2NetLoss(nn.Module):
                 temperature=self.spike_temperature,
             )
 
-        if spikes is not None:
-            parts["spike_smooth"] = spike_temporal_smoothness_loss(spikes)
-            parts["spike_diversity"] = spike_diversity_loss(spikes)
+        if activity is not None:
+            parts["spike_smooth"] = spike_temporal_smoothness_loss(activity)
+            parts["spike_diversity"] = spike_diversity_loss(activity)
 
-        if spikes is not None and sc is not None:
-            parts["structural"] = structural_consistency_loss(spikes, sc)
+        if activity is not None and sc is not None:
+            parts["structural"] = structural_consistency_loss(activity, sc)
 
-        if spikes is not None:
-            parts["sample_diversity"] = sample_activity_diversity_loss(spikes)
-            parts["temporal_balance"] = temporal_activity_balance_loss(spikes)
+        if activity is not None:
+            parts["sample_diversity"] = sample_activity_diversity_loss(activity)
+            parts["temporal_balance"] = temporal_activity_balance_loss(activity)
             if self.patch_grid_size is not None:
                 parts["spatial_compactness"] = spatial_compactness_loss(
-                    spikes,
+                    activity,
                     patch_grid_size=self.patch_grid_size,
                 )
 
         if object_groups is not None:
             parts["object_overlap"] = object_overlap_loss(
                 object_groups,
-                num_oscillators=spikes.size(1) if spikes is not None else None,
+                num_oscillators=(
+                    activity.size(1) if activity is not None else None
+                ),
                 device=device,
             )
 
