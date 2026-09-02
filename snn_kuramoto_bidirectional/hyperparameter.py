@@ -64,11 +64,15 @@ class S2NetHyperparameters:
     structural_weight: float = 0.03
     object_overlap_weight: float = 0.00
     sample_diversity_weight: float = 0.04
-    spatial_compactness_weight: float = 0.00
+    spatial_compactness_weight: float = 0.0001
     temporal_balance_weight: float = 0.00
     edge_membrane_weight: float = 0.01
     edge_membrane_margin: float = 0.30
-    dense_magnitude_weight: float = 0.5
+    dense_magnitude_weight: float = 0.1
+    dense_magnitude_target: float = 1.0
+    dense_positive_weight: float = 0.01
+    dense_positive_target: float = 0.5
+    dense_positive_temperature: float = 1.0
     dendritic_cancellation_weight: float = 0.05
 
     def validate(self):

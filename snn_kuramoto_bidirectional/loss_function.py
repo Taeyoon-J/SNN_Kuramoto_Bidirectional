@@ -16,7 +16,7 @@ def spike_rate_loss(
     reduction="mean",
 ):
     """
-    Keep threshold-aware soft spiking activity near a target firing rate.
+    Keep threshold-aware soft spiking activity above a minimum firing rate.
 
     Args:
         core_out:
@@ -29,14 +29,31 @@ def spike_rate_loss(
         (core_out.float() - float(v_th)) / float(temperature)
     )
     soft_rate = soft_spikes.mean()
-    loss = (soft_rate - float(target_rate)).pow(2)
+    loss = F.relu(float(target_rate) - soft_rate).pow(2)
     return _reduce(loss, reduction)
 
 
-def dense_magnitude_loss(dense_i, target_magnitude=4.0):
+def dense_magnitude_loss(dense_i, target_magnitude=1.0):
     """Prevent local oscillator-dense output magnitude from collapsing."""
     magnitude = dense_i.abs().mean()
     return F.relu(float(target_magnitude) - magnitude).pow(2)
+
+
+def dense_positive_loss(
+    dense_i,
+    target_positive_fraction=0.5,
+    temperature=1.0,
+):
+    """Keep the branch-level soft-positive dense fraction above a minimum."""
+    soft_positive = torch.sigmoid(
+        dense_i.float() / float(temperature)
+    )
+    fraction_dims = tuple(range(dense_i.dim() - 1))
+    branch_positive_fraction = soft_positive.mean(dim=fraction_dims)
+    branch_penalty = F.relu(
+        float(target_positive_fraction) - branch_positive_fraction
+    ).pow(2)
+    return branch_penalty.mean()
 
 
 def dendritic_cancellation_loss(
@@ -142,10 +159,10 @@ def sample_activity_diversity_loss(activity, reduction="mean", eps=1e-8):
 
 def spatial_compactness_loss(activity, patch_grid_size, reduction="mean"):
     """
-    Encourage spatially adjacent patch oscillators to form smooth components.
+    Encourage adjacent oscillators to have similar temporal activity patterns.
 
-    This is a differentiable total-variation style term on the temporally
-    averaged patch activity.
+    Each oscillator history is centered over time, and cosine distance is
+    averaged across horizontal and vertical neighbors on the patch grid.
     """
     if activity.dim() != 3:
         raise ValueError("activity must have shape [B, N, T].")
@@ -156,10 +173,31 @@ def spatial_compactness_loss(activity, patch_grid_size, reduction="mean"):
             f"{grid_h}x{grid_w} has {grid_h * grid_w}."
         )
 
-    grid = activity.float().mean(dim=2).view(activity.size(0), grid_h, grid_w)
-    vertical = (grid[:, 1:, :] - grid[:, :-1, :]).abs().mean(dim=(1, 2))
-    horizontal = (grid[:, :, 1:] - grid[:, :, :-1]).abs().mean(dim=(1, 2))
-    return _reduce(vertical + horizontal, reduction)
+    activity = activity.float()
+    centered = activity - activity.mean(dim=2, keepdim=True)
+    grid = centered.view(
+        activity.size(0),
+        grid_h,
+        grid_w,
+        activity.size(2),
+    )
+
+    vertical_similarity = F.cosine_similarity(
+        grid[:, 1:, :, :],
+        grid[:, :-1, :, :],
+        dim=-1,
+        eps=1e-8,
+    )
+    horizontal_similarity = F.cosine_similarity(
+        grid[:, :, 1:, :],
+        grid[:, :, :-1, :],
+        dim=-1,
+        eps=1e-8,
+    )
+
+    vertical_loss = (1.0 - vertical_similarity).mean(dim=(1, 2))
+    horizontal_loss = (1.0 - horizontal_similarity).mean(dim=(1, 2))
+    return _reduce(vertical_loss + horizontal_loss, reduction)
 
 
 def edge_membrane_separation_loss(
@@ -359,6 +397,10 @@ class UnsupervisedS2NetLoss(nn.Module):
         edge_membrane_weight=DEFAULT_HYPERPARAMETERS.edge_membrane_weight,
         edge_membrane_margin=DEFAULT_HYPERPARAMETERS.edge_membrane_margin,
         dense_magnitude_weight=DEFAULT_HYPERPARAMETERS.dense_magnitude_weight,
+        dense_magnitude_target=DEFAULT_HYPERPARAMETERS.dense_magnitude_target,
+        dense_positive_weight=DEFAULT_HYPERPARAMETERS.dense_positive_weight,
+        dense_positive_target=DEFAULT_HYPERPARAMETERS.dense_positive_target,
+        dense_positive_temperature=DEFAULT_HYPERPARAMETERS.dense_positive_temperature,
         dendritic_cancellation_weight=DEFAULT_HYPERPARAMETERS.dendritic_cancellation_weight,
         spike_target_rate=0.25,
         spike_v_th=0.5,
@@ -377,6 +419,10 @@ class UnsupervisedS2NetLoss(nn.Module):
         self.edge_membrane_weight = float(edge_membrane_weight)
         self.edge_membrane_margin = float(edge_membrane_margin)
         self.dense_magnitude_weight = float(dense_magnitude_weight)
+        self.dense_magnitude_target = float(dense_magnitude_target)
+        self.dense_positive_weight = float(dense_positive_weight)
+        self.dense_positive_target = float(dense_positive_target)
+        self.dense_positive_temperature = float(dense_positive_temperature)
         self.dendritic_cancellation_weight = float(dendritic_cancellation_weight)
         self.spike_target_rate = float(spike_target_rate)
         self.spike_v_th = float(spike_v_th)
@@ -444,7 +490,17 @@ class UnsupervisedS2NetLoss(nn.Module):
             )
 
         if self.dense_magnitude_weight > 0.0 and dense_i is not None:
-            parts["dense_magnitude_loss"] = dense_magnitude_loss(dense_i)
+            parts["dense_magnitude_loss"] = dense_magnitude_loss(
+                dense_i,
+                target_magnitude=self.dense_magnitude_target,
+            )
+
+        if self.dense_positive_weight > 0.0 and dense_i is not None:
+            parts["dense_positive_loss"] = dense_positive_loss(
+                dense_i,
+                target_positive_fraction=self.dense_positive_target,
+                temperature=self.dense_positive_temperature,
+            )
 
         if self.dendritic_cancellation_weight > 0.0 and dendritic_h is not None:
             parts["dendritic_cancellation_loss"] = dendritic_cancellation_loss(
@@ -463,6 +519,7 @@ class UnsupervisedS2NetLoss(nn.Module):
             "temporal_balance": self.temporal_balance_weight,
             "edge_membrane": self.edge_membrane_weight,
             "dense_magnitude_loss": self.dense_magnitude_weight,
+            "dense_positive_loss": self.dense_positive_weight,
             "dendritic_cancellation_loss": self.dendritic_cancellation_weight,
         }
         for name, value in parts.items():

@@ -309,6 +309,7 @@ def _loss_weights(criterion):
         "temporal_balance": criterion.temporal_balance_weight,
         "edge_membrane": criterion.edge_membrane_weight,
         "dense_magnitude_loss": criterion.dense_magnitude_weight,
+        "dense_positive_loss": criterion.dense_positive_weight,
         "dendritic_cancellation_loss": criterion.dendritic_cancellation_weight,
     }
 
@@ -474,6 +475,10 @@ def main():
     parser.add_argument("--edge-membrane-weight", type=float, default=defaults.edge_membrane_weight)
     parser.add_argument("--edge-membrane-margin", type=float, default=defaults.edge_membrane_margin)
     parser.add_argument("--dense-magnitude-weight", type=float, default=defaults.dense_magnitude_weight)
+    parser.add_argument("--dense-magnitude-target", type=float, default=defaults.dense_magnitude_target)
+    parser.add_argument("--dense-positive-weight", type=float, default=defaults.dense_positive_weight)
+    parser.add_argument("--dense-positive-target", type=float, default=defaults.dense_positive_target)
+    parser.add_argument("--dense-positive-temperature", type=float, default=defaults.dense_positive_temperature)
     parser.add_argument("--dendritic-cancellation-weight", type=float, default=defaults.dendritic_cancellation_weight)
     parser.add_argument("--loss-signal", default="sigmoid_membrane", choices=["spikes", "membrane", "sigmoid_membrane"])
     parser.add_argument("--grad-clip-norm", type=float, default=1.0)
@@ -534,6 +539,10 @@ def main():
         edge_membrane_weight=args.edge_membrane_weight,
         edge_membrane_margin=args.edge_membrane_margin,
         dense_magnitude_weight=args.dense_magnitude_weight,
+        dense_magnitude_target=args.dense_magnitude_target,
+        dense_positive_weight=args.dense_positive_weight,
+        dense_positive_target=args.dense_positive_target,
+        dense_positive_temperature=args.dense_positive_temperature,
         dendritic_cancellation_weight=args.dendritic_cancellation_weight,
         spike_v_th=model.core.membrane_layer.vth,
         patch_grid_size=grid_size,
