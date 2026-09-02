@@ -245,6 +245,12 @@ def main():
     parser.add_argument("--sample-diversity-weight", type=float, default=0.0)
     parser.add_argument("--spatial-compactness-weight", type=float, default=0.0)
     parser.add_argument("--temporal-balance-weight", type=float, default=0.0)
+    parser.add_argument("--activity-confidence-weight", type=float, default=0.0)
+    parser.add_argument("--activity-area-weight", type=float, default=0.0)
+    parser.add_argument("--activity-contrast-weight", type=float, default=0.0)
+    parser.add_argument("--activity-min-area", type=float, default=0.05)
+    parser.add_argument("--activity-max-area", type=float, default=0.35)
+    parser.add_argument("--activity-target-std", type=float, default=0.15)
     parser.add_argument("--loss-patch-grid-size", type=int, nargs="+", default=None)
     parser.add_argument("--spike-target-rate", type=float, default=0.1)
     parser.add_argument("--loss-signal", default="sigmoid_membrane", choices=["spikes", "membrane", "sigmoid_membrane"])
@@ -317,12 +323,18 @@ def main():
         sample_diversity_weight=args.sample_diversity_weight,
         spatial_compactness_weight=args.spatial_compactness_weight,
         temporal_balance_weight=args.temporal_balance_weight,
+        activity_confidence_weight=args.activity_confidence_weight,
+        activity_area_weight=args.activity_area_weight,
+        activity_contrast_weight=args.activity_contrast_weight,
         spike_target_rate=args.spike_target_rate,
         patch_grid_size=(
             _parse_pair_arg(args.loss_patch_grid_size, "loss-patch-grid-size")
             if args.loss_patch_grid_size is not None
             else _parse_pair_arg(args.spike_spatial_grid_size, "spike-spatial-grid-size")
         ),
+        activity_min_area=args.activity_min_area,
+        activity_max_area=args.activity_max_area,
+        activity_target_std=args.activity_target_std,
     )
 
     _, losses = train_s2net_core(

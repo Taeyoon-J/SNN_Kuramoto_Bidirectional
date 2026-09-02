@@ -131,6 +131,55 @@ def temporal_activity_balance_loss(activity, reduction="mean"):
     return _reduce(loss, reduction)
 
 
+def activity_confidence_loss(activity, reduction="mean"):
+    """
+    Push continuous activity away from the ambiguous 0.5 region.
+
+    This expects probability-like activity values in [0, 1], such as
+    sigmoid(membrane). The loss is highest near 0.5 and lowest near 0 or 1.
+    """
+    if activity.dim() != 3:
+        raise ValueError("activity must have shape [B, N, T].")
+
+    activity = activity.float().clamp(0.0, 1.0)
+    loss = (activity * (1.0 - activity)).mean(dim=(1, 2))
+    return _reduce(loss, reduction)
+
+
+def activity_area_loss(activity, min_area=0.05, max_area=0.35, reduction="mean"):
+    """
+    Keep soft mask area inside a useful range.
+
+    The area is the average activity per sample. This differentiable proxy
+    discourages both empty masks and all-on masks before thresholding.
+    """
+    if activity.dim() != 3:
+        raise ValueError("activity must have shape [B, N, T].")
+    if min_area < 0.0 or max_area > 1.0 or min_area > max_area:
+        raise ValueError("min_area and max_area must satisfy 0 <= min <= max <= 1.")
+
+    area = activity.float().clamp(0.0, 1.0).mean(dim=(1, 2))
+    loss = F.relu(float(min_area) - area).pow(2) + F.relu(area - float(max_area)).pow(2)
+    return _reduce(loss, reduction)
+
+
+def activity_contrast_loss(activity, target_std=0.15, reduction="mean"):
+    """
+    Encourage visible separation between active and inactive patches.
+
+    This prevents every oscillator from living in a narrow band around 0.5,
+    which makes threshold-based masks brittle.
+    """
+    if activity.dim() != 3:
+        raise ValueError("activity must have shape [B, N, T].")
+    if target_std < 0.0:
+        raise ValueError("target_std must be non-negative.")
+
+    std = activity.float().flatten(start_dim=1).std(dim=1)
+    loss = F.relu(float(target_std) - std).pow(2)
+    return _reduce(loss, reduction)
+
+
 def object_overlap_loss(object_groups, num_oscillators=None, reduction="mean", device=None):
     """
     Penalize one oscillator being assigned to multiple detected objects.
@@ -203,8 +252,14 @@ class UnsupervisedS2NetLoss(nn.Module):
         sample_diversity_weight=0.0,
         spatial_compactness_weight=0.0,
         temporal_balance_weight=0.0,
+        activity_confidence_weight=0.0,
+        activity_area_weight=0.0,
+        activity_contrast_weight=0.0,
         spike_target_rate=0.1,
         patch_grid_size=None,
+        activity_min_area=0.05,
+        activity_max_area=0.35,
+        activity_target_std=0.15,
     ):
         super().__init__()
         self.spike_rate_weight = float(spike_rate_weight)
@@ -215,8 +270,14 @@ class UnsupervisedS2NetLoss(nn.Module):
         self.sample_diversity_weight = float(sample_diversity_weight)
         self.spatial_compactness_weight = float(spatial_compactness_weight)
         self.temporal_balance_weight = float(temporal_balance_weight)
+        self.activity_confidence_weight = float(activity_confidence_weight)
+        self.activity_area_weight = float(activity_area_weight)
+        self.activity_contrast_weight = float(activity_contrast_weight)
         self.spike_target_rate = float(spike_target_rate)
         self.patch_grid_size = patch_grid_size
+        self.activity_min_area = float(activity_min_area)
+        self.activity_max_area = float(activity_max_area)
+        self.activity_target_std = float(activity_target_std)
 
     def forward(self, spikes=None, object_groups=None, sc=None):
         device, dtype = _infer_device_dtype(spikes, sc)
@@ -237,6 +298,16 @@ class UnsupervisedS2NetLoss(nn.Module):
         if spikes is not None:
             parts["sample_diversity"] = sample_activity_diversity_loss(spikes)
             parts["temporal_balance"] = temporal_activity_balance_loss(spikes)
+            parts["activity_confidence"] = activity_confidence_loss(spikes)
+            parts["activity_area"] = activity_area_loss(
+                spikes,
+                min_area=self.activity_min_area,
+                max_area=self.activity_max_area,
+            )
+            parts["activity_contrast"] = activity_contrast_loss(
+                spikes,
+                target_std=self.activity_target_std,
+            )
             if self.patch_grid_size is not None:
                 parts["spatial_compactness"] = spatial_compactness_loss(
                     spikes,
@@ -259,6 +330,9 @@ class UnsupervisedS2NetLoss(nn.Module):
             "sample_diversity": self.sample_diversity_weight,
             "spatial_compactness": self.spatial_compactness_weight,
             "temporal_balance": self.temporal_balance_weight,
+            "activity_confidence": self.activity_confidence_weight,
+            "activity_area": self.activity_area_weight,
+            "activity_contrast": self.activity_contrast_weight,
         }
         for name, value in parts.items():
             total = total + weights[name] * value
