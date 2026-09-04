@@ -43,7 +43,7 @@ class SharedMultiScaleEncoder(nn.Module):
         )
         self.cnn_a = SharedConvBlock(feature_channels)
         self.cnn_b = SharedConvBlock(feature_channels)
-        self.pool = nn.AvgPool2d(kernel_size=2, stride=2)
+        self.pool = nn.MaxPool2d(kernel_size=2, stride=2)
 
     def forward(self, image: Tensor) -> list[Tensor]:
         """Return raw differentiable features from 128, 64, 32, and 16 scales."""
@@ -160,7 +160,7 @@ def run_structural_probe() -> None:
     print("CNN_A and CNN_B are different modules:", model.encoder.cnn_a is not model.encoder.cnn_b)
     print("shared CNN_A call count:", call_counts["cnn_a"])
     print("shared CNN_B call count:", call_counts["cnn_b"])
-    print("AvgPool2d call count:", call_counts["pool"])
+    print("MaxPool2d call count:", call_counts["pool"])
     print("all parameters trainable:", all(parameter.requires_grad for parameter in model.parameters()))
     print("backward gradients verified: True")
 
