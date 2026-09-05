@@ -1,63 +1,87 @@
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 from dataclasses import dataclass
 from kuramoto_layer import graphVectorKuramoto
 from dendric_layer import DendricLayer
 from membrane_layer import MembraneLayer
 from sinusoidal_gating import sinusoidal_gating
-from input_layer_generator import CNNFeatureEncoder
-from gamma_initializer import FeaturePatchGammaInitializer
+from u_net import SharedMultiScaleUNet
+from u_net_classifier import classify_hierarchical_spikes
 from sc_generator import generate_sc
-from spike_classifier import spike_interval, spike_rhythm, spike_spatial_components
 
 class GammaGenerator(nn.Module):
-    """Generate gamma sequences from input images."""
+    """Generate one spatial-patch gamma sequence per U-Net encoder level."""
 
     def __init__(self, hparams, device="cuda"):
         super().__init__()
         self.T = int(hparams.num_feature_maps)
-        self.in_dim = int(hparams.num_regions)
-        self.device = device
-        self.input_layer = CNNFeatureEncoder(
-            num_kernels=self.T,
-            kernel_size=hparams.kernel_size,
-            in_channels=hparams.in_channels,
-            bias=True,
-        )
-        self.gamma_initializer = FeaturePatchGammaInitializer(
-            grid_size=hparams.gamma_patch_grid_size,
-            patch_size=hparams.gamma_patch_size,
-            stride=hparams.gamma_patch_stride,
-            reduction=hparams.gamma_patch_reduction,
-        )
-
-    def forward(self, x):
-        x = x.to(self.device)
-        feature_maps = self._image_to_feature_maps(x)
-        gamma_seq = self.gamma_initializer(feature_maps)
-        if gamma_seq.size(-1) != self.in_dim:
+        if self.T != 8:
             raise ValueError(
-                f"Patch gamma produced {gamma_seq.size(-1)} oscillators, "
-                f"but hparams.num_regions is {self.in_dim}."
+                "SharedMultiScaleUNet produces exactly 8 feature maps per level, "
+                f"but hparams.num_feature_maps is {self.T}."
             )
-        return gamma_seq
 
-    def _image_to_feature_maps(self, x):
+        self.device = torch.device(device)
+        self.patch_size = 8
+        self.unet = SharedMultiScaleUNet(feature_channels=self.T).to(self.device)
+
+    def forward(self, x, return_features=False):
+        """Return four gamma tensors, optionally together with encoder features."""
         if x.dim() != 4:
             raise ValueError("x must have shape [B, 3, H, W]. Use B=1 for one image.")
         if x.size(1) != 3:
             raise ValueError(f"Expected RGB input with 3 channels, but got {x.size(1)}.")
 
-        return self.input_layer(x)
+        model_device = next(self.unet.parameters()).device
+        feature_levels = self.unet.encoder(x.to(model_device))
+        gamma_levels = []
+
+        for level_index, feature_maps in enumerate(feature_levels, start=1):
+            height, width = feature_maps.shape[-2:]
+            if height % self.patch_size != 0 or width % self.patch_size != 0:
+                raise ValueError(
+                    f"U-Net level {level_index} has spatial shape {(height, width)}, "
+                    f"which is not divisible by patch size {self.patch_size}."
+                )
+
+            pooled = F.avg_pool2d(
+                feature_maps,
+                kernel_size=self.patch_size,
+                stride=self.patch_size,
+            )
+            gamma_levels.append(pooled.flatten(start_dim=2))
+
+        if return_features:
+            return gamma_levels, feature_levels
+        return gamma_levels
+
+    def load_unet_checkpoint(self, checkpoint_path, map_location=None):
+        """Load a SharedMultiScaleUNet training checkpoint."""
+        checkpoint = torch.load(
+            checkpoint_path,
+            map_location=map_location if map_location is not None else self.device,
+        )
+        state_dict = checkpoint.get("model_state_dict", checkpoint)
+        self.unet.load_state_dict(state_dict)
+        return self
+
+    def set_unet_trainable(self, trainable):
+        """Enable or disable gradient updates for the U-Net."""
+        for parameter in self.unet.parameters():
+            parameter.requires_grad = bool(trainable)
+        return self
 
 
 class S2NetCore(nn.Module):
     """Classifier core driven by gamma and batch-specific connectivity."""
 
-    def __init__(self, hparams, device="cuda"):
+    def __init__(self, hparams, device="cuda", num_regions=None):
         super().__init__()
         self.T = int(hparams.num_feature_maps)
-        self.in_dim = int(hparams.num_regions)
+        self.in_dim = int(
+            hparams.num_regions if num_regions is None else num_regions
+        )
         self.osc_dim = 4
         self.phase_delay_steps = 2
         self.device = device
@@ -154,41 +178,48 @@ class S2NetCore(nn.Module):
 
 @dataclass
 class S2NetOutput:
-    """Detailed outputs from one image-conditioned S2Net forward pass."""
+    """Detailed outputs from one multi-level S2Net forward pass."""
 
-    object_groups: list | None
-    spikes: torch.Tensor
-    core_out: torch.Tensor
-    gamma_seq: torch.Tensor
-    sc: torch.Tensor
-    dense_i: torch.Tensor | None = None
-    dendritic_h: torch.Tensor | None = None
+    object_masks: torch.Tensor | None
+    valid_objects: torch.Tensor | None
+    feature_levels: list[torch.Tensor]
+    gamma_levels: list[torch.Tensor]
+    sc_levels: list[torch.Tensor]
+    spike_levels: list[torch.Tensor]
+    core_out_levels: list[torch.Tensor]
+    dense_i_levels: list[torch.Tensor | None]
+    dendritic_h_levels: list[torch.Tensor | None]
 
 
 class S2NetClassifier(nn.Module):
-    """End-to-end wrapper: image -> spatial patch gamma -> classifier core."""
+    """Run four U-Net feature levels through independent S2Net cores."""
 
     def __init__(self, hparams, device="cuda"):
         super().__init__()
         hparams.validate()
         self.hparams = hparams
-        self.device = device
-        self.patch_grid_size = hparams.gamma_patch_grid_size
-        self.spike_classify_method = hparams.spike_classify_method
-        self.spike_rhythm_threshold = hparams.spike_rhythm_threshold
-        self.spike_rhythm_min_group_size = hparams.spike_rhythm_min_group_size
-        self.spike_rhythm_return_all_groups = hparams.spike_rhythm_return_all_groups
-        self.spike_interval_size = hparams.spike_interval_size
-        self.spike_interval_threshold = hparams.spike_interval_threshold
-        self.spike_interval_min_group_size = hparams.spike_interval_min_group_size
-        self.spike_interval_include_partial = hparams.spike_interval_include_partial
-        self.spike_spatial_grid_size = hparams.spike_spatial_grid_size
-        self.spike_spatial_threshold = hparams.spike_spatial_threshold
-        self.spike_spatial_min_group_size = hparams.spike_spatial_min_group_size
-        self.spike_spatial_activity_source = hparams.spike_spatial_activity_source
-        self.spike_spatial_time_aggregate = hparams.spike_spatial_time_aggregate
+        self.device = torch.device(device)
+        self.level_grid_sizes = (
+            (16, 16),
+            (8, 8),
+            (4, 4),
+            (2, 2),
+        )
+        self.level_num_regions = tuple(
+            grid_height * grid_width
+            for grid_height, grid_width in self.level_grid_sizes
+        )
         self.gamma_generator = GammaGenerator(hparams, device=device)
-        self.core = S2NetCore(hparams, device=device)
+        self.level_cores = nn.ModuleList(
+            [
+                S2NetCore(
+                    hparams,
+                    device=device,
+                    num_regions=num_regions,
+                )
+                for num_regions in self.level_num_regions
+            ]
+        )
 
     @classmethod
     def from_hyperparameters(cls, hparams, device="cuda"):
@@ -197,98 +228,107 @@ class S2NetClassifier(nn.Module):
 
     def forward(self, x, return_details=False, classify=True):
         x = x.to(self.device)
-        gamma_seq = self.gamma_generator(x)
-        sc = generate_sc(
+        gamma_levels, feature_levels = self.gamma_generator(
             x,
-            self.patch_grid_size,
-            sigma_color=self.hparams.sc_sigma_color,
-            m_min=self.hparams.sc_m_min,
-            self_connectivity=self.hparams.sc_self_connectivity,
+            return_features=True,
         )
-        spikes, core_out = self.core(
-            gamma_seq,
-            sc=sc,
-        )
-        object_groups = (
-            self._detect_object_groups(core_out, spikes)
-            if classify
-            else None
-        )
+        if len(gamma_levels) != len(self.level_cores):
+            raise ValueError(
+                f"Expected {len(self.level_cores)} gamma levels, "
+                f"but received {len(gamma_levels)}."
+            )
+
+        sc_levels = []
+        spike_levels = []
+        core_out_levels = []
+        dense_i_levels = []
+        dendritic_h_levels = []
+
+        for level_index, (gamma, grid_size, core) in enumerate(
+            zip(gamma_levels, self.level_grid_sizes, self.level_cores),
+            start=1,
+        ):
+            expected_regions = self.level_num_regions[level_index - 1]
+            if gamma.shape[-1] != expected_regions:
+                raise ValueError(
+                    f"Level {level_index} gamma has {gamma.shape[-1]} oscillators, "
+                    f"but grid {grid_size} requires {expected_regions}."
+                )
+
+            sc = generate_sc(
+                x,
+                grid_size,
+                sigma_color=self.hparams.sc_sigma_color,
+                m_min=self.hparams.sc_m_min,
+                self_connectivity=self.hparams.sc_self_connectivity,
+            )
+            spikes, core_out = core(gamma, sc=sc)
+            sc_levels.append(sc)
+            spike_levels.append(spikes)
+            core_out_levels.append(core_out)
+            dense_i_levels.append(core.dense_history)
+            dendritic_h_levels.append(core.dendritic_history)
+
+        if classify:
+            object_masks, valid_objects = classify_hierarchical_spikes(
+                spike_levels,
+                output_size=x.shape[-2:],
+                level_grid_sizes=self.level_grid_sizes,
+            )
+        else:
+            object_masks = None
+            valid_objects = None
+
         if return_details:
             return S2NetOutput(
-                object_groups=object_groups,
-                spikes=spikes,
-                core_out=core_out,
-                gamma_seq=gamma_seq,
-                sc=sc,
-                dense_i=self.core.dense_history,
-                dendritic_h=self.core.dendritic_history,
+                object_masks=object_masks,
+                valid_objects=valid_objects,
+                feature_levels=feature_levels,
+                gamma_levels=gamma_levels,
+                sc_levels=sc_levels,
+                spike_levels=spike_levels,
+                core_out_levels=core_out_levels,
+                dense_i_levels=dense_i_levels,
+                dendritic_h_levels=dendritic_h_levels,
             )
-        return object_groups, spikes
+        return object_masks, spike_levels
 
-    def _detect_object_groups(self, core_out, spikes):
-        if self.spike_classify_method == "spike_rhythm":
-            return spike_rhythm(
-                spikes,
-                threshold=self.spike_rhythm_threshold,
-                min_group_size=self.spike_rhythm_min_group_size,
-                return_all_groups=self.spike_rhythm_return_all_groups,
-            )
-        if self.spike_classify_method == "spike_interval":
-            return spike_interval(
-                core_out,
-                interval_size=self.spike_interval_size,
-                threshold=self.spike_interval_threshold,
-                min_group_size=self.spike_interval_min_group_size,
-                include_partial=self.spike_interval_include_partial,
-            )
-        if self.spike_classify_method == "spatial_components":
-            if self.spike_spatial_activity_source == "spikes":
-                activity = spikes
-            elif self.spike_spatial_activity_source == "membrane":
-                activity = core_out
-            else:
-                activity = torch.sigmoid(core_out)
-            return spike_spatial_components(
-                activity,
-                patch_grid_size=self.spike_spatial_grid_size,
-                threshold=self.spike_spatial_threshold,
-                min_group_size=self.spike_spatial_min_group_size,
-                activity_source=self.spike_spatial_activity_source,
-                time_aggregate=self.spike_spatial_time_aggregate,
-            )
-        raise ValueError(f"Unsupported spike_classify_method: {self.spike_classify_method}")
-
-    def load_input_layer(self, checkpoint_path, map_location=None):
-        """Load pretrained GammaGenerator.input_layer parameters."""
-        state_dict = torch.load(
+    def load_unet(self, checkpoint_path, map_location=None, trainable=False):
+        """Load the trained U-Net and optionally enable fine-tuning."""
+        self.gamma_generator.load_unet_checkpoint(
             checkpoint_path,
             map_location=self._checkpoint_device(map_location),
         )
-        self.gamma_generator.input_layer.load_state_dict(state_dict)
+        self.gamma_generator.set_unet_trainable(trainable)
         return self
 
-    def load_core(self, checkpoint_path, map_location=None):
-        """Load pretrained S2NetCore parameters."""
-        state_dict = torch.load(
+    def load_cores(self, checkpoint_path, map_location=None):
+        """Load one checkpoint containing all four level-core parameters."""
+        checkpoint = torch.load(
             checkpoint_path,
             map_location=self._checkpoint_device(map_location),
         )
-        self.core.load_state_dict(state_dict)
+        state_dict = checkpoint.get("level_cores_state_dict", checkpoint)
+        self.level_cores.load_state_dict(state_dict)
         return self
 
     def load_checkpoints(
         self,
-        input_layer_path=None,
-        core_path=None,
+        unet_path=None,
+        cores_path=None,
         map_location=None,
         eval_mode=True,
+        unet_trainable=False,
     ):
-        """Load any available pretrained component checkpoints."""
-        if input_layer_path is not None:
-            self.load_input_layer(input_layer_path, map_location=map_location)
-        if core_path is not None:
-            self.load_core(core_path, map_location=map_location)
+        """Load the U-Net and/or multi-level core checkpoints."""
+        if unet_path is not None:
+            self.load_unet(
+                unet_path,
+                map_location=map_location,
+                trainable=unet_trainable,
+            )
+        if cores_path is not None:
+            self.load_cores(cores_path, map_location=map_location)
         if eval_mode:
             self.eval()
         return self
