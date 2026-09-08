@@ -29,7 +29,7 @@ class S2NetHyperparameters:
 
     # Online image-conditioned structural connectivity
     sc_sigma_color: float = 0.25
-    sc_m_min: float = 0.5
+    sc_m_min: float = 0.2
     sc_self_connectivity: float = 0.0
 
     # Kuramoto dynamics

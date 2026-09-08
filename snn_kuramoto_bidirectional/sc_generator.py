@@ -59,7 +59,7 @@ def generate_image_modulation(
     grid_size: GridSize,
     *,
     sigma_color: float = 0.25,
-    m_min: float = 0.5,
+    m_min: float = 0.2,
 ) -> Tensor:
     """Create RGB-similarity modulation ``[B, N, N]`` from original images.
 
@@ -99,7 +99,7 @@ def generate_sc(
     grid_size: GridSize,
     *,
     sigma_color: float = 0.25,
-    m_min: float = 0.5,
+    m_min: float = 0.2,
     self_connectivity: float = 0.0,
 ) -> Tensor:
     """Generate image-specific patch connectivity ``[B, N, N]``.
