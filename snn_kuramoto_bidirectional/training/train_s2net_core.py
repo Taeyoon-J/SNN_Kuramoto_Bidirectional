@@ -14,21 +14,25 @@ try:
     from snn_kuramoto_bidirectional.hyperparameter import S2NetHyperparameters
     from snn_kuramoto_bidirectional.loss_function import (
         UnsupervisedS2NetLoss,
+        patch_pool_rgb,
         phase_locking_value,
         phase_alignment,
         signal_synchrony,
     )
-    from snn_kuramoto_bidirectional.s2net_cls import S2NetCore
+    from snn_kuramoto_bidirectional.s2net_cls import GammaGenerator, S2NetCore
+    from snn_kuramoto_bidirectional.training.train_gamma_initializer import load_image_folder
     from snn_kuramoto_bidirectional.sc_generator import pearson_cor_sc
 except ModuleNotFoundError:
     from hyperparameter import S2NetHyperparameters
     from loss_function import (
         UnsupervisedS2NetLoss,
+        patch_pool_rgb,
         phase_locking_value,
         phase_alignment,
         signal_synchrony,
     )
-    from s2net_cls import S2NetCore
+    from s2net_cls import GammaGenerator, S2NetCore
+    from train_gamma_initializer import load_image_folder
     from sc_generator import pearson_cor_sc
 
 
@@ -46,6 +50,9 @@ def train_s2net_core(
     verbose=False,
     plv_settle=0,
     plv_source="phase",
+    gamma_generator=None,
+    encoder_lr=None,
+    recon_grid=None,
 ):
     """
     Train only S2NetCore from precomputed gamma sequences with an unsupervised
@@ -63,18 +70,43 @@ def train_s2net_core(
     device = _resolve_device(device, core)
     core = core.to(device)
     criterion = criterion if criterion is not None else UnsupervisedS2NetLoss()
-    optimizer = optimizer if optimizer is not None else torch.optim.Adam(core.parameters(), lr=lr)
+    if optimizer is None:
+        # End to end: the feature encoder learns alongside the core. It was
+        # trained as a reconstruction autoencoder and never asked to separate
+        # objects; per-channel IoU against ground truth averages 0.079, with two
+        # channels at exactly 0.000, so the features cap everything downstream.
+        groups = [{"params": list(core.parameters()), "lr": lr}]
+        if gamma_generator is not None:
+            gamma_generator = gamma_generator.to(device)
+            # A pretrained encoder is easy to destroy at the core's learning
+            # rate: at lr 1e-3 for 50 epochs the phase readout fell 23% on both
+            # seeds tried. Its own rate is separate so it can be moved gently.
+            groups.append({
+                "params": list(gamma_generator.parameters()),
+                "lr": lr if encoder_lr is None else float(encoder_lr),
+            })
+        optimizer = torch.optim.Adam(groups)
     loss_history = []
     parts_history = []
 
     core.train()
+    if gamma_generator is not None:
+        gamma_generator.train()
     for epoch in range(1, int(epochs) + 1):
         epoch_loss = 0.0
         sample_count = 0
         epoch_parts = {}
         for batch in dataloader:
-            gamma_seq = _unpack_gamma_batch(batch)
-            gamma_seq = gamma_seq.to(device)
+            raw_batch = _unpack_gamma_batch(batch).to(device)
+            recon_target = None
+            if gamma_generator is not None:
+                # the reconstruction target is pooled RGB, external to the model,
+                # so it cannot be gamed by changing the features
+                if float(getattr(criterion, "slot_reconstruction_weight", 0.0)) != 0.0:
+                    recon_target = patch_pool_rgb(raw_batch, recon_grid)
+                gamma_seq = gamma_generator(raw_batch)      # images -> gamma
+            else:
+                gamma_seq = raw_batch
 
             object_groups, spikes, core_out, plv, theta = _forward_with_plv(
                 core, gamma_seq, criterion, plv_settle, plv_source
@@ -91,12 +123,16 @@ def train_s2net_core(
                 plv=plv,
                 theta=theta,
                 plv_settle=int(plv_settle),
+                recon_target=recon_target,
             )
 
             optimizer.zero_grad()
             loss.backward()
             if grad_clip_norm is not None and float(grad_clip_norm) > 0:
-                torch.nn.utils.clip_grad_norm_(core.parameters(), float(grad_clip_norm))
+                clipped = list(core.parameters())
+                if gamma_generator is not None:
+                    clipped += list(gamma_generator.parameters())
+                torch.nn.utils.clip_grad_norm_(clipped, float(grad_clip_norm))
             optimizer.step()
 
             batch_size = gamma_seq.size(0)
@@ -123,6 +159,9 @@ def train_s2net_core(
 
     if save_path is not None:
         save_s2net_core(core, save_path)
+        if gamma_generator is not None:
+            enc = Path(save_path).with_name(Path(save_path).stem + "_encoder.pt")
+            torch.save(gamma_generator.state_dict(), enc)
 
     return core, loss_history
 
@@ -173,7 +212,8 @@ def evaluate_s2net_core(core, dataloader, criterion=None, device=None, plv_settl
 def _uses_theta(criterion):
     return any(
         float(getattr(criterion, name, 0.0)) != 0.0
-        for name in ("phase_quantization_weight", "phase_spread_weight")
+        for name in ("phase_quantization_weight", "phase_spread_weight",
+                     "slot_reconstruction_weight")
     )
 
 
@@ -281,7 +321,33 @@ def main():
     import argparse
 
     parser = argparse.ArgumentParser(description="Train S2NetCore from precomputed gamma sequences.")
-    parser.add_argument("--gamma-seq-path", required=True)
+    parser.add_argument(
+        "--gamma-seq-path",
+        default=None,
+        help="Precomputed gamma. Mutually exclusive with --image-dir.",
+    )
+    parser.add_argument(
+        "--image-dir",
+        default=None,
+        help=(
+            "Train end to end from images instead of frozen gamma, so the CNN "
+            "feature encoder learns alongside the core. Requires --num-regions "
+            "and --gamma-patch-grid-size."
+        ),
+    )
+    parser.add_argument("--image-size", type=int, default=128)
+    parser.add_argument("--max-images", type=int, default=None)
+    parser.add_argument(
+        "--gamma-patch-grid-size",
+        type=int,
+        default=None,
+        help="Patch grid for end-to-end mode, e.g. 16 for a 16x16 grid.",
+    )
+    parser.add_argument(
+        "--input-encoder-path",
+        default=None,
+        help="Optional pretrained CNNFeatureEncoder to start the encoder from.",
+    )
     parser.add_argument("--save-path", required=True)
     parser.add_argument("--sc-path", default=None)
     parser.add_argument("--sc-save-path", default=None)
@@ -511,24 +577,74 @@ def main():
             "without a fixed seed any difference below about 0.07 is unreadable."
         ),
     )
+    parser.add_argument(
+        "--slot-reconstruction-weight",
+        type=float,
+        default=0.0,
+        help=(
+            "Require the phase grouping to explain the image: patches are rebuilt "
+            "from their slot's mean pooled RGB. Every other loss is a generic "
+            "structure prior that knows nothing about objects, which is how "
+            "targets like a group count get optimised perfectly while the task "
+            "score falls to chance. Needs --image-dir."
+        ),
+    )
+    parser.add_argument("--slot-num-slots", type=int, default=7)
+    parser.add_argument("--slot-temperature", type=float, default=0.3)
+    parser.add_argument(
+        "--encoder-lr",
+        type=float,
+        default=None,
+        help=(
+            "Separate learning rate for the feature encoder in end-to-end mode. "
+            "Defaults to --lr, which measured 23% worse on the phase readout for "
+            "a pretrained encoder."
+        ),
+    )
     parser.add_argument("--verbose", action="store_true")
     args = parser.parse_args()
 
     torch.manual_seed(int(args.seed))
     torch.cuda.manual_seed_all(int(args.seed))
 
-    gamma_seq = torch.load(args.gamma_seq_path, map_location="cpu").float()
-    if gamma_seq.dim() != 3:
-        raise ValueError(f"gamma_seq must have shape [B, T, N], but got {tuple(gamma_seq.shape)}.")
+    if (args.gamma_seq_path is None) == (args.image_dir is None):
+        raise ValueError("Pass exactly one of --gamma-seq-path or --image-dir.")
 
-    num_feature_maps = gamma_seq.size(1) if args.num_feature_maps is None else int(args.num_feature_maps)
-    num_regions = gamma_seq.size(2) if args.num_regions is None else int(args.num_regions)
-    if gamma_seq.size(1) != num_feature_maps:
-        raise ValueError(f"gamma_seq T={gamma_seq.size(1)} does not match num_feature_maps={num_feature_maps}.")
-    if gamma_seq.size(2) != num_regions:
-        raise ValueError(f"gamma_seq N={gamma_seq.size(2)} does not match num_regions={num_regions}.")
+    gamma_generator = None
+    if args.image_dir is not None:
+        if args.gamma_patch_grid_size is None:
+            raise ValueError("--gamma-patch-grid-size is required with --image-dir.")
+        images = load_image_folder(
+            args.image_dir, image_size=args.image_size, max_images=args.max_images
+        )
+        grid = int(args.gamma_patch_grid_size)
+        train_tensor = images
+        num_feature_maps = int(args.num_feature_maps or 8)
+        num_regions = grid * grid
+        print(f"end-to-end: {images.size(0)} images, {grid}x{grid} grid, "
+              f"{num_regions} oscillators", flush=True)
+        # gamma is produced on the fly, so SC has to come from a first pass
+        gamma_seq = None
+    else:
+        gamma_seq = torch.load(args.gamma_seq_path, map_location="cpu").float()
+        if gamma_seq.dim() != 3:
+            raise ValueError(f"gamma_seq must have shape [B, T, N], but got {tuple(gamma_seq.shape)}.")
+        train_tensor = gamma_seq
 
-    if args.sc_path is None:
+    if gamma_seq is not None:
+        num_feature_maps = gamma_seq.size(1) if args.num_feature_maps is None else int(args.num_feature_maps)
+        num_regions = gamma_seq.size(2) if args.num_regions is None else int(args.num_regions)
+        if gamma_seq.size(1) != num_feature_maps:
+            raise ValueError(f"gamma_seq T={gamma_seq.size(1)} does not match num_feature_maps={num_feature_maps}.")
+        if gamma_seq.size(2) != num_regions:
+            raise ValueError(f"gamma_seq N={gamma_seq.size(2)} does not match num_regions={num_regions}.")
+
+    if args.graph_mode == "learned":
+        # the graph is built per image, so the fixed SC is never read
+        sc = None
+    elif args.sc_path is None:
+        if gamma_seq is None:
+            raise ValueError("--sc-path is required in end-to-end mode with a static graph.")
         sc = pearson_cor_sc(gamma_seq.reshape(-1, num_regions))
         if args.sc_save_path is not None:
             sc_path = Path(args.sc_save_path)
@@ -538,7 +654,7 @@ def main():
     else:
         sc = torch.load(args.sc_path, map_location="cpu").float()
 
-    if tuple(sc.shape) != (num_regions, num_regions):
+    if sc is not None and tuple(sc.shape) != (num_regions, num_regions):
         raise ValueError(f"sc must have shape {(num_regions, num_regions)}, but got {tuple(sc.shape)}.")
 
     hparams = S2NetHyperparameters(
@@ -590,8 +706,17 @@ def main():
     hparams.validate()
 
     core = S2NetCore(hparams, device=args.device)
+    if args.image_dir is not None:
+        hparams.gamma_mode = "patch"
+        hparams.gamma_patch_grid_size = int(args.gamma_patch_grid_size)
+        gamma_generator = GammaGenerator(hparams, device=args.device).to(args.device)
+        if args.input_encoder_path is not None:
+            gamma_generator.input_layer.load_state_dict(
+                torch.load(args.input_encoder_path, map_location=args.device)
+            )
+            print(f"loaded pretrained encoder: {args.input_encoder_path}", flush=True)
     loader = DataLoader(
-        TensorDataset(gamma_seq),
+        TensorDataset(train_tensor),
         batch_size=int(args.batch_size),
         shuffle=True,
     )
@@ -624,6 +749,9 @@ def main():
         phase_quantization_weight=args.phase_quantization_weight,
         phase_spread_weight=args.phase_spread_weight,
         phase_num_slots=args.phase_num_slots,
+        slot_reconstruction_weight=args.slot_reconstruction_weight,
+        slot_num_slots=args.slot_num_slots,
+        slot_temperature=args.slot_temperature,
         plv_target_density=args.plv_target_density,
         plv_target_groups=args.plv_target_groups,
     )
@@ -641,6 +769,9 @@ def main():
         verbose=args.verbose,
         plv_settle=args.plv_settle,
         plv_source=args.plv_source,
+        gamma_generator=gamma_generator,
+        encoder_lr=args.encoder_lr,
+        recon_grid=args.gamma_patch_grid_size,
     )
     print(f"trained S2NetCore: {args.save_path}")
     print(f"loss: {losses[0]:.6f} -> {losses[-1]:.6f}")

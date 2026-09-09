@@ -375,6 +375,66 @@ def signal_synchrony(signal, settle=0, eps=1e-8):
     return torch.bmm(trace, trace.transpose(1, 2)).abs().clamp(0.0, 1.0)
 
 
+def patch_pool_rgb(images, grid_size):
+    """[B, 3, H, W] images -> [B, grid*grid, 3] mean RGB per patch."""
+    grid_h, grid_w = _parse_grid_size(grid_size)
+    pooled = F.adaptive_avg_pool2d(images, (grid_h, grid_w))
+    return pooled.flatten(2).transpose(1, 2)
+
+
+def slot_reconstruction_loss(theta, target, num_slots=7, settle=0, temperature=0.3,
+                            reduction="mean", eps=1e-8):
+    """
+    Require the phase grouping to explain the image.
+
+    Every other loss here is a generic structure prior: make synchrony bimodal,
+    do not collapse, keep groups contiguous. None of them knows what an object
+    is, which is why targets like a fixed group count or a k-fold phase grid can
+    be optimised perfectly while the task score falls to chance. The model can
+    satisfy them with structure unrelated to objects.
+
+    Reconstruction removes that freedom. Oscillators are softly assigned to slots
+    by their phase, each slot takes the mean of the target over the patches
+    assigned to it, and every patch is then rebuilt from its slot:
+
+        phi   = preferred phase of each unit
+        w     = softmax_k cos(phi_i - psi_k) / temperature      [B, N, K]
+        slot  = sum_i w_ik * target_i / sum_i w_ik              [B, K, C]
+        recon = sum_k w_ik * slot_k                             [B, N, C]
+
+    A grouping that cuts across objects makes each slot mean a blur of unlike
+    content, so the reconstruction is poor. A grouping that follows objects makes
+    slots homogeneous and the reconstruction cheap. This is the signal
+    slot-based methods use, and it is what the phase structure has been missing.
+
+    Everything is differentiable, so it works despite the eventual readout
+    (spectral clustering) being outside the graph.
+
+    Args:
+        theta:  [B, T, N, D] phase history.
+        target: [B, N, C] what each patch should be rebuilt as. Prefer something
+            external to the model, such as pooled RGB; reconstructing the
+            model's own features invites a collapse to uniform features.
+    """
+    if theta.dim() != 4:
+        raise ValueError("theta must have shape [B, T, N, D].")
+    if target.dim() != 3:
+        raise ValueError("target must have shape [B, N, C].")
+
+    phi = preferred_phase(theta, settle=settle)                      # [B, N]
+    slots = torch.arange(int(num_slots), device=phi.device, dtype=phi.dtype)
+    centres = 2.0 * math.pi * slots / float(num_slots)
+    weights = (torch.cos(phi.unsqueeze(-1) - centres) / float(temperature)).softmax(dim=-1)
+
+    mass = weights.sum(dim=1).clamp_min(eps)                         # [B, K]
+    slot_value = torch.einsum("bnk,bnc->bkc", weights, target) / mass.unsqueeze(-1)
+    reconstruction = torch.einsum("bnk,bkc->bnc", weights, slot_value)
+
+    loss = (reconstruction - target).pow(2).mean(dim=(1, 2))
+    scale = target.var(dim=(1, 2)).clamp_min(eps)                    # scale free
+    return _reduce(loss / scale, reduction)
+
+
 def plv_collapse_loss(plv, eps=1e-4, reduction="mean"):
     """
     Barrier against a uniform synchrony matrix.
@@ -540,6 +600,9 @@ class UnsupervisedS2NetLoss(nn.Module):
         plv_coherence_weight=0.0,
         plv_group_count_weight=0.0,
         plv_collapse_weight=0.0,
+        slot_reconstruction_weight=0.0,
+        slot_num_slots=7,
+        slot_temperature=0.3,
         phase_quantization_weight=0.0,
         phase_spread_weight=0.0,
         phase_num_slots=7.0,
@@ -552,6 +615,9 @@ class UnsupervisedS2NetLoss(nn.Module):
         self.plv_coherence_weight = float(plv_coherence_weight)
         self.plv_group_count_weight = float(plv_group_count_weight)
         self.plv_collapse_weight = float(plv_collapse_weight)
+        self.slot_reconstruction_weight = float(slot_reconstruction_weight)
+        self.slot_num_slots = int(slot_num_slots)
+        self.slot_temperature = float(slot_temperature)
         self.phase_quantization_weight = float(phase_quantization_weight)
         self.phase_spread_weight = float(phase_spread_weight)
         self.phase_num_slots = float(phase_num_slots)
@@ -575,7 +641,7 @@ class UnsupervisedS2NetLoss(nn.Module):
         self.activity_target_std = float(activity_target_std)
 
     def forward(self, spikes=None, object_groups=None, sc=None, plv=None, theta=None,
-                plv_settle=0):
+                plv_settle=0, recon_target=None):
         device, dtype = _infer_device_dtype(spikes, sc, plv)
         total = torch.zeros((), device=device, dtype=dtype)
         parts = {}
@@ -585,6 +651,11 @@ class UnsupervisedS2NetLoss(nn.Module):
                 theta, num_slots=self.phase_num_slots, settle=plv_settle
             )
             parts["phase_spread"] = phase_spread_loss(theta, settle=plv_settle)
+            if recon_target is not None:
+                parts["slot_reconstruction"] = slot_reconstruction_loss(
+                    theta, recon_target, num_slots=self.slot_num_slots,
+                    settle=plv_settle, temperature=self.slot_temperature,
+                )
 
         if plv is not None:
             parts["plv_bimodality"] = plv_bimodality_loss(plv)
@@ -657,6 +728,7 @@ class UnsupervisedS2NetLoss(nn.Module):
             "plv_coherence": self.plv_coherence_weight,
             "plv_group_count": self.plv_group_count_weight,
             "plv_collapse": self.plv_collapse_weight,
+            "slot_reconstruction": self.slot_reconstruction_weight,
             "phase_quantization": self.phase_quantization_weight,
             "phase_spread": self.phase_spread_weight,
         }

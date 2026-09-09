@@ -56,7 +56,23 @@ capture only 78% of the scene objects, so objects the model does find can still
 be scored as wrong.
 
 `results/result_overview.png` shows images, ground truth, and both readouts side
-by side.
+by side. `results/report_figure.png` puts the best case next to the median, the
+worst, and the distribution. `results/spike_raster.png` shows the mechanism
+itself: oscillators sorted by object, each object firing at its own rhythm.
+
+## Does the model earn its place?
+
+The control that matters, and the one this project went longest without running:
+cluster the patch features directly, with no oscillators at all, and compare.
+
+| | ARI | fgIoU |
+| --- | --- | --- |
+| cluster the CNN features directly | 0.077 | 0.145 |
+| **through Kuramoto + SNN** | **0.284** | **0.187** |
+
+**3.7x.** The dynamics are not decoration; they build group structure that is not
+recoverable from feature similarity alone. Any future change should be checked
+against this baseline, because a pipeline that only matches it is doing nothing.
 
 ---
 
@@ -496,7 +512,83 @@ between-object synchrony diverged from the task metric four separate times, once
 with a *higher* gap than the phase readout and 1/10 the ARI. It is descriptive
 only.
 
-## 3.4 Hypotheses tested and ruled out
+## 3.4 Better features did not help, and the metric that chose them was wrong
+
+DINOv2 patch features separate CLEVR objects far better than the current encoder
+by the binding measure, so they looked like the obvious fix:
+
+~~~
+                              binding    d'
+current 8-channel CNN          0.102     0.84
+U-Net resnet34, best level     0.134     0.52
+DINOv2 ViT-B/14                0.294     1.49
+raw RGB (floor)                0.021     0.92
+~~~
+
+Trained through the same pipeline they were far worse: ARI 0.045 against 0.346
+for the CNN features on the same seed. The drive entering the oscillators was
+still better (binding 0.133 against 0.071 after projection and phase mapping), so
+the loss is in the dynamics, and `freq_gain` recalibration made it worse rather
+than better, in both directions.
+
+The control above explains it. Clustered directly, DINOv2 scores **0.019** against
+the CNN's **0.077** — four times worse at the actual task, despite being three
+times better by binding. The two measure different things: binding is a mean
+difference, while ARI asks whether a consistent partition exists. DINOv2 patches
+of one object are on average more alike without forming coherent blocks.
+
+That is the fifth time in this project that the binding gap failed to predict
+ARI, and this time the failure was expensive because the gap is what selected
+the features. **Screen feature candidates by direct-clustering ARI, not by
+binding.**
+
+## 3.5 Training the encoder end to end
+
+Unfreezing `CNNFeatureEncoder` and training it with the core at the core's own
+learning rate cost 23% of the phase readout on both seeds. At `--encoder-lr 1e-5`
+the damage disappeared but so did any gain: 0.295 against 0.318 frozen. The
+encoder can be trained without harm; it just has nothing to learn from a loss
+that does not know what an object is.
+
+## 3.6 Reconstruction as a training signal
+
+`slot_reconstruction_loss` softly assigns oscillators to slots by phase, gives
+each slot the mean pooled RGB of its patches, and rebuilds every patch from its
+slot. On a synthetic test with equal-sized blocks it behaved exactly as intended
+(0.19 when the phase groups matched the content, 0.97 when they cut across it).
+
+On CLEVR it halved performance, 0.318 -> 0.138 on both seeds. The synthetic test
+hid the flaw: real backgrounds occupy about 240 of 256 patches, so putting
+everything in one slot reconstructs almost perfectly, and the loss actively
+pushed towards global synchrony. It can be fixed by normalising the error per
+slot rather than per patch, but that is untested.
+
+## 3.7 Readout variants that did not help
+
+Reading the phases scores 0.346 while correlating the same one-dimensional signal
+scores 0.216, which suggested a third was being lost in how synchrony is measured
+rather than in what survives. Whitening each spike train's Fourier magnitude, so
+that only the phase spectrum remains, is PLV's amplitude-blindness in the spike
+domain. It made things far worse:
+
+~~~
+phases, PLV                     0.3461
+spikes, plain correlation       0.2190      current
+spikes, phase-only synchrony    0.0356      6x worse
+membrane, phase-only synchrony  0.0985
+~~~
+
+A binary spike train has noise across most of its spectrum, and whitening
+amplifies that noise to the same magnitude as the signal. PLV working well on
+continuous phases does not transfer to binary events. Plain correlation is the
+better spike readout.
+
+`spike_rhythm`, the repository's own readout, could not be scored at all: its
+Bron-Kerbosch maximal-clique search does not terminate in ten minutes on a dense
+256-node graph. It was written when the grid was 8x8 (64 oscillators) and is not
+usable at 16x16 regardless of whether the spikes now carry signal.
+
+## 3.8 Hypotheses tested and ruled out
 
 **"t is a feature axis, one object per t."** Requires CNN channels to isolate
 objects. They do not: per-channel IoU against ground truth is 0.079 on average,
@@ -667,6 +759,9 @@ parameters create none at their default, so old checkpoints load with
 | `--gate-mode` | `sigmoid` | `raw` unsquashes the gate; `phase_mean` reduces osc_dim first |
 | `--plv-source` | `phase` | `alignment`, `membrane`, `spikes` |
 | `--seed` | 0 | required for any comparison |
+| `--image-dir` | None | train end to end from images instead of frozen gamma |
+| `--encoder-lr` | `--lr` | separate rate for the encoder; 1e-5 avoids damaging a pretrained one |
+| `--slot-reconstruction-weight` | 0.0 | rebuild each patch from its phase slot (see 3.6) |
 
 ## Repository map
 
@@ -695,19 +790,20 @@ parameters create none at their default, so old checkpoints load with
 
 Ranked by evidence, not by appeal.
 
-**1. The feature front-end is frozen and was never asked to separate objects.**
-`CNNFeatureEncoder` was trained as a reconstruction autoencoder and has not been
-updated since. Per-channel IoU against ground truth averages 0.079 with two
-channels at exactly 0.000. Yet training a single linear 8->4 projection on top of
-those frozen features moved binding +29%, which suggests the encoder itself has
-much more to give. This is the ceiling on everything downstream.
+Two directions have now been tried and closed, so what remains is narrower than
+it was.
 
-Caveat: training the encoder against a binding loss risks a trivial solution
-where all features collapse to identical values. It needs a guard.
+**Closed: better off-the-shelf features.** DINOv2 and ImageNet U-Net were both
+measured; DINOv2 is three times better by binding and four times worse at the
+task (3.4). Screen any future candidate by direct-clustering ARI first.
 
-**2. A learned readout.** Spectral clustering sits outside the loss, so what is
-optimised (pairwise PLV structure) and what is measured (cluster quality) are
-different objects.
+**Closed: training the encoder end to end.** Harmless at a low learning rate,
+useless at any rate, because the loss cannot tell it what an object is (3.5).
+
+**1. The readout sits outside the loss.** Spectral clustering is not
+differentiable, so what is optimised (pairwise PLV structure) and what is
+measured (cluster quality) are different objects. This is the one architectural
+gap where the objective could be made to target the metric directly.
 
 **3. Resolution.** At 16x16 an object spans 2-3 patches, which limits boundary
 precision regardless of method. 32x32 costs 4x.
@@ -715,9 +811,14 @@ precision regardless of method. 32x32 costs 4x.
 **4. Estimating k.** Currently taken from ground truth. Needed for a real system;
 it will lower the reported numbers.
 
+**5. Reconstruction, repaired.** The one signal that is known to work in the
+literature. It failed here for a diagnosable reason (3.6) and normalising per
+slot is the obvious fix, but the loss-design record in this project is 0 for 5.
+
 **Not recommended: more loss-weight tuning.** Measured seed noise is +/- 0.07 and
-most loss variants tried fell inside it, while the aggregate-statistic family
-failed four times for a structural reason.
+most loss variants tried fell inside it, while every attempt to encode
+object-ness as an aggregate statistic was optimised perfectly and scored at
+chance.
 
 ## Reproducibility notes
 
