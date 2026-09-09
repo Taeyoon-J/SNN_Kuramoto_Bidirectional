@@ -16,6 +16,28 @@ class S2NetHyperparameters:
     num_feature_maps: int = 8
     num_regions: int = 90
     num_classes: int = 2
+    osc_dim: int = 4
+
+    # SNN recurrent time axis.
+    #
+    # gamma_drive_mode == "sequence" (legacy): one Kuramoto step per visual
+    # channel, so the recurrent length is tied to num_feature_maps.
+    # gamma_drive_mode == "static": gamma is a constant sensory drive and the
+    # recurrent length is num_time_steps, independent of the channel count.
+    # "static" is required for multi-scale/U-Net work, where every level must
+    # share one time axis while having a different channel count.
+    gamma_drive_mode: str = "sequence"
+    num_time_steps: int = 8
+
+    # Map raw gamma values onto a phase range before sin(gamma - theta).
+    # Pooled CNN activations have an arbitrary scale, so "none" lets the drive
+    # wrap around the sine and lose image specificity.
+    gamma_phase_mode: str = "none"
+
+    # Initial oscillator phase. "zeros" makes every image start from the same
+    # state, so only the drive term carries image information.
+    theta_init: str = "zeros"
+    theta_init_noise: float = 0.0
 
     # Fixed region-to-region connectivity matrix [num_regions, num_regions]
     sc: object = None
@@ -39,14 +61,72 @@ class S2NetHyperparameters:
     gamma_order_exact_max_steps: int = 8
     gamma_order_local_search_passes: int = 5
 
-    # Kuramoto dynamics
+    # Coupling graph.
+    #
+    # "static" uses the fixed sc matrix. A fixed graph cannot express which
+    # patches belong to the same object, because that changes with the image,
+    # so "learned" builds one graph per sample from its own features.
+    # Measured on CLEVR at a 16x16 grid: sparse, feature-only, image-conditioned
+    # coupling was the only variant that beat no coupling at all.
+    graph_mode: str = "static"
+    graph_hidden_dim: int = 16
+    graph_top_k: int = 8
+    graph_coupling_gain: float = 8.0
+    graph_temperature: float = 0.1
+
+    # Structural prior on the learned graph. Objects are connected regions, and
+    # the features do not know that. A hand-written spatial x similarity kernel
+    # scored ARI 0.056 against 0.038 for the randomly initialised graph, so this
+    # is a better starting point. None disables it.
+    graph_spatial_decay: object = None
+
+    # Let the graph track the synchrony it produces, so oscillators that stay in
+    # phase couple more strongly. Held fixed for the whole rollout the graph has
+    # no way to sharpen a forming group, and the PLV matrix stays near-uniform
+    # (measured mean 0.763). 0.0 disables it.
+    graph_feedback_strength: float = 0.0
+    graph_feedback_momentum: float = 0.9
+
+    # Kuramoto dynamics.
+    #
+    # freq_gain lets the image set oscillator frequencies. At 0 the input only
+    # pins phases, the system settles to a fixed point, and it globally
+    # synchronises, which erases every group distinction. Measured optimum for
+    # object binding on CLEVR was around 2.0; 0.0 reproduces the original model.
     k: float = 1.0
     dt: float = 0.1
+    freq_gain: float = 0.0
+
+    # Pulse coupling: spikes act back on the phases through the same graph.
+    # Without it the flow is one-way and the spiking layers receive no gradient
+    # at all under the usual loss weights, so they sit at their initialisation
+    # and contribute nothing. 0.0 reproduces the original one-way model.
+    spike_pulse_gain: float = 0.0
 
     # Dendritic SNN layer
     low_n: float = 0.0
     high_n: float = 4.0
     branch: int = 4
+
+    # Membrane layer.
+    #
+    # The defaults were never matched to the signal scale. Measured on a trained
+    # checkpoint: the membrane oscillates with a standard deviation of 0.103
+    # while vth is 0.5, so the threshold sits about five times the amplitude and
+    # the network cannot fire (spike rate 0.0002). Its own binding signal is
+    # 7.5x weaker than the phases it is driven by, because tau_m ~ U(0, 4) gives
+    # a leak of about 0.85 that low-passes away the oscillation carrying the
+    # information. Lowering the tau range shortens the time constant so the
+    # membrane tracks the rhythm instead of averaging it.
+    membrane_vth: float = 0.5
+    membrane_low_m: float = 0.0
+    membrane_high_m: float = 4.0
+
+    # "sigmoid" reproduces the original gate, compressed to [0.5, 0.731] so it
+    # never closes. "raw" leaves it spanning [0, 1]. "phase_mean" reduces the
+    # osc_dim axis before the sine, which measured 0.216 against 0.067 for the
+    # same information reduced the other way round.
+    gate_mode: str = "sigmoid"
 
     # Object-group based classification
     spike_classify_method: str = "spike_rhythm"
@@ -70,6 +150,40 @@ class S2NetHyperparameters:
             raise ValueError("num_regions must be positive.")
         if self.num_classes <= 0:
             raise ValueError("num_classes must be positive.")
+        if self.osc_dim <= 0:
+            raise ValueError("osc_dim must be positive.")
+        if self.gamma_drive_mode not in {"sequence", "static"}:
+            raise ValueError('gamma_drive_mode must be "sequence" or "static".')
+        if self.num_time_steps <= 0:
+            raise ValueError("num_time_steps must be positive.")
+        if self.gamma_phase_mode not in {"none", "tanh", "standardize_tanh"}:
+            raise ValueError(
+                'gamma_phase_mode must be "none", "tanh", or "standardize_tanh".'
+            )
+        if self.theta_init not in {"zeros", "gamma", "gamma_noise"}:
+            raise ValueError('theta_init must be "zeros", "gamma", or "gamma_noise".')
+        if self.theta_init_noise < 0:
+            raise ValueError("theta_init_noise must be non-negative.")
+        if self.graph_mode not in {"static", "learned"}:
+            raise ValueError('graph_mode must be "static" or "learned".')
+        if self.graph_top_k <= 0:
+            raise ValueError("graph_top_k must be positive.")
+        if self.graph_coupling_gain <= 0:
+            raise ValueError("graph_coupling_gain must be positive.")
+        if self.graph_temperature <= 0:
+            raise ValueError("graph_temperature must be positive.")
+        if self.graph_spatial_decay is not None and not 0.0 < float(self.graph_spatial_decay) < 1.0:
+            raise ValueError("graph_spatial_decay must lie in (0, 1).")
+        if not 0.0 <= self.graph_feedback_momentum < 1.0:
+            raise ValueError("graph_feedback_momentum must lie in [0, 1).")
+        if self.membrane_vth <= 0:
+            raise ValueError("membrane_vth must be positive.")
+        if self.membrane_low_m > self.membrane_high_m:
+            raise ValueError("membrane_low_m must not exceed membrane_high_m.")
+        if self.spike_pulse_gain < 0:
+            raise ValueError("spike_pulse_gain must be non-negative.")
+        if self.gate_mode not in {"sigmoid", "raw", "phase_mean"}:
+            raise ValueError('gate_mode must be "sigmoid", "raw", or "phase_mean".')
         if self.in_channels != 3:
             raise ValueError("in_channels must be 3 because the model is fixed to RGB input.")
         if self.kernel_size <= 0:

@@ -35,24 +35,23 @@ class DendricLayer(nn.Module):
         """
         Args:
             gamma_wave: [Batch, Output_Dim, Input_Vector_Dim]
+            prev_spike: [Batch, Output_Dim]
+
+        ``oscillator_dense`` is shared by every oscillator, so the per-neuron
+        loop is applied as one batched matmul instead. This is numerically the
+        same update, and it matters once the oscillator count grows from a
+        single 8x8 grid to a multi-level pyramid.
         """
         # 1. Dendritic Integration
-        beta = torch.sigmoid(self.tau_n)
+        beta = torch.sigmoid(self.tau_n).unsqueeze(0)  # [1, N, branch]
 
-        next_h = []
-        for i in range(self.output_dim):
-            k_input = torch.cat(
-                (
-                    gamma_wave[:, i, :].float(),
-                    prev_spike[:, i:i + 1],
-                ),
-                dim=1,
-            )
-            dense_i = self.oscillator_dense(k_input)
-            h_i = beta[i] * self.h[:, i, :] + (1 - beta[i]) * dense_i
-            next_h.append(h_i)
+        k_input = torch.cat(
+            (gamma_wave.float(), prev_spike.unsqueeze(-1)),
+            dim=-1,
+        )  # [B, N, input_vector_dim + 1]
+        dense = self.oscillator_dense(k_input)  # [B, N, branch]
 
-        self.h = torch.stack(next_h, dim=1)
+        self.h = beta * self.h + (1.0 - beta) * dense
         h_wave = self.h.sum(dim=2, keepdim=False)
 
         return h_wave

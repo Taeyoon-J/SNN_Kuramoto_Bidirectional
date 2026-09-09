@@ -9,7 +9,8 @@ class graphVectorKuramoto(nn.Module):
     Graph-Aware Vector Kuramoto with OT-derived Phase Lags.
     Strictly aligns with Eq. (5) and OT Surrogate mechanics.
     """
-    def __init__(self, N, D=2, K=1.0, dt=1.0, alpha_scale=1.0, device="cuda"):
+    def __init__(self, N, D=2, K=1.0, dt=1.0, alpha_scale=1.0, device="cuda", freq_gain=0.0,
+                 spike_pulse_gain=0.0):
         super().__init__()
         self.N = N
         self.D = D
@@ -17,6 +18,42 @@ class graphVectorKuramoto(nn.Module):
         self.dt = dt
         self.alpha_scale = alpha_scale # alpha_0 in paper
         self.device = device
+
+        # Sensory frequency modulation.
+        #
+        # With freq_gain = 0 the input only enters through the phase-pinning
+        # drive kappa*sin(gamma - theta), which is an attractor: measured
+        # |dtheta| fell to 0.006 by step 31 and the network settled into global
+        # synchrony (PLV 1.000, order parameter 0.977). Every oscillator then
+        # carries the same phase, so no group is distinguishable.
+        #
+        # Two oscillators lock when |domega| < K_eff, so letting the image set
+        # frequencies is what makes "similar features -> same group" possible.
+        # freq_gain = 0 reproduces the original Eq. (5) behaviour exactly, and
+        # creates no parameter, so existing checkpoints still load strictly.
+        self.freq_gain = (
+            nn.Parameter(torch.tensor(float(freq_gain))) if float(freq_gain) != 0.0 else None
+        )
+
+        # Pulse coupling: spikes act back on the phases.
+        #
+        # Without this the flow is one-way. Phases drive the spiking layers and
+        # nothing returns, so with the usual loss weights the dendritic and
+        # membrane layers receive exactly zero gradient and contribute nothing
+        # to the result. Routing spikes back through the same graph closes the
+        # loop, which both makes the spiking side causally part of the binding
+        # and gives it a learning signal through the spike surrogate gradient.
+        #
+        # The cos(theta) factor is a phase response curve: an arriving spike
+        # advances or delays depending on where the receiver is in its cycle,
+        # which is what produces locking rather than a uniform shift. Measured
+        # replay on a trained checkpoint improved ARI monotonically with gain up
+        # to 1.0, while a densely firing neuron at high gain destabilised the
+        # phases, so sparse pulses are the useful regime.
+        self.spike_pulse_gain = (
+            nn.Parameter(torch.tensor(float(spike_pulse_gain)))
+            if float(spike_pulse_gain) != 0.0 else None
+        )
 
         # Natural frequency ω_i (aligns with revised Eq. 5)
         self.omega = nn.Parameter(torch.randn(N, D) * 0.1)
@@ -27,11 +64,24 @@ class graphVectorKuramoto(nn.Module):
         # REMOVED: self.alpha = nn.Parameter(...) 
         # Reason: alpha must be derived from A, not learned freely.
 
-    def forward(self, theta_prev, gamma, A=None):
+    def forward(self, theta_prev, gamma, A=None, spike=None):
         """
-        A : [B, H, H] Connectivity matrix (Structural priors)
+        theta_prev : [B, H, D] Oscillator phases
+        gamma      : [B, H] scalar drive broadcast over D, or [B, H, D] vector drive
+        A          : [B, H, H] Connectivity matrix (Structural priors)
+        spike      : [B, H] spikes from the previous step, for pulse coupling
         """
         B, H, D = theta_prev.shape
+        if gamma.dim() == 2:
+            gamma = gamma.unsqueeze(-1)
+        elif gamma.dim() != 3 or gamma.size(-1) not in (1, D):
+            raise ValueError(
+                f"gamma must be [B, {H}] or [B, {H}, {D}], but got {tuple(gamma.shape)}."
+            )
+        if gamma.size(1) != H:
+            raise ValueError(
+                f"gamma has {gamma.size(1)} oscillators, but theta has {H}."
+            )
         device = theta_prev.device
 
         # 1. Handle Graph Structure & OT Surrogate
@@ -72,12 +122,21 @@ class graphVectorKuramoto(nn.Module):
         coupling = (self.K / float(H)) * interaction
 
         # 3. Sensory Drive (Corrected to Sinusoidal)
-        # kappa * sin(gamma - theta)
-        gamma_exp = gamma.unsqueeze(-1)
-        drive_term = self.kappa * torch.sin(gamma_exp - theta_prev)
+        # kappa * sin(gamma - theta); gamma is already [B, H, 1] or [B, H, D]
+        drive_term = self.kappa * torch.sin(gamma - theta_prev)
 
         # 4. Euler Integration
-        theta_dot = self.omega + coupling + drive_term
+        omega_eff = self.omega
+        if self.freq_gain is not None:
+            omega_eff = omega_eff + self.freq_gain * gamma
+        theta_dot = omega_eff + coupling + drive_term
+
+        # 5. Pulse coupling: spikes arrive through the same graph.
+        if spike is not None and self.spike_pulse_gain is not None:
+            arriving = torch.bmm(A_lat, spike.unsqueeze(-1)).squeeze(-1)
+            theta_dot = theta_dot + (
+                self.spike_pulse_gain * arriving.unsqueeze(-1) * torch.cos(theta_prev)
+            )
         theta_new = theta_prev + self.dt * theta_dot
         
         return theta_new

@@ -1,3 +1,5 @@
+import math
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -180,6 +182,279 @@ def activity_contrast_loss(activity, target_std=0.15, reduction="mean"):
     return _reduce(loss, reduction)
 
 
+def phase_locking_value(theta, settle=0):
+    """
+    Pairwise phase-locking value between oscillators.
+
+    Args:
+        theta: [B, T, N, D] phase history. The D components are averaged first.
+        settle: number of leading steps to discard as transient.
+
+    Returns:
+        [B, N, N] in [0, 1]. PLV is 1 for a constant phase difference.
+
+    This is the synchrony readout. Time-averaging sigmoid(membrane), the readout
+    the spatial-components path uses, discards phase relationships entirely,
+    which is precisely the information a binding-by-synchrony model carries.
+    Computed with real matmuls rather than complex tensors so it stays cheap and
+    avoids complex autograd.
+    """
+    if theta.dim() != 4:
+        raise ValueError("theta must have shape [B, T, N, D].")
+    phase = theta.mean(dim=-1)
+    if int(settle) > 0:
+        if int(settle) >= phase.size(1):
+            raise ValueError("settle must be smaller than the number of steps.")
+        phase = phase[:, int(settle):]
+
+    steps = phase.size(1)
+    cos_t, sin_t = torch.cos(phase), torch.sin(phase)
+    real = (cos_t.transpose(1, 2) @ cos_t + sin_t.transpose(1, 2) @ sin_t) / steps
+    imag = (sin_t.transpose(1, 2) @ cos_t - cos_t.transpose(1, 2) @ sin_t) / steps
+    return torch.sqrt(real.pow(2) + imag.pow(2) + 1e-12).clamp(0.0, 1.0)
+
+
+def plv_bimodality_loss(plv, reduction="mean"):
+    """
+    Push pairwise synchrony towards locked or unlocked, away from ambiguity.
+
+    A binding solution is a partition: two oscillators are in the same group or
+    they are not. Intermediate PLV means no decision has been made.
+    """
+    off_diag = _off_diagonal(plv)
+    loss = (off_diag * (1.0 - off_diag)).mean(dim=1)
+    return _reduce(loss, reduction)
+
+
+def preferred_phase(theta, settle=0, eps=1e-8):
+    """Each unit's phase relative to the global mean field. -> [B, N] in (-pi, pi]."""
+    if theta.dim() != 4:
+        raise ValueError("theta must have shape [B, T, N, D].")
+    phase = theta.mean(dim=-1)
+    if int(settle) > 0:
+        if int(settle) >= phase.size(1):
+            raise ValueError("settle must be smaller than the number of steps.")
+        phase = phase[:, int(settle):]
+    field = torch.atan2(
+        torch.sin(phase).mean(dim=2, keepdim=True),
+        torch.cos(phase).mean(dim=2, keepdim=True),
+    )
+    relative = phase - field
+    return torch.atan2(torch.sin(relative).mean(dim=1), torch.cos(relative).mean(dim=1))
+
+
+def order_parameters(theta, num_slots=7.0, settle=0):
+    """
+    First- and k-th order Kuramoto order parameters, averaged over time.
+
+    R1 = |<exp(i*theta)>_units|    1 when every unit shares one phase
+    Rk = |<exp(i*k*theta)>_units|  1 when phases sit on a k-fold grid
+
+    Both are reference free, which matters: measuring a phase relative to the
+    mean field breaks precisely in the state we want, because k evenly spread
+    phases cancel and leave the field angle undefined.
+
+    A k-cluster state is exactly Rk high with R1 low.
+    """
+    if theta.dim() != 4:
+        raise ValueError("theta must have shape [B, T, N, D].")
+    phase = theta.mean(dim=-1)
+    if int(settle) > 0:
+        if int(settle) >= phase.size(1):
+            raise ValueError("settle must be smaller than the number of steps.")
+        phase = phase[:, int(settle):]
+
+    def resultant(angle):
+        return (torch.cos(angle).mean(dim=2).pow(2)
+                + torch.sin(angle).mean(dim=2).pow(2)).clamp_min(1e-12).sqrt()
+
+    return resultant(phase).mean(dim=1), resultant(float(num_slots) * phase).mean(dim=1)
+
+
+def phase_quantization_loss(theta, num_slots=7.0, settle=0, reduction="mean"):
+    """
+    Snap phases onto num_slots evenly spaced positions on the circle.
+
+    This states the "one object per phase window" hypothesis directly: the k-th
+    order parameter is 1 exactly when every phase difference is a multiple of
+    2*pi/k.
+
+    plv_bimodality cannot express this. Pushing the alignment matrix to 0 or 1
+    asks cross-group pairs to be antiphase, which more than two groups on a
+    circle cannot all be: with k slots the cross-group alignment values spread
+    across [0, 1] with a mean near 0.5, so that target is unreachable by
+    construction.
+    """
+    _, r_k = order_parameters(theta, num_slots=num_slots, settle=settle)
+    return _reduce(1.0 - r_k, reduction)
+
+
+def phase_spread_loss(theta, settle=0, reduction="mean"):
+    """
+    Penalise every unit sharing a single phase.
+
+    Quantization alone is perfectly satisfied by one occupied slot, the same
+    degenerate global-synchrony solution that appeared for the PLV losses. The
+    first order parameter is 1 in exactly that state and low once the phases
+    occupy several slots.
+    """
+    r_1, _ = order_parameters(theta, settle=settle)
+    return _reduce(r_1, reduction)
+
+
+def phase_alignment(theta, settle=0, eps=1e-8):
+    """
+    Pairwise phase alignment: 1 when two oscillators sit at the same phase.
+
+    phase_locking_value asks whether a phase difference is *constant*, so two
+    units locked a quarter cycle apart score 1. That is the wrong question for a
+    code where an object is the set of units active at the same moment: there
+    the difference has to be near zero, not merely steady.
+
+    Each unit's preferred phase is taken relative to the global mean field, so
+    collective drift cancels and what remains is where the unit sits within the
+    shared rhythm.
+
+    Args:
+        theta: [B, T, N, D] phase history.
+        settle: leading steps to discard as transient.
+
+    Returns:
+        [B, N, N] in [0, 1], (1 + cos(phi_i - phi_j)) / 2.
+    """
+    if theta.dim() != 4:
+        raise ValueError("theta must have shape [B, T, N, D].")
+    phase = theta.mean(dim=-1)
+    if int(settle) > 0:
+        if int(settle) >= phase.size(1):
+            raise ValueError("settle must be smaller than the number of steps.")
+        phase = phase[:, int(settle):]
+
+    field = torch.atan2(
+        torch.sin(phase).mean(dim=2, keepdim=True),
+        torch.cos(phase).mean(dim=2, keepdim=True),
+    )
+    relative = phase - field
+    cos_p = torch.cos(relative).mean(dim=1)
+    sin_p = torch.sin(relative).mean(dim=1)
+    scale = (cos_p.pow(2) + sin_p.pow(2)).sqrt().clamp_min(eps)
+    cos_p, sin_p = cos_p / scale, sin_p / scale
+
+    align = cos_p.unsqueeze(2) * cos_p.unsqueeze(1) + sin_p.unsqueeze(2) * sin_p.unsqueeze(1)
+    return ((1.0 + align) / 2.0).clamp(0.0, 1.0)
+
+
+def signal_synchrony(signal, settle=0, eps=1e-8):
+    """
+    Pairwise synchrony between real-valued unit traces, e.g. membrane or spikes.
+
+    Args:
+        signal: [B, N, T].
+        settle: leading steps to discard as transient.
+
+    Returns:
+        [B, N, N] in [0, 1], the absolute centred correlation between traces.
+
+    phase_locking_value reads the Kuramoto phases directly, which bypasses the
+    dendritic and membrane layers entirely. This reads the same synchrony off
+    whatever the spiking side produces, so the SNN sits inside the measured
+    path. Centring matters: without it, all-positive near-constant traces give a
+    cosine of about 1 for every pair, which is why spike_diversity_loss sat
+    pinned near its maximum for a whole training run.
+    """
+    if signal.dim() != 3:
+        raise ValueError("signal must have shape [B, N, T].")
+    trace = signal.float()
+    if int(settle) > 0:
+        if int(settle) >= trace.size(2):
+            raise ValueError("settle must be smaller than the number of steps.")
+        trace = trace[:, :, int(settle):]
+
+    trace = trace - trace.mean(dim=2, keepdim=True)
+    trace = trace / trace.norm(dim=2, keepdim=True).clamp_min(eps)
+    return torch.bmm(trace, trace.transpose(1, 2)).abs().clamp(0.0, 1.0)
+
+
+def plv_collapse_loss(plv, eps=1e-4, reduction="mean"):
+    """
+    Barrier against a uniform synchrony matrix.
+
+    plv_bimodality_loss is zero at PLV == 1 everywhere just as much as at a real
+    partition, so global synchrony is one of its minima, and it is the one the
+    optimiser reaches: measured per-element gradients at PLV == 1 are 1/M for
+    bimodality against 0.27/M for a 0.867 density target and 0.49/M for a group
+    count target, so those constraints lose by 2x to 4x and the run collapses
+    (within 0.9993, between 0.9990). A 0.25 density target wins at 1.5/M, which
+    is the only reason that configuration escaped.
+
+    This removes the minimum instead of out-weighting it: the loss diverges as
+    the variance of the off-diagonal entries goes to zero, so a constant matrix
+    is not a solution at any weight. For a 0/1 partition with density d the
+    variance is d(1 - d), giving about 2.2 at d = 0.867 against 9.2 at collapse.
+    """
+    off_diag = _off_diagonal(plv)
+    variance = off_diag.var(dim=1, unbiased=False)
+    return _reduce(-torch.log(variance + float(eps)), reduction)
+
+
+def plv_group_count_loss(plv, target_groups=7.0, reduction="mean"):
+    """
+    Target the effective number of synchronised groups.
+
+    For a symmetric matrix with a unit diagonal the participation ratio
+
+        PR = N^2 / ||PLV||_F^2
+
+    counts groups directly: 1 when everything is locked into one group, N when
+    nothing is locked, and k for k equal blocks. It needs no eigendecomposition.
+
+    This replaces targeting a mean synchrony level, which turned out to be
+    ill-posed: with CLEVR ground truth the ideal mean PLV is 0.867 if the
+    background counts as one group and 0.003 if it stays incoherent, so any
+    intermediate target pulls the solution away from both.
+    """
+    num_nodes = plv.size(-1)
+    frob_sq = plv.pow(2).sum(dim=(1, 2)).clamp_min(1e-8)
+    participation = (float(num_nodes) ** 2) / frob_sq
+    target = float(target_groups)
+    loss = ((participation - target) / target).pow(2)
+    return _reduce(loss, reduction)
+
+
+def plv_group_balance_loss(plv, target_density=0.25, reduction="mean"):
+    """
+    Keep the mean synchrony near a target.
+
+    Without this the bimodality term is minimised by locking everything (PLV 1
+    everywhere, one global group) or nothing (PLV 0, no groups). Both were
+    observed: dense coupling drove global synchrony at high K.
+    """
+    density = _off_diagonal(plv).mean(dim=1)
+    loss = (density - float(target_density)).pow(2)
+    return _reduce(loss, reduction)
+
+
+def plv_spatial_coherence_loss(plv, patch_grid_size, reduction="mean"):
+    """
+    Prefer synchronised groups that are spatially contiguous.
+
+    Objects are connected regions, so a group scattered across the grid is not
+    an object. This penalises synchrony that varies sharply between neighbouring
+    patches, applied to each oscillator's mean synchrony with the rest.
+    """
+    grid_h, grid_w = _parse_grid_size(patch_grid_size)
+    batch_size, num_nodes, _ = plv.shape
+    if grid_h * grid_w != num_nodes:
+        raise ValueError(
+            f"patch grid {grid_h}x{grid_w} does not match {num_nodes} oscillators."
+        )
+    field = _off_diagonal(plv).view(batch_size, num_nodes, num_nodes - 1).mean(dim=2)
+    field = field.view(batch_size, grid_h, grid_w)
+    d_h = (field[:, 1:, :] - field[:, :-1, :]).abs().mean(dim=(1, 2))
+    d_w = (field[:, :, 1:] - field[:, :, :-1]).abs().mean(dim=(1, 2))
+    return _reduce(d_h + d_w, reduction)
+
+
 def object_overlap_loss(object_groups, num_oscillators=None, reduction="mean", device=None):
     """
     Penalize one oscillator being assigned to multiple detected objects.
@@ -260,8 +535,28 @@ class UnsupervisedS2NetLoss(nn.Module):
         activity_min_area=0.05,
         activity_max_area=0.35,
         activity_target_std=0.15,
+        plv_bimodality_weight=0.0,
+        plv_balance_weight=0.0,
+        plv_coherence_weight=0.0,
+        plv_group_count_weight=0.0,
+        plv_collapse_weight=0.0,
+        phase_quantization_weight=0.0,
+        phase_spread_weight=0.0,
+        phase_num_slots=7.0,
+        plv_target_density=0.25,
+        plv_target_groups=7.0,
     ):
         super().__init__()
+        self.plv_bimodality_weight = float(plv_bimodality_weight)
+        self.plv_balance_weight = float(plv_balance_weight)
+        self.plv_coherence_weight = float(plv_coherence_weight)
+        self.plv_group_count_weight = float(plv_group_count_weight)
+        self.plv_collapse_weight = float(plv_collapse_weight)
+        self.phase_quantization_weight = float(phase_quantization_weight)
+        self.phase_spread_weight = float(phase_spread_weight)
+        self.phase_num_slots = float(phase_num_slots)
+        self.plv_target_density = float(plv_target_density)
+        self.plv_target_groups = float(plv_target_groups)
         self.spike_rate_weight = float(spike_rate_weight)
         self.spike_smooth_weight = float(spike_smooth_weight)
         self.spike_diversity_weight = float(spike_diversity_weight)
@@ -279,10 +574,34 @@ class UnsupervisedS2NetLoss(nn.Module):
         self.activity_max_area = float(activity_max_area)
         self.activity_target_std = float(activity_target_std)
 
-    def forward(self, spikes=None, object_groups=None, sc=None):
-        device, dtype = _infer_device_dtype(spikes, sc)
+    def forward(self, spikes=None, object_groups=None, sc=None, plv=None, theta=None,
+                plv_settle=0):
+        device, dtype = _infer_device_dtype(spikes, sc, plv)
         total = torch.zeros((), device=device, dtype=dtype)
         parts = {}
+
+        if theta is not None:
+            parts["phase_quantization"] = phase_quantization_loss(
+                theta, num_slots=self.phase_num_slots, settle=plv_settle
+            )
+            parts["phase_spread"] = phase_spread_loss(theta, settle=plv_settle)
+
+        if plv is not None:
+            parts["plv_bimodality"] = plv_bimodality_loss(plv)
+            parts["plv_balance"] = plv_group_balance_loss(
+                plv,
+                target_density=self.plv_target_density,
+            )
+            parts["plv_group_count"] = plv_group_count_loss(
+                plv,
+                target_groups=self.plv_target_groups,
+            )
+            parts["plv_collapse"] = plv_collapse_loss(plv)
+            if self.patch_grid_size is not None:
+                parts["plv_coherence"] = plv_spatial_coherence_loss(
+                    plv,
+                    patch_grid_size=self.patch_grid_size,
+                )
 
         if spikes is not None:
             parts["spike_rate"] = spike_rate_loss(
@@ -333,6 +652,13 @@ class UnsupervisedS2NetLoss(nn.Module):
             "activity_confidence": self.activity_confidence_weight,
             "activity_area": self.activity_area_weight,
             "activity_contrast": self.activity_contrast_weight,
+            "plv_bimodality": self.plv_bimodality_weight,
+            "plv_balance": self.plv_balance_weight,
+            "plv_coherence": self.plv_coherence_weight,
+            "plv_group_count": self.plv_group_count_weight,
+            "plv_collapse": self.plv_collapse_weight,
+            "phase_quantization": self.phase_quantization_weight,
+            "phase_spread": self.phase_spread_weight,
         }
         for name, value in parts.items():
             total = total + weights[name] * value

@@ -1,7 +1,11 @@
 import torch
 
-from .gamma_initializer import FeatureMapCNNEncoder, FeaturePatchGammaInitializer
-from .input_layer_generator import CNNFeatureEncoder
+try:
+    from .gamma_initializer import FeatureMapCNNEncoder, FeaturePatchGammaInitializer
+    from .input_layer_generator import CNNFeatureEncoder
+except ImportError:
+    from gamma_initializer import FeatureMapCNNEncoder, FeaturePatchGammaInitializer
+    from input_layer_generator import CNNFeatureEncoder
 
 
 @torch.no_grad()

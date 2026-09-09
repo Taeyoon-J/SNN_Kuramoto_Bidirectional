@@ -540,6 +540,17 @@ def main():
     parser.add_argument("--kernel-size", type=int, default=3)
     parser.add_argument("--k", type=float, default=1.0)
     parser.add_argument("--dt", type=float, default=0.1)
+    parser.add_argument(
+        "--gamma-drive-mode",
+        default="sequence",
+        choices=["sequence", "static"],
+        help="Must match the setting the checkpoint was trained with.",
+    )
+    parser.add_argument("--num-time-steps", type=int, default=None)
+    parser.add_argument("--osc-dim", type=int, default=4)
+    parser.add_argument("--gamma-phase-mode", default="none", choices=["none", "tanh", "standardize_tanh"])
+    parser.add_argument("--theta-init", default="zeros", choices=["zeros", "gamma", "gamma_noise"])
+    parser.add_argument("--theta-init-noise", type=float, default=0.0)
     parser.add_argument("--low-n", type=float, default=0.0)
     parser.add_argument("--high-n", type=float, default=4.0)
     parser.add_argument("--branch", type=int, default=4)
@@ -590,6 +601,14 @@ def main():
         sc=sc,
         k=args.k,
         dt=args.dt,
+        osc_dim=args.osc_dim,
+        gamma_drive_mode=args.gamma_drive_mode,
+        num_time_steps=(
+            gamma_seq.size(1) if args.num_time_steps is None else int(args.num_time_steps)
+        ),
+        gamma_phase_mode=args.gamma_phase_mode,
+        theta_init=args.theta_init,
+        theta_init_noise=args.theta_init_noise,
         low_n=args.low_n,
         high_n=args.high_n,
         branch=args.branch,
