@@ -933,6 +933,44 @@ most loss variants tried fell inside it, while every attempt to encode
 object-ness as an aggregate statistic was optimised perfectly and scored at
 chance.
 
+## The rollout is chaotic, and that is fine
+
+Rewriting the coupling to avoid the pairwise phase tensor (Part 1) changes only
+the order of floating-point accumulation. Measured on the same checkpoint and
+inputs, the two forms drift apart anyway:
+
+~~~
+step   1   max |dtheta| = 7.2e-06
+step  64   max |dtheta| = 2.7e-03
+step 255   max |dtheta| = 6.45 rad        a full cycle
+~~~
+
+A rounding difference grows by six orders of magnitude over 255 steps, so the
+system has a positive Lyapunov exponent and individual phase trajectories are
+not reproducible across hardware, library versions, or anything else that
+changes reduction order.
+
+The readout is another matter. The PLV matrix differs by 2.6e-04 on average
+(0.26 at the worst single pair), and the scores move by at most 0.006:
+
+~~~
+readout                        before    after
+phases, oracle k               0.3480   0.3481
+phases, k=3                    0.3499   0.3505
+phases, k=8                    0.3190   0.3253
+spikes, spectral, oracle k     0.2097   0.2105
+spikes, k-means, k=4           0.1819   0.1855
+~~~
+
+Against measured seed noise of +/- 0.07 that is an order of magnitude below the
+threshold of interest. This is what the model should look like: binding is
+frequency locking, which is a property of the attractor and survives
+perturbation, while absolute phase is not and does not. It is also consistent
+with the readout being PLV, which is invariant to a constant phase offset.
+
+Practically: do not expect two runs to produce identical phases, do not debug
+against a stored trajectory, and treat any single-pair PLV value as noise.
+
 ## Reproducibility notes
 
 - Checkpoints, experiment images, JSON/CSV summaries and caches are excluded from
