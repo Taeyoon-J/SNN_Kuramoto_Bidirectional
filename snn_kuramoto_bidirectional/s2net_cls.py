@@ -253,6 +253,13 @@ class S2NetCore(nn.Module):
         self.membrane_layer.set_neuron_state(B)
         pulse_enabled = self.kuramoto.spike_pulse_gain is not None
 
+        # The graph is fixed for the whole rollout unless feedback is on, so the
+        # lag kernels are built once. Rebuilding them per step kept T copies of
+        # a [B, N, N] pair in the autograd graph for no gain.
+        coupling = None if feedback else self.kuramoto.prepare_coupling(
+            sc, batch_size=B, num_units=self.in_dim, device=gamma_seq.device
+        )
+
         theta_hist = []
         outputs = []
         spikes_hist = []
@@ -268,6 +275,7 @@ class S2NetCore(nn.Module):
                 drive_t,
                 A=sc,
                 spike=self.membrane_layer.spike if pulse_enabled else None,
+                coupling=coupling,
             )
             if feedback:
                 alignment = self.graph_generator.update_alignment(alignment, theta)
