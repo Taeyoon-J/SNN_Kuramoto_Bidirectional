@@ -9,6 +9,7 @@ from sinusoidal_gating import sinusoidal_gating
 from input_layer_generator import CNNFeatureEncoder
 from gamma_initializer import FeatureMapCNNEncoder, FeaturePatchGammaInitializer
 from graph_generator import ImageConditionedGraph
+from cluster_readout import ClusterReadout
 from gamma_ordering import order_gammas
 from spike_classifier import spike_interval, spike_rhythm, spike_spatial_components
 
@@ -171,6 +172,20 @@ class S2NetCore(nn.Module):
             device=device
         )
         self.gate_mode = getattr(hparams, "gate_mode", "sigmoid")
+
+        # The readout that produces the grouping. Built only when asked for, so
+        # a checkpoint trained without it still loads with strict=True.
+        self.cluster_readout = None
+        if int(getattr(hparams, "readout_slots", 0)) > 0:
+            self.cluster_readout = ClusterReadout(
+                num_slots=int(hparams.readout_slots),
+                embed_dim=int(getattr(hparams, "readout_embed_dim", 16)),
+                num_iters=int(getattr(hparams, "readout_iters", 3)),
+                temperature=float(getattr(hparams, "readout_temperature", 0.5)),
+                feature_source=getattr(hparams, "readout_source", "phase"),
+                signal_dim=getattr(hparams, "readout_signal_dim", None),
+            )
+
     def forward(
         self,
         gamma_seq,

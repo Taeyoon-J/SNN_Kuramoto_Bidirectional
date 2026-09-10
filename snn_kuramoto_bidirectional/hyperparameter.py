@@ -128,6 +128,19 @@ class S2NetHyperparameters:
     # same information reduced the other way round.
     gate_mode: str = "sigmoid"
 
+    # Differentiable readout. Spectral clustering runs after training and is
+    # not differentiable, so the objective shapes pairwise synchrony while the
+    # metric scores a partition, and nothing ties the two together. A soft
+    # k-means head over the dynamics puts the partition in the graph, and the
+    # relaxed normalized cut scores it directly. 0 disables it and leaves the
+    # state_dict unchanged.
+    readout_slots: int = 0
+    readout_source: str = "phase"
+    readout_signal_dim: object = None
+    readout_embed_dim: int = 16
+    readout_iters: int = 3
+    readout_temperature: float = 0.5
+
     # Object-group based classification
     spike_classify_method: str = "spike_rhythm"
     spike_rhythm_threshold: float = 0.8
@@ -182,6 +195,17 @@ class S2NetHyperparameters:
             raise ValueError("membrane_low_m must not exceed membrane_high_m.")
         if self.spike_pulse_gain < 0:
             raise ValueError("spike_pulse_gain must be non-negative.")
+        if self.readout_slots < 0 or self.readout_slots == 1:
+            raise ValueError("readout_slots must be 0 (disabled) or at least 2.")
+        if self.readout_source not in {"phase", "signal"}:
+            raise ValueError('readout_source must be "phase" or "signal".')
+        if self.readout_slots > 0 and self.readout_source == "signal" \
+                and self.readout_signal_dim is None:
+            raise ValueError("readout_signal_dim is required when readout_source is signal.")
+        if self.readout_iters <= 0:
+            raise ValueError("readout_iters must be positive.")
+        if self.readout_temperature <= 0:
+            raise ValueError("readout_temperature must be positive.")
         if self.gate_mode not in {"sigmoid", "raw", "phase_mean"}:
             raise ValueError('gate_mode must be "sigmoid", "raw", or "phase_mean".')
         if self.in_channels != 3:

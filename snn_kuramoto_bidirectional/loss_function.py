@@ -435,6 +435,120 @@ def slot_reconstruction_loss(theta, target, num_slots=7, settle=0, temperature=0
     return _reduce(loss / scale, reduction)
 
 
+def oscillator_state_features(theta, settle=0, eps=1e-8):
+    """
+    Per-unit summary of the dynamics, as input to a clustering head. [B, N, 4]
+
+    cos and sin of the preferred phase, the mean phase advance (the frequency
+    the image wrote into the unit), and the resultant length, which says how
+    reliably the unit holds a phase at all. Grouping here is by frequency and
+    phase similarity, so these are the quantities the decision rests on.
+    """
+    if theta.dim() != 4:
+        raise ValueError("theta must have shape [B, T, N, D].")
+    phase = theta.mean(dim=-1)
+    if int(settle) > 0:
+        phase = phase[:, int(settle):]
+    field = torch.atan2(
+        torch.sin(phase).mean(dim=2, keepdim=True),
+        torch.cos(phase).mean(dim=2, keepdim=True),
+    )
+    relative = phase - field
+    cos_p = torch.cos(relative).mean(dim=1)
+    sin_p = torch.sin(relative).mean(dim=1)
+    resultant = (cos_p.pow(2) + sin_p.pow(2)).clamp_min(eps).sqrt()
+    advance = (phase[:, 1:] - phase[:, :-1]).mean(dim=1)
+    return torch.stack([cos_p / resultant, sin_p / resultant, advance, resultant], dim=-1)
+
+
+def occupancy_floor_loss(assignment, floor=0.01, reduction="mean"):
+    """
+    Penalise a slot holding less than `floor` of the units, and nothing else.
+
+    This guards the same failure the orthogonality term guards -- everything in
+    one cluster -- without asking for clusters of equal size. Measured on CLEVR
+    patches, where background is 94% of the grid, the balance term ranks the
+    partitions backwards: the ground truth scores 0.897 against 0.003 for a
+    random balanced partition, and no weight on it recovers the right order. The
+    floor scores the ground truth at 0.052 and the single-cluster solution at
+    0.689, so at a weight of 0.5 the ground truth becomes the objective's
+    optimum on the spike synchrony matrix.
+    """
+    if assignment.dim() != 3:
+        raise ValueError("assignment must have shape [B, N, K].")
+    mass = assignment.sum(dim=1) / assignment.size(1)
+    return _reduce((1.0 - mass / float(floor)).clamp_min(0.0).mean(dim=-1), reduction)
+
+
+def mincut_loss(affinity, assignment, eps=1e-8, reduction="mean",
+                ortho_weight=1.0, floor=0.0, floor_weight=0.0,
+                entropy_weight=0.0):
+    """
+    Relaxed normalized cut on a soft assignment, from MinCutPool.
+
+        L_cut   = -trace(Y^T A Y) / trace(Y^T D Y)
+        L_ortho = || Y^T Y / ||Y^T Y||_F - I_K / sqrt(K) ||_F
+
+    Why this rather than another hand-written term. Spectral clustering sits
+    outside the loss and is not differentiable, so training shapes the pairwise
+    synchrony while the metric scores a partition; the two are different objects.
+    This puts the partition itself in the loss, and the head that produces the
+    assignment becomes the readout.
+
+    It is taken from the literature rather than invented here on purpose. Every
+    objective this project wrote from scratch to encode object-ness -- a target
+    group count, a k-fold phase grid, a reconstruction from phase slots -- was
+    optimised perfectly and scored at chance, because a scalar summary of the
+    affinity says nothing about *which* units belong together. The cut term is
+    per-pair, and the orthogonality term is what stops the single-cluster
+    solution that the earlier attempts all fell into.
+
+    The balance term is optional because it is wrong for this data. Pass
+    ortho_weight=0 with floor_weight>0 to swap it for an occupancy floor, which
+    is what the measurement supports; see occupancy_floor_loss.
+
+    Dropping the balance term opens a hole the floor does not cover. The cut is
+    -1.0 for the uniform soft assignment, spreading every unit evenly over every
+    slot, and that assignment gives each slot 1/K of the mass, so the floor is
+    satisfied and the uniform solution becomes the optimum -- measured, it is
+    exactly where training went. The floor guards empty slots; nothing guards
+    diffuse ones. entropy_weight penalises the row entropy of the assignment,
+    which is zero for any hard partition and maximal for the uniform one, so it
+    removes the degenerate solution without changing how hard partitions rank
+    against each other.
+
+    Args:
+        affinity:   [B, N, N] non-negative, e.g. a PLV or spike synchrony matrix.
+        assignment: [B, N, K] rows summing to one.
+    """
+    if affinity.dim() != 3 or assignment.dim() != 3:
+        raise ValueError("affinity must be [B, N, N] and assignment [B, N, K].")
+    num_slots = assignment.size(-1)
+
+    degree = affinity.sum(dim=-1)
+    numerator = torch.einsum("bnk,bnm,bmk->bk", assignment, affinity, assignment).sum(-1)
+    denominator = torch.einsum("bnk,bn,bnk->bk", assignment, degree, assignment).sum(-1)
+    cut = -(numerator / denominator.clamp_min(eps))
+
+    gram = torch.einsum("bnk,bnl->bkl", assignment, assignment)
+    gram = gram / gram.norm(dim=(1, 2), keepdim=True).clamp_min(eps)
+    target = torch.eye(num_slots, device=gram.device, dtype=gram.dtype) / (num_slots ** 0.5)
+    ortho = (gram - target).norm(dim=(1, 2))
+
+    total = cut + float(ortho_weight) * ortho
+    if float(floor_weight) != 0.0:
+        mass = assignment.sum(dim=1) / assignment.size(1)
+        total = total + float(floor_weight) * (
+            1.0 - mass / float(floor)
+        ).clamp_min(0.0).mean(dim=-1)
+    if float(entropy_weight) != 0.0:
+        row_entropy = -(assignment.clamp_min(eps).log() * assignment).sum(dim=-1)
+        total = total + float(entropy_weight) * (
+            row_entropy.mean(dim=-1) / math.log(num_slots)
+        )
+    return _reduce(total, reduction)
+
+
 def plv_collapse_loss(plv, eps=1e-4, reduction="mean"):
     """
     Barrier against a uniform synchrony matrix.
@@ -608,8 +722,18 @@ class UnsupervisedS2NetLoss(nn.Module):
         phase_num_slots=7.0,
         plv_target_density=0.25,
         plv_target_groups=7.0,
+        mincut_weight=0.0,
+        mincut_ortho_weight=0.0,
+        mincut_floor=0.01,
+        mincut_floor_weight=0.5,
+        mincut_entropy_weight=0.5,
     ):
         super().__init__()
+        self.mincut_weight = float(mincut_weight)
+        self.mincut_ortho_weight = float(mincut_ortho_weight)
+        self.mincut_floor = float(mincut_floor)
+        self.mincut_floor_weight = float(mincut_floor_weight)
+        self.mincut_entropy_weight = float(mincut_entropy_weight)
         self.plv_bimodality_weight = float(plv_bimodality_weight)
         self.plv_balance_weight = float(plv_balance_weight)
         self.plv_coherence_weight = float(plv_coherence_weight)
@@ -641,7 +765,7 @@ class UnsupervisedS2NetLoss(nn.Module):
         self.activity_target_std = float(activity_target_std)
 
     def forward(self, spikes=None, object_groups=None, sc=None, plv=None, theta=None,
-                plv_settle=0, recon_target=None):
+                plv_settle=0, recon_target=None, assignment=None):
         device, dtype = _infer_device_dtype(spikes, sc, plv)
         total = torch.zeros((), device=device, dtype=dtype)
         parts = {}
@@ -704,6 +828,15 @@ class UnsupervisedS2NetLoss(nn.Module):
                     patch_grid_size=self.patch_grid_size,
                 )
 
+        if assignment is not None and plv is not None:
+            parts["mincut"] = mincut_loss(
+                plv, assignment,
+                ortho_weight=self.mincut_ortho_weight,
+                floor=self.mincut_floor,
+                floor_weight=self.mincut_floor_weight,
+                entropy_weight=self.mincut_entropy_weight,
+            )
+
         if object_groups is not None:
             parts["object_overlap"] = object_overlap_loss(
                 object_groups,
@@ -731,6 +864,7 @@ class UnsupervisedS2NetLoss(nn.Module):
             "slot_reconstruction": self.slot_reconstruction_weight,
             "phase_quantization": self.phase_quantization_weight,
             "phase_spread": self.phase_spread_weight,
+            "mincut": self.mincut_weight,
         }
         for name, value in parts.items():
             total = total + weights[name] * value

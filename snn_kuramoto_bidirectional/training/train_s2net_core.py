@@ -124,6 +124,7 @@ def train_s2net_core(
                 theta=theta,
                 plv_settle=int(plv_settle),
                 recon_target=recon_target,
+                assignment=_cluster_assignment(core, theta, plv_settle, loss_values),
             )
 
             optimizer.zero_grad()
@@ -196,6 +197,7 @@ def evaluate_s2net_core(core, dataloader, criterion=None, device=None, plv_settl
             plv=plv,
             theta=theta,
             plv_settle=int(plv_settle),
+            assignment=_cluster_assignment(core, theta, plv_settle, loss_values),
         )
 
         batch_size = gamma_seq.size(0)
@@ -213,7 +215,7 @@ def _uses_theta(criterion):
     return any(
         float(getattr(criterion, name, 0.0)) != 0.0
         for name in ("phase_quantization_weight", "phase_spread_weight",
-                     "slot_reconstruction_weight")
+                     "slot_reconstruction_weight", "mincut_weight")
     )
 
 
@@ -226,6 +228,7 @@ def _uses_plv(criterion):
             "plv_coherence_weight",
             "plv_group_count_weight",
             "plv_collapse_weight",
+            "mincut_weight",
         )
     )
 
@@ -259,6 +262,27 @@ def _forward_with_plv(core, gamma_seq, criterion, plv_settle, plv_source="phase"
             'plv_source must be "phase", "alignment", "membrane", or "spikes".'
         )
     return groups, spikes, core_out, plv, theta
+
+
+def _cluster_assignment(core, theta, plv_settle, spikes=None):
+    """
+    Soft partition from the readout, or None when the core has no readout.
+
+    In signal mode the head reads the spike trains, which is the readout the
+    architecture specifies: units that spike together are one object. That also
+    keeps the spiking layers on the gradient path, which reading the phases does
+    not -- a head on theta bypasses the SNN entirely.
+    """
+    readout = getattr(core, "cluster_readout", None)
+    if readout is None:
+        return None
+    if readout.feature_source == "signal":
+        if spikes is None:
+            return None
+        return readout(signal=spikes, settle=int(plv_settle))
+    if theta is None:
+        return None
+    return readout(theta=theta, settle=int(plv_settle))
 
 
 def _select_loss_signal(spikes, core_out, loss_signal):
@@ -312,7 +336,15 @@ def load_s2net_core(core, checkpoint_path, device=None):
     device = _resolve_device(device, core)
     core = core.to(device)
     state_dict = torch.load(checkpoint_path, map_location=device)
-    core.load_state_dict(state_dict)
+    missing, unexpected = core.load_state_dict(state_dict, strict=False)
+    stray = [k for k in missing if not k.startswith("cluster_readout.")]
+    if stray or unexpected:
+        raise RuntimeError(
+            f"checkpoint does not match the core: missing {stray}, unexpected {list(unexpected)}"
+        )
+    if missing:
+        # the checkpoint predates the readout, so it starts from its own init
+        print(f"[load] readout not in checkpoint, initialising {len(missing)} tensors")
     core.eval()
     return core
 
@@ -474,6 +506,52 @@ def main():
     )
     parser.add_argument("--phase-num-slots", type=float, default=7.0)
     parser.add_argument(
+        "--readout-slots",
+        type=int,
+        default=0,
+        help=(
+            "Size of the differentiable partition. 0 keeps the old setup, where "
+            "spectral clustering runs after training and the loss never sees the "
+            "grouping it is judged on. Set it near the typical object count."
+        ),
+    )
+    parser.add_argument(
+        "--readout-source",
+        choices=["phase", "signal"],
+        default="phase",
+        help=(
+            "What the readout head reads. \"signal\" reads the spike trains, which "
+            "is the readout the architecture specifies and the only one that keeps "
+            "the SNN on the gradient path."
+        ),
+    )
+    parser.add_argument("--readout-embed-dim", type=int, default=16)
+    parser.add_argument("--readout-iters", type=int, default=3)
+    parser.add_argument(
+        "--readout-temperature",
+        type=float,
+        default=0.5,
+        help=(
+            "Softmax temperature of the slot assignment. Measured on 192-step spike "
+            "trains, 0.5 leaves the assignment exactly uniform -- a stationary point "
+            "training never escapes -- and 0.05 was the first value that committed."
+        ),
+    )
+    parser.add_argument("--mincut-ortho-weight", type=float, default=0.0)
+    parser.add_argument("--mincut-floor", type=float, default=0.01)
+    parser.add_argument("--mincut-floor-weight", type=float, default=0.5)
+    parser.add_argument("--mincut-entropy-weight", type=float, default=0.5)
+    parser.add_argument(
+        "--mincut-weight",
+        type=float,
+        default=0.0,
+        help=(
+            "Weight on the relaxed normalized cut over the readout's assignment. "
+            "This is the only term that scores the partition itself; every other "
+            "objective here scores a summary of the synchrony matrix instead."
+        ),
+    )
+    parser.add_argument(
         "--plv-collapse-weight",
         type=float,
         default=0.0,
@@ -597,7 +675,7 @@ def main():
         default=None,
         help=(
             "Separate learning rate for the feature encoder in end-to-end mode. "
-            "Defaults to --lr, which measured 23% worse on the phase readout for "
+            "Defaults to --lr, which measured 23%% worse on the phase readout for "
             "a pretrained encoder."
         ),
     )
@@ -686,6 +764,15 @@ def main():
         membrane_low_m=args.membrane_low_m,
         membrane_high_m=args.membrane_high_m,
         gate_mode=args.gate_mode,
+        readout_slots=args.readout_slots,
+        readout_source=args.readout_source,
+        readout_signal_dim=(
+            max(int(args.num_time_steps) - int(args.plv_settle), 1)
+            if args.readout_source == "signal" else None
+        ),
+        readout_embed_dim=args.readout_embed_dim,
+        readout_iters=args.readout_iters,
+        readout_temperature=args.readout_temperature,
         low_n=args.low_n,
         high_n=args.high_n,
         branch=args.branch,
@@ -746,6 +833,11 @@ def main():
         plv_coherence_weight=args.plv_coherence_weight,
         plv_group_count_weight=args.plv_group_count_weight,
         plv_collapse_weight=args.plv_collapse_weight,
+        mincut_weight=args.mincut_weight,
+        mincut_ortho_weight=args.mincut_ortho_weight,
+        mincut_floor=args.mincut_floor,
+        mincut_floor_weight=args.mincut_floor_weight,
+        mincut_entropy_weight=args.mincut_entropy_weight,
         phase_quantization_weight=args.phase_quantization_weight,
         phase_spread_weight=args.phase_spread_weight,
         phase_num_slots=args.phase_num_slots,

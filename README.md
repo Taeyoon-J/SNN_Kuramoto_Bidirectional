@@ -50,10 +50,11 @@ carry the grouping, and it went from 13% to 49% of what the phases hold.
 For scale: 0 is chance, and slot-based object-discovery methods on CLEVR
 typically report foreground ARI in the 0.9 range. The model finds roughly where
 objects are and produces a different grouping for every image, but it does not
-recover object boundaries. Two caveats inflate the numbers slightly: the number
-of clusters is taken from ground truth (oracle k), and the colour-derived masks
-capture only 78% of the scene objects, so objects the model does find can still
-be scored as wrong.
+recover object boundaries. One caveat inflates the numbers: the colour-derived
+masks capture only 78% of the scene objects, so objects the model does find can
+still be scored as wrong. The oracle cluster count was long listed as a second
+caveat and is not one -- see 3.9, where a fixed k=3 scores 0.3499 against 0.3480
+for the true per-image count.
 
 `results/result_overview.png` shows images, ground truth, and both readouts side
 by side. `results/report_figure.png` puts the best case next to the median, the
@@ -406,8 +407,11 @@ mem   -> signal_synchrony    -> correlation   -> spectral clustering -> labels
 
 Three consequences worth knowing:
 
-- **k comes from ground truth.** The number of clusters is the true object count
-  plus background. Real performance without that is lower.
+- **k comes from ground truth,** and it turns out not to matter. The number of
+  clusters is the true object count plus background, which sounds like an
+  advantage and is not: a fixed k=3 for every image scores slightly *higher*
+  (3.9). Sweeping k also showed the phase readout to be nearly flat across
+  k=3..8 on the best checkpoint, so this is not a knife edge.
 - **The clustering is outside the loss.** It is not differentiable, so gradients
   never reach it; training shapes the pairwise PLV structure, not cluster
   quality.
@@ -602,6 +606,92 @@ than merely constant. Training for it does produce separation (alignment ARI
 but costs the PLV structure (0.358 -> 0.121) and lands well below the phase
 route.
 
+## 3.9 Putting the readout inside the loss
+
+This was headroom item 1: spectral clustering is not differentiable, so training
+shaped the pairwise synchrony while the metric scored a partition. Closing that
+gap meant a differentiable readout, scored by an objective that judges the
+partition itself, with the gradient running back into the dynamics.
+
+**The objective.** The relaxed normalized cut from MinCutPool, chosen over
+anything written here because the loss-design record in this repository was 0
+for 5:
+
+~~~
+L_cut   = -trace(Y^T A Y) / trace(Y^T D Y)
+L_ortho = || Y^T Y / ||Y^T Y||_F - I_K / sqrt(K) ||_F
+~~~
+
+**Four things had to be fixed before it could train at all.** Each was found by
+measurement, and each is worth knowing independently:
+
+*The balance term is wrong for this data.* Background is 94% of the patch grid,
+so the true partition is extremely unbalanced. Scoring known partitions against
+the PLV matrix, the objective ranked them exactly backwards:
+
+~~~
+partition              cut      ortho    total      ARI
+ground truth        -0.9457    0.8972   -0.0485   1.0000     worst
+spectral, oracle k  -0.9800    0.8194   -0.1606   0.3300
+random balanced     -0.3122    0.0029   -0.3093   0.0001     best
+~~~
+
+Replacing it with an occupancy floor -- penalise a slot holding less than 1% of
+the units, and nothing else -- put the ground truth first for any weight in
+[0.25, 1.0].
+
+*The matrix matters more than the readout.* On the PLV matrix no weighting can
+work, because spectral clustering's own partition beats the ground truth on both
+terms. On the spike synchrony matrix the cut ranks the ground truth first
+(-0.9424 against -0.7983). The readout the architecture actually specifies --
+units that spike together are one object -- is the one the objective fits.
+
+*A hard-partition check does not validate a soft objective.* The uniform soft
+assignment scores cut = -1.0 exactly and gives every slot 1/K of the mass, so it
+satisfies the floor and becomes the optimum. Training sat there at row entropy
+1.000. A row-entropy penalty removes it without changing how hard partitions
+rank.
+
+*Learned slot queries collapse.* With a diffuse first assignment the centroid
+update averages every slot onto the data mean, after which the assignment is
+exactly uniform, which is a stationary point. Seeding centroids from the data,
+farthest-point style, fixes it. Softmax temperature had to drop from 0.5 to 0.05
+as well: on 192-step spike trains, 0.5 leaves the assignment flat.
+
+**With all four fixed, it still fails.** Three runs at T=256, seed 0, 40 epochs,
+differing only in the objective:
+
+~~~
+checkpoint            phases, oracle k   phases, k=3   trained readout
+graph_X1 (T=64)            0.3480          0.3499           --
+C1 control (no mincut)     0.3267          0.3423           --
+X3 mincut, 4 slots         0.1337          0.1723         0.0450
+X2 mincut, 8 slots         0.0687          0.0546         0.0339
+~~~
+
+More cut pressure is monotonically worse. The objective does not build group
+structure, it destroys it. A confound to state plainly: the criterion holds one
+synchrony matrix, so moving the cut onto the spikes meant switching
+`--plv-source` and zeroing the phase PLV terms. X2 therefore changed two things
+at once, and this measurement cannot separate "the cut hurts" from "removing the
+phase terms hurts". Either way the configuration is a loss, not a gain.
+
+Frozen-dynamics runs, training only the head on the trained checkpoint, agree
+and add one more comparison: the trained readout scored 0.0869 against 0.0590
+for spectral clustering at the same k, which looked like a win until plain
+k-means on the raw spike trains -- no learning anywhere -- scored 0.1720.
+
+**What came out of it anyway.** Sweeping k, which the diagnostics needed, showed
+the oracle cluster count is not an advantage: a fixed k=3 scores 0.3499 against
+0.3480. Two README caveats were wrong. Also `spikes -> k-means on trains` is
+nearly flat across k=3..8 (0.168-0.182) where spectral clustering on the same
+signal collapses from 0.210 to 0.059, so it is the more robust spiking readout.
+
+The reusable part is the check itself: score known partitions -- ground truth,
+what the current method returns, random, degenerate -- under any proposed
+objective before training on it. It costs one forward pass. Run on soft
+candidates as well as hard ones.
+
 ---
 
 # Part 4 — How to run it
@@ -696,6 +786,25 @@ python snn_kuramoto_bidirectional/training/diagnose_image_specificity.py \
 `specificity_ratio` near zero means the core is ignoring the image and no loss
 weighting will help. A healthy ratio with identical masks points at the readout.
 
+Score a checkpoint against the object masks with every readout side by side,
+including the k sweep, which is what showed the oracle cluster count to be
+unnecessary:
+
+~~~bash
+PYTHONPATH=/export_home/tkim1/tools:$PWD/snn_kuramoto_bidirectional \
+python snn_kuramoto_bidirectional/training/evaluate_binding.py \
+  --checkpoint $RUN/core.pt \
+  --gamma-seq-path $GAMMA/clevr1k_patch_gamma_seq_k8_grid16.pt \
+  --masks $RUNS/clevr1k_object_patches.pt \
+  --scenes $CLEVR/scenes/CLEVR_train_scenes.json \
+  --num-images 100 --skip 200 --num-time-steps 256 --settle 64
+~~~
+
+Add `--readout-slots 8 --readout-source signal --readout-temperature 0.05` for a
+checkpoint trained with the differentiable readout. This evaluator used to be
+rewritten from scratch in `/tmp` every session, which is how the readout
+comparison twice got scored against the wrong baseline.
+
 `image_conditioned_sc.py` is a standalone, torch-only file with the graph, a
 minimal Kuramoto step, and a full `diagnose()` report. Run it directly:
 
@@ -776,11 +885,13 @@ parameters create none at their default, so old checkpoints load with
 | `kuramoto_layer.py` | graph-aware vector Kuramoto, `freq_gain`, pulse coupling |
 | `sinusoidal_gating.py` | phase to spiking drive, `gate_mode` |
 | `dendric_layer.py`, `membrane_layer.py` | recurrent spiking computation |
-| `loss_function.py` | activity, PLV, alignment and phase-slot objectives |
+| `loss_function.py` | activity, PLV, alignment, phase-slot and cut objectives |
+| `cluster_readout.py` | **differentiable readout: soft k-means over the dynamics (3.9)** |
 | `spike_classifier.py` | rhythm, interval, spatial grouping (currently unused) |
 | `hierarchical_spike_classifier.py` | multi-level same-time matching (unwired) |
 | `training/diagnose_image_specificity.py` | **is the core responding to the image at all** |
 | `training/train_s2net_core.py` | core training entry point |
+| `training/evaluate_binding.py` | **ARI/fgIoU for every readout, with a k sweep** |
 | `training/visualize_s2net_objects.py` | visual reports and diagnostics |
 | `results/` | figures |
 
@@ -800,16 +911,18 @@ task (3.4). Screen any future candidate by direct-clustering ARI first.
 **Closed: training the encoder end to end.** Harmless at a low learning rate,
 useless at any rate, because the loss cannot tell it what an object is (3.5).
 
-**1. The readout sits outside the loss.** Spectral clustering is not
-differentiable, so what is optimised (pairwise PLV structure) and what is
-measured (cluster quality) are different objects. This is the one architectural
-gap where the objective could be made to target the metric directly.
+**Closed: putting the readout inside the loss.** The one architectural gap that
+looked most promising, and it was measured end to end (3.9). A differentiable
+readout trained on a relaxed normalized cut destroys the binding structure
+rather than sharpening it: the phase readout falls from 0.327 to 0.069. What
+survives is the diagnostic, which is reusable and cheap.
 
 **3. Resolution.** At 16x16 an object spans 2-3 patches, which limits boundary
 precision regardless of method. 32x32 costs 4x.
 
-**4. Estimating k.** Currently taken from ground truth. Needed for a real system;
-it will lower the reported numbers.
+**4. Estimating k -- already free.** A fixed k=3 matches the oracle on the best
+checkpoint (3.9), so the ground-truth cluster count can simply be dropped. This
+entry used to say it would lower the reported numbers. It does not.
 
 **5. Reconstruction, repaired.** The one signal that is known to work in the
 literature. It failed here for a diagnosable reason (3.6) and normalising per
