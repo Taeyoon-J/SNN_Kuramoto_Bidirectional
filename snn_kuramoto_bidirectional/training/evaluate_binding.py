@@ -128,9 +128,18 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--checkpoint", required=True)
     parser.add_argument("--gamma-seq-path", required=True)
-    parser.add_argument("--masks", required=True, help="blob supplying the image name list")
-    parser.add_argument("--image-dir", required=True, help="CLEVR train images")
-    parser.add_argument("--scenes", required=True, help="CLEVR_train_scenes.json")
+    parser.add_argument("--masks", help="blob supplying the image name list")
+    parser.add_argument("--image-dir", help="CLEVR train images")
+    parser.add_argument(
+        "--patch-labels",
+        help=(
+            "Blob from prepare_clevr_with_masks.py holding labels_grid<N>. These are "
+            "the dataset's own segmentation, so they replace both --masks and the "
+            "colour reconstruction, which recovered 77% of objects and 54% of the "
+            "foreground area."
+        ),
+    )
+    parser.add_argument("--scenes", help="CLEVR_train_scenes.json")
     parser.add_argument("--num-images", type=int, default=100)
     parser.add_argument("--skip", type=int, default=200, help="images to skip, to score held-out ones")
     parser.add_argument("--num-regions", type=int, default=256)
@@ -155,12 +164,24 @@ def main():
     parser.add_argument("--device", default="cuda")
     args = parser.parse_args()
 
-    masks_blob = torch.load(args.masks)
-    names = masks_blob["names"][args.skip:args.skip + args.num_images]
-    scenes = json.load(open(args.scenes))["scenes"]
-    objects_by_name = {s["image_filename"]: s["objects"]
-                       for s in scenes if s["image_filename"] in set(names)}
-    labels = build_masks(names, objects_by_name, args.image_dir, args.grid)
+    if args.patch_labels:
+        blob = torch.load(args.patch_labels)
+        names = blob["names"][args.skip:args.skip + args.num_images]
+        key = "labels_grid%d" % args.grid
+        if key not in blob:
+            raise ValueError("%s has no %s; available: %s"
+                             % (args.patch_labels, key, sorted(blob)))
+        labels = blob[key][args.skip:args.skip + args.num_images]
+        objects_by_name = None
+    else:
+        if not (args.masks and args.image_dir and args.scenes):
+            raise ValueError("pass --patch-labels, or all of --masks, --image-dir, --scenes.")
+        masks_blob = torch.load(args.masks)
+        names = masks_blob["names"][args.skip:args.skip + args.num_images]
+        scenes = json.load(open(args.scenes))["scenes"]
+        objects_by_name = {s["image_filename"]: s["objects"]
+                           for s in scenes if s["image_filename"] in set(names)}
+        labels = build_masks(names, objects_by_name, args.image_dir, args.grid)
 
     gamma = torch.load(args.gamma_seq_path, map_location="cpu").float()
     gamma = gamma[args.skip:args.skip + args.num_images].to(args.device)
@@ -184,7 +205,7 @@ def main():
     core.load_state_dict(torch.load(args.checkpoint, map_location=args.device))
     core.eval()
 
-    plv, spike_sync, trains = [], [], []
+    plv, plv_parts, spike_sync, trains = [], [], [], []
     with torch.no_grad():
         for start in range(0, gamma.size(0), 25):
             _, _, membrane, theta = core(gamma[start:start + 25],
@@ -192,9 +213,13 @@ def main():
             spikes = (membrane > torch.quantile(
                 membrane[:, :, args.settle:], 0.50, dim=2, keepdim=True)).float()
             plv.append(phase_locking_value(theta, settle=args.settle).cpu())
+            plv_parts.append(
+                phase_locking_value(theta, settle=args.settle, combine="product").cpu()
+            )
             spike_sync.append(signal_synchrony(spikes, settle=args.settle).clamp_min(0).cpu())
             trains.append(spikes[:, :, args.settle:].cpu())
     plv, spike_sync, trains = torch.cat(plv), torch.cat(spike_sync), torch.cat(trains)
+    plv_parts = torch.cat(plv_parts)
 
     readout_labels = None
     if core.cluster_readout is not None:
@@ -211,7 +236,7 @@ def main():
         return torch.unique(g, return_inverse=True)[1]
 
     def report(name, pred_of):
-        aris, ious = [], []
+        aris, fg_aris, ious = [], [], []
         for i in range(len(names)):
             g = truth(i)
             if g is None:
@@ -219,22 +244,53 @@ def main():
             p = pred_of(i)
             aris.append(adjusted_rand_index(p, g))
             ious.extend(foreground_iou(p, g))
-        print("%-46s %-8.4f %.4f" % (name, sum(aris) / len(aris), sum(ious) / len(ious)))
+            # Object-discovery papers report ARI over foreground only. Background
+            # is 92% of this grid, so scoring it as one more cluster rewards
+            # separating figure from ground and says little about whether one
+            # object was told apart from another. Reported alongside, because the
+            # repository's own history is in the all-patch number.
+            fg = labels[i] >= 0
+            if fg.sum() > 1 and labels[i][fg].unique().numel() > 1:
+                fg_aris.append(adjusted_rand_index(p[fg], labels[i][fg]))
+        print("%-40s %-9.4f %-9.4f %.4f"
+              % (name, sum(aris) / len(aris),
+                 sum(fg_aris) / max(len(fg_aris), 1), sum(ious) / len(ious)))
 
     counts = [int(truth(i).max()) + 1 for i in range(len(names)) if truth(i) is not None]
+    recovered = sum(int(labels[i].max()) + 1 for i in range(len(names)) if labels[i].max() >= 0)
+    if objects_by_name is None:
+        print("dataset segmentation: %.2f objects and %.1f%% foreground per image"
+              % (recovered / len(names), 100 * float((labels >= 0).float().mean())))
+    else:
+        declared = sum(len(objects_by_name[nm]) for nm in names)
+        print("colour-derived masks recover %d of %d scene objects (%.0f%%); anything "
+              "missing is scored as an error" % (recovered, declared, 100 * recovered / declared))
     print("checkpoint %s  (graph_top_k=%d)" % (Path(args.checkpoint), args.graph_top_k))
     print("oracle cluster count: mean %.1f, range %d-%d\n"
           % (sum(counts) / len(counts), min(counts), max(counts)))
-    print("%-46s %-8s %s" % ("READOUT", "ARI", "fgIoU"))
-    print("-" * 66)
+    print("%-40s %-9s %-9s %s" % ("READOUT", "ARI", "FG-ARI", "fgIoU"))
+    print("-" * 70)
     report("phases -> PLV -> spectral, oracle k",
            lambda i: spectral_cluster(plv[i], int(truth(i).max()) + 1))
+    report("phases -> per-component PLV -> spectral, oracle k",
+           lambda i: spectral_cluster(plv_parts[i], int(truth(i).max()) + 1))
     report("spikes -> correlation -> spectral, oracle k",
            lambda i: spectral_cluster(spike_sync[i], int(truth(i).max()) + 1))
     for k in args.fixed_k:
         report("phases -> spectral, k=%d" % k, lambda i, k=k: spectral_cluster(plv[i], k))
     for k in args.fixed_k:
+        report("phases -> per-component PLV, k=%d" % k,
+               lambda i, k=k: spectral_cluster(plv_parts[i], k))
+    for k in args.fixed_k:
         report("spikes -> k-means on trains, k=%d" % k, lambda i, k=k: kmeans(trains[i], k))
+    # The control the README insists on: cluster the features the oscillators are
+    # driven by, with no dynamics at all. Run in this program rather than a
+    # separate script, because a standalone version of this comparison produced
+    # numbers that did not reproduce here.
+    report("CONTROL: gamma features, clustered directly",
+           lambda i: kmeans(gamma[i].t().cpu(), int(truth(i).max()) + 1))
+    report("CONTROL: chance", lambda i: torch.randint(0, int(truth(i).max()) + 1, (labels.size(1),)))
+
     if readout_labels is not None:
         report("spikes -> trained readout, k=%d" % args.readout_slots,
                lambda i: readout_labels[i])

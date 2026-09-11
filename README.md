@@ -63,17 +63,27 @@ itself: oscillators sorted by object, each object firing at its own rhythm.
 
 ## Does the model earn its place?
 
-The control that matters, and the one this project went longest without running:
-cluster the patch features directly, with no oscillators at all, and compare.
+The control that matters: cluster the patch features directly, with no
+oscillators at all, and compare. Scored against the dataset's own segmentation
+(3.10), on 100 held-out images, at the true cluster count:
 
-| | ARI | fgIoU |
-| --- | --- | --- |
-| cluster the CNN features directly | 0.077 | 0.145 |
-| **through Kuramoto + SNN** | **0.284** | **0.187** |
+| | ARI | FG-ARI | fgIoU |
+| --- | --- | --- | --- |
+| cluster the CNN features directly | 0.362 | 0.466 | 0.450 |
+| through Kuramoto + SNN, averaged phases | 0.812 | 0.430 | 0.416 |
+| **through Kuramoto + SNN, per-component synchrony** | **0.816** | **0.501** | 0.445 |
+| chance | 0.000 | -0.001 | 0.057 |
 
-**3.7x.** The dynamics are not decoration; they build group structure that is not
-recoverable from feature similarity alone. Any future change should be checked
-against this baseline, because a pipeline that only matches it is doing nothing.
+Read the two ARI columns together. Over all patches the dynamics are far ahead,
+and on foreground only they were behind their own input until the readout stopped
+averaging the oscillator components (3.11). So the dynamics buy a great deal of
+figure/ground and, now, a modest amount of object/object: FG-ARI 0.501 against
+0.466, while boundary precision is a tie.
+
+An earlier version of this table reported 0.077 against 0.284 and called it
+"3.7x". That was measured against colour-reconstructed masks which labelled 46%
+of the foreground as background, and it understated the feature control more
+than the model. Both numbers were wrong.
 
 ---
 
@@ -691,6 +701,73 @@ The reusable part is the check itself: score known partitions -- ground truth,
 what the current method returns, random, degenerate -- under any proposed
 objective before training on it. It costs one forward pass. Run on soft
 candidates as well as hard ones.
+
+## 3.10 The ground truth was wrong, and so was the metric
+
+CLEVR v1.0 ships images and a scene file but no segmentation, so every number in
+this repository up to here was scored against masks reconstructed by matching
+each object's declared colour to pixels near its stated centre. Measured against
+the real thing:
+
+~~~
+                              colour masks      dataset segmentation
+objects per image                4.92 of 6.39        6.53 of 6.53
+foreground                       7.9% of patches     14.8% of patches
+~~~
+
+Not only were a quarter of the objects missing; **46% of the foreground area was
+labelled background**, so a model that got an object's edge right was scored
+wrong for it. The distortion was not uniform: it compressed differences between
+configurations, and it penalised the better model more than the weaker feature
+control, which is how the headline control came to read 3.7x in the model's
+favour when the true relation is the other way on foreground ARI.
+
+The replacement is DeepMind's `clevr_with_masks`, the version object-discovery
+papers evaluate on. It is a different render, so the images come from there too
+and gamma is regenerated; `training/prepare_clevr_with_masks.py` converts it
+without TensorFlow, which the cluster does not have.
+
+**The metric was also not the field's.** Published CLEVR numbers are foreground
+ARI, computed over foreground pixels with background excluded. This repository
+reported ARI over all patches with background as one more cluster, and then
+compared its 0.33 against slot-based methods' 0.9 as though those were the same
+quantity. Both are now reported side by side. Against the roughly 0.95 those
+methods reach, this model is at 0.50.
+
+## 3.11 Object identity was being squeezed through one number
+
+With the ground truth fixed, the picture split cleanly in two: the dynamics were
+far ahead of the feature control over all patches and slightly behind it on
+foreground only. They were buying figure/ground and not object/object. Three
+candidate causes, and what each measurement said:
+
+**Not the features.** On foreground patches the drive separates objects at
+d' = 2.43, and the single best channel reaches 3.56.
+
+**Not the coupling strength.** Sweeping k at fixed top_k=32, foreground ARI runs
+0.337, 0.402, 0.434, 0.430, 0.391 for k = 32, 64, 128, 256, 512. There is a peak
+and the untested default was already sitting on it.
+
+**The readout.** `phase_locking_value` averaged the osc_dim components before
+measuring synchrony, and `gate_mode="phase_mean"` does the same before the SNN,
+so which group a patch belongs to was carried by a single number -- which has to
+hold seven distinguishable bands when there are 6.5 objects, from features that
+have eight dimensions. Measuring synchrony per component and combining after:
+
+~~~
+                                    ARI     FG-ARI   fgIoU
+mean over components, then PLV     0.812    0.430    0.416
+per-component PLV, product         0.816    0.501    0.445
+feature control                    0.362    0.466    0.450
+~~~
+
+No retraining: this is the same checkpoint read differently. Comparing two
+readouts on one checkpoint also has no seed noise in it, and the only other
+source of variation, the chaotic trajectory, is worth at most 0.006.
+
+`phase_locking_value(..., combine="product")` does this. The training loss still
+uses the averaged form, and `gate_mode` still averages before the SNN, so the
+same compression is still in the path the spiking side sees.
 
 ---
 
