@@ -769,6 +769,63 @@ source of variation, the chaotic trajectory, is worth at most 0.006.
 uses the averaged form, and `gate_mode` still averages before the SNN, so the
 same compression is still in the path the spiking side sees.
 
+## 3.12 Every score had been measured on the training set
+
+`train_tensor` is the whole gamma tensor and evaluation used images 200-299,
+which are inside it, so nothing reported here had ever been scored on an image
+the model had not trained on. The same checkpoint, on 100 images from each of
+three ranges:
+
+~~~
+images        FG-ARI   control   status
+200-299       0.5144   0.4657    in the training set
+1000-1099     0.5249   0.4598    never seen
+5000-9999     0.5169   0.4456    never seen
+~~~
+
+Nothing degrades; the unseen ranges score marginally higher, and the margin over
+the feature control is slightly wider on them. The reason is structural: every
+parameter here is indexed by patch position -- `omega`, `kappa`,
+`direction_learner`, the graph projection -- and none is indexed by image, so
+there is nowhere for an individual scene to be stored. Worth knowing rather than
+assuming, and it means the earlier numbers stand.
+
+## 3.13 osc_dim, and 32x32 reopened
+
+**osc_dim was already right.** If object identity rides on the oscillator
+components then four of them is a number nobody chose. Sweeping it:
+
+~~~
+osc_dim      2       4       8      16
+FG-ARI     0.359   0.510   0.502   0.423
+~~~
+
+Two is badly short, four and eight are the same, sixteen is worse. The features
+driving it have eight dimensions, so there was never more than that to carry, and
+capacity stopped being the constraint once the readout stopped averaging (3.11).
+
+**32x32 was closed on a measurement that no longer holds.** Resolution was ruled
+out after 32x32 lost at every coupling density -- but every one of those scores
+came from the averaged readout, which was hiding object structure. Rerun with
+per-component synchrony:
+
+~~~
+32x32, top_k        64      128     256
+FG-ARI            0.500   0.546   0.565
+control (same grid)      0.517 at every top_k
+~~~
+
+0.565 is the best number this project has produced, against 0.510 at 16x16. Two
+qualifications. The control rises with the grid as well, 0.466 to 0.517, so a
+finer grid flatters every method; the model's own margin is +0.044 at 16x16 and
++0.049 at 32x32, which is the same. And foreground ARI is still climbing at
+top_k=256, which is 25% of the grid where the 16x16 optimum was 12.5%, so the
+top of that curve has not been found.
+
+The wall that closed this direction the first time was never resolution. It was
+a [B, N, N, D] tensor in the coupling (Part 1) that put a 1024-oscillator run out
+of memory, and a loss that computed terms it had been given weight 0.
+
 ---
 
 # Part 4 — How to run it

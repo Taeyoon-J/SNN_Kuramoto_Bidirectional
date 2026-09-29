@@ -157,6 +157,17 @@ def main():
         ),
     )
     parser.add_argument("--freq-gain", type=float, default=2.0)
+    parser.add_argument("--osc-dim", type=int, default=4, help="must match training")
+    parser.add_argument(
+        "--gate-mode",
+        choices=["sigmoid", "raw", "phase_mean"],
+        default="phase_mean",
+        help=(
+            "Must match training. phase_mean hands the dendrite one reduced "
+            "oscillation per unit and the others hand it osc_dim, so a mismatch is "
+            "a state_dict shape error rather than a silently wrong score."
+        ),
+    )
     parser.add_argument("--readout-slots", type=int, default=0)
     parser.add_argument("--readout-source", choices=["phase", "signal"], default="signal")
     parser.add_argument("--readout-temperature", type=float, default=0.05)
@@ -189,12 +200,12 @@ def main():
     hp = S2NetHyperparameters(
         num_feature_maps=gamma.size(1), num_regions=args.num_regions, sc=None,
         gamma_drive_mode="static", num_time_steps=args.num_time_steps,
-        theta_init="gamma", gamma_phase_mode="standardize_tanh", osc_dim=4,
+        theta_init="gamma", gamma_phase_mode="standardize_tanh", osc_dim=args.osc_dim,
         freq_gain=args.freq_gain,
         graph_mode="learned", graph_top_k=args.graph_top_k, k=256.,
         graph_spatial_decay=0.861,
         low_n=-4., high_n=0., membrane_vth=0.06, membrane_low_m=-4., membrane_high_m=0.,
-        gate_mode="phase_mean", spike_classify_method="spatial_components",
+        gate_mode=args.gate_mode, spike_classify_method="spatial_components",
         spike_spatial_grid_size=(args.grid, args.grid),
         readout_slots=args.readout_slots, readout_source=args.readout_source,
         readout_temperature=args.readout_temperature,
