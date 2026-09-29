@@ -158,6 +158,7 @@ def main():
     )
     parser.add_argument("--freq-gain", type=float, default=2.0)
     parser.add_argument("--osc-dim", type=int, default=4, help="must match training")
+    parser.add_argument("--gamma-time-phases", type=int, default=0, help="must match training")
     parser.add_argument(
         "--gate-mode",
         choices=["sigmoid", "raw", "phase_mean"],
@@ -207,6 +208,7 @@ def main():
         low_n=-4., high_n=0., membrane_vth=0.06, membrane_low_m=-4., membrane_high_m=0.,
         gate_mode=args.gate_mode, spike_classify_method="spatial_components",
         spike_spatial_grid_size=(args.grid, args.grid),
+        gamma_time_phases=args.gamma_time_phases,
         readout_slots=args.readout_slots, readout_source=args.readout_source,
         readout_temperature=args.readout_temperature,
         readout_signal_dim=(args.num_time_steps - args.settle

@@ -118,9 +118,11 @@ class S2NetCore(nn.Module):
         # Extra parameters are created only when the corresponding non-default
         # mode is requested, so a legacy configuration keeps an unchanged
         # state_dict and old checkpoints still load with strict=True.
+        self.gamma_time_phases = int(getattr(hparams, "gamma_time_phases", 0))
         self.gamma_channel_proj = None
         if self.gamma_drive_mode == "static":
-            self.gamma_channel_proj = nn.Linear(self.T, self.osc_dim, bias=False)
+            out_dim = self.osc_dim * max(self.gamma_time_phases, 1)
+            self.gamma_channel_proj = nn.Linear(self.T, out_dim, bias=False)
             nn.init.normal_(self.gamma_channel_proj.weight, std=1.0 / max(self.T, 1) ** 0.5)
 
         self.gamma_phase_gain = None
@@ -217,6 +219,7 @@ class S2NetCore(nn.Module):
         else:
             sc = self.sc.to(gamma_seq.device).unsqueeze(0).expand(B, -1, -1)
 
+        drive_cycle = None
         if self.gamma_drive_mode == "sequence":
             if gamma_seq.dim() != 3:
                 raise ValueError(
@@ -234,7 +237,14 @@ class S2NetCore(nn.Module):
             theta = self._init_theta(drive_seq[:, 0, :], B)
         else:
             drive_seq = None
-            drive = self._to_phase(self._static_drive(gamma_seq))
+            staged = self._to_phase(self._static_drive(gamma_seq))
+            if self.gamma_time_phases > 0:
+                # [B, phases, N, osc_dim], indexed by t modulo the cycle length
+                drive_cycle = staged.permute(0, 2, 1, 3).contiguous()
+                drive = drive_cycle[:, 0]
+            else:
+                drive_cycle = None
+                drive = staged
             T = int(num_time_steps if num_time_steps is not None else self.num_time_steps)
             if T <= 0:
                 raise ValueError("num_time_steps must be positive.")
@@ -269,7 +279,12 @@ class S2NetCore(nn.Module):
                 # A graph fixed for the whole rollout cannot sharpen a group
                 # once it starts forming; this is what lets one crystallise.
                 sc = self.graph_generator(gamma_seq, alignment=alignment)
-            drive_t = drive if drive_seq is None else drive_seq[:, t, :]
+            if drive_seq is not None:
+                drive_t = drive_seq[:, t, :]
+            elif drive_cycle is not None:
+                drive_t = drive_cycle[:, t % self.gamma_time_phases]
+            else:
+                drive_t = drive
             theta = self.kuramoto(
                 theta,
                 drive_t,
@@ -328,7 +343,13 @@ class S2NetCore(nn.Module):
                 raise ValueError(
                     f"gamma has {gamma.size(1)} channels, but num_feature_maps is {self.T}."
                 )
-            return self.gamma_channel_proj(gamma.transpose(1, 2))  # [B, N, osc_dim]
+            projected = self.gamma_channel_proj(gamma.transpose(1, 2))
+            if self.gamma_time_phases > 0:
+                # [B, N, phases, osc_dim]: one drive vector per point in the cycle
+                return projected.view(
+                    projected.size(0), projected.size(1), self.gamma_time_phases, self.osc_dim
+                )
+            return projected                                       # [B, N, osc_dim]
         if gamma.size(1) == self.in_dim and gamma.size(-1) == self.osc_dim:
             return gamma
         raise ValueError(

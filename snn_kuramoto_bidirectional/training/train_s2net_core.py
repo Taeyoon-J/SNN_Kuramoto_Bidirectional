@@ -412,6 +412,17 @@ def main():
     )
     parser.add_argument("--osc-dim", type=int, default=4)
     parser.add_argument(
+        "--gamma-time-phases",
+        type=int,
+        default=0,
+        help=(
+            "Give each patch this many drive vectors, cycled over the rollout, "
+            "instead of one held constant. 0 is the current constant drive. The "
+            "cycle length is independent of the channel count on purpose: tying "
+            "them together is what made the legacy sequence mode fail."
+        ),
+    )
+    parser.add_argument(
         "--gamma-phase-mode",
         default="none",
         choices=["none", "tanh", "standardize_tanh"],
@@ -777,6 +788,7 @@ def main():
         membrane_low_m=args.membrane_low_m,
         membrane_high_m=args.membrane_high_m,
         gate_mode=args.gate_mode,
+        gamma_time_phases=args.gamma_time_phases,
         readout_slots=args.readout_slots,
         readout_source=args.readout_source,
         readout_signal_dim=(

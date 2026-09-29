@@ -29,6 +29,20 @@ class S2NetHyperparameters:
     gamma_drive_mode: str = "sequence"
     num_time_steps: int = 8
 
+    # Number of distinct drive vectors per patch, cycled over the rollout.
+    #
+    # The drive is currently one vector per patch held constant for every step,
+    # so the only thing that varies in time is the oscillator state. Giving each
+    # patch a short cycle of drive vectors lets the input carry temporal
+    # structure, which is what "a different gamma at each t" asks for.
+    #
+    # It deliberately does not tie the cycle to the channel count. The legacy
+    # "sequence" mode did that, which forced T to the number of feature maps;
+    # with membrane time constants averaging 14 steps, T=8 meant most neurons
+    # never completed one, and 32 images produced a single shared mask. 0 keeps
+    # the constant drive and leaves the state_dict unchanged.
+    gamma_time_phases: int = 0
+
     # Map raw gamma values onto a phase range before sin(gamma - theta).
     # Pooled CNN activations have an arbitrary scale, so "none" lets the drive
     # wrap around the sine and lose image specificity.
@@ -175,6 +189,8 @@ class S2NetHyperparameters:
             )
         if self.theta_init not in {"zeros", "gamma", "gamma_noise"}:
             raise ValueError('theta_init must be "zeros", "gamma", or "gamma_noise".')
+        if self.gamma_time_phases < 0:
+            raise ValueError("gamma_time_phases must be non-negative.")
         if self.theta_init_noise < 0:
             raise ValueError("theta_init_noise must be non-negative.")
         if self.graph_mode not in {"static", "learned"}:
