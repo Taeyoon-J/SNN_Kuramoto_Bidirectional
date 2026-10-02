@@ -33,28 +33,43 @@ spiking readout started at 4% of what the phases hold and is now at 49%.
 
 ## Current status
 
-Averaged over four seeds, scored against colour-derived CLEVR object masks:
+Scored against `clevr_with_masks`, the dataset's own segmentation (3.10), on 100
+images at the true cluster count. Foreground ARI is the metric object-discovery
+papers report; the all-patch ARI is kept because this repository's history is in
+it, and because the two disagree in informative ways.
 
-| readout | original gate | `phase_mean` |
-| --- | --- | --- |
-| ARI from oscillator phase | **0.329** | 0.304 |
-| ARI from membrane | 0.045 | **0.182** |
-| ARI from spikes | 0.042 | **0.150** |
-| foreground IoU from spikes | 0.122 | **0.179** |
+| | ARI | FG-ARI | fgIoU |
+| --- | --- | --- | --- |
+| **32x32 grid, top_k 256, per-component synchrony** | 0.735 | **0.565** | 0.439 |
+| 16x16 grid, top_k 32, per-component synchrony | 0.610 | 0.510 | 0.455 |
+| features clustered directly, 32x32 | 0.399 | 0.517 | 0.444 |
+| features clustered directly, 16x16 | 0.362 | 0.466 | 0.450 |
+| same model with the coupling switched off | 0.747 | 0.281 | — |
+| chance | 0.000 | -0.001 | 0.057 |
 
-Untrained baseline is ARI 0.033. The `phase_mean` gate improves every spiking
-readout on 4 of 4 seeds, at the cost of about 7.6% on the phase readout (3 of 4
-seeds), which is the trade this project wants: the spiking side is supposed to
-carry the grouping, and it went from 13% to 49% of what the phases hold.
+Three things to read from this.
 
-For scale: 0 is chance, and slot-based object-discovery methods on CLEVR
-typically report foreground ARI in the 0.9 range. The model finds roughly where
-objects are and produces a different grouping for every image, but it does not
-recover object boundaries. One caveat inflates the numbers: the colour-derived
-masks capture only 78% of the scene objects, so objects the model does find can
-still be scored as wrong. The oracle cluster count was long listed as a second
-caveat and is not one -- see 3.9, where a fixed k=3 scores 0.3499 against 0.3480
-for the true per-image count.
+**The coupling is load-bearing.** Switching it off drops foreground ARI to 0.281,
+below the features the drive was built from. The grouping is produced by the
+dynamics rather than carried in by the input, which is the claim the architecture
+rests on and which had never been measured at this metric.
+
+**The margin over the features is small.** 0.510 against 0.466 at 16x16, 0.565
+against 0.517 at 32x32 -- about +0.05 either way. A finer grid raises the absolute
+score and the control by the same amount, so resolution buys the task, not the
+model.
+
+**Against the literature it is early.** Slot Attention and IODINE report
+foreground ARI around 0.99 on CLEVR6. The comparison is not clean in several ways
+that mostly disfavour this model -- they segment pixels where this segments a
+16x16 or 32x32 patch grid, they train on 50-70k images where this trains on 1000,
+and CLEVR6 caps scenes at six objects where these average 6.5 -- but the gap is
+large and resolution is the largest single term in it.
+
+Two notes on what the numbers are not. They are measured on images the model
+trained on, and separately on images it never saw, and they do not differ (3.12).
+The oracle cluster count is not an advantage: a well-chosen fixed k matches it
+(3.9).
 
 `results/result_overview.png` shows images, ground truth, and both readouts side
 by side. `results/report_figure.png` puts the best case next to the median, the
