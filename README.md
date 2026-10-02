@@ -80,6 +80,34 @@ averaging the oscillator components (3.11). So the dynamics buy a great deal of
 figure/ground and, now, a modest amount of object/object: FG-ARI 0.501 against
 0.466, while boundary precision is a tie.
 
+**Is the coupling doing the work, or is the drive passing the input through?**
+A constant drive sets each oscillator's frequency and a phase target, and the
+question is whether which patches group together comes from that or from the
+coupling. Switch the coupling off on the trained checkpoint:
+
+| | ARI | FG-ARI |
+| --- | --- | --- |
+| trained, coupling on | 0.610 | **0.510** |
+| trained, coupling off (drive alone) | 0.747 | **0.281** |
+| trained, coupling x0.25 | 0.509 | 0.507 |
+| untrained, coupling on | 0.150 | 0.463 |
+| features clustered directly | 0.362 | 0.466 |
+
+Without coupling, foreground ARI falls to 0.281 -- below the features the drive
+was built from. The drive alone is a worse description of the objects than its own
+input, because with nothing to lock them the phases separate by `|w_i - w_j|`,
+which turns a graded feature difference into a step. The grouping is made by the
+coupling, not carried in by the drive.
+
+The decomposition: features 0.466, untrained dynamics 0.463 (nothing), trained
+0.510 (+0.047), coupling removed 0.281 (-0.229). Coupling is necessary and not
+sufficient; the margin over the features comes from training the graph and the
+frequencies.
+
+Note the two columns disagree in direction. Removing the coupling *raises* ARI
+over all patches, to 0.747. Figure and ground separate on the drive alone; only
+telling two objects apart needs the dynamics.
+
 An earlier version of this table reported 0.077 against 0.284 and called it
 "3.7x". That was measured against colour-reconstructed masks which labelled 46%
 of the foreground as background, and it understated the feature control more
@@ -825,6 +853,54 @@ top of that curve has not been found.
 The wall that closed this direction the first time was never resolution. It was
 a [B, N, N, D] tensor in the coupling (Part 1) that put a 1024-oscillator run out
 of memory, and a loss that computed terms it had been given weight 0.
+
+## 3.14 A different gamma at each t
+
+The drive is one vector per patch, held constant for the whole rollout, so the
+only thing that varies in time is the oscillator state. The proposal was to vary
+the drive instead. `gamma_drive_mode="sequence"` already does a version of this --
+channel t at step t -- and scores 0.082 against 0.336, but it differs from the
+static drive in three ways at once, and nobody had separated them: the drive
+varies in time, it is a scalar rather than a vector, and it is not trained with
+the core.
+
+`gamma_time_phases` isolates the first. The learned channel projection emits that
+many drive vectors per patch and the rollout cycles through them, so the drive is
+time-varying while staying a vector and staying trained with the core. The cycle
+length is deliberately not the channel count: tying those together forces T to 8,
+and with membrane time constants averaging 14 steps that was measured at
+specificity 0.000091 with one mask shared by 32 images (1.1).
+
+~~~
+gamma_time_phases      0      2      4      8     16
+FG-ARI               0.510  0.452  0.491  0.290  0.376
+~~~
+
+**The diagnosis was right and the change does not pay.** Making the drive a
+vector and training it with the core recovers nearly all of what the sequence
+mode lost -- 0.491 against 0.510, which is a tie -- so those two things were
+indeed why the static drive works. Varying the drive in time is worth nothing on
+top, and lengthening the cycle costs: 8 and 16 are far below the constant drive,
+so the sign of the effect is negative.
+
+There is also a reason to expect that. Patches that receive the same temporal
+pattern synchronise because they are driven alike, which puts the grouping in the
+input rather than in the coupling -- the opposite of what the coupling ablation
+above shows the model currently does. The worry that motivated the proposal, that
+a constant drive is "just feeding the input in", is answered by that ablation
+rather than by varying the drive.
+
+One part of the proposal is untested: replacing the patch feature itself. Today it
+is `adaptive_avg_pool2d` over the feature map, which has no parameters at all, so
+everything inside a patch collapses to a mean. Whether a learned per-patch encoder
+beats that average is a separate question from whether the drive should vary in
+time, and it is worth asking with the drive held constant.
+
+## 3.15 Coupling density at 32x32
+
+The 32x32 sweep, completed: foreground ARI 0.500, 0.546, 0.565, 0.528, 0.429 for
+top_k 64, 128, 256, 384, 512. It peaks at 256, which is 25% of the grid, against
+12.5% at 16x16. 0.565 remains the best result here.
 
 ---
 
