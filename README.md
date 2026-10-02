@@ -40,8 +40,9 @@ it, and because the two disagree in informative ways.
 
 | | ARI | FG-ARI | fgIoU |
 | --- | --- | --- | --- |
-| **32x32 grid, top_k 256, per-component synchrony** | 0.735 | **0.565** | 0.439 |
-| 16x16 grid, top_k 32, per-component synchrony | 0.610 | 0.510 | 0.455 |
+| **16x16 grid, top_k 32, spatial decay 0.55** (3 seeds) | — | **0.598** | — |
+| 32x32 grid, top_k 256, spatial decay 0.928 | 0.735 | 0.565 | 0.439 |
+| 16x16 grid, top_k 32, spatial decay 0.861 | 0.610 | 0.510 | 0.455 |
 | features clustered directly, 32x32 | 0.399 | 0.517 | 0.444 |
 | features clustered directly, 16x16 | 0.362 | 0.466 | 0.450 |
 | same model with the coupling switched off | 0.747 | 0.281 | — |
@@ -916,6 +917,59 @@ time, and it is worth asking with the drive held constant.
 The 32x32 sweep, completed: foreground ARI 0.500, 0.546, 0.565, 0.528, 0.429 for
 top_k 64, 128, 256, 384, 512. It peaks at 256, which is 25% of the grid, against
 12.5% at 16x16. 0.565 remains the best result here.
+
+## 3.16 The coupling graph was wiring same-coloured objects together
+
+The margin over clustering the features directly was about +0.05, which raises a
+fair question: if a mechanism is doing the binding, why is it barely ahead of
+k-means on its own input? Splitting the evaluation by scene content answered it.
+
+CLEVR has eight colours and these scenes average 6.5 objects, so by the pigeonhole
+principle **83% of scenes contain two objects of the same colour**. The graph
+chooses its edges by feature cosine, and the features are essentially colour, so
+those objects look identical to it. Measured on a trained checkpoint:
+
+~~~
+mean learned edge weight between patch pairs
+  same object                           0.738
+  different object, same colour         0.418     54% of the within-object weight
+  different object, different colour    0.041
+  object to background                  0.004
+~~~
+
+With coupling this strong, an edge at 0.418 pulls two separate objects into one
+group. That is the dominant error mode, and it is upstream of everything else:
+no loss term and no readout can separate two oscillators the graph has tied
+together.
+
+**The fix is the spatial prior, which was far too loose.** It decays as
+decay^(patch distance), and at 0.861 a pair eight patches apart still keeps 0.31
+of its weight. Same-coloured objects are spatially separated, so tightening the
+decay cuts exactly those edges. Three paired seeds, scored on 300 images no run
+had trained on:
+
+~~~
+decay    FG-ARI (3 seeds)              mean    margin over features   edge ratio
+0.861    0.527  0.482  0.520          0.510         +0.049              1.8
+0.55     0.553  0.603  0.637          0.598         +0.137              3.8
+~~~
+
+The two sets of runs do not overlap, every seed improves, and the margin over the
+feature control nearly triples. The subset that improves most is the one the
+mechanism predicts: scenes with a repeated colour go from +0.058 to +0.168, while
+scenes where every object has its own colour gain less.
+
+Overtightening costs. At 0.40 the ratio reaches 5.0 but within-object edge weight
+falls from 0.738 to 0.526 and the score drops back, so the prior is trading one
+error against the other and 0.55 is where that trade sits at this grid.
+
+The default is now 0.55. The decay is per unit of patch distance, so a finer grid
+wants roughly the square root of it to keep the same reach in the image.
+
+Two corrections made along the way, both from scoring too few images. A first pass
+on 18 scenes said the model *lost* to feature clustering where colours repeat
+(-0.039); on 500 scenes it wins there by +0.084. And the overall margin, long
+quoted as +0.044 from 100 images, is +0.064 on 500.
 
 ---
 

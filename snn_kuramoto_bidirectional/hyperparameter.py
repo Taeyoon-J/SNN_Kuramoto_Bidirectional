@@ -88,11 +88,22 @@ class S2NetHyperparameters:
     graph_coupling_gain: float = 8.0
     graph_temperature: float = 0.1
 
-    # Structural prior on the learned graph. Objects are connected regions, and
-    # the features do not know that. A hand-written spatial x similarity kernel
-    # scored ARI 0.056 against 0.038 for the randomly initialised graph, so this
-    # is a better starting point. None disables it.
-    graph_spatial_decay: object = None
+    # Structural prior on the learned graph, applied as decay^(patch distance).
+    #
+    # The graph picks its edges by feature cosine, and two objects of the same
+    # colour look alike to it: measured, it wires them together at 0.418 mean edge
+    # weight against 0.749 inside an object. 83% of CLEVR scenes contain a
+    # repeated colour, so that is the dominant error. Objects of the same colour
+    # are spatially apart, so tightening this cuts those edges and leaves the
+    # within-object ones.
+    #
+    # 0.55 at a 16x16 grid, measured over three paired seeds: foreground ARI
+    # 0.510 -> 0.598 with no overlap between the two sets of runs, and the margin
+    # over clustering the features directly goes from +0.049 to +0.137. Too tight
+    # starts cutting within-object edges as well -- 0.40 falls back. The decay is
+    # per unit of patch distance, so a finer grid wants the square root to keep
+    # the same reach in the image. None disables it.
+    graph_spatial_decay: object = 0.55
 
     # Let the graph track the synchrony it produces, so oscillators that stay in
     # phase couple more strongly. Held fixed for the whole rollout the graph has
