@@ -157,6 +157,18 @@ def main():
         ),
     )
     parser.add_argument("--freq-gain", type=float, default=2.0)
+    parser.add_argument(
+        "--graph-spatial-decay",
+        type=float,
+        default=0.55,
+        help=(
+            "Must match training. This was hardcoded to 0.861 here, so every "
+            "checkpoint trained at another value was scored with a graph it had "
+            "never seen -- the prior is applied at inference and is not a learned "
+            "parameter. Relative comparisons within one sweep survived, since the "
+            "mismatch was constant, but the absolute numbers did not."
+        ),
+    )
     parser.add_argument("--osc-dim", type=int, default=4, help="must match training")
     parser.add_argument("--gamma-time-phases", type=int, default=0, help="must match training")
     parser.add_argument("--spike-per-component", action="store_true", help="must match training")
@@ -205,7 +217,7 @@ def main():
         theta_init="gamma", gamma_phase_mode="standardize_tanh", osc_dim=args.osc_dim,
         freq_gain=args.freq_gain,
         graph_mode="learned", graph_top_k=args.graph_top_k, k=256.,
-        graph_spatial_decay=0.861,
+        graph_spatial_decay=args.graph_spatial_decay,
         low_n=-4., high_n=0., membrane_vth=0.06, membrane_low_m=-4., membrane_high_m=0.,
         gate_mode=args.gate_mode, spike_classify_method="spatial_components",
         spike_spatial_grid_size=(args.grid, args.grid),
