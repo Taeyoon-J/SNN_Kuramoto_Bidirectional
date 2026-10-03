@@ -51,6 +51,7 @@ def train_s2net_core(
     plv_settle=0,
     plv_source="phase",
     plv_combine="mean",
+    spike_plv_weight=0.0,
     gamma_generator=None,
     encoder_lr=None,
     recon_grid=None,
@@ -127,6 +128,17 @@ def train_s2net_core(
                 recon_target=recon_target,
                 assignment=_cluster_assignment(core, theta, plv_settle, loss_values),
             )
+            if float(spike_plv_weight) != 0.0:
+                # The phase objective is kept and the spiking one added beside
+                # it. Replacing it was the confound the last two attempts at this
+                # shared: both switched plv_source to the spiking side, which
+                # also removed every phase term, so a loss could not be told from
+                # the absence of a gain.
+                spike_plv = _spike_component_plv(core, plv_settle)
+                if spike_plv is not None:
+                    aux, aux_parts = criterion(plv=spike_plv, plv_settle=int(plv_settle))
+                    loss = loss + float(spike_plv_weight) * aux
+                    parts.update({"spike_" + k: v for k, v in aux_parts.items()})
 
             optimizer.zero_grad()
             loss.backward()
@@ -264,6 +276,30 @@ def _forward_with_plv(core, gamma_seq, criterion, plv_settle, plv_source="phase"
             'plv_source must be "phase", "alignment", "membrane", or "spikes".'
         )
     return groups, spikes, core_out, plv, theta
+
+
+def _spike_component_plv(core, plv_settle):
+    """
+    Synchrony between per-component spike trains, combined by product. [B, N, N]
+
+    The same shape of readout the phases use, applied to the spiking side. It
+    exists so the loss can reach the spiking layers at all: the dendritic and
+    membrane time constants are drawn from sigmoid(U(-4, 0)) and have never been
+    trained towards preserving synchrony, because the objective reads the phases.
+
+    Measured, the spiking path loses 0.165 foreground ARI and loses it in roughly
+    equal bites -- gate 0.02, dendrite 0.045, membrane 0.046, thresholding 0.028 --
+    so there is no single stage to repair. Letting the layers see the objective is
+    what is left.
+    """
+    comp = getattr(core, "last_component_spikes", None)
+    if comp is None:
+        return None
+    per = [
+        signal_synchrony(comp[:, d], settle=int(plv_settle)).clamp_min(0)
+        for d in range(comp.size(1))
+    ]
+    return torch.stack(per).prod(dim=0)
 
 
 def _cluster_assignment(core, theta, plv_settle, spikes=None):
@@ -411,6 +447,36 @@ def main():
         help="Recurrent length for static drive mode. Defaults to the gamma channel count.",
     )
     parser.add_argument("--osc-dim", type=int, default=4)
+    parser.add_argument(
+        "--train-limit",
+        type=int,
+        default=None,
+        help=(
+            "Train on the first N samples only. Everything in this repository has "
+            "been trained on all 1000 images with no split; this is how a larger "
+            "set is used while leaving later images genuinely unseen."
+        ),
+    )
+    parser.add_argument(
+        "--spike-plv-weight",
+        type=float,
+        default=0.0,
+        help=(
+            "Weight on the PLV family applied to per-component spike synchrony, "
+            "added alongside the phase objective rather than replacing it. "
+            "Requires --spike-per-component. The spiking layers receive no "
+            "gradient at all without this."
+        ),
+    )
+    parser.add_argument(
+        "--spike-per-component",
+        action="store_true",
+        help=(
+            "Run the spiking layers once per oscillator component instead of "
+            "mixing them in the dendrite. Collapsing the components is worth "
+            "0.202 foreground ARI, and the dendrite does it in its first layer."
+        ),
+    )
     parser.add_argument(
         "--gamma-time-phases",
         type=int,
@@ -732,6 +798,14 @@ def main():
         if gamma_seq.dim() != 3:
             raise ValueError(f"gamma_seq must have shape [B, T, N], but got {tuple(gamma_seq.shape)}.")
         train_tensor = gamma_seq
+        if args.train_limit is not None:
+            if int(args.train_limit) < 1 or int(args.train_limit) > train_tensor.size(0):
+                raise ValueError(
+                    f"--train-limit must lie in [1, {train_tensor.size(0)}]."
+                )
+            train_tensor = train_tensor[: int(args.train_limit)]
+            print(f"training on the first {train_tensor.size(0)} of "
+                  f"{gamma_seq.size(0)} samples", flush=True)
 
     if gamma_seq is not None:
         num_feature_maps = gamma_seq.size(1) if args.num_feature_maps is None else int(args.num_feature_maps)
@@ -789,6 +863,7 @@ def main():
         membrane_high_m=args.membrane_high_m,
         gate_mode=args.gate_mode,
         gamma_time_phases=args.gamma_time_phases,
+        spike_per_component=args.spike_per_component,
         readout_slots=args.readout_slots,
         readout_source=args.readout_source,
         readout_signal_dim=(
@@ -887,6 +962,7 @@ def main():
         plv_settle=args.plv_settle,
         plv_source=args.plv_source,
         plv_combine=args.plv_combine,
+        spike_plv_weight=args.spike_plv_weight,
         gamma_generator=gamma_generator,
         encoder_lr=args.encoder_lr,
         recon_grid=args.gamma_patch_grid_size,

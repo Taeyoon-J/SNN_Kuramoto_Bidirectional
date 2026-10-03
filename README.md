@@ -1056,6 +1056,85 @@ against the 0.630 of the full phase readout and the 0.457 of the feature control
 If the spiking layers carried the components as separate channels, the spike
 readout has that much room.
 
+## 3.19 Carrying the components through the SNN, and letting the loss see the spikes
+
+Both follow from 3.18 and both fail. They are kept because the flags exist and
+someone will otherwise try them again.
+
+**`spike_per_component` carries the osc_dim components through the spiking
+layers** instead of mixing them in the dendrite's first linear map, by folding the
+component axis into the batch axis so every weight stays shared. The collapse was
+worth 0.202 at the phase level, so the expectation was that the spike readout
+would follow. Three seeds:
+
+~~~
+                      seed 0  seed 1  seed 2   mean
+spikes, collapsed      0.436   0.363   0.460   0.419
+spikes, per-component  0.371   0.347   0.430   0.383
+feature control                                0.457
+~~~
+
+No gain on foreground ARI. The all-patch ARI, though, rises from about 0.29 to
+0.66, higher than the phase readout's own, so the components do carry a great deal
+more figure/ground. The same split as everywhere else in this project.
+
+Per-component staging shows why the earlier diagnosis misled. Measured on the
+component path, the loss is spread out rather than concentrated:
+
+~~~
+theta, per-component PLV        0.5952
+sin(theta) per-component        0.5688    -0.026
+gate output                     0.5484    -0.020
+dendrite output                 0.5034    -0.045
+membrane                        0.4579    -0.046
+spikes, binary                  0.4303    -0.028
+~~~
+
+The staged measurement in 3.18 was taken on the collapsed path, where the signal
+had already fallen to 0.43 and the layers had little left to destroy. There is no
+single stage to repair; each leaky stage takes a bite. Lengthening the rollout
+does not recover it either -- 0.436, 0.431, 0.450 for 192, 448 and 960 steps after
+settling, so it is signal loss and not estimation noise.
+
+**`spike_plv_weight` puts the PLV family on the per-component spike synchrony,
+alongside the phase objective rather than replacing it.** Replacing it was the
+confound the two earlier attempts shared (3.1, 3.9), and the graph and the readout
+that were also wrong then are now fixed, so this was a genuinely different
+attempt. At one seed it looked monotone -- 0.371, 0.400, 0.410, 0.418 for weights
+0, 0.03, 0.10, 0.30 -- and with seeds it is not:
+
+~~~
+weight 0.30   seed 0  0.418    seed 1  0.326    seed 2  0.266    mean 0.337
+weight 0      (above)                                            mean 0.383
+weight 1.0    0.141        weight 3.0   0.181
+~~~
+
+Worse than no spike loss, and at higher weights the firing collapses to 0.006 and
+0.011 despite the rate guard, which is exactly how 3.1 failed. The confounds were
+not the reason the earlier attempts failed; the approach fails.
+
+**Data scale closes too, and the way it fails is the useful part.** Two arms with
+ten times the gradient steps, one by data and one by epochs, scored on 150 images
+held out of both:
+
+~~~
+1000 images,  40 epochs    0.576      the current recipe
+8000 images,  40 epochs    0.462
+1000 images, 400 epochs    0.398
+feature control            0.425
+~~~
+
+The arms share the step count and both fall below one tenth of it, with the
+data-rich arm falling less. So what hurts is the extra optimisation, and more data
+only softens it. That is 3.2 again: an objective on summary statistics of the
+synchrony matrix is satisfiable by structures unrelated to objects, and optimising
+harder finds them. 40 epochs is where that has not yet shown.
+
+Two predictions of mine were reported here before seeds and then retracted: the
+monotone spike-loss trend above, and a claim from 18 images that the model loses
+to feature clustering on repeated-colour scenes, which on 500 images is +0.084.
+Both were single-seed or small-sample. Seeds first, in this area especially.
+
 ---
 
 # Part 4 — How to run it

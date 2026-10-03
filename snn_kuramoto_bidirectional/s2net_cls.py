@@ -84,6 +84,7 @@ class S2NetCore(nn.Module):
         self.theta_init = getattr(hparams, "theta_init", "zeros")
         self.theta_init_noise = float(getattr(hparams, "theta_init_noise", 0.0))
         self.gate_mode = getattr(hparams, "gate_mode", "sigmoid")
+        self.spike_per_component = bool(getattr(hparams, "spike_per_component", False))
         self.spike_classify_method = hparams.spike_classify_method
         self.spike_rhythm_threshold = hparams.spike_rhythm_threshold
         self.spike_rhythm_min_group_size = hparams.spike_rhythm_min_group_size
@@ -161,8 +162,12 @@ class S2NetCore(nn.Module):
             branch=hparams.branch,
             device=device,
             bias=True,
-            # phase_mean hands the dendrite one reduced oscillation per unit
-            input_vector_dim=1 if self.gate_mode == "phase_mean" else self.osc_dim,
+            # phase_mean hands the dendrite one reduced oscillation per unit, and
+            # in per-component mode each component arrives on its own pass
+            input_vector_dim=(
+                1 if self.gate_mode == "phase_mean" or self.spike_per_component
+                else self.osc_dim
+            ),
         )
         self.membrane_layer = MembraneLayer(
             output_dim=self.in_dim,
@@ -259,8 +264,13 @@ class S2NetCore(nn.Module):
             self.graph_generator.initial_alignment(B, self.in_dim, theta.device)
             if feedback else None
         )
-        self.dendric_layer.set_neuron_state(B)
-        self.membrane_layer.set_neuron_state(B)
+        # In per-component mode the component axis is folded into the batch axis,
+        # so the layers keep one state per (sample, component) while sharing every
+        # weight. The per-neuron parameters are indexed by oscillator and
+        # broadcast over the fold unchanged.
+        spike_fold = self.osc_dim if self.spike_per_component else 1
+        self.dendric_layer.set_neuron_state(B * spike_fold)
+        self.membrane_layer.set_neuron_state(B * spike_fold)
         pulse_enabled = self.kuramoto.spike_pulse_gain is not None
 
         # The graph is fixed for the whole rollout unless feedback is on, so the
@@ -304,14 +314,34 @@ class S2NetCore(nn.Module):
                 gamma_wave_t = torch.sin(theta) * mask.unsqueeze(-1)
             g_wave_t = torch.sigmoid(mask) if self.gate_mode == "sigmoid" else mask
 
-            h_wave_t = self.dendric_layer(gamma_wave_t, self.membrane_layer.spike)
-            mem_t, spike_t = self.membrane_layer(h_wave_t, g_wave_t)
+            if self.spike_per_component:
+                # [B, N, D] -> [B * D, N, 1], and the gate repeated to match
+                folded = gamma_wave_t.permute(0, 2, 1).reshape(B * spike_fold, self.in_dim, 1)
+                gate_folded = g_wave_t.repeat_interleave(spike_fold, dim=0)
+                h_wave_t = self.dendric_layer(folded, self.membrane_layer.spike)
+                mem_t, spike_t = self.membrane_layer(h_wave_t, gate_folded)
+            else:
+                h_wave_t = self.dendric_layer(gamma_wave_t, self.membrane_layer.spike)
+                mem_t, spike_t = self.membrane_layer(h_wave_t, g_wave_t)
             spikes_hist.append(spike_t)
             outputs.append(mem_t)
 
         core_out = torch.stack(outputs).permute(1, 2, 0)
         spikes = torch.stack(spikes_hist).permute(1, 2, 0)
+        component_out = component_spikes = None
+        if self.spike_per_component:
+            # [B * D, N, T] -> [B, D, N, T], then averaged back to [B, N, T] so
+            # everything downstream keeps the shape it expects. The per-component
+            # tensors are what a readout should use: measuring synchrony per
+            # component and combining is worth 0.202 foreground ARI over
+            # averaging first.
+            component_out = core_out.view(B, spike_fold, self.in_dim, -1)
+            component_spikes = spikes.view(B, spike_fold, self.in_dim, -1)
+            core_out = component_out.mean(dim=1)
+            spikes = component_spikes.mean(dim=1)
         object_groups = self._detect_object_groups(core_out, spikes)
+        self.last_component_out = component_out
+        self.last_component_spikes = component_spikes
 
         if return_theta:
             # [B, T, num_regions, osc_dim]

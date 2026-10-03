@@ -147,6 +147,21 @@ class S2NetHyperparameters:
     membrane_low_m: float = 0.0
     membrane_high_m: float = 4.0
 
+    # Run the spiking layers once per oscillator component instead of mixing the
+    # components in the dendrite's first linear map.
+    #
+    # Measured on a trained checkpoint, scoring every stage with one measure:
+    # collapsing the osc_dim components costs 0.202 foreground ARI, while the
+    # whole spiking path from the gate to binary spikes costs 0.058 and swapping
+    # PLV for correlation costs 0.045. The collapse happens in the dendrite,
+    # which was written to produce one neuron per oscillator. Folding the
+    # component axis into the batch axis keeps the weights shared and gives each
+    # component its own spike train, so the readout can measure synchrony per
+    # component the way the phase readout already does. Per-component
+    # correlation on sin(theta) reaches 0.585 against 0.374 for the current spike
+    # readout, which is the room this is aiming at.
+    spike_per_component: bool = False
+
     # "sigmoid" reproduces the original gate, compressed to [0.5, 0.731] so it
     # never closes. "raw" leaves it spanning [0, 1]. "phase_mean" reduces the
     # osc_dim axis before the sine, which measured 0.216 against 0.067 for the
@@ -233,6 +248,11 @@ class S2NetHyperparameters:
             raise ValueError("readout_iters must be positive.")
         if self.readout_temperature <= 0:
             raise ValueError("readout_temperature must be positive.")
+        if self.spike_per_component and self.gate_mode == "phase_mean":
+            raise ValueError(
+                'spike_per_component needs the components, but gate_mode '
+                '"phase_mean" averages them away. Use "raw".'
+            )
         if self.gate_mode not in {"sigmoid", "raw", "phase_mean"}:
             raise ValueError('gate_mode must be "sigmoid", "raw", or "phase_mean".')
         if self.in_channels != 3:

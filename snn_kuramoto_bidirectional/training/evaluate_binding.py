@@ -159,6 +159,7 @@ def main():
     parser.add_argument("--freq-gain", type=float, default=2.0)
     parser.add_argument("--osc-dim", type=int, default=4, help="must match training")
     parser.add_argument("--gamma-time-phases", type=int, default=0, help="must match training")
+    parser.add_argument("--spike-per-component", action="store_true", help="must match training")
     parser.add_argument(
         "--gate-mode",
         choices=["sigmoid", "raw", "phase_mean"],
@@ -209,6 +210,7 @@ def main():
         gate_mode=args.gate_mode, spike_classify_method="spatial_components",
         spike_spatial_grid_size=(args.grid, args.grid),
         gamma_time_phases=args.gamma_time_phases,
+        spike_per_component=args.spike_per_component,
         readout_slots=args.readout_slots, readout_source=args.readout_source,
         readout_temperature=args.readout_temperature,
         readout_signal_dim=(args.num_time_steps - args.settle
@@ -219,6 +221,7 @@ def main():
     core.eval()
 
     plv, plv_parts, spike_sync, trains = [], [], [], []
+    spike_parts = []
     with torch.no_grad():
         for start in range(0, gamma.size(0), 25):
             _, _, membrane, theta = core(gamma[start:start + 25],
@@ -230,9 +233,19 @@ def main():
                 phase_locking_value(theta, settle=args.settle, combine="product").cpu()
             )
             spike_sync.append(signal_synchrony(spikes, settle=args.settle).clamp_min(0).cpu())
+            if core.last_component_spikes is not None:
+                # synchrony per component, combined after, which is what the
+                # phase readout does and what the component collapse was losing
+                per = torch.stack([
+                    signal_synchrony(core.last_component_spikes[:, d],
+                                     settle=args.settle).clamp_min(0)
+                    for d in range(core.last_component_spikes.size(1))
+                ])
+                spike_parts.append(per.prod(dim=0).cpu())
             trains.append(spikes[:, :, args.settle:].cpu())
     plv, spike_sync, trains = torch.cat(plv), torch.cat(spike_sync), torch.cat(trains)
     plv_parts = torch.cat(plv_parts)
+    spike_parts = torch.cat(spike_parts) if spike_parts else None
 
     readout_labels = None
     if core.cluster_readout is not None:
@@ -296,6 +309,12 @@ def main():
                lambda i, k=k: spectral_cluster(plv_parts[i], k))
     for k in args.fixed_k:
         report("spikes -> k-means on trains, k=%d" % k, lambda i, k=k: kmeans(trains[i], k))
+    if spike_parts is not None:
+        report("spikes -> per-component synchrony, oracle k",
+               lambda i: spectral_cluster(spike_parts[i], int(truth(i).max()) + 1))
+        for k in args.fixed_k:
+            report("spikes -> per-component synchrony, k=%d" % k,
+                   lambda i, k=k: spectral_cluster(spike_parts[i], k))
     # The control the README insists on: cluster the features the oscillators are
     # driven by, with no dynamics at all. Run in this program rather than a
     # separate script, because a standalone version of this comparison produced
