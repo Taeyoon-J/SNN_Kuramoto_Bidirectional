@@ -1,3 +1,9 @@
+
+if __package__:
+    from . import error_bound
+else:
+    import error_bound
+
 import torch
 
 
@@ -195,29 +201,15 @@ def _groups_for_time(
 
 
 def _validate_inputs(level_spikes, grid_sizes, min_group_size, time_aggregate):
-    if not isinstance(level_spikes, (list, tuple)) or len(level_spikes) < 2:
-        raise ValueError("level_spikes must contain at least two levels.")
-    if not isinstance(grid_sizes, (list, tuple)) or len(grid_sizes) != len(level_spikes):
-        raise ValueError("grid_sizes must have the same length as level_spikes.")
-    if int(min_group_size) <= 0:
-        raise ValueError("min_group_size must be positive.")
-    if time_aggregate not in {"any", "per_time"}:
-        raise ValueError('time_aggregate must be "any" or "per_time".')
+    error_bound.validate_hierarchical_spike_classifier_validate_inputs(level_spikes, grid_sizes, min_group_size, time_aggregate)
 
     batch_size = None
     num_steps = None
     for level_idx, (spikes, grid_size) in enumerate(zip(level_spikes, grid_sizes)):
-        if not torch.is_tensor(spikes):
-            raise ValueError(f"level_spikes[{level_idx}] must be a tensor.")
-        if spikes.dim() != 3:
-            raise ValueError(f"level_spikes[{level_idx}] must have shape [B, N, T].")
+        error_bound.validate_hierarchical_spike_classifier_validate_inputs_2(spikes, level_idx)
 
         grid_h, grid_w = _parse_grid_size(grid_size)
-        if spikes.size(1) != grid_h * grid_w:
-            raise ValueError(
-                f"level_spikes[{level_idx}] has {spikes.size(1)} oscillators, "
-                f"but grid {grid_h}x{grid_w} has {grid_h * grid_w}."
-            )
+        error_bound.validate_hierarchical_spike_classifier_validate_inputs_3(grid_h, grid_w, spikes, level_idx)
         if batch_size is None:
             batch_size = spikes.size(0)
             num_steps = spikes.size(2)
@@ -227,12 +219,10 @@ def _validate_inputs(level_spikes, grid_sizes, min_group_size, time_aggregate):
 
 def _parse_grid_size(value):
     if isinstance(value, int):
-        if value <= 0:
-            raise ValueError("grid size must be positive.")
+        error_bound.validate_hierarchical_spike_classifier_parse_grid_size(value)
         return int(value), int(value)
     if isinstance(value, (tuple, list)) and len(value) == 2:
         height, width = int(value[0]), int(value[1])
-        if height <= 0 or width <= 0:
-            raise ValueError("grid size values must be positive.")
+        error_bound.validate_hierarchical_spike_classifier_parse_grid_size_2(height, width)
         return height, width
     raise ValueError("grid size must be an int or a pair of ints.")

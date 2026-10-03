@@ -1,3 +1,9 @@
+
+if __package__:
+    from . import error_bound
+else:
+    import error_bound
+
 import torch
 import torch.nn as nn
 import sys
@@ -68,22 +74,17 @@ def decode_oscillator_features(
     """
     if not torch.is_tensor(gamma_samples):
         gamma_samples = torch.as_tensor(gamma_samples, dtype=torch.float32)
-    if gamma_samples.dim() < 2:
-        raise ValueError("gamma_samples must have shape [..., num_osci].")
-    if gamma_samples.numel() == 0:
-        raise ValueError("gamma_samples must not be empty.")
+    error_bound.validate_image_reconstruct_decode_oscillator_features(gamma_samples)
 
     flat_gamma = gamma_samples.float().reshape(-1, gamma_samples.shape[-1])
-    if flat_gamma.size(0) < 2:
-        raise ValueError("At least two gamma samples are required for std.")
+    error_bound.validate_image_reconstruct_decode_oscillator_features_2(flat_gamma)
 
     model_device = next(decoder.parameters()).device
     device = torch.device(device) if device is not None else model_device
     decoder = decoder.to(device)
     flat_gamma = flat_gamma.to(device)
     steps = torch.as_tensor(sigma_steps, dtype=flat_gamma.dtype, device=device)
-    if steps.dim() != 1 or steps.numel() == 0:
-        raise ValueError("sigma_steps must be a non-empty one-dimensional sequence.")
+    error_bound.validate_image_reconstruct_decode_oscillator_features_3(steps)
 
     was_training = decoder.training
     decoder.eval()
@@ -155,26 +156,14 @@ def decode_oscillator_features_from_checkpoint(
         else ("cuda" if torch.cuda.is_available() else "cpu")
     )
     state_dict = torch.load(decoder_checkpoint_path, map_location=device)
-    if not isinstance(state_dict, dict):
-        raise ValueError("The checkpoint must contain a decoder state_dict.")
+    error_bound.validate_image_reconstruct_decode_oscillator_features_from_checkpoint(state_dict)
 
     first_weight = state_dict.get("0.weight")
     output_weight = state_dict.get("2.weight")
-    if first_weight is None or output_weight is None:
-        raise ValueError(
-            "The checkpoint does not match a FeatureMapAutoEncoder decoder."
-        )
+    error_bound.validate_image_reconstruct_decode_oscillator_features_from_checkpoint_2(first_weight, output_weight)
     num_osci = int(first_weight.shape[1])
     inferred_hidden_dim = int(first_weight.shape[0])
-    if decoder_hidden_dim is not None and int(decoder_hidden_dim) != inferred_hidden_dim:
-        raise ValueError(
-            f"decoder_hidden_dim={decoder_hidden_dim} does not match checkpoint "
-            f"dimension {inferred_hidden_dim}."
-        )
-    if int(output_weight.shape[0]) != height * width:
-        raise ValueError(
-            "input_size does not match the decoder checkpoint output size."
-        )
+    error_bound.validate_image_reconstruct_decode_oscillator_features_from_checkpoint_3(decoder_hidden_dim, inferred_hidden_dim, height, width, output_weight)
 
     decoder = nn.Sequential(
         nn.Linear(num_osci, inferred_hidden_dim),
@@ -211,8 +200,7 @@ def decode_oscillator_features_from_autoencoder_checkpoint(
         else ("cuda" if torch.cuda.is_available() else "cpu")
     )
     checkpoint = torch.load(autoencoder_checkpoint_path, map_location=device)
-    if not isinstance(checkpoint, dict):
-        raise ValueError("The checkpoint must be a dictionary.")
+    error_bound.validate_image_reconstruct_decode_oscillator_features_from_autoencoder_checkpoint(checkpoint)
 
     if "state_dict" in checkpoint:
         state_dict = checkpoint["state_dict"]
@@ -226,14 +214,12 @@ def decode_oscillator_features_from_autoencoder_checkpoint(
         decoder_first_weight = state_dict.get("decoder.0.weight")
         decoder_output_weight = state_dict.get("decoder.2.weight")
         projection_weight = state_dict.get("encoder.projection.2.weight")
-        if decoder_first_weight is None or decoder_output_weight is None or projection_weight is None:
-            raise ValueError("The checkpoint does not match a FeatureMapAutoEncoder.")
+        error_bound.validate_image_reconstruct_decode_oscillator_features_from_autoencoder_checkpoint_2(decoder_first_weight, decoder_output_weight, projection_weight)
         num_osci = int(projection_weight.shape[0])
         decoder_hidden_dim = int(decoder_first_weight.shape[0])
         flat_output = int(decoder_output_weight.shape[0])
         side = int(flat_output ** 0.5)
-        if side * side != flat_output:
-            raise ValueError("Cannot infer square decoder output size from checkpoint.")
+        error_bound.validate_image_reconstruct_decode_oscillator_features_from_autoencoder_checkpoint_3(flat_output, side)
         input_size = (side, side)
         hidden_channels = _infer_hidden_channels_from_autoencoder_state_dict(state_dict)
         dropout = 0.0
@@ -267,20 +253,13 @@ def _infer_hidden_channels_from_autoencoder_state_dict(state_dict):
 
 
 def _validate_decoded_feature_maps(feature_maps, expected_batch_size):
-    if feature_maps.dim() != 4 or feature_maps.size(0) != expected_batch_size:
-        raise ValueError(
-            "decoder must return feature maps shaped [B, 1, H, W]."
-        )
-    if feature_maps.size(1) != 1:
-        raise ValueError("decoder output must contain exactly one channel.")
+    error_bound.validate_image_reconstruct_validate_decoded_feature_maps(expected_batch_size, feature_maps)
 
 
 def _validate_input_size(input_size):
-    if not isinstance(input_size, (tuple, list)) or len(input_size) != 2:
-        raise ValueError("input_size must be a (height, width) pair.")
+    error_bound.validate_image_reconstruct_validate_input_size(input_size)
     height, width = int(input_size[0]), int(input_size[1])
-    if height <= 0 or width <= 0:
-        raise ValueError("input_size values must be positive.")
+    error_bound.validate_image_reconstruct_validate_input_size_2(height, width)
     return height, width
 
 
@@ -303,8 +282,7 @@ def maximize_oscillator_images_from_checkpoint(
         else ("cuda" if torch.cuda.is_available() else "cpu")
     )
     state_dict = torch.load(checkpoint_path, map_location=device)
-    if not isinstance(state_dict, dict):
-        raise ValueError("The checkpoint must contain an encoder state_dict.")
+    error_bound.validate_image_reconstruct_maximize_oscillator_images_from_checkpoint(state_dict)
 
     conv_weights = [
         value
@@ -312,10 +290,7 @@ def maximize_oscillator_images_from_checkpoint(
         if key.startswith("cnn.") and key.endswith(".weight") and value.dim() == 4
     ]
     projection_weight = state_dict.get("projection.2.weight")
-    if not conv_weights or projection_weight is None:
-        raise ValueError(
-            "The checkpoint does not match a FeatureMapCNNEncoder state_dict."
-        )
+    error_bound.validate_image_reconstruct_maximize_oscillator_images_from_checkpoint_2(conv_weights, projection_weight)
 
     hidden_channels = tuple(int(weight.shape[0]) for weight in conv_weights)
     in_channels = int(conv_weights[0].shape[1])
@@ -384,18 +359,11 @@ def maximize_oscillator_images(
         Tensor shaped ``[num_osci, 1, height, width]`` on CPU. Item ``d`` is
         the feature-map image optimized for oscillator ``d``.
     """
-    if not isinstance(input_size, (tuple, list)) or len(input_size) != 2:
-        raise ValueError("input_size must be a (height, width) pair.")
+    error_bound.validate_image_reconstruct_validate_input_size(input_size)
     height, width = (int(input_size[0]), int(input_size[1]))
-    if height <= 0 or width <= 0:
-        raise ValueError("input_size values must be positive.")
-    if int(steps) <= 0:
-        raise ValueError("steps must be positive.")
-    if float(lr) <= 0:
-        raise ValueError("lr must be positive.")
+    error_bound.validate_image_reconstruct_maximize_oscillator_images(height, width, steps, lr)
     if value_range is not None:
-        if len(value_range) != 2 or value_range[0] >= value_range[1]:
-            raise ValueError("value_range must be a (minimum, maximum) pair.")
+        error_bound.validate_image_reconstruct_maximize_oscillator_images_2(value_range)
 
     model_device = next(gamma_initializer.parameters()).device
     device = torch.device(device) if device is not None else model_device
@@ -422,11 +390,7 @@ def maximize_oscillator_images(
 
         for _ in range(int(steps)):
             gamma = gamma_initializer(images)
-            if gamma.shape != (num_osci, num_osci):
-                raise ValueError(
-                    "gamma_initializer must return [B, num_osci] for input "
-                    "shaped [B, 1, H, W]."
-                )
+            error_bound.validate_image_reconstruct_maximize_oscillator_images_3(gamma, num_osci)
 
             target_activation = gamma[targets, targets].mean()
             if num_osci > 1 and float(other_weight) != 0.0:
@@ -522,8 +486,7 @@ def save_feature_map_grid(feature_maps, output_path, title, columns=10):
     feature_maps = feature_maps.detach().cpu().float()
     if feature_maps.dim() == 4 and feature_maps.size(1) == 1:
         feature_maps = feature_maps.squeeze(1)
-    if feature_maps.dim() != 3:
-        raise ValueError("feature_maps must have shape [D, H, W] or [D, 1, H, W].")
+    error_bound.validate_image_reconstruct_save_feature_map_grid(feature_maps)
 
     num_dims = feature_maps.size(0)
     columns = min(int(columns), num_dims)

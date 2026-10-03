@@ -1,3 +1,9 @@
+
+if __package__:
+    from . import error_bound
+else:
+    import error_bound
+
 import math
 
 import torch
@@ -13,8 +19,7 @@ def spike_rate_loss(spikes, target_rate=0.1, reduction="mean"):
         spikes:
             Tensor shaped [B, N, T].
     """
-    if spikes.dim() != 3:
-        raise ValueError("spikes must have shape [B, N, T].")
+    error_bound.validate_loss_function_spike_rate_loss(spikes)
 
     rate = spikes.float().mean(dim=(1, 2))
     loss = (rate - float(target_rate)).pow(2)
@@ -23,8 +28,7 @@ def spike_rate_loss(spikes, target_rate=0.1, reduction="mean"):
 
 def spike_temporal_smoothness_loss(spikes, reduction="mean"):
     """Discourage abrupt frame-to-frame changes in spike histories."""
-    if spikes.dim() != 3:
-        raise ValueError("spikes must have shape [B, N, T].")
+    error_bound.validate_loss_function_spike_rate_loss(spikes)
     if spikes.size(2) < 2:
         return spikes.new_zeros(())
 
@@ -38,8 +42,7 @@ def spike_diversity_loss(spikes, reduction="mean", eps=1e-8):
 
     This keeps every oscillator from learning the same spike train.
     """
-    if spikes.dim() != 3:
-        raise ValueError("spikes must have shape [B, N, T].")
+    error_bound.validate_loss_function_spike_rate_loss(spikes)
 
     similarity = _pairwise_cosine(spikes.float(), eps=eps)
     off_diag = _off_diagonal(similarity)
@@ -57,8 +60,7 @@ def structural_consistency_loss(spikes, sc, reduction="mean", eps=1e-8):
         sc:
             Tensor shaped [N, N] or [B, N, N].
     """
-    if spikes.dim() != 3:
-        raise ValueError("spikes must have shape [B, N, T].")
+    error_bound.validate_loss_function_spike_rate_loss(spikes)
 
     spike_similarity = _pairwise_cosine(spikes.float(), eps=eps)
     sc = _prepare_sc(sc, batch_size=spikes.size(0), device=spikes.device, dtype=spikes.dtype)
@@ -76,8 +78,7 @@ def sample_activity_diversity_loss(activity, reduction="mean", eps=1e-8):
         activity:
             Tensor shaped [B, N, T].
     """
-    if activity.dim() != 3:
-        raise ValueError("activity must have shape [B, N, T].")
+    error_bound.validate_loss_function_sample_activity_diversity_loss(activity)
     if activity.size(0) < 2:
         return activity.new_zeros(())
 
@@ -100,14 +101,9 @@ def spatial_compactness_loss(activity, patch_grid_size, reduction="mean"):
     This is a differentiable total-variation style term on the temporally
     averaged patch activity.
     """
-    if activity.dim() != 3:
-        raise ValueError("activity must have shape [B, N, T].")
+    error_bound.validate_loss_function_sample_activity_diversity_loss(activity)
     grid_h, grid_w = _parse_grid_size(patch_grid_size)
-    if activity.size(1) != grid_h * grid_w:
-        raise ValueError(
-            f"activity has {activity.size(1)} oscillators, but grid "
-            f"{grid_h}x{grid_w} has {grid_h * grid_w}."
-        )
+    error_bound.validate_loss_function_spatial_compactness_loss(grid_h, grid_w, activity)
 
     grid = activity.float().mean(dim=2).view(activity.size(0), grid_h, grid_w)
     vertical = (grid[:, 1:, :] - grid[:, :-1, :]).abs().mean(dim=(1, 2))
@@ -122,8 +118,7 @@ def temporal_activity_balance_loss(activity, reduction="mean"):
     It compares the mean activity per time step to each sample's average
     activity over the full sequence.
     """
-    if activity.dim() != 3:
-        raise ValueError("activity must have shape [B, N, T].")
+    error_bound.validate_loss_function_sample_activity_diversity_loss(activity)
     if activity.size(2) < 2:
         return activity.new_zeros(())
 
@@ -140,8 +135,7 @@ def activity_confidence_loss(activity, reduction="mean"):
     This expects probability-like activity values in [0, 1], such as
     sigmoid(membrane). The loss is highest near 0.5 and lowest near 0 or 1.
     """
-    if activity.dim() != 3:
-        raise ValueError("activity must have shape [B, N, T].")
+    error_bound.validate_loss_function_sample_activity_diversity_loss(activity)
 
     activity = activity.float().clamp(0.0, 1.0)
     loss = (activity * (1.0 - activity)).mean(dim=(1, 2))
@@ -155,10 +149,7 @@ def activity_area_loss(activity, min_area=0.05, max_area=0.35, reduction="mean")
     The area is the average activity per sample. This differentiable proxy
     discourages both empty masks and all-on masks before thresholding.
     """
-    if activity.dim() != 3:
-        raise ValueError("activity must have shape [B, N, T].")
-    if min_area < 0.0 or max_area > 1.0 or min_area > max_area:
-        raise ValueError("min_area and max_area must satisfy 0 <= min <= max <= 1.")
+    error_bound.validate_loss_function_activity_area_loss(activity, min_area, max_area)
 
     area = activity.float().clamp(0.0, 1.0).mean(dim=(1, 2))
     loss = F.relu(float(min_area) - area).pow(2) + F.relu(area - float(max_area)).pow(2)
@@ -172,10 +163,7 @@ def activity_contrast_loss(activity, target_std=0.15, reduction="mean"):
     This prevents every oscillator from living in a narrow band around 0.5,
     which makes threshold-based masks brittle.
     """
-    if activity.dim() != 3:
-        raise ValueError("activity must have shape [B, N, T].")
-    if target_std < 0.0:
-        raise ValueError("target_std must be non-negative.")
+    error_bound.validate_loss_function_activity_contrast_loss(activity, target_std)
 
     std = activity.float().flatten(start_dim=1).std(dim=1)
     loss = F.relu(float(target_std) - std).pow(2)
@@ -199,12 +187,10 @@ def phase_locking_value(theta, settle=0):
     Computed with real matmuls rather than complex tensors so it stays cheap and
     avoids complex autograd.
     """
-    if theta.dim() != 4:
-        raise ValueError("theta must have shape [B, T, N, D].")
+    error_bound.validate_loss_function_phase_locking_value(theta)
     phase = theta.mean(dim=-1)
     if int(settle) > 0:
-        if int(settle) >= phase.size(1):
-            raise ValueError("settle must be smaller than the number of steps.")
+        error_bound.validate_loss_function_phase_locking_value_2(settle, phase)
         phase = phase[:, int(settle):]
 
     steps = phase.size(1)
@@ -228,12 +214,10 @@ def plv_bimodality_loss(plv, reduction="mean"):
 
 def preferred_phase(theta, settle=0, eps=1e-8):
     """Each unit's phase relative to the global mean field. -> [B, N] in (-pi, pi]."""
-    if theta.dim() != 4:
-        raise ValueError("theta must have shape [B, T, N, D].")
+    error_bound.validate_loss_function_phase_locking_value(theta)
     phase = theta.mean(dim=-1)
     if int(settle) > 0:
-        if int(settle) >= phase.size(1):
-            raise ValueError("settle must be smaller than the number of steps.")
+        error_bound.validate_loss_function_phase_locking_value_2(settle, phase)
         phase = phase[:, int(settle):]
     field = torch.atan2(
         torch.sin(phase).mean(dim=2, keepdim=True),
@@ -256,12 +240,10 @@ def order_parameters(theta, num_slots=7.0, settle=0):
 
     A k-cluster state is exactly Rk high with R1 low.
     """
-    if theta.dim() != 4:
-        raise ValueError("theta must have shape [B, T, N, D].")
+    error_bound.validate_loss_function_phase_locking_value(theta)
     phase = theta.mean(dim=-1)
     if int(settle) > 0:
-        if int(settle) >= phase.size(1):
-            raise ValueError("settle must be smaller than the number of steps.")
+        error_bound.validate_loss_function_phase_locking_value_2(settle, phase)
         phase = phase[:, int(settle):]
 
     def resultant(angle):
@@ -322,12 +304,10 @@ def phase_alignment(theta, settle=0, eps=1e-8):
     Returns:
         [B, N, N] in [0, 1], (1 + cos(phi_i - phi_j)) / 2.
     """
-    if theta.dim() != 4:
-        raise ValueError("theta must have shape [B, T, N, D].")
+    error_bound.validate_loss_function_phase_locking_value(theta)
     phase = theta.mean(dim=-1)
     if int(settle) > 0:
-        if int(settle) >= phase.size(1):
-            raise ValueError("settle must be smaller than the number of steps.")
+        error_bound.validate_loss_function_phase_locking_value_2(settle, phase)
         phase = phase[:, int(settle):]
 
     field = torch.atan2(
@@ -362,12 +342,10 @@ def signal_synchrony(signal, settle=0, eps=1e-8):
     cosine of about 1 for every pair, which is why spike_diversity_loss sat
     pinned near its maximum for a whole training run.
     """
-    if signal.dim() != 3:
-        raise ValueError("signal must have shape [B, N, T].")
+    error_bound.validate_loss_function_signal_synchrony(signal)
     trace = signal.float()
     if int(settle) > 0:
-        if int(settle) >= trace.size(2):
-            raise ValueError("settle must be smaller than the number of steps.")
+        error_bound.validate_loss_function_signal_synchrony_2(settle, trace)
         trace = trace[:, :, int(settle):]
 
     trace = trace - trace.mean(dim=2, keepdim=True)
@@ -444,10 +422,7 @@ def plv_spatial_coherence_loss(plv, patch_grid_size, reduction="mean"):
     """
     grid_h, grid_w = _parse_grid_size(patch_grid_size)
     batch_size, num_nodes, _ = plv.shape
-    if grid_h * grid_w != num_nodes:
-        raise ValueError(
-            f"patch grid {grid_h}x{grid_w} does not match {num_nodes} oscillators."
-        )
+    error_bound.validate_loss_function_plv_spatial_coherence_loss(num_nodes, grid_h, grid_w)
     field = _off_diagonal(plv).view(batch_size, num_nodes, num_nodes - 1).mean(dim=2)
     field = field.view(batch_size, grid_h, grid_w)
     d_h = (field[:, 1:, :] - field[:, :-1, :]).abs().mean(dim=(1, 2))
@@ -472,10 +447,7 @@ def object_overlap_loss(object_groups, num_oscillators=None, reduction="mean", d
         an objective value/selection pressure but does not provide gradients
         through the grouping operation itself.
     """
-    if object_groups is None:
-        raise ValueError("object_groups must not be None.")
-    if not isinstance(object_groups, (list, tuple)):
-        raise ValueError("object_groups must be a list with length B.")
+    error_bound.validate_loss_function_object_overlap_loss(object_groups)
 
     device = torch.device("cpu") if device is None else torch.device(device)
     if num_oscillators is None:
@@ -674,8 +646,7 @@ def _pairwise_cosine(values, eps=1e-8):
 
 
 def _off_diagonal(matrix):
-    if matrix.dim() != 3:
-        raise ValueError("matrix must have shape [B, N, N].")
+    error_bound.validate_loss_function_off_diagonal(matrix)
 
     n = matrix.size(-1)
     mask = ~torch.eye(n, device=matrix.device, dtype=torch.bool)
@@ -688,8 +659,7 @@ def _prepare_sc(sc, batch_size, device, dtype):
     elif sc.dim() != 3:
         raise ValueError("sc must have shape [N, N] or [B, N, N].")
 
-    if sc.size(0) != batch_size:
-        raise ValueError(f"sc batch size {sc.size(0)} does not match spikes batch size {batch_size}.")
+    error_bound.validate_loss_function_prepare_sc(batch_size, sc)
     return sc.to(device=device, dtype=dtype)
 
 
@@ -702,13 +672,11 @@ def _minmax_normalize(values, eps=1e-8):
 
 def _parse_grid_size(value):
     if isinstance(value, int):
-        if value <= 0:
-            raise ValueError("patch_grid_size must be positive.")
+        error_bound.validate_loss_function_parse_grid_size(value)
         return int(value), int(value)
     if isinstance(value, (tuple, list)) and len(value) == 2:
         height, width = int(value[0]), int(value[1])
-        if height <= 0 or width <= 0:
-            raise ValueError("patch_grid_size values must be positive.")
+        error_bound.validate_loss_function_parse_grid_size_2(height, width)
         return height, width
     raise ValueError("patch_grid_size must be an int or a pair of ints.")
 

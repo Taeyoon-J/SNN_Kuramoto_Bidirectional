@@ -206,7 +206,7 @@ def _forward_with_plv(core, gamma_seq, criterion, plv_settle, plv_source="phase"
     )
     if not _uses_plv(criterion):
         return groups, spikes, core_out, None, theta
-    if plv_source == "phase":
+    if plv_source == "phase":  # readout mode: README 4.3 training
         plv = phase_locking_value(theta, settle=int(plv_settle))
     elif plv_source == "alignment":
         plv = phase_alignment(theta, settle=int(plv_settle))
@@ -226,7 +226,7 @@ def _select_loss_signal(spikes, core_out, loss_signal):
         return spikes
     if loss_signal == "membrane":
         return core_out
-    if loss_signal == "sigmoid_membrane":
+    if loss_signal == "sigmoid_membrane":  # readout mode: legacy activity-loss input, not PLV source
         return torch.sigmoid(core_out)
     raise ValueError('loss_signal must be "spikes", "membrane", or "sigmoid_membrane".')
 

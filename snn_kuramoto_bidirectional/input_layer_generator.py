@@ -1,3 +1,9 @@
+
+if __package__:
+    from . import error_bound
+else:
+    import error_bound
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -13,12 +19,7 @@ class CNNFeatureEncoder(nn.Module):
 
     def __init__(self, num_kernels, kernel_size, in_channels=3, bias=True):
         super().__init__()
-        if num_kernels <= 0:
-            raise ValueError("num_kernels must be positive.")
-        if kernel_size <= 0:
-            raise ValueError("kernel_size must be positive.")
-        if in_channels <= 0:
-            raise ValueError("in_channels must be positive.")
+        error_bound.validate_input_layer_generator_c_n_n_feature_encoder_init(num_kernels, kernel_size, in_channels)
 
         self.num_kernels = int(num_kernels)
         self.kernel_size = int(kernel_size)
@@ -58,14 +59,7 @@ class CNNFeatureEncoder(nn.Module):
 
     def _validate_image_size(self, image):
         _, channels, width, height = image.shape
-        if channels != self.in_channels:
-            raise ValueError(
-                f"Expected {self.in_channels} input channels, but got {channels}."
-            )
-        if width < self.kernel_size or height < self.kernel_size:
-            raise ValueError(
-                "Image width and height must both be at least as large as kernel_size."
-            )
+        error_bound.validate_input_layer_generator_c_n_n_feature_encoder_validate_image_size(channels, self, width, height)
 
 
 class CNNFeatureDecoder(nn.Module):
@@ -78,12 +72,7 @@ class CNNFeatureDecoder(nn.Module):
 
     def __init__(self, num_kernels, kernel_size, out_channels=3, bias=True):
         super().__init__()
-        if num_kernels <= 0:
-            raise ValueError("num_kernels must be positive.")
-        if kernel_size <= 0:
-            raise ValueError("kernel_size must be positive.")
-        if out_channels <= 0:
-            raise ValueError("out_channels must be positive.")
+        error_bound.validate_input_layer_generator_c_n_n_feature_decoder_init(num_kernels, kernel_size, out_channels)
 
         self.num_kernels = int(num_kernels)
         self.kernel_size = int(kernel_size)

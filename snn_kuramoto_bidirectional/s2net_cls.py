@@ -1,4 +1,8 @@
-import math
+
+if __package__:
+    from . import error_bound
+else:
+    import error_bound
 
 import torch
 import torch.nn as nn
@@ -7,9 +11,8 @@ from dendric_layer import DendricLayer
 from membrane_layer import MembraneLayer
 from sinusoidal_gating import sinusoidal_gating
 from input_layer_generator import CNNFeatureEncoder
-from gamma_initializer import FeatureMapCNNEncoder, FeaturePatchGammaInitializer
+from gamma_initializer import FeatureMapCNNEncoder, FeaturePatchGammaInitializer, GammaToDrive
 from graph_generator import ImageConditionedGraph
-from gamma_ordering import order_gammas
 from spike_classifier import spike_interval, spike_rhythm, spike_spatial_components
 
 class GammaGenerator(nn.Module):
@@ -47,11 +50,7 @@ class GammaGenerator(nn.Module):
         feature_maps = self._image_to_feature_maps(x)
         if self.gamma_mode == "patch":
             gamma_seq = self.gamma_initializer(feature_maps)
-            if gamma_seq.size(-1) != self.in_dim:
-                raise ValueError(
-                    f"Patch gamma produced {gamma_seq.size(-1)} oscillators, "
-                    f"but hparams.num_regions is {self.in_dim}."
-                )
+            error_bound.validate_s2net_cls_gamma_generator_forward(self, gamma_seq)
             return gamma_seq
         B, T, height, width = feature_maps.shape
         return self.gamma_initializer(
@@ -59,14 +58,12 @@ class GammaGenerator(nn.Module):
         ).view(B, T, self.in_dim)
 
     def _image_to_feature_maps(self, x):
-        if x.dim() != 4:
-            raise ValueError("x must have shape [B, 3, H, W]. Use B=1 for one image.")
-        if x.size(1) != 3:
-            raise ValueError(f"Expected RGB input with 3 channels, but got {x.size(1)}.")
+        error_bound.validate_s2net_cls_gamma_generator_image_to_feature_maps(x)
 
         return self.input_layer(x)
 
 
+# "readout mode" marks README 4.3 training flags plus training parser defaults.
 class S2NetCore(nn.Module):
     """Classifier core driven by externally generated gamma sequences."""
 
@@ -99,38 +96,37 @@ class S2NetCore(nn.Module):
 
         graph_mode = getattr(hparams, "graph_mode", "static")
         if hparams.sc is None:
-            if graph_mode != "learned":
-                raise ValueError(
-                    "hparams.sc must be generated before constructing S2NetCore, "
-                    'or set graph_mode="learned" to build the graph per image.'
-                )
+            error_bound.validate_s2net_cls_s2net_core_init(graph_mode)
             self.register_buffer("sc", torch.eye(self.in_dim))
         else:
             sc = torch.as_tensor(hparams.sc, dtype=torch.float32)
             expected_shape = (self.in_dim, self.in_dim)
-            if tuple(sc.shape) != expected_shape:
-                raise ValueError(
-                    f"hparams.sc must have shape {expected_shape}, but got {tuple(sc.shape)}."
-                )
+            error_bound.validate_s2net_cls_s2net_core_init_2(expected_shape, sc)
             self.register_buffer("sc", sc.clone().detach())
 
         # Extra parameters are created only when the corresponding non-default
         # mode is requested, so a legacy configuration keeps an unchanged
         # state_dict and old checkpoints still load with strict=True.
         self.gamma_channel_proj = None
-        if self.gamma_drive_mode == "static":
+        if self.gamma_drive_mode == "static":  # readout mode
             self.gamma_channel_proj = nn.Linear(self.T, self.osc_dim, bias=False)
             nn.init.normal_(self.gamma_channel_proj.weight, std=1.0 / max(self.T, 1) ** 0.5)
 
         self.gamma_phase_gain = None
-        if self.gamma_phase_mode != "none":
+        if self.gamma_phase_mode != "none":  # readout mode: standardize_tanh
             self.gamma_phase_gain = nn.Parameter(torch.ones(1))
+
+        # Keep trainable parameters above under their original checkpoint keys.
+        self.gamma_to_drive = GammaToDrive(
+            self.T, self.in_dim, self.osc_dim,
+            drive_mode=self.gamma_drive_mode, phase_mode=self.gamma_phase_mode,
+        )
 
         # A fixed SC cannot express object membership, which changes per image.
         # In "learned" mode the coupling graph is produced from the sample.
         self.graph_mode = getattr(hparams, "graph_mode", "static")
         self.graph_generator = None
-        if self.graph_mode == "learned":
+        if self.graph_mode == "learned":  # readout mode
             self.graph_generator = ImageConditionedGraph(
                 in_channels=self.T,
                 hidden_dim=int(getattr(hparams, "graph_hidden_dim", 16)),
@@ -159,7 +155,7 @@ class S2NetCore(nn.Module):
             device=device,
             bias=True,
             # phase_mean hands the dendrite one reduced oscillation per unit
-            input_vector_dim=1 if self.gate_mode == "phase_mean" else self.osc_dim,
+            input_vector_dim=1 if self.gate_mode == "phase_mean" else self.osc_dim,  # readout mode: phase_mean -> 1
         )
         self.membrane_layer = MembraneLayer(
             output_dim=self.in_dim,
@@ -196,33 +192,27 @@ class S2NetCore(nn.Module):
         """
         gamma_seq = gamma_seq.to(self.device)
         B = gamma_seq.size(0)
-        feedback = self.graph_generator is not None and self.graph_generator.uses_feedback
-        if self.graph_generator is not None:
+        feedback = self.graph_generator is not None and self.graph_generator.uses_feedback  # readout mode: False (strength=0.0)
+        if self.graph_generator is not None:  # readout mode: learned SC, once per forward
             sc = self.graph_generator(gamma_seq)
         else:
             sc = self.sc.to(gamma_seq.device).unsqueeze(0).expand(B, -1, -1)
 
         if self.gamma_drive_mode == "sequence":
-            if gamma_seq.dim() != 3:
-                raise ValueError(
-                    "gamma_seq must have shape [B, T, num_regions] in sequence drive mode. "
-                    "Use B=1 for one sample."
-                )
-            if num_time_steps is not None:
-                raise ValueError(
-                    "num_time_steps only applies to static drive mode; in sequence mode "
-                    "the recurrent length is fixed by the gamma channel axis."
-                )
-            drive_seq = self._to_phase(gamma_seq)
+            error_bound.validate_s2net_cls_s2net_core_forward(gamma_seq, num_time_steps)
+            drive_seq = self.gamma_to_drive(
+                gamma_seq, self.gamma_channel_proj, self.gamma_phase_gain
+            )
             T = drive_seq.size(1)
             drive = None
             theta = self._init_theta(drive_seq[:, 0, :], B)
-        else:
+        else:  # readout mode: static
             drive_seq = None
-            drive = self._to_phase(self._static_drive(gamma_seq))
+            drive = self.gamma_to_drive(
+                gamma_seq, self.gamma_channel_proj, self.gamma_phase_gain
+            )
             T = int(num_time_steps if num_time_steps is not None else self.num_time_steps)
-            if T <= 0:
-                raise ValueError("num_time_steps must be positive.")
+            error_bound.validate_s2net_cls_s2net_core_forward_2(T)
             theta = self._init_theta(drive, B)
 
         # Oscillators and neurons advance in one interleaved loop so that spikes
@@ -258,13 +248,9 @@ class S2NetCore(nn.Module):
                 alignment = self.graph_generator.update_alignment(alignment, theta)
             theta_hist.append(theta)
 
-            delayed = theta_hist[max(0, t - self.phase_delay_steps)]
-            mask = 0.5 * (1.0 + torch.sin(delayed.mean(dim=-1)))
-            if self.gate_mode == "phase_mean":
-                gamma_wave_t = torch.sin(theta.mean(dim=-1)).unsqueeze(-1)
-            else:
-                gamma_wave_t = torch.sin(theta) * mask.unsqueeze(-1)
-            g_wave_t = torch.sigmoid(mask) if self.gate_mode == "sigmoid" else mask
+            gamma_wave_t, g_wave_t = sinusoidal_gating(
+                theta_hist, t, self.phase_delay_steps, gate_mode=self.gate_mode
+            )
 
             h_wave_t = self.dendric_layer(gamma_wave_t, self.membrane_layer.spike)
             mem_t, spike_t = self.membrane_layer(h_wave_t, g_wave_t)
@@ -285,50 +271,11 @@ class S2NetCore(nn.Module):
             return object_groups, spikes, core_out
         return object_groups, spikes
 
-    def _static_drive(self, gamma):
-        """Normalize any accepted static-drive layout to [B, N, D] or [B, N]."""
-        if gamma.dim() == 2:
-            if gamma.size(1) != self.in_dim:
-                raise ValueError(
-                    f"gamma has {gamma.size(1)} oscillators, but num_regions is {self.in_dim}."
-                )
-            return gamma
-        if gamma.dim() != 3:
-            raise ValueError(
-                "static gamma must have shape [B, N], [B, N, osc_dim], or [B, C, N]."
-            )
-        # [B, C, N]: the oscillator axis is last, so project channels to osc_dim.
-        if gamma.size(-1) == self.in_dim:
-            if self.gamma_channel_proj is None:
-                raise ValueError("gamma_channel_proj is unavailable; rebuild the core in static mode.")
-            if gamma.size(1) != self.T:
-                raise ValueError(
-                    f"gamma has {gamma.size(1)} channels, but num_feature_maps is {self.T}."
-                )
-            return self.gamma_channel_proj(gamma.transpose(1, 2))  # [B, N, osc_dim]
-        if gamma.size(1) == self.in_dim and gamma.size(-1) == self.osc_dim:
-            return gamma
-        raise ValueError(
-            f"Cannot interpret static gamma of shape {tuple(gamma.shape)} with "
-            f"num_regions={self.in_dim}, num_feature_maps={self.T}, osc_dim={self.osc_dim}."
-        )
-
-    def _to_phase(self, gamma):
-        """Map raw gamma onto a phase range so sin(gamma - theta) does not wrap."""
-        if self.gamma_phase_mode == "none":
-            return gamma
-        if self.gamma_phase_mode == "standardize_tanh":
-            dims = tuple(range(1, gamma.dim()))
-            mean = gamma.mean(dim=dims, keepdim=True)
-            std = gamma.std(dim=dims, keepdim=True, unbiased=False).clamp_min(1e-6)
-            gamma = (gamma - mean) / std
-        return math.pi * torch.tanh(self.gamma_phase_gain * gamma)
-
     def _init_theta(self, drive, batch_size):
         """Initial oscillator phase [B, num_regions, osc_dim]."""
         if self.theta_init == "zeros":
             theta = torch.zeros(batch_size, self.in_dim, self.osc_dim, device=self.device)
-        else:
+        else:  # readout mode: gamma (without noise)
             theta = drive if drive.dim() == 3 else drive.unsqueeze(-1)
             theta = theta.expand(batch_size, self.in_dim, self.osc_dim).contiguous()
             if self.theta_init == "gamma_noise":
@@ -352,12 +299,12 @@ class S2NetCore(nn.Module):
                 min_group_size=self.spike_interval_min_group_size,
                 include_partial=self.spike_interval_include_partial,
             )
-        if self.spike_classify_method == "spatial_components":
+        if self.spike_classify_method == "spatial_components":  # readout mode: core's internal groups
             if self.spike_spatial_activity_source == "spikes":
                 activity = spikes
             elif self.spike_spatial_activity_source == "membrane":
                 activity = core_out
-            else:
+            else:  # readout mode: sigmoid_membrane
                 activity = torch.sigmoid(core_out)
             return spike_spatial_components(
                 activity,
@@ -371,24 +318,13 @@ class S2NetCore(nn.Module):
 
 
 class S2NetClassifier(nn.Module):
-    """End-to-end wrapper: input image -> gamma sequence -> ordered classifier core."""
+    """End-to-end wrapper: input image -> gamma sequence -> classifier core."""
 
     def __init__(self, hparams, device="cuda"):
         super().__init__()
         hparams.validate()
         self.hparams = hparams
         self.device = device
-        self.gamma_order_lambda = hparams.gamma_order_lambda
-        self.gamma_order_mu = hparams.gamma_order_mu
-        self.gamma_order_method = hparams.gamma_order_method
-        self.gamma_order_exact_max_steps = hparams.gamma_order_exact_max_steps
-        self.gamma_order_local_search_passes = hparams.gamma_order_local_search_passes
-        # Patch gamma indices are spatial positions, and static drive has no
-        # sequence axis to order in the first place.
-        self.gamma_order_enabled = (
-            hparams.gamma_mode != "patch"
-            and getattr(hparams, "gamma_drive_mode", "sequence") == "sequence"
-        )
         self.gamma_generator = GammaGenerator(hparams, device=device)
         self.core = S2NetCore(hparams, device=device)
 
@@ -399,30 +335,7 @@ class S2NetClassifier(nn.Module):
 
     def forward(self, x):
         gamma_seq = self.gamma_generator(x)
-        if self.gamma_order_enabled:
-            gamma_seq, _, _ = self.order_gamma_sequence(gamma_seq)
         return self.core(gamma_seq)
-
-    def order_gamma_sequence(self, gamma_seq):
-        """Order generated gamma sequences before feeding S2NetCore.
-
-        Only valid for latent gamma. In patch mode a gamma index is a fixed
-        spatial patch position, so permuting the sequence would break the
-        patch-to-image mapping that masks and reconstruction depend on.
-        """
-        if not self.gamma_order_enabled:
-            raise ValueError(
-                "gamma ordering is disabled: gamma indices are fixed spatial patches "
-                "in patch mode and must never be reordered."
-            )
-        return order_gammas(
-            gamma_seq,
-            lambda_smooth=self.gamma_order_lambda,
-            mu_similarity=self.gamma_order_mu,
-            method=self.gamma_order_method,
-            exact_max_steps=self.gamma_order_exact_max_steps,
-            local_search_passes=self.gamma_order_local_search_passes,
-        )
 
     def load_input_layer(self, checkpoint_path, map_location=None):
         """Load pretrained GammaGenerator.input_layer parameters."""

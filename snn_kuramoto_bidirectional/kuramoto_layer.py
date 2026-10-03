@@ -1,3 +1,9 @@
+
+if __package__:
+    from . import error_bound
+else:
+    import error_bound
+
 # kuramoto_layer.py
 
 import torch
@@ -78,10 +84,7 @@ class graphVectorKuramoto(nn.Module):
             raise ValueError(
                 f"gamma must be [B, {H}] or [B, {H}, {D}], but got {tuple(gamma.shape)}."
             )
-        if gamma.size(1) != H:
-            raise ValueError(
-                f"gamma has {gamma.size(1)} oscillators, but theta has {H}."
-            )
+        error_bound.validate_kuramoto_layer_graph_vector_kuramoto_forward(H, gamma)
         device = theta_prev.device
 
         # 1. Handle Graph Structure & OT Surrogate

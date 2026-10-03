@@ -1,3 +1,9 @@
+
+if __package__:
+    from . import error_bound
+else:
+    import error_bound
+
 import itertools
 
 import torch
@@ -32,10 +38,7 @@ def spike_rhythm(
         List with length B. Each item is a list of tuples containing
         oscillator indices that form one object group.
     """
-    if spikes.dim() != 3:
-        raise ValueError("spikes must have shape [B, num_oscillators, T]. Use B=1 for one sample.")
-    if min_group_size < 2:
-        raise ValueError("min_group_size must be at least 2.")
+    error_bound.validate_spike_classifier_spike_rhythm(spikes, min_group_size)
 
     spikes = spikes.float()
     similarity = _pairwise_cosine_similarity(spikes, eps=eps)
@@ -82,12 +85,7 @@ def spike_interval(
         List with length B. Each item is a list of unique tuples containing
         oscillator indices that form one object group.
     """
-    if core_out.dim() != 3:
-        raise ValueError("core_out must have shape [B, num_oscillators, T]. Use B=1 for one sample.")
-    if interval_size <= 0:
-        raise ValueError("interval_size must be positive.")
-    if min_group_size <= 0:
-        raise ValueError("min_group_size must be positive.")
+    error_bound.validate_spike_classifier_spike_interval(core_out, interval_size, min_group_size)
 
     core_out = core_out.float()
     intervals = _make_intervals(
@@ -158,26 +156,15 @@ def spike_spatial_components(
         List with length B. Each item is a list of tuples containing oscillator
         indices for spatially contiguous active patch components.
     """
-    if activity.dim() != 3:
-        raise ValueError("activity must have shape [B, num_oscillators, T].")
-    if min_group_size <= 0:
-        raise ValueError("min_group_size must be positive.")
-    if activity_source not in {"spikes", "membrane", "sigmoid_membrane"}:
-        raise ValueError('activity_source must be "spikes", "membrane", or "sigmoid_membrane".')
-    if time_aggregate not in {"max", "mean"}:
-        raise ValueError('time_aggregate must be "max" or "mean".')
+    error_bound.validate_spike_classifier_spike_spatial_components(activity, min_group_size, activity_source, time_aggregate)
 
     grid_h, grid_w = _parse_grid_size(patch_grid_size)
-    if activity.size(1) != grid_h * grid_w:
-        raise ValueError(
-            f"activity has {activity.size(1)} oscillators, but patch grid "
-            f"{grid_h}x{grid_w} has {grid_h * grid_w}."
-        )
+    error_bound.validate_spike_classifier_spike_spatial_components_2(grid_h, grid_w, activity)
 
     activity = activity.float()
     if time_aggregate == "max":
         patch_scores = activity.max(dim=2).values
-    else:
+    else:  # readout mode: mean (README 4.3 training default)
         patch_scores = activity.mean(dim=2)
     active = patch_scores >= float(threshold)
 
@@ -214,13 +201,11 @@ def _make_intervals(num_steps, interval_size, include_partial):
 
 def _parse_grid_size(value):
     if isinstance(value, int):
-        if value <= 0:
-            raise ValueError("patch_grid_size must be positive.")
+        error_bound.validate_loss_function_parse_grid_size(value)
         return int(value), int(value)
     if isinstance(value, (tuple, list)) and len(value) == 2:
         height, width = int(value[0]), int(value[1])
-        if height <= 0 or width <= 0:
-            raise ValueError("patch_grid_size values must be positive.")
+        error_bound.validate_loss_function_parse_grid_size_2(height, width)
         return height, width
     raise ValueError("patch_grid_size must be an int or a pair of ints.")
 

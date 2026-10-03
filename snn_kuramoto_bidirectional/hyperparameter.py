@@ -1,3 +1,9 @@
+
+if __package__:
+    from . import error_bound
+else:
+    import error_bound
+
 from dataclasses import dataclass
 
 
@@ -53,13 +59,6 @@ class S2NetHyperparameters:
     gamma_patch_size: object = None
     gamma_patch_stride: object = None
     gamma_patch_reduction: str = "mean"
-
-    # Gamma ordering loss
-    gamma_order_lambda: float = 1.0
-    gamma_order_mu: float = 1.0
-    gamma_order_method: str = "auto"
-    gamma_order_exact_max_steps: int = 8
-    gamma_order_local_search_passes: int = 5
 
     # Coupling graph.
     #
@@ -144,74 +143,7 @@ class S2NetHyperparameters:
     spike_spatial_time_aggregate: str = "mean"
 
     def validate(self):
-        if self.num_feature_maps <= 0:
-            raise ValueError("num_feature_maps must be positive.")
-        if self.num_regions <= 0:
-            raise ValueError("num_regions must be positive.")
-        if self.num_classes <= 0:
-            raise ValueError("num_classes must be positive.")
-        if self.osc_dim <= 0:
-            raise ValueError("osc_dim must be positive.")
-        if self.gamma_drive_mode not in {"sequence", "static"}:
-            raise ValueError('gamma_drive_mode must be "sequence" or "static".')
-        if self.num_time_steps <= 0:
-            raise ValueError("num_time_steps must be positive.")
-        if self.gamma_phase_mode not in {"none", "tanh", "standardize_tanh"}:
-            raise ValueError(
-                'gamma_phase_mode must be "none", "tanh", or "standardize_tanh".'
-            )
-        if self.theta_init not in {"zeros", "gamma", "gamma_noise"}:
-            raise ValueError('theta_init must be "zeros", "gamma", or "gamma_noise".')
-        if self.theta_init_noise < 0:
-            raise ValueError("theta_init_noise must be non-negative.")
-        if self.graph_mode not in {"static", "learned"}:
-            raise ValueError('graph_mode must be "static" or "learned".')
-        if self.graph_top_k <= 0:
-            raise ValueError("graph_top_k must be positive.")
-        if self.graph_coupling_gain <= 0:
-            raise ValueError("graph_coupling_gain must be positive.")
-        if self.graph_temperature <= 0:
-            raise ValueError("graph_temperature must be positive.")
-        if self.graph_spatial_decay is not None and not 0.0 < float(self.graph_spatial_decay) < 1.0:
-            raise ValueError("graph_spatial_decay must lie in (0, 1).")
-        if not 0.0 <= self.graph_feedback_momentum < 1.0:
-            raise ValueError("graph_feedback_momentum must lie in [0, 1).")
-        if self.membrane_vth <= 0:
-            raise ValueError("membrane_vth must be positive.")
-        if self.membrane_low_m > self.membrane_high_m:
-            raise ValueError("membrane_low_m must not exceed membrane_high_m.")
-        if self.spike_pulse_gain < 0:
-            raise ValueError("spike_pulse_gain must be non-negative.")
-        if self.gate_mode not in {"sigmoid", "raw", "phase_mean"}:
-            raise ValueError('gate_mode must be "sigmoid", "raw", or "phase_mean".')
-        if self.in_channels != 3:
-            raise ValueError("in_channels must be 3 because the model is fixed to RGB input.")
-        if self.kernel_size <= 0:
-            raise ValueError("kernel_size must be positive.")
-        if self.gamma_order_method not in {"auto", "exact", "local_search"}:
-            raise ValueError('gamma_order_method must be "auto", "exact", or "local_search".')
-        if self.gamma_mode not in {"autoencoder", "patch"}:
-            raise ValueError('gamma_mode must be "autoencoder" or "patch".')
-        if self.gamma_patch_reduction not in {"mean", "max"}:
-            raise ValueError('gamma_patch_reduction must be "mean" or "max".')
-        if self.gamma_mode == "patch" and self.gamma_patch_grid_size is None and self.gamma_patch_size is None:
-            raise ValueError("gamma_patch_grid_size or gamma_patch_size is required when gamma_mode is patch.")
-        if self.spike_classify_method not in {"spike_rhythm", "spike_interval", "spatial_components"}:
-            raise ValueError('spike_classify_method must be "spike_rhythm", "spike_interval", or "spatial_components".')
-        if self.spike_rhythm_min_group_size < 2:
-            raise ValueError("spike_rhythm_min_group_size must be at least 2.")
-        if self.spike_interval_size <= 0:
-            raise ValueError("spike_interval_size must be positive.")
-        if self.spike_interval_min_group_size <= 0:
-            raise ValueError("spike_interval_min_group_size must be positive.")
-        if self.spike_classify_method == "spatial_components" and self.spike_spatial_grid_size is None:
-            raise ValueError("spike_spatial_grid_size is required when spike_classify_method is spatial_components.")
-        if self.spike_spatial_min_group_size <= 0:
-            raise ValueError("spike_spatial_min_group_size must be positive.")
-        if self.spike_spatial_activity_source not in {"spikes", "membrane", "sigmoid_membrane"}:
-            raise ValueError('spike_spatial_activity_source must be "spikes", "membrane", or "sigmoid_membrane".')
-        if self.spike_spatial_time_aggregate not in {"max", "mean"}:
-            raise ValueError('spike_spatial_time_aggregate must be "max" or "mean".')
+        error_bound.validate_hyperparameter_s2net_hyperparameters_validate(self)
         return self
 
 

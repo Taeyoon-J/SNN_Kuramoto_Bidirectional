@@ -1,3 +1,9 @@
+
+if __package__:
+    from . import error_bound
+else:
+    import error_bound
+
 import torch
 
 try:
@@ -40,8 +46,7 @@ def gamma_sampes(
     if not torch.is_tensor(images):
         images = torch.as_tensor(images, dtype=torch.float32)
     images = images.float()
-    if images.dim() != 4:
-        raise ValueError("images must have shape [num_images, 3, H, W].")
+    error_bound.validate_sc_generator_gamma_sampes(images)
 
     device = torch.device(
         device if device is not None else ("cuda" if torch.cuda.is_available() else "cpu")
@@ -63,8 +68,7 @@ def gamma_sampes(
             reduction=hparams.gamma_patch_reduction,
         ).to(device)
     else:
-        if gamma_initializer_path is None:
-            raise ValueError("gamma_initializer_path is required for autoencoder gamma mode.")
+        error_bound.validate_sc_generator_gamma_sampes_2(gamma_initializer_path)
         gamma_initializer = FeatureMapCNNEncoder(
             num_osci=hparams.num_regions,
             in_channels=1,
@@ -81,11 +85,7 @@ def gamma_sampes(
     num_images, num_feature_maps, height, width = feature_maps.shape
     if hparams.gamma_mode == "patch":
         gamma_seq = gamma_initializer(feature_maps)
-        if gamma_seq.size(-1) != hparams.num_regions:
-            raise ValueError(
-                f"Patch gamma produced {gamma_seq.size(-1)} oscillators, "
-                f"but hparams.num_regions is {hparams.num_regions}."
-            )
+        error_bound.validate_sc_generator_gamma_sampes_3(hparams, gamma_seq)
         gamma_samples = gamma_seq.reshape(num_images * num_feature_maps, hparams.num_regions)
     else:
         gamma_samples = gamma_initializer(
@@ -116,12 +116,7 @@ def pearson_cor_sc(gamma_samples, hparams=None, eps=1e-8):
         gamma_samples = torch.as_tensor(gamma_samples, dtype=torch.float32)
     if not gamma_samples.is_floating_point():
         gamma_samples = gamma_samples.float()
-    if gamma_samples.dim() != 2:
-        raise ValueError(
-            "gamma_samples must have shape [num_gamma_samples, num_regions]."
-        )
-    if gamma_samples.size(0) < 2:
-        raise ValueError("At least two gamma samples are required.")
+    error_bound.validate_sc_generator_pearson_cor_sc(gamma_samples)
 
     centered = gamma_samples - gamma_samples.mean(dim=0, keepdim=True)
     column_norms = torch.linalg.vector_norm(centered, dim=0, keepdim=True)

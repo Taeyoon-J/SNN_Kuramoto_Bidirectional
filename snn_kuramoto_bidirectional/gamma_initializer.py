@@ -1,6 +1,65 @@
+
+if __package__:
+    from . import error_bound
+else:
+    import error_bound
+
+import math
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+
+
+class GammaToDrive(nn.Module):
+    """Convert gamma to Kuramoto drive without owning duplicate parameters.
+
+    Projection and phase gain are passed from the core so existing checkpoint
+    keys and optimizer parameter ordering remain unchanged. Gradients flow
+    through both parameters and the input gamma normally.
+    """
+
+    def __init__(self, num_feature_maps, num_regions, osc_dim,
+                 drive_mode="sequence", phase_mode="none"):
+        super().__init__()
+        self.T = num_feature_maps
+        self.in_dim = num_regions
+        self.osc_dim = osc_dim
+        self.drive_mode = drive_mode
+        self.phase_mode = phase_mode
+
+    def forward(self, gamma, channel_projection=None, phase_gain=None):
+        if self.drive_mode == "static":  # readout mode
+            gamma = self._static_drive(gamma, channel_projection)
+        return self._to_phase(gamma, phase_gain)
+
+    def _static_drive(self, gamma, channel_projection):
+        """Normalize static-drive layouts to [B, N, D] or [B, N]."""
+        if gamma.dim() == 2:
+            error_bound.validate_gamma_to_drive_oscillators(self, gamma)
+            return gamma
+        error_bound.validate_gamma_to_drive_dimensions(gamma)
+        # Preserve layout precedence, including when num_regions == osc_dim.
+        if gamma.size(-1) == self.in_dim:
+            error_bound.validate_gamma_to_drive_channels(self, gamma, channel_projection)
+            return channel_projection(gamma.transpose(1, 2))
+        if gamma.size(1) == self.in_dim and gamma.size(-1) == self.osc_dim:
+            return gamma
+        raise ValueError(
+            f"Cannot interpret static gamma of shape {tuple(gamma.shape)} with "
+            f"num_regions={self.in_dim}, num_feature_maps={self.T}, osc_dim={self.osc_dim}."
+        )
+
+    def _to_phase(self, gamma, phase_gain):
+        """Apply the unchanged gamma-to-phase mapping."""
+        if self.phase_mode == "none":
+            return gamma
+        if self.phase_mode == "standardize_tanh":  # readout mode
+            dims = tuple(range(1, gamma.dim()))
+            mean = gamma.mean(dim=dims, keepdim=True)
+            std = gamma.std(dim=dims, keepdim=True, unbiased=False).clamp_min(1e-6)
+            gamma = (gamma - mean) / std
+        return math.pi * torch.tanh(phase_gain * gamma)
 
 
 class FeatureMapCNNEncoder(nn.Module):
@@ -132,12 +191,7 @@ class FeaturePatchGammaInitializer(nn.Module):
         reduction="mean",
     ):
         super().__init__()
-        if grid_size is None and patch_size is None:
-            raise ValueError("Either grid_size or patch_size must be provided.")
-        if grid_size is not None and patch_size is not None:
-            raise ValueError("Use either grid_size or patch_size, not both.")
-        if reduction not in {"mean", "max"}:
-            raise ValueError('reduction must be "mean" or "max".')
+        error_bound.validate_gamma_initializer_feature_patch_gamma_initializer_init(grid_size, patch_size, reduction)
 
         self.grid_size = _pair_or_none(grid_size, "grid_size")
         self.patch_size = _pair_or_none(patch_size, "patch_size")
@@ -166,8 +220,7 @@ class FeaturePatchGammaInitializer(nn.Module):
         patch_h, patch_w = self.patch_size
         out_h = (height - patch_h) // stride_h + 1
         out_w = (width - patch_w) // stride_w + 1
-        if out_h <= 0 or out_w <= 0:
-            raise ValueError("patch_size is larger than feature_map_size.")
+        error_bound.validate_gamma_initializer_feature_patch_gamma_initializer_num_oscillators(out_h, out_w)
         return int(out_h * out_w)
 
 
@@ -222,13 +275,11 @@ def _pair_or_none(value, name):
 
 def _pair(value, name):
     if isinstance(value, int):
-        if value <= 0:
-            raise ValueError(f"{name} must be positive.")
+        error_bound.validate_gamma_initializer_pair(value, name)
         return (int(value), int(value))
     if isinstance(value, (tuple, list)) and len(value) == 2:
         first, second = int(value[0]), int(value[1])
-        if first <= 0 or second <= 0:
-            raise ValueError(f"{name} values must be positive.")
+        error_bound.validate_gamma_initializer_pair_2(first, second, name)
         return (first, second)
     raise ValueError(f"{name} must be an int or a pair of ints.")
 

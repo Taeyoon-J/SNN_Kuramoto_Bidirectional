@@ -48,6 +48,12 @@ USAGE
 Run this file directly for a self-test.
 """
 
+if __package__:
+    from . import error_bound
+else:
+    import error_bound
+
+
 import math
 
 import torch
@@ -106,8 +112,7 @@ class ImageConditionedGraph(nn.Module):
         feedback_momentum=0.9,
     ):
         super().__init__()
-        if int(top_k) < 1:
-            raise ValueError("top_k must be at least 1.")
+        error_bound.validate_graph_generator_image_conditioned_graph_init(top_k)
         self.top_k = int(top_k)
         self.feedback_momentum = float(feedback_momentum)
         self.projection = nn.Linear(int(in_channels), int(hidden_dim), bias=False)
@@ -120,10 +125,7 @@ class ImageConditionedGraph(nn.Module):
 
         self.spatial_rate = None
         if spatial_decay is not None:
-            if grid_size is None:
-                raise ValueError("grid_size is required when spatial_decay is set.")
-            if not 0.0 < float(spatial_decay) < 1.0:
-                raise ValueError("spatial_decay must lie in (0, 1).")
+            error_bound.validate_graph_generator_image_conditioned_graph_init_2(grid_size, spatial_decay)
             grid_h, grid_w = _pair(grid_size)
             index = torch.arange(grid_h * grid_w)
             rows = (index // grid_w).float()
@@ -151,8 +153,7 @@ class ImageConditionedGraph(nn.Module):
         Returns A [B, N, N], symmetric and non-negative, rows summing to the
         coupling gain before symmetrization.
         """
-        if gamma.dim() != 3:
-            raise ValueError("gamma must have shape [B, C, N] or [B, N, C].")
+        error_bound.validate_graph_generator_image_conditioned_graph_forward(gamma)
         if (gamma.size(1) == self.projection.in_features
                 and gamma.size(2) != self.projection.in_features):
             gamma = gamma.transpose(1, 2)  # [B, N, C]
