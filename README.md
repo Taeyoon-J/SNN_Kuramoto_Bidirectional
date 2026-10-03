@@ -1013,6 +1013,49 @@ spiking layers receive no gradient at all.
 That is the next thing to work on, and it is the part the architecture actually
 claims.
 
+## 3.18 What the spiking path actually loses: the osc_dim components
+
+The phase readout scores 0.630 and the spike readout 0.374, and the obvious
+reading is that the spiking layers destroy the structure. Scoring each stage with
+the same measure and the same clustering says otherwise:
+
+~~~
+theta, per-component PLV              0.6296
+theta, component-mean PLV             0.4278     collapsing components: -0.202
+sin(theta) per-component, correlation 0.5847     changing the measure:   -0.045
+gate output, component-mean           0.3966
+dendrite output                       0.4047
+membrane, continuous                  0.3969
+spikes, binary                        0.3735
+feature control                       0.4566
+~~~
+
+Two wrong diagnoses, in order. The first was that the spiking layers are the
+bottleneck; from the gate onward the whole path costs 0.058, and even
+binarisation costs 0.023. The second was that the measure is the bottleneck,
+since PLV on phases and correlation on traces are not the same instrument --
+correlation reads two units a quarter cycle apart as unrelated where PLV reads
+them as locked. That was tested by taking the analytic signal of the membrane and
+computing PLV on its instantaneous phase, which is how this is done on real
+membrane recordings, and it was **worse**: 0.375 against 0.397.
+
+What actually costs is collapsing the osc_dim components. Averaging them before
+measuring loses 0.202, while keeping them and switching to correlation loses
+0.045. Correlation is a perfectly good instrument on this signal; four
+components reduced to one is not a perfectly good representation.
+
+**And the SNN performs exactly that collapse.** `gate_mode="raw"` hands the
+dendrite all osc_dim components, the dendrite reduces them to one signal per
+unit, and from the membrane onward there is nothing left to separate. So the
+spiking path is not losing the grouping through leaky integration or
+thresholding; it is losing it in its first layer, by design, because that layer
+was written to produce one neuron per oscillator.
+
+The measured target: per-component correlation on `sin(theta)` reaches 0.585
+against the 0.630 of the full phase readout and the 0.457 of the feature control.
+If the spiking layers carried the components as separate channels, the spike
+readout has that much room.
+
 ---
 
 # Part 4 — How to run it
