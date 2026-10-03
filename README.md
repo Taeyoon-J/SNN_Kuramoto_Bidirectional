@@ -40,8 +40,8 @@ it, and because the two disagree in informative ways.
 
 | | ARI | FG-ARI | fgIoU |
 | --- | --- | --- | --- |
-| **16x16 grid, top_k 32, spatial decay 0.55** (3 seeds) | — | **0.598** | — |
-| 32x32 grid, top_k 256, spatial decay 0.928 | 0.735 | 0.565 | 0.439 |
+| **16x16 grid, top_k 32, spatial decay 0.55** (3 seeds) | — | **0.591** | — |
+| 32x32 grid, top_k 256, spatial decay 0.60 | 0.629 | 0.568 | 0.466 |
 | 16x16 grid, top_k 32, spatial decay 0.861 | 0.610 | 0.510 | 0.455 |
 | features clustered directly, 32x32 | 0.399 | 0.517 | 0.444 |
 | features clustered directly, 16x16 | 0.362 | 0.466 | 0.450 |
@@ -970,6 +970,48 @@ Two corrections made along the way, both from scoring too few images. A first pa
 on 18 scenes said the model *lost* to feature clustering where colours repeat
 (-0.039); on 500 scenes it wins there by +0.084. And the overall margin, long
 quoted as +0.044 from 100 images, is +0.064 on 500.
+
+## 3.17 32x32 closes again, for a different reason, and the SNN is now the leak
+
+**The spatial prior does not transfer to 32x32.** Foreground ARI reads 0.568,
+0.527, 0.512, 0.555 for decay 0.60, 0.742, 0.86, 0.928 -- non-monotonic, and the
+spread sits inside seed noise. The square-root rule, that a grid twice as fine
+wants decay^0.5 to keep the same reach, predicted 0.742 and that came second from
+last, so the reasoning was wrong.
+
+**And with the prior tuned on both, 16x16 wins.** The earlier claim that 32x32 was
+the best configuration compared two untuned priors, 0.928 against 0.861:
+
+~~~
+                              FG-ARI   control   margin
+16x16, decay 0.55 (3 seeds)   0.591    0.457     +0.134
+32x32, decay 0.60 (1 seed)    0.568    0.509     +0.059
+~~~
+
+A finer grid raises the feature control more than it raises the model, 0.457 to
+0.509, so resolution is buying the task rather than the mechanism. Resolution is
+closed again, now for that reason rather than for the memory wall of Part 1.
+
+**The spiking side is where the loss now is.** The architecture reads the grouping
+from which units spike together, and that path has never been in the loss. On 150
+unseen images:
+
+~~~
+                       decay 0.861   decay 0.55
+phase readout             0.503         0.591
+spike readout             0.389         0.419
+feature control           0.457         0.457
+~~~
+
+Fixing the graph gained the phases +0.088 and the spikes +0.030, so the fraction
+of the phase result the spikes carry fell from 77% to 71%. More to the point, the
+phase readout is now well above the feature control while the spike readout is
+**below** it. Everything upstream improves and the transduction falls further
+behind, which it cannot correct for because the loss reads the phases and the
+spiking layers receive no gradient at all.
+
+That is the next thing to work on, and it is the part the architecture actually
+claims.
 
 ---
 
