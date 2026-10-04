@@ -9,6 +9,7 @@
 | SW_0005 | complete, mixed result | Prediction-only perimeter rule for background clusters; no model retraining | Foreground IoU rose to 0.3220, but FG-ARI fell to 0.0495 and object IoU to 0.1386 |
 | SW_0006 | complete, mixed result | Reproduce peer `patch_v2:5a29422` connected-components spike classifier on our fixed HDF5 split | At threshold 0.95 aggregate: FG-ARI 0.077165, foreground IoU 0.328720, matched object IoU 0.173560; better IoUs but worse ARI than SW_0001 |
 | SW_0007 | complete, negative result | Peer connected-component foreground selection followed by spike-pattern spectral grouping of only foreground patches | Threshold 0.95, k=5: FG-ARI 0.080966; foreground IoU 0.328720; matched object IoU 0.134053. No all-metric gain |
+| SW_0008 | complete, improvement candidate | Apply peer spike classifier to SW_0003 and SW_0004 trained cores on same validation split | SW_0004 + component-product threshold 0.50: FG-ARI 0.195269; foreground IoU 0.275711; matched object IoU 0.238803, all above SW_0001 seed-0 validation |
 
 Each experiment's README begins with a Korean plain-language explanation and a
 baseline-versus-candidate table when results exist. Arrows in those tables
