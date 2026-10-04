@@ -1,6 +1,6 @@
 # SW_0034: stage-wise object signal and gradient diagnostic
 
-Status: running; SSH restored, 64-image pilot started on GPU 3, launcher PID 1258675 and Python PID 1258677 (2026-10-04). No other user training processes observed; GPU 3 was idle at launch.
+Status: completed on 64-image pilot and full 320-image validation. No other user training processes were observed; GPU 3 was idle at launch.
 
 ## Pilot finding (real checkpoint, 64 images)
 
@@ -13,7 +13,7 @@ membrane .5492, gated spike .5524, binary threshold .5000. Signal is weak
 already upstream; these different affinity definitions do not establish a
 causal loss at one layer. Phase loss bypasses all downstream parameters;
 membrane/spike loss connects all four downstream tensors with finite gradients.
-Full320 confirmation is running before any training decision.
+Full320 confirmed the binary threshold saturation and weak stage signal.
 
 | Pilot readout | FG-ARI | FG IoU | Object IoU |
 |---|---:|---:|---:|
@@ -24,13 +24,37 @@ Full320 confirmation is running before any training decision.
 All predict nine foreground groups; predicted foreground fractions are .883,
 .865, .858 respectively. No three-seed or test improvement claim.
 
+## Full validation finding (320 images)
+
+After controlling pair distance, macro AUC is phase `.578814`, gating
+`.587110`, h-wave `.584243`, membrane `.587027`, gated spike `.586344`, and
+binary threshold `.500000`. The signal is weak already in phase/gating and is
+roughly preserved through continuous downstream activations; this diagnostic
+does not isolate one abrupt information-loss layer. Binary threshold activation
+is exactly 1.0 with constant fraction 1.0 after settle on all 81,920 aggregate
+patch histories, so the apparent gated-spike rhythm is gate amplitude rather
+than changing threshold events. Branch cancellation ratio is `.947275`, which
+does not support severe branch cancellation as the current main bottleneck.
+
+| Full320 readout | FG-ARI | FG IoU | Object IoU | Foreground fraction |
+|---|---:|---:|---:|---:|
+| Spatial only | .491272 | .190837 | .178026 | .882813 |
+| Membrane × spatial | .494639 | .191070 | .170568 | .867578 |
+| Gated spike × spatial | .479762 | .185651 | .164179 | .858936 |
+
+Membrane/spike PLV losses connect finite gradients to dendritic and membrane
+parameters; phase PLV bypasses them. The next controlled core candidates should
+therefore include threshold/range dynamics and an object-specific upstream
+signal, while classifier count/grouping baselines continue in parallel.
+
 ## 무엇을 확인하는가
 
 SW_0033에서 높은 ARI의 대부분은 공간 거리만으로 설명됐습니다.
 이번에는 같은 이미지에서 theta, gating 입력, dendritic h-wave,
 membrane, gate가 곱해진 spike, gate를 곱하기 전 binary threshold 신호를
-비교합니다. 어디서 물체 구분 정보가 약해지는지 확인한 후에만 다음
-학습 loss를 선택합니다. 아직 결과나 성능 개선은 확인되지 않았습니다.
+비교합니다. 어디서 물체 구분 정보가 약해지는지 다음 학습과 classifier
+실험을 고르는 근거로 사용합니다. 이는 다음 작업을 막는 엄격한 단계별
+통과 조건이 아니며, classifier와 core 진단은 서로 피드백을 주며 병행합니다.
 
 기존 nearby-pair AUC는 같은 물체 patch가 더 가깝다는 영향이 섞입니다.
 따라서 patch 간 squared distance 1, 2, 4, 5, 8, 9를 각각 고정하고
@@ -89,6 +113,7 @@ on 2026-10-04 and remains `b99fac0`, with no new tested results.
 
 ## Next decision
 
-Choose a controlled training experiment only after reviewing stage AUC and
-gradient connectivity. Preserve spatial-only control and matched readout;
-record count/foreground tradeoffs. No training sweep is queued yet.
+Use stage AUC and gradient connectivity as evidence for controlled training,
+while continuing classifier baselines in parallel when they can clarify count
+or grouping limits. Preserve spatial-only control and matched readout; record
+count/foreground tradeoffs. No training sweep is queued yet.
