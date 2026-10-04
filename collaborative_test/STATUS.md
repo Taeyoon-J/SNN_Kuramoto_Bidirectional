@@ -1,5 +1,8 @@
 # Current status
 
+- 2026-10-04 new-chat resume: created a new active goal; source branch `patch_v2_sw`, HEAD before preparation `28d24b0`. Handoff and start prompt were present as untracked files. Peer fetch succeeded and remains `b99fac0`, with no new tested results. Server SSH master socket is absent; live processes/GPU/checkpoint cannot yet be verified. User will restore SSH after chat preparation.
+- SW_0034: planned stage-wise object-signal diagnostic prepared under `SW_0034_stage_signal_diagnostic`. Observe unchanged core with hooks; compare phase, gating, h-wave, membrane, gated spikes and ungated binary threshold; distance-stratified foreground-pair AUC and phase/membrane/spike loss gradient connectivity. Same spatial-only and membrane-spatial k10 controls. Syntax check passed; real-data execution pending server connection. No new training or improvement claim.
+
 - Goal: active. The three-seed mean of a spike or membrane readout must exceed the comparable Slot Attention mean on all three patch metrics.
 - Baseline seed 0 checkpoint: `/Data0/kevinswk/patch_v2_sw/trained_models/baseline_best_seed0_20261003/core.pt`.
 - SW_0001: completed classifier-only validation experiment. Fixed-k spike synchrony clustering improves all three metrics over the baseline spatial-components readout, but does not meet the Slot Attention reference.
