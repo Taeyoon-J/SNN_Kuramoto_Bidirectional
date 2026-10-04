@@ -19,3 +19,7 @@ terms and phase path remain active. The auxiliary product synchrony puts actual
 component spikes on the gradient path. Evaluate under the SW_0034–0036 fixed
 validation suite; loss value alone cannot select a model because the peer found
 lower final loss associated with worse task metrics across three seeds.
+
+`run.sh GPU_ID VARIANT SEED` trains either variant. After a checkpoint is
+complete, `evaluate.sh GPU_ID VARIANT SEED` applies the same full320 stage
+diagnostic and selected classifier suite as SW_0037.
