@@ -15,6 +15,8 @@
 | SW_0011 | complete, mixed result | Match the SW_0004 graph-teacher pilot to 40 training epochs, seed 0 | Best ARI 0.179760 / FG IoU 0.271468 / object IoU 0.295250 at component-product 0.50; predicted groups 77.03 vs true 6.20; no all-metric gain over SW_0008 |
 | SW_0012 | complete, diagnostic only | Test peer `patch_v2:0dd2115` geodesic graph distance on our existing checkpoint, without modifying core | Same/different-object edge ratio 15.00→13.59 on 16 validation images; not merged |
 | SW_0013 | complete, mixed result | User-proposed adaptive cosine slots on observed spike histories; no retraining | Best ARI 0.247376, FG IoU 0.248332, object IoU 0.204032; groups 17.37 vs true 6.20. ARI improves but both IoUs worsen; not adopted |
+| SW_0014 | complete, negative result | Compare background inference rules for SW_0013 adaptive slots | Border rule lifts foreground IoU to 0.338240 but FG-ARI drops to 0.071979 and object IoU to 0.177311; not adopted |
+| SW_0015 | complete, diagnostic | Verify cached gamma versus HDF5 image index alignment | Same-index RGB/gamma boundary fingerprint ranks top-1 for 27/128 train and 26/128 validation images, versus 1/128 random expectation; strongly supports alignment |
 
 Each experiment's README begins with a Korean plain-language explanation and a
 baseline-versus-candidate table when results exist. Arrows in those tables

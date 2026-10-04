@@ -1,0 +1,25 @@
+{
+  "method": "nearest HDF5 image by 16x16 horizontal and vertical patch-boundary contrast",
+  "train": {
+    "gamma_path": "/work/USERS/tkim1/gamma_sequences/wm_patch_gamma_seq_k8_grid16.pt",
+    "count": 128,
+    "same_index_top1": 27,
+    "same_index_top5": 65,
+    "same_index_median_rank": 5.0,
+    "same_index_mean_similarity": 0.33263683319091797,
+    "all_pairs_mean_similarity": 0.16161534190177917,
+    "random_expected_top1": 1.0,
+    "random_expected_median_rank": 64.5
+  },
+  "validation": {
+    "gamma_path": "/work/USERS/tkim1/gamma_sequences/wm10k_full_grid16.pt",
+    "count": 128,
+    "same_index_top1": 26,
+    "same_index_top5": 73,
+    "same_index_median_rank": 4.0,
+    "same_index_mean_similarity": 0.351266086101532,
+    "all_pairs_mean_similarity": 0.18351459503173828,
+    "random_expected_top1": 1.0,
+    "random_expected_median_rank": 64.5
+  }
+}

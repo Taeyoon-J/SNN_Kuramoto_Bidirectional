@@ -14,7 +14,7 @@ from evaluate_fixed_split import _core
 from snn_kuramoto_bidirectional.evaluation import clevr_mask_patch, evaluate_patch_masks
 
 
-def dynamic_slots(traces, threshold, initial_slots, seed):
+def dynamic_slots(traces, threshold, initial_slots, seed, *, assign_background=True):
     """Grow cosine slots from observed nonconstant spike traces until assigned."""
     traces = np.asarray(traces, dtype=np.float32)
     centered = traces - traces.mean(axis=1, keepdims=True)
@@ -51,7 +51,7 @@ def dynamic_slots(traces, threshold, initial_slots, seed):
     if (assigned < 0).any():
         raise RuntimeError("Slot assignment did not terminate")
     counts = np.bincount(assigned, minlength=len(centers))
-    background_slot = int(counts.argmax())
+    background_slot = int(counts.argmax()) if assign_background else -1
     object_id = 1
     for slot, count in enumerate(counts):
         if slot != background_slot and count:

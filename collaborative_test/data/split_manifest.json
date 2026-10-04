@@ -6,5 +6,5 @@
   "reference_test": {"start": 1000, "count": 320, "gamma": "/work/USERS/tkim1/gamma_sequences/wm10k_full_grid16.pt"},
   "ground_truth": "HDF5 mask array converted by clevr_mask_patch with patch_size=8",
   "grid": [16, 16],
-  "note": "The train gamma file and first 1000 examples of wm10k_full_grid16.pt are not bitwise identical; measured maximum absolute difference is about 0.00496. Image-order alignment beyond the numeric index convention remains to be verified."
+  "note": "The train gamma file and first 1000 examples of wm10k_full_grid16.pt are not bitwise identical; measured maximum absolute difference is about 0.00496. SW_0015 direct gamma/HDF5 boundary-fingerprint matching strongly supports image-index alignment on 128 train and 128 validation examples (same-index top-1 27 and 26 versus random expectation 1), but exact source provenance remains unverified. CLEVR_1k PNG numbering does not match this HDF5 dataset and must not be used as an index proxy."
 }
