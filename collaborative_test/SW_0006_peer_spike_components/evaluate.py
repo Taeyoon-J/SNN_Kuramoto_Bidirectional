@@ -53,9 +53,13 @@ def main():
     parser.add_argument("--settle", type=int, default=64)
     parser.add_argument("--batch-size", type=int, default=8)
     parser.add_argument("--device", default="cuda")
+    parser.add_argument("--thresholds", type=float, nargs="+",
+                        default=[0.50, 0.70, 0.80, 0.90, 0.95])
     args = parser.parse_args()
 
-    thresholds = (0.50, 0.70, 0.80, 0.90, 0.95)
+    thresholds = tuple(args.thresholds)
+    if not thresholds or any(value < 0 or value > 1 for value in thresholds):
+        raise ValueError("thresholds must be in [0, 1]")
     modes = ("aggregate", "component_product")
     ids = list(range(args.start, args.start + args.count))
     if args.start < 1000 or args.start + args.count > 10000:
