@@ -1,63 +1,58 @@
-# Status
+# STATUS
 
-Contract v1, split manifest v1, targets v1. Goal: `patch_foreground_iou` above
-0.7, currently 0.412 +/- 0.098.
+Updated 2026-10-04. Branch `patch_v2`, commit `a6740b8`. Contract v1, split v1.
 
-## Baseline
+## Where the goal stands
 
-`PV2_0001`, test split, 300 images, three seeds, scored from spike masks:
+Goal: `patch_foreground_iou` at or above 0.700, from classifier masks on spikes.
 
-| metric | mean | std | Slot Attention | |
-| --- | --- | --- | --- | --- |
-| `patch_fg_ari` | 0.4457 | 0.0706 | 0.6195 | below |
-| `patch_foreground_iou` | 0.4115 | 0.0980 | 0.1241 | beats |
-| `patch_matched_object_iou` | 0.3438 | 0.0924 | 0.0920 | beats |
+Best confirmed: **`PV2_0004`, foreground IoU 0.4967** (test, 3 seeds, std 0.0872),
+with `fg_ari` 0.5105 and `matched_object_iou` 0.3689 -- the first setting above
+the `PV2_0001` baseline on all three. 0.203 short of the goal.
 
-## In flight when the session lost the server
+Against the Slot Attention reference (one published checkpoint, not a 3-seed
+training mean): foreground IoU and matched-object IoU beat it, foreground ARI is
+short by 0.109.
 
-- `PV2_0002a` -- firing-rate constraint, `--loss-signal spikes
-  --spike-rate-weight 1.0 --spike-target-rate 0.2`. Training finished for seeds
-  0, 1, 2 (`RATE_s0/1/2`) and a weight-0.3 probe (`RATE_w03`). The rate is now
-  pinned: the rate loss sits at 5e-5 for every seed, against a sevenfold spread
-  before. **Not yet scored on test.** On validation it looks worse than the
-  baseline on all three metrics, so it may buy variance at the cost of mean.
-- `PV2_0002b` -- geodesic graph, launched but the server dropped before the
-  first epoch landed. Runs `GEO_s3_c2`, `GEO_s3_c5`, `GEO_s4_c2` may or may not
-  exist; check before relaunching.
+## What the ceiling measurement changed
 
-## What the threshold sweep settled
+`PV2_0005` re-measured the oracle ceiling: a ground-truth coupling graph reaches
+foreground IoU **0.561**, and the learned graph already reaches about 0.49.
 
-Tuning the classifier's synchrony threshold **cannot reach the goal**. On
-validation, foreground IoU peaks near 0.456 at threshold 0.35 and falls on both
-sides; below 0.30 everything collapses. The predicted foreground fraction can be
-driven onto the target's 0.126, and foreground IoU still only reaches 0.267 --
-so the fraction being right is not enough, the foreground has to be in the right
-places. The graph is the remaining lever.
+**A perfect coupling graph is worth about +0.06, so 0.700 is not reachable by
+improving the graph.** Under the oracle graph foreground ARI is *worse* (0.329 vs
+0.511) -- perfect coupling makes grouping worse. The limit is downstream of the
+graph, in how spikes become masks. Graph-side work (geodesic rounds, spatial
+prior) is close to spent; `--geodesic-steps 5` actively hurts.
 
-## Why the graph
+Everything from `PV2_0006` on therefore works on the readout and on the spiking
+layers themselves.
 
-Training on a ground-truth coupling graph, which is a diagnostic and not a
-result, gives foreground IoU 0.610 against 0.421 and lifts the phase readout from
-0.598 to 0.723.
+## Resume point
 
-What the learned graph gets wrong is specific: its edges come from feature cosine
-with a Euclidean distance prior, so two objects of the same colour -- alike to the
-features, a few patches apart -- stay linked at 0.418 mean edge weight against
-0.749 inside an object. 83% of CLEVR scenes contain a repeated colour.
+Nothing below needs re-running. Checkpoints live under `/work/USERS/tkim1/runs/`.
 
-`geodesic_steps` measures patch distance along the image instead of through it,
-by min-plus relaxation over a dissimilarity-weighted step cost. Verified locally:
-two identical patches three apart get edge weight 0.123 under the geodesic
-against 1.141 under the Euclidean prior, while an immediate neighbour keeps
-0.458. Gradients reach both the graph projection and the geodesic contrast
-parameter.
+Running on frontier, detached -- these survive the loss of a driving session:
 
-## Resume
+| what | where | state |
+| --- | --- | --- |
+| `PV2_0006` -- `--spike-plv-weight` 1 / 5 / 20 on the `d35` graph | `$R/SPLV_w{1,5,20}`, log `$R/pv6.log` | training, 18/40 epochs |
+| queue round B -- readout knobs, evaluation only, on `PV2_0004`'s seed-0 checkpoint | `$R/queue_results.txt`, log `$R/queue.log` | waits for training to clear |
+| queue round C -- slower dendrite/membrane time constants | `$R/SLOW{D,M,B}` | after round B |
 
-1. `ssh frontier` to restore the multiplexed connection; it expires and the agent
-   cannot reopen it.
-2. Score `RATE_s0/1/2` on test, finish `PV2_0002a`.
-3. Check whether `GEO_*` runs survived; relaunch
-   `/work/USERS/tkim1/runs/pv2_0002b.sh` if not.
+To resume: read `$R/pv6.log` and `$R/queue_results.txt`, then write up whatever
+beat its reference. The queue does not commit or push by design -- results are
+recorded only after they have been read and analysed.
 
-Everything lives under `/work/USERS/tkim1`; code in `/export_home/tkim1`.
+## Standing cautions
+
+- A session's background waiters die with the session; only the detached remote
+  work continues. Nothing re-invokes a session on its own.
+- Per-component synchrony is a **product over four components**, so its
+  thresholds sit near 0.002-0.030, two orders of magnitude below a single
+  correlation's. A threshold carried across readouts has already produced one
+  wrong conclusion and one wrong ceiling.
+- Keep stderr in sweeps. A suppressed argparse error from a flag that did not
+  exist came back as an empty table and was nearly read as a result.
+- Single-seed validation numbers are candidates, never findings. Two findings
+  have already been retracted for being reported at one seed.
