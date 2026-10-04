@@ -21,9 +21,12 @@
   `.185651/.135165/.036969`; substituting it raises the diagnostic three-seed
   mean to `.469714/.429096/.328878`. This rescues all three seed2 metrics but
   remains below seeds0/1. The matched LR `1e-3` arm with measured
-  approximately `0.1x`-gradient diversity weight is still training on GPU2.
-  Future launches require asset-bound one-update preflight; remote Bash,
-  Python compile, and 3+5 direct unit tests pass.
+  approximately `0.1x`-gradient diversity also completed at
+  `.305639/.226015/.123898`; it trades lower ARI/object IoU for much higher
+  foreground IoU than low LR. Its seed2-substitution mean is
+  `.455875/.448510/.325094`. Future launches require asset-bound one-update
+  preflight; remote Bash, Python compile, 3+5 direct unit tests, and both real
+  asset preflights pass.
 - SW0051 seed0 completed both windows. Long membrane-freeze scores
   `.630592/.606040/.449873` versus frozen spike-CC
   `.598427/.606040/.461779`; membrane-restricted-dynamic scores

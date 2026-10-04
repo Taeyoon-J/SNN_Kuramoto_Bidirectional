@@ -82,10 +82,15 @@ still below seeds 0 and 1. Substituting this arm for only the collapsed seed2
 would raise the three-seed common-threshold mean from
 `.415879/.418226/.296118` to `.469714/.429096/.328878`; this is a diagnostic
 counterfactual until the same selected recipe is checked for seed0/1 harm.
-The measured-`0.1x` diversity arm remains in its 40-epoch training/evaluation
-pipeline on GPU2.
+The measured-`0.1x` diversity arm also completed. At the same long `.35` row
+it scores `.305639/.226015/.123898`: all three exceed the collapsed original,
+foreground IoU exceeds the low-LR arm, and ARI/object IoU trail it. Its
+seed2-substitution diagnostic mean is `.455875/.448510/.325094`. Thus the two
+interventions establish a real stability direction but form a Pareto tradeoff;
+neither is yet selected for seed expansion.
 
-The low-LR outputs are versioned under `results/seed2_low_lr/`.
+Outputs are versioned under `results/seed2_low_lr/` and
+`results/seed2_diversity/`.
 The first LR-arm launch exposed a pre-environment bare-`python` validation
 call and exited before creating an output directory; `run.sh` now uses the
 absolute SNN-environment Python path, validates both weight and LR, and the
