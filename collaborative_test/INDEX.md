@@ -17,7 +17,7 @@
 | SW_0013 | complete, mixed result | User-proposed adaptive cosine slots on observed spike histories; no retraining | Best ARI 0.247376, FG IoU 0.248332, object IoU 0.204032; groups 17.37 vs true 6.20. ARI improves but both IoUs worsen; not adopted |
 | SW_0014 | complete, negative result | Compare background inference rules for SW_0013 adaptive slots | Border rule lifts foreground IoU to 0.338240 but FG-ARI drops to 0.071979 and object IoU to 0.177311; not adopted |
 | SW_0015 | complete, diagnostic | Verify cached gamma versus HDF5 image index alignment | Same-index RGB/gamma boundary fingerprint ranks top-1 for 27/128 train and 26/128 validation images, versus 1/128 random expectation; strongly supports alignment |
-| SW_0016 | training | Add optional `patch_sw`-derived RGB-edge membrane separation loss to matched SW_0011 seed-0 training | Eight-image diagnostic raw loss .478038, nonzero dendritic/membrane gradients; 40-epoch validation pending |
+| SW_0016 | complete, mixed result | Add optional `patch_sw`-derived RGB-edge membrane separation loss to matched SW_0011 seed-0 training | At same component-product .50 readout: FG-ARI .069476 / FG IoU .331876 / object IoU .164980, versus SW_0011 .179760 / .271468 / .295250; no all-metric gain |
 | SW_0017 | complete, mixed result | Run the same adaptive slots on continuous membrane instead of binary spikes | At threshold .7/six slots: FG-ARI .261507, FG IoU .246264, object IoU .207637, groups 18.18; only small gains over spike slots and worse IoUs than existing readout |
 | SW_0018 | complete, mixed result | Peer-inspired low-spike-synchrony foreground ranking plus our adaptive slots | Best FG IoU .291989 comes with FG-ARI .130456 and object IoU .177966; no all-metric gain |
 

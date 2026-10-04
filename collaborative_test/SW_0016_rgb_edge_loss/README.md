@@ -1,6 +1,6 @@
 # SW_0016: RGB-edge membrane separation loss
 
-Status: seed-0 40-epoch training running on server GPU 2. Validation not yet complete; no performance claim.
+Status: seed-0 40-epoch training and fixed-split validation complete. Mixed result; not adopted.
 
 ## Why this test
 
@@ -53,3 +53,33 @@ Server training output:
 The first GPU-1 attempt was stopped after one epoch when another process
 started sharing GPU 1. No checkpoint was written. The same run was restarted
 from seed 0 on then-idle GPU 2 with log `training_gpu2.log`.
+
+## Result and decision
+
+The GPU-2 run completed 40 epochs. The fixed validation set was CLEVR HDF5
+IDs 1320-1639 (320 images). Under the *same* component-product spike
+classifier threshold 0.50, the controlled comparison is:
+
+| Metric (higher is better) | SW_0011 no RGB-edge loss | SW_0016 RGB-edge loss 0.1 |
+|---|---:|---:|
+| Patch FG-ARI | 0.179760 | 0.069476 |
+| Patch foreground IoU | 0.271468 | 0.331876 |
+| Patch matched-object IoU | 0.295250 | 0.164980 |
+| Predicted groups/image | 77.03 | 11.98 |
+
+Thus foreground detection and the number of groups improved, but separating
+individual objects became much worse. Sweeping the spike classifier threshold
+did not recover an all-metric improvement: the best FG-ARI row (threshold
+0.80) scored 0.071724 / 0.332549 / 0.168455; the best matched-object-IoU
+row (threshold 0.95) scored 0.069077 / 0.332043 / 0.172222. These are
+seed-0 validation scores, not a three-seed result. Do **not** adopt this
+weight-0.1 RGB-edge objective as a default. Full results are in
+`validation_results.json`.
+
+On the first 16 validation images, phase-to-spike affinity correlation was
+0.7287 (SW_0011: 0.7265). Same- versus different-object spike synchrony was
+0.4608 versus 0.3607, a contrast of 0.1001 (SW_0011: 0.4296 versus 0.2756,
+contrast 0.1540). Same/different membrane synchrony was 0.4607/0.2802.
+These diagnostics suggest that better membrane boundary separation did not
+translate into better spike object grouping; this is an inference rather
+than a demonstrated causal mechanism. See `signal_flow.json`.
