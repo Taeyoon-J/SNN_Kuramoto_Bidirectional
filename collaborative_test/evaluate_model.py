@@ -77,7 +77,9 @@ def main():
                     help=("calibrate the synchrony threshold per image so the groups "
                           "cover this fraction of patches; chosen on validation"))
     ap.add_argument("--background", default="largest_component",
-                    choices=["largest_component", "activity"])
+                    choices=["largest_component", "activity", "hybrid"])
+    ap.add_argument("--synchrony-quantile", type=float, default=0.35,
+                    help="hybrid background: fraction of units the synchrony ranking admits")
     ap.add_argument("--membrane-spikes", action="store_true",
                     help=(
                         "Binarise the membrane at --membrane-threshold instead of "
@@ -133,6 +135,7 @@ def main():
         synchrony_threshold=args.synchrony_threshold,
         min_group_size=args.min_group_size, settle=args.settle, components=components,
         background=args.background, target_foreground=args.target_foreground,
+        synchrony_quantile=args.synchrony_quantile,
     )
     prediction = spatial_components_to_patch_labels(groups, args.grid)
     scored = evaluate_patch_masks(prediction, target)
