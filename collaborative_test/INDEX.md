@@ -21,9 +21,12 @@
 | SW_0017 | complete, mixed result | Run the same adaptive slots on continuous membrane instead of binary spikes | At threshold .7/six slots: FG-ARI .261507, FG IoU .246264, object IoU .207637, groups 18.18; only small gains over spike slots and worse IoUs than existing readout |
 | SW_0018 | complete, mixed result | Peer-inspired low-spike-synchrony foreground ranking plus our adaptive slots | Best FG IoU .291989 comes with FG-ARI .130456 and object IoU .177966; no all-metric gain |
 | SW_0019 | complete, mixed pilot | Mix actual spike and membrane per-component affinities at readout on SW_0011 checkpoint | On 64 validation images, 25% membrane improves FG-ARI .157762 to .188753 and FG IoU .257242 to .268401, but object IoU falls .296283 to .259725; not adopted |
-| SW_0020 | training | Apply the existing graph-teacher loss to actual hard spikes rather than membrane; keep SW_0004 10-epoch seed-0 settings matched | Two-image check: spike loss gradient reaches dense weight (norm .280915) and tau_m (.002523); training/validation pending |
+| SW_0020 | complete, mixed result | Apply the existing graph-teacher loss to actual spikes rather than membrane; matched SW_0004 10-epoch settings | At component-product .50, FG-ARI .122560 / FG IoU .260356 / object IoU .287220 versus SW_0004 .195269 / .275711 / .238803; object IoU gains but priority FG-ARI falls |
+| SW_0021 | complete, FG-ARI improvement | Apply user-proposed adaptive slots to SW_0003 high-ARI core, comparing actual spike versus membrane histories | Membrane slots: FG-ARI .357053 / FG IoU .209870 / object IoU .113992, mean predicted groups 5.98 vs true 6.20; retain ARI-first track and improve foreground next |
 
 Each experiment's README begins with a Korean plain-language explanation and a
 baseline-versus-candidate table when results exist. Arrows in those tables
 mean higher is better; no score is combined into a single total. These are
 validation scores from seed 0, not three-seed test results or a goal claim.
+Continue promising single-metric results rather than requiring every
+intermediate ablation to improve all three metrics; see `SELECTION_POLICY.md`.

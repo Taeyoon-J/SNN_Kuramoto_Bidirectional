@@ -1,7 +1,7 @@
 # SW_0020: graph teacher on actual spikes
 
-Status: two-image gradient diagnostic completed; matched 10-epoch training
-running on frontier GPU 0 (PID 1151716, launched 2026-10-03). Validation pending.
+Status: matched seed-0 10-epoch training and fixed 320-image validation complete.
+The spike-source loss was differentiable but did not improve the priority FG-ARI.
 
 ## Motivation
 
@@ -53,3 +53,37 @@ solely because an SSH observation times out.
   selector and CLI flag; default unchanged.
 - This experiment's diagnostic, run script, and report files. No production classifier
   change.
+
+After training, `evaluate.sh` uses the same SW_0006 component-product spike
+classifier and the SW_0011 signal-flow diagnostic on the fixed validation
+IDs. It refuses to run until epoch 10 and the checkpoint are present.
+
+## Result and interpretation
+
+The training log reached epoch 10/10 and saved the checkpoint. The final
+total training loss was 2.804146; the raw graph-teacher term was 1.160337.
+Validation used IDs 1320-1639, actual spike-derived masks, and the identical
+threshold sweep used for SW_0004. At the same component-product threshold .50:
+
+| Metric | SW_0004 membrane-source teacher | SW_0020 spike-source teacher |
+|---|---:|---:|
+| Patch FG-ARI | .195269 | .122560 |
+| Patch foreground IoU | .275711 | .260356 |
+| Patch matched-object IoU | .238803 | .287220 |
+| Predicted groups/image | about 31 | 144.21 |
+
+The object-IoU gain is retained as a potentially useful signal, not dismissed
+because other metrics fell. However, the priority FG-ARI and foreground IoU
+worsened and object fragmentation increased sharply. In the alternative
+aggregate readout, the highest FG-ARI was .185819 at threshold .80, with
+foreground IoU .270110 and object IoU .221173. Thus no tested readout beats
+SW_0004 on priority FG-ARI, so this exact weight-.1 spike-source training is
+not the leading follow-up. Full sweep: `validation_results.json`.
+
+On the first 16 validation images, the phase-to-spike affinity correlation
+was .805587 (SW_0004: .816019). Spike synchrony same/different-object
+means were .359067/.180711 (SW_0004: .382151/.212295). These diagnostics
+do not show a clear improvement in theta-to-spike transfer. Mean actual
+spike rate fell from .419544 to .195464. This association suggests that
+weight .1 may be too strong, but no causal claim follows from one seed.
+See `signal_flow.json`.
