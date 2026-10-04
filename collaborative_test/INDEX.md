@@ -12,8 +12,9 @@
 | SW_0008 | complete, improvement candidate | Apply peer spike classifier to SW_0003 and SW_0004 trained cores on same validation split | SW_0004 + component-product threshold 0.50: FG-ARI 0.195269; foreground IoU 0.275711; matched object IoU 0.238803, all above SW_0001 seed-0 validation |
 | SW_0009 | complete, goal unmet | Frozen SW_0008 readout on reference test IDs 1000–1319 | FG-ARI 0.190909; foreground IoU 0.270928; matched object IoU 0.229805. Slot reference 0.890115 / 0.212251 / 0.235487 |
 | SW_0010 | complete, negative result | Lower peer component-product spike edge threshold to reduce object fragmentation; validation only | At 0.10 groups fall 30.99→18.77, but FG-ARI 0.183586, foreground IoU 0.266737, object IoU 0.197857 all below threshold 0.50 |
-| SW_0011 | training | Match the SW_0004 graph-teacher pilot to 40 training epochs, seed 0 | Awaiting validation |
+| SW_0011 | complete, mixed result | Match the SW_0004 graph-teacher pilot to 40 training epochs, seed 0 | Best ARI 0.179760 / FG IoU 0.271468 / object IoU 0.295250 at component-product 0.50; predicted groups 77.03 vs true 6.20; no all-metric gain over SW_0008 |
 | SW_0012 | complete, diagnostic only | Test peer `patch_v2:0dd2115` geodesic graph distance on our existing checkpoint, without modifying core | Same/different-object edge ratio 15.00→13.59 on 16 validation images; not merged |
+| SW_0013 | complete, mixed result | User-proposed adaptive cosine slots on observed spike histories; no retraining | Best ARI 0.247376, FG IoU 0.248332, object IoU 0.204032; groups 17.37 vs true 6.20. ARI improves but both IoUs worsen; not adopted |
 
 Each experiment's README begins with a Korean plain-language explanation and a
 baseline-versus-candidate table when results exist. Arrows in those tables

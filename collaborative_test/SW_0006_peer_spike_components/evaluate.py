@@ -80,10 +80,16 @@ def main():
                     for threshold in thresholds:
                         predictions[(mode, threshold)].append(_component_labels(affinity, threshold))
 
+    truth_counts = torch.tensor([
+        torch.unique(image[image != 0]).numel() for image in truth
+    ], dtype=torch.int64)
     rows = []
     for (mode, threshold), masks in predictions.items():
         labels = torch.stack(masks)
         scores = evaluate_patch_masks(labels, truth)
+        predicted_counts = torch.tensor([
+            torch.unique(image[image != 0]).numel() for image in labels
+        ], dtype=torch.int64)
         rows.append({
             "mode": mode,
             "threshold": threshold,
@@ -91,15 +97,16 @@ def main():
             "foreground_iou": float(scores["mean"]["foreground_iou"]),
             "matched_object_iou": float(scores["mean"]["matched_object_iou"]),
             "predicted_foreground_fraction": float((labels != 0).float().mean()),
-            "predicted_groups_mean": float(torch.tensor([
-                torch.unique(image[image != 0]).numel() for image in labels
-            ], dtype=torch.float32).mean()),
+            "predicted_groups_mean": float(predicted_counts.float().mean()),
+            "exact_count_fraction": float((predicted_counts == truth_counts).float().mean()),
+            "within_one_count_fraction": float(((predicted_counts - truth_counts).abs() <= 1).float().mean()),
         })
     result = {
         "source_commit": "patch_v2:5a29422",
         "checkpoint": args.checkpoint,
         "ids": [ids[0], ids[-1]],
         "spike_rate_mean": sum(spike_rates) / len(spike_rates),
+        "true_groups_mean": float(truth_counts.float().mean()),
         "rows": rows,
     }
     out = Path(args.output_dir)
