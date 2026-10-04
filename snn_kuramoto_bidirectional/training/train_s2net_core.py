@@ -53,6 +53,7 @@ def train_s2net_core(
     plv_combine="mean",
     graph_teacher_weight=0.0,
     graph_teacher_temperature=0.1,
+    graph_teacher_signal="membrane",
     edge_membrane_weight=0.0,
     edge_membrane_margin=0.3,
     edge_membrane_grid_size=(16, 16),
@@ -115,8 +116,11 @@ def train_s2net_core(
                         if core.graph_generator is not None
                         else core.sc.to(gamma_seq.device).unsqueeze(0).expand(gamma_seq.size(0), -1, -1)
                     )
+                if graph_teacher_signal not in ("membrane", "spikes"):
+                    raise ValueError("graph_teacher_signal must be membrane or spikes")
+                teacher_signal = core_out if graph_teacher_signal == "membrane" else spikes
                 teacher_loss = graph_teacher_synchrony_loss(
-                    core_out,
+                    teacher_signal,
                     graph,
                     settle=int(plv_settle),
                     temperature=float(graph_teacher_temperature),
@@ -558,6 +562,8 @@ def main():
     parser.add_argument("--structural-weight", type=float, default=0.0)
     parser.add_argument("--graph-teacher-weight", type=float, default=0.0)
     parser.add_argument("--graph-teacher-temperature", type=float, default=0.1)
+    parser.add_argument("--graph-teacher-signal", choices=["membrane", "spikes"],
+                        default="membrane")
     parser.add_argument("--edge-image-hdf5", default=None,
                         help="Aligned HDF5 RGB images for optional edge membrane loss.")
     parser.add_argument("--edge-membrane-weight", type=float, default=0.0)
@@ -733,6 +739,7 @@ def main():
         plv_combine=args.plv_combine,
         graph_teacher_weight=args.graph_teacher_weight,
         graph_teacher_temperature=args.graph_teacher_temperature,
+        graph_teacher_signal=args.graph_teacher_signal,
         edge_membrane_weight=args.edge_membrane_weight,
         edge_membrane_margin=args.edge_membrane_margin,
         edge_membrane_grid_size=_parse_pair_arg(args.spike_spatial_grid_size, "spike-spatial-grid-size"),

@@ -21,6 +21,7 @@
 | SW_0017 | complete, mixed result | Run the same adaptive slots on continuous membrane instead of binary spikes | At threshold .7/six slots: FG-ARI .261507, FG IoU .246264, object IoU .207637, groups 18.18; only small gains over spike slots and worse IoUs than existing readout |
 | SW_0018 | complete, mixed result | Peer-inspired low-spike-synchrony foreground ranking plus our adaptive slots | Best FG IoU .291989 comes with FG-ARI .130456 and object IoU .177966; no all-metric gain |
 | SW_0019 | complete, mixed pilot | Mix actual spike and membrane per-component affinities at readout on SW_0011 checkpoint | On 64 validation images, 25% membrane improves FG-ARI .157762 to .188753 and FG IoU .257242 to .268401, but object IoU falls .296283 to .259725; not adopted |
+| SW_0020 | training | Apply the existing graph-teacher loss to actual hard spikes rather than membrane; keep SW_0004 10-epoch seed-0 settings matched | Two-image check: spike loss gradient reaches dense weight (norm .280915) and tau_m (.002523); training/validation pending |
 
 Each experiment's README begins with a Korean plain-language explanation and a
 baseline-versus-candidate table when results exist. Arrows in those tables
