@@ -1,0 +1,57 @@
+{
+  "checkpoint": "trained_models/SW_0004_graph_teacher_pilot_seed0/core.pt",
+  "ids": [
+    1320,
+    1335
+  ],
+  "peer_source_commit": "patch_v2:0dd2115",
+  "peer_geodesic_settings": {
+    "steps": 3,
+    "radius": 1.5,
+    "contrast": 2.0,
+    "temperature": 0.5,
+    "cap": 16.0
+  },
+  "graph_categories": {
+    "euclidean": {
+      "same_object": {
+        "mean_weight": 0.18807901758621384,
+        "nonzero_fraction": 0.7018132975151108,
+        "pair_count": 8934
+      },
+      "different_objects": {
+        "mean_weight": 0.012534574749296064,
+        "nonzero_fraction": 0.17007139322824627,
+        "pair_count": 28294
+      },
+      "foreground_background": {
+        "mean_weight": 0.013225229824054103,
+        "nonzero_fraction": 0.1097290952501634,
+        "pair_count": 299884
+      }
+    },
+    "peer_geodesic": {
+      "same_object": {
+        "mean_weight": 0.19282604005744,
+        "nonzero_fraction": 0.7002462502798299,
+        "pair_count": 8934
+      },
+      "different_objects": {
+        "mean_weight": 0.014193152424100516,
+        "nonzero_fraction": 0.15706510214179684,
+        "pair_count": 28294
+      },
+      "foreground_background": {
+        "mean_weight": 0.015508238289231601,
+        "nonzero_fraction": 0.1110295981112697,
+        "pair_count": 299884
+      }
+    }
+  },
+  "geodesic_distance": {
+    "min": -0.9995861053466797,
+    "max": 14.547362327575684,
+    "negative_fraction": 0.06271743774414062
+  },
+  "warning": "Ground truth labels used only for edge diagnostics, not training or prediction."
+}
