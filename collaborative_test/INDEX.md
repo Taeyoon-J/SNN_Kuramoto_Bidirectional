@@ -8,7 +8,9 @@
 | PV2_0003 | completed | per-component spikes and pulse coupling, screened at one seed | | | |
 | PV2_0004 | completed | per-component spikes on the geodesic graph | 0.5105 | **0.4967** | **0.3689** |
 | PV2_0005 | completed | ceiling re-measured; spatial prior 0.35 helps, geodesic 5 hurts | | | |
-| PV2_0006 | running | spike synchrony in the objective (`--spike-plv-weight`) | | | |
+| PV2_0006 | completed | `--readout plv` added; the phase readout beats the spike readout by 0.174 | | | |
+| PV2_0007 | failed | distil phase synchrony into the spikes by MSE; foreground IoU collapses to 0.37 | | | |
+| PV2_0008 | completed | **spike synchrony in the objective, three seeds** | 0.6075 | **0.6755** | **0.4298** |
 
 Three seeds on the test split, scored from spike masks. Peer experiments from
 `patch_v2_sw` use the `SW_` prefix and are reviewed under `peer_updates/`.
@@ -27,12 +29,23 @@ Not a 3-seed training mean, and trained on a different render; see
 The goal is foreground IoU above 0.7. `PV2_0004` reaches **0.497**, up from the
 baseline's 0.412, and is the first setting above baseline on all three metrics.
 
-`PV2_0005` re-measured the ceiling: a ground-truth coupling graph reaches
-**0.561**, not the 0.610 quoted before, and the learned graph is already near
-0.49. A perfect graph is worth about **+0.06**, so **0.700 is not reachable by
-improving the graph**. Under the oracle graph foreground ARI is *worse* (0.329 vs
-0.511), so the limit is downstream, in the spike-to-mask readout. That is where
-`PV2_0006` onward works.
+`PV2_0008` is the best result: test, three seeds, foreground IoU **0.6755**
+(+0.1788 over `PV2_0004`, +36%), fg_ari 0.6075, matched-object IoU 0.4298. **The
+goal is not met** -- 0.0245 short of 0.700 -- and fg_ari is 0.0120 below the Slot
+Attention reference, so the all-three condition is not met either.
+
+What separates it from the goal is **variance, not a missing mechanism**: seed 0
+scores 0.603 against 0.732 and 0.692, and if it behaved like the others the mean
+would be near 0.71. `--spike-plv-weight` is unstable -- at weight 3 training
+diverged outright -- and no gradient clipping was used.
+
+The graph is spent: `PV2_0005` found a ground-truth coupling graph worth only
+about +0.06. `PV2_0006` located the real gap by adding `--readout plv`: with one
+classifier and one evaluation, the phase readout reaches 0.660 where the spike
+readout reaches 0.486, so theta already carries what the goal needs and the
+spiking path loses 0.174 of it. `PV2_0007` tried to close that by MSE-matching the
+phase matrix and failed badly -- matching values fuses the graph; what the readout
+needs is the contrast.
 
 ## Diagnostics kept out of the headline
 
