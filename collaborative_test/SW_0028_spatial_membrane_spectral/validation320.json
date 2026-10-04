@@ -1,0 +1,54 @@
+{
+  "checkpoint": "/Data0/kevinswk/patch_v2_sw/trained_models/SW_0003_membrane_plv_40ep_seed0/core.pt",
+  "ids": [
+    1320,
+    1639
+  ],
+  "source": "actual membrane histories after 64-step settle",
+  "cluster_count": 10,
+  "spatial_kernel": "exp(-squared 2D grid distance / (2 sigma^2))",
+  "rows": [
+    {
+      "mode": "control",
+      "fg_ari": 0.3939744100113371,
+      "foreground_iou": 0.228821105407533,
+      "matched_object_iou": 0.15070575656006746,
+      "predicted_groups_mean": 9.0
+    },
+    {
+      "mode": "sigma_1.5",
+      "fg_ari": 0.4946390652454548,
+      "foreground_iou": 0.19106963125857832,
+      "matched_object_iou": 0.17056843402932967,
+      "predicted_groups_mean": 9.0
+    },
+    {
+      "mode": "sigma_3",
+      "fg_ari": 0.47558353644937784,
+      "foreground_iou": 0.19776565132107313,
+      "matched_object_iou": 0.1670147341092492,
+      "predicted_groups_mean": 9.0
+    },
+    {
+      "mode": "sigma_6",
+      "fg_ari": 0.46273938655716906,
+      "foreground_iou": 0.19133255008907077,
+      "matched_object_iou": 0.16167439297336123,
+      "predicted_groups_mean": 9.0
+    },
+    {
+      "mode": "sigma_12",
+      "fg_ari": 0.42710968297058527,
+      "foreground_iou": 0.19783465823846455,
+      "matched_object_iou": 0.15832136896621138,
+      "predicted_groups_mean": 9.0
+    },
+    {
+      "mode": "sigma_24",
+      "fg_ari": 0.4043467218677721,
+      "foreground_iou": 0.2227258592936324,
+      "matched_object_iou": 0.16299837203215206,
+      "predicted_groups_mean": 9.0
+    }
+  ]
+}

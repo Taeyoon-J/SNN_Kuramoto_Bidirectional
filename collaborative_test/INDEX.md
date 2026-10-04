@@ -29,6 +29,7 @@
 | SW_0025 | complete, tradeoff | Extend spectral cluster count beyond k=10 on the same SW_0003 core | Full validation: k=10 retains top FG-ARI .393974; k=20 raises object IoU .150706 to .228019 but lowers FG-ARI to .348207 and predicts 19 groups/image; preserve separate tracks |
 | SW_0026 | complete, threshold tradeoff | Recheck peer-inspired very low spike-product thresholds on three frozen cores | SW_0004 .50 remains best of this sweep on all metrics; SW_0011 .10 lifts foreground IoU .271468 to .331330 but lowers FG-ARI .179760 to .098892 and object IoU .295250 to .180793. Keep as IoU track, not the ARI lead |
 | SW_0027 | complete, IoU tradeoff | Compare component-wise membrane affinity with the existing aggregate spectral k=10 readout | On full 320 validation, aggregate remains FG-ARI leader .393974/.228821/.150706; component positive mean gives .386094/.232912/.157926. Retain both FG-ARI and IoU tracks |
+| SW_0028 | complete, FG-ARI gain | Spatial Gaussian weight on existing membrane spectral affinity, same checkpoint | On full 320 validation sigma=1.5 raises FG-ARI .393974 to .494639 and object IoU .150706 to .170568, but foreground IoU falls .228821 to .191070. New ARI-first candidate; foreground selection remains a separate problem |
 
 Each experiment's README begins with a Korean plain-language explanation and a
 baseline-versus-candidate table when results exist. Arrows in those tables
