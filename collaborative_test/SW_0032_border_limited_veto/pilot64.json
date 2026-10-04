@@ -1,0 +1,68 @@
+{
+  "checkpoint": "/Data0/kevinswk/patch_v2_sw/trained_models/SW_0003_membrane_plv_40ep_seed0/core.pt",
+  "ids": [
+    1320,
+    1383
+  ],
+  "source": "actual membrane histories after 64-step settle",
+  "rule": "veto spatial foreground only within width patches of border where nonspatial component-positive classifier says background",
+  "true_foreground_fraction": 0.19940185546875,
+  "rows": [
+    {
+      "mode": "control",
+      "fg_ari": 0.5301100845750425,
+      "foreground_iou": 0.1843245951508311,
+      "matched_object_iou": 0.1766300759466105,
+      "predicted_groups_mean": 9.0,
+      "predicted_foreground_fraction": 0.86480712890625
+    },
+    {
+      "mode": "width_1",
+      "fg_ari": 0.5109055183942522,
+      "foreground_iou": 0.1957150238518474,
+      "matched_object_iou": 0.1775330735872574,
+      "predicted_groups_mean": 9.0,
+      "predicted_foreground_fraction": 0.796875
+    },
+    {
+      "mode": "width_2",
+      "fg_ari": 0.502671147296625,
+      "foreground_iou": 0.20557102943581967,
+      "matched_object_iou": 0.17856871895779022,
+      "predicted_groups_mean": 9.0,
+      "predicted_foreground_fraction": 0.73919677734375
+    },
+    {
+      "mode": "width_3",
+      "fg_ari": 0.4896131859895787,
+      "foreground_iou": 0.21024561260062,
+      "matched_object_iou": 0.17785413261052113,
+      "predicted_groups_mean": 9.0,
+      "predicted_foreground_fraction": 0.6922607421875
+    },
+    {
+      "mode": "width_4",
+      "fg_ari": 0.47253571652995985,
+      "foreground_iou": 0.2099565658319155,
+      "matched_object_iou": 0.17409826234517778,
+      "predicted_groups_mean": 8.8125,
+      "predicted_foreground_fraction": 0.6571044921875
+    },
+    {
+      "mode": "width_6",
+      "fg_ari": 0.4600559190187228,
+      "foreground_iou": 0.20611404632329702,
+      "matched_object_iou": 0.169880363768899,
+      "predicted_groups_mean": 8.0625,
+      "predicted_foreground_fraction": 0.62713623046875
+    },
+    {
+      "mode": "width_8",
+      "fg_ari": 0.4596470787481557,
+      "foreground_iou": 0.20724585275944474,
+      "matched_object_iou": 0.17028210857570256,
+      "predicted_groups_mean": 8.0625,
+      "predicted_foreground_fraction": 0.6226806640625
+    }
+  ]
+}

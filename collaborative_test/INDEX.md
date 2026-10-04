@@ -33,6 +33,7 @@
 | SW_0029 | complete, no new FG-ARI lead | Refine spatial sigma .75-2 and spectral k6/8/10 on same frozen core | First-64 validation keeps sigma1.5/k10 best FG-ARI .530110; k6/8 lower ARI. Sigma1.25/k10 gives only a tiny object-IoU increase .176630 to .178952 with lower ARI .520789; not promoted to full320 |
 | SW_0030 | complete, negative border pilot | Add whole-group background removal by border-patch fraction to SW_0028 readout | First-64 validation: foreground fraction .865 to .228 at border threshold .2, but FG-ARI .530 to .261; foreground IoU only .184 to .198. Correct foreground amount does not locate the right patches; no full320 promotion |
 | SW_0031 | complete, foreground-IoU tradeoff | Intersect SW_0028 spatial group labels with independent nonspatial membrane foreground masks on same core | Full320: spatial FG-ARI .494639/FG IoU .191070/object IoU .170568; positive-mask hybrid .432699/.205366/.161077. IoU rises slightly but both grouping metrics fall; keep only as foreground-IoU candidate |
+| SW_0032 | complete, two-IoU tradeoff | Apply SW_0031's independent membrane veto only within a selected border width | Full320 width2: FG-ARI .467718 vs control .494639, foreground IoU .210417 vs .191070, object IoU .174335 vs .170568; retain separate IoU track, spatial control remains ARI lead |
 
 Each experiment's README begins with a Korean plain-language explanation and a
 baseline-versus-candidate table when results exist. Arrows in those tables
