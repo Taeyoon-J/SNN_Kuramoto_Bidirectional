@@ -136,6 +136,11 @@ def validate_hyperparameter_s2net_hyperparameters_validate(self):
         raise ValueError("membrane_low_m must not exceed membrane_high_m.")
     if self.spike_pulse_gain < 0:
         raise ValueError("spike_pulse_gain must be non-negative.")
+    if self.spike_per_component and self.gate_mode == "phase_mean":
+        raise ValueError(
+            'spike_per_component requires gate_mode "raw" or "sigmoid"; '
+            '"phase_mean" removes the component axis.'
+        )
     if self.gate_mode not in {"sigmoid", "raw", "phase_mean"}:
         raise ValueError('gate_mode must be "sigmoid", "raw", or "phase_mean".')
     if self.in_channels != 3:

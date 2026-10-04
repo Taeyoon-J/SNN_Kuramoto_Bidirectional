@@ -1,0 +1,10 @@
+{
+  "contract_version": 1,
+  "dataset": "/Data0/kevinswk/datasets/object_centric_data/clevr_10-full.hdf5",
+  "train": {"start": 0, "count": 1000, "gamma": "/work/USERS/tkim1/gamma_sequences/wm_patch_gamma_seq_k8_grid16.pt"},
+  "validation": {"start": 1320, "count": 320, "gamma": "/work/USERS/tkim1/gamma_sequences/wm10k_full_grid16.pt"},
+  "reference_test": {"start": 1000, "count": 320, "gamma": "/work/USERS/tkim1/gamma_sequences/wm10k_full_grid16.pt"},
+  "ground_truth": "HDF5 mask array converted by clevr_mask_patch with patch_size=8",
+  "grid": [16, 16],
+  "note": "The train gamma file and first 1000 examples of wm10k_full_grid16.pt are not bitwise identical; measured maximum absolute difference is about 0.00496. Image-order alignment beyond the numeric index convention remains to be verified."
+}

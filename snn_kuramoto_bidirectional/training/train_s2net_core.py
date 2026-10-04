@@ -46,6 +46,7 @@ def train_s2net_core(
     verbose=False,
     plv_settle=0,
     plv_source="phase",
+    plv_combine="mean",
 ):
     """
     Train only S2NetCore from precomputed gamma sequences with an unsupervised
@@ -77,7 +78,12 @@ def train_s2net_core(
             gamma_seq = gamma_seq.to(device)
 
             object_groups, spikes, core_out, plv, theta = _forward_with_plv(
-                core, gamma_seq, criterion, plv_settle, plv_source
+                core,
+                gamma_seq,
+                criterion,
+                plv_settle,
+                plv_source,
+                plv_combine,
             )
             loss_values = _select_loss_signal(
                 spikes=spikes,
@@ -190,7 +196,14 @@ def _uses_plv(criterion):
     )
 
 
-def _forward_with_plv(core, gamma_seq, criterion, plv_settle, plv_source="phase"):
+def _forward_with_plv(
+    core,
+    gamma_seq,
+    criterion,
+    plv_settle,
+    plv_source="phase",
+    plv_combine="mean",
+):
     """
     Run the core, returning the synchrony matrix only when the loss needs it.
 
@@ -207,7 +220,11 @@ def _forward_with_plv(core, gamma_seq, criterion, plv_settle, plv_source="phase"
     if not _uses_plv(criterion):
         return groups, spikes, core_out, None, theta
     if plv_source == "phase":  # readout mode: README 4.3 training
-        plv = phase_locking_value(theta, settle=int(plv_settle))
+        plv = phase_locking_value(
+            theta,
+            settle=int(plv_settle),
+            combine=plv_combine,
+        )
     elif plv_source == "alignment":
         plv = phase_alignment(theta, settle=int(plv_settle))
     elif plv_source == "membrane":
@@ -285,18 +302,18 @@ def main():
     parser.add_argument("--save-path", required=True)
     parser.add_argument("--sc-path", default=None)
     parser.add_argument("--sc-save-path", default=None)
-    parser.add_argument("--num-feature-maps", type=int, default=None)
-    parser.add_argument("--num-regions", type=int, default=None)
+    parser.add_argument("--num-feature-maps", type=int, default=8)
+    parser.add_argument("--num-regions", type=int, default=256)
     parser.add_argument("--kernel-size", type=int, default=3)
-    parser.add_argument("--epochs", type=int, default=100)
+    parser.add_argument("--epochs", type=int, default=40)
     parser.add_argument("--lr", type=float, default=1e-3)
     parser.add_argument("--batch-size", type=int, default=16)
     parser.add_argument("--device", default="cuda" if torch.cuda.is_available() else "cpu")
-    parser.add_argument("--k", type=float, default=1.0)
+    parser.add_argument("--k", type=float, default=256.0)
     parser.add_argument("--dt", type=float, default=0.1)
     parser.add_argument(
         "--gamma-drive-mode",
-        default="sequence",
+        default="static",
         choices=["sequence", "static"],
         help=(
             "sequence: one Kuramoto step per visual channel (legacy, T = channels). "
@@ -307,19 +324,27 @@ def main():
     parser.add_argument(
         "--num-time-steps",
         type=int,
-        default=None,
-        help="Recurrent length for static drive mode. Defaults to the gamma channel count.",
+        default=64,
+        help="Recurrent length for static drive mode.",
     )
     parser.add_argument("--osc-dim", type=int, default=4)
     parser.add_argument(
+        "--spike-per-component",
+        action="store_true",
+        help=(
+            "Run the shared dendritic and membrane layers separately for each "
+            "oscillator component, preserving component-wise spike histories."
+        ),
+    )
+    parser.add_argument(
         "--gamma-phase-mode",
-        default="none",
+        default="standardize_tanh",
         choices=["none", "tanh", "standardize_tanh"],
         help="Map raw gamma onto a phase range before sin(gamma - theta).",
     )
     parser.add_argument(
         "--theta-init",
-        default="zeros",
+        default="gamma",
         choices=["zeros", "gamma", "gamma_noise"],
         help="zeros makes every image start from an identical oscillator state.",
     )
@@ -327,7 +352,7 @@ def main():
     parser.add_argument(
         "--freq-gain",
         type=float,
-        default=0.0,
+        default=2.0,
         help=(
             "Let the image set oscillator frequencies. At 0 the input only pins "
             "phases and the network settles into global synchrony, which erases "
@@ -346,18 +371,18 @@ def main():
     )
     parser.add_argument(
         "--graph-mode",
-        default="static",
+        default="learned",
         choices=["static", "learned"],
         help="static uses the fixed sc; learned builds a sparse graph per image.",
     )
-    parser.add_argument("--graph-top-k", type=int, default=8)
+    parser.add_argument("--graph-top-k", type=int, default=32)
     parser.add_argument("--graph-hidden-dim", type=int, default=16)
     parser.add_argument("--graph-coupling-gain", type=float, default=8.0)
     parser.add_argument("--graph-temperature", type=float, default=0.1)
     parser.add_argument(
         "--graph-spatial-decay",
         type=float,
-        default=None,
+        default=0.55,
         help=(
             "Distance prior on the learned graph, weight ~ decay ** grid_distance. "
             "Objects are connected regions and the features do not know that."
@@ -374,9 +399,9 @@ def main():
         ),
     )
     parser.add_argument("--graph-feedback-momentum", type=float, default=0.9)
-    parser.add_argument("--plv-bimodality-weight", type=float, default=0.0)
-    parser.add_argument("--plv-balance-weight", type=float, default=0.0)
-    parser.add_argument("--plv-coherence-weight", type=float, default=0.0)
+    parser.add_argument("--plv-bimodality-weight", type=float, default=1.0)
+    parser.add_argument("--plv-balance-weight", type=float, default=10.0)
+    parser.add_argument("--plv-coherence-weight", type=float, default=0.5)
     parser.add_argument(
         "--plv-group-count-weight",
         type=float,
@@ -410,18 +435,18 @@ def main():
     parser.add_argument(
         "--plv-collapse-weight",
         type=float,
-        default=0.0,
+        default=1.0,
         help=(
             "Barrier against a uniform synchrony matrix. plv_bimodality is zero at "
             "global synchrony as well as at a real partition, and that is the minimum "
             "the optimiser reaches unless this is on."
         ),
     )
-    parser.add_argument("--plv-target-density", type=float, default=0.25)
+    parser.add_argument("--plv-target-density", type=float, default=0.867)
     parser.add_argument(
         "--plv-settle",
         type=int,
-        default=0,
+        default=32,
         help="Recurrent steps to discard as transient before measuring synchrony.",
     )
     parser.add_argument(
@@ -437,9 +462,15 @@ def main():
         ),
     )
     parser.add_argument(
+        "--plv-combine",
+        choices=["mean", "product", "min", "component_mean"],
+        default="mean",
+        help="How oscillator components are combined when computing phase PLV.",
+    )
+    parser.add_argument(
         "--membrane-vth",
         type=float,
-        default=0.5,
+        default=0.06,
         help=(
             "Spike threshold. The default was never matched to the signal: the "
             "membrane oscillates with a standard deviation near 0.1, so 0.5 sits "
@@ -449,17 +480,17 @@ def main():
     parser.add_argument(
         "--membrane-low-m",
         type=float,
-        default=0.0,
+        default=-4.0,
         help=(
             "Lower bound of the membrane tau init. The default U(0, 4) gives a "
             "leak near 0.85, which low-passes away the oscillation carrying the "
             "information; U(-4, 0) lets the membrane track the rhythm instead."
         ),
     )
-    parser.add_argument("--membrane-high-m", type=float, default=4.0)
+    parser.add_argument("--membrane-high-m", type=float, default=0.0)
     parser.add_argument(
         "--gate-mode",
-        default="sigmoid",
+        default="raw",
         choices=["sigmoid", "raw", "phase_mean"],
         help=(
             "'sigmoid' keeps the original gate, compressed to [0.5, 0.731]. "
@@ -467,8 +498,8 @@ def main():
             "information reduced the other way round measured 0.216 vs 0.067."
         ),
     )
-    parser.add_argument("--low-n", type=float, default=0.0)
-    parser.add_argument("--high-n", type=float, default=4.0)
+    parser.add_argument("--low-n", type=float, default=-4.0)
+    parser.add_argument("--high-n", type=float, default=0.0)
     parser.add_argument("--branch", type=int, default=4)
     parser.add_argument("--spike-classify-method", default="spike_interval", choices=["spike_rhythm", "spike_interval", "spatial_components"])
     parser.add_argument("--spike-rhythm-threshold", type=float, default=0.8)
@@ -478,15 +509,15 @@ def main():
     parser.add_argument("--spike-interval-threshold", type=float, default=0.5)
     parser.add_argument("--spike-interval-min-group-size", type=int, default=1)
     parser.add_argument("--no-spike-interval-include-partial", action="store_true")
-    parser.add_argument("--spike-spatial-grid-size", type=int, nargs="+", default=None)
+    parser.add_argument("--spike-spatial-grid-size", type=int, nargs="+", default=[16])
     parser.add_argument("--spike-spatial-threshold", type=float, default=0.5)
     parser.add_argument("--spike-spatial-min-group-size", type=int, default=2)
     parser.add_argument("--spike-spatial-activity-source", default="sigmoid_membrane", choices=["spikes", "membrane", "sigmoid_membrane"])
     parser.add_argument("--spike-spatial-time-aggregate", default="mean", choices=["max", "mean"])
-    parser.add_argument("--spike-rate-weight", type=float, default=1.0)
-    parser.add_argument("--spike-smooth-weight", type=float, default=0.1)
-    parser.add_argument("--spike-diversity-weight", type=float, default=0.1)
-    parser.add_argument("--structural-weight", type=float, default=0.1)
+    parser.add_argument("--spike-rate-weight", type=float, default=0.0)
+    parser.add_argument("--spike-smooth-weight", type=float, default=0.0)
+    parser.add_argument("--spike-diversity-weight", type=float, default=0.0)
+    parser.add_argument("--structural-weight", type=float, default=0.0)
     parser.add_argument("--object-overlap-weight", type=float, default=0.0)
     parser.add_argument("--sample-diversity-weight", type=float, default=0.0)
     parser.add_argument("--spatial-compactness-weight", type=float, default=0.0)
@@ -570,6 +601,7 @@ def main():
         membrane_low_m=args.membrane_low_m,
         membrane_high_m=args.membrane_high_m,
         gate_mode=args.gate_mode,
+        spike_per_component=args.spike_per_component,
         low_n=args.low_n,
         high_n=args.high_n,
         branch=args.branch,
@@ -641,6 +673,7 @@ def main():
         verbose=args.verbose,
         plv_settle=args.plv_settle,
         plv_source=args.plv_source,
+        plv_combine=args.plv_combine,
     )
     print(f"trained S2NetCore: {args.save_path}")
     print(f"loss: {losses[0]:.6f} -> {losses[-1]:.6f}")
