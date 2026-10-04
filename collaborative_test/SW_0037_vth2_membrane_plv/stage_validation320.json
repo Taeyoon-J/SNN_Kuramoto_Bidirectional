@@ -1,0 +1,36 @@
+{
+  "checkpoint": "/Data0/kevinswk/patch_v2_sw/trained_models/SW_0037_vth2_membrane_plv_seed0/core.pt",
+  "ids": [
+    1320,
+    1639
+  ],
+  "intervention": "matched vth2-trained membrane-PLV checkpoint stage diagnostic",
+  "settle": 64,
+  "steps": 256,
+  "spatial_sigma": 1.5,
+  "spectral_k": 10,
+  "warning": "GT is used only for metrics and pair AUC, never prediction.",
+  "rows": [
+    {
+      "threshold": 2.0,
+      "binary_event_rate": 0.546981155872345,
+      "binary_constant_fraction": 0.0032287598587572575,
+      "binary_temporal_std_mean": 0.4716976284980774,
+      "membrane_distance_macro_auc": 0.5112760350833819,
+      "gated_spike_distance_macro_auc": 0.5142850326281024,
+      "binary_distance_macro_auc": 0.5179335016245695,
+      "membrane_spatial_readout": {
+        "fg_ari": 0.4789205353822525,
+        "foreground_iou": 0.20010993836107618,
+        "matched_object_iou": 0.1740308809804949,
+        "predicted_groups_mean": 9.0
+      },
+      "gated_spike_spatial_readout": {
+        "fg_ari": 0.4618781507098718,
+        "foreground_iou": 0.20448567571985757,
+        "matched_object_iou": 0.17488847315626177,
+        "predicted_groups_mean": 9.0
+      }
+    }
+  ]
+}

@@ -16,6 +16,8 @@ export CUDA_VISIBLE_DEVICES="$GPU_ID"
   --dataset-path /Data0/kevinswk/datasets/object_centric_data/clevr_10-full.hdf5 \
   --output-path "$OUT/stage_validation320.json" --count 320 --batch-size 8 \
   --device cuda --thresholds 2.0 \
+  --intervention "matched vth2-trained membrane-PLV checkpoint stage diagnostic" \
+  --warning "GT is used only for metrics and pair AUC, never prediction." \
   > "$OUT/stage_validation.log" 2>&1
 /Data0/kevinswk/envs/snn/bin/python \
   "$ROOT/collaborative_test/SW_0035_adaptive_count_baseline/evaluate.py" \

@@ -1,4 +1,4 @@
-"""Frozen-checkpoint validation pilot for membrane threshold saturation."""
+"""Checkpoint validation diagnostic for membrane threshold dynamics."""
 import argparse
 import json
 import sys
@@ -53,6 +53,13 @@ def main():
     parser.add_argument("--thresholds", type=float, nargs="+",
                         default=[.06, .25, .5, 1., 2., 3., 4.])
     parser.add_argument("--device", default="cuda")
+    parser.add_argument(
+        "--intervention",
+        default="inference-only membrane vth sweep on frozen weights")
+    parser.add_argument(
+        "--warning",
+        default=("Diagnostic only: checkpoint was trained at vth .06. GT is "
+                 "used only for metrics and pair AUC, never prediction."))
     args = parser.parse_args()
     if not 1 <= args.count <= 320 or any(value <= 0 for value in args.thresholds):
         raise ValueError("Require 1-320 images and positive thresholds")
@@ -120,9 +127,9 @@ def main():
         print(json.dumps(row), flush=True)
     result = {
         "checkpoint": args.checkpoint, "ids": [ids[0], ids[-1]],
-        "intervention": "inference-only membrane vth sweep on frozen weights",
+        "intervention": args.intervention,
         "settle": 64, "steps": 256, "spatial_sigma": 1.5, "spectral_k": 10,
-        "warning": "Diagnostic only: checkpoint was trained at vth .06. GT is used only for metrics and pair AUC, never prediction.",
+        "warning": args.warning,
         "rows": rows,
     }
     output = Path(args.output_path)
