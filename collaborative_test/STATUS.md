@@ -57,7 +57,10 @@ Reading it out of spikes costs 8-16x the window the phases need.
 
 Fixed:
 
-1. **Membrane threshold absolute, membrane scale free.** `mem* ~ R_m * h_wave`
+1. **Membrane threshold absolute, membrane scale free.** Fix applies at
+   **inference only** -- training with it collapses all three seeds (fg_ari
+   0.5445 / 0.0442 / 0.0325), because a threshold tracking the population mean is
+   a moving target that puts half the units above it at every step. `mem* ~ R_m * h_wave`
    while `v_th` is 0.06, so across seeds the membrane sat at means +1.14, +2.64
    (100% above, threshold inert), +0.26 and -0.65 with maximum -0.046 -- firing
    nothing. Re-thresholding the dead checkpoint at the population mean, no weight
@@ -103,8 +106,7 @@ Detached on frontier, surviving the loss of a driving session:
 
 | what | where |
 | --- | --- |
-| matched-kernel phase comparison, sigma 0.5-1.25 | `$R/decide_results.txt` |
-| population-threshold retraining, 3 seeds | `$R/PC_s{0,1,2}`, `$R/pop2_results.txt` |
+| matched-kernel phase comparison, threshold re-selected per sigma | `$R/decide2_results.txt` |
 
 The peer (`kevinswk`) is verifying BIM6 on this machine under
 `/Data0/kevinswk/peer_verify_20261004`. Leave it alone: GPU 3 is theirs, and a
@@ -116,8 +118,12 @@ match by save path instead.
 - Single-seed validation numbers are candidates, never findings. Five have had to
   be corrected this way, the latest being "fg_ari prefers a lower spike weight",
   which reversed at three seeds.
-- Compare only matched conditions. A new spike score was once held against a
-  phase score from older checkpoints and read as a win.
+- Compare only matched conditions, and re-select the threshold whenever the
+  measure changes. A new spike score was once held against a phase score from
+  older checkpoints and read as a win; later, sweeping the spatial kernel with the
+  phase threshold left at 0.75 clipped every phase row to zero groups, because the
+  kernel rescales the affinity. The same error once produced the false conclusion
+  that per-component spikes did not help.
 - Gains that fix the same error substitute rather than add. Hybrid background with
   the spike loss, and now the membrane fix with the spatial kernel, both came out
   below the better single change.

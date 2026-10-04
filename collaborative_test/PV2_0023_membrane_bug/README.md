@@ -70,5 +70,24 @@ added this session now display.
 | population, corrected reset | 0.6906 |
 
 Neutral on the protocol seeds and it revives the dead one, which is the right
-trade for correctness at no metric cost. Trained with it rather than only read
-with it, seed 0's saturation should not arise at all -- that run is separate.
+trade for correctness at no metric cost.
+
+**Training with it instead of only reading with it fails outright**, even with
+the reset corrected:
+
+| | fg_ari | groups/image |
+| --- | --- | --- |
+| `PC_s0` | 0.5445 | 3.51 |
+| `PC_s1` | **0.0442** | **0.62** |
+| `PC_s2` | 0.0325 | 12.1 |
+
+A threshold that tracks the population mean is a moving target: by construction
+about half the units sit above it at every step, which fights the sparse coding
+the rest of the objective asks for. Seed 1 collapses to under one group per
+image, seed 2 fragments into twelve.
+
+**So this fix belongs at inference only.** It makes an otherwise unusable
+checkpoint usable without retraining -- foreground IoU 0.0000 to 0.6353 -- and is
+neutral on healthy ones. It does not belong in the training loop, and
+`--membrane-threshold-mode population` should not be passed to
+`train_s2net_core.py`.
