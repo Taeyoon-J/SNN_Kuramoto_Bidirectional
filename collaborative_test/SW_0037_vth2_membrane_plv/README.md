@@ -26,3 +26,7 @@ vth 2.0.
 This experiment targets a proven spike-dynamics defect. It may still fail if
 the upstream object signal remains too weak; threshold calibration alone did
 not materially increase distance-controlled AUC.
+
+`evaluate.sh` runs the fixed full320 stage/event diagnostic first, then the
+same adaptive-count reference suite with `--membrane-vth 2.0`. It starts only
+after `core.pt` exists and never selects from the reference-test split.

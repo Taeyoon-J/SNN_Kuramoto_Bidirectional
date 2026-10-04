@@ -51,6 +51,7 @@ def train_s2net_core(
     plv_settle=0,
     plv_source="phase",
     plv_combine="mean",
+    spike_plv_weight=0.0,
     graph_teacher_weight=0.0,
     graph_teacher_temperature=0.1,
     graph_teacher_signal="membrane",
@@ -108,6 +109,17 @@ def train_s2net_core(
                 theta=theta,
                 plv_settle=int(plv_settle),
             )
+
+            if float(spike_plv_weight) != 0.0:
+                spike_plv = _component_spike_synchrony(core, plv_settle)
+                if spike_plv is None:
+                    raise ValueError("spike_plv_weight requires --spike-per-component")
+                spike_loss, spike_parts = criterion(
+                    plv=spike_plv,
+                    plv_settle=int(plv_settle),
+                )
+                loss = loss + float(spike_plv_weight) * spike_loss
+                parts.update({f"spike_{name}": value for name, value in spike_parts.items()})
 
             if float(graph_teacher_weight) != 0.0:
                 with torch.no_grad():
@@ -288,6 +300,18 @@ def _select_loss_signal(spikes, core_out, loss_signal):
     if loss_signal == "sigmoid_membrane":  # readout mode: legacy activity-loss input, not PLV source
         return torch.sigmoid(core_out)
     raise ValueError('loss_signal must be "spikes", "membrane", or "sigmoid_membrane".')
+
+
+def _component_spike_synchrony(core, settle):
+    """Product of per-component spike synchrony matrices, shaped [B,N,N]."""
+    components = getattr(core, "last_component_spikes", None)
+    if components is None:
+        return None
+    synchrony = [
+        signal_synchrony(components[:, component], settle=int(settle))
+        for component in range(components.size(1))
+    ]
+    return torch.stack(synchrony).prod(dim=0)
 
 
 def _parse_pair_arg(value, name):
@@ -508,6 +532,16 @@ def main():
         choices=["mean", "product", "min", "component_mean"],
         default="mean",
         help="How oscillator components are combined when computing phase PLV.",
+    )
+    parser.add_argument(
+        "--spike-plv-weight",
+        type=float,
+        default=0.0,
+        help=(
+            "Add the same PLV-family objective on product-combined per-component "
+            "spike synchrony while retaining the selected primary PLV source. "
+            "Requires --spike-per-component."
+        ),
     )
     parser.add_argument(
         "--membrane-vth",
@@ -737,6 +771,7 @@ def main():
         plv_settle=args.plv_settle,
         plv_source=args.plv_source,
         plv_combine=args.plv_combine,
+        spike_plv_weight=args.spike_plv_weight,
         graph_teacher_weight=args.graph_teacher_weight,
         graph_teacher_temperature=args.graph_teacher_temperature,
         graph_teacher_signal=args.graph_teacher_signal,
