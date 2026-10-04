@@ -17,7 +17,12 @@
 | PV2_0012 | completed | **half of a six-seed draw fails outright** | | | |
 | PV2_0013 | completed | **bimodality 6 lifts all three at all three seeds** | **0.6756** | 0.6878 | **0.4728** |
 | PV2_0014 | failed | align to the phase contrast; gap closes by the phase side collapsing | | | |
-| PV2_0015 | completed | **the spiking path has 8 weights of transduction; no loss can fix the leak** | | | |
+| PV2_0015 | completed | frozen phase path; gradients arrive, the alignment term will not move | | | |
+| PV2_0016-18 | failed | per-region transduction; the shared map is the prior, not the bottleneck | | | |
+| PV2_0019-20 | completed | **the leak is a sampling limit: the gap falls 0.149 -> 0.023 with window length alone** | 0.6887 | 0.6828 | 0.4710 |
+| PV2_0021-22 | failed | training at the readout's window collapses; bimodality 6 survives re-selection | | | |
+| PV2_0023-25 | completed | **membrane threshold bug: a dead seed revives from 0.000 to 0.635 foreground IoU** | | | |
+| PV2_0026-27 | completed | **ported the peer's spatial kernel: fg_ari 0.7043, obj_iou 0.4914** | **0.7043** | 0.6740 | **0.4914** |
 
 Three seeds on the test split, scored from spike masks. Peer experiments from
 `patch_v2_sw` use the `SW_` prefix and are reviewed under `peer_updates/`.
