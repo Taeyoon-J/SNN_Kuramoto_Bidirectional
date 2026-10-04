@@ -1,0 +1,75 @@
+{
+  "checkpoint": "trained_models/SW_0003_membrane_plv_40ep_seed0/core.pt",
+  "ids": [
+    1320,
+    1639
+  ],
+  "true_foreground_fraction": 0.2168212890625,
+  "warning": "GT mask is used only to label this post-hoc diagnostic; no predictions or model training here.",
+  "rows": [
+    {
+      "feature": "spike_rate",
+      "true_foreground_mean": 0.49425920844078064,
+      "true_background_mean": 0.5110300779342651,
+      "per_image_auc_mean": 0.41463383795508574,
+      "per_image_auc_median": 0.40413453667641647,
+      "images_with_valid_auc": 320
+    },
+    {
+      "feature": "membrane_mean",
+      "true_foreground_mean": 2.297274351119995,
+      "true_background_mean": 2.300257682800293,
+      "per_image_auc_mean": 0.49615169346620586,
+      "per_image_auc_median": 0.4988238925903544,
+      "images_with_valid_auc": 320
+    },
+    {
+      "feature": "membrane_abs_mean",
+      "true_foreground_mean": 2.297274351119995,
+      "true_background_mean": 2.300257682800293,
+      "per_image_auc_mean": 0.49615169346620586,
+      "per_image_auc_median": 0.4988238925903544,
+      "images_with_valid_auc": 320
+    },
+    {
+      "feature": "membrane_std",
+      "true_foreground_mean": 0.4591808617115021,
+      "true_background_mean": 0.4686122238636017,
+      "per_image_auc_mean": 0.5184903388097624,
+      "per_image_auc_median": 0.5104243282032214,
+      "images_with_valid_auc": 320
+    },
+    {
+      "feature": "membrane_max",
+      "true_foreground_mean": 3.695512533187866,
+      "true_background_mean": 3.6759228706359863,
+      "per_image_auc_mean": 0.5414494712277526,
+      "per_image_auc_median": 0.5478056657375643,
+      "images_with_valid_auc": 320
+    },
+    {
+      "feature": "membrane_range",
+      "true_foreground_mean": 2.333505392074585,
+      "true_background_mean": 2.340998411178589,
+      "per_image_auc_mean": 0.5335128571498615,
+      "per_image_auc_median": 0.5309795082036528,
+      "images_with_valid_auc": 320
+    },
+    {
+      "feature": "membrane_temporal_change",
+      "true_foreground_mean": 0.1130877211689949,
+      "true_background_mean": 0.11682956665754318,
+      "per_image_auc_mean": 0.5120650653744833,
+      "per_image_auc_median": 0.5094543903474399,
+      "images_with_valid_auc": 320
+    },
+    {
+      "feature": "border_template_similarity",
+      "true_foreground_mean": 0.8583808541297913,
+      "true_background_mean": 0.8956893086433411,
+      "per_image_auc_mean": 0.3889318430656018,
+      "per_image_auc_median": 0.38066474752200735,
+      "images_with_valid_auc": 320
+    }
+  ]
+}

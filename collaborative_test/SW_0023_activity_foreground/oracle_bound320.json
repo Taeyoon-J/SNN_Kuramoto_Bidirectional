@@ -1,0 +1,26 @@
+{
+  "checkpoint": "trained_models/SW_0003_membrane_plv_40ep_seed0/core.pt",
+  "ids": [
+    1320,
+    1639
+  ],
+  "warning": "ORACLE DIAGNOSTIC ONLY: GT foreground is applied after prediction; these scores are NOT deployable model performance.",
+  "largest_slot_background": {
+    "fg_ari": 0.3570531811751384,
+    "foreground_iou": 0.20987019451911376,
+    "matched_object_iou": 0.11399236748151767,
+    "predicted_foreground_fraction": 0.6583251953125
+  },
+  "largest_slot_plus_oracle_foreground": {
+    "fg_ari": 0.3570531811751384,
+    "foreground_iou": 0.7165899154323789,
+    "matched_object_iou": 0.3126923632364652,
+    "predicted_foreground_fraction": 0.15191650390625
+  },
+  "no_slot_background_plus_oracle_foreground": {
+    "fg_ari": 0.3570531811751384,
+    "foreground_iou": 1.0,
+    "matched_object_iou": 0.3845558844876652,
+    "predicted_foreground_fraction": 0.21682128310203552
+  }
+}
