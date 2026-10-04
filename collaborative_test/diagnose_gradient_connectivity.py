@@ -11,7 +11,7 @@ PACKAGE_DIR = Path(__file__).resolve().parents[1] / "snn_kuramoto_bidirectional"
 sys.path.insert(0, str(PACKAGE_DIR))
 
 from hyperparameter import S2NetHyperparameters
-from loss_function import UnsupervisedS2NetLoss
+from loss_function import UnsupervisedS2NetLoss, graph_teacher_synchrony_loss
 from s2net_cls import S2NetCore
 from training.train_s2net_core import _forward_with_plv, _select_loss_signal
 
@@ -23,6 +23,7 @@ def main():
     parser.add_argument("--output-path", required=True)
     parser.add_argument("--num-samples", type=int, default=4)
     parser.add_argument("--device", default="cuda")
+    parser.add_argument("--graph-teacher-weight", type=float, default=0.0)
     args = parser.parse_args()
 
     gamma = torch.load(args.gamma_path, map_location="cpu")[: args.num_samples]
@@ -78,9 +79,20 @@ def main():
         theta=theta,
         plv_settle=32,
     )
+    if args.graph_teacher_weight != 0.0:
+        with torch.no_grad():
+            graph = core.graph_generator(gamma)
+        raw_teacher = graph_teacher_synchrony_loss(membrane, graph, settle=32)
+        loss = loss + args.graph_teacher_weight * raw_teacher
+        parts["graph_teacher_synchrony"] = raw_teacher.detach()
+        parts["total"] = loss.detach()
     loss.backward()
 
-    summary = {"loss": loss.detach().item(), "parts": {k: v.detach().item() for k, v in parts.items()}}
+    summary = {
+        "loss": loss.detach().item(),
+        "graph_teacher_weight": args.graph_teacher_weight,
+        "parts": {k: v.detach().item() for k, v in parts.items()},
+    }
     summary["gradients"] = {}
     for group in (
         "gamma_channel_proj",
