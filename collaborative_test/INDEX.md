@@ -25,6 +25,7 @@
 | SW_0021 | complete, FG-ARI improvement | Apply user-proposed adaptive slots to SW_0003 high-ARI core, comparing actual spike versus membrane histories | Membrane slots: FG-ARI .357053 / FG IoU .209870 / object IoU .113992, mean predicted groups 5.98 vs true 6.20; retain ARI-first track and improve foreground next |
 | SW_0022 | complete, small all-metric gain | Use a border membrane pattern as an additional per-patch background cue on SW_0021's fixed membrane slots | Largest-slot AND template similarity >=.90: FG-ARI .361770 / FG IoU .215081 / object IoU .119675; predicted FG .677 vs GT .217, so background remains a major IoU gap |
 | SW_0023 | complete, diagnostic | Measure SNN activity features versus GT foreground and the oracle-foreground ceiling for frozen SW_0021 grouping | Single-feature AUC weak (best inverse border similarity .611); oracle foreground raises FG IoU to 1 and object IoU to .385 but **FG-ARI remains .357**, proving grouping is the ARI bottleneck |
+| SW_0024 | complete, all-metric validation gain | Compare membrane spectral clustering with adaptive slots on the same high-ARI SW_0003 core | Absolute-correlation spectral k=10 scores FG-ARI .393974 / FG IoU .228821 / object IoU .150706 vs slots .357053 / .209870 / .113992; seed-0 validation only |
 
 Each experiment's README begins with a Korean plain-language explanation and a
 baseline-versus-candidate table when results exist. Arrows in those tables
