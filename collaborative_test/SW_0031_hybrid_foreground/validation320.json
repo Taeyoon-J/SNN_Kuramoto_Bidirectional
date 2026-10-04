@@ -1,0 +1,52 @@
+{
+  "checkpoint": "/Data0/kevinswk/patch_v2_sw/trained_models/SW_0003_membrane_plv_40ep_seed0/core.pt",
+  "ids": [
+    1320,
+    1639
+  ],
+  "source": "actual membrane histories after 64-step settle",
+  "rule": "retain spatial cluster ID only where independent nonspatial membrane readout predicts foreground",
+  "true_foreground_fraction": 0.21682128310203552,
+  "rows": [
+    {
+      "mode": "spatial_control",
+      "fg_ari": 0.4946390652454548,
+      "foreground_iou": 0.19106963125857832,
+      "matched_object_iou": 0.17056843402932967,
+      "predicted_groups_mean": 9.0,
+      "predicted_foreground_fraction": 0.8675781488418579
+    },
+    {
+      "mode": "nonspatial_aggregate",
+      "fg_ari": 0.3939744100113371,
+      "foreground_iou": 0.228821105407533,
+      "matched_object_iou": 0.15070575656006746,
+      "predicted_groups_mean": 9.0,
+      "predicted_foreground_fraction": 0.742932140827179
+    },
+    {
+      "mode": "nonspatial_positive",
+      "fg_ari": 0.386094423515149,
+      "foreground_iou": 0.23291218004461384,
+      "matched_object_iou": 0.15792562276357164,
+      "predicted_groups_mean": 9.0,
+      "predicted_foreground_fraction": 0.731188952922821
+    },
+    {
+      "mode": "spatial_and_aggregate",
+      "fg_ari": 0.4463811235275209,
+      "foreground_iou": 0.2032983337510617,
+      "matched_object_iou": 0.16169716765251524,
+      "predicted_groups_mean": 8.1375,
+      "predicted_foreground_fraction": 0.6447387933731079
+    },
+    {
+      "mode": "spatial_and_positive",
+      "fg_ari": 0.43269898339127943,
+      "foreground_iou": 0.205366213315105,
+      "matched_object_iou": 0.1610771773419131,
+      "predicted_groups_mean": 8.025,
+      "predicted_foreground_fraction": 0.6323486566543579
+    }
+  ]
+}
