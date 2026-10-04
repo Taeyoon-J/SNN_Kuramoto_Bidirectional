@@ -1,0 +1,63 @@
+{
+  "checkpoint": "/Data0/kevinswk/patch_v2_sw/trained_models/SW_0003_membrane_plv_40ep_seed0/core.pt",
+  "ids": [
+    1320,
+    1383
+  ],
+  "source": "actual membrane histories after 64-step settle",
+  "ablation": "spatial kernel only versus actual membrane affinity versus random position-permutation of membrane affinity",
+  "diagnostic_only_ground_truth_use": "same/different foreground object pairs within 3 patches; never used for prediction",
+  "rows": [
+    {
+      "mode": "spatial_only",
+      "fg_ari": 0.5257187337846656,
+      "foreground_iou": 0.17989580956352125,
+      "matched_object_iou": 0.18039121377588063,
+      "predicted_groups_mean": 9.0
+    },
+    {
+      "mode": "membrane_spatial",
+      "fg_ari": 0.5301100845750425,
+      "foreground_iou": 0.1843245951508311,
+      "matched_object_iou": 0.1766300759466105,
+      "predicted_groups_mean": 9.0
+    },
+    {
+      "mode": "shuffled_membrane_spatial",
+      "fg_ari": 0.4673530386633508,
+      "foreground_iou": 0.17862039972261756,
+      "matched_object_iou": 0.16017641295971796,
+      "predicted_groups_mean": 9.0
+    }
+  ],
+  "pair_diagnostics": {
+    "membrane": {
+      "same_pairs": 15951,
+      "different_pairs": 5109,
+      "same_mean": 0.8691296197202827,
+      "different_mean": 0.8131010573735272,
+      "same_vs_different_auc": 0.6073990738346894
+    },
+    "spatial_only": {
+      "same_pairs": 15951,
+      "different_pairs": 5109,
+      "same_mean": 0.5052615163025606,
+      "different_mean": 0.32872269988165,
+      "same_vs_different_auc": 0.7157009172946818
+    },
+    "membrane_spatial": {
+      "same_pairs": 15951,
+      "different_pairs": 5109,
+      "same_mean": 0.4491478766339881,
+      "different_mean": 0.2724393011517463,
+      "same_vs_different_auc": 0.6998742564743595
+    },
+    "shuffled_membrane_spatial": {
+      "same_pairs": 15951,
+      "different_pairs": 5109,
+      "same_mean": 0.39035200008671195,
+      "different_mean": 0.25221528432479184,
+      "same_vs_different_auc": 0.6622293889147866
+    }
+  }
+}

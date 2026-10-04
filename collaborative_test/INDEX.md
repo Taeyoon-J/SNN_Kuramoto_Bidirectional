@@ -34,6 +34,7 @@
 | SW_0030 | complete, negative border pilot | Add whole-group background removal by border-patch fraction to SW_0028 readout | First-64 validation: foreground fraction .865 to .228 at border threshold .2, but FG-ARI .530 to .261; foreground IoU only .184 to .198. Correct foreground amount does not locate the right patches; no full320 promotion |
 | SW_0031 | complete, foreground-IoU tradeoff | Intersect SW_0028 spatial group labels with independent nonspatial membrane foreground masks on same core | Full320: spatial FG-ARI .494639/FG IoU .191070/object IoU .170568; positive-mask hybrid .432699/.205366/.161077. IoU rises slightly but both grouping metrics fall; keep only as foreground-IoU candidate |
 | SW_0032 | complete, two-IoU tradeoff | Apply SW_0031's independent membrane veto only within a selected border width | Full320 width2: FG-ARI .467718 vs control .494639, foreground IoU .210417 vs .191070, object IoU .174335 vs .170568; retain separate IoU track, spatial control remains ARI lead |
+| SW_0033 | complete, critical diagnostic | Separate learned membrane affinity from spatial distance prior and random-permutation null | On full320, spatial-only FG-ARI .491272 versus actual membrane×spatial .494639; learned increment tiny. Raw membrane same-vs-different-object nearby-pair AUC .6365 versus spatial-only .6979. Prioritize membrane-learning signal, not geometry tuning |
 
 Each experiment's README begins with a Korean plain-language explanation and a
 baseline-versus-candidate table when results exist. Arrows in those tables
