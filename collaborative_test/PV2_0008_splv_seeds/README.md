@@ -47,11 +47,25 @@ Seed 0 is worst on all three and by a wide margin on grouping: fg_ari 0.481
 against 0.643 and 0.698. Predicted foreground is not the explanation -- 0.124,
 0.127, 0.144 across the seeds, all near the 0.126 target.
 
-If seed 0 behaved like the other two, the mean would land near 0.71. **Variance,
-not a missing mechanism, is what separates this result from the goal**, and
-`--spike-plv-weight` looks unstable: at weight 3 training diverged outright, loss
-rising from 10.87 at epoch 20 to 44.01 at epoch 30 and ending at 27.07. No
-gradient clipping was used.
+If seed 0 behaved like the other two, the mean would land near 0.71.
+
+It is not instability, and the first version of this record said it was. Two
+corrections. `--grad-clip-norm` defaults to **1.0**, so gradient clipping was
+already active in every run here and in weight 3's divergence -- the claim that
+none was used was simply wrong. And the loss traces say the opposite of
+undertraining:
+
+| seed | final loss | foreground IoU |
+| --- | --- | --- |
+| 0 | **15.31** (lowest) | **0.603** (worst) |
+| 1 | 16.67 (highest) | **0.732** (best) |
+| 2 | 15.47 | 0.692 |
+
+**Lower training loss goes with a worse metric.** Seed 0 minimised the objective
+best and scored worst, so the objective is misaligned with the metric rather than
+badly optimised. Three points is weak evidence for the anti-correlation, but it is
+the opposite of what an undertrained seed predicts, which is enough to retire the
+stability hypothesis.
 
 ## A reporting error this experiment exposed
 
@@ -63,6 +77,8 @@ single-seed reading has had to be corrected.
 
 ## Next
 
-Stability, not a new mechanism: gradient clipping and a lower learning rate, to
-see whether seed 0 catches up. That is worth about +0.035 on the mean if it
-works, which is more than the remaining gap.
+`PV2_0009`: re-balance the four PLV terms, screening on seed 0 because it is the
+drag on the mean, with three further seeds of the unchanged setting alongside to
+test the anti-correlation on six points instead of three. Optimiser settings are
+not the lever -- making the objective easier to minimise is, if anything, the wrong
+direction.
