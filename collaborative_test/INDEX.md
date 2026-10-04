@@ -12,7 +12,12 @@
 | PV2_0007 | failed | distil phase synchrony into the spikes by MSE; foreground IoU collapses to 0.37 | | | |
 | PV2_0008 | completed | **spike synchrony in the objective, three seeds** | 0.6075 | **0.6755** | **0.4298** |
 | PV2_0009 | completed | objective re-balance screened on seed 0; bimodality 3 lifts all three | | | |
-| PV2_0010 | running | bimodality 3 at seeds 1 and 2 | | | |
+| PV2_0010 | completed | bimodality 3 at three seeds: compresses spread, mean +0.022 | 0.6337 | 0.6643 | 0.4173 |
+| PV2_0011 | refuted | fg_ari does not prefer a lower spike weight; 5 is still best | | | |
+| PV2_0012 | completed | **half of a six-seed draw fails outright** | | | |
+| PV2_0013 | completed | **bimodality 6 lifts all three at all three seeds** | **0.6756** | 0.6878 | **0.4728** |
+| PV2_0014 | failed | align to the phase contrast; gap closes by the phase side collapsing | | | |
+| PV2_0015 | completed | **the spiking path has 8 weights of transduction; no loss can fix the leak** | | | |
 
 Three seeds on the test split, scored from spike masks. Peer experiments from
 `patch_v2_sw` use the `SW_` prefix and are reviewed under `peer_updates/`.
@@ -36,10 +41,23 @@ baseline's 0.412, and is the first setting above baseline on all three metrics.
 goal is not met** -- 0.0245 short of 0.700 -- and fg_ari is 0.0120 below the Slot
 Attention reference, so the all-three condition is not met either.
 
-What separates it from the goal is **variance, not a missing mechanism**: seed 0
-scores 0.603 against 0.732 and 0.692, and if it behaved like the others the mean
-would be near 0.71. `--spike-plv-weight` is unstable -- at weight 3 training
-diverged outright -- and no gradient clipping was used.
+`PV2_0013` improves on it: raising the bimodality weight to 6 gives fg_ari
+**0.6756**, foreground IoU 0.6878 and matched-object IoU 0.4728 on the full
+validation split at three seeds, up on all three.
+
+Two things block the goal. **The setting is unreliable** -- `PV2_0012` ran seeds 3,
+4 and 5 of the same configuration and got foreground IoU 0.163, 0.430 and 0.000,
+seed 5 having not trained at all, so `PV2_0008`'s test number is a lucky draw of
+the three protocol seeds. And **the phase readout still beats the spike readout**,
+0.7120 against 0.6756 on fg_ari.
+
+`PV2_0015` explains why the second one cannot be fixed with a loss. The spiking
+path holds 1,292 of 200,114 parameters, and the map from phase into it --
+`oscillator_dense` -- is 8 weights shared across all 256 regions. Gradients reach
+it and the alignment term will not move at any weight. The leak is an almost
+parameterless transduction bottleneck, not a training failure, which is also why
+`PV2_0007` and `PV2_0014` failed. Closing it needs a core change: give that
+transduction per-region capacity.
 
 The graph is spent: `PV2_0005` found a ground-truth coupling graph worth only
 about +0.06. `PV2_0006` located the real gap by adding `--readout plv`: with one
