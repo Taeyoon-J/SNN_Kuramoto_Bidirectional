@@ -29,6 +29,7 @@ same/different-object 평균과 AUC를 측정합니다. 두 종류 쌍이 모두
 - Spectral k10, sigma1.5, largest group background: spatial-only, aggregate membrane×spatial, aggregate gated spike×spatial. GT is never used for prediction.
 - Aggregate and per-component waveform absolute correlations are exploratory diagnostics, not new final classifiers. Phase uses its existing mean PLV definition, so AUC differences between definitions are not a causal isolation.
 - Branch cancellation reports `abs(sum(branches))/sum(abs(branches))`; smaller values mean stronger cancellation.
+- Each waveform also reports constant-node fraction, temporal standard deviation and activation mean. Near-constant histories can make correlation uninformative; inspect these before interpreting AUC. Binary threshold mean measures firing fraction, while gated-spike mean also includes gate amplitude.
 - Every readout reports three metrics, foreground fraction, and predicted group count. No result values are filled until execution.
 
 ## Exact code changes
@@ -53,9 +54,15 @@ available single GPU; never kill another user's processes.
 Server outputs: `trained_models/SW_0034_stage_signal_diagnostic/validation64.json`
 and `validation320.json`; copy small results into this experiment directory.
 
-Local Python syntax compilation passed. Runtime validation remains pending:
-Windows torch import fails with duplicate OpenMP runtime; no unsafe runtime
-override was enabled. Server master socket is absent. Peer fetch succeeded
+Local Python syntax compilation passed. A synthetic CPU smoke check in the
+existing `anaconda3/envs/kuramoto` environment passed: two samples, eight steps;
+membrane observation hooks leave outputs exactly equal; binary threshold times
+actual gate reconstructs aggregate spikes exactly in B,D,N fold order; a membrane
+synchrony loss gives finite connected gradients to all dendritic and membrane
+parameters. This is a core-path check, not real-data/checkpoint or full diagnostic
+validation. That environment lacks h5py. Base Windows torch import fails with
+duplicate OpenMP runtime; no unsafe runtime override was enabled.
+Server master socket is absent. Peer fetch succeeded
 on 2026-10-04 and remains `b99fac0`, with no new tested results.
 
 ## Next decision

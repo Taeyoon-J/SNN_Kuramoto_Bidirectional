@@ -77,6 +77,7 @@ def main():
     predictions = {key: [] for key in ("spatial_only", "membrane_spatial", "spike_spatial")}
     control = spectral_labels(kernel, 10)
     branch_ratios = []
+    signal_statistics = {}
     try:
         with torch.no_grad():
             for start in range(0, args.count, args.batch_size):
@@ -98,6 +99,15 @@ def main():
                 ratio = branches.sum(2).abs() / branches.abs().sum(2).clamp_min(1e-8)
                 branch_ratios.extend(ratio.mean((1, 2)).tolist())
                 phase = phase_locking_value(theta, settle=64, combine="mean").cpu()
+                for key, history in histories.items():
+                    observed = history[..., 64:]
+                    stats = signal_statistics.setdefault(key, {"nodes": 0, "constant_nodes": 0,
+                                                               "std_sum": 0.0, "mean_sum": 0.0})
+                    temporal_std = observed.std(-1, unbiased=False)
+                    stats["nodes"] += temporal_std.numel()
+                    stats["constant_nodes"] += int((temporal_std <= 1e-8).sum())
+                    stats["std_sum"] += float(temporal_std.sum())
+                    stats["mean_sum"] += float(observed.mean(-1).sum())
                 for offset in range(b):
                     matrices = {key: correlation(value[offset, :, 64:]).abs()
                                 for key, value in histories.items()}
@@ -161,6 +171,12 @@ def main():
               "ids": ids, "diagnostic_steps": 256, "diagnostic_settle": 64,
               "gradient_steps": 64, "gradient_settle": 32, "seed": 0,
               "pair_diagnostics": diagnostics, "gradient_connectivity": gradients,
+              "signal_statistics": {key: {
+                  "node_count": stats["nodes"],
+                  "constant_fraction": stats["constant_nodes"] / stats["nodes"],
+                  "temporal_std_mean": stats["std_sum"] / stats["nodes"],
+                  "activation_mean": stats["mean_sum"] / stats["nodes"]}
+                  for key, stats in signal_statistics.items()},
               "branch_abs_sum_over_sum_abs_mean": float(np.mean(branch_ratios)),
               "readout": {key: {**score(torch.stack(value), truth),
                           "foreground_fraction": float((torch.stack(value) != 0).float().mean())}
