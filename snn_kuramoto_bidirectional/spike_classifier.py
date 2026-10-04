@@ -325,6 +325,7 @@ def spike_synchrony_components(
     settle=0,
     components=None,
     background="largest_component",
+    target_foreground=None,
     eps=1e-8,
 ):
     """
@@ -352,6 +353,15 @@ def spike_synchrony_components(
             mean firing rate instead, which is near useless -- that ranking
             recovers the foreground at 0.146.
         foreground_threshold: only used when background="activity".
+        target_foreground: when set, the synchrony threshold is calibrated per
+            image so the groups cover about this fraction of units, and
+            synchrony_threshold is ignored. A fixed threshold lands in a
+            different place for every model: across three seeds of one setting
+            the predicted foreground came out at 0.179, 0.363 and 0.312 of
+            patches, and foreground IoU tracked that inversely -- 0.520, 0.214,
+            0.363 -- so most of the seed variance was the threshold, not the
+            model. The fraction is chosen on validation, never from an image's
+            own labels, so this stays a prediction.
         synchrony_threshold: two foreground units are linked above this.
         min_group_size: components smaller than this are dropped to background.
         settle: leading steps to discard as transient.
@@ -393,6 +403,50 @@ def spike_synchrony_components(
     else:
         foreground = torch.ones(activity.shape[:2], dtype=torch.bool,
                                 device=activity.device)
+    def components_at(b, threshold):
+        """Groups for image b at one threshold, background already removed."""
+        active = foreground[b]
+        adjacency = (similarity[b] >= threshold) & active.unsqueeze(1) & active.unsqueeze(0)
+        seen = torch.zeros(activity.size(1), dtype=torch.bool)
+        found = []
+        for start in range(activity.size(1)):
+            if seen[start] or not bool(active[start]):
+                continue
+            frontier, member = [start], [start]
+            seen[start] = True
+            while frontier:
+                node = frontier.pop()
+                for n in (adjacency[node] & ~seen).nonzero(as_tuple=True)[0].tolist():
+                    seen[n] = True
+                    member.append(n)
+                    frontier.append(n)
+            if len(member) >= int(min_group_size):
+                found.append(tuple(sorted(member)))
+        found.sort(key=len, reverse=True)
+        if background == "largest_component" and found:
+            found = found[1:]
+        return found
+
+    if target_foreground is not None:
+        goal = float(target_foreground) * activity.size(1)
+        out = []
+        for b in range(activity.size(0)):
+            low, high, best = 0.0, 1.0, None
+            # the covered count falls as the threshold drops, because more units
+            # join the one component that is then called background
+            for _ in range(12):
+                mid = 0.5 * (low + high)
+                found = components_at(b, mid)
+                covered = sum(len(g) for g in found)
+                if best is None or abs(covered - goal) < best[0]:
+                    best = (abs(covered - goal), found)
+                if covered > goal:
+                    high = mid
+                else:
+                    low = mid
+            out.append(best[1])
+        return out
+
     linked = similarity >= float(synchrony_threshold)
 
     out = []

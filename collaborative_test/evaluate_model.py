@@ -61,6 +61,9 @@ def main():
     ap.add_argument("--freq-gain", type=float, default=2.0)
     ap.add_argument("--gate-mode", default="raw")
     ap.add_argument("--spike-per-component", action="store_true")
+    ap.add_argument("--geodesic-steps", type=int, default=0, help="must match training")
+    ap.add_argument("--geodesic-radius", type=float, default=1.5, help="must match training")
+    ap.add_argument("--geodesic-contrast", type=float, default=2.0, help="must match training")
     ap.add_argument("--spike-pulse-gain", type=float, default=0.0)
     ap.add_argument("--no-center-pulse", action="store_true")
     ap.add_argument("--num-time-steps", type=int, default=256)
@@ -70,6 +73,9 @@ def main():
     ap.add_argument("--min-group-size", type=int, default=2)
     ap.add_argument("--membrane-threshold", type=float, default=0.06,
                     help="used when --use-model-spikes is off; the core's own v_th")
+    ap.add_argument("--target-foreground", type=float, default=None,
+                    help=("calibrate the synchrony threshold per image so the groups "
+                          "cover this fraction of patches; chosen on validation"))
     ap.add_argument("--background", default="largest_component",
                     choices=["largest_component", "activity"])
     ap.add_argument("--membrane-spikes", action="store_true",
@@ -126,7 +132,7 @@ def main():
         spikes, foreground_threshold=args.foreground_threshold,
         synchrony_threshold=args.synchrony_threshold,
         min_group_size=args.min_group_size, settle=args.settle, components=components,
-        background=args.background,
+        background=args.background, target_foreground=args.target_foreground,
     )
     prediction = spatial_components_to_patch_labels(groups, args.grid)
     scored = evaluate_patch_masks(prediction, target)
@@ -140,6 +146,7 @@ def main():
         "background": args.background,
         "foreground_threshold": args.foreground_threshold,
         "synchrony_threshold": args.synchrony_threshold,
+        "target_foreground": args.target_foreground,
         "min_group_size": args.min_group_size,
         "metrics": {k: float(v) for k, v in scored["mean"].items()},
         "valid_count": {k: int(v) for k, v in scored["valid_count"].items()},
