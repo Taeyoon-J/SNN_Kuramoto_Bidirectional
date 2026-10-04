@@ -58,6 +58,11 @@ class ImageConditionedGraph(nn.Module):
         temperature=0.1,
         grid_size=None,
         spatial_decay=None,
+        geodesic_steps=0,
+        geodesic_radius=1.5,
+        geodesic_contrast=2.0,
+        geodesic_temperature=0.5,
+        geodesic_cap=16.0,
         feedback_strength=0.0,
         feedback_momentum=0.9,
     ):
@@ -87,6 +92,15 @@ class ImageConditionedGraph(nn.Module):
             rate = -math.log(float(spatial_decay))
             self.spatial_rate = nn.Parameter(torch.tensor(_inverse_softplus(rate)))
 
+        # Keep every default checkpoint key unchanged when geodesics are off.
+        self.geodesic_steps = int(geodesic_steps)
+        self.geodesic_radius = float(geodesic_radius)
+        self.geodesic_temperature = float(geodesic_temperature)
+        self.geodesic_cap = float(geodesic_cap)
+        self.geodesic_contrast = nn.Parameter(
+            torch.tensor(_inverse_softplus(float(geodesic_contrast)))
+        ) if self.geodesic_steps > 0 else None
+
         self.feedback_strength = None
         if float(feedback_strength) != 0.0:
             self.feedback_strength = nn.Parameter(torch.tensor(float(feedback_strength)))
@@ -113,7 +127,10 @@ class ImageConditionedGraph(nn.Module):
 
         if self.spatial_rate is not None:
             rate = F.softplus(self.spatial_rate)
-            logits = logits - rate * self.grid_distance.unsqueeze(0)
+            distance = self.grid_distance.unsqueeze(0)
+            if self.geodesic_steps > 0:
+                distance = self._geodesic_distance(z, distance)
+            logits = logits - rate * distance
 
         if self.feedback_strength is not None and alignment is not None:
             logits = logits + self.feedback_strength * alignment
@@ -123,6 +140,26 @@ class ImageConditionedGraph(nn.Module):
         weights = values.softmax(dim=-1) * self.log_coupling_gain.exp()
         adjacency = torch.zeros_like(logits).scatter_(-1, indices, weights)
         return 0.5 * (adjacency + adjacency.transpose(1, 2))
+
+    def _geodesic_distance(self, z, euclidean):
+        """Differentiable soft min-plus patch distance copied from peer patch_v2."""
+        similarity = torch.bmm(z, z.transpose(1, 2)).clamp(-1.0, 1.0)
+        step = euclidean * (
+            1.0 + F.softplus(self.geodesic_contrast) * (1.0 - similarity)
+        )
+        step = torch.where(
+            euclidean <= self.geodesic_radius,
+            step,
+            torch.full_like(step, self.geodesic_cap),
+        )
+        distance = step
+        for _ in range(self.geodesic_steps):
+            through = distance.unsqueeze(2) + distance.unsqueeze(1)
+            relaxed = -self.geodesic_temperature * torch.logsumexp(
+                -through / self.geodesic_temperature, dim=-1
+            )
+            distance = torch.minimum(distance, relaxed)
+        return distance.clamp(max=self.geodesic_cap)
 
     def initial_alignment(self, batch_size, num_nodes, device):
         return torch.zeros(batch_size, num_nodes, num_nodes, device=device)

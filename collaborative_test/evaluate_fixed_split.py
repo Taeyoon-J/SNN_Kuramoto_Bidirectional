@@ -9,7 +9,6 @@ import json
 import sys
 from pathlib import Path
 
-import h5py
 import torch
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -27,7 +26,10 @@ from snn_kuramoto_bidirectional.s2net_cls import S2NetCore
 from snn_kuramoto_bidirectional.training.evaluate_binding import spectral_cluster
 
 
-def _core(device, checkpoint, steps):
+def _core(device, checkpoint, steps, dendritic_projection="shared",
+          geodesic_steps=0, geodesic_radius=1.5, geodesic_contrast=2.0,
+          geodesic_temperature=0.5, geodesic_cap=16.0,
+          graph_spatial_decay=0.55, kuramoto_backend="pairwise"):
     hp = S2NetHyperparameters(
         num_feature_maps=8,
         num_regions=256,
@@ -40,7 +42,13 @@ def _core(device, checkpoint, steps):
         freq_gain=2.0,
         graph_mode="learned",
         graph_top_k=32,
-        graph_spatial_decay=0.55,
+        graph_spatial_decay=graph_spatial_decay,
+        kuramoto_backend=kuramoto_backend,
+        geodesic_steps=geodesic_steps,
+        geodesic_radius=geodesic_radius,
+        geodesic_contrast=geodesic_contrast,
+        geodesic_temperature=geodesic_temperature,
+        geodesic_cap=geodesic_cap,
         k=256.0,
         low_n=-4.0,
         high_n=0.0,
@@ -51,6 +59,7 @@ def _core(device, checkpoint, steps):
         spike_classify_method="spatial_components",
         spike_spatial_grid_size=(16, 16),
         spike_per_component=True,
+        dendritic_projection=dendritic_projection,
     ).validate()
     model = S2NetCore(hp, device=device).to(device)
     state = torch.load(checkpoint, map_location=device, weights_only=True)
@@ -71,6 +80,8 @@ def _cluster_labels(affinity, k):
 
 
 def main():
+    import h5py
+
     parser = argparse.ArgumentParser()
     parser.add_argument("--checkpoint", required=True)
     parser.add_argument("--gamma-path", required=True)
@@ -79,6 +90,14 @@ def main():
     parser.add_argument("--start", type=int, default=1320)
     parser.add_argument("--count", type=int, default=320)
     parser.add_argument("--steps", type=int, default=256)
+    parser.add_argument("--dendritic-projection", choices=["shared", "per_region"], default="shared")
+    parser.add_argument("--geodesic-steps", type=int, default=0)
+    parser.add_argument("--geodesic-radius", type=float, default=1.5)
+    parser.add_argument("--geodesic-contrast", type=float, default=2.0)
+    parser.add_argument("--geodesic-temperature", type=float, default=0.5)
+    parser.add_argument("--geodesic-cap", type=float, default=16.0)
+    parser.add_argument("--graph-spatial-decay", type=float, default=0.55)
+    parser.add_argument("--kuramoto-backend", choices=["pairwise", "factorized"], default="pairwise")
     parser.add_argument("--settle", type=int, default=64)
     parser.add_argument("--k", type=int, default=8)
     parser.add_argument("--batch-size", type=int, default=8)
@@ -99,7 +118,12 @@ def main():
     with h5py.File(args.dataset_path, "r") as dataset:
         truth = clevr_mask_patch(torch.from_numpy(dataset["mask"][indices]), 8)["patch_labels"]
 
-    model = _core(args.device, args.checkpoint, args.steps)
+    model = _core(
+        args.device, args.checkpoint, args.steps, args.dendritic_projection,
+        args.geodesic_steps, args.geodesic_radius, args.geodesic_contrast,
+        args.geodesic_temperature, args.geodesic_cap, args.graph_spatial_decay,
+        args.kuramoto_backend,
+    )
     baseline_masks, synchrony_masks = [], []
     spike_rates = []
     with torch.no_grad():

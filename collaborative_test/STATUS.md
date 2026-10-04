@@ -1,7 +1,35 @@
 # Current status
 
 - User clarified classifier/count and stage-wise activation analysis are useful research direction, not strict sequential gates. Run classifier and core diagnostics in parallel when either can clarify the other.
-- User replaced the prior cap: run 1 hour 30 minutes from 02:45:42 ET and pause at the first safe boundary at or after 04:15:42 ET. See `GOAL_RUNTIME_LIMIT_2026-10-04.md`.
+- The earlier 90-minute cap applied to the prior goal run and expired before the user explicitly restarted goal mode. No new runtime cap was set for the restarted goal.
+- Current aligned SW0042 three-seed result is complete. At the common long
+  threshold .35, mean FG-ARI / foreground IoU / matched-object IoU is
+  `.415879 / .418226 / .296118` (sample std `.210397 / .249434 / .227312`).
+  Both IoUs exceed the aligned official single-checkpoint Slot reference, but
+  FG-ARI is far below it and variance is unacceptable. Seed2 collapses to
+  about `.1857/.1352/.0370`; its phase product-PLV mean/std across images is
+  `.4454/.00627`, versus seed0 `.7150/.1433` and seed1 `.6487/.1707`.
+- SW0047 completed the correct-position control. Randomly permuting the
+  Gaussian kernel's patch correspondence drops the best seed0 short row from
+  correctly aligned about `.5993/.6085/.4637` to
+  `.3192/.4945/.2543`; long permuted best is
+  `.3249/.4802/.2630`. Spatial correspondence is a real readout prior, but it
+  is not a learned-core improvement.
+- SW0050 is the active model-training intervention. Seed2/no-diversity at LR
+  `3e-4` completed all 40 epochs. Long threshold .35 scores
+  `.347156/.167773/.135250`, versus original seed2
+  `.185651/.135165/.036969`; substituting it raises the diagnostic three-seed
+  mean to `.469714/.429096/.328878`. This rescues all three seed2 metrics but
+  remains below seeds0/1. The matched LR `1e-3` arm with measured
+  approximately `0.1x`-gradient diversity weight is still training on GPU2.
+  Future launches require asset-bound one-update preflight; remote Bash,
+  Python compile, and 3+5 direct unit tests pass.
+- SW0051 seed0 completed both windows. Long membrane-freeze scores
+  `.630592/.606040/.449873` versus frozen spike-CC
+  `.598427/.606040/.461779`; membrane-restricted-dynamic scores
+  `.588565/.606040/.465839`. The foreground mask is exactly unchanged. This
+  separates an ARI gain from a small object-IoU gain but provides no single
+  dominant hybrid yet.
 - SW_0034 full320 complete: distance-controlled AUC phase .5788, gating .5871, h-wave .5842, membrane .5870, gated spike .5863, binary threshold .5000. Binary threshold is constant 1 after settle across all aggregate patch histories; gated spike variation is gate-driven. Continuous signal is weak upstream and roughly preserved downstream; no single sharp loss stage. Spatial-only/membrane-spatial/gated-spike-spatial readouts .491272/.190837/.178026, .494639/.191070/.170568, .479762/.185651/.164179. Phase PLV bypasses downstream gradients; membrane/spike losses connect them. No improvement claim.
 - SW_0035: adaptive object-count classifier baseline code prepared. It compares GT-free eigengap/eigen-threshold count inference, existing adaptive slots, and fixed-k grouping controls on membrane and gated-spike patterns. Not yet run.
 - SW_0035 pilot: gated-spike spatial eigengap range 5-10 reduces predicted groups 9.0→7.06 and count MAE 2.95→2.05; FG IoU .1746→.1997, but FG-ARI .4871→.4759 and object IoU .1605→.1413. Exact count only 4.7%. Existing membrane slots average 6.06 versus true 6.11 but exact count 7.8%, showing mean count is misleading. Selected full320 baseline running.
@@ -15,6 +43,7 @@
 - SW_0034 preparation follow-up: add per-stage constant-node fraction/std/activation statistics; synthetic CPU smoke check in local kuramoto environment passed exact observation-hook output parity, binary-times-gate spike reconstruction and finite membrane-loss downstream gradients. No full diagnostic/checkpoint validation yet; h5py missing locally and SSH master still absent.
 
 - Goal: active. The three-seed mean of a spike or membrane readout must exceed the comparable Slot Attention mean on all three patch metrics.
+- Slot baseline audit: the saved .890115/.212251/.235487 reference is one deterministic inference run from Google's official pretrained `ckpt-500`, trained on a different CLEVR distribution with seven slots and evaluated here with 11 slots. It is not a comparable three-seed training mean. Keep it as the provisional numeric bar; a formal goal claim still needs a matched three-seed Slot baseline or an explicit limitation. See `baselines/slot_attention.md`.
 - Baseline seed 0 checkpoint: `/Data0/kevinswk/patch_v2_sw/trained_models/baseline_best_seed0_20261003/core.pt`.
 - SW_0001: completed classifier-only validation experiment. Fixed-k spike synchrony clustering improves all three metrics over the baseline spatial-components readout, but does not meet the Slot Attention reference.
 - Gradient connectivity confirmed: phase-only loss gives no gradients to dendritic or membrane parameters (0/3 and 0/1 tensors connected). See `baseline_gradient_connectivity.json` on server.
@@ -54,3 +83,15 @@
 - SW_0032: border-limited independent membrane veto on same spatial grouping and fixed 320 validation IDs. Width2 scores FG-ARI .467718 / foreground IoU .210417 / object IoU .174335, versus spatial control .494639/.191070/.170568. Retain as a two-IoU tradeoff, not an ARI lead. First-64 pilot agrees directionally. Predicted foreground .748 versus true .217 means background remains the major IoU problem. No production merge or training change.
 - SW_0033: critical 320-image diagnostic on the frozen SW_0003 core. Spatial-only kernel and k10 spectral readout scores .491272/.190837/.178026, nearly the actual membrane×spatial .494639/.191070/.170568; a random patch-position permutation of membrane affinity scores .481408/.192980/.165653. Raw membrane same-vs-different-object foreground neighbor-pair AUC .6365 versus spatial-only .6979 (distance-confounded diagnostic). The spatial prior explains nearly all of the ARI gain; do not describe SW_0028 as strong learned object binding. Shift attention to better membrane training signals while retaining the spatial readout control. GT used only for evaluation/diagnosis, never prediction.
 - No training process has been started for SW_0001.
+- Peer review 0003 (2026-10-04): direct review of peer commit `a026c1a` corrects the old spike-vs-phase claim: BIM6 spike mean .675574/.687838/.472764 remains below same-checkpoint phase .7120/.7150/.4994. Peer uncommitted server snapshot reports long T1024/sync.10 seed FG-ARI .6362/.7100/.7199 (mean .6887), negative per-region transfer, population inference can rescue dead seed 5 but harm normal seeds, and population training is poor. Sources, cautions, and variant details are in `peer_updates/REVIEW_0003_20261004.md`; snapshot read around 16:xx ET and may change.
+- SW_0039: per-region projection experiment held; do not launch while pairing/architecture review remains open and peer per-region result is negative.
+- SW_0040: complete diagnostic on SW0038 spike5 seed0, IDs 1320-1639. Peer component readout threshold .05 scores HDF5 .132102/.197586/.151268 and identity-mapped peer targets .272610/.124795/.281338; same predictions only, cross-target diagnostic, not classifier replacement. Pairing evidence is recorded in the SW0040 JSON and review 0003.
+- SW_0041: complete for seeds 0/1/2, shared projection. Formal peer validation T256/64 means at threshold .20 are .560392/.610688/.404574; .35 gives .556789/.609456/.406034, .50 .546366/.602581/.402983. T1024/512 threshold .10 is best among common rows at .574026/.605911/.415638 (per-seed FG-ARI .3700/.6543/.6978; seed0 collapsed); .05 gives .572251/.608677/.413222 and .15 .573070/.604528/.415632. Same predictions on HDF5 score approximately .0369/.2502/.1294, consistent with target/renderer mismatch. Direct peer-exact seed0 epoch-1 loss 23.52399481 matches original 23.523995. See SW0041 README and `peer_updates/REVIEW_0003_20261004.md`.
+- SW_0043: seed-0 factorized training completed all 40 epochs with logs matching the peer exact recipe. A learned-state comparison finds every learned tensor equal; only `sc` differs (peer identity versus local Pearson matrix). Because `structural_weight=0` and learned graph forward ignores `sc`, this does not affect computation. Same-input CPU T16 graph/theta/membrane/spike outputs are bitwise equal. Formal peer-validation short and long evaluations also completed; long T1024/settle512 scores against peer targets are .640695/.632759/.463078 at threshold .10 and .656050/.614347/.480345 at .35. See `SW_0043_peer_exact_dynamics/results/local_factorized_vs_peer_original.json`. Do not attribute prior seed-0 divergence to factorized arithmetic.
+- The direct peer-code seed-0 retraining completed with final loss 17.22858517. All 17 tensors and the serialized checkpoint SHA-256 are exactly identical to the original BIM6 seed-0 checkpoint (`503c589c...be75be`).
+- SW_0042 uses the verified factorized backend. Seed0 completed 40 epochs at final loss 18.82954237 and HDF5 validation IDs 1320-1639: short T256/64 threshold .35 scored .582002/.600063/.447548 (FG-ARI/foreground IoU/matched-object IoU). Long T1024/512 threshold .35 scored .598174/.605847/.461779; threshold .20 scored .596839/.615626/.457246 and had the best FG IoU. Long count exact/MAE is .1906/1.6344 at .35 and .2156/1.6906 at .50. These are seed0 observations, not common three-seed threshold selection. Seeds1/2 remain training on GPUs2/0.
+- Peer uncommitted spatial-spike readout completed on validation300 at T1024/512, sync .10: sigma 1.5 seed triples are .6646/.6242/.4786, .7149/.7238/.4879, and .7228/.6802/.4893; mean .700767/.676067/.485267. Treat as a promising classifier candidate, not pooled evidence. SW0044 ports it opt-in and will compare S-only, S×G, and G-only under a fair threshold grid on aligned HDF5 validation.
+- SW0044 spatial-affinity short/long evaluation is waiting for assigned GPU3 to become idle; SW0042 seed0 base evaluation is complete. SW0045 full320 aligned stage-signal diagnostic remains queued after the SW0044 completion marker, so GPU3 work is serialized.
+- SW_0046 aligned official Slot Attention checkpoint audit completed on HDF5 IDs 1320-1639 (320 valid): FG-ARI .8946414575, foreground IoU .2235111789, matched object IoU .2459682554. IDs 1000-1319 scored .8901145722/.2122510283/.2354868700, supporting stability across the split shift. Against this single-checkpoint reference, the current SW0042 seed0 gap is concentrated in ARI; both IoUs exceed the reference. This is not a three-seed mean or goal success. See `SW_0046_aligned_slot_audit/README.md`.
+- SW_0040 peer BIM6 count diagnostic (peer validation 6000-6999, 1000 images/seed, sync .35, steps256/settle64): exact count .192/.189/.204 (mean .195), MAE 1.635/1.624/1.543 (mean 1.601), within-one .522/.547/.572 (mean .547), bias -.819/-.852/-.227 (mean -.633). Predicted mean count 5.416/5.383/6.008 vs target 6.235. Dynamic count inference works, but accurate count is not solved; results and method are documented in SW0040 README and peer review 0003.
+- SW_0040 peer BIM6 long-count diagnostic (peer validation 6000-6999, 1000 images/seed, T1024/settle512/sync .10): exact .215/.187/.209 (mean .203667), MAE 1.499/1.595/1.488 (mean 1.527333), within-one .571/.552/.581 (mean .568), bias -.211/-.867/-.358 (mean -.478667); predicted mean count 6.024/5.368/5.877 vs target 6.235. This is a modest improvement over T256/64/.35, but exact count remains about 20.4%; dynamic count inference works, accurate count is not solved. JSONs are in `SW_0040_peer_transfer/results/peer_count_long/`.

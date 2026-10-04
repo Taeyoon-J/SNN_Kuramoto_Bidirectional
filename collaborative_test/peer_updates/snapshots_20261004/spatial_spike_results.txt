@@ -1,0 +1,21 @@
+[17:26] # validation 300, window 1024/512. BIM6 seeds.
+[17:26] # our spike readout at sync 0.10: s0 .6362  s1 .7100  s2 .7199  mean .6887
+[17:26] label                                            fg_ari   fg_iou  obj_iou  groups  pred_fg
+[17:26] === SW_0033 control: the spatial kernel ALONE, no model information ===
+[17:26] # whatever this reproduces is not evidence of binding by synchrony
+SPATIAL-ONLY sigma=1.0                         0.0033 0.0000 0.0000 0.0000 0.0000 
+SPATIAL-ONLY sigma=1.5                         0.0033 0.0000 0.0000 0.0000 0.0000 
+SPATIAL-ONLY sigma=2.5                         0.0033 0.0000 0.0000 0.0000 0.0000 
+SPATIAL-ONLY sigma=4.0                         0.0033 0.0000 0.0000 0.0000 0.0000 
+[17:30] # and at the three seeds, to compare against the 3-seed mean
+SPATIAL-ONLY s0 sigma=1.5                      0.0033 0.0000 0.0000 0.0000 0.0000 
+SPATIAL-ONLY s1 sigma=1.5                      0.0033 0.0000 0.0000 0.0000 0.0000 
+SPATIAL-ONLY s2 sigma=1.5                      0.0033 0.0000 0.0000 0.0000 0.0000 
+[17:33] === SW_0028 mechanism: spike affinity TIMES the spatial kernel ===
+s0 spike x spatial sigma=1.5                   0.6646 0.6242 0.4786 6.1900 0.1725 
+s0 spike x spatial sigma=3.0                   0.6533 0.6320 0.4675 6.0900 0.1686 
+s1 spike x spatial sigma=1.5                   0.7149 0.7238 0.4879 5.4267 0.1292 
+s1 spike x spatial sigma=3.0                   0.7099 0.7269 0.4798 5.3933 0.1303 
+s2 spike x spatial sigma=1.5                   0.7228 0.6802 0.4893 5.8700 0.1475 
+s2 spike x spatial sigma=3.0                   0.7206 0.6811 0.4840 5.8400 0.1491 
+[17:39] === PEER DONE ===

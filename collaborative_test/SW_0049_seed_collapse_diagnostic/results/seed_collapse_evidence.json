@@ -1,0 +1,41 @@
+{
+  "purpose": "Motivation for a seed2 stage-wise input-sensitivity diagnostic; descriptive evidence, not causal attribution.",
+  "sw0042": {
+    "final_reconstruction_loss": {
+      "seed0": 18.8295,
+      "seed1": 17.3599,
+      "seed2": 14.2687
+    },
+    "short_T256_settle64_threshold_0.35_fg_ari": {
+      "seed0": 0.5820,
+      "seed1": 0.4285,
+      "seed2": 0.1866
+    },
+    "phase_product_plv_mean": {
+      "seed2": 0.4454
+    },
+    "per_image_phase_product_plv_mean_std": {
+      "seed0": 0.1433,
+      "seed1": 0.1707,
+      "seed2": 0.00627
+    },
+    "long_T1024_settle512_common_threshold_0.35": {
+      "metric_order": ["fg_ari", "foreground_iou", "matched_object_iou"],
+      "three_seed_mean": [0.415879, 0.418226, 0.296118],
+      "three_seed_std": [0.210397, 0.249434, 0.227312]
+    }
+  },
+  "diagnostic_protocol": {
+    "target_seed": 2,
+    "validation_ids": [1320, 1639],
+    "images": 320,
+    "steps": 256,
+    "settle": 64,
+    "membrane_vth": 0.06,
+    "dendritic_projection": "shared",
+    "graph_spatial_decay": 0.35,
+    "geodesic": {"steps": 3, "radius": 1.5, "contrast": 2.0, "temperature": 0.5, "cap": 16.0},
+    "kuramoto_backend": "factorized",
+    "diagnostic_script": "collaborative_test/SW_0034_stage_signal_diagnostic/diagnose.py"
+  }
+}

@@ -1,0 +1,147 @@
+{
+  "checkpoint": "/Data0/kevinswk/patch_v2_sw/trained_models/SW_0038_control_seed0/core.pt",
+  "ids": [
+    1320,
+    1639
+  ],
+  "membrane_vth": 2.0,
+  "prediction_contract": "All per-image counts inferred from signal eigenspectrum or adaptive slots; GT used only for validation scoring. Fixed-k rows are controls.",
+  "background_rule": "largest spectral cluster; adaptive slots use largest slot and zero traces",
+  "spatial_kernel": "sigma 1.5 when source name ends in _spatial",
+  "rows": [
+    {
+      "name": "gated_spike_spatial:eigengap:5-10",
+      "fg_ari": 0.3971997834360438,
+      "foreground_iou": 0.2369274058401436,
+      "matched_object_iou": 0.14768129596008756,
+      "predicted_groups_mean": 6.409375190734863,
+      "true_groups_mean": 6.196875095367432,
+      "count_mae": 2.625,
+      "count_bias": 0.21250000596046448,
+      "exact_count_fraction": 0.09687499701976776,
+      "within_one_count_fraction": 0.34375,
+      "predicted_foreground_fraction": 0.7894042730331421,
+      "selected_total_cluster_histogram": {
+        "5": 78,
+        "6": 49,
+        "7": 32,
+        "8": 45,
+        "9": 57,
+        "10": 59
+      }
+    },
+    {
+      "name": "membrane_spatial:threshold:0.8:3-10",
+      "fg_ari": 0.414340688400087,
+      "foreground_iou": 0.22572964301692444,
+      "matched_object_iou": 0.16597924046578166,
+      "predicted_groups_mean": 7.315625190734863,
+      "true_groups_mean": 6.196875095367432,
+      "count_mae": 1.881250023841858,
+      "count_bias": 1.118749976158142,
+      "exact_count_fraction": 0.17499999701976776,
+      "within_one_count_fraction": 0.4437499940395355,
+      "predicted_foreground_fraction": 0.8312133550643921,
+      "selected_total_cluster_histogram": {
+        "6": 11,
+        "7": 37,
+        "8": 141,
+        "9": 102,
+        "10": 29
+      }
+    },
+    {
+      "name": "membrane:adaptive_slots:.7:6",
+      "fg_ari": 0.18560740425193906,
+      "foreground_iou": 0.24306656068967553,
+      "matched_object_iou": 0.19390394444849085,
+      "predicted_groups_mean": 19.734375,
+      "true_groups_mean": 6.196875095367432,
+      "count_mae": 13.537500381469727,
+      "count_bias": 13.537500381469727,
+      "exact_count_fraction": 0.0,
+      "within_one_count_fraction": 0.0,
+      "predicted_foreground_fraction": 0.6777099370956421,
+      "selected_total_cluster_histogram": {
+        "9": 2,
+        "10": 6,
+        "11": 3,
+        "12": 10,
+        "13": 17,
+        "14": 12,
+        "15": 20,
+        "16": 20,
+        "17": 26,
+        "18": 17,
+        "19": 21,
+        "20": 15,
+        "21": 19,
+        "22": 16,
+        "23": 15,
+        "24": 14,
+        "25": 10,
+        "26": 17,
+        "27": 12,
+        "28": 7,
+        "29": 12,
+        "30": 4,
+        "31": 5,
+        "32": 7,
+        "33": 4,
+        "34": 3,
+        "35": 3,
+        "37": 1,
+        "39": 1,
+        "42": 1
+      }
+    },
+    {
+      "name": "membrane:fixed_k10_control",
+      "fg_ari": 0.19847832714255736,
+      "foreground_iou": 0.2408008222659439,
+      "matched_object_iou": 0.16348892081467065,
+      "predicted_groups_mean": 9.0,
+      "true_groups_mean": 6.196875095367432,
+      "count_mae": 2.8968749046325684,
+      "count_bias": 2.8031249046325684,
+      "exact_count_fraction": 0.13124999403953552,
+      "within_one_count_fraction": 0.32499998807907104,
+      "predicted_foreground_fraction": 0.6919800043106079,
+      "selected_total_cluster_histogram": {
+        "10": 320
+      }
+    },
+    {
+      "name": "membrane_spatial:fixed_k10_control",
+      "fg_ari": 0.41557589777757753,
+      "foreground_iou": 0.22670071992946134,
+      "matched_object_iou": 0.19541197661525084,
+      "predicted_groups_mean": 9.0,
+      "true_groups_mean": 6.196875095367432,
+      "count_mae": 2.8968749046325684,
+      "count_bias": 2.8031249046325684,
+      "exact_count_fraction": 0.13124999403953552,
+      "within_one_count_fraction": 0.32499998807907104,
+      "predicted_foreground_fraction": 0.8533935546875,
+      "selected_total_cluster_histogram": {
+        "10": 320
+      }
+    },
+    {
+      "name": "gated_spike_spatial:fixed_k10_control",
+      "fg_ari": 0.4073729592525104,
+      "foreground_iou": 0.22846248800657945,
+      "matched_object_iou": 0.19442978624843746,
+      "predicted_groups_mean": 9.0,
+      "true_groups_mean": 6.196875095367432,
+      "count_mae": 2.8968749046325684,
+      "count_bias": 2.8031249046325684,
+      "exact_count_fraction": 0.13124999403953552,
+      "within_one_count_fraction": 0.32499998807907104,
+      "predicted_foreground_fraction": 0.844616711139679,
+      "selected_total_cluster_histogram": {
+        "10": 320
+      }
+    }
+  ]
+}

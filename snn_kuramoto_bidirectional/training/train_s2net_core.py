@@ -58,6 +58,8 @@ def train_s2net_core(
     edge_membrane_weight=0.0,
     edge_membrane_margin=0.3,
     edge_membrane_grid_size=(16, 16),
+    checkpoint_dir=None,
+    checkpoint_epochs=(),
 ):
     """
     Train only S2NetCore from precomputed gamma sequences with an unsupervised
@@ -171,6 +173,8 @@ def train_s2net_core(
         }
         loss_history.append(mean_loss)
         parts_history.append(mean_parts)
+        if checkpoint_dir is not None and epoch in set(map(int, checkpoint_epochs)):
+            save_s2net_core(core, Path(checkpoint_dir) / f"epoch_{epoch:02d}.pt")
         if verbose:
             parts_text = " ".join(
                 f"{name}={value:.6f}"
@@ -445,6 +449,14 @@ def main():
     parser.add_argument("--graph-hidden-dim", type=int, default=16)
     parser.add_argument("--graph-coupling-gain", type=float, default=8.0)
     parser.add_argument("--graph-temperature", type=float, default=0.1)
+    parser.add_argument("--kuramoto-backend", choices=["pairwise", "factorized"],
+                        default="pairwise",
+                        help="Pairwise legacy interaction or cached factorized coupling kernels.")
+    parser.add_argument("--geodesic-steps", type=int, default=0)
+    parser.add_argument("--geodesic-radius", type=float, default=1.5)
+    parser.add_argument("--geodesic-contrast", type=float, default=2.0)
+    parser.add_argument("--geodesic-temperature", type=float, default=0.5)
+    parser.add_argument("--geodesic-cap", type=float, default=16.0)
     parser.add_argument(
         "--graph-spatial-decay",
         type=float,
@@ -577,6 +589,9 @@ def main():
     parser.add_argument("--low-n", type=float, default=-4.0)
     parser.add_argument("--high-n", type=float, default=0.0)
     parser.add_argument("--branch", type=int, default=4)
+    parser.add_argument("--dendritic-projection", default="shared",
+                        choices=["shared", "per_region"],
+                        help="Share one dendritic projection or learn one per region.")
     parser.add_argument("--spike-classify-method", default="spike_interval", choices=["spike_rhythm", "spike_interval", "spatial_components"])
     parser.add_argument("--spike-rhythm-threshold", type=float, default=0.8)
     parser.add_argument("--spike-rhythm-min-group-size", type=int, default=2)
@@ -603,7 +618,12 @@ def main():
     parser.add_argument("--edge-membrane-weight", type=float, default=0.0)
     parser.add_argument("--edge-membrane-margin", type=float, default=0.3)
     parser.add_argument("--object-overlap-weight", type=float, default=0.0)
-    parser.add_argument("--sample-diversity-weight", type=float, default=0.0)
+    parser.add_argument(
+        "--sample-diversity-weight", "--sample-activity-diversity-weight",
+        dest="sample_diversity_weight", type=float, default=0.0,
+        help=("Weight sample_activity_diversity_loss on the selected --loss-signal "
+              "(SW0050 uses sigmoid_membrane)."),
+    )
     parser.add_argument("--spatial-compactness-weight", type=float, default=0.0)
     parser.add_argument("--temporal-balance-weight", type=float, default=0.0)
     parser.add_argument("--activity-confidence-weight", type=float, default=0.0)
@@ -627,7 +647,15 @@ def main():
         ),
     )
     parser.add_argument("--verbose", action="store_true")
+    parser.add_argument("--checkpoint-dir", default=None,
+                        help="Optional directory for selected intermediate epoch state_dicts.")
+    parser.add_argument("--checkpoint-epochs", type=int, nargs="*", default=[],
+                        help="Epochs to checkpoint; requires --checkpoint-dir.")
     args = parser.parse_args()
+    if args.checkpoint_epochs and args.checkpoint_dir is None:
+        parser.error("--checkpoint-epochs requires --checkpoint-dir")
+    if any(epoch <= 0 or epoch > args.epochs for epoch in args.checkpoint_epochs):
+        parser.error("checkpoint epochs must lie in [1, --epochs]")
 
     torch.manual_seed(int(args.seed))
     torch.cuda.manual_seed_all(int(args.seed))
@@ -678,7 +706,13 @@ def main():
         graph_hidden_dim=args.graph_hidden_dim,
         graph_coupling_gain=args.graph_coupling_gain,
         graph_temperature=args.graph_temperature,
+        kuramoto_backend=args.kuramoto_backend,
         graph_spatial_decay=args.graph_spatial_decay,
+        geodesic_steps=args.geodesic_steps,
+        geodesic_radius=args.geodesic_radius,
+        geodesic_contrast=args.geodesic_contrast,
+        geodesic_temperature=args.geodesic_temperature,
+        geodesic_cap=args.geodesic_cap,
         graph_feedback_strength=args.graph_feedback_strength,
         graph_feedback_momentum=args.graph_feedback_momentum,
         membrane_vth=args.membrane_vth,
@@ -688,6 +722,7 @@ def main():
         spike_per_component=args.spike_per_component,
         low_n=args.low_n,
         high_n=args.high_n,
+        dendritic_projection=args.dendritic_projection,
         branch=args.branch,
         spike_classify_method=args.spike_classify_method,
         spike_rhythm_threshold=args.spike_rhythm_threshold,
@@ -778,6 +813,8 @@ def main():
         edge_membrane_weight=args.edge_membrane_weight,
         edge_membrane_margin=args.edge_membrane_margin,
         edge_membrane_grid_size=_parse_pair_arg(args.spike_spatial_grid_size, "spike-spatial-grid-size"),
+        checkpoint_dir=args.checkpoint_dir,
+        checkpoint_epochs=args.checkpoint_epochs,
     )
     print(f"trained S2NetCore: {args.save_path}")
     print(f"loss: {losses[0]:.6f} -> {losses[-1]:.6f}")

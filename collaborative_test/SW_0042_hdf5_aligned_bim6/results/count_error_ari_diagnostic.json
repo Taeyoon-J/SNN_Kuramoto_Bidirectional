@@ -1,0 +1,41 @@
+{
+  "experiment": "SW0042 aligned long-window count-error versus FG-ARI diagnostic",
+  "split": {
+    "dataset": "/Data0/kevinswk/datasets/object_centric_data/clevr_10-full.hdf5",
+    "ids": [1320, 1639],
+    "images": 320,
+    "patch_size": 8
+  },
+  "inference": {
+    "steps": 1024,
+    "settle": 512,
+    "synchrony_threshold": 0.35,
+    "ground_truth_used_for_prediction": false,
+    "ground_truth_used_for_diagnostic": true
+  },
+  "seed0": {
+    "pearson_correlation_absolute_count_error_vs_fg_ari": -0.2616799733,
+    "exact_count_images": 61,
+    "fg_ari_exact_count": 0.6500645657,
+    "fg_ari_nonexact_count": 0.5859525028,
+    "fg_ari_by_absolute_count_error": {
+      "0": {"images": 61, "mean": 0.6500645657},
+      "1": {"images": 99, "mean": 0.6689731938},
+      "2": {"images": 89, "mean": 0.5660585259},
+      "3_or_more": {"images": 71, "mean": 0.4951287781}
+    }
+  },
+  "seed1": {
+    "pearson_correlation_absolute_count_error_vs_fg_ari": -0.1902055218,
+    "exact_count_images": 60,
+    "fg_ari_exact_count": 0.5015331685,
+    "fg_ari_nonexact_count": 0.4551085465,
+    "fg_ari_by_absolute_count_error": {
+      "0": {"images": 60, "mean": 0.5015331685},
+      "1": {"images": 104, "mean": 0.4854802100},
+      "2": {"images": 78, "mean": 0.4844574562},
+      "3_or_more": {"images": 78, "mean": 0.3852640853}
+    }
+  },
+  "interpretation": "Large count errors are harmful, but exact object count is not sufficient for high FG-ARI and does not explain the seed gap. Prioritize affinity and membership quality over a count-only fix."
+}

@@ -1,0 +1,26 @@
+{
+  "dataset": "/Data0/kevinswk/datasets/object_centric_data/clevr_10-full.hdf5",
+  "image_ids": [
+    1320,
+    1639
+  ],
+  "count": 320,
+  "seed": 0,
+  "resolution": [
+    128,
+    128
+  ],
+  "batch_size": 1,
+  "num_slots": 11,
+  "iterations": 3,
+  "checkpoint_dir": "/Data0/kevinswk/patch_v2/trained_models/slot_attention_official_patch_eval_20261002/checkpoint",
+  "checkpoint_prefix": "/Data0/kevinswk/patch_v2/trained_models/slot_attention_official_patch_eval_20261002/checkpoint/ckpt-500",
+  "checkpoint_source": "gs://gresearch/slot-attention/object-discovery/ckpt-500",
+  "model_py": "/Data0/kevinswk/patch_v2/trained_models/slot_attention_official_patch_eval_20261002/model.py",
+  "model_sha256": "96c2b12d8b28c22fd2605eccf9027bda304f38bb9332f8c1620898f471c67ec4",
+  "tensorflow_version": "2.15.1",
+  "preprocessing": "full HDF5 RGB image, float32 /127.5 - 1; no crop",
+  "background_rule": "most hard-assigned one-pixel perimeter pixels; smallest slot ID wins ties",
+  "label_rule": "slot ID + 1; selected background slot set to 0",
+  "ground_truth_used_for_prediction": false
+}

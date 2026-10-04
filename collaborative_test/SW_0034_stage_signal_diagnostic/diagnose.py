@@ -38,6 +38,14 @@ def pair_summary(same, different):
             "auc": auc(same, different)}
 
 
+def gamma_rows_for_ids(global_ids, global_start, row_count):
+    """Map scene IDs to local gamma rows for full or aligned tensors."""
+    rows = [int(scene_id) - int(global_start) for scene_id in global_ids]
+    if not rows or min(rows) < 0 or max(rows) >= int(row_count):
+        raise ValueError("Gamma tensor does not cover the requested global IDs.")
+    return rows
+
+
 def main():
     parser = argparse.ArgumentParser()
     for name in ("checkpoint", "gamma-path", "dataset-path", "output-path"):
@@ -45,15 +53,46 @@ def main():
     parser.add_argument("--count", type=int, default=64)
     parser.add_argument("--batch-size", type=int, default=4)
     parser.add_argument("--device", default="cuda")
+    parser.add_argument("--start", type=int, default=1320,
+                        help="First global validation scene ID (default preserves SW0034).")
+    parser.add_argument("--gamma-global-start", type=int, default=0,
+                        help="Global scene ID represented by gamma row zero.")
+    parser.add_argument("--gamma-manifest", default=None,
+                        help="Optional gamma alignment/provenance JSON to copy into results.")
+    parser.add_argument("--steps", type=int, default=256)
+    parser.add_argument("--settle", type=int, default=64)
+    parser.add_argument("--membrane-vth", type=float, default=0.06)
+    parser.add_argument("--dendritic-projection", choices=["shared", "per_region"], default="shared")
+    parser.add_argument("--graph-spatial-decay", type=float, default=0.55)
+    parser.add_argument("--geodesic-steps", type=int, default=0)
+    parser.add_argument("--geodesic-radius", type=float, default=1.5)
+    parser.add_argument("--geodesic-contrast", type=float, default=2.0)
+    parser.add_argument("--geodesic-temperature", type=float, default=0.5)
+    parser.add_argument("--geodesic-cap", type=float, default=16.0)
+    parser.add_argument("--kuramoto-backend", choices=["pairwise", "factorized"], default="pairwise")
     args = parser.parse_args()
-    if not 1 <= args.count <= 320 or args.batch_size < 1:
-        raise ValueError("Require 1-320 validation images and positive batch size")
+    if not 1 <= args.count <= 320 or args.batch_size < 1 or not 0 <= args.settle < args.steps:
+        raise ValueError("Require 1-320 images, positive batch size, and 0 <= settle < steps")
     torch.manual_seed(0)
-    ids = list(range(1320, 1320 + args.count))
-    gamma = torch.load(args.gamma_path, map_location="cpu", weights_only=True)[ids].float()
+    ids = list(range(args.start, args.start + args.count))
+    gamma_blob = torch.load(args.gamma_path, map_location="cpu", weights_only=True)
+    gamma_rows = gamma_rows_for_ids(ids, args.gamma_global_start, len(gamma_blob))
+    gamma = gamma_blob[gamma_rows].float()
+    gamma_manifest = None
+    if args.gamma_manifest is not None:
+        manifest_path = Path(args.gamma_manifest)
+        if not manifest_path.is_file():
+            raise ValueError(f"Gamma manifest does not exist: {manifest_path}")
+        gamma_manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     with h5py.File(args.dataset_path, "r") as dataset:
         truth = clevr_mask_patch(torch.from_numpy(dataset["mask"][ids]), 8)["patch_labels"]
-    model = _core(args.device, args.checkpoint, 256)
+    model = _core(
+        args.device, args.checkpoint, args.steps, args.dendritic_projection,
+        args.geodesic_steps, args.geodesic_radius, args.geodesic_contrast,
+        args.geodesic_temperature, args.geodesic_cap, args.graph_spatial_decay,
+        args.kuramoto_backend,
+    )
+    model.membrane_layer.vth = float(args.membrane_vth)
     captured = {}
 
     def dendrite_hook(module, inputs, output):
@@ -95,12 +134,12 @@ def main():
                                    ("gated_spike", model.last_component_spikes)):
                     for component in range(model.osc_dim):
                         histories[f"{key}_component{component}"] = value[:, component].cpu()
-                branches = torch.stack(captured["branch_state"], -1)[..., 64:]
+                branches = torch.stack(captured["branch_state"], -1)[..., args.settle:]
                 ratio = branches.sum(2).abs() / branches.abs().sum(2).clamp_min(1e-8)
                 branch_ratios.extend(ratio.mean((1, 2)).tolist())
-                phase = phase_locking_value(theta, settle=64, combine="mean").cpu()
+                phase = phase_locking_value(theta, settle=args.settle, combine="mean").cpu()
                 for key, history in histories.items():
-                    observed = history[..., 64:]
+                    observed = history[..., args.settle:]
                     stats = signal_statistics.setdefault(key, {"nodes": 0, "constant_nodes": 0,
                                                                "std_sum": 0.0, "mean_sum": 0.0})
                     temporal_std = observed.std(-1, unbiased=False)
@@ -109,7 +148,7 @@ def main():
                     stats["std_sum"] += float(temporal_std.sum())
                     stats["mean_sum"] += float(observed.mean(-1).sum())
                 for offset in range(b):
-                    matrices = {key: correlation(value[offset, :, 64:]).abs()
+                    matrices = {key: correlation(value[offset, :, args.settle:]).abs()
                                 for key, value in histories.items()}
                     matrices.update(phase_plv=phase[offset], spatial_only=kernel)
                     matrices["membrane_spatial"] = matrices["membrane"] * kernel
@@ -168,8 +207,24 @@ def main():
             digest.update(chunk)
     checkpoint_hash = digest.hexdigest()
     result = {"checkpoint": args.checkpoint, "checkpoint_sha256": checkpoint_hash,
-              "ids": ids, "diagnostic_steps": 256, "diagnostic_settle": 64,
+              "ids": ids, "diagnostic_steps": args.steps, "diagnostic_settle": args.settle,
               "gradient_steps": 64, "gradient_settle": 32, "seed": 0,
+              "gamma_source": {"path": args.gamma_path,
+                               "global_start": args.gamma_global_start,
+                               "manifest_path": args.gamma_manifest,
+                               "manifest": gamma_manifest,
+                               "local_rows": [gamma_rows[0], gamma_rows[-1]]},
+              "target_source": {"path": args.dataset_path, "ids": [ids[0], ids[-1]],
+                                "ground_truth_used_for_prediction": False},
+              "core_config": {"membrane_vth": args.membrane_vth,
+                              "dendritic_projection": args.dendritic_projection,
+                              "graph_spatial_decay": args.graph_spatial_decay,
+                              "geodesic_steps": args.geodesic_steps,
+                              "geodesic_radius": args.geodesic_radius,
+                              "geodesic_contrast": args.geodesic_contrast,
+                              "geodesic_temperature": args.geodesic_temperature,
+                              "geodesic_cap": args.geodesic_cap,
+                              "kuramoto_backend": args.kuramoto_backend},
               "pair_diagnostics": diagnostics, "gradient_connectivity": gradients,
               "signal_statistics": {key: {
                   "node_count": stats["nodes"],

@@ -101,6 +101,7 @@ def main():
     parser.add_argument("--count", type=int, default=64)
     parser.add_argument("--batch-size", type=int, default=8)
     parser.add_argument("--device", default="cuda")
+    parser.add_argument("--dendritic-projection", choices=["shared", "per_region"], default="shared")
     parser.add_argument("--membrane-vth", type=float, default=.06)
     parser.add_argument("--min-clusters", type=int, nargs="+", default=[3, 4, 5])
     parser.add_argument("--max-clusters", type=int, nargs="+", default=[10, 12, 14])
@@ -114,7 +115,7 @@ def main():
     gamma = torch.load(args.gamma_path, map_location="cpu", weights_only=True)[ids].float()
     with h5py.File(args.dataset_path, "r") as dataset:
         truth = clevr_mask_patch(torch.from_numpy(dataset["mask"][ids]), 8)["patch_labels"]
-    model = _core(args.device, args.checkpoint, 256)
+    model = _core(args.device, args.checkpoint, 256, args.dendritic_projection)
     model.membrane_layer.vth = args.membrane_vth
     kernel = spatial_kernel(1.5)
     histories = {"membrane": [], "gated_spike": []}

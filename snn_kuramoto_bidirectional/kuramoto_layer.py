@@ -16,7 +16,7 @@ class graphVectorKuramoto(nn.Module):
     Strictly aligns with Eq. (5) and OT Surrogate mechanics.
     """
     def __init__(self, N, D=2, K=1.0, dt=1.0, alpha_scale=1.0, device="cuda", freq_gain=0.0,
-                 spike_pulse_gain=0.0):
+                 spike_pulse_gain=0.0, kuramoto_backend="pairwise"):
         super().__init__()
         self.N = N
         self.D = D
@@ -24,6 +24,9 @@ class graphVectorKuramoto(nn.Module):
         self.dt = dt
         self.alpha_scale = alpha_scale # alpha_0 in paper
         self.device = device
+        if kuramoto_backend not in ("pairwise", "factorized"):
+            raise ValueError("kuramoto_backend must be 'pairwise' or 'factorized'")
+        self.kuramoto_backend = kuramoto_backend
 
         # Sensory frequency modulation.
         #
@@ -70,12 +73,32 @@ class graphVectorKuramoto(nn.Module):
         # REMOVED: self.alpha = nn.Parameter(...) 
         # Reason: alpha must be derived from A, not learned freely.
 
-    def forward(self, theta_prev, gamma, A=None, spike=None):
+    def prepare_coupling(self, A, batch_size=None, num_units=None, device=None):
+        """Precompute peer-compatible lag kernels for a fixed graph."""
+        if A is None:
+            if batch_size is None or num_units is None:
+                raise ValueError("batch_size and num_units are required when A is None.")
+            A_lat = torch.ones(batch_size, num_units, num_units, device=device)
+            return A_lat, A_lat, torch.zeros_like(A_lat)
+
+        A_lat = 0.5 * (A + A.transpose(1, 2))
+        A_lat = torch.relu(A_lat) + 1e-6
+        cost_matrix = 1.0 / A_lat
+        c_min = cost_matrix.min(dim=1, keepdim=True)[0].min(dim=2, keepdim=True)[0]
+        c_max = cost_matrix.max(dim=1, keepdim=True)[0].max(dim=2, keepdim=True)[0]
+        norm_cost = (cost_matrix - c_min) / (c_max - c_min + 1e-6)
+        direction = self.direction_learner - self.direction_learner.transpose(0, 1)
+        alpha_matrix = torch.tanh(direction).unsqueeze(0) * norm_cost
+        alpha = self.alpha_scale * alpha_matrix
+        return A_lat, A_lat * torch.cos(alpha), A_lat * torch.sin(alpha)
+
+    def forward(self, theta_prev, gamma, A=None, spike=None, coupling=None):
         """
         theta_prev : [B, H, D] Oscillator phases
         gamma      : [B, H] scalar drive broadcast over D, or [B, H, D] vector drive
         A          : [B, H, H] Connectivity matrix (Structural priors)
         spike      : [B, H] spikes from the previous step, for pulse coupling
+        coupling   : optional precomputed (A_lat, A*cos(alpha), A*sin(alpha))
         """
         B, H, D = theta_prev.shape
         if gamma.dim() == 2:
@@ -87,42 +110,42 @@ class graphVectorKuramoto(nn.Module):
         error_bound.validate_kuramoto_layer_graph_vector_kuramoto_forward(H, gamma)
         device = theta_prev.device
 
-        # 1. Handle Graph Structure & OT Surrogate
-        if A is None:
-            # Fallback if no graph provided
-            A_lat = torch.ones(B, H, H, device=device)
-            alpha = torch.zeros(B, H, H, 1, device=device)
+        # 1. Graph structure and lag kernels. The pairwise default deliberately
+        # retains the original computation order; factorized is opt-in.
+        if self.kuramoto_backend == "factorized":
+            if coupling is None:
+                coupling = self.prepare_coupling(
+                    A, batch_size=B, num_units=H, device=device
+                )
+            A_lat, lag_cos, lag_sin = coupling
+            sin_theta, cos_theta = torch.sin(theta_prev), torch.cos(theta_prev)
+            interaction = (
+                cos_theta * torch.bmm(lag_cos, sin_theta)
+                - sin_theta * torch.bmm(lag_cos, cos_theta)
+                - cos_theta * torch.bmm(lag_sin, cos_theta)
+                - sin_theta * torch.bmm(lag_sin, sin_theta)
+            )
+            coupling_term = (self.K / float(H)) * interaction
         else:
-            # Symmetrize connectivity
-            A_lat = 0.5 * (A + A.transpose(1, 2))
-            A_lat = torch.relu(A_lat) + 1e-6 # Avoid div by zero
-
-            # --- OT-Derived Phase Lag (Section 3.3 in Paper) ---
-            # Cost C_ij = 1 / A_ij
-            cost_matrix = 1.0 / A_lat 
-            
-            # Normalize cost to [0, 1] per batch to stabilize
-            c_min = cost_matrix.min(dim=1, keepdim=True)[0].min(dim=2, keepdim=True)[0]
-            c_max = cost_matrix.max(dim=1, keepdim=True)[0].max(dim=2, keepdim=True)[0]
-            norm_cost = (cost_matrix - c_min) / (c_max - c_min + 1e-6)
-            direction = self.direction_learner - self.direction_learner.transpose(0, 1) # [N, N]
-            direction_mask = torch.tanh(direction)
-            alpha_matrix = direction_mask.unsqueeze(0) * norm_cost # [B, N, N]
-            # alpha_ij = alpha_0 * norm(C_ij)
-            # Expand to [B, H, H, 1] to broadcast over D dim
-            # alpha = (self.alpha_scale * norm_cost).unsqueeze(-1)
-            alpha = (self.alpha_scale * alpha_matrix).unsqueeze(-1)
-
-        # 2. Kuramoto Dynamics
-        theta_i = theta_prev.unsqueeze(2) # [B, H, 1, D]
-        theta_j = theta_prev.unsqueeze(1) # [B, 1, H, D]
-
-        # Interaction term: sin(theta_j - theta_i - alpha_ij)
-        phase_diff = theta_j - theta_i - alpha
-        
-        # Weighted sum by adjacency A_ij
-        interaction = torch.sum(A_lat.unsqueeze(-1) * torch.sin(phase_diff), dim=2)
-        coupling = (self.K / float(H)) * interaction
+            if A is None:
+                A_lat = torch.ones(B, H, H, device=device)
+                alpha = torch.zeros(B, H, H, 1, device=device)
+            else:
+                A_lat = 0.5 * (A + A.transpose(1, 2))
+                A_lat = torch.relu(A_lat) + 1e-6
+                cost_matrix = 1.0 / A_lat
+                c_min = cost_matrix.min(dim=1, keepdim=True)[0].min(dim=2, keepdim=True)[0]
+                c_max = cost_matrix.max(dim=1, keepdim=True)[0].max(dim=2, keepdim=True)[0]
+                norm_cost = (cost_matrix - c_min) / (c_max - c_min + 1e-6)
+                direction = self.direction_learner - self.direction_learner.transpose(0, 1)
+                direction_mask = torch.tanh(direction)
+                alpha_matrix = direction_mask.unsqueeze(0) * norm_cost
+                alpha = (self.alpha_scale * alpha_matrix).unsqueeze(-1)
+            theta_i = theta_prev.unsqueeze(2)
+            theta_j = theta_prev.unsqueeze(1)
+            phase_diff = theta_j - theta_i - alpha
+            interaction = torch.sum(A_lat.unsqueeze(-1) * torch.sin(phase_diff), dim=2)
+            coupling_term = (self.K / float(H)) * interaction
 
         # 3. Sensory Drive (Corrected to Sinusoidal)
         # kappa * sin(gamma - theta); gamma is already [B, H, 1] or [B, H, D]
@@ -132,7 +155,7 @@ class graphVectorKuramoto(nn.Module):
         omega_eff = self.omega
         if self.freq_gain is not None:
             omega_eff = omega_eff + self.freq_gain * gamma
-        theta_dot = omega_eff + coupling + drive_term
+        theta_dot = omega_eff + coupling_term + drive_term
 
         # 5. Pulse coupling: spikes arrive through the same graph.
         if spike is not None and self.spike_pulse_gain is not None:

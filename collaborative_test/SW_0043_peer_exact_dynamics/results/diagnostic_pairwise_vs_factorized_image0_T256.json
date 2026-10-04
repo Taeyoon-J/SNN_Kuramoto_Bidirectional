@@ -1,0 +1,21 @@
+{
+  "checkpoint": "trained_models/SW_0041_BIM6_s0/core.pt",
+  "gamma_path": "/work/USERS/tkim1/gamma_sequences/wm_patch_gamma_seq_k8_grid16.pt",
+  "global_image_id": 0,
+  "rollout_steps": 256,
+  "comparison": "same checkpoint, one aligned gamma batch, one diagnostic SGD update",
+  "diagnostic_loss": "mean(membrane^2) + 0.01 * mean(theta^2); not the training objective",
+  "state_dict_keys_identical": true,
+  "max_abs_forward_difference": {
+    "spikes": 4.649162292480469e-06,
+    "membrane": 3.886222839355469e-05,
+    "theta": 6.866455078125e-05
+  },
+  "max_abs_gradient_difference": 0.000148773193359375,
+  "all_compared_gradients_finite": true,
+  "max_abs_parameter_update_difference": 1.1920928955078125e-07,
+  "backend_losses": {
+    "pairwise": 36.45099639892578,
+    "factorized": 36.45099639892578
+  }
+}

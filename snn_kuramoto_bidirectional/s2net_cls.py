@@ -98,6 +98,7 @@ class S2NetCore(nn.Module):
         self.spike_spatial_time_aggregate = hparams.spike_spatial_time_aggregate
 
         graph_mode = getattr(hparams, "graph_mode", "static")
+        self.kuramoto_backend = getattr(hparams, "kuramoto_backend", "pairwise")
         if hparams.sc is None:
             error_bound.validate_s2net_cls_s2net_core_init(graph_mode)
             self.register_buffer("sc", torch.eye(self.in_dim))
@@ -138,6 +139,11 @@ class S2NetCore(nn.Module):
                 temperature=float(getattr(hparams, "graph_temperature", 0.1)),
                 grid_size=getattr(hparams, "spike_spatial_grid_size", None),
                 spatial_decay=getattr(hparams, "graph_spatial_decay", None),
+                geodesic_steps=int(getattr(hparams, "geodesic_steps", 0)),
+                geodesic_radius=float(getattr(hparams, "geodesic_radius", 1.5)),
+                geodesic_contrast=float(getattr(hparams, "geodesic_contrast", 2.0)),
+                geodesic_temperature=float(getattr(hparams, "geodesic_temperature", 0.5)),
+                geodesic_cap=float(getattr(hparams, "geodesic_cap", 16.0)),
                 feedback_strength=float(getattr(hparams, "graph_feedback_strength", 0.0)),
                 feedback_momentum=float(getattr(hparams, "graph_feedback_momentum", 0.9)),
             )
@@ -146,6 +152,7 @@ class S2NetCore(nn.Module):
             N=self.in_dim, D=self.osc_dim, K=hparams.k, dt=hparams.dt, alpha_scale=1.0,
             device=device, freq_gain=float(getattr(hparams, "freq_gain", 0.0)),
             spike_pulse_gain=float(getattr(hparams, "spike_pulse_gain", 0.0)),
+            kuramoto_backend=self.kuramoto_backend,
         )
 
         self.dendric_layer = DendricLayer(
@@ -164,6 +171,7 @@ class S2NetCore(nn.Module):
                 if self.gate_mode == "phase_mean" or self.spike_per_component
                 else self.osc_dim
             ),
+            dendritic_projection=getattr(hparams, "dendritic_projection", "shared"),
         )
         self.membrane_layer = MembraneLayer(
             output_dim=self.in_dim,
@@ -236,6 +244,11 @@ class S2NetCore(nn.Module):
         self.dendric_layer.set_neuron_state(B * spike_fold)
         self.membrane_layer.set_neuron_state(B * spike_fold)
         pulse_enabled = self.kuramoto.spike_pulse_gain is not None
+        coupling = None
+        if self.kuramoto_backend == "factorized" and not feedback:
+            coupling = self.kuramoto.prepare_coupling(
+                sc, batch_size=B, num_units=self.in_dim, device=gamma_seq.device
+            )
 
         theta_hist = []
         outputs = []
@@ -252,6 +265,7 @@ class S2NetCore(nn.Module):
                 drive_t,
                 A=sc,
                 spike=self.membrane_layer.spike if pulse_enabled else None,
+                coupling=coupling,
             )
             if feedback:
                 alignment = self.graph_generator.update_alignment(alignment, theta)

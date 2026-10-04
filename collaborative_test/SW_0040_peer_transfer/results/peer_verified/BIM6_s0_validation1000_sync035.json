@@ -1,0 +1,34 @@
+{
+ "split": "validation",
+ "images": 1000,
+ "oracle_graph": false,
+ "membrane_quantile": null,
+ "readout": "spikes",
+ "contract_version": 1,
+ "manifest_version": 1,
+ "checkpoint": "/work/USERS/tkim1/runs/BIM6_s0/core.pt",
+ "classifier": "spike_synchrony_components",
+ "background": "largest_component",
+ "foreground_threshold": 0.15,
+ "synchrony_threshold": 0.35,
+ "target_foreground": null,
+ "min_group_size": 2,
+ "metrics": {
+  "fg_ari": 0.6248469242998083,
+  "foreground_iou": 0.6686825063519104,
+  "matched_object_iou": 0.4413920830921834
+ },
+ "valid_count": {
+  "fg_ari": 1000,
+  "foreground_iou": 1000,
+  "matched_object_iou": 1000
+ },
+ "diagnostics": {
+  "spike_rate": 0.5235159963369369,
+  "groups_per_image_mean": 5.416,
+  "images_with_no_group": 3,
+  "plv_mean": 0.7086249589920044,
+  "predicted_foreground_fraction": 0.12349609285593033,
+  "target_foreground_fraction": 0.11629296839237213
+ }
+}

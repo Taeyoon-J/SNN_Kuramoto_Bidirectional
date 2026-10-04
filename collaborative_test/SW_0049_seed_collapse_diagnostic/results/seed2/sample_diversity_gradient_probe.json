@@ -1,0 +1,193 @@
+{
+  "checkpoint": "/Data0/kevinswk/patch_v2_sw/trained_models/SW_0042_HDF5_aligned_BIM6_s2/core.pt",
+  "gamma_path": "/Data0/kevinswk/patch_v2/trained_models/readme_patch_eval_20261002/gamma_train.pt",
+  "gamma_train_rows": [
+    0,
+    63
+  ],
+  "batch_size": 16,
+  "probe_batch_count": 4,
+  "model_protocol": {
+    "steps": 64,
+    "plv_settle": 32,
+    "membrane_vth": 0.06,
+    "dendritic_projection": "shared",
+    "graph_spatial_decay": 0.35,
+    "geodesic_steps": 3,
+    "kuramoto_backend": "factorized",
+    "activity_source": "sigmoid(membrane)"
+  },
+  "per_batch": [
+    {
+      "batch_rows": [
+        0,
+        15
+      ],
+      "raw_losses": {
+        "baseline_phase_objective": 4.447530269622803,
+        "baseline_spike_phase_objective_unweighted": 1.9459409713745117,
+        "baseline_total_with_spike_plv_weight_5": 14.177234649658203,
+        "sample_activity_diversity_unweighted": 0.9944851398468018,
+        "phase_parts": {
+          "plv_bimodality": 0.10230987519025803,
+          "plv_balance": 0.0001604845019755885,
+          "plv_collapse": 3.8255245685577393,
+          "plv_coherence": 0.013083178550004959,
+          "total": 4.447530269622803
+        },
+        "spike_plv_parts": {
+          "plv_bimodality": 0.0054789455607533455,
+          "plv_balance": 0.008478984236717224,
+          "plv_collapse": 1.7777007818222046,
+          "plv_coherence": 0.10115329176187515,
+          "total": 1.9459409713745117
+        }
+      },
+      "gradient_norms": {
+        "baseline_total": {
+          "graph_generator": 0.16236884891986847,
+          "upstream_kuramoto": 1.1427215337753296,
+          "dendrite_membrane": 0.01693309098482132,
+          "all_parameters": 1.1543235778808594
+        },
+        "sample_activity_diversity_unweighted": {
+          "graph_generator": 0.001312237698584795,
+          "upstream_kuramoto": 0.045869335532188416,
+          "dendrite_membrane": 0.03220207244157791,
+          "all_parameters": 0.056059714406728745
+        }
+      }
+    },
+    {
+      "batch_rows": [
+        16,
+        31
+      ],
+      "raw_losses": {
+        "baseline_phase_objective": 4.43906307220459,
+        "baseline_spike_phase_objective_unweighted": 1.9503686428070068,
+        "baseline_total_with_spike_plv_weight_5": 14.190906524658203,
+        "sample_activity_diversity_unweighted": 0.995227038860321,
+        "phase_parts": {
+          "plv_bimodality": 0.10240890085697174,
+          "plv_balance": 0.00016708491602912545,
+          "plv_collapse": 3.8163232803344727,
+          "plv_coherence": 0.01323169469833374,
+          "total": 4.43906307220459
+        },
+        "spike_plv_parts": {
+          "plv_bimodality": 0.005885982420295477,
+          "plv_balance": 0.008556006476283073,
+          "plv_collapse": 1.7787272930145264,
+          "plv_coherence": 0.10153086483478546,
+          "total": 1.9503686428070068
+        }
+      },
+      "gradient_norms": {
+        "baseline_total": {
+          "graph_generator": 0.20291729271411896,
+          "upstream_kuramoto": 1.0158836841583252,
+          "dendrite_membrane": 0.015918921679258347,
+          "all_parameters": 1.0360735654830933
+        },
+        "sample_activity_diversity_unweighted": {
+          "graph_generator": 0.002977991010993719,
+          "upstream_kuramoto": 0.03714899718761444,
+          "dendrite_membrane": 0.025561830028891563,
+          "all_parameters": 0.04519207403063774
+        }
+      }
+    },
+    {
+      "batch_rows": [
+        32,
+        47
+      ],
+      "raw_losses": {
+        "baseline_phase_objective": 4.442719459533691,
+        "baseline_spike_phase_objective_unweighted": 1.9456400871276855,
+        "baseline_total_with_spike_plv_weight_5": 14.170920372009277,
+        "sample_activity_diversity_unweighted": 0.9951918721199036,
+        "phase_parts": {
+          "plv_bimodality": 0.10230440646409988,
+          "plv_balance": 0.00016142072854563594,
+          "plv_collapse": 3.820805549621582,
+          "plv_coherence": 0.01294613629579544,
+          "total": 4.442719459533691
+        },
+        "spike_plv_parts": {
+          "plv_bimodality": 0.005488453432917595,
+          "plv_balance": 0.008554014377295971,
+          "plv_collapse": 1.7764805555343628,
+          "plv_coherence": 0.10137733817100525,
+          "total": 1.9456400871276855
+        }
+      },
+      "gradient_norms": {
+        "baseline_total": {
+          "graph_generator": 0.19749902188777924,
+          "upstream_kuramoto": 1.5962742567062378,
+          "dendrite_membrane": 0.017739923670887947,
+          "all_parameters": 1.6085435152053833
+        },
+        "sample_activity_diversity_unweighted": {
+          "graph_generator": 0.0008044044952839613,
+          "upstream_kuramoto": 0.05690238997340202,
+          "dendrite_membrane": 0.022045923396945,
+          "all_parameters": 0.0610291063785553
+        }
+      }
+    },
+    {
+      "batch_rows": [
+        48,
+        63
+      ],
+      "raw_losses": {
+        "baseline_phase_objective": 4.443076133728027,
+        "baseline_spike_phase_objective_unweighted": 1.9519520998001099,
+        "baseline_total_with_spike_plv_weight_5": 14.202836990356445,
+        "sample_activity_diversity_unweighted": 0.9938740134239197,
+        "phase_parts": {
+          "plv_bimodality": 0.10245548188686371,
+          "plv_balance": 0.00018180435290560126,
+          "plv_collapse": 3.8199777603149414,
+          "plv_coherence": 0.013094880618155003,
+          "total": 4.443076133728027
+        },
+        "spike_plv_parts": {
+          "plv_bimodality": 0.006023888476192951,
+          "plv_balance": 0.008546782657504082,
+          "plv_collapse": 1.7797328233718872,
+          "plv_coherence": 0.1012163907289505,
+          "total": 1.9519520998001099
+        }
+      },
+      "gradient_norms": {
+        "baseline_total": {
+          "graph_generator": 0.3014896512031555,
+          "upstream_kuramoto": 1.692039132118225,
+          "dendrite_membrane": 0.01818646304309368,
+          "all_parameters": 1.718785285949707
+        },
+        "sample_activity_diversity_unweighted": {
+          "graph_generator": 0.0010603253031149507,
+          "upstream_kuramoto": 0.05220717564225197,
+          "dendrite_membrane": 0.03491722792387009,
+          "all_parameters": 0.06281660497188568
+        }
+      }
+    }
+  ],
+  "gradient_norms": {
+    "baseline_total": 1.3794314861297607,
+    "sample_activity_diversity_unweighted": 0.056274374946951866,
+    "unweighted_diversity_to_baseline": 0.04079533888619549
+  },
+  "suggested_weights": {
+    "target_0.1x_baseline_gradient": 2.451260431466558,
+    "target_1.0x_baseline_gradient": 24.512604314665577,
+    "interpretation": "weight * raw diversity gradient norm divided by baseline total gradient norm; suggestions for coarse pilot only"
+  },
+  "ground_truth_used": false
+}

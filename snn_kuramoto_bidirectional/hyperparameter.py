@@ -78,6 +78,15 @@ class S2NetHyperparameters:
     # scored ARI 0.056 against 0.038 for the randomly initialised graph, so this
     # is a better starting point. None disables it.
     graph_spatial_decay: object = 0.55
+    # Use the original pairwise angle-difference rollout by default. The
+    # factorized mode is algebraically equivalent and caches graph kernels.
+    kuramoto_backend: str = "pairwise"
+    # Differentiable route distance on the spatial grid. Zero preserves legacy.
+    geodesic_steps: int = 0
+    geodesic_radius: float = 1.5
+    geodesic_contrast: float = 2.0
+    geodesic_temperature: float = 0.5
+    geodesic_cap: float = 16.0
 
     # Let the graph track the synchrony it produces, so oscillators that stay in
     # phase couple more strongly. Held fixed for the whole rollout the graph has
@@ -106,6 +115,7 @@ class S2NetHyperparameters:
     low_n: float = -4.0
     high_n: float = 0.0
     branch: int = 4
+    dendritic_projection: str = "shared"
 
     # Membrane layer.
     #
@@ -147,6 +157,16 @@ class S2NetHyperparameters:
     spike_spatial_time_aggregate: str = "mean"
 
     def validate(self):
+        if self.kuramoto_backend not in ("pairwise", "factorized"):
+            raise ValueError("kuramoto_backend must be 'pairwise' or 'factorized'")
+        if self.dendritic_projection not in ("shared", "per_region"):
+            raise ValueError("dendritic_projection must be 'shared' or 'per_region'")
+        if self.geodesic_steps < 0:
+            raise ValueError("geodesic_steps must be nonnegative")
+        if self.geodesic_radius <= 0 or self.geodesic_temperature <= 0 or self.geodesic_cap <= 0:
+            raise ValueError("geodesic_radius, geodesic_temperature, and geodesic_cap must be positive")
+        if self.geodesic_contrast <= 0:
+            raise ValueError("geodesic_contrast must be positive")
         error_bound.validate_hyperparameter_s2net_hyperparameters_validate(self)
         return self
 
