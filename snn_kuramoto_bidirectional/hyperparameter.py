@@ -122,6 +122,16 @@ class S2NetHyperparameters:
     dt: float = 0.1
     freq_gain: float = 0.0
 
+    # Centre the arriving pulse across oscillators before it acts on the phases.
+    #
+    # Without it, pulse coupling drove the system to global synchrony: with dense
+    # firing, A @ spike is nearly uniform across units and the term reduces to a
+    # constant times cos(theta), a force pulling every phase the same way rather
+    # than a signal about which units belong together. Measured, firing went from
+    # 0.0036 to 0.74 and ARI collapsed to 0.006. Centring removes that uniform
+    # component. Only matters when spike_pulse_gain is non-zero.
+    center_pulse: bool = True
+
     # Pulse coupling: spikes act back on the phases through the same graph.
     # Without it the flow is one-way and the spiking layers receive no gradient
     # at all under the usual loss weights, so they sit at their initialisation
@@ -235,6 +245,8 @@ class S2NetHyperparameters:
             raise ValueError("membrane_vth must be positive.")
         if self.membrane_low_m > self.membrane_high_m:
             raise ValueError("membrane_low_m must not exceed membrane_high_m.")
+        if not isinstance(self.center_pulse, bool):
+            raise ValueError("center_pulse must be a bool.")
         if self.spike_pulse_gain < 0:
             raise ValueError("spike_pulse_gain must be non-negative.")
         if self.readout_slots < 0 or self.readout_slots == 1:

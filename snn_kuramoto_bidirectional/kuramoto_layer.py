@@ -10,7 +10,7 @@ class graphVectorKuramoto(nn.Module):
     Strictly aligns with Eq. (5) and OT Surrogate mechanics.
     """
     def __init__(self, N, D=2, K=1.0, dt=1.0, alpha_scale=1.0, device="cuda", freq_gain=0.0,
-                 spike_pulse_gain=0.0):
+                 spike_pulse_gain=0.0, center_pulse=True):
         super().__init__()
         self.N = N
         self.D = D
@@ -50,6 +50,7 @@ class graphVectorKuramoto(nn.Module):
         # replay on a trained checkpoint improved ARI monotonically with gain up
         # to 1.0, while a densely firing neuron at high gain destabilised the
         # phases, so sparse pulses are the useful regime.
+        self.center_pulse = bool(center_pulse)
         self.spike_pulse_gain = (
             nn.Parameter(torch.tensor(float(spike_pulse_gain)))
             if float(spike_pulse_gain) != 0.0 else None
@@ -146,9 +147,23 @@ class graphVectorKuramoto(nn.Module):
             omega_eff = omega_eff + self.freq_gain * gamma
         theta_dot = omega_eff + coupling_term + drive_term
 
-        # 5. Pulse coupling: spikes arrive through the same graph.
+        # 5. Pulse coupling: spikes arrive through the same graph, closing the
+        #    loop from the spiking layers back onto the phases. This is the
+        #    "bidirectional" the architecture is named for, and it is off unless
+        #    spike_pulse_gain is set.
+        #
+        #    The arriving pulse is centred across oscillators first. Without that
+        #    it drove the system straight to global synchrony: when firing is
+        #    dense, A @ spike is nearly uniform across units, so the term becomes
+        #    a constant times cos(theta) -- a force that pulls every phase the
+        #    same way, which is the opposite of a signal about which units belong
+        #    together. Measured without centring, firing went from 0.0036 to 0.74
+        #    and ARI collapsed to 0.006. Centring removes exactly the uniform
+        #    component and leaves the part that differs between oscillators.
         if spike is not None and self.spike_pulse_gain is not None:
             arriving = torch.bmm(A_lat, spike.unsqueeze(-1)).squeeze(-1)
+            if self.center_pulse:
+                arriving = arriving - arriving.mean(dim=1, keepdim=True)
             theta_dot = theta_dot + (
                 self.spike_pulse_gain * arriving.unsqueeze(-1) * torch.cos(theta_prev)
             )

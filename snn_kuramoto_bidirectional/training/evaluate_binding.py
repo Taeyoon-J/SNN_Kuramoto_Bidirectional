@@ -172,6 +172,15 @@ def main():
     parser.add_argument("--osc-dim", type=int, default=4, help="must match training")
     parser.add_argument("--gamma-time-phases", type=int, default=0, help="must match training")
     parser.add_argument("--spike-per-component", action="store_true", help="must match training")
+    parser.add_argument("--spike-pulse-gain", type=float, default=0.0,
+                        help="must match training")
+    parser.add_argument("--no-center-pulse", action="store_true",
+                        help="must match training")
+    parser.add_argument(
+        "--oracle-graph",
+        action="store_true",
+        help="couple only within a ground-truth group; must match training",
+    )
     parser.add_argument(
         "--gate-mode",
         choices=["sigmoid", "raw", "phase_mean"],
@@ -222,6 +231,8 @@ def main():
         gate_mode=args.gate_mode, spike_classify_method="spatial_components",
         spike_spatial_grid_size=(args.grid, args.grid),
         gamma_time_phases=args.gamma_time_phases,
+        spike_pulse_gain=args.spike_pulse_gain,
+        center_pulse=not args.no_center_pulse,
         spike_per_component=args.spike_per_component,
         readout_slots=args.readout_slots, readout_source=args.readout_source,
         readout_temperature=args.readout_temperature,
@@ -232,10 +243,20 @@ def main():
     core.load_state_dict(torch.load(args.checkpoint, map_location=args.device))
     core.eval()
 
+    def oracle_graph(index_slice):
+        rows = labels[index_slice].long()
+        same = (rows.unsqueeze(2) == rows.unsqueeze(1)).float()
+        same = same * (1.0 - torch.eye(same.size(-1)).unsqueeze(0))
+        return same / same.sum(dim=-1, keepdim=True).clamp_min(1e-8)
+
     plv, plv_parts, spike_sync, trains = [], [], [], []
     spike_parts = []
     with torch.no_grad():
         for start in range(0, gamma.size(0), 25):
+            if args.oracle_graph:
+                core.forced_graph = oracle_graph(
+                    slice(start, min(start + 25, gamma.size(0)))
+                ).to(args.device)
             _, _, membrane, theta = core(gamma[start:start + 25],
                                          return_core_out=True, return_theta=True)
             spikes = (membrane > torch.quantile(

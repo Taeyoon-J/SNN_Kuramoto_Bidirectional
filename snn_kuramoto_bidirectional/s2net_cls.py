@@ -84,6 +84,9 @@ class S2NetCore(nn.Module):
         self.theta_init = getattr(hparams, "theta_init", "zeros")
         self.theta_init_noise = float(getattr(hparams, "theta_init_noise", 0.0))
         self.gate_mode = getattr(hparams, "gate_mode", "sigmoid")
+        # Replaces the coupling graph when set, so a known graph can be supplied
+        # instead of the learned one. Not a parameter and not saved.
+        self.forced_graph = None
         self.spike_per_component = bool(getattr(hparams, "spike_per_component", False))
         self.spike_classify_method = hparams.spike_classify_method
         self.spike_rhythm_threshold = hparams.spike_rhythm_threshold
@@ -151,6 +154,7 @@ class S2NetCore(nn.Module):
             N=self.in_dim, D=self.osc_dim, K=hparams.k, dt=hparams.dt, alpha_scale=1.0,
             device=device, freq_gain=float(getattr(hparams, "freq_gain", 0.0)),
             spike_pulse_gain=float(getattr(hparams, "spike_pulse_gain", 0.0)),
+            center_pulse=bool(getattr(hparams, "center_pulse", True)),
         )
 
         self.dendric_layer = DendricLayer(
@@ -219,7 +223,12 @@ class S2NetCore(nn.Module):
         gamma_seq = gamma_seq.to(self.device)
         B = gamma_seq.size(0)
         feedback = self.graph_generator is not None and self.graph_generator.uses_feedback
-        if self.graph_generator is not None:
+        if self.forced_graph is not None:
+            # An externally supplied coupling graph, for oracle experiments. Set
+            # per batch by the caller; the learned generator is bypassed.
+            sc = self.forced_graph.to(gamma_seq.device, gamma_seq.dtype)
+            feedback = False
+        elif self.graph_generator is not None:
             sc = self.graph_generator(gamma_seq)
         else:
             sc = self.sc.to(gamma_seq.device).unsqueeze(0).expand(B, -1, -1)

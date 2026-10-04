@@ -52,6 +52,7 @@ def train_s2net_core(
     plv_source="phase",
     plv_combine="mean",
     spike_plv_weight=0.0,
+    oracle_labels=None,
     gamma_generator=None,
     encoder_lr=None,
     recon_grid=None,
@@ -100,6 +101,8 @@ def train_s2net_core(
         epoch_parts = {}
         for batch in dataloader:
             raw_batch = _unpack_gamma_batch(batch).to(device)
+            if oracle_labels is not None:
+                core.forced_graph = _oracle_graph(oracle_labels, batch[1]).to(device)
             recon_target = None
             if gamma_generator is not None:
                 # the reconstruction target is pooled RGB, external to the model,
@@ -278,6 +281,20 @@ def _forward_with_plv(core, gamma_seq, criterion, plv_settle, plv_source="phase"
     return groups, spikes, core_out, plv, theta
 
 
+def _oracle_graph(labels, indices, row_total=1.0):
+    """
+    Couple only within a ground-truth group. [B, N, N]
+
+    Background is one group like any other. Rows are normalised to `row_total`
+    so the coupling strength the model sees is comparable to the learned graph's,
+    whose rows carry about 32 x 0.032 of weight.
+    """
+    rows = labels[indices].long()
+    same = (rows.unsqueeze(2) == rows.unsqueeze(1)).float()
+    same = same * (1.0 - torch.eye(same.size(-1)).unsqueeze(0))
+    return same / same.sum(dim=-1, keepdim=True).clamp_min(1e-8) * float(row_total)
+
+
 def _spike_component_plv(core, plv_settle):
     """
     Synchrony between per-component spike trains, combined by product. [B, N, N]
@@ -447,6 +464,26 @@ def main():
         help="Recurrent length for static drive mode. Defaults to the gamma channel count.",
     )
     parser.add_argument("--osc-dim", type=int, default=4)
+    parser.add_argument(
+        "--no-center-pulse",
+        action="store_true",
+        help=(
+            "Leave the arriving pulse uncentred, reproducing the configuration "
+            "that drove firing to 0.74 and ARI to 0.006."
+        ),
+    )
+    parser.add_argument(
+        "--oracle-graph-labels",
+        default=None,
+        help=(
+            "Patch-label blob. Couples only within a ground-truth group, rows "
+            "normalised to the same total weight the learned graph carries, and "
+            "bypasses the learned generator. An upper bound on what graph quality "
+            "is worth: swapping the graph in at inference only breaks the "
+            "operating point the model trained into, so this has to be trained with."
+        ),
+    )
+    parser.add_argument("--oracle-graph-key", default="labels_grid16")
     parser.add_argument(
         "--train-limit",
         type=int,
@@ -850,6 +887,7 @@ def main():
         theta_init_noise=args.theta_init_noise,
         freq_gain=args.freq_gain,
         spike_pulse_gain=args.spike_pulse_gain,
+        center_pulse=not args.no_center_pulse,
         graph_mode=args.graph_mode,
         graph_top_k=args.graph_top_k,
         graph_hidden_dim=args.graph_hidden_dim,
@@ -902,8 +940,20 @@ def main():
                 torch.load(args.input_encoder_path, map_location=args.device)
             )
             print(f"loaded pretrained encoder: {args.input_encoder_path}", flush=True)
+    oracle_labels = None
+    if args.oracle_graph_labels is not None:
+        blob = torch.load(args.oracle_graph_labels)
+        oracle_labels = blob[args.oracle_graph_key][: train_tensor.size(0)]
+        if oracle_labels.size(0) != train_tensor.size(0):
+            raise ValueError(
+                f"{args.oracle_graph_labels} has {oracle_labels.size(0)} label rows "
+                f"but training uses {train_tensor.size(0)} samples."
+            )
+        print(f"oracle coupling graph from {args.oracle_graph_labels}", flush=True)
+
     loader = DataLoader(
-        TensorDataset(train_tensor),
+        TensorDataset(train_tensor, torch.arange(train_tensor.size(0)))
+        if oracle_labels is not None else TensorDataset(train_tensor),
         batch_size=int(args.batch_size),
         shuffle=True,
     )
@@ -963,6 +1013,7 @@ def main():
         plv_source=args.plv_source,
         plv_combine=args.plv_combine,
         spike_plv_weight=args.spike_plv_weight,
+        oracle_labels=oracle_labels,
         gamma_generator=gamma_generator,
         encoder_lr=args.encoder_lr,
         recon_grid=args.gamma_patch_grid_size,
