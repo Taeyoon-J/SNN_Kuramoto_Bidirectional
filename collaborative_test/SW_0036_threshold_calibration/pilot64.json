@@ -1,0 +1,162 @@
+{
+  "checkpoint": "/Data0/kevinswk/patch_v2_sw/trained_models/SW_0003_membrane_plv_40ep_seed0/core.pt",
+  "ids": [
+    1320,
+    1383
+  ],
+  "intervention": "inference-only membrane vth sweep on frozen weights",
+  "settle": 64,
+  "steps": 256,
+  "spatial_sigma": 1.5,
+  "spectral_k": 10,
+  "warning": "Diagnostic only: checkpoint was trained at vth .06. GT is used only for metrics and pair AUC, never prediction.",
+  "rows": [
+    {
+      "threshold": 0.06,
+      "binary_event_rate": 1.0,
+      "binary_constant_fraction": 1.0,
+      "binary_temporal_std_mean": 0.0,
+      "membrane_distance_macro_auc": 0.5492414071673171,
+      "gated_spike_distance_macro_auc": 0.5524338563356156,
+      "binary_distance_macro_auc": 0.5,
+      "membrane_spatial_readout": {
+        "fg_ari": 0.5301100845750425,
+        "foreground_iou": 0.1843245951508311,
+        "matched_object_iou": 0.1766300759466105,
+        "predicted_groups_mean": 9.0
+      },
+      "gated_spike_spatial_readout": {
+        "fg_ari": 0.4870709153466233,
+        "foreground_iou": 0.17455966392882377,
+        "matched_object_iou": 0.1605335170221454,
+        "predicted_groups_mean": 9.0
+      }
+    },
+    {
+      "threshold": 0.25,
+      "binary_event_rate": 0.9839497208595276,
+      "binary_constant_fraction": 0.415618896484375,
+      "binary_temporal_std_mean": 0.08852940797805786,
+      "membrane_distance_macro_auc": 0.548223401809619,
+      "gated_spike_distance_macro_auc": 0.5436658795554495,
+      "binary_distance_macro_auc": 0.5167056868094226,
+      "membrane_spatial_readout": {
+        "fg_ari": 0.5203350587844635,
+        "foreground_iou": 0.18378157000597112,
+        "matched_object_iou": 0.17279391351463996,
+        "predicted_groups_mean": 9.0
+      },
+      "gated_spike_spatial_readout": {
+        "fg_ari": 0.4786547905524548,
+        "foreground_iou": 0.17383887791418512,
+        "matched_object_iou": 0.1632411561136389,
+        "predicted_groups_mean": 9.0
+      }
+    },
+    {
+      "threshold": 0.5,
+      "binary_event_rate": 0.938655436038971,
+      "binary_constant_fraction": 0.2286834716796875,
+      "binary_temporal_std_mean": 0.20354382693767548,
+      "membrane_distance_macro_auc": 0.5463785582530635,
+      "gated_spike_distance_macro_auc": 0.5505408320846525,
+      "binary_distance_macro_auc": 0.5323689465914474,
+      "membrane_spatial_readout": {
+        "fg_ari": 0.5217579980284828,
+        "foreground_iou": 0.18716693661657344,
+        "matched_object_iou": 0.17442717229180849,
+        "predicted_groups_mean": 9.0
+      },
+      "gated_spike_spatial_readout": {
+        "fg_ari": 0.48421601406577375,
+        "foreground_iou": 0.17279435505881258,
+        "matched_object_iou": 0.16149610439495932,
+        "predicted_groups_mean": 9.0
+      }
+    },
+    {
+      "threshold": 1.0,
+      "binary_event_rate": 0.8409884572029114,
+      "binary_constant_fraction": 0.217315673828125,
+      "binary_temporal_std_mean": 0.3099372982978821,
+      "membrane_distance_macro_auc": 0.537056686458259,
+      "gated_spike_distance_macro_auc": 0.5427643079487585,
+      "binary_distance_macro_auc": 0.5246205013017762,
+      "membrane_spatial_readout": {
+        "fg_ari": 0.49650346355442976,
+        "foreground_iou": 0.17804101521809632,
+        "matched_object_iou": 0.16355164568706798,
+        "predicted_groups_mean": 9.0
+      },
+      "gated_spike_spatial_readout": {
+        "fg_ari": 0.48338693201936983,
+        "foreground_iou": 0.17209066002385617,
+        "matched_object_iou": 0.1569722082008054,
+        "predicted_groups_mean": 9.0
+      }
+    },
+    {
+      "threshold": 2.0,
+      "binary_event_rate": 0.2993205487728119,
+      "binary_constant_fraction": 0.0006561279296875,
+      "binary_temporal_std_mean": 0.4472102224826813,
+      "membrane_distance_macro_auc": 0.5226700328592301,
+      "gated_spike_distance_macro_auc": 0.5278265277120616,
+      "binary_distance_macro_auc": 0.5225363112059149,
+      "membrane_spatial_readout": {
+        "fg_ari": 0.47275762813244904,
+        "foreground_iou": 0.1829941419372883,
+        "matched_object_iou": 0.16613208939050117,
+        "predicted_groups_mean": 9.0
+      },
+      "gated_spike_spatial_readout": {
+        "fg_ari": 0.4941241446411115,
+        "foreground_iou": 0.18264408616420405,
+        "matched_object_iou": 0.17032915265850218,
+        "predicted_groups_mean": 9.0
+      }
+    },
+    {
+      "threshold": 3.0,
+      "binary_event_rate": 0.060787200927734375,
+      "binary_constant_fraction": 0.0731658935546875,
+      "binary_temporal_std_mean": 0.22565299272537231,
+      "membrane_distance_macro_auc": 0.5403782712651682,
+      "gated_spike_distance_macro_auc": 0.525102300026263,
+      "binary_distance_macro_auc": 0.5266739700680655,
+      "membrane_spatial_readout": {
+        "fg_ari": 0.4636681639364831,
+        "foreground_iou": 0.18358451025748435,
+        "matched_object_iou": 0.16602095327727012,
+        "predicted_groups_mean": 9.0
+      },
+      "gated_spike_spatial_readout": {
+        "fg_ari": 0.4015616648026833,
+        "foreground_iou": 0.1657160947509465,
+        "matched_object_iou": 0.13203898722643378,
+        "predicted_groups_mean": 8.828125
+      }
+    },
+    {
+      "threshold": 4.0,
+      "binary_event_rate": 0.002746979473158717,
+      "binary_constant_fraction": 0.5982666015625,
+      "binary_temporal_std_mean": 0.032380111515522,
+      "membrane_distance_macro_auc": 0.5393566301828878,
+      "gated_spike_distance_macro_auc": 0.5192623287216024,
+      "binary_distance_macro_auc": 0.5188963614812034,
+      "membrane_spatial_readout": {
+        "fg_ari": 0.5201029539201241,
+        "foreground_iou": 0.1807848840550365,
+        "matched_object_iou": 0.17253686659901446,
+        "predicted_groups_mean": 9.0
+      },
+      "gated_spike_spatial_readout": {
+        "fg_ari": 0.2401561147908373,
+        "foreground_iou": 0.1676281678100231,
+        "matched_object_iou": 0.09680662751908728,
+        "predicted_groups_mean": 8.671875
+      }
+    }
+  ]
+}

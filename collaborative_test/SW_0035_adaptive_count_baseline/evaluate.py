@@ -101,9 +101,12 @@ def main():
     parser.add_argument("--count", type=int, default=64)
     parser.add_argument("--batch-size", type=int, default=8)
     parser.add_argument("--device", default="cuda")
+    parser.add_argument("--membrane-vth", type=float, default=.06)
     parser.add_argument("--min-clusters", type=int, nargs="+", default=[3, 4, 5])
     parser.add_argument("--max-clusters", type=int, nargs="+", default=[10, 12, 14])
     parser.add_argument("--eigen-thresholds", type=float, nargs="+", default=[.80, .85, .90, .95])
+    parser.add_argument("--selected-only", action="store_true",
+                        help="Run only pilot-selected adaptive configurations plus controls")
     args = parser.parse_args()
     if not 1 <= args.count <= 320:
         raise ValueError("count must be in [1, 320]")
@@ -112,6 +115,7 @@ def main():
     with h5py.File(args.dataset_path, "r") as dataset:
         truth = clevr_mask_patch(torch.from_numpy(dataset["mask"][ids]), 8)["patch_labels"]
     model = _core(args.device, args.checkpoint, 256)
+    model.membrane_layer.vth = args.membrane_vth
     kernel = spatial_kernel(1.5)
     histories = {"membrane": [], "gated_spike": []}
     with torch.no_grad():
@@ -128,39 +132,55 @@ def main():
         affinity_sets["gated_spike_spatial"].append(correlation(spike).abs() * kernel)
     decomposed = {source: [decomposition(a) for a in affinities]
                   for source, affinities in affinity_sets.items()}
+    count_low = 3 if args.selected_only else min(args.min_clusters)
+    count_high = 10 if args.selected_only else max(args.max_clusters)
+    label_cache = {
+        source: [{count: labels_from_vectors(vectors, count)
+                  for count in range(count_low, count_high + 1)}
+                 for _, vectors in items]
+        for source, items in decomposed.items()
+    }
     rows = []
-    for source, items in decomposed.items():
-        for low in args.min_clusters:
-            for high in args.max_clusters:
-                if low >= high:
-                    continue
-                predictions, counts = [], []
-                for values, vectors in items:
-                    count = choose_eigengap(values, low, high)
-                    counts.append(count)
-                    predictions.append(labels_from_vectors(vectors, count))
-                rows.append(summarize(f"{source}:eigengap:{low}-{high}", predictions, truth, counts))
-                for threshold in args.eigen_thresholds:
-                    predictions, counts = [], []
-                    for values, vectors in items:
-                        count = choose_threshold(values, threshold, low, high)
-                        counts.append(count)
-                        predictions.append(labels_from_vectors(vectors, count))
-                    rows.append(summarize(
-                        f"{source}:threshold:{threshold:g}:{low}-{high}",
-                        predictions, truth, counts))
+    configurations = (
+        [("gated_spike_spatial", "eigengap", None, 5, 10),
+         ("membrane_spatial", "threshold", .8, 3, 10)]
+        if args.selected_only else
+        [(source, policy, threshold, low, high)
+         for source in decomposed
+         for low in args.min_clusters for high in args.max_clusters if low < high
+         for policy, threshold in [("eigengap", None)] +
+         [("threshold", value) for value in args.eigen_thresholds]]
+    )
+    for source, policy, threshold, low, high in configurations:
+        items = decomposed[source]
+        if policy == "eigengap":
+            predictions, counts = [], []
+            for image_index, (values, _) in enumerate(items):
+                count = choose_eigengap(values, low, high)
+                counts.append(count)
+                predictions.append(label_cache[source][image_index][count])
+            rows.append(summarize(f"{source}:eigengap:{low}-{high}", predictions, truth, counts))
+        else:
+            predictions, counts = [], []
+            for image_index, (values, _) in enumerate(items):
+                count = choose_threshold(values, threshold, low, high)
+                counts.append(count)
+                predictions.append(label_cache[source][image_index][count])
+            rows.append(summarize(
+                f"{source}:threshold:{threshold:g}:{low}-{high}", predictions, truth, counts))
     # Existing GT-free adaptive-slot count baseline on the same histories.
     slots = [torch.from_numpy(dynamic_slots(x.numpy(), .7, 6, image_id * 1009))
              for image_id, x in zip(ids, histories["membrane"])]
     rows.append(summarize("membrane:adaptive_slots:.7:6", slots, truth,
                           [int(torch.unique(x[x != 0]).numel()) + 1 for x in slots]))
     # Fixed-k controls show grouping quality at the established count, not count inference.
-    for source, affinities in affinity_sets.items():
-        predictions = [fixed_spectral_labels(a, 10) for a in affinities]
+    for source in affinity_sets:
+        predictions = [labels[10] for labels in label_cache[source]]
         rows.append(summarize(f"{source}:fixed_k10_control", predictions, truth,
                               [10] * len(predictions)))
     result = {
         "checkpoint": args.checkpoint, "ids": [ids[0], ids[-1]],
+        "membrane_vth": args.membrane_vth,
         "prediction_contract": "All per-image counts inferred from signal eigenspectrum or adaptive slots; GT used only for validation scoring. Fixed-k rows are controls.",
         "background_rule": "largest spectral cluster; adaptive slots use largest slot and zero traces",
         "spatial_kernel": "sigma 1.5 when source name ends in _spatial",

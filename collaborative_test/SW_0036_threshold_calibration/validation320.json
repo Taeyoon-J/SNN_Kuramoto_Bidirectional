@@ -1,0 +1,57 @@
+{
+  "checkpoint": "trained_models/SW_0003_membrane_plv_40ep_seed0/core.pt",
+  "ids": [
+    1320,
+    1639
+  ],
+  "intervention": "inference-only membrane vth sweep on frozen weights",
+  "settle": 64,
+  "steps": 256,
+  "spatial_sigma": 1.5,
+  "spectral_k": 10,
+  "warning": "Diagnostic only: checkpoint was trained at vth .06. GT is used only for metrics and pair AUC, never prediction.",
+  "rows": [
+    {
+      "threshold": 0.06,
+      "binary_event_rate": 1.0,
+      "binary_constant_fraction": 1.0,
+      "binary_temporal_std_mean": 0.0,
+      "membrane_distance_macro_auc": 0.587027043682797,
+      "gated_spike_distance_macro_auc": 0.5863430269205012,
+      "binary_distance_macro_auc": 0.5,
+      "membrane_spatial_readout": {
+        "fg_ari": 0.4946390652454548,
+        "foreground_iou": 0.19106963125857832,
+        "matched_object_iou": 0.17056843402932967,
+        "predicted_groups_mean": 9.0
+      },
+      "gated_spike_spatial_readout": {
+        "fg_ari": 0.4797615419674967,
+        "foreground_iou": 0.18565077088680276,
+        "matched_object_iou": 0.16417924625677155,
+        "predicted_groups_mean": 9.0
+      }
+    },
+    {
+      "threshold": 2.0,
+      "binary_event_rate": 0.2988165020942688,
+      "binary_constant_fraction": 0.0006988525274209678,
+      "binary_temporal_std_mean": 0.44738835096359253,
+      "membrane_distance_macro_auc": 0.5525416366783786,
+      "gated_spike_distance_macro_auc": 0.5552763676403529,
+      "binary_distance_macro_auc": 0.553070002887673,
+      "membrane_spatial_readout": {
+        "fg_ari": 0.4713145198358534,
+        "foreground_iou": 0.19396106076417646,
+        "matched_object_iou": 0.1676944877658779,
+        "predicted_groups_mean": 9.0
+      },
+      "gated_spike_spatial_readout": {
+        "fg_ari": 0.4873512988222977,
+        "foreground_iou": 0.19263537786547583,
+        "matched_object_iou": 0.1729319316501168,
+        "predicted_groups_mean": 9.0
+      }
+    }
+  ]
+}

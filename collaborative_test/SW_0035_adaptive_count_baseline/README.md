@@ -1,6 +1,6 @@
 # SW_0035: adaptive object-count classifier baseline
 
-Status: planned; code prepared while SW_0034 full validation is running.
+Status: 64-image pilot and selected full320 validation complete.
 
 ## 목적
 
@@ -35,3 +35,36 @@ bash collaborative_test/SW_0035_adaptive_count_baseline/run.sh GPU_ID 64
 
 Frozen SW_0003 seed-0 checkpoint, validation IDs 1320–1383, 256 steps and
 64-step settle. No training, core change, reference-test selection, or goal claim.
+
+## Pilot result
+
+The best adaptive ARI row is gated-spike×spatial eigengap with total-cluster
+range 5–10: `.475881/.199710/.141286`, 7.06 predicted foreground groups,
+count MAE 2.05, bias +.95, exact count 4.7%, within-one 42.2%, foreground
+fraction .839. Its fixed k10 control is `.487071/.174560/.160534`, nine
+groups and count MAE 2.95. Adaptive count improves FG IoU and count error but
+reduces ARI/object IoU.
+
+Existing membrane adaptive slots average 6.06 groups versus true 6.11, but
+count MAE is 1.86 and exact count only 7.8%; close means hide per-image errors.
+Membrane×spatial eigen-threshold .8 has the lowest pilot count MAE 1.83 but
+scores `.441001/.168027/.107110`. No classifier is yet a strong count baseline;
+retain eigengap 5–10 as the grouping/count tradeoff candidate for full320.
+
+## Full320 classifier reference suite
+
+| Readout | FG-ARI | FG IoU | Object IoU | Count MAE | Mean groups |
+|---|---:|---:|---:|---:|---:|
+| Gated spike×spatial eigengap 5–10 | .490649 | .204761 | .140716 | 1.925 | 7.066 |
+| Membrane adaptive slots | .357053 | .209870 | .113992 | 1.797 | 5.975 |
+| Membrane fixed k10 | .393974 | .228821 | .150706 | 2.897 | 9.000 |
+| Membrane×spatial fixed k10 | .494639 | .191070 | .170568 | 2.897 | 9.000 |
+| Gated spike×spatial fixed k10 | .479762 | .185651 | .164179 | 2.897 | 9.000 |
+
+The selected adaptive eigengap improves spike fixed-k FG-ARI, FG IoU and count
+MAE together, but object IoU falls. Exact count is 12.8% and within-one 44.7%;
+the eigengap selects eight total clusters on 301/320 images, so it is only
+weakly image-adaptive. The classifier baseline should therefore remain a
+reference suite: eigengap for count/grouping tradeoff, nonspatial membrane k10
+for FG IoU, and membrane×spatial k10 for ARI/object IoU. Foreground fractions
+remain .659–.868 versus true ~.217, so background inference is still separate.

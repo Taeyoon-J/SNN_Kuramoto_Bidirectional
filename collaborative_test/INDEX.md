@@ -3,7 +3,9 @@
 | ID | Status | Change | Validation result |
 |---|---|---|---|
 | SW_0034 | planned, execution pending SSH | Stage-wise object-signal AUC at fixed pair distances and training-loss gradient connectivity; unchanged core observed with hooks | No results yet; syntax check passed; spatial-only and membrane/spike spatial controls prepared |
-| SW_0035 | planned | GT-free adaptive spectral object-count baseline on actual membrane/gated-spike patterns, compared with adaptive slots and fixed-k controls | Code prepared; no validation result yet |
+| SW_0035 | complete, classifier reference suite | GT-free adaptive spectral object-count baseline on actual membrane/gated-spike patterns, compared with adaptive slots and fixed-k controls | Full320 eigengap .490649/.204761/.140716, count MAE 1.925; improves fixed spike ARI/FG IoU/count but lowers object IoU; weakly adaptive |
+| SW_0036 | complete, spike all-metric calibration gain | Frozen checkpoint threshold sweep after binary event saturation diagnosis | Full320 vth2 spike spatial k10 .487351/.192635/.172932 vs vth.06 .479762/.185651/.164179; event rate 1.0→.299, but object AUC remains weak |
+| SW_0037 | running | Matched 40-epoch seed-0 membrane-PLV training with vth 2.0 instead of .06 | Awaiting training and fixed validation |
 | SW_0001 | completed | Spike synchrony spectral readout, fixed k=8 | FG-ARI 0.136286; foreground IoU 0.271997; matched object IoU 0.145604 on CLEVR IDs 1320–1639 |
 | SW_0002 | complete, mixed result | Membrane-sourced synchrony objective, 10-epoch pilot | Spike FG-ARI 0.270323, foreground IoU 0.235452, object IoU 0.123274 on validation; not an all-metric gain |
 | SW_0003 | complete, mixed result | Matched 40-epoch membrane-PLV follow-up to isolate source change | FG-ARI 0.2889, foreground IoU 0.2075, object IoU 0.1027; no all-metric gain |

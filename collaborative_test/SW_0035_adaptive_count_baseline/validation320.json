@@ -1,0 +1,117 @@
+{
+  "checkpoint": "trained_models/SW_0003_membrane_plv_40ep_seed0/core.pt",
+  "ids": [
+    1320,
+    1639
+  ],
+  "prediction_contract": "All per-image counts inferred from signal eigenspectrum or adaptive slots; GT used only for validation scoring. Fixed-k rows are controls.",
+  "background_rule": "largest spectral cluster; adaptive slots use largest slot and zero traces",
+  "spatial_kernel": "sigma 1.5 when source name ends in _spatial",
+  "rows": [
+    {
+      "name": "gated_spike_spatial:eigengap:5-10",
+      "fg_ari": 0.49064929425151876,
+      "foreground_iou": 0.20476072803543072,
+      "matched_object_iou": 0.14071576813817405,
+      "predicted_groups_mean": 7.065625190734863,
+      "true_groups_mean": 6.196875095367432,
+      "count_mae": 1.9249999523162842,
+      "count_bias": 0.8687499761581421,
+      "exact_count_fraction": 0.12812499701976776,
+      "within_one_count_fraction": 0.4468750059604645,
+      "predicted_foreground_fraction": 0.8388427495956421,
+      "selected_total_cluster_histogram": {
+        "8": 301,
+        "9": 17,
+        "10": 2
+      }
+    },
+    {
+      "name": "membrane_spatial:threshold:0.8:3-10",
+      "fg_ari": 0.4383557297788682,
+      "foreground_iou": 0.17947042661990903,
+      "matched_object_iou": 0.10918001997023827,
+      "predicted_groups_mean": 5.290625095367432,
+      "true_groups_mean": 6.196875095367432,
+      "count_mae": 1.912500023841858,
+      "count_bias": -0.90625,
+      "exact_count_fraction": 0.125,
+      "within_one_count_fraction": 0.4156250059604645,
+      "predicted_foreground_fraction": 0.8011474609375,
+      "selected_total_cluster_histogram": {
+        "6": 233,
+        "7": 81,
+        "8": 6
+      }
+    },
+    {
+      "name": "membrane:adaptive_slots:.7:6",
+      "fg_ari": 0.3570531811751384,
+      "foreground_iou": 0.20987019451911376,
+      "matched_object_iou": 0.11399236748151767,
+      "predicted_groups_mean": 5.974999904632568,
+      "true_groups_mean": 6.196875095367432,
+      "count_mae": 1.796875,
+      "count_bias": -0.22187499701976776,
+      "exact_count_fraction": 0.11874999850988388,
+      "within_one_count_fraction": 0.4437499940395355,
+      "predicted_foreground_fraction": 0.6583251953125,
+      "selected_total_cluster_histogram": {
+        "6": 134,
+        "7": 104,
+        "8": 54,
+        "9": 16,
+        "10": 8,
+        "11": 4
+      }
+    },
+    {
+      "name": "membrane:fixed_k10_control",
+      "fg_ari": 0.3939744100113371,
+      "foreground_iou": 0.228821105407533,
+      "matched_object_iou": 0.15070575656006746,
+      "predicted_groups_mean": 9.0,
+      "true_groups_mean": 6.196875095367432,
+      "count_mae": 2.8968749046325684,
+      "count_bias": 2.8031249046325684,
+      "exact_count_fraction": 0.13124999403953552,
+      "within_one_count_fraction": 0.32499998807907104,
+      "predicted_foreground_fraction": 0.742932140827179,
+      "selected_total_cluster_histogram": {
+        "10": 320
+      }
+    },
+    {
+      "name": "membrane_spatial:fixed_k10_control",
+      "fg_ari": 0.4946390652454548,
+      "foreground_iou": 0.19106963125857832,
+      "matched_object_iou": 0.17056843402932967,
+      "predicted_groups_mean": 9.0,
+      "true_groups_mean": 6.196875095367432,
+      "count_mae": 2.8968749046325684,
+      "count_bias": 2.8031249046325684,
+      "exact_count_fraction": 0.13124999403953552,
+      "within_one_count_fraction": 0.32499998807907104,
+      "predicted_foreground_fraction": 0.8675781488418579,
+      "selected_total_cluster_histogram": {
+        "10": 320
+      }
+    },
+    {
+      "name": "gated_spike_spatial:fixed_k10_control",
+      "fg_ari": 0.4797615419674967,
+      "foreground_iou": 0.18565077088680276,
+      "matched_object_iou": 0.16417924625677155,
+      "predicted_groups_mean": 9.0,
+      "true_groups_mean": 6.196875095367432,
+      "count_mae": 2.8968749046325684,
+      "count_bias": 2.8031249046325684,
+      "exact_count_fraction": 0.13124999403953552,
+      "within_one_count_fraction": 0.32499998807907104,
+      "predicted_foreground_fraction": 0.858935534954071,
+      "selected_total_cluster_histogram": {
+        "10": 320
+      }
+    }
+  ]
+}
