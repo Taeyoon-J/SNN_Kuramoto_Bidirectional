@@ -2,6 +2,23 @@
 
 Status: training and validation complete. This pilot does not meet the goal.
 
+## 쉽게 설명하면
+
+기존 학습은 Kuramoto의 위상(theta)이 잘 묶이는지만 loss로 봤습니다. 그래서
+그 뒤에 있는 dendritic·membrane 층에는 학습 신호가 가지 않는다는 것을
+확인했습니다. 이번에는 loss가 **membrane의 시간 패턴**을 보도록 바꾸고
+10 epoch만 시험했습니다. 모델 구조와 최종 spike 분류법은 그대로입니다.
+
+| 같은 검증 이미지 320장, spike 분류 | 물체 구분 FG-ARI ↑ | 전경 IoU ↑ | 물체별 IoU ↑ |
+|---|---:|---:|---:|
+| 기존 모델, 40 epoch | 0.1363 | 0.2720 | 0.1456 |
+| membrane 기준 학습, 10 epoch | 0.2703 | 0.2355 | 0.1233 |
+
+**해석:** 물체끼리 구분하는 점수는 올랐지만, 전경과 각 물체의 실제 위치를
+맞추는 두 점수는 떨어졌습니다. 따라서 전체 개선은 아닙니다. 학습 길이도
+40 대 10 epoch로 달라, 이 숫자만으로 loss 변경의 순수한 효과라고 할 수
+없습니다. SW_0003에서 둘 다 40 epoch로 맞춰 비교합니다.
+
 ## Reason
 
 Under the starting `plv_source=phase` objective, all PLV terms read Kuramoto

@@ -1,6 +1,16 @@
 # SW_0004 — graph-to-membrane synchrony pilot
 
-Status: code smoke-tested; training pending.
+Status: code smoke-tested; 10-epoch training running on server GPU 1.
+
+## 쉽게 설명하면
+
+모델 안에는 이미지마다 patch 사이의 연결 강도를 만드는 그래프가 있습니다.
+진단해 보니 같은 물체의 patch 사이 연결이 다른 물체 사이보다 약 12배
+강했습니다. 이번 후보는 **그 그래프를 정답 대신 힌트로 삼아 membrane의
+시간 패턴도 비슷하게 만들도록 학습**하는 것입니다. 원래의 위상 loss는
+그대로 유지하고 새 loss만 약하게 더합니다. 정답 CLEVR mask는 학습에
+쓰지 않습니다. 아직 점수는 없으며, 결과가 나오면 기존 모델과 같은
+검증 이미지로 비교합니다.
 
 ## Motivation
 
