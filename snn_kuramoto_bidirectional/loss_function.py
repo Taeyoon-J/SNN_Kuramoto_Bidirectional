@@ -399,6 +399,34 @@ def signal_synchrony(signal, settle=0, eps=1e-8):
     return torch.bmm(trace, trace.transpose(1, 2)).abs().clamp(0.0, 1.0)
 
 
+def graph_teacher_synchrony_loss(membrane, graph, settle=0, temperature=0.1):
+    """Distill an image-conditioned graph into membrane-trace synchrony.
+
+    The graph is a detached, unsupervised teacher. For every oscillator, its
+    normalized outgoing edge weights define a neighbor distribution. The
+    membrane trace yields a centered-synchrony distribution over the same
+    neighbors. KL divergence trains the SNN path to preserve graph structure
+    without using CLEVR instance masks or changing the core dynamics.
+    """
+    if membrane.ndim != 3 or graph.ndim != 3:
+        raise ValueError("membrane and graph must have shapes [B,N,T] and [B,N,N].")
+    batch, nodes, _ = membrane.shape
+    if nodes < 2 or graph.shape != (batch, nodes, nodes):
+        raise ValueError("graph must match the membrane batch and oscillator dimensions.")
+    if temperature <= 0:
+        raise ValueError("temperature must be positive.")
+    synchrony = signal_synchrony(membrane, settle=settle)
+    diagonal = torch.eye(nodes, dtype=torch.bool, device=membrane.device).unsqueeze(0)
+    teacher = graph.detach().to(device=membrane.device, dtype=synchrony.dtype)
+    teacher = teacher.clamp_min(0.0).masked_fill(diagonal, 0.0)
+    row_mass = teacher.sum(dim=-1, keepdim=True)
+    if bool((row_mass <= 0).any()):
+        raise ValueError("Every graph row needs at least one non-self neighbor.")
+    teacher = teacher / row_mass
+    logits = (synchrony / float(temperature)).masked_fill(diagonal, -1e4)
+    return F.kl_div(F.log_softmax(logits, dim=-1), teacher, reduction="none").sum(dim=-1).mean()
+
+
 def patch_pool_rgb(images, grid_size):
     """[B, 3, H, W] images -> [B, grid*grid, 3] mean RGB per patch."""
     grid_h, grid_w = _parse_grid_size(grid_size)

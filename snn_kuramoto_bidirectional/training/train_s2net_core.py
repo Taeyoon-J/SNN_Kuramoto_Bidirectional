@@ -17,6 +17,7 @@ try:
         phase_locking_value,
         phase_alignment,
         signal_synchrony,
+        graph_teacher_synchrony_loss,
     )
     from snn_kuramoto_bidirectional.s2net_cls import S2NetCore
     from snn_kuramoto_bidirectional.sc_generator import pearson_cor_sc
@@ -27,6 +28,7 @@ except ModuleNotFoundError:
         phase_locking_value,
         phase_alignment,
         signal_synchrony,
+        graph_teacher_synchrony_loss,
     )
     from s2net_cls import S2NetCore
     from sc_generator import pearson_cor_sc
@@ -47,6 +49,8 @@ def train_s2net_core(
     plv_settle=0,
     plv_source="phase",
     plv_combine="mean",
+    graph_teacher_weight=0.0,
+    graph_teacher_temperature=0.1,
 ):
     """
     Train only S2NetCore from precomputed gamma sequences with an unsupervised
@@ -98,6 +102,23 @@ def train_s2net_core(
                 theta=theta,
                 plv_settle=int(plv_settle),
             )
+
+            if float(graph_teacher_weight) != 0.0:
+                with torch.no_grad():
+                    graph = (
+                        core.graph_generator(gamma_seq)
+                        if core.graph_generator is not None
+                        else core.sc.to(gamma_seq.device).unsqueeze(0).expand(gamma_seq.size(0), -1, -1)
+                    )
+                teacher_loss = graph_teacher_synchrony_loss(
+                    core_out,
+                    graph,
+                    settle=int(plv_settle),
+                    temperature=float(graph_teacher_temperature),
+                )
+                loss = loss + float(graph_teacher_weight) * teacher_loss
+                parts["graph_teacher_synchrony"] = teacher_loss.detach()
+                parts["total"] = loss.detach()
 
             optimizer.zero_grad()
             loss.backward()
@@ -518,6 +539,8 @@ def main():
     parser.add_argument("--spike-smooth-weight", type=float, default=0.0)
     parser.add_argument("--spike-diversity-weight", type=float, default=0.0)
     parser.add_argument("--structural-weight", type=float, default=0.0)
+    parser.add_argument("--graph-teacher-weight", type=float, default=0.0)
+    parser.add_argument("--graph-teacher-temperature", type=float, default=0.1)
     parser.add_argument("--object-overlap-weight", type=float, default=0.0)
     parser.add_argument("--sample-diversity-weight", type=float, default=0.0)
     parser.add_argument("--spatial-compactness-weight", type=float, default=0.0)
@@ -674,6 +697,8 @@ def main():
         plv_settle=args.plv_settle,
         plv_source=args.plv_source,
         plv_combine=args.plv_combine,
+        graph_teacher_weight=args.graph_teacher_weight,
+        graph_teacher_temperature=args.graph_teacher_temperature,
     )
     print(f"trained S2NetCore: {args.save_path}")
     print(f"loss: {losses[0]:.6f} -> {losses[-1]:.6f}")
