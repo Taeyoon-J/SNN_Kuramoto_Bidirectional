@@ -75,6 +75,7 @@ def main():
     parser.add_argument("--initial-slots", type=int, nargs="+", default=[1, 3, 6])
     parser.add_argument("--assignment-seeds", type=int, nargs="+", default=[0, 1, 2])
     parser.add_argument("--device", default="cuda")
+    parser.add_argument("--source", choices=["spikes", "membrane"], default="spikes")
     args = parser.parse_args()
     if args.start < 1320 or args.start + args.count > 1640:
         raise ValueError("Use fixed validation IDs 1320-1639 only")
@@ -88,8 +89,11 @@ def main():
     histories = []
     with torch.no_grad():
         for index in range(0, args.count, args.batch_size):
-            _, spikes, _ = model(gamma[index:index + args.batch_size].to(args.device), return_core_out=True)
-            histories.extend(spikes[:, :, args.settle:].cpu().numpy())
+            _, spikes, membrane = model(
+                gamma[index:index + args.batch_size].to(args.device), return_core_out=True
+            )
+            signal = spikes if args.source == "spikes" else membrane
+            histories.extend(signal[:, :, args.settle:].cpu().numpy())
     true_counts = torch.tensor([torch.unique(t[t != 0]).numel() for t in truth])
     rows = []
     for threshold in args.thresholds:
@@ -112,7 +116,7 @@ def main():
                     "predicted_foreground_fraction": float((predicted != 0).float().mean()),
                 })
     result = {"checkpoint": args.checkpoint, "ids": [ids[0], ids[-1]],
-              "source": "actual core spike histories after settle",
+              "source": f"actual core {args.source} histories after settle",
               "background_rule": "zero traces and largest slot",
               "true_groups_mean": float(true_counts.float().mean()), "rows": rows}
     output = Path(args.output_path)
