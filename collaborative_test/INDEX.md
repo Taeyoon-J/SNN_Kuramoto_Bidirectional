@@ -19,6 +19,7 @@
 | SW_0015 | complete, diagnostic | Verify cached gamma versus HDF5 image index alignment | Same-index RGB/gamma boundary fingerprint ranks top-1 for 27/128 train and 26/128 validation images, versus 1/128 random expectation; strongly supports alignment |
 | SW_0016 | training | Add optional `patch_sw`-derived RGB-edge membrane separation loss to matched SW_0011 seed-0 training | Eight-image diagnostic raw loss .478038, nonzero dendritic/membrane gradients; 40-epoch validation pending |
 | SW_0017 | complete, mixed result | Run the same adaptive slots on continuous membrane instead of binary spikes | At threshold .7/six slots: FG-ARI .261507, FG IoU .246264, object IoU .207637, groups 18.18; only small gains over spike slots and worse IoUs than existing readout |
+| SW_0018 | complete, mixed result | Peer-inspired low-spike-synchrony foreground ranking plus our adaptive slots | Best FG IoU .291989 comes with FG-ARI .130456 and object IoU .177966; no all-metric gain |
 
 Each experiment's README begins with a Korean plain-language explanation and a
 baseline-versus-candidate table when results exist. Arrows in those tables

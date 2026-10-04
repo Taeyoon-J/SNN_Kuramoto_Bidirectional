@@ -30,6 +30,10 @@ loss 0.478038. Gradients reached `dendric_layer.oscillator_dense.weight`
 unlike a phase-only objective. These are unweighted gradients, not a guarantee
 of improved segmentation. Details: `diagnostic.json`.
 
+A synthetic-input comparison against the original `patch_sw` implementation
+found exactly the same scalar loss and membrane gradient (maximum absolute
+difference 0.0 for both). See `verify_equivalence.py` and `equivalence.json`.
+
 ## Exact code changes
 
 - `snn_kuramoto_bidirectional/loss_function.py`: add standalone
