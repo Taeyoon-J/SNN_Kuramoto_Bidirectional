@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 GPU_ID="${1:?Select an idle GPU after inspecting nvidia-smi}"
-VARIANT="${2:?Use control or spike5}"
+VARIANT="${2:?Use control, spike0p25, or spike5}"
 SEED="${3:-0}"
-if [[ "$VARIANT" != control && "$VARIANT" != spike5 ]]; then
-  echo "variant must be control or spike5" >&2
+if [[ "$VARIANT" != control && "$VARIANT" != spike0p25 && "$VARIANT" != spike5 ]]; then
+  echo "variant must be control, spike0p25, or spike5" >&2
   exit 2
 fi
 ROOT=/Data0/kevinswk/patch_v2_sw
@@ -16,6 +16,7 @@ source /Data0/kevinswk/miniforge3/etc/profile.d/conda.sh
 conda activate /Data0/kevinswk/envs/snn
 cd "$ROOT"
 SPIKE_WEIGHT=0
+if [[ "$VARIANT" == spike0p25 ]]; then SPIKE_WEIGHT=0.25; fi
 if [[ "$VARIANT" == spike5 ]]; then SPIKE_WEIGHT=5; fi
 CUDA_VISIBLE_DEVICES="$GPU_ID" python -u -m snn_kuramoto_bidirectional.training.train_s2net_core \
   --gamma-seq-path /work/USERS/tkim1/gamma_sequences/wm_patch_gamma_seq_k8_grid16.pt \

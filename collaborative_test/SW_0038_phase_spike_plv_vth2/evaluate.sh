@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 GPU_ID="${1:?Select an idle GPU after inspecting nvidia-smi}"
-VARIANT="${2:?Use control or spike5}"
+VARIANT="${2:?Use control, spike0p25, or spike5}"
 SEED="${3:-0}"
-if [[ "$VARIANT" != control && "$VARIANT" != spike5 ]]; then
-  echo "variant must be control or spike5" >&2
+if [[ "$VARIANT" != control && "$VARIANT" != spike0p25 && "$VARIANT" != spike5 ]]; then
+  echo "variant must be control, spike0p25, or spike5" >&2
   exit 2
 fi
 ROOT=/Data0/kevinswk/patch_v2_sw
