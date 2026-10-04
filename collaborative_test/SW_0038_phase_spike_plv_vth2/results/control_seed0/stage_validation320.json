@@ -1,0 +1,36 @@
+{
+  "checkpoint": "/Data0/kevinswk/patch_v2_sw/trained_models/SW_0038_control_seed0/core.pt",
+  "ids": [
+    1320,
+    1639
+  ],
+  "intervention": "matched vth2-trained phase/spike-PLV checkpoint stage diagnostic",
+  "settle": 64,
+  "steps": 256,
+  "spatial_sigma": 1.5,
+  "spectral_k": 10,
+  "warning": "GT is used only for metrics and pair AUC, never prediction.",
+  "rows": [
+    {
+      "threshold": 2.0,
+      "binary_event_rate": 0.06148487702012062,
+      "binary_constant_fraction": 0.16421814262866974,
+      "binary_temporal_std_mean": 0.21078510582447052,
+      "membrane_distance_macro_auc": 0.535886077268539,
+      "gated_spike_distance_macro_auc": 0.5319531497556688,
+      "binary_distance_macro_auc": 0.5312524997754468,
+      "membrane_spatial_readout": {
+        "fg_ari": 0.41557589777757753,
+        "foreground_iou": 0.22670071992946134,
+        "matched_object_iou": 0.19541197661525084,
+        "predicted_groups_mean": 9.0
+      },
+      "gated_spike_spatial_readout": {
+        "fg_ari": 0.40752589787736504,
+        "foreground_iou": 0.22846248800657945,
+        "matched_object_iou": 0.1944642422008468,
+        "predicted_groups_mean": 9.0
+      }
+    }
+  ]
+}
