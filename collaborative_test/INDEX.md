@@ -28,6 +28,7 @@
 | SW_0024 | complete, all-metric validation gain | Compare membrane spectral clustering with adaptive slots on the same high-ARI SW_0003 core | Absolute-correlation spectral k=10 scores FG-ARI .393974 / FG IoU .228821 / object IoU .150706 vs slots .357053 / .209870 / .113992; seed-0 validation only |
 | SW_0025 | complete, tradeoff | Extend spectral cluster count beyond k=10 on the same SW_0003 core | Full validation: k=10 retains top FG-ARI .393974; k=20 raises object IoU .150706 to .228019 but lowers FG-ARI to .348207 and predicts 19 groups/image; preserve separate tracks |
 | SW_0026 | complete, threshold tradeoff | Recheck peer-inspired very low spike-product thresholds on three frozen cores | SW_0004 .50 remains best of this sweep on all metrics; SW_0011 .10 lifts foreground IoU .271468 to .331330 but lowers FG-ARI .179760 to .098892 and object IoU .295250 to .180793. Keep as IoU track, not the ARI lead |
+| SW_0027 | complete, IoU tradeoff | Compare component-wise membrane affinity with the existing aggregate spectral k=10 readout | On full 320 validation, aggregate remains FG-ARI leader .393974/.228821/.150706; component positive mean gives .386094/.232912/.157926. Retain both FG-ARI and IoU tracks |
 
 Each experiment's README begins with a Korean plain-language explanation and a
 baseline-versus-candidate table when results exist. Arrows in those tables
