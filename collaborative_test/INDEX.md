@@ -26,6 +26,7 @@
 | SW_0022 | complete, small all-metric gain | Use a border membrane pattern as an additional per-patch background cue on SW_0021's fixed membrane slots | Largest-slot AND template similarity >=.90: FG-ARI .361770 / FG IoU .215081 / object IoU .119675; predicted FG .677 vs GT .217, so background remains a major IoU gap |
 | SW_0023 | complete, diagnostic | Measure SNN activity features versus GT foreground and the oracle-foreground ceiling for frozen SW_0021 grouping | Single-feature AUC weak (best inverse border similarity .611); oracle foreground raises FG IoU to 1 and object IoU to .385 but **FG-ARI remains .357**, proving grouping is the ARI bottleneck |
 | SW_0024 | complete, all-metric validation gain | Compare membrane spectral clustering with adaptive slots on the same high-ARI SW_0003 core | Absolute-correlation spectral k=10 scores FG-ARI .393974 / FG IoU .228821 / object IoU .150706 vs slots .357053 / .209870 / .113992; seed-0 validation only |
+| SW_0025 | complete, tradeoff | Extend spectral cluster count beyond k=10 on the same SW_0003 core | Full validation: k=10 retains top FG-ARI .393974; k=20 raises object IoU .150706 to .228019 but lowers FG-ARI to .348207 and predicts 19 groups/image; preserve separate tracks |
 
 Each experiment's README begins with a Korean plain-language explanation and a
 baseline-versus-candidate table when results exist. Arrows in those tables

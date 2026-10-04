@@ -68,10 +68,13 @@ def main():
     parser.add_argument("--start", type=int, default=1320)
     parser.add_argument("--count", type=int, default=64)
     parser.add_argument("--batch-size", type=int, default=8)
+    parser.add_argument("--cluster-counts", type=int, nargs="+", default=[4, 6, 8, 10])
     parser.add_argument("--device", default="cuda")
     args = parser.parse_args()
     if args.start < 1320 or args.start + args.count > 1640:
         raise ValueError("Use fixed validation IDs 1320-1639 only")
+    if not args.cluster_counts or min(args.cluster_counts) < 2 or max(args.cluster_counts) > 256:
+        raise ValueError("Cluster counts must be integers from 2 through 256")
     ids = list(range(args.start, args.start + args.count))
     gamma = torch.load(args.gamma_path, map_location="cpu", weights_only=True)[ids].float()
     with h5py.File(args.dataset_path, "r") as dataset:
@@ -83,11 +86,11 @@ def main():
             _, _, membrane = model(gamma[start:start + args.batch_size].to(args.device), return_core_out=True)
             histories.extend(membrane[:, :, 64:].cpu())
     predictions = {(mode, count): [] for mode in ("absolute", "positive")
-                   for count in (4, 6, 8, 10)}
+                   for count in args.cluster_counts}
     for history in histories:
         signed = correlation(history)
         for mode, affinity in (("absolute", signed.abs()), ("positive", signed.clamp_min(0))):
-            for count, labels in spectral_labels(affinity, (4, 6, 8, 10)).items():
+            for count, labels in spectral_labels(affinity, args.cluster_counts).items():
                 predictions[(mode, count)].append(labels)
     rows = []
     for (mode, count), labels in predictions.items():
