@@ -1,6 +1,28 @@
 # SW_0034: stage-wise object signal and gradient diagnostic
 
-Status: planned; executable prepared, server execution pending SSH master connection.
+Status: running; SSH restored, 64-image pilot started on GPU 3, launcher PID 1258675 and Python PID 1258677 (2026-10-04). No other user training processes observed; GPU 3 was idle at launch.
+
+## Pilot finding (real checkpoint, 64 images)
+
+`pilot64.json` confirms the SW_0033 control scores exactly. After settle,
+binary threshold activation mean is 1.0, temporal standard deviation is 0,
+and constant fraction is 1.0 for all components: actual gated spike histories
+in this subset therefore reflect gate modulation, not changing threshold events.
+Distance-stratified macro AUC: phase .5437, gating .5484, h-wave .5494,
+membrane .5492, gated spike .5524, binary threshold .5000. Signal is weak
+already upstream; these different affinity definitions do not establish a
+causal loss at one layer. Phase loss bypasses all downstream parameters;
+membrane/spike loss connects all four downstream tensors with finite gradients.
+Full320 confirmation is running before any training decision.
+
+| Pilot readout | FG-ARI | FG IoU | Object IoU |
+|---|---:|---:|---:|
+| Spatial only | .525719 | .179896 | .180391 |
+| Membrane × spatial | .530110 | .184325 | .176630 |
+| Gated spike × spatial | .487071 | .174560 | .160534 |
+
+All predict nine foreground groups; predicted foreground fractions are .883,
+.865, .858 respectively. No three-seed or test improvement claim.
 
 ## 무엇을 확인하는가
 
