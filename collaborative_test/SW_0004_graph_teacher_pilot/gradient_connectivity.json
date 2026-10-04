@@ -1,0 +1,57 @@
+{
+  "loss": 2.855868101119995,
+  "graph_teacher_weight": 0.1,
+  "parts": {
+    "plv_bimodality": 0.0735706239938736,
+    "plv_balance": 0.005169471725821495,
+    "plv_collapse": 2.5696778297424316,
+    "plv_coherence": 0.12044662237167358,
+    "total": 2.855868101119995,
+    "graph_teacher_synchrony": 1.0070157051086426
+  },
+  "gradients": {
+    "gamma_channel_proj": {
+      "parameter_count": 1,
+      "connected_count": 1,
+      "norms": {
+        "gamma_channel_proj.weight": 14.967290878295898
+      }
+    },
+    "graph_generator": {
+      "parameter_count": 4,
+      "connected_count": 4,
+      "norms": {
+        "graph_generator.log_temperature": 0.03776426613330841,
+        "graph_generator.log_coupling_gain": 0.45085546374320984,
+        "graph_generator.spatial_rate": 0.11208156496286392,
+        "graph_generator.projection.weight": 0.3276973068714142
+      }
+    },
+    "kuramoto": {
+      "parameter_count": 4,
+      "connected_count": 4,
+      "norms": {
+        "kuramoto.freq_gain": 1.0604588985443115,
+        "kuramoto.omega": 0.14313368499279022,
+        "kuramoto.kappa": 0.08743128925561905,
+        "kuramoto.direction_learner": 1.2161066251792363e-06
+      }
+    },
+    "dendric_layer": {
+      "parameter_count": 3,
+      "connected_count": 3,
+      "norms": {
+        "dendric_layer.tau_n": 0.00038063901592977345,
+        "dendric_layer.oscillator_dense.weight": 0.008231887593865395,
+        "dendric_layer.oscillator_dense.bias": 0.0006551214028149843
+      }
+    },
+    "membrane_layer": {
+      "parameter_count": 1,
+      "connected_count": 1,
+      "norms": {
+        "membrane_layer.tau_m": 0.0005880152457393706
+      }
+    }
+  }
+}
