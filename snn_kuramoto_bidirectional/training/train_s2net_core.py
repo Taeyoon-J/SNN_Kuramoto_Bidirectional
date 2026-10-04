@@ -18,6 +18,7 @@ try:
         phase_alignment,
         signal_synchrony,
         graph_teacher_synchrony_loss,
+        edge_membrane_separation_loss,
     )
     from snn_kuramoto_bidirectional.s2net_cls import S2NetCore
     from snn_kuramoto_bidirectional.sc_generator import pearson_cor_sc
@@ -29,6 +30,7 @@ except ModuleNotFoundError:
         phase_alignment,
         signal_synchrony,
         graph_teacher_synchrony_loss,
+        edge_membrane_separation_loss,
     )
     from s2net_cls import S2NetCore
     from sc_generator import pearson_cor_sc
@@ -51,6 +53,9 @@ def train_s2net_core(
     plv_combine="mean",
     graph_teacher_weight=0.0,
     graph_teacher_temperature=0.1,
+    edge_membrane_weight=0.0,
+    edge_membrane_margin=0.3,
+    edge_membrane_grid_size=(16, 16),
 ):
     """
     Train only S2NetCore from precomputed gamma sequences with an unsupervised
@@ -118,6 +123,18 @@ def train_s2net_core(
                 )
                 loss = loss + float(graph_teacher_weight) * teacher_loss
                 parts["graph_teacher_synchrony"] = teacher_loss.detach()
+                parts["total"] = loss.detach()
+
+            if float(edge_membrane_weight) != 0.0:
+                if not isinstance(batch, (tuple, list)) or len(batch) < 2:
+                    raise ValueError("Edge membrane loss requires paired gamma and RGB batches")
+                images = batch[1].to(device=device, dtype=core_out.dtype) / 255.0
+                edge_loss = edge_membrane_separation_loss(
+                    core_out, images, edge_membrane_grid_size,
+                    margin=float(edge_membrane_margin),
+                )
+                loss = loss + float(edge_membrane_weight) * edge_loss
+                parts["edge_membrane_separation"] = edge_loss.detach()
                 parts["total"] = loss.detach()
 
             optimizer.zero_grad()
@@ -541,6 +558,10 @@ def main():
     parser.add_argument("--structural-weight", type=float, default=0.0)
     parser.add_argument("--graph-teacher-weight", type=float, default=0.0)
     parser.add_argument("--graph-teacher-temperature", type=float, default=0.1)
+    parser.add_argument("--edge-image-hdf5", default=None,
+                        help="Aligned HDF5 RGB images for optional edge membrane loss.")
+    parser.add_argument("--edge-membrane-weight", type=float, default=0.0)
+    parser.add_argument("--edge-membrane-margin", type=float, default=0.3)
     parser.add_argument("--object-overlap-weight", type=float, default=0.0)
     parser.add_argument("--sample-diversity-weight", type=float, default=0.0)
     parser.add_argument("--spatial-compactness-weight", type=float, default=0.0)
@@ -645,8 +666,21 @@ def main():
     hparams.validate()
 
     core = S2NetCore(hparams, device=args.device)
+    if float(args.edge_membrane_weight) != 0.0:
+        if args.edge_image_hdf5 is None:
+            raise ValueError("--edge-image-hdf5 is required when --edge-membrane-weight is nonzero")
+        import h5py
+        with h5py.File(args.edge_image_hdf5, "r") as dataset:
+            if len(dataset["image"]) < len(gamma_seq):
+                raise ValueError("HDF5 has fewer RGB images than gamma examples")
+            images = torch.from_numpy(dataset["image"][:len(gamma_seq)]).permute(0, 3, 1, 2)
+        if images.dtype != torch.uint8 or images.size(1) != 3:
+            raise ValueError("Edge RGB images must have uint8 shape [B,3,H,W]")
+        training_data = TensorDataset(gamma_seq, images)
+    else:
+        training_data = TensorDataset(gamma_seq)
     loader = DataLoader(
-        TensorDataset(gamma_seq),
+        training_data,
         batch_size=int(args.batch_size),
         shuffle=True,
     )
@@ -699,6 +733,9 @@ def main():
         plv_combine=args.plv_combine,
         graph_teacher_weight=args.graph_teacher_weight,
         graph_teacher_temperature=args.graph_teacher_temperature,
+        edge_membrane_weight=args.edge_membrane_weight,
+        edge_membrane_margin=args.edge_membrane_margin,
+        edge_membrane_grid_size=_parse_pair_arg(args.spike_spatial_grid_size, "spike-spatial-grid-size"),
     )
     print(f"trained S2NetCore: {args.save_path}")
     print(f"loss: {losses[0]:.6f} -> {losses[-1]:.6f}")

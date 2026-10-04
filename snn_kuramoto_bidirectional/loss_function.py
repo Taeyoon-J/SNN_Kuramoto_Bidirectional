@@ -21,6 +21,53 @@ def spike_rate_loss(spikes, target_rate=0.1, reduction="mean"):
     return _reduce(loss, reduction)
 
 
+def edge_membrane_separation_loss(membrane, images, grid_size, margin=0.3, eps=1e-8):
+    """Penalize synchronized neighboring membranes across strong RGB edges.
+
+    Adapted from patch_sw's same-named loss. RGB only supplies non-trainable
+    boundary weights; the gradient flows through the membrane histories.
+    """
+    if membrane.ndim != 3:
+        raise ValueError("membrane must have shape [B,N,T]")
+    if images.ndim != 4 or images.shape[1] != 3 or images.shape[0] != membrane.shape[0]:
+        raise ValueError("images must have shape [B,3,H,W] matching membrane batch")
+    grid_h, grid_w = _parse_grid_size(grid_size)
+    if membrane.shape[1] != grid_h * grid_w:
+        raise ValueError("membrane oscillator count does not match grid")
+    height, width = images.shape[-2:]
+    if grid_h > height or grid_w > width:
+        raise ValueError("grid cannot exceed RGB image dimensions")
+    centered = membrane - membrane.mean(dim=2, keepdim=True)
+    pattern = F.normalize(centered, p=2, dim=2, eps=eps).reshape(
+        membrane.shape[0], grid_h, grid_w, membrane.shape[2]
+    )
+    horizontal_similarity = (pattern[:, :, :-1] * pattern[:, :, 1:]).sum(dim=-1)
+    vertical_similarity = (pattern[:, :-1] * pattern[:, 1:]).sum(dim=-1)
+    with torch.no_grad():
+        rgb = images.detach().to(device=membrane.device, dtype=membrane.dtype)
+        horizontal_distances = torch.linalg.vector_norm(
+            rgb[:, :, :, 1:] - rgb[:, :, :, :-1], ord=2, dim=1
+        )
+        columns = torch.div(torch.arange(1, grid_w, device=membrane.device) * width,
+                            grid_w, rounding_mode="floor")
+        horizontal_boundaries = horizontal_distances[:, :, columns - 1]
+        horizontal_weights = F.adaptive_avg_pool1d(
+            horizontal_boundaries.permute(0, 2, 1).reshape(-1, 1, height), grid_h
+        ).reshape(membrane.shape[0], grid_w - 1, grid_h).transpose(1, 2)
+        vertical_distances = torch.linalg.vector_norm(
+            rgb[:, :, 1:, :] - rgb[:, :, :-1, :], ord=2, dim=1
+        )
+        rows = torch.div(torch.arange(1, grid_h, device=membrane.device) * height,
+                         grid_h, rounding_mode="floor")
+        vertical_boundaries = vertical_distances[:, rows - 1, :]
+        vertical_weights = F.adaptive_avg_pool1d(
+            vertical_boundaries.reshape(-1, 1, width), grid_w
+        ).reshape(membrane.shape[0], grid_h - 1, grid_w)
+    numerator = (horizontal_weights * F.relu(horizontal_similarity - float(margin))).sum()
+    numerator = numerator + (vertical_weights * F.relu(vertical_similarity - float(margin))).sum()
+    return numerator / (horizontal_weights.sum() + vertical_weights.sum() + eps)
+
+
 def spike_temporal_smoothness_loss(spikes, reduction="mean"):
     """Discourage abrupt frame-to-frame changes in spike histories."""
     if spikes.dim() != 3:
