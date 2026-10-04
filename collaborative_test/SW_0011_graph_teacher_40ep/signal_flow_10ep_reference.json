@@ -1,0 +1,29 @@
+{
+  "checkpoint": "trained_models/SW_0004_graph_teacher_pilot_seed0/core.pt",
+  "ids": [
+    1320,
+    1335
+  ],
+  "steps": 256,
+  "settle": 64,
+  "mean_spike_rate": 0.41954366862773895,
+  "mean_phase_to_spike_affinity_correlation": 0.816019382327795,
+  "affinity": {
+    "phase_plv": {
+      "same_object": 0.39233929779483134,
+      "different_objects": 0.22811176377976836,
+      "all_offdiagonal": 0.4538293314915077
+    },
+    "membrane_synchrony": {
+      "same_object": 0.39473175772997204,
+      "different_objects": 0.2027440421984222,
+      "all_offdiagonal": 0.30723984288234335
+    },
+    "spike_synchrony": {
+      "same_object": 0.38215148435600765,
+      "different_objects": 0.21229516678735494,
+      "all_offdiagonal": 0.3753918367273667
+    }
+  },
+  "warning": "Ground truth only partitions pair diagnostics; it is not used for training or prediction."
+}

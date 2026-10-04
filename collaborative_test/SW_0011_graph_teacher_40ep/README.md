@@ -20,3 +20,14 @@ SW_0008에서 graph 힌트로 membrane을 학습한 모델과 동료 spike 분�
 - 학습 뒤 검증 ID 1320–1639에서 동료 분류법을 먼저 비교하며, reference
   ID 1000–1319는 검증에서 읽기 설정을 고른 뒤 고정된 설정으로만 평가.
 - 목표의 3-seed 평균에는 seed 1/2 검증도 별도로 필요.
+- `diagnose_signal_flow.py`는 같은 검증 이미지에서 phase PLV,
+  membrane synchrony, 실제 spike synchrony를 각각 같은/다른 물체 patch
+  쌍으로 나눠 기록합니다. GT는 이 진단에만 쓰며 mask 예측에는 쓰지 않습니다.
+
+10-epoch 기준 checkpoint의 첫 검증 16장에서는 phase PLV가 같은 물체
+patch 쌍 0.3923, 다른 물체 쌍 0.2281이었고, 실제 spike 동기화는
+0.3822 대 0.2123이었습니다. phase와 spike 유사도 행렬의 이미지별
+상관 평균은 0.8160입니다 (`signal_flow_10ep_reference.json`). 이는
+위상 구분 신호가 spike 쪽에도 일부 보인다는 진단일 뿐, 충분한 mask
+성능이나 인과적 전달의 증명은 아닙니다. 40-epoch checkpoint가 나오면
+같은 16장으로 다시 비교합니다.
