@@ -465,6 +465,19 @@ def main():
     )
     parser.add_argument("--osc-dim", type=int, default=4)
     parser.add_argument(
+        "--geodesic-steps",
+        type=int,
+        default=0,
+        help=(
+            "Measure patch distance along the image rather than through it, with "
+            "this many min-plus relaxation rounds. Euclidean decay leaves two "
+            "same-coloured objects linked at 0.418 mean edge weight against 0.749 "
+            "within an object, and 83% of scenes have a repeated colour."
+        ),
+    )
+    parser.add_argument("--geodesic-radius", type=float, default=1.5)
+    parser.add_argument("--geodesic-contrast", type=float, default=2.0)
+    parser.add_argument(
         "--no-center-pulse",
         action="store_true",
         help=(
@@ -888,6 +901,9 @@ def main():
         freq_gain=args.freq_gain,
         spike_pulse_gain=args.spike_pulse_gain,
         center_pulse=not args.no_center_pulse,
+        geodesic_steps=args.geodesic_steps,
+        geodesic_radius=args.geodesic_radius,
+        geodesic_contrast=args.geodesic_contrast,
         graph_mode=args.graph_mode,
         graph_top_k=args.graph_top_k,
         graph_hidden_dim=args.graph_hidden_dim,

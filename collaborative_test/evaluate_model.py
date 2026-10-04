@@ -34,6 +34,8 @@ def build_core(args, device):
         low_n=-4., high_n=0., membrane_vth=0.06, membrane_low_m=-4., membrane_high_m=0.,
         gate_mode=args.gate_mode, spike_per_component=args.spike_per_component,
         spike_pulse_gain=args.spike_pulse_gain, center_pulse=not args.no_center_pulse,
+        geodesic_steps=args.geodesic_steps, geodesic_radius=args.geodesic_radius,
+        geodesic_contrast=args.geodesic_contrast,
         spike_classify_method="spatial_components",
         spike_spatial_grid_size=(args.grid, args.grid),
     ).validate()

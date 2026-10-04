@@ -146,6 +146,10 @@ class S2NetCore(nn.Module):
                 temperature=float(getattr(hparams, "graph_temperature", 0.1)),
                 grid_size=getattr(hparams, "spike_spatial_grid_size", None),
                 spatial_decay=getattr(hparams, "graph_spatial_decay", None),
+                geodesic_steps=int(getattr(hparams, "geodesic_steps", 0)),
+                geodesic_radius=float(getattr(hparams, "geodesic_radius", 1.5)),
+                geodesic_contrast=float(getattr(hparams, "geodesic_contrast", 2.0)),
+                geodesic_temperature=float(getattr(hparams, "geodesic_temperature", 0.5)),
                 feedback_strength=float(getattr(hparams, "graph_feedback_strength", 0.0)),
                 feedback_momentum=float(getattr(hparams, "graph_feedback_momentum", 0.9)),
             )
