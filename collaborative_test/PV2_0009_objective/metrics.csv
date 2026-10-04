@@ -1,0 +1,16 @@
+# seed 0 only, validation 300 images. Screening, not a score.
+# Losses are NOT comparable across arms: changing a term's weight changes what
+# the loss number means. Only the metrics compare.
+run,collapse,bimodality,balance,coherence,target_density,sync,fg_ari,foreground_iou,matched_object_iou,predicted_foreground
+baseline,1.0,1.0,10.0,0.5,0.867,0.20,0.4715,0.5947,0.3442,0.1151
+baseline,1.0,1.0,10.0,0.5,0.867,0.35,0.4925,0.5814,0.3643,0.1298
+baseline,1.0,1.0,10.0,0.5,0.867,0.50,0.4982,0.5605,0.3740,0.1442
+OBJ_bal2,1.0,1.0,2.0,0.5,0.867,0.20,0.6217,0.5574,0.4096,0.1775
+OBJ_bal2,1.0,1.0,2.0,0.5,0.867,0.35,0.6306,0.5541,0.4224,0.1914
+OBJ_bal2,1.0,1.0,2.0,0.5,0.867,0.50,0.6359,0.5551,0.4308,0.1988
+OBJ_coh2,1.0,1.0,10.0,2.0,0.867,0.20,0.2986,0.3926,0.2180,0.0625
+OBJ_coh2,1.0,1.0,10.0,2.0,0.867,0.35,0.3082,0.3997,0.2255,0.0636
+OBJ_coh2,1.0,1.0,10.0,2.0,0.867,0.50,0.3130,0.4021,0.2299,0.0658
+OBJ_bim3,1.0,3.0,10.0,0.5,0.867,0.20,0.5972,0.6207,0.3773,0.1281
+OBJ_bim3,1.0,3.0,10.0,0.5,0.867,0.35,0.6214,0.6099,0.4031,0.1445
+OBJ_bim3,1.0,3.0,10.0,0.5,0.867,0.50,0.6390,0.5900,0.4186,0.1606

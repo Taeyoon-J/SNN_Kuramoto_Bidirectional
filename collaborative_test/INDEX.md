@@ -11,6 +11,8 @@
 | PV2_0006 | completed | `--readout plv` added; the phase readout beats the spike readout by 0.174 | | | |
 | PV2_0007 | failed | distil phase synchrony into the spikes by MSE; foreground IoU collapses to 0.37 | | | |
 | PV2_0008 | completed | **spike synchrony in the objective, three seeds** | 0.6075 | **0.6755** | **0.4298** |
+| PV2_0009 | completed | objective re-balance screened on seed 0; bimodality 3 lifts all three | | | |
+| PV2_0010 | running | bimodality 3 at seeds 1 and 2 | | | |
 
 Three seeds on the test split, scored from spike masks. Peer experiments from
 `patch_v2_sw` use the `SW_` prefix and are reviewed under `peer_updates/`.
