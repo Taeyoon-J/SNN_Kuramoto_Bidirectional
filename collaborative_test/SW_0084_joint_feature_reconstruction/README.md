@@ -94,3 +94,8 @@ itself to GPU0--1:
 nohup bash collaborative_test/SW_0084_joint_feature_reconstruction/queue_evaluation.sh \
   </dev/null >trained_models/SW0084_EVALUATION_QUEUE.log 2>&1 &
 ```
+
+When SW0086 was added while every GPU remained occupied, the original SW0084
+waiter was replaced by `resume_after_sw0086.sh`. This gives the newer requested
+cross-contract evaluation the first newly idle GPU and resumes every SW0084 job
+afterward, avoiding a race in which two independent waiters claim one GPU.
