@@ -1,0 +1,98 @@
+{
+  "experiment": "SW0080 graph-only phase/spike binding with RGB slot reconstruction",
+  "seed": 1,
+  "training_ids": {
+    "segments_inclusive": [
+      [
+        0,
+        999
+      ],
+      [
+        1640,
+        3139
+      ]
+    ],
+    "count": 2500
+  },
+  "gamma_path": "/Data0/kevinswk/patch_v2_sw/data/SW_0055_unique_data_scale/gamma_train_2500.pt",
+  "gamma_sha256": "7139439232d5717b66ffd1749572ab3faff9d0337d49c28b1602dce4d6c742aa",
+  "source_core_checkpoint": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0072_frozen_seed0_graph_s1_e10/core.pt",
+  "source_core_sha256": "b90dc8e78aaacf7347952e2bb6fd2f2da1593679e7bc5c9430cc26888a38cd91",
+  "trainer_sha256": "4fff2b8334b0fdc4afec93745929f68e43d91cbcc81142558b53426a6144affd",
+  "code_dependencies_sha256": {
+    "snn_kuramoto_bidirectional/s2net_cls.py": "18313e5ee7358146703256e7e29d9846bfa60394feedba3237f2f7eac8791288",
+    "snn_kuramoto_bidirectional/graph_generator.py": "4f4c4d680a60822a5e4645eec3bbceb960846d4fac89e799076f6b4cf1bc6dde",
+    "snn_kuramoto_bidirectional/kuramoto_layer.py": "76e61785fb19228fe4ecf6bbdfd4dc72519b9d6bd34d5f4fd9165e29c76d263e",
+    "snn_kuramoto_bidirectional/loss_function.py": "6542d084f66c07101b75869709df9302db45e0dde87b6b5945d1790daa316543",
+    "snn_kuramoto_bidirectional/training/train_s2net_core.py": "6056ae4d98d36678ae680e868c6c40716c8b2380f6ab81437e60ce962e15efde"
+  },
+  "epochs_requested": 5,
+  "steps_completed": 785,
+  "batch_size": 16,
+  "graph_learning_rate": 3e-05,
+  "reconstruction_weight": 1.0,
+  "primary_objectives": {
+    "phase_binding": "existing PLV criterion",
+    "component_spike_weight": 5.0
+  },
+  "freeze_contract": {
+    "encoder_frozen": true,
+    "non_graph_core_frozen": true,
+    "non_graph_max_abs_change": 0.0,
+    "graph_max_abs_change": 0.0035077035427093506
+  },
+  "ground_truth_used_for_training": false,
+  "training_protocol": "cached aligned gamma + RGB images only; masks and object counts are never opened",
+  "history": [
+    {
+      "epoch": 1,
+      "steps": 157,
+      "samples_seen": 2500,
+      "loss": 20.48672084350586,
+      "primary": 4.174139246368409,
+      "spike": 3.2625163223266602,
+      "slot_reconstruction": 0.6390510404586792,
+      "graph_grad_norm": 39.40687809448242
+    },
+    {
+      "epoch": 2,
+      "steps": 314,
+      "samples_seen": 2500,
+      "loss": 20.484340063476562,
+      "primary": 4.173123244476319,
+      "spike": 3.262243378829956,
+      "slot_reconstruction": 0.6392543521881103,
+      "graph_grad_norm": 40.56434789428711
+    },
+    {
+      "epoch": 3,
+      "steps": 471,
+      "samples_seen": 2500,
+      "loss": 20.482579794311523,
+      "primary": 4.172444248199463,
+      "spike": 3.262027141571045,
+      "slot_reconstruction": 0.6394975113868714,
+      "graph_grad_norm": 59.72006343078613
+    },
+    {
+      "epoch": 4,
+      "steps": 628,
+      "samples_seen": 2500,
+      "loss": 20.483026959228514,
+      "primary": 4.171996366882325,
+      "spike": 3.2622061164855958,
+      "slot_reconstruction": 0.6394148747444153,
+      "graph_grad_norm": 49.217901330566406
+    },
+    {
+      "epoch": 5,
+      "steps": 785,
+      "samples_seen": 2500,
+      "loss": 20.47976273498535,
+      "primary": 4.171008109283448,
+      "spike": 3.2617509090423584,
+      "slot_reconstruction": 0.639575838470459,
+      "graph_grad_norm": 70.44606532592773
+    }
+  ]
+}

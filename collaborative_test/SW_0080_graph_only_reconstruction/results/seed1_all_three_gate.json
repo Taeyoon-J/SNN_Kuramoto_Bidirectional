@@ -1,0 +1,37 @@
+{
+  "baseline": {
+    "fg_ari": 0.7087568718226954,
+    "foreground_iou": 0.46810477545343715,
+    "matched_object_iou": 0.5098805140855838
+  },
+  "candidates": {
+    "r0p3": {
+      "metrics": {
+        "fg_ari": 0.682507747409264,
+        "foreground_iou": 0.4641121031868979,
+        "matched_object_iou": 0.4924030379585784
+      },
+      "delta_vs_sw0072_seed1": {
+        "fg_ari": -0.026249124413431413,
+        "foreground_iou": -0.0039926722665392655,
+        "matched_object_iou": -0.017477476127005342
+      },
+      "advance_gate_all_three_strictly_positive": false
+    },
+    "r1p0": {
+      "metrics": {
+        "fg_ari": 0.6679943506406396,
+        "foreground_iou": 0.4712234859024446,
+        "matched_object_iou": 0.4922450705855932
+      },
+      "delta_vs_sw0072_seed1": {
+        "fg_ari": -0.04076252118205581,
+        "foreground_iou": 0.003118710449007467,
+        "matched_object_iou": -0.017635443499990577
+      },
+      "advance_gate_all_three_strictly_positive": false
+    }
+  },
+  "gate": "advance only an arm with positive deltas on all three fixed metrics",
+  "threshold_or_parameter_selected_from_scores": false
+}
