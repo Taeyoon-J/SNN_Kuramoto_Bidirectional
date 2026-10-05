@@ -53,3 +53,16 @@ are refused. `launch_parallel.sh` also rejects duplicate GPU IDs, checks all
 three devices for active compute processes, and refuses existing output
 directories before starting. No server run or evaluation was launched as part
 of this preparation.
+
+To wait for an available GPU and run the SW0054 gate-invariant preflight plus
+its 32-image short pilot before launching SW0055 on GPUs 1/2/3, use:
+
+```bash
+bash collaborative_test/SW_0055_unique_data_scale/wait_for_idle_and_launch.sh
+```
+
+The wrapper polls GPUs 1/2/3 every 30 seconds, takes a single-instance lock,
+logs timestamps, validates and reuses an existing successful SW0054 pilot, and
+does not retry a pilot that leaves a failed evaluator artifact. It refuses
+existing SW0055 seed outputs and writes a completion marker after successful
+launch. Inspect its log and marker before any later restart.
