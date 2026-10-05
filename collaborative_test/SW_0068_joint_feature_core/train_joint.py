@@ -134,7 +134,7 @@ def main():
         lambda core_out, spikes: [[] for _ in range(spikes.size(0))]
     )
     # Loading the auxiliary encoder must not perturb the baseline core RNG
-    # sequence or the explicit DataLoader generator.
+    # sequence or the subsequent baseline-equivalent DataLoader shuffle.
     with torch.random.fork_rng(devices=[]):
         encoder = load_encoder(args.encoder, device)
     patcher = FeaturePatchGammaInitializer(grid_size=16).to(device)
@@ -149,9 +149,8 @@ def main():
     initial_encoder = {key: value.detach().cpu().clone()
                        for key, value in encoder.state_dict().items()}
 
-    generator = torch.Generator().manual_seed(args.seed)
     loader = DataLoader(TensorDataset(images, anchors), batch_size=args.batch_size,
-                        shuffle=True, generator=generator)
+                        shuffle=True)
     criterion = UnsupervisedS2NetLoss(
         spike_rate_weight=0.0, spike_smooth_weight=0.0,
         spike_diversity_weight=0.0, structural_weight=0.0,
@@ -228,6 +227,7 @@ def main():
                          "full_segments": [[0, 999], [1640, 3139]]
                          if len(ids) == 2500 else None},
         "core_lr": args.core_lr, "encoder_lr": args.encoder_lr,
+        "data_order": "global RNG after baseline-equivalent core initialization",
         "anchor_weight": args.anchor_weight,
         "initial_gamma_max_abs_diff": initial_max_diff,
         "final_gamma_rms_drift_n32": gamma_drift,

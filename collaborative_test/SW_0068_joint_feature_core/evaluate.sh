@@ -4,8 +4,8 @@ GPU="${1:?GPU 0 or 1}"; TAG="${2:?lr3e6 or lr3e5}"
 case "$GPU" in 0|1) ;; *) exit 2 ;; esac
 case "$TAG" in lr3e6|lr3e5) ;; *) exit 2 ;; esac
 ROOT=/Data0/kevinswk/patch_v2_sw
-MODEL="$ROOT/trained_models/SW0068_joint_s1_${TAG}"
-OUT="$ROOT/trained_models/SW0068_stage1"
+MODEL="$ROOT/trained_models/SW0068b_joint_s1_${TAG}"
+OUT="$ROOT/trained_models/SW0068b_stage1"
 RESULT="$OUT/${TAG}_seed1_n32.json"; LOG="${RESULT%.json}.log"
 test -f "$MODEL/TRAINING_COMPLETED" -a -s "$MODEL/model/core.pt" -a -s "$MODEL/gamma_validation.pt"
 [[ ! -e "$RESULT" && ! -e "$LOG" ]] || exit 3

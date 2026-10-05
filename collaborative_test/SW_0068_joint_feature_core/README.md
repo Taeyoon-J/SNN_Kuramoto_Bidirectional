@@ -18,3 +18,9 @@ nonzero encoder parameter change, and export learned validation gamma directly
 from HDF5 RGB. Stage 1 uses seed1 and fixed IDs1320-1351. An arm advances only
 if it improves all three mask metrics over the SW0066 seed1 checkpoint; feature
 drift and object count are diagnostics, not selection substitutes.
+
+The first launch was stopped after epoch1 because a fresh explicit DataLoader
+generator changed the baseline shuffle order. The corrected `SW0068b` launch
+uses the same global RNG state reached after core construction as SW0066, so
+the warmup isolates the later encoder intervention. Corrected epoch1 loss is
+`23.7410427216`, matching SW0066's `23.74104272`.

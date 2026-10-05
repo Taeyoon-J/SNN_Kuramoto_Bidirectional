@@ -4,7 +4,7 @@ GPU="${1:?GPU 0 or 1}"; TAG="${2:?lr3e6 or lr3e5}"
 case "$GPU" in 0|1) ;; *) exit 2 ;; esac
 case "$TAG" in lr3e6) LR=0.000003 ;; lr3e5) LR=0.00003 ;; *) exit 2 ;; esac
 ROOT=/Data0/kevinswk/patch_v2_sw
-OUT="$ROOT/trained_models/SW0068_joint_s1_${TAG}"
+OUT="$ROOT/trained_models/SW0068b_joint_s1_${TAG}"
 test ! -e "$OUT"
 PIDS="$(nvidia-smi --id="$GPU" --query-compute-apps=pid --format=csv,noheader 2>&1)"; [[ ! "$PIDS" =~ [0-9] ]]
 mkdir -p "$OUT/cache"; export CUDA_VISIBLE_DEVICES="$GPU" TMPDIR="$OUT/cache" TRITON_CACHE_DIR="$OUT/cache"
