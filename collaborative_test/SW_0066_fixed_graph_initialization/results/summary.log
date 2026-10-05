@@ -1,0 +1,41 @@
+{
+  "experiment": "SW0066 graph-init0 stage1",
+  "rows": {
+    "1": {
+      "baseline": {
+        "fg_ari": 0.5499158941802094,
+        "foreground_iou": 0.41366292921531267,
+        "matched_object_iou": 0.39762581642046635
+      },
+      "candidate": {
+        "fg_ari": 0.6316519272381114,
+        "foreground_iou": 0.3852088450351232,
+        "matched_object_iou": 0.46168352926256573
+      },
+      "delta": {
+        "fg_ari": 0.081736033057902,
+        "foreground_iou": -0.028454084180189465,
+        "matched_object_iou": 0.06405771284209938
+      }
+    },
+    "2": {
+      "baseline": {
+        "fg_ari": 0.38951975542312955,
+        "foreground_iou": 0.20028964169844504,
+        "matched_object_iou": 0.182222404519279
+      },
+      "candidate": {
+        "fg_ari": 0.4580581432935339,
+        "foreground_iou": 0.24307263480150731,
+        "matched_object_iou": 0.25563807328963944
+      },
+      "delta": {
+        "fg_ari": 0.06853838787040434,
+        "foreground_iou": 0.04278299310306227,
+        "matched_object_iou": 0.07341566877036043
+      }
+    }
+  },
+  "advance": false,
+  "gate": "both seeds must improve all three fixed metrics"
+}

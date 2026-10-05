@@ -48,6 +48,7 @@ def compact_sweep(rows):
         "affinity_mode": row.get("affinity_mode", "spike"),
         "spatial_sigma": row.get("spatial_sigma"),
         "threshold": row["synchrony_threshold"],
+        "target_foreground": row.get("target_foreground"),
         "predicted_foreground_fraction": row.get("predicted_foreground_fraction"),
         "groups_per_image_mean": row.get("predicted_object_count", {}).get("mean"),
         "empty_image_count": row.get("predicted_object_count", {}).get("empty_image_count"),
@@ -133,6 +134,12 @@ def main():
                         default="largest_component")
     parser.add_argument("--foreground-threshold", type=float, default=0.15)
     parser.add_argument("--synchrony-quantile", type=float, default=0.35)
+    parser.add_argument(
+        "--target-foreground", type=float, default=None,
+        help=("Optional fixed foreground-area prior. When set, each image uses "
+              "a label-free threshold search to approach this coverage; the "
+              "provided synchrony threshold is retained only as provenance."),
+    )
     parser.add_argument("--phase-endpoint", action="store_true",
                         help="Score phase-PLV connected components as a diagnostic alongside spikes.")
     parser.add_argument("--dendritic-projection", choices=["shared", "per_region"], default="shared")
@@ -156,6 +163,10 @@ def main():
         raise ValueError("Require positive count and 0 <= settle < steps.")
     if not args.thresholds or any(not 0.0 <= x <= 1.0 for x in args.thresholds):
         raise ValueError("Synchrony thresholds must lie in [0, 1].")
+    if args.target_foreground is not None and not 0.0 < args.target_foreground < 1.0:
+        raise ValueError("target foreground must lie strictly between 0 and 1")
+    if args.target_foreground is not None and len(args.thresholds) != 1:
+        raise ValueError("target foreground evaluation requires exactly one provenance threshold")
     if not args.spatial_sigmas or any(x <= 0.0 or x != x for x in args.spatial_sigmas):
         raise ValueError("Spatial sigma values must be positive (or inf).")
     if not args.spatial_permutation_seeds or any(seed < 0 for seed in args.spatial_permutation_seeds):
@@ -280,6 +291,7 @@ def main():
             background=args.background,
             foreground_threshold=args.foreground_threshold,
             synchrony_quantile=args.synchrony_quantile,
+            target_foreground=args.target_foreground,
             spatial_sigma=spatial_sigma,
             spatial_grid_size=16,
             affinity_mode=affinity_mode,
@@ -326,6 +338,7 @@ def main():
             "spatial_sigma": ("inf" if spatial_sigma is not None and math.isinf(spatial_sigma)
                               else spatial_sigma),
             "synchrony_threshold": float(threshold),
+            "target_foreground": args.target_foreground,
             "predicted_foreground_fraction": float((prediction != 0).float().mean()),
             "predicted_object_count": {
                 "mean": float(torch.tensor(predicted_counts, dtype=torch.float32).mean()),
@@ -369,6 +382,7 @@ def main():
             "geodesic_temperature": args.geodesic_temperature,
             "geodesic_cap": args.geodesic_cap,
             "synchrony_thresholds": args.thresholds,
+            "target_foreground": args.target_foreground,
             "affinity_modes": args.affinity_modes,
             "spatial_sigmas": [None if mode == "spike" else
                                ["inf" if math.isinf(sigma) else sigma

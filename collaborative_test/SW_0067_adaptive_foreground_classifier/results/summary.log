@@ -1,0 +1,93 @@
+{
+  "experiment": "SW0067 adaptive foreground classifier stage1",
+  "ids": [
+    1320,
+    1351
+  ],
+  "target_foreground": 0.22,
+  "fixed": {
+    "0": {
+      "metrics": {
+        "fg_ari": 0.7662750269998821,
+        "foreground_iou": 0.807298769681214,
+        "matched_object_iou": 0.5933659735634471
+      },
+      "count_mae": 1.21875,
+      "predicted_count_mean": 4.625,
+      "predicted_foreground_fraction": 0.200439453125
+    },
+    "1": {
+      "metrics": {
+        "fg_ari": 0.6316519272381114,
+        "foreground_iou": 0.3852088450351232,
+        "matched_object_iou": 0.46168352926256573
+      },
+      "count_mae": 1.34375,
+      "predicted_count_mean": 5.375,
+      "predicted_foreground_fraction": 0.407470703125
+    },
+    "2": {
+      "metrics": {
+        "fg_ari": 0.4580581432935339,
+        "foreground_iou": 0.24307263480150731,
+        "matched_object_iou": 0.25563807328963944
+      },
+      "count_mae": 3.21875,
+      "predicted_count_mean": 8.0625,
+      "predicted_foreground_fraction": 0.554443359375
+    }
+  },
+  "adaptive": {
+    "0": {
+      "metrics": {
+        "fg_ari": 0.7661427640003932,
+        "foreground_iou": 0.8155457019939371,
+        "matched_object_iou": 0.5992596460860451
+      },
+      "count_mae": 1.53125,
+      "predicted_count_mean": 4.625,
+      "predicted_foreground_fraction": 0.1839599609375
+    },
+    "1": {
+      "metrics": {
+        "fg_ari": 0.44971520966742484,
+        "foreground_iou": 0.3465308447065193,
+        "matched_object_iou": 0.287871009502485
+      },
+      "count_mae": 2.84375,
+      "predicted_count_mean": 2.9375,
+      "predicted_foreground_fraction": 0.2142333984375
+    },
+    "2": {
+      "metrics": {
+        "fg_ari": 0.3202021982193709,
+        "foreground_iou": 0.31298748849424063,
+        "matched_object_iou": 0.15212212684206905
+      },
+      "count_mae": 3.09375,
+      "predicted_count_mean": 2.9375,
+      "predicted_foreground_fraction": 0.178466796875
+    }
+  },
+  "three_seed_mean": {
+    "fixed_metrics": {
+      "fg_ari": 0.6186616991771757,
+      "foreground_iou": 0.4785267498392815,
+      "matched_object_iou": 0.4368958587052174
+    },
+    "adaptive_metrics": {
+      "fg_ari": 0.5120200572957296,
+      "foreground_iou": 0.4916880117315657,
+      "matched_object_iou": 0.34641759414353307
+    },
+    "delta": {
+      "fg_ari": -0.10664164188144609,
+      "foreground_iou": 0.01316126189228417,
+      "matched_object_iou": -0.09047826456168434
+    },
+    "fixed_count_mae": 1.9270833333333333,
+    "adaptive_count_mae": 2.4895833333333335
+  },
+  "advance": false,
+  "gate": "three-seed mean improves all mask metrics and count MAE does not rise"
+}

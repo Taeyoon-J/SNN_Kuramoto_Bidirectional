@@ -16,3 +16,12 @@ unique scenes and evaluates candidates plus their original baselines on fixed
 IDs1320-1351, T256/settle64, threshold .35. It advances to full 320-image long
 evaluation only if both seeds improve all three metrics. SW0055 seed0 is the
 natural graph-init-seed0 arm and need not be retrained for the final mean.
+
+## Result
+
+Seed1 changed from `.5499/.4137/.3976` to `.6317/.3852/.4617`; seed2 changed
+from `.3895/.2003/.1822` to `.4581/.2431/.2556`. Thus the intervention improves
+grouping and matched-object IoU for both weak seeds and all metrics for seed2,
+but seed1 foreground IoU falls `.0285`. The registered per-seed all-three gate
+does not advance. Graph initialization is retained as an activation-stability
+baseline, while the next experiment targets foreground classification.
