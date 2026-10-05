@@ -34,7 +34,8 @@ OMP/MKL/OpenBLAS/NumExpr threads, and uses `nice`. It is sequential by design:
 ```bash
 bash collaborative_test/SW_0056_matched_slot_2500/run_seed.sh 0 dry-run
 bash collaborative_test/SW_0056_matched_slot_2500/run_seed.sh 0 smoke
-bash collaborative_test/SW_0056_matched_slot_2500/run_sequential.sh full
+bash collaborative_test/SW_0056_matched_slot_2500/wait_for_low_load_and_run.sh --dry-run
+bash collaborative_test/SW_0056_matched_slot_2500/wait_for_low_load_and_run.sh
 ```
 
 The smoke mode performs a 16-image update followed by an 8-image update on 24
@@ -43,10 +44,35 @@ current primary weights, applies its gradients to the primary variables, and
 asserts finite loss plus a changed primary weight before completing. It does
 not validate. Full runs write the seed, exact IDs/exposure plan, schedule,
 model/trainer/checksum provenance, loss log, TensorFlow checkpoint, and
-validation protocol into a fresh seed directory. Existing outputs are refused;
-there is no parallel/GPU launcher. The full run then uses SW0046's predictor
+validation protocol into its seed directory. Valid completed phases can be
+skipped; partial or invalid artifacts are never overwritten. There is no
+parallel/GPU launcher. The full run then uses SW0046's predictor
 and scorer on IDs 1320-1639 with protocol metadata identifying the scratch
 checkpoint and training seed.
+
+`run_seed.sh` is phase-aware. A training phase is skipped only if its completion
+marker, `ckpt-1563` index/data, full protocol, and all 1,563 finite loss rows
+validate. Its unique launcher log is created outside the output directory, then
+moved to `training.log` only after successful validation. Training failures
+retain the external log and partial output with a `FAILED` record containing
+phase, return code, and UTC timestamp; partial training is never retried.
+Inference is skipped only when its completion marker, exact IDs, predictions,
+and protocol validate. Partial/invalid inference or scoring output is preserved
+and stops recovery. `COMPLETED` is written only after training, inference, and
+scoring artifacts all pass their full validators.
+
+The separate sequential runner waits until **ten consecutive 60-second
+samples** satisfy load1 <= 32, load5 <= 36, load15 <= 40, and
+`MemAvailable >= 8 GiB`. It does no compute while load is high, validates the
+24-image smoke first, then runs seeds 0, 1, and 2 sequentially. It checks the
+same gate once immediately before each actual training, inference, or scoring
+phase; concurrency is one. An exclusive lock, timestamped log, phase markers,
+stale-PID verification, and no-restart policy protect a stopped/partial run.
+After all three seeds pass, it writes an exclusive three-seed JSON and Markdown
+summary with per-seed values, mean, and sample standard deviation for FG-ARI,
+foreground IoU, and matched-object IoU. The summary requires the same
+validation slice and protocol family across seeds and verifies GT-free
+prediction provenance.
 
 Pure NumPy tests check exact IDs, deterministic order, ten real appearances per
 image, the 1,562+1 batch structure, and schedule metadata:
