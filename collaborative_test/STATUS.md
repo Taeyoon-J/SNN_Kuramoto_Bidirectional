@@ -87,12 +87,21 @@ Reviewed `origin/patch_v2_sw` through `7e3ce3d` (SW_0001-0038).
 Applied: **SW_0028's spatial kernel**, `exp(-d^2/2 sigma^2)` into the affinity.
 Worth +0.0156 fg_ari and +0.0204 matched-object IoU here, best at sigma 1.0.
 
-Outstanding: **SW_0024/0028's spectral-k readout**. It is both their ARI
-mechanism and the only way to run their SW_0033 control faithfully -- that control
-showed the kernel alone scored 0.4913 against 0.4946 for kernel-times-membrane,
-so nearly all of their gain was the spatial prior rather than learned binding.
-Run against this branch's connected-components readout the control degenerates to
-zero groups, so **how much of 0.7043 is grid structure is still unknown.**
+Applied and settled: **SW_0024/0027's spectral-k readout**. It does not beat
+connected components on fg_ari (about 0.61 against 0.7059) so it is not adopted,
+but it raises matched-object IoU 0.4807 to 0.5240 and, more importantly, it made
+their control runnable.
+
+**That control now answers the open question in this branch's favour.** Same
+readout, same k, only the affinity's source changing: the spatial kernel alone
+reaches fg_ari 0.3902 and spike synchrony reaches 0.6068, so the spikes add
+**+0.217** over pure geometry. The peer's finding -- that spatial-only nearly
+matched membrane-times-spatial on their data -- does not reproduce here.
+
+SW0047's permutation control agrees: keeping the kernel's values and scrambling
+which patch each row belongs to takes seed 0 from 0.6639 to **0.0033** and seed 1
+to **-0.0050**, below having no kernel at all. The kernel acts entirely through
+grid geometry and must be correctly registered to help.
 
 Independent corroboration: their SW_0034 found the binary spike threshold
 "constant 1 after settle" and SW_0036 repaired it by changing vth -- the same
