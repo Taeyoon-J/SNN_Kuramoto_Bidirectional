@@ -17,8 +17,10 @@ output, and write an ID/checksum manifest. The controlled comparison is:
 | data + compute | 2,500 | 25 | 62,500 |
 
 The 2,500x10 arm isolates unique-scene diversity at matched exposure. The
-2,500x25 arm is launched only after the matched-exposure result. This folder
-initially builds and validates the gamma asset; it does not launch training.
+2,500x25 arm is launched only after the matched-exposure result. With batch
+size 16, the selected 1,000x25 run has 1,575 optimizer updates and this
+2,500x10 control has 1,570; every scene is still seen for exactly the stated
+number of epochs, so image exposure is exact and update count differs by five.
 
 ```bash
 python collaborative_test/SW_0055_unique_data_scale/build_gamma.py \
@@ -30,5 +32,9 @@ The real-asset preflight regenerated all original 1,000 rows with maximum
 absolute difference `0.0`. The full expanded asset then passed shape
 `[2500,8,256]`, finite-value, held-out-exclusion, and provenance checks. Its
 SHA-256 is `7139439232d5717b66ffd1749572ab3faff9d0337d49c28b1602dce4d6c742aa`;
-the versioned manifest is under `results/`. Training remains unlaunched until
-the matched-exposure 2,500x10 runner receives its own one-update preflight.
+the versioned manifest is under `results/`. The matched-exposure runner's
+real-gamma one-update preflight passes and is bound to the gamma and
+training-code checksums. `launch_parallel.sh` refuses occupied GPUs and
+existing seed output directories before starting seeds 0/1/2, followed by
+fixed short and long aligned validation. Training is ready but remains
+unlaunched while the requested GPUs are occupied by another user.
