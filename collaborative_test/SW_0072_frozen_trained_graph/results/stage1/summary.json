@@ -1,0 +1,41 @@
+{
+  "experiment": "SW0072 frozen trained seed0 graph stage1",
+  "rows": {
+    "1": {
+      "candidate": {
+        "fg_ari": 0.7087568718226954,
+        "foreground_iou": 0.46810477545343715,
+        "matched_object_iou": 0.5098805140855838
+      },
+      "baseline": {
+        "fg_ari": 0.6316519272381114,
+        "foreground_iou": 0.3852088450351232,
+        "matched_object_iou": 0.46168352926256573
+      },
+      "delta": {
+        "fg_ari": 0.07710494458458406,
+        "foreground_iou": 0.08289593041831395,
+        "matched_object_iou": 0.04819698482301804
+      }
+    },
+    "2": {
+      "candidate": {
+        "fg_ari": 0.7603966015998521,
+        "foreground_iou": 0.319002918540583,
+        "matched_object_iou": 0.5789567284339128
+      },
+      "baseline": {
+        "fg_ari": 0.4580581432935339,
+        "foreground_iou": 0.24307263480150731,
+        "matched_object_iou": 0.25563807328963944
+      },
+      "delta": {
+        "fg_ari": 0.3023384583063182,
+        "foreground_iou": 0.07593028373907568,
+        "matched_object_iou": 0.3233186551442733
+      }
+    }
+  },
+  "advance": true,
+  "gate": "both weak seeds improve all three metrics over SW0066 graph-init0"
+}
