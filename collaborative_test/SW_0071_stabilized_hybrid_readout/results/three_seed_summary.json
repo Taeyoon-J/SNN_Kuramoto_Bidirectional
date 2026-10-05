@@ -1,0 +1,269 @@
+{
+  "experiment": "SW0071 stabilized hybrid readout",
+  "contract": {
+    "ids": [
+      1320,
+      1639
+    ],
+    "steps": 1024,
+    "settle": 512,
+    "spike_threshold": 0.5
+  },
+  "baseline_sw0070_report": {
+    "fg_ari": 0.6774476445271609,
+    "foreground_iou": 0.4354392959422126,
+    "matched_object_iou": 0.47987806126492416
+  },
+  "baseline_internal_spike_cc": {
+    "fg_ari": 0.6767441486663843,
+    "foreground_iou": 0.4354486190711041,
+    "matched_object_iou": 0.4792054806026696
+  },
+  "internal_vs_sw0070_evaluation_drift": {
+    "fg_ari": -0.0007034958607765596,
+    "foreground_iou": 9.323128891514099e-06,
+    "matched_object_iou": -0.0006725806622545627
+  },
+  "per_seed": {
+    "0": {
+      "membrane_freeze": {
+        "fg_ari": 0.8347828361771639,
+        "foreground_iou": 0.7307319709759666,
+        "matched_object_iou": 0.593341088306956
+      },
+      "spike_freeze": {
+        "fg_ari": 0.8349849829510694,
+        "foreground_iou": 0.7307319709759666,
+        "matched_object_iou": 0.6024825016327303
+      },
+      "membrane_restrict_k10": {
+        "fg_ari": 0.5469519328092541,
+        "foreground_iou": 0.7307319709759666,
+        "matched_object_iou": 0.5453076152395866
+      },
+      "spike_restrict_k10": {
+        "fg_ari": 0.5372767578290473,
+        "foreground_iou": 0.7307319709759666,
+        "matched_object_iou": 0.5394452838875243
+      },
+      "membrane_restrict_dynamic": {
+        "fg_ari": 0.8112779162649858,
+        "foreground_iou": 0.7307319709759666,
+        "matched_object_iou": 0.6432794843829577
+      },
+      "spike_restrict_dynamic": {
+        "fg_ari": 0.8056455196853103,
+        "foreground_iou": 0.7307319709759666,
+        "matched_object_iou": 0.6386058438870432
+      },
+      "spike_cc_baseline": {
+        "fg_ari": 0.8174309504994108,
+        "foreground_iou": 0.7307319709759666,
+        "matched_object_iou": 0.6445000895962123
+      }
+    },
+    "1": {
+      "membrane_freeze": {
+        "fg_ari": 0.6943363176018226,
+        "foreground_iou": 0.3438457830589809,
+        "matched_object_iou": 0.44611549611650336
+      },
+      "spike_freeze": {
+        "fg_ari": 0.6897565866533437,
+        "foreground_iou": 0.3438457830589809,
+        "matched_object_iou": 0.44264989682916445
+      },
+      "membrane_restrict_k10": {
+        "fg_ari": 0.6535431069962976,
+        "foreground_iou": 0.3438457830589809,
+        "matched_object_iou": 0.5053337931154728
+      },
+      "spike_restrict_k10": {
+        "fg_ari": 0.6509277908105903,
+        "foreground_iou": 0.3438457830589809,
+        "matched_object_iou": 0.5030732094673802
+      },
+      "membrane_restrict_dynamic": {
+        "fg_ari": 0.6814519597815444,
+        "foreground_iou": 0.3438457830589809,
+        "matched_object_iou": 0.4486451845928916
+      },
+      "spike_restrict_dynamic": {
+        "fg_ari": 0.6806968279701283,
+        "foreground_iou": 0.3438457830589809,
+        "matched_object_iou": 0.44484657116006227
+      },
+      "spike_cc_baseline": {
+        "fg_ari": 0.6680760970960085,
+        "foreground_iou": 0.3438457830589809,
+        "matched_object_iou": 0.4960630492537795
+      }
+    },
+    "2": {
+      "membrane_freeze": {
+        "fg_ari": 0.5661091474657697,
+        "foreground_iou": 0.23176810317836485,
+        "matched_object_iou": 0.26821128193466315
+      },
+      "spike_freeze": {
+        "fg_ari": 0.5715103831770364,
+        "foreground_iou": 0.23176810317836485,
+        "matched_object_iou": 0.2924457964411757
+      },
+      "membrane_restrict_k10": {
+        "fg_ari": 0.5330693761422362,
+        "foreground_iou": 0.23176810317836485,
+        "matched_object_iou": 0.30841102737067483
+      },
+      "spike_restrict_k10": {
+        "fg_ari": 0.5485837443291428,
+        "foreground_iou": 0.23176810317836485,
+        "matched_object_iou": 0.32048590734713056
+      },
+      "membrane_restrict_dynamic": {
+        "fg_ari": 0.5134442472218583,
+        "foreground_iou": 0.23176810317836485,
+        "matched_object_iou": 0.3060052352307403
+      },
+      "spike_restrict_dynamic": {
+        "fg_ari": 0.547065601259756,
+        "foreground_iou": 0.23176810317836485,
+        "matched_object_iou": 0.3212653451502726
+      },
+      "spike_cc_baseline": {
+        "fg_ari": 0.5447253984037336,
+        "foreground_iou": 0.23176810317836485,
+        "matched_object_iou": 0.297053302958017
+      }
+    }
+  },
+  "rows": [
+    {
+      "mode": "spike_freeze",
+      "fg_ari": 0.6987506509271498,
+      "foreground_iou": 0.4354486190711041,
+      "matched_object_iou": 0.4458593983010235,
+      "delta_vs_internal_spike_cc": {
+        "fg_ari": 0.022006502260765504,
+        "foreground_iou": 0.0,
+        "matched_object_iou": -0.033346082301646096
+      },
+      "delta_vs_sw0070_report": {
+        "fg_ari": 0.021303006399988944,
+        "foreground_iou": 9.323128891514099e-06,
+        "matched_object_iou": -0.03401866296390066
+      },
+      "foreground_preserved": true,
+      "accepted": false
+    },
+    {
+      "mode": "membrane_freeze",
+      "fg_ari": 0.698409433748252,
+      "foreground_iou": 0.4354486190711041,
+      "matched_object_iou": 0.43588928878604083,
+      "delta_vs_internal_spike_cc": {
+        "fg_ari": 0.021665285081867713,
+        "foreground_iou": 0.0,
+        "matched_object_iou": -0.04331619181662877
+      },
+      "delta_vs_sw0070_report": {
+        "fg_ari": 0.020961789221091154,
+        "foreground_iou": 9.323128891514099e-06,
+        "matched_object_iou": -0.04398877247888333
+      },
+      "foreground_preserved": true,
+      "accepted": false
+    },
+    {
+      "mode": "spike_restrict_dynamic",
+      "fg_ari": 0.6778026496383982,
+      "foreground_iou": 0.4354486190711041,
+      "matched_object_iou": 0.46823925339912603,
+      "delta_vs_internal_spike_cc": {
+        "fg_ari": 0.001058500972013876,
+        "foreground_iou": 0.0,
+        "matched_object_iou": -0.010966227203543566
+      },
+      "delta_vs_sw0070_report": {
+        "fg_ari": 0.0003550051112373165,
+        "foreground_iou": 9.323128891514099e-06,
+        "matched_object_iou": -0.011638807865798129
+      },
+      "foreground_preserved": true,
+      "accepted": false
+    },
+    {
+      "mode": "spike_cc_baseline",
+      "fg_ari": 0.6767441486663843,
+      "foreground_iou": 0.4354486190711041,
+      "matched_object_iou": 0.4792054806026696,
+      "delta_vs_internal_spike_cc": {
+        "fg_ari": 0.0,
+        "foreground_iou": 0.0,
+        "matched_object_iou": 0.0
+      },
+      "delta_vs_sw0070_report": {
+        "fg_ari": -0.0007034958607765596,
+        "foreground_iou": 9.323128891514099e-06,
+        "matched_object_iou": -0.0006725806622545627
+      },
+      "foreground_preserved": true,
+      "accepted": false
+    },
+    {
+      "mode": "membrane_restrict_dynamic",
+      "fg_ari": 0.6687247077561295,
+      "foreground_iou": 0.4354486190711041,
+      "matched_object_iou": 0.46597663473552986,
+      "delta_vs_internal_spike_cc": {
+        "fg_ari": -0.00801944091025486,
+        "foreground_iou": 0.0,
+        "matched_object_iou": -0.013228845867139738
+      },
+      "delta_vs_sw0070_report": {
+        "fg_ari": -0.00872293677103142,
+        "foreground_iou": 9.323128891514099e-06,
+        "matched_object_iou": -0.0139014265293943
+      },
+      "foreground_preserved": true,
+      "accepted": false
+    },
+    {
+      "mode": "spike_restrict_k10",
+      "fg_ari": 0.5789294309895935,
+      "foreground_iou": 0.4354486190711041,
+      "matched_object_iou": 0.4543348002340117,
+      "delta_vs_internal_spike_cc": {
+        "fg_ari": -0.09781471767679084,
+        "foreground_iou": 0.0,
+        "matched_object_iou": -0.024870680368657916
+      },
+      "delta_vs_sw0070_report": {
+        "fg_ari": -0.0985182135375674,
+        "foreground_iou": 9.323128891514099e-06,
+        "matched_object_iou": -0.02554326103091248
+      },
+      "foreground_preserved": true,
+      "accepted": false
+    },
+    {
+      "mode": "membrane_restrict_k10",
+      "fg_ari": 0.5778548053159293,
+      "foreground_iou": 0.4354486190711041,
+      "matched_object_iou": 0.4530174785752447,
+      "delta_vs_internal_spike_cc": {
+        "fg_ari": -0.09888934335045507,
+        "foreground_iou": 0.0,
+        "matched_object_iou": -0.026188002027424884
+      },
+      "delta_vs_sw0070_report": {
+        "fg_ari": -0.09959283921123163,
+        "foreground_iou": 9.323128891514099e-06,
+        "matched_object_iou": -0.026860582689679446
+      },
+      "foreground_preserved": true,
+      "accepted": false
+    }
+  ],
+  "accepted_modes": []
+}

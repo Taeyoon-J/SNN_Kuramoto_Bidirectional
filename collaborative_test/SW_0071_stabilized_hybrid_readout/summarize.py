@@ -41,17 +41,23 @@ def main() -> None:
             for key, value in values.items():
                 bucket[key].append(value)
 
+    internal_baseline = {
+        key: statistics.mean(by_mode["spike_cc_baseline"][key]) for key in METRICS
+    }
     rows = []
     for mode, values in by_mode.items():
         means = {key: statistics.mean(values[key]) for key in METRICS}
-        deltas = {key: means[key] - baseline[key] for key in METRICS}
+        deltas = {key: means[key] - internal_baseline[key] for key in METRICS}
         rows.append(
             {
                 "mode": mode,
                 **means,
-                "delta_vs_sw0070": deltas,
+                "delta_vs_internal_spike_cc": deltas,
+                "delta_vs_sw0070_report": {
+                    key: means[key] - baseline[key] for key in METRICS
+                },
                 "foreground_preserved": math.isclose(
-                    means["foreground_iou"], baseline["foreground_iou"], abs_tol=1e-12
+                    means["foreground_iou"], internal_baseline["foreground_iou"], abs_tol=1e-12
                 ),
                 "accepted": (
                     deltas["fg_ari"] > 0
@@ -64,7 +70,11 @@ def main() -> None:
     output = {
         "experiment": "SW0071 stabilized hybrid readout",
         "contract": {"ids": [1320, 1639], "steps": 1024, "settle": 512, "spike_threshold": 0.5},
-        "baseline_sw0070": baseline,
+        "baseline_sw0070_report": baseline,
+        "baseline_internal_spike_cc": internal_baseline,
+        "internal_vs_sw0070_evaluation_drift": {
+            key: internal_baseline[key] - baseline[key] for key in METRICS
+        },
         "per_seed": per_seed,
         "rows": rows,
         "accepted_modes": [row["mode"] for row in rows if row["accepted"]],

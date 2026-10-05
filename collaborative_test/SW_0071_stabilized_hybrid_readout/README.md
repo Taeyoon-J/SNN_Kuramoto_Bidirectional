@@ -13,3 +13,13 @@ threshold `.50`, so every hybrid must preserve SW0070 foreground IoU exactly.
 No masks or object counts enter prediction. A readout is accepted only if its
 three-seed mean raises FG-ARI without lowering matched-object IoU relative to
 SW0070; foreground IoU is asserted equal.
+
+## Result
+
+No hybrid is accepted. Against the spike-CC baseline recomputed in the same
+run (`.676744/.435449/.479205`), spike-freeze raises FG-ARI by `.022007` to
+`.698751` and preserves foreground IoU exactly, but lowers matched-object IoU
+by `.033346` to `.445859`. The closest balanced row, spike-restrict-dynamic,
+changes the metrics by `+.001059/0/-.010966`. This confirms useful continuous
+grouping information, but replacing whole spike components damages object
+overlap. Stop this readout direction and retain SW0070 as the formal reference.

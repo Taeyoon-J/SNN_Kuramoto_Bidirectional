@@ -1,0 +1,130 @@
+{
+  "experiment": "SW0051 frozen spike-CC spectral hybrids",
+  "checkpoint": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0066_graphinit0_s1_e10/core.pt",
+  "ids": [
+    1320,
+    1639
+  ],
+  "gamma": {
+    "path": "/Data0/kevinswk/patch_v2_sw/data/SW_0042_hdf5_aligned/gamma_validation_1320_1639.pt",
+    "manifest_path": "/Data0/kevinswk/patch_v2_sw/data/SW_0042_hdf5_aligned/manifest.json",
+    "manifest": {
+      "dataset": "/Data0/kevinswk/datasets/object_centric_data/clevr_10-full.hdf5",
+      "image_ids": [
+        1320,
+        1639
+      ],
+      "shape": [
+        320,
+        8,
+        256
+      ],
+      "dtype": "torch.float32",
+      "source_run": "/Data0/kevinswk/patch_v2/trained_models/readme_patch_eval_20261002",
+      "encoder": "/Data0/kevinswk/patch_v2/trained_models/readme_patch_eval_20261002/input_encoder/input_layer_encoder.pt",
+      "encoder_sha256": "9b9c9c59725f872084a6c9bfae1ebbd1b89de40d18ef4f8ab6b8ec014c2ab868",
+      "preprocessing": "/Data0/kevinswk/patch_v2/trained_models/readme_patch_eval_20261002/feature_preprocessing.pt",
+      "preprocessing_sha256": "a9ec3281b9603021c37f7c346baa6cf62513c5ce7edde867ab7eddf24b18e127",
+      "gamma_sha256": "f20b019bd46adb378b2bfcecbb252d960da2592ef651dcd419753034c8b705f0",
+      "normalization": "train IDs 0-999 standardize, clip [-3,3]",
+      "patch_grid_size": 16
+    },
+    "global_start": 1320
+  },
+  "target": {
+    "path": "/Data0/kevinswk/datasets/object_centric_data/clevr_10-full.hdf5",
+    "ids": [
+      1320,
+      1639
+    ]
+  },
+  "core": {
+    "steps": 1024,
+    "settle": 512,
+    "vth": 0.06,
+    "projection": "shared",
+    "graph_spatial_decay": 0.35,
+    "geodesic_steps": 3,
+    "kuramoto_backend": "factorized"
+  },
+  "readout": {
+    "sigma": 1.5,
+    "spectral_k": 10,
+    "frozen_spike_cc_threshold": 0.5,
+    "prediction_uses_ground_truth": false,
+    "foreground_component_count_mean": 7.13125,
+    "foreground_fraction_mean": 0.5143798828125
+  },
+  "rows": [
+    {
+      "mode": "membrane_freeze",
+      "fg_ari": 0.6943363176018226,
+      "foreground_iou": 0.3438457830589809,
+      "matched_object_iou": 0.44611549611650336,
+      "predicted_groups_mean": 7.090625,
+      "predicted_foreground_fraction": 0.5143798589706421,
+      "predicted_object_count_mean": 7.090624809265137,
+      "foreground_mask_exactly_matches_spike_cc": true
+    },
+    {
+      "mode": "spike_freeze",
+      "fg_ari": 0.6897565866533437,
+      "foreground_iou": 0.3438457830589809,
+      "matched_object_iou": 0.44264989682916445,
+      "predicted_groups_mean": 7.1,
+      "predicted_foreground_fraction": 0.5143798589706421,
+      "predicted_object_count_mean": 7.099999904632568,
+      "foreground_mask_exactly_matches_spike_cc": true
+    },
+    {
+      "mode": "membrane_restrict_k10",
+      "fg_ari": 0.6535431069962976,
+      "foreground_iou": 0.3438457830589809,
+      "matched_object_iou": 0.5053337931154728,
+      "predicted_groups_mean": 10.0,
+      "predicted_foreground_fraction": 0.5143798589706421,
+      "predicted_object_count_mean": 10.0,
+      "foreground_mask_exactly_matches_spike_cc": true
+    },
+    {
+      "mode": "spike_restrict_k10",
+      "fg_ari": 0.6509277908105903,
+      "foreground_iou": 0.3438457830589809,
+      "matched_object_iou": 0.5030732094673802,
+      "predicted_groups_mean": 10.0,
+      "predicted_foreground_fraction": 0.5143798589706421,
+      "predicted_object_count_mean": 10.0,
+      "foreground_mask_exactly_matches_spike_cc": true
+    },
+    {
+      "mode": "membrane_restrict_dynamic",
+      "fg_ari": 0.6814519597815444,
+      "foreground_iou": 0.3438457830589809,
+      "matched_object_iou": 0.4486451845928916,
+      "predicted_groups_mean": 7.13125,
+      "predicted_foreground_fraction": 0.5143798589706421,
+      "predicted_object_count_mean": 7.131249904632568,
+      "foreground_mask_exactly_matches_spike_cc": true
+    },
+    {
+      "mode": "spike_restrict_dynamic",
+      "fg_ari": 0.6806968279701283,
+      "foreground_iou": 0.3438457830589809,
+      "matched_object_iou": 0.44484657116006227,
+      "predicted_groups_mean": 7.13125,
+      "predicted_foreground_fraction": 0.5143798589706421,
+      "predicted_object_count_mean": 7.131249904632568,
+      "foreground_mask_exactly_matches_spike_cc": true
+    },
+    {
+      "mode": "spike_cc_baseline",
+      "fg_ari": 0.6680760970960085,
+      "foreground_iou": 0.3438457830589809,
+      "matched_object_iou": 0.4960630492537795,
+      "predicted_groups_mean": 7.13125,
+      "predicted_foreground_fraction": 0.5143798589706421,
+      "predicted_object_count_mean": 7.131249904632568,
+      "foreground_mask_exactly_matches_spike_cc": true
+    }
+  ]
+}
