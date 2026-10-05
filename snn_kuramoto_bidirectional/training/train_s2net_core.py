@@ -255,6 +255,23 @@ def reset_graph_initialization(core, hparams, device, graph_init_seed):
     return core
 
 
+def load_graph_checkpoint(core, checkpoint_path, device, freeze=False):
+    """Load only the learned graph generator from a full core checkpoint."""
+    if core.graph_generator is None:
+        raise ValueError("--graph-checkpoint requires --graph-mode learned")
+    state = torch.load(checkpoint_path, map_location=device, weights_only=True)
+    prefix = "graph_generator."
+    graph_state = {key[len(prefix):]: value for key, value in state.items()
+                   if key.startswith(prefix)}
+    if not graph_state:
+        raise ValueError(f"No graph_generator tensors in {checkpoint_path}")
+    core.graph_generator.load_state_dict(graph_state, strict=True)
+    if freeze:
+        for parameter in core.graph_generator.parameters():
+            parameter.requires_grad_(False)
+    return core
+
+
 @torch.no_grad()
 def evaluate_s2net_core(core, dataloader, criterion=None, device=None, plv_settle=0):
     """Evaluate S2NetCore using its fixed SC and precomputed gamma sequences."""
@@ -519,6 +536,16 @@ def main():
             "Initialize only the learned graph generator from this fixed model "
             "seed while preserving --seed for all other modules and data order."
         ),
+    )
+    parser.add_argument(
+        "--graph-checkpoint",
+        default=None,
+        help="Load only graph_generator tensors from a full S2NetCore checkpoint.",
+    )
+    parser.add_argument(
+        "--freeze-graph",
+        action="store_true",
+        help="Freeze a graph loaded with --graph-checkpoint during training.",
     )
     parser.add_argument("--graph-coupling-gain", type=float, default=8.0)
     parser.add_argument("--graph-temperature", type=float, default=0.1)
@@ -827,9 +854,17 @@ def main():
     hparams.validate()
 
     core = S2NetCore(hparams, device=args.device)
+    if args.graph_init_seed is not None and args.graph_checkpoint is not None:
+        raise ValueError("Use either --graph-init-seed or --graph-checkpoint, not both")
+    if args.freeze_graph and args.graph_checkpoint is None:
+        raise ValueError("--freeze-graph requires --graph-checkpoint")
     if args.graph_init_seed is not None:
         core = reset_graph_initialization(
             core, hparams, args.device, args.graph_init_seed
+        )
+    if args.graph_checkpoint is not None:
+        core = load_graph_checkpoint(
+            core, args.graph_checkpoint, args.device, freeze=args.freeze_graph
         )
     if float(args.edge_membrane_weight) != 0.0:
         if args.edge_image_hdf5 is None:

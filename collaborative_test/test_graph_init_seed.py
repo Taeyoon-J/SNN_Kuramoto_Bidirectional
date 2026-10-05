@@ -1,4 +1,5 @@
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -9,7 +10,10 @@ sys.path[:0] = [str(ROOT), str(ROOT / "snn_kuramoto_bidirectional")]
 
 from snn_kuramoto_bidirectional.hyperparameter import S2NetHyperparameters
 from snn_kuramoto_bidirectional.s2net_cls import S2NetCore
-from snn_kuramoto_bidirectional.training.train_s2net_core import reset_graph_initialization
+from snn_kuramoto_bidirectional.training.train_s2net_core import (
+    load_graph_checkpoint,
+    reset_graph_initialization,
+)
 
 
 class GraphInitSeedTests(unittest.TestCase):
@@ -46,6 +50,25 @@ class GraphInitSeedTests(unittest.TestCase):
         core = S2NetCore(hp, device="cpu")
         with self.assertRaises(ValueError):
             reset_graph_initialization(core, hp, "cpu", 0)
+
+    def test_graph_checkpoint_loads_only_graph_and_freezes_it(self):
+        hp = self.hparams()
+        torch.manual_seed(0)
+        source = S2NetCore(hp, device="cpu")
+        torch.manual_seed(2)
+        target = S2NetCore(hp, device="cpu")
+        non_graph = {key: value.clone() for key, value in target.state_dict().items()
+                     if not key.startswith("graph_generator.")}
+        with tempfile.TemporaryDirectory() as directory:
+            checkpoint = Path(directory) / "core.pt"
+            torch.save(source.state_dict(), checkpoint)
+            load_graph_checkpoint(target, checkpoint, "cpu", freeze=True)
+        for key, value in source.graph_generator.state_dict().items():
+            self.assertTrue(torch.equal(value, target.graph_generator.state_dict()[key]), key)
+        for key, value in non_graph.items():
+            self.assertTrue(torch.equal(value, target.state_dict()[key]), key)
+        self.assertTrue(all(not parameter.requires_grad
+                            for parameter in target.graph_generator.parameters()))
 
 
 if __name__ == "__main__":
