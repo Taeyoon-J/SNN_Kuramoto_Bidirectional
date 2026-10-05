@@ -2,7 +2,6 @@
 import argparse
 import hashlib
 import json
-import math
 import sys
 from pathlib import Path
 
@@ -22,7 +21,7 @@ from snn_kuramoto_bidirectional import s2net_cls as core_module
 from snn_kuramoto_bidirectional.evaluation import clevr_mask_patch, evaluate_patch_masks, spatial_components_to_patch_labels
 from snn_kuramoto_bidirectional.loss_function import phase_locking_value
 from snn_kuramoto_bidirectional.spike_classifier import spike_synchrony_components
-from interventions import permute_gate_regions, temporal_mean_gates
+from interventions import apply_carrier_mask_intervention, temporal_means
 
 
 def gamma_rows(nrows, global_start, count):
@@ -68,18 +67,28 @@ def summarize_auc(entries):
     return rows
 
 
-def run_one(model, gamma, condition, seed=None, means=None, permutation=None):
+def run_one(model, gamma, condition, means=None, permutation=None):
     batch_size = gamma.shape[0]
     originals = core_module.sinusoidal_gating
-    gate_records, h_records, graph_records = [], [], []
+    carrier_records, mask_records, h_records, graph_records = [], [], [], []
 
     def gate_wrapper(theta_hist, t, delay, gate_mode="sigmoid"):
-        drive_gate, membrane_gate = originals(theta_hist, t, delay, gate_mode=gate_mode)
-        if condition == "gate_perm":
-            drive_gate, membrane_gate = permute_gate_regions(drive_gate, membrane_gate, permutation)
-        elif condition == "gate_mean":
-            drive_gate, membrane_gate = means
-        gate_records.append((drive_gate.detach().cpu(), membrane_gate.detach().cpu()))
+        if gate_mode != "raw":
+            raise RuntimeError("SW0054 interventions are derived for the checkpoint's raw gate mode")
+        _, local_mask = originals(theta_hist, t, delay, gate_mode=gate_mode)
+        local_carrier = torch.sin(theta_hist[t])
+        intervention = {
+            "normal": "normal", "gate_perm": "gate_perm", "carrier_perm": "carrier_perm",
+            "gate_mean": "gate_mean", "carrier_mean": "carrier_mean", "K0": "normal",
+        }[condition]
+        mean_carrier, mean_mask = means if means is not None else (None, None)
+        drive_gate, used_carrier, used_mask = apply_carrier_mask_intervention(
+            local_carrier, local_mask, intervention, permutation=permutation,
+            mean_mask=mean_mask, mean_carrier=mean_carrier,
+        )
+        carrier_records.append(used_carrier.detach().cpu())
+        mask_records.append(used_mask.detach().cpu())
+        membrane_gate = used_mask
         return drive_gate, membrane_gate
 
     def dendrite_hook(_module, _inputs, output):
@@ -108,13 +117,29 @@ def run_one(model, gamma, condition, seed=None, means=None, permutation=None):
         core_module.sinusoidal_gating = originals
         for hook in hooks:
             hook.remove()
-    gate_drive = torch.stack([x[0] for x in gate_records], dim=-1)  # [B,N,D,T]
-    gate_membrane = torch.stack([x[1] for x in gate_records], dim=-1)  # [B,N,T]
+    carriers = torch.stack(carrier_records, dim=-1)  # [B,N,D,T]
+    gate_membrane = torch.stack(mask_records, dim=-1)  # [B,N,T]
     h_wave = torch.stack(h_records, dim=-1)
     components = model.last_component_spikes.detach().cpu().clone() if model.last_component_spikes is not None else None
+    expected = {
+        "theta": (batch_size, model.num_time_steps, model.in_dim, model.osc_dim),
+        "spikes": (batch_size, model.in_dim, model.num_time_steps),
+        "membrane": (batch_size, model.in_dim, model.num_time_steps),
+        "carrier": (batch_size, model.in_dim, model.osc_dim, model.num_time_steps),
+        "gate": (batch_size, model.in_dim, model.num_time_steps),
+        "h_wave": (batch_size, model.in_dim, model.num_time_steps),
+    }
+    actual = {"theta": tuple(theta.shape), "spikes": tuple(spikes.shape),
+              "membrane": tuple(membrane.shape), "carrier": tuple(carriers.shape),
+              "gate": tuple(gate_membrane.shape), "h_wave": tuple(h_wave.shape)}
+    if actual != expected:
+        raise RuntimeError(f"Unexpected causal intervention output shapes: {actual} != {expected}")
+    if not all(torch.isfinite(value).all() for value in
+               (theta, spikes, membrane, carriers, gate_membrane, h_wave)):
+        raise RuntimeError(f"Non-finite output under intervention {condition}")
     return {"theta": theta.detach().cpu(), "spikes": spikes.detach().cpu(),
             "membrane": membrane.detach().cpu(), "components": components,
-            "gate_drive": gate_drive, "gate": gate_membrane, "h_wave": h_wave,
+            "carrier": carriers, "gate": gate_membrane, "h_wave": h_wave,
             "graph": graph_records[0] if graph_records else None,
             "K_used": 0.0 if condition == "K0" else float(old_k)}
 
@@ -124,6 +149,7 @@ def main():
     for name in ("checkpoint", "gamma-path", "gamma-manifest", "dataset-path", "output-path"):
         p.add_argument("--" + name, required=True)
     p.add_argument("--count", type=int, default=320)
+    p.add_argument("--condition-set", choices=("pilot", "full"), default="full")
     p.add_argument("--start", type=int, default=1320)
     p.add_argument("--steps", type=int, default=256)
     p.add_argument("--settle", type=int, default=64)
@@ -155,12 +181,20 @@ def main():
     coords = torch.stack(torch.meshgrid(torch.arange(16), torch.arange(16), indexing="ij"), -1).reshape(256, 2)
     d2 = ((coords[:, None] - coords[None, :]) ** 2).sum(-1).numpy()
     kernel = spatial_kernel(1.5)
-    conditions = ["normal", "gate_perm_s0", "gate_perm_s1", "gate_perm_s2", "gate_mean", "K0"]
-    auc_acc = {c: {s: {str(d): ([], []) for d in range(1, 10)} for s in ("phase", "gate", "h_wave", "membrane", "spike")} for c in conditions}
+    if model.gate_mode != "raw":
+        raise RuntimeError(f"Expected raw gate_mode, got {model.gate_mode!r}")
+    full_conditions = (["normal"] + [f"gate_perm_s{i}" for i in range(3)]
+                       + [f"carrier_perm_s{i}" for i in range(3)]
+                       + ["gate_mean", "carrier_mean", "K0"])
+    pilot_conditions = ["normal", "gate_perm_s0", "carrier_perm_s0", "gate_mean", "carrier_mean", "K0"]
+    conditions = full_conditions if args.condition_set == "full" else pilot_conditions
+    auc_acc = {c: {s: {str(d): ([], []) for d in range(1, 10)} for s in ("phase", "gate", "carrier", "h_wave", "membrane", "spike")} for c in conditions}
     predictions = {c: {"spike_cc": [], "membrane_spatial": []} for c in conditions}
     invariants = {c: [] for c in conditions if c.startswith("gate_")}
+    invariants.update({c: [] for c in conditions if c.startswith("carrier_")})
     count_means = {c: [] for c in conditions}
     theta_deltas = {c: [] for c in conditions}
+    activity_stats = {c: {"spike_event_rate": [], "membrane_variance": [], "membrane_abs_mean": []} for c in conditions}
     original_K = float(model.kuramoto.K)
     permutations = {}
     for seed in range(3):
@@ -168,25 +202,29 @@ def main():
         permutations[seed] = torch.randperm(model.in_dim, generator=gen)
     if any(torch.equal(permutations[s], torch.arange(model.in_dim)) for s in range(3)):
         raise RuntimeError("A fixed region permutation unexpectedly became identity")
-    if any(torch.equal(permutations[s], torch.arange(model.in_dim)) for s in permutations):
-        raise RuntimeError("A requested gate permutation unexpectedly became identity")
-
     with torch.no_grad():
         for start in range(0, args.count, args.batch_size):
             batch = gamma[start:start + args.batch_size].to(args.device)
             base = run_one(model, batch, "normal")
-            drive_mean, membrane_mean = temporal_mean_gates(
-                base["gate_drive"].permute(0, 3, 1, 2), base["gate"].permute(0, 2, 1)
+            mean_carrier, mean_mask = temporal_means(
+                base["carrier"].permute(0, 3, 1, 2), base["gate"].permute(0, 2, 1)
             )
             condition_outputs = {"normal": base}
-            for seed in range(3):
-                condition_outputs[f"gate_perm_s{seed}"] = run_one(
-                    model, batch, "gate_perm", seed=seed, permutation=permutations[seed]
-                )
-            condition_outputs["gate_mean"] = run_one(
-                model, batch, "gate_mean", means=(drive_mean.to(args.device), membrane_mean.to(args.device))
-            )
-            condition_outputs["K0"] = run_one(model, batch, "K0")
+            for cond in conditions:
+                if cond == "normal":
+                    continue
+                if cond.startswith("gate_perm_s"):
+                    seed = int(cond.rsplit("s", 1)[1])
+                    condition_outputs[cond] = run_one(model, batch, "gate_perm", permutation=permutations[seed])
+                elif cond.startswith("carrier_perm_s"):
+                    seed = int(cond.rsplit("s", 1)[1])
+                    condition_outputs[cond] = run_one(model, batch, "carrier_perm", permutation=permutations[seed])
+                elif cond == "gate_mean":
+                    condition_outputs[cond] = run_one(model, batch, "gate_mean", means=(None, mean_mask.to(args.device)))
+                elif cond == "carrier_mean":
+                    condition_outputs[cond] = run_one(model, batch, "carrier_mean", means=(mean_carrier.to(args.device), None))
+                elif cond == "K0":
+                    condition_outputs[cond] = run_one(model, batch, "K0")
 
             for cond, out in condition_outputs.items():
                 theta = out["theta"]
@@ -201,9 +239,16 @@ def main():
                                    for m in out["membrane"]]
                 predictions[cond]["membrane_spatial"].extend(membrane_labels)
                 count_means[cond].extend(len(g) for g in groups)
-                histories = {"gate": out["gate"], "h_wave": out["h_wave"],
+                histories = {"gate": out["gate"], "carrier": out["carrier"].mean(dim=2), "h_wave": out["h_wave"],
                              "membrane": out["membrane"], "spike": out["spikes"]}
                 for bi in range(len(batch)):
+                    activity_stats[cond]["spike_event_rate"].append(float(
+                        (out["components"][bi] > 0).float().mean()
+                        if out["components"] is not None else (out["spikes"][bi] > 0).float().mean()))
+                    activity_stats[cond]["membrane_variance"].append(float(
+                        out["membrane"][bi, :, args.settle:].var(unbiased=False)))
+                    activity_stats[cond]["membrane_abs_mean"].append(float(
+                        out["membrane"][bi, :, args.settle:].abs().mean()))
                     phase_matrix = phase_locking_value(
                         theta[bi:bi + 1], settle=args.settle, combine="product"
                     )[0].cpu().numpy()
@@ -217,7 +262,7 @@ def main():
                         for distance, (same, different) in strata.items():
                             auc_acc[cond][signal][distance][0].extend(same)
                             auc_acc[cond][signal][distance][1].extend(different)
-                    if cond.startswith("gate_"):
+                    if cond.startswith("gate_") or cond.startswith("carrier_"):
                         graph_exact = torch.equal(out["graph"], base["graph"])
                         theta_delta = float((out["theta"] - base["theta"]).abs().max())
                         invariants[cond].append({"graph_bitwise_equal": graph_exact,
@@ -247,8 +292,14 @@ def main():
             "distance_controlled_macro_auc": summarize_auc(auc_acc[cond]),
             "fixed_readouts": scored[cond],
         }
-        if cond.startswith("gate_"):
+        if cond.startswith("gate_") or cond.startswith("carrier_"):
             condition_results[cond]["gate_invariants"] = invariants[cond]
+        condition_results[cond]["activity_scale"] = {
+            "spike_event_rate_mean": float(np.mean(activity_stats[cond]["spike_event_rate"])),
+            "membrane_temporal_variance_mean": float(np.mean(activity_stats[cond]["membrane_variance"])),
+            "membrane_abs_mean": float(np.mean(activity_stats[cond]["membrane_abs_mean"])),
+            "per_image": activity_stats[cond],
+        }
         if cond == "K0":
             condition_results[cond]["kuramoto_K_during_rollout"] = 0.0
             condition_results[cond]["theta_max_abs_delta_from_normal"] = max(theta_deltas[cond], default=0.0)
@@ -266,8 +317,12 @@ def main():
                  "backend": "factorized", "K_normal": original_K,
                  "spike_pulse_gain": None},
         "interventions": {
-            "gate_permutation": {str(seed): permutations[seed].tolist() for seed in range(3)},
-            "gate_mean": "separate per-image/per-region time mean for gamma_wave and membrane gate, repeated each step",
+            "gate_permutation_seeds": {str(seed): permutations[seed].tolist() for seed in range(3)},
+            "gate_perm": "local sin(theta) carrier times permuted delayed raw mask; membrane gate uses the same permuted mask",
+            "carrier_perm": "permuted sin(theta) carrier times local dynamic delayed mask; membrane gate remains local",
+            "gate_mean": "local carrier times per-image/per-region time-mean delayed mask; membrane gate uses the same mean mask",
+            "carrier_mean": "per-image/per-region time-mean carrier times local dynamic mask; membrane gate remains local",
+            "condition_set": args.condition_set,
             "K0": "sets inter-region Kuramoto stiffness K to exactly zero; gamma/frequency/theta init untouched",
             "prediction_ground_truth_free": True,
         },

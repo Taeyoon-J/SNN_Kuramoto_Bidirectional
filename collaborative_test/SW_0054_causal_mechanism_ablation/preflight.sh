@@ -41,15 +41,20 @@ export CUDA_VISIBLE_DEVICES="$GPU_ID" TMPDIR="$TMP" TRITON_CACHE_DIR="$TMP"
 import json,math,sys
 r=json.load(open(sys.argv[1])); c=r["conditions"]
 assert r["target"]["ground_truth_used_for_prediction"] is False
-assert set(c)=={"normal","gate_perm_s0","gate_perm_s1","gate_perm_s2","gate_mean","K0"}
+assert set(c)=={"normal","gate_perm_s0","gate_perm_s1","gate_perm_s2",
+ "carrier_perm_s0","carrier_perm_s1","carrier_perm_s2","gate_mean","carrier_mean","K0"}
 assert c["K0"]["kuramoto_K_during_rollout"]==0.0
-for name in ("gate_perm_s0","gate_perm_s1","gate_perm_s2","gate_mean"):
+for name in ("gate_perm_s0","gate_perm_s1","gate_perm_s2","carrier_perm_s0",
+             "carrier_perm_s1","carrier_perm_s2","gate_mean","carrier_mean"):
  rows=c[name]["gate_invariants"]
  assert rows and all(x["graph_bitwise_equal"] and x["theta_allclose"] and math.isfinite(x["theta_max_abs_delta"]) for x in rows)
 for condition in c.values():
  assert set(condition["fixed_readouts"])=={"spike_cc","membrane_spatial"}
  for readout in condition["fixed_readouts"].values():
   assert all(math.isfinite(float(x)) for x in readout["metrics"].values())
+ assert set(condition["distance_controlled_macro_auc"])=={"phase","gate","carrier","h_wave","membrane","spike"}
+ for x in condition["activity_scale"].values():
+  if isinstance(x,float): assert math.isfinite(x)
 PY
 /Data0/kevinswk/envs/snn/bin/python - "$MARKER" "$CHECKPOINT_SUM" "$GAMMA_SUM" "$MANIFEST_SUM" "$HDF5_META" "$CODE_SUM" <<'PY'
 import json,sys
