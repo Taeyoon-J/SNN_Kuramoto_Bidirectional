@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 set -euo pipefail
 GPU_ID="${1:?Pass an assigned GPU ID}"
-SEED="${2:?Pass seed 0 or 2}"
+SEED="${2:?Pass seed 0, 1, or 2}"
 WEIGHT="${3:?Pass the training diversity weight}"
 LR="${4:?Pass the training learning rate}"
 MODE="${5:?Pass pilot or full}"
 WINDOW="${6:?Pass short or long}"
-case "$SEED" in 0|2) ;; *) echo "SEED must be 0 or 2" >&2; exit 2 ;; esac
-case "$MODE" in pilot|full) ;; *) echo "MODE must be pilot or full" >&2; exit 2 ;; esac
+case "$SEED" in 0|1|2) ;; *) echo "SEED must be 0, 1, or 2" >&2; exit 2 ;; esac
+case "$MODE" in pilot|epoch25|full) ;; *) echo "MODE must be pilot, epoch25, or full" >&2; exit 2 ;; esac
 case "$WINDOW" in short) STEPS=256; SETTLE=64 ;; long) STEPS=1024; SETTLE=512 ;; *) echo "WINDOW must be short or long" >&2; exit 2 ;; esac
 TAG="${WEIGHT//./p}"
 LR_TAG="${LR//./p}"

@@ -1,15 +1,16 @@
 #!/usr/bin/env bash
 set -euo pipefail
 GPU_ID="${1:?Pass an assigned GPU ID}"
-SEED="${2:?Use rescue seed 2 or harm-control seed 0}"
+SEED="${2:?Use seed 0, 1, or 2}"
 WEIGHT="${3:?Pass a measured positive diversity weight}"
 LR="${4:?Pass optimizer learning rate}"
 MODE="${5:?Use pilot or full}"
-case "$SEED" in 0|2) ;; *) echo "SEED must be 0 or 2" >&2; exit 2 ;; esac
+case "$SEED" in 0|1|2) ;; *) echo "SEED must be 0, 1, or 2" >&2; exit 2 ;; esac
 case "$MODE" in
   pilot) EPOCHS=2 ;;
+  epoch25) EPOCHS=25 ;;
   full) EPOCHS=40 ;;
-  *) echo "MODE must be pilot or full" >&2; exit 2 ;;
+  *) echo "MODE must be pilot, epoch25, or full" >&2; exit 2 ;;
 esac
 PYTHON=/Data0/kevinswk/envs/snn/bin/python
 if [[ ! "$WEIGHT" =~ ^([0-9]+([.][0-9]*)?|[.][0-9]+)([eE][+-]?[0-9]+)?$ ]] \
@@ -42,6 +43,8 @@ if [[ "$GPU_PIDS" =~ [0-9] ]]; then echo "GPU $GPU_ID is occupied; refusing over
 OUT="$ROOT/trained_models/SW_0050_sample_diversity_s${SEED}_w${TAG}_lr${LR_TAG}_${MODE}"
 if [[ "$MODE" == full ]]; then
   CHECKPOINT_ARGS=(--checkpoint-dir "$OUT/checkpoints" --checkpoint-epochs 20 25 30 35 40)
+elif [[ "$MODE" == epoch25 ]]; then
+  CHECKPOINT_ARGS=(--checkpoint-dir "$OUT/checkpoints" --checkpoint-epochs 25)
 else
   CHECKPOINT_ARGS=()
 fi

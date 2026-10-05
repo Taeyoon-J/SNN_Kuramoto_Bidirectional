@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 GPU_ID="${1:?Pass an assigned GPU ID}"
-SEED="${2:?Pass seed 0 or 2}"
+SEED="${2:?Pass seed 0, 1, or 2}"
 WEIGHT="${3:?Pass diversity weight}"
 LR="${4:?Pass learning rate}"
 MODE="${5:?Pass pilot or full}"
@@ -11,7 +11,7 @@ TAG="${WEIGHT//./p}"
 LR_TAG="${LR//./p}"
 ROOT=/Data0/kevinswk/patch_v2_sw
 OUT="$ROOT/trained_models/SW_0050_sample_diversity_s${SEED}_w${TAG}_lr${LR_TAG}_${MODE}"
-if [[ ! "$SEED" =~ ^(0|2)$ || ! "$MODE" =~ ^(pilot|full)$ ]]; then echo "invalid seed/mode" >&2; exit 2; fi
+if [[ ! "$SEED" =~ ^(0|1|2)$ || ! "$MODE" =~ ^(pilot|epoch25|full)$ ]]; then echo "invalid seed/mode" >&2; exit 2; fi
 while kill -0 "$TRAIN_PID" 2>/dev/null; do sleep 20; done
 if [[ ! -s "$OUT/core.pt" || ! -s "$OUT/TRAINING_COMPLETED" ]]; then
   echo "Training did not complete successfully; inspect $OUT/training.log" >&2
