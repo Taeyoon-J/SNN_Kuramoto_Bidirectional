@@ -29,7 +29,7 @@ from snn_kuramoto_bidirectional.training.evaluate_binding import spectral_cluste
 def _core(device, checkpoint, steps, dendritic_projection="shared",
           geodesic_steps=0, geodesic_radius=1.5, geodesic_contrast=2.0,
           geodesic_temperature=0.5, geodesic_cap=16.0,
-          graph_spatial_decay=0.55, kuramoto_backend="pairwise"):
+          graph_spatial_decay=0.55, kuramoto_backend="pairwise", gate_mode="raw"):
     hp = S2NetHyperparameters(
         num_feature_maps=8,
         num_regions=256,
@@ -55,7 +55,7 @@ def _core(device, checkpoint, steps, dendritic_projection="shared",
         membrane_vth=0.06,
         membrane_low_m=-4.0,
         membrane_high_m=0.0,
-        gate_mode="raw",
+        gate_mode=gate_mode,
         spike_classify_method="spatial_components",
         spike_spatial_grid_size=(16, 16),
         spike_per_component=True,

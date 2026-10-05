@@ -183,12 +183,15 @@ def main():
     parser.add_argument("--spike-per-component", action="store_true", help="must match training")
     parser.add_argument(
         "--gate-mode",
-        choices=["sigmoid", "raw", "phase_mean"],
+        choices=["sigmoid", "raw", "phase_mean", "centered_raw", "signed_mask"],
         default="raw",
         help=(
             "Must match training. phase_mean hands the dendrite one reduced "
             "oscillation per unit and the others hand it osc_dim, so a mismatch is "
-            "a state_dict shape error rather than a silently wrong score."
+            "a state_dict shape error rather than a silently wrong score. "
+            "centered_raw uses the centered delayed mask for dendritic input "
+            "and signed_mask applies it to the current carrier; both keep the "
+            "raw delayed mask for the membrane."
         ),
     )
     parser.add_argument("--fixed-k", type=int, nargs="*", default=[3, 4, 6, 8])

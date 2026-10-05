@@ -13,6 +13,15 @@ def sinusoidal_gating(theta_hist, t, phase_delay_steps, gate_mode="sigmoid"):
     mask = 0.5 * (1.0 + torch.sin(delayed.mean(dim=-1)))
     if gate_mode == "phase_mean":  # readout mode: README 4.3 training
         gamma_wave_t = torch.sin(theta.mean(dim=-1)).unsqueeze(-1)
+    elif gate_mode == "centered_raw":
+        # Center the same delayed raw mask: 2 * (1 + sin(phi)) / 2 - 1 = sin(phi).
+        # This replaces carrier*mask with the delayed rhythmic signal. Membrane
+        # gating remains the unsquashed, non-centered delayed mask below.
+        gamma_wave_t = (2.0 * mask - 1.0).unsqueeze(-1).expand_as(theta)
+    elif gate_mode == "signed_mask":
+        # Preserve the current per-component carrier while centering only the
+        # delayed modulation. The membrane still receives the raw mask below.
+        gamma_wave_t = torch.sin(theta) * (2.0 * mask - 1.0).unsqueeze(-1)
     else:
         gamma_wave_t = torch.sin(theta) * mask.unsqueeze(-1)
     g_wave_t = torch.sigmoid(mask) if gate_mode == "sigmoid" else mask  # readout mode: else -> mask (phase_mean)

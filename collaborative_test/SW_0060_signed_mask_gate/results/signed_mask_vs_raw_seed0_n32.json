@@ -1,0 +1,25 @@
+{
+  "experiment": "SW0060 signed delayed-mask carrier pilot",
+  "comparison": "fixed seed0 checkpoint; IDs1320-1351; T256/settle64; spike-CC threshold .35",
+  "checkpoint_sha256": "d30147fbd460a702689cb59fea13dd4d36d70b4a7b460ffd020382b2334e8c85",
+  "prediction_ground_truth_independent": true,
+  "metrics": {
+    "fg_ari": {
+      "raw": 0.668520261873324,
+      "signed_mask": 0.6679590481079267,
+      "delta": -0.0005612137653973059
+    },
+    "foreground_iou": {
+      "raw": 0.6920255075800473,
+      "signed_mask": 0.6886417731879566,
+      "delta": -0.0033837343920907204
+    },
+    "matched_object_iou": {
+      "raw": 0.48987872185834525,
+      "signed_mask": 0.48628837894508575,
+      "delta": -0.003590342913259492
+    }
+  },
+  "all_three_improved": false,
+  "interpretation": "32-image validation pilot only; no retraining or general claim."
+}

@@ -129,11 +129,11 @@ def summarize(model_root: Path):
         candidate_readouts[seed] = fixed_multireadout_metrics(multi, seed)
 
         if seed == 0:
-            baseline_path = HERE.parents[1] / "SW_0053_lr_early_stop_matrix" / "results" / "seed0_low_lr" / "validation_long_T1024_settle512.json"
+            baseline_path = HERE.parent / "SW_0053_lr_early_stop_matrix" / "results" / "seed0_low_lr" / "validation_long_T1024_settle512.json"
         elif seed == 1:
-            baseline_path = HERE.parents[1] / "SW_0053_lr_early_stop_matrix" / "results" / "seed1_low_lr" / "validation_long_T1024_settle512.json"
+            baseline_path = HERE.parent / "SW_0053_lr_early_stop_matrix" / "results" / "seed1_low_lr" / "validation_long_T1024_settle512.json"
         else:
-            baseline_path = HERE.parents[1] / "SW_0052_checkpoint_trajectory" / "results" / "low_lr_epoch25_long_T1024_settle512.json"
+            baseline_path = HERE.parent / "SW_0052_checkpoint_trajectory" / "results" / "low_lr_epoch25_long_T1024_settle512.json"
         baseline[seed], baseline_report = load_baseline(baseline_path, seed)
         if candidate_spike[seed].keys() != baseline[seed].keys():
             raise ValueError("candidate/baseline metric schema differs")

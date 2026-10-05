@@ -143,6 +143,8 @@ def main():
     parser.add_argument("--geodesic-cap", type=float, default=16.0)
     parser.add_argument("--graph-spatial-decay", type=float, default=0.55)
     parser.add_argument("--kuramoto-backend", choices=["pairwise", "factorized"], default="pairwise")
+    parser.add_argument("--gate-mode", choices=["sigmoid", "raw", "phase_mean", "centered_raw", "signed_mask"], default="raw",
+                        help="Transduction/gating mode; centered modes retain raw mask membrane gating.")
     parser.add_argument("--batch-size", type=int, default=8)
     parser.add_argument("--device", default="cuda")
     args = parser.parse_args()
@@ -247,6 +249,7 @@ def main():
         args.geodesic_steps, args.geodesic_radius, args.geodesic_contrast,
         args.geodesic_temperature, args.geodesic_cap, args.graph_spatial_decay,
         args.kuramoto_backend,
+        args.gate_mode,
     )
     model.membrane_layer.vth = float(args.membrane_vth)
     spikes_rows, components_rows, phase_rows = [], [], []
@@ -359,6 +362,7 @@ def main():
             "dendritic_projection": args.dendritic_projection,
             "graph_spatial_decay": args.graph_spatial_decay,
             "kuramoto_backend": args.kuramoto_backend,
+            "gate_mode": args.gate_mode,
             "geodesic_steps": args.geodesic_steps,
             "geodesic_radius": args.geodesic_radius,
             "geodesic_contrast": args.geodesic_contrast,

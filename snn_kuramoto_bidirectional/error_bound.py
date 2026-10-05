@@ -138,11 +138,11 @@ def validate_hyperparameter_s2net_hyperparameters_validate(self):
         raise ValueError("spike_pulse_gain must be non-negative.")
     if self.spike_per_component and self.gate_mode == "phase_mean":
         raise ValueError(
-            'spike_per_component requires gate_mode "raw" or "sigmoid"; '
+            'spike_per_component requires gate_mode "raw", "sigmoid", "centered_raw", or "signed_mask"; '
             '"phase_mean" removes the component axis.'
         )
-    if self.gate_mode not in {"sigmoid", "raw", "phase_mean"}:
-        raise ValueError('gate_mode must be "sigmoid", "raw", or "phase_mean".')
+    if self.gate_mode not in {"sigmoid", "raw", "phase_mean", "centered_raw", "signed_mask"}:
+        raise ValueError('gate_mode must be "sigmoid", "raw", "phase_mean", "centered_raw", or "signed_mask".')
     if self.in_channels != 3:
         raise ValueError("in_channels must be 3 because the model is fixed to RGB input.")
     if self.kernel_size <= 0:
@@ -557,8 +557,8 @@ def validate_sc_generator_pearson_cor_sc(gamma_samples):
 
 def validate_sinusoidal_gating_sinusoidal_gating(gate_mode):
     """Validate sinusoidal_gating.sinusoidal_gating inputs at the call site."""
-    if gate_mode not in {"sigmoid", "raw", "phase_mean"}:
-        raise ValueError('gate_mode must be "sigmoid", "raw", or "phase_mean".')
+    if gate_mode not in {"sigmoid", "raw", "phase_mean", "centered_raw", "signed_mask"}:
+        raise ValueError('gate_mode must be "sigmoid", "raw", "phase_mean", "centered_raw", or "signed_mask".')
 
 
 def validate_spike_classifier_spike_rhythm(spikes, min_group_size):

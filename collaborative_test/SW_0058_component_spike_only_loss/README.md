@@ -66,8 +66,13 @@ whether any existing preflight is current without training or evaluating. Each
 actual training/evaluation phase rechecks its assigned GPU. The launch refuses
 existing seed outputs, lock/state, preflight artifacts, and summary files;
 failed/partial outputs are left for manual review. `run.sh`, `evaluate.sh`, and
-`evaluate_multireadout.sh` are available for explicit phase-level operation,
-but the full workflow is the recommended path. The canonical one-batch
-preflight passed with loss `20.36037254`, weighted primary total `0`, and
-weighted component-spike total `20.360373`; seed0 was launched separately on
-GPU0, and its result remains pending authoritative server verification.
+`evaluate_multireadout.sh` are available for explicit phase-level operation.
+
+The canonical one-batch preflight passed with loss `20.36037254`, weighted
+primary total `0`, and weighted component-spike total `20.360373`. Seeds 0 and
+1 then completed. At the registered long-window threshold, both were lower
+than their SW0053 baselines on all three primary metrics. Seed2 was therefore
+not launched. The exact stage-1 stopping result is recorded in
+`results/stage1_seed0_seed1_stop.{json,md}`. This rejects complete removal of
+the phase-primary term under this contract; it does not decide whether a
+smaller reweighting or a structural gate-transduction change can improve it.

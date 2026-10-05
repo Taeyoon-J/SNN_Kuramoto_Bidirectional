@@ -1,0 +1,114 @@
+{
+  "schema_version": 1,
+  "experiment": "SW0058 component-spike-only stage1 stopping screen",
+  "seeds_completed": [
+    0,
+    1
+  ],
+  "seed2_launched": false,
+  "candidate": {
+    "primary_loss_weight": 0.0,
+    "spike_plv_weight": 5.0,
+    "train_ids": [
+      0,
+      999
+    ],
+    "epochs": 25,
+    "lr": 0.0003
+  },
+  "baseline": {
+    "experiment": "SW0053 mixed loss",
+    "primary_loss_weight": 1.0,
+    "spike_plv_weight": 5.0
+  },
+  "endpoint": {
+    "ids": [
+      1320,
+      1639
+    ],
+    "steps": 1024,
+    "settle": 512,
+    "spike_threshold": 0.5,
+    "postselection": false
+  },
+  "primary": {
+    "fg_ari": {
+      "candidate_seed0_seed1": [
+        0.6147425260186195,
+        0.5744950789031046
+      ],
+      "baseline_seed0_seed1": [
+        0.7015376881275344,
+        0.5921664043323526
+      ],
+      "paired_delta_seed0_seed1": [
+        -0.08679516210891491,
+        -0.017671325429247986
+      ],
+      "candidate_mean": 0.5946188024608621,
+      "baseline_mean": 0.6468520462299434,
+      "paired_delta_mean": -0.05223324376908145
+    },
+    "foreground_iou": {
+      "candidate_seed0_seed1": [
+        0.5671002402556855,
+        0.3342400101120854
+      ],
+      "baseline_seed0_seed1": [
+        0.6109582320901147,
+        0.34509429696312843
+      ],
+      "paired_delta_seed0_seed1": [
+        -0.04385799183442918,
+        -0.01085428685104306
+      ],
+      "candidate_mean": 0.45067012518388544,
+      "baseline_mean": 0.47802626452662156,
+      "paired_delta_mean": -0.02735613934273612
+    },
+    "matched_object_iou": {
+      "candidate_seed0_seed1": [
+        0.43418227084270233,
+        0.33495105395823793
+      ],
+      "baseline_seed0_seed1": [
+        0.4894204426567114,
+        0.4213907348177569
+      ],
+      "paired_delta_seed0_seed1": [
+        -0.055238171814009085,
+        -0.08643968085951897
+      ],
+      "candidate_mean": 0.3845666624004701,
+      "baseline_mean": 0.45540558873723413,
+      "paired_delta_mean": -0.07083892633676403
+    }
+  },
+  "secondary_candidate": {
+    "0": {
+      "spike_cc_threshold_0p50": {
+        "fg_ari": 0.6147110589806124,
+        "foreground_iou": 0.5668904403693527,
+        "matched_object_iou": 0.43422545217773634
+      },
+      "membrane_spatial_sigma1p5_k10": {
+        "fg_ari": 0.7387198261878151,
+        "foreground_iou": 0.21222745562012077,
+        "matched_object_iou": 0.34104582458025334
+      }
+    },
+    "1": {
+      "spike_cc_threshold_0p50": {
+        "fg_ari": 0.5749023383825573,
+        "foreground_iou": 0.3343749151756189,
+        "matched_object_iou": 0.3348888260604303
+      },
+      "membrane_spatial_sigma1p5_k10": {
+        "fg_ari": 0.6764259189871257,
+        "foreground_iou": 0.21462737310899221,
+        "matched_object_iou": 0.31780770737824715
+      }
+    }
+  },
+  "decision": "stop before seed2; candidate is lower on all three primary metrics for both completed seeds"
+}

@@ -1,0 +1,26 @@
+{
+  "experiment": "SW0059 centered delayed-gate validation pilot",
+  "comparison": "fixed seed0 checkpoint; IDs1320-1351; T256/settle64; spike-CC threshold .35",
+  "prediction_ground_truth_independent": true,
+  "centered_report": "trained_models/SW_0059_centered_delayed_gate/seed0_centered_raw_short_n32_T256_settle64_validated.json",
+  "raw_reference": "collaborative_test/SW_0054_causal_mechanism_ablation/results/seed0_epoch25_short_n32_pilot_summary.json",
+  "checkpoint_sha256": "d30147fbd460a702689cb59fea13dd4d36d70b4a7b460ffd020382b2334e8c85",
+  "metrics": {
+    "fg_ari": {
+      "raw": 0.668520261873324,
+      "centered_raw": 0.6777679673836814,
+      "delta": 0.009247705510357362
+    },
+    "foreground_iou": {
+      "raw": 0.6920255075800473,
+      "centered_raw": 0.6749811439289749,
+      "delta": -0.017044363651072425
+    },
+    "matched_object_iou": {
+      "raw": 0.48987872185834525,
+      "centered_raw": 0.5113787120601594,
+      "delta": 0.021499990201814145
+    }
+  },
+  "interpretation": "32-image validation pilot only; no retraining or general claim."
+}

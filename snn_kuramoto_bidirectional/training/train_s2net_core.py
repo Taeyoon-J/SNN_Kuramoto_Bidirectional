@@ -624,11 +624,14 @@ def main():
     parser.add_argument(
         "--gate-mode",
         default="raw",
-        choices=["sigmoid", "raw", "phase_mean"],
+        choices=["sigmoid", "raw", "phase_mean", "centered_raw", "signed_mask"],
         help=(
             "'sigmoid' keeps the original gate, compressed to [0.5, 0.731]. "
             "'phase_mean' reduces the osc_dim axis before the sine; the same "
-            "information reduced the other way round measured 0.216 vs 0.067."
+            "information reduced the other way round measured 0.216 vs 0.067. "
+            "'centered_raw' drives dendrites with the delayed centered mask; "
+            "'signed_mask' applies it to the current carrier. Both keep the "
+            "raw delayed mask as the membrane gate."
         ),
     )
     parser.add_argument("--low-n", type=float, default=-4.0)
