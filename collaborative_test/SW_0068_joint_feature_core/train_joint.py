@@ -18,12 +18,16 @@ sys.path[:0] = [str(ROOT), str(ROOT / "snn_kuramoto_bidirectional")]
 from snn_kuramoto_bidirectional.gamma_initializer import FeaturePatchGammaInitializer
 from snn_kuramoto_bidirectional.hyperparameter import S2NetHyperparameters
 from snn_kuramoto_bidirectional.input_layer_generator import CNNFeatureEncoder
-from snn_kuramoto_bidirectional.loss_function import UnsupervisedS2NetLoss
+from snn_kuramoto_bidirectional.loss_function import (
+    UnsupervisedS2NetLoss,
+    patch_pool_rgb,
+)
 from snn_kuramoto_bidirectional.s2net_cls import S2NetCore
 from snn_kuramoto_bidirectional.training.train_s2net_core import (
     _component_spike_synchrony,
     _forward_with_plv,
     _select_loss_signal,
+    load_graph_checkpoint,
     reset_graph_initialization,
     save_s2net_core,
 )
@@ -82,6 +86,8 @@ def main():
     p.add_argument("--output-dir", required=True)
     p.add_argument("--seed", type=int, required=True)
     p.add_argument("--graph-init-seed", type=int, default=0)
+    p.add_argument("--graph-checkpoint", default=None)
+    p.add_argument("--freeze-graph", action="store_true")
     p.add_argument("--core-checkpoint", default=None)
     p.add_argument("--freeze-core", action="store_true")
     p.add_argument("--epochs", type=int, default=10)
@@ -90,6 +96,9 @@ def main():
     p.add_argument("--core-lr", type=float, default=3e-4)
     p.add_argument("--encoder-lr", type=float, required=True)
     p.add_argument("--anchor-weight", type=float, default=0.0)
+    p.add_argument("--slot-reconstruction-weight", type=float, default=0.0)
+    p.add_argument("--slot-num-slots", type=int, default=7)
+    p.add_argument("--slot-temperature", type=float, default=0.3)
     p.add_argument("--max-samples", type=int, default=2500)
     p.add_argument("--device", default="cuda")
     args = p.parse_args()
@@ -97,8 +106,15 @@ def main():
         raise ValueError("require epochs >= 1 and 0 <= warmup < epochs")
     if args.freeze_core and (args.core_checkpoint is None or args.warmup_epochs != 0):
         raise ValueError("freeze-core requires a checkpoint and zero warmup epochs")
-    if args.encoder_lr <= 0 or args.core_lr <= 0 or args.anchor_weight < 0:
-        raise ValueError("learning rates must be positive and anchor weight nonnegative")
+    if args.freeze_graph and args.graph_checkpoint is None:
+        raise ValueError("freeze-graph requires graph-checkpoint")
+    if args.graph_checkpoint is not None and args.core_checkpoint is not None:
+        raise ValueError("graph-checkpoint and core-checkpoint are mutually exclusive")
+    if (args.encoder_lr <= 0 or args.core_lr <= 0 or args.anchor_weight < 0
+            or args.slot_reconstruction_weight < 0):
+        raise ValueError("learning rates must be positive and loss weights nonnegative")
+    if args.slot_num_slots < 2 or args.slot_temperature <= 0:
+        raise ValueError("slot count must be >=2 and temperature positive")
     out = Path(args.output_dir)
     if out.exists():
         raise FileExistsError(out)
@@ -129,12 +145,18 @@ def main():
 
     hp = build_hparams()
     core = S2NetCore(hp, device=device).to(device)
-    reset_graph_initialization(core, hp, device, args.graph_init_seed)
+    if args.graph_checkpoint is None:
+        reset_graph_initialization(core, hp, device, args.graph_init_seed)
+    else:
+        load_graph_checkpoint(core, args.graph_checkpoint, device,
+                              freeze=args.freeze_graph)
     if args.core_checkpoint is not None:
         core.load_state_dict(torch.load(args.core_checkpoint, map_location=device,
                                         weights_only=True), strict=True)
     initial_core = {key: value.detach().cpu().clone()
                     for key, value in core.state_dict().items()}
+    initial_graph = {key: value.detach().cpu().clone()
+                     for key, value in core.graph_generator.state_dict().items()}
     if args.freeze_core:
         core.requires_grad_(False)
     # The registered recipe has object_overlap_weight=0. Computing the legacy
@@ -168,6 +190,9 @@ def main():
         sample_diversity_weight=0.0, plv_bimodality_weight=6.0,
         plv_balance_weight=10.0, plv_coherence_weight=0.5,
         plv_collapse_weight=1.0, plv_target_density=0.867,
+        slot_reconstruction_weight=args.slot_reconstruction_weight,
+        slot_num_slots=args.slot_num_slots,
+        slot_temperature=args.slot_temperature,
         patch_grid_size=(16, 16),
     )
     groups = [{"params": encoder.parameters(), "lr": args.encoder_lr}]
@@ -178,7 +203,8 @@ def main():
     for epoch in range(1, args.epochs + 1):
         core.train()
         encoder.train(epoch > args.warmup_epochs)
-        totals = {"loss": 0.0, "primary": 0.0, "spike": 0.0, "anchor": 0.0}
+        totals = {"loss": 0.0, "primary": 0.0, "spike": 0.0,
+                  "anchor": 0.0, "slot_reconstruction": 0.0}
         seen = 0
         for image_batch, anchor_batch in loader:
             image_batch = image_batch.to(device)
@@ -191,9 +217,10 @@ def main():
             groups, spikes, core_out, plv, theta = _forward_with_plv(
                 core, gamma, criterion, 32, "phase", "mean")
             values = _select_loss_signal(spikes, core_out, "sigmoid_membrane")
-            primary, _ = criterion(spikes=values, object_groups=groups,
-                                   sc=core.sc, plv=plv, theta=theta,
-                                   plv_settle=32)
+            recon_target = patch_pool_rgb(image_batch.float().div(255.0), (16, 16))
+            primary, primary_parts = criterion(
+                spikes=values, object_groups=groups, sc=core.sc, plv=plv,
+                theta=theta, plv_settle=32, recon_target=recon_target)
             component_plv = _component_spike_synchrony(core, 32)
             if component_plv is None:
                 raise RuntimeError("component spike synchrony missing")
@@ -215,6 +242,9 @@ def main():
             totals["primary"] += float(primary.detach()) * batch
             totals["spike"] += float(spike_loss.detach()) * batch
             totals["anchor"] += float(anchor_loss.detach()) * batch
+            totals["slot_reconstruction"] += float(
+                primary_parts.get("slot_reconstruction", gamma.new_zeros(())).detach()
+            ) * batch
         record = {"epoch": epoch, **{key: value / seen for key, value in totals.items()}}
         history.append(record)
         print(json.dumps(record), flush=True)
@@ -231,13 +261,19 @@ def main():
     core_change = max(
         float((value.detach().cpu() - initial_core[key]).abs().max())
         for key, value in core.state_dict().items())
+    graph_change = max(
+        float((value.detach().cpu() - initial_graph[key]).abs().max())
+        for key, value in core.graph_generator.state_dict().items())
     if encoder_change <= 0 or not math.isfinite(gamma_drift):
         raise AssertionError("joint path did not update the encoder finitely")
     if args.freeze_core and core_change != 0.0:
         raise AssertionError("frozen core changed")
+    if args.freeze_graph and graph_change != 0.0:
+        raise AssertionError("frozen graph changed")
     manifest = {
         "experiment": "SW0068 joint native feature generator and core",
         "seed": args.seed, "graph_init_seed": args.graph_init_seed,
+        "graph_checkpoint": args.graph_checkpoint, "freeze_graph": args.freeze_graph,
         "core_checkpoint": args.core_checkpoint, "freeze_core": args.freeze_core,
         "epochs": args.epochs, "warmup_epochs": args.warmup_epochs,
         "samples": len(ids),
@@ -247,10 +283,14 @@ def main():
         "core_lr": args.core_lr, "encoder_lr": args.encoder_lr,
         "data_order": "global RNG after baseline-equivalent core initialization",
         "anchor_weight": args.anchor_weight,
+        "slot_reconstruction_weight": args.slot_reconstruction_weight,
+        "slot_num_slots": args.slot_num_slots,
+        "slot_temperature": args.slot_temperature,
         "initial_gamma_max_abs_diff": initial_max_diff,
         "final_gamma_rms_drift_n32": gamma_drift,
         "encoder_max_parameter_change": encoder_change,
         "core_max_parameter_change": core_change,
+        "graph_max_parameter_change": graph_change,
         "source_encoder_sha256": sha256(args.encoder),
         "stats_sha256": sha256(args.stats),
         "anchor_gamma_sha256": sha256(args.anchor_gamma),
