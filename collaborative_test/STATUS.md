@@ -51,6 +51,13 @@
   object IoU improve strongly; foreground IoU trades down but stays above the
   audited Slot single-checkpoint reference. Goal remains unmet because FG-ARI
   is still below Slot `.894641`.
+- SW0055 prepared the unique-data scaling contract. Training IDs are 0-999
+  plus 1640-3139, explicitly excluding held-out/reference IDs1000-1639. The
+  frozen encoder and saved scalar normalization reproduce the original 1,000
+  gamma rows exactly (max difference 0.0); the expanded gamma is finite with
+  shape `[2500,8,256]` and SHA-256 `71394392...c742aa`. The matched-exposure
+  2500x10 training arm is not launched until a real one-update preflight is
+  added for this asset.
 - SW_0034 full320 complete: distance-controlled AUC phase .5788, gating .5871, h-wave .5842, membrane .5870, gated spike .5863, binary threshold .5000. Binary threshold is constant 1 after settle across all aggregate patch histories; gated spike variation is gate-driven. Continuous signal is weak upstream and roughly preserved downstream; no single sharp loss stage. Spatial-only/membrane-spatial/gated-spike-spatial readouts .491272/.190837/.178026, .494639/.191070/.170568, .479762/.185651/.164179. Phase PLV bypasses downstream gradients; membrane/spike losses connect them. No improvement claim.
 - SW_0035: adaptive object-count classifier baseline code prepared. It compares GT-free eigengap/eigen-threshold count inference, existing adaptive slots, and fixed-k grouping controls on membrane and gated-spike patterns. Not yet run.
 - SW_0035 pilot: gated-spike spatial eigengap range 5-10 reduces predicted groups 9.0→7.06 and count MAE 2.95→2.05; FG IoU .1746→.1997, but FG-ARI .4871→.4759 and object IoU .1605→.1413. Exact count only 4.7%. Existing membrane slots average 6.06 versus true 6.11 but exact count 7.8%, showing mean count is misleading. Selected full320 baseline running.

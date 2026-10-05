@@ -1,0 +1,35 @@
+{
+  "contract_version": 1,
+  "dataset": "/Data0/kevinswk/datasets/object_centric_data/clevr_10-full.hdf5",
+  "training_ids": {
+    "segments": [
+      [
+        0,
+        999
+      ],
+      [
+        1640,
+        3139
+      ]
+    ],
+    "count": 2500
+  },
+  "held_out_ids_excluded": [
+    1000,
+    1639
+  ],
+  "shape": [
+    2500,
+    8,
+    256
+  ],
+  "dtype": "torch.float32",
+  "encoder": "/Data0/kevinswk/patch_v2/trained_models/readme_patch_eval_20261002/input_encoder/input_layer_encoder.pt",
+  "encoder_sha256": "9b9c9c59725f872084a6c9bfae1ebbd1b89de40d18ef4f8ab6b8ec014c2ab868",
+  "preprocessing": "/Data0/kevinswk/patch_v2/trained_models/readme_patch_eval_20261002/feature_preprocessing.pt",
+  "preprocessing_sha256": "a9ec3281b9603021c37f7c346baa6cf62513c5ce7edde867ab7eddf24b18e127",
+  "reference_gamma": "/Data0/kevinswk/patch_v2/trained_models/readme_patch_eval_20261002/gamma_train.pt",
+  "reference_gamma_sha256": "00c0fb08f9d8195ec0d8107373b1ade32a0415df56fc2b36a5ccce1c603176e9",
+  "first_1000_max_abs_diff": 0.0,
+  "gamma_sha256": "7139439232d5717b66ffd1749572ab3faff9d0337d49c28b1602dce4d6c742aa"
+}
