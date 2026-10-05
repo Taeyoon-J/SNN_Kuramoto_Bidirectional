@@ -22,3 +22,25 @@ windows. Ground truth is used only for scoring. No test split is used.
 ```bash
 bash collaborative_test/SW_0053_lr_early_stop_matrix/launch_parallel.sh 1 2 3
 ```
+
+## Results
+
+All three arms completed training plus short/long evaluation. At the common
+long threshold `.35`:
+
+| Run | FG-ARI | Foreground IoU | Matched-object IoU |
+|---|---:|---:|---:|
+| seed0, low LR, epoch25 | .700964 | .613168 | .484189 |
+| seed1, low LR, epoch25 | .583643 | .343275 | .404509 |
+| seed2, low LR, epoch25 (SW0052) | .395707 | .189112 | .159085 |
+| **low-LR three-seed mean** | **.560105** | **.381852** | **.349261** |
+| seed2, LR1e-3, epoch25 control | .345872 | .172243 | .126184 |
+
+At threshold `.50`, the low-LR three-seed mean is
+`.562902/.381328/.356857`. Compared with the prior SW0042 `.35` mean
+`.415879/.418226/.296118`, low LR plus epoch25 greatly improves FG-ARI and
+object IoU, while foreground IoU trades down but remains above the audited
+single-checkpoint Slot reference. Seed2 low LR strictly exceeds the matched
+LR1e-3 epoch25 control on all three metrics, so the rescue is not explained by
+early stopping alone. Seed0 improves all three metrics; seed1 gains ARI and
+object IoU but loses foreground IoU. Full outputs are under `results/`.

@@ -41,6 +41,16 @@
   foreground-IoU tradeoff. Substituting low-LR epoch25 for collapsed seed2
   gives diagnostic three-seed mean about `.485898/.436209/.336823`; this is
   not yet a same-recipe three-seed result.
+- SW0053 completed the same-recipe low-LR/epoch25 expansion. Long common `.35`
+  seeds0/1/2 are `.700964/.613168/.484189`,
+  `.583643/.343275/.404509`, and `.395707/.189112/.159085`; the formal mean
+  is `.560105/.381852/.349261`. At `.50` it is
+  `.562902/.381328/.356857`, the new formal three-seed lead. The matched
+  seed2 LR1e-3/epoch25 control is only `.345872/.172243/.126184`, proving low
+  LR contributes beyond early stopping. Relative to SW0042, mean ARI and
+  object IoU improve strongly; foreground IoU trades down but stays above the
+  audited Slot single-checkpoint reference. Goal remains unmet because FG-ARI
+  is still below Slot `.894641`.
 - SW_0034 full320 complete: distance-controlled AUC phase .5788, gating .5871, h-wave .5842, membrane .5870, gated spike .5863, binary threshold .5000. Binary threshold is constant 1 after settle across all aggregate patch histories; gated spike variation is gate-driven. Continuous signal is weak upstream and roughly preserved downstream; no single sharp loss stage. Spatial-only/membrane-spatial/gated-spike-spatial readouts .491272/.190837/.178026, .494639/.191070/.170568, .479762/.185651/.164179. Phase PLV bypasses downstream gradients; membrane/spike losses connect them. No improvement claim.
 - SW_0035: adaptive object-count classifier baseline code prepared. It compares GT-free eigengap/eigen-threshold count inference, existing adaptive slots, and fixed-k grouping controls on membrane and gated-spike patterns. Not yet run.
 - SW_0035 pilot: gated-spike spatial eigengap range 5-10 reduces predicted groups 9.0→7.06 and count MAE 2.95→2.05; FG IoU .1746→.1997, but FG-ARI .4871→.4759 and object IoU .1605→.1413. Exact count only 4.7%. Existing membrane slots average 6.06 versus true 6.11 but exact count 7.8%, showing mean count is misleading. Selected full320 baseline running.
