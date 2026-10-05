@@ -22,6 +22,20 @@ bash collaborative_test/SW_0054_causal_mechanism_ablation/evaluate.sh GPU_ID sho
 bash collaborative_test/SW_0054_causal_mechanism_ablation/evaluate.sh GPU_ID long 320 full
 ```
 
+After the count-32 pilot JSON is written, validate and summarize changes versus
+`normal` with:
+
+```bash
+python collaborative_test/SW_0054_causal_mechanism_ablation/summarize.py \
+  trained_models/SW_0054_causal_mechanism_ablation/seed0_epoch25_short_n32_pilot_T256_settle64.json
+```
+
+The tool checks checkpoint SHA/path, IDs/count/window/condition set, finite
+metrics, and graph/theta invariants. It writes JSON and Markdown beside the
+input and refuses to overwrite either unless `--overwrite` is passed. Deltas
+and activity ratios are descriptive; it deliberately makes no claim that an
+effect is explained by activity-scale collapse.
+
 All six tensor unit tests and a one-image/full-condition CPU smoke test pass
 against the real checkpoint, gamma, manifest, and HDF5 assets. The smoke test
 is a code-validity check, not validation evidence. GPU preflight and the

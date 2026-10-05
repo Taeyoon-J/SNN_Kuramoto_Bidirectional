@@ -66,3 +66,18 @@ logs timestamps, validates and reuses an existing successful SW0054 pilot, and
 does not retry a pilot that leaves a failed evaluator artifact. It refuses
 existing SW0055 seed outputs and writes a completion marker after successful
 launch. Inspect its log and marker before any later restart.
+
+Once seed0/1/2 short and long validation JSON files exist, create the fixed
+threshold three-seed JSON/Markdown summary with:
+
+```bash
+python collaborative_test/SW_0055_unique_data_scale/summarize.py \
+  --model-root trained_models \
+  --output collaborative_test/SW_0055_unique_data_scale/results/three_seed_summary.json
+```
+
+The summarizer requires all six reports and seed manifests, checks the
+checkpoint/code/gamma hashes, aligned IDs/counts and rollout windows, and
+reports long .50 as primary and long .35 as secondary against the fixed SW0053
+baselines. It refuses to overwrite the JSON/Markdown pair unless `--overwrite`
+is provided. It performs no threshold reselection.
