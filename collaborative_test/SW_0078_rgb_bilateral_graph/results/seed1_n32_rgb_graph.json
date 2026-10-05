@@ -1,0 +1,529 @@
+{
+  "experiment": "SW0078 label-free RGB-bilateral graph override",
+  "ids": [
+    1320,
+    1351
+  ],
+  "images": 32,
+  "checkpoint": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0072_frozen_seed0_graph_s1_e10/core.pt",
+  "checkpoint_sha256": "b90dc8e78aaacf7347952e2bb6fd2f2da1593679e7bc5c9430cc26888a38cd91",
+  "evaluator_dependencies_sha256": "eb5bcdb134c4e0edb9ac8cc489df1fbedf0b7c90533d477dd9a66a58b2218418",
+  "gamma_path": "/Data0/kevinswk/patch_v2_sw/data/SW_0042_hdf5_aligned/gamma_validation_1320_1639.pt",
+  "gamma_sha256": "f20b019bd46adb378b2bfcecbb252d960da2592ef651dcd419753034c8b705f0",
+  "gamma_manifest": {
+    "dataset": "/Data0/kevinswk/datasets/object_centric_data/clevr_10-full.hdf5",
+    "image_ids": [
+      1320,
+      1639
+    ],
+    "shape": [
+      320,
+      8,
+      256
+    ],
+    "dtype": "torch.float32",
+    "source_run": "/Data0/kevinswk/patch_v2/trained_models/readme_patch_eval_20261002",
+    "encoder": "/Data0/kevinswk/patch_v2/trained_models/readme_patch_eval_20261002/input_encoder/input_layer_encoder.pt",
+    "encoder_sha256": "9b9c9c59725f872084a6c9bfae1ebbd1b89de40d18ef4f8ab6b8ec014c2ab868",
+    "preprocessing": "/Data0/kevinswk/patch_v2/trained_models/readme_patch_eval_20261002/feature_preprocessing.pt",
+    "preprocessing_sha256": "a9ec3281b9603021c37f7c346baa6cf62513c5ce7edde867ab7eddf24b18e127",
+    "gamma_sha256": "f20b019bd46adb378b2bfcecbb252d960da2592ef651dcd419753034c8b705f0",
+    "normalization": "train IDs 0-999 standardize, clip [-3,3]",
+    "patch_grid_size": 16
+  },
+  "gamma_global_start": 1320,
+  "image_source": {
+    "path": "/Data0/kevinswk/datasets/object_centric_data/clevr_10-full.hdf5",
+    "ids": [
+      1320,
+      1351
+    ]
+  },
+  "inference": {
+    "steps": 256,
+    "settle": 64,
+    "membrane_vth": 0.06,
+    "threshold": 0.35,
+    "background": "largest_component",
+    "min_group_size": 2,
+    "dendritic_projection": "shared",
+    "graph_spatial_decay": 0.35,
+    "geodesic_steps": 3,
+    "geodesic_radius": 1.5,
+    "geodesic_contrast": 2.0,
+    "geodesic_temperature": 0.5,
+    "geodesic_cap": 16,
+    "kuramoto_backend": "factorized",
+    "gate_mode": "raw"
+  },
+  "rgb_graph": {
+    "formula": "bilateral = exp(-color_d2/(2*2.0^2)) * exp(-grid_d2/(2*2.0^2))",
+    "color_features": "16x16 RGB patch means, per-image median and 1.4826*MAD normalization, scale floor 4 intensity levels, clamp [-8,8]",
+    "top_k": 32,
+    "coupling_scale": 7.623262882232666,
+    "normalization": "top-k bilateral weights sum to learned coupling scale per row before symmetrization",
+    "symmetry": "A = 0.5*(A + A.T)"
+  },
+  "blend_alphas": {
+    "learned_default": null,
+    "rgb_only": 1.0,
+    "blend_alpha_0p25": 0.25,
+    "blend_alpha_0p50": 0.5
+  },
+  "ground_truth_used_for_graph_or_prediction": false,
+  "readout": "same per-component spike synchrony connected components, threshold .35, largest component background",
+  "sweep": [
+    {
+      "mode": "learned_default",
+      "graph_batches": [
+        {
+          "shape": [
+            4,
+            256,
+            256
+          ],
+          "min": 0.0,
+          "max": 6.396039962768555,
+          "mean": 0.02977837063372135,
+          "mean_row_sum": 7.623262882232666,
+          "max_asymmetry": 0.0
+        },
+        {
+          "shape": [
+            4,
+            256,
+            256
+          ],
+          "min": 0.0,
+          "max": 7.082255840301514,
+          "mean": 0.029778368771076202,
+          "mean_row_sum": 7.623263359069824,
+          "max_asymmetry": 0.0
+        },
+        {
+          "shape": [
+            4,
+            256,
+            256
+          ],
+          "min": 0.0,
+          "max": 7.614816188812256,
+          "mean": 0.029778368771076202,
+          "mean_row_sum": 7.623262882232666,
+          "max_asymmetry": 0.0
+        },
+        {
+          "shape": [
+            4,
+            256,
+            256
+          ],
+          "min": 0.0,
+          "max": 7.619568824768066,
+          "mean": 0.02977837063372135,
+          "mean_row_sum": 7.623262882232666,
+          "max_asymmetry": 0.0
+        },
+        {
+          "shape": [
+            4,
+            256,
+            256
+          ],
+          "min": 0.0,
+          "max": 7.348599433898926,
+          "mean": 0.02977837063372135,
+          "mean_row_sum": 7.623263359069824,
+          "max_asymmetry": 0.0
+        },
+        {
+          "shape": [
+            4,
+            256,
+            256
+          ],
+          "min": 0.0,
+          "max": 5.323843955993652,
+          "mean": 0.02977837063372135,
+          "mean_row_sum": 7.623262882232666,
+          "max_asymmetry": 0.0
+        },
+        {
+          "shape": [
+            4,
+            256,
+            256
+          ],
+          "min": 0.0,
+          "max": 7.169592380523682,
+          "mean": 0.029778368771076202,
+          "mean_row_sum": 7.623262882232666,
+          "max_asymmetry": 0.0
+        },
+        {
+          "shape": [
+            4,
+            256,
+            256
+          ],
+          "min": 0.0,
+          "max": 7.373557090759277,
+          "mean": 0.02977837063372135,
+          "mean_row_sum": 7.623263359069824,
+          "max_asymmetry": 0.0
+        }
+      ],
+      "predicted_foreground_fraction": 0.377685546875,
+      "predicted_group_count_mean": 5.78125,
+      "metrics": {
+        "fg_ari": 0.7087568718226954,
+        "foreground_iou": 0.46810477545343715,
+        "matched_object_iou": 0.5098805140855838
+      },
+      "valid_count": {
+        "fg_ari": 32,
+        "foreground_iou": 32,
+        "matched_object_iou": 32
+      }
+    },
+    {
+      "mode": "rgb_only",
+      "graph_batches": [
+        {
+          "shape": [
+            4,
+            256,
+            256
+          ],
+          "min": 0.0,
+          "max": 3.72607421875,
+          "mean": 0.02977837063372135,
+          "mean_row_sum": 7.623262882232666,
+          "max_asymmetry": 0.0
+        },
+        {
+          "shape": [
+            4,
+            256,
+            256
+          ],
+          "min": 0.0,
+          "max": 1.755178451538086,
+          "mean": 0.02977837063372135,
+          "mean_row_sum": 7.623262882232666,
+          "max_asymmetry": 0.0
+        },
+        {
+          "shape": [
+            4,
+            256,
+            256
+          ],
+          "min": 0.0,
+          "max": 6.432065486907959,
+          "mean": 0.029778368771076202,
+          "mean_row_sum": 7.623262882232666,
+          "max_asymmetry": 0.0
+        },
+        {
+          "shape": [
+            4,
+            256,
+            256
+          ],
+          "min": 0.0,
+          "max": 3.157792568206787,
+          "mean": 0.02977837063372135,
+          "mean_row_sum": 7.623262882232666,
+          "max_asymmetry": 0.0
+        },
+        {
+          "shape": [
+            4,
+            256,
+            256
+          ],
+          "min": 0.0,
+          "max": 2.929871082305908,
+          "mean": 0.029778368771076202,
+          "mean_row_sum": 7.623262882232666,
+          "max_asymmetry": 0.0
+        },
+        {
+          "shape": [
+            4,
+            256,
+            256
+          ],
+          "min": 0.0,
+          "max": 3.674539566040039,
+          "mean": 0.029778368771076202,
+          "mean_row_sum": 7.623262882232666,
+          "max_asymmetry": 0.0
+        },
+        {
+          "shape": [
+            4,
+            256,
+            256
+          ],
+          "min": 0.0,
+          "max": 6.172944068908691,
+          "mean": 0.0297783724963665,
+          "mean_row_sum": 7.623263359069824,
+          "max_asymmetry": 0.0
+        },
+        {
+          "shape": [
+            4,
+            256,
+            256
+          ],
+          "min": 0.0,
+          "max": 2.7988758087158203,
+          "mean": 0.02977837063372135,
+          "mean_row_sum": 7.623262882232666,
+          "max_asymmetry": 0.0
+        }
+      ],
+      "predicted_foreground_fraction": 0.399658203125,
+      "predicted_group_count_mean": 4.40625,
+      "metrics": {
+        "fg_ari": 0.5687705254582286,
+        "foreground_iou": 0.41812036252815993,
+        "matched_object_iou": 0.35349667432450504
+      },
+      "valid_count": {
+        "fg_ari": 32,
+        "foreground_iou": 32,
+        "matched_object_iou": 32
+      }
+    },
+    {
+      "mode": "blend_alpha_0p25",
+      "graph_batches": [
+        {
+          "shape": [
+            4,
+            256,
+            256
+          ],
+          "min": 0.0,
+          "max": 5.206843852996826,
+          "mean": 0.02977837063372135,
+          "mean_row_sum": 7.623262882232666,
+          "max_asymmetry": 0.0
+        },
+        {
+          "shape": [
+            4,
+            256,
+            256
+          ],
+          "min": 0.0,
+          "max": 5.474523067474365,
+          "mean": 0.02977837063372135,
+          "mean_row_sum": 7.623262882232666,
+          "max_asymmetry": 0.0
+        },
+        {
+          "shape": [
+            4,
+            256,
+            256
+          ],
+          "min": 0.0,
+          "max": 7.09900426864624,
+          "mean": 0.02977837063372135,
+          "mean_row_sum": 7.623262405395508,
+          "max_asymmetry": 0.0
+        },
+        {
+          "shape": [
+            4,
+            256,
+            256
+          ],
+          "min": 0.0,
+          "max": 6.504125118255615,
+          "mean": 0.02977837063372135,
+          "mean_row_sum": 7.623262405395508,
+          "max_asymmetry": 0.0
+        },
+        {
+          "shape": [
+            4,
+            256,
+            256
+          ],
+          "min": 0.0,
+          "max": 5.909534454345703,
+          "mean": 0.02977837063372135,
+          "mean_row_sum": 7.623262882232666,
+          "max_asymmetry": 0.0
+        },
+        {
+          "shape": [
+            4,
+            256,
+            256
+          ],
+          "min": 0.0,
+          "max": 4.390323638916016,
+          "mean": 0.02977837063372135,
+          "mean_row_sum": 7.623262882232666,
+          "max_asymmetry": 0.0
+        },
+        {
+          "shape": [
+            4,
+            256,
+            256
+          ],
+          "min": 0.0,
+          "max": 6.208624839782715,
+          "mean": 0.02977837063372135,
+          "mean_row_sum": 7.623263359069824,
+          "max_asymmetry": 0.0
+        },
+        {
+          "shape": [
+            4,
+            256,
+            256
+          ],
+          "min": 0.0,
+          "max": 5.860706806182861,
+          "mean": 0.029778368771076202,
+          "mean_row_sum": 7.623262882232666,
+          "max_asymmetry": 0.0
+        }
+      ],
+      "predicted_foreground_fraction": 0.3782958984375,
+      "predicted_group_count_mean": 5.34375,
+      "metrics": {
+        "fg_ari": 0.6809191004949292,
+        "foreground_iou": 0.42263943696904294,
+        "matched_object_iou": 0.4935728444086709
+      },
+      "valid_count": {
+        "fg_ari": 32,
+        "foreground_iou": 32,
+        "matched_object_iou": 32
+      }
+    },
+    {
+      "mode": "blend_alpha_0p50",
+      "graph_batches": [
+        {
+          "shape": [
+            4,
+            256,
+            256
+          ],
+          "min": 0.0,
+          "max": 4.439271926879883,
+          "mean": 0.029778368771076202,
+          "mean_row_sum": 7.623263359069824,
+          "max_asymmetry": 0.0
+        },
+        {
+          "shape": [
+            4,
+            256,
+            256
+          ],
+          "min": 0.0,
+          "max": 3.866790533065796,
+          "mean": 0.02977837063372135,
+          "mean_row_sum": 7.623262405395508,
+          "max_asymmetry": 0.0
+        },
+        {
+          "shape": [
+            4,
+            256,
+            256
+          ],
+          "min": 0.0,
+          "max": 6.860593318939209,
+          "mean": 0.02977837063372135,
+          "mean_row_sum": 7.623262882232666,
+          "max_asymmetry": 0.0
+        },
+        {
+          "shape": [
+            4,
+            256,
+            256
+          ],
+          "min": 0.0,
+          "max": 5.388680458068848,
+          "mean": 0.029778368771076202,
+          "mean_row_sum": 7.623262882232666,
+          "max_asymmetry": 0.0
+        },
+        {
+          "shape": [
+            4,
+            256,
+            256
+          ],
+          "min": 0.0,
+          "max": 4.470468521118164,
+          "mean": 0.02977837063372135,
+          "mean_row_sum": 7.623262882232666,
+          "max_asymmetry": 0.0
+        },
+        {
+          "shape": [
+            4,
+            256,
+            256
+          ],
+          "min": 0.0,
+          "max": 4.028853416442871,
+          "mean": 0.0297783724963665,
+          "mean_row_sum": 7.623262882232666,
+          "max_asymmetry": 0.0
+        },
+        {
+          "shape": [
+            4,
+            256,
+            256
+          ],
+          "min": 0.0,
+          "max": 5.24765682220459,
+          "mean": 0.029778368771076202,
+          "mean_row_sum": 7.623262405395508,
+          "max_asymmetry": 0.0
+        },
+        {
+          "shape": [
+            4,
+            256,
+            256
+          ],
+          "min": 0.0,
+          "max": 4.759461402893066,
+          "mean": 0.02977837063372135,
+          "mean_row_sum": 7.623262405395508,
+          "max_asymmetry": 0.0
+        }
+      ],
+      "predicted_foreground_fraction": 0.3787841796875,
+      "predicted_group_count_mean": 5.15625,
+      "metrics": {
+        "fg_ari": 0.6863184427480824,
+        "foreground_iou": 0.4416088166251871,
+        "matched_object_iou": 0.4755471131659916
+      },
+      "valid_count": {
+        "fg_ari": 32,
+        "foreground_iou": 32,
+        "matched_object_iou": 32
+      }
+    }
+  ]
+}

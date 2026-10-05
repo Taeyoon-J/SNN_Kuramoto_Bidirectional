@@ -189,6 +189,7 @@ class S2NetCore(nn.Module):
         return_core_out=False,
         num_time_steps=None,
         return_theta=False,
+        graph_override=None,
     ):
         """
         Run the Kuramoto/SNN core.
@@ -203,13 +204,25 @@ class S2NetCore(nn.Module):
             [B, num_regions, osc_dim]       -> vector drive
             [B, C, num_regions]             -> channel-projected to [B, N, osc_dim]
 
+        `graph_override`, when supplied, is a finite nonnegative
+        [B, num_regions, num_regions] adjacency used instead of graph generation.
+        Leaving it None preserves the standard checkpoint path.
+
         The last form lets already-stored gamma_seq tensors be reused without
         regenerating them.
         """
         gamma_seq = gamma_seq.to(self.device)
         B = gamma_seq.size(0)
-        feedback = self.graph_generator is not None and self.graph_generator.uses_feedback  # readout mode: False (strength=0.0)
-        if self.graph_generator is not None:  # readout mode: learned SC, once per forward
+        feedback = (graph_override is None and self.graph_generator is not None
+                    and self.graph_generator.uses_feedback)
+        if graph_override is not None:
+            expected = (B, self.in_dim, self.in_dim)
+            if tuple(graph_override.shape) != expected:
+                raise ValueError(f"graph_override must have shape {expected}, got {tuple(graph_override.shape)}")
+            sc = graph_override.to(device=gamma_seq.device, dtype=gamma_seq.dtype)
+            if not torch.isfinite(sc).all() or torch.any(sc < 0):
+                raise ValueError("graph_override must contain finite nonnegative weights")
+        elif self.graph_generator is not None:  # default learned SC computation, unchanged
             sc = self.graph_generator(gamma_seq)
         else:
             sc = self.sc.to(gamma_seq.device).unsqueeze(0).expand(B, -1, -1)
