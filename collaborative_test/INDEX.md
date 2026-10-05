@@ -26,6 +26,7 @@
 | PV2_0028 | completed | matched-threshold spike vs phase: gap is 0.0196, not the 0.0044 first reported | | | |
 | PV2_0029-30 | completed | **spectral readout ports the control: geometry alone 0.390, spikes add 0.217** | | | |
 | PV2_0031 | failed to transfer | peer's low-LR rescue: spread halves, mean falls 0.040, dead seed stays dead | 0.6657 | | |
+| PV2_0032 | completed | **ORACLE ceiling: true count + phase readout reaches 0.7338, below the 0.75 goal** | | | |
 
 Three seeds on the test split, scored from spike masks. Peer experiments from
 `patch_v2_sw` use the `SW_` prefix and are reviewed under `peer_updates/`.
