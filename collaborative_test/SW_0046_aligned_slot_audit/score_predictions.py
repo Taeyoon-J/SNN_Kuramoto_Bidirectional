@@ -12,7 +12,7 @@ import torch
 REPO_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(REPO_ROOT))
 from snn_kuramoto_bidirectional.evaluation import clevr_mask_patch, evaluate_patch_masks
-from protocol import validate_slice
+from protocol import evaluation_description, validate_slice
 
 
 def main():
@@ -33,6 +33,7 @@ def main():
             raise ValueError("Invalid requested validation slice.")
         target_pixel_masks = torch.from_numpy(source["mask"][start:end])
     saved = np.load(args.predictions)
+    prediction_protocol = json.loads(Path(args.protocol).read_text(encoding="utf-8"))
     expected_ids = np.arange(start, end, dtype=np.int64)
     if not np.array_equal(saved["image_ids"], expected_ids):
         raise ValueError("Prediction image_ids do not exactly match requested HDF5 rows.")
@@ -43,8 +44,8 @@ def main():
     prediction = clevr_mask_patch(pixel_predictions, 8)["patch_labels"]
     scores = evaluate_patch_masks(prediction, target["patch_labels"])
     summary = {
-        "protocol": json.loads(Path(args.protocol).read_text(encoding="utf-8")),
-        "evaluation": "validation only; single official transfer checkpoint, not a three-seed mean",
+        "protocol": prediction_protocol,
+        "evaluation": evaluation_description(prediction_protocol),
         "patch_size": 8,
         "patch_grid": [16, 16],
         "ground_truth_used_for_prediction": False,

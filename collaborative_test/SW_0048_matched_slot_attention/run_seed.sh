@@ -50,6 +50,8 @@ done
 mkdir -p "$VAL_OUT"
 "$TF_PY" -u "$ROOT/collaborative_test/SW_0046_aligned_slot_audit/slot_attention_checkpoint_predict.py" \
   --checkpoint-dir "$OUT/checkpoint" --checkpoint-prefix "ckpt-2500" \
+  --checkpoint-source "SW0048 scratch matched-data/pass-budget candidate" \
+  --training-seed "$SEED" --inference-seed 0 --training-protocol "$OUT/training_protocol.json" \
   --model-py "$MODEL_PY" --dataset "$DATASET" \
   --start 1320 --count 320 --output-dir "$VAL_OUT" \
   > "$VAL_OUT/inference.log" 2>&1

@@ -6,7 +6,9 @@ from pathlib import Path
 import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from protocol import perimeter_background, remap_foreground, validate_slice
+from protocol import (evaluation_description, perimeter_background,
+                      remap_foreground, validate_slice,
+                      validate_training_protocol)
 
 
 class ProtocolTest(unittest.TestCase):
@@ -39,6 +41,16 @@ class ProtocolTest(unittest.TestCase):
             perimeter_background(np.array([[0, 1], [2, 4]]), num_slots=4)
         with self.assertRaises(ValueError):
             remap_foreground(np.array([[0, 1]]), background_slot=2, num_slots=2)
+
+    def test_checkpoint_training_source_and_seed_are_explicit(self):
+        record = {"seed": 2, "protocol_type": "matched_data"}
+        self.assertEqual(validate_training_protocol(record, 2)["seed"], 2)
+        with self.assertRaises(ValueError):
+            validate_training_protocol(record, 0)
+        self.assertEqual(
+            evaluation_description({"checkpoint_source": "SW0048 scratch seed2"}),
+            "validation only; single checkpoint source=SW0048 scratch seed2; not a three-seed mean",
+        )
 
 
 if __name__ == "__main__":

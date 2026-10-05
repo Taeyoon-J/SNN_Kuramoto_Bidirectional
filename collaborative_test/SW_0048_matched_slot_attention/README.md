@@ -47,6 +47,15 @@ uses one log and output directory per seed and refuses pre-existing paths.
 `run_seed.sh` also refuses to overwrite existing outputs. Smoke runs are
 isolated under `*-smoke` and skip full validation.
 
+SW0048 prediction now passes its scratch checkpoint source label, training
+seed, and `training_protocol.json` into SW0046's parameterized predictor. The
+resulting prediction protocol records the training seed/source and fixed
+inference RNG seed. SW0046's existing transfer invocation remains
+backward-compatible: omitted provenance flags retain the official `ckpt-500`
+source label and seed 0. The shared scorer reads the checkpoint source from
+the prediction protocol while retaining the single-checkpoint/not-a-three-
+seed-mean qualification.
+
 Pure NumPy protocol checks (schedule, exact pass coverage, and deterministic
 seed ordering):
 

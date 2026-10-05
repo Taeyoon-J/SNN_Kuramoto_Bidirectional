@@ -16,7 +16,8 @@ import h5py
 import numpy as np
 import tensorflow as tf
 
-from protocol import perimeter_background, remap_foreground, validate_slice
+from protocol import (evaluation_description, load_training_protocol,
+                       perimeter_background, remap_foreground, validate_slice)
 
 
 def load_model_module(model_py):
@@ -49,11 +50,36 @@ def resolve_checkpoint(tf, checkpoint_dir, checkpoint_prefix=None):
     return checkpoint_path
 
 
+def checkpoint_fingerprints(prefix):
+    prefix = Path(prefix)
+    files = sorted(prefix.parent.glob(prefix.name + ".*"))
+    if not files:
+        raise FileNotFoundError(f"No TensorFlow checkpoint shards for {prefix}")
+    per_file = {}
+    combined = hashlib.sha256()
+    for path in files:
+        digest = hashlib.sha256(path.read_bytes()).hexdigest()
+        per_file[path.name] = digest
+        combined.update(path.name.encode("utf-8"))
+        combined.update(bytes.fromhex(digest))
+    return combined.hexdigest(), per_file
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--checkpoint-dir", required=True)
     parser.add_argument("--checkpoint-prefix", default=None,
                         help="Optional prefix such as ckpt-500; otherwise use latest_checkpoint().")
+    parser.add_argument("--checkpoint-source", default="gs://gresearch/slot-attention/object-discovery/ckpt-500",
+                        help="Human-readable source/recipe label for provenance.")
+    parser.add_argument("--training-seed", type=int, default=0,
+                        help="Seed used to train this checkpoint (not the inference RNG seed).")
+    parser.add_argument("--inference-seed", type=int, default=0,
+                        help="Seed for stochastic slot initialization during prediction.")
+    parser.add_argument("--training-protocol", default=None,
+                        help="Optional JSON training protocol to embed in prediction provenance.")
+    parser.add_argument("--tf-intra-threads", type=int, default=4)
+    parser.add_argument("--tf-inter-threads", type=int, default=2)
     parser.add_argument("--model-py", required=True)
     parser.add_argument("--dataset", required=True)
     parser.add_argument("--start", type=int, required=True)
@@ -63,12 +89,15 @@ def main():
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
     try:
-        tf.config.threading.set_intra_op_parallelism_threads(4)
-        tf.config.threading.set_inter_op_parallelism_threads(2)
-        tf.random.set_seed(0)
+        if args.tf_intra_threads < 1 or args.tf_inter_threads < 1:
+            raise ValueError("TensorFlow thread counts must be positive")
+        tf.config.threading.set_intra_op_parallelism_threads(args.tf_intra_threads)
+        tf.config.threading.set_inter_op_parallelism_threads(args.tf_inter_threads)
+        tf.random.set_seed(args.inference_seed)
         model_py = Path(args.model_py).resolve()
         model = load_model_module(model_py)
         checkpoint_path = resolve_checkpoint(tf, args.checkpoint_dir, args.checkpoint_prefix)
+        checkpoint_sha256, checkpoint_files_sha256 = checkpoint_fingerprints(checkpoint_path)
         network = model.build_model((128, 128), 1, 11, 3, model_type="object_discovery")
         checkpoint = tf.train.Checkpoint(network=network)
         status = checkpoint.restore(checkpoint_path)
@@ -102,18 +131,28 @@ def main():
             background_slots=np.asarray(background_slots, dtype=np.int64),
             reconstruction_mse=np.asarray(reconstruction_mse, dtype=np.float32),
         )
+        training_protocol = load_training_protocol(args.training_protocol, args.training_seed)
         protocol = {
             "dataset": str(Path(args.dataset).resolve()),
             "image_ids": [start, end - 1],
             "count": args.count,
-            "seed": 0,
+            "seed": args.training_seed,
+            "inference_seed": args.inference_seed,
+            "tf_intra_threads": args.tf_intra_threads,
+            "tf_inter_threads": args.tf_inter_threads,
             "resolution": [128, 128],
             "batch_size": 1,
             "num_slots": 11,
             "iterations": 3,
             "checkpoint_dir": str(Path(args.checkpoint_dir).resolve()),
             "checkpoint_prefix": checkpoint_path,
-            "checkpoint_source": "gs://gresearch/slot-attention/object-discovery/ckpt-500",
+            "checkpoint_sha256": checkpoint_sha256,
+            "checkpoint_files_sha256": checkpoint_files_sha256,
+            "checkpoint_source": args.checkpoint_source,
+            "evaluation_description": evaluation_description({"checkpoint_source": args.checkpoint_source}),
+            "training_protocol_path": (str(Path(args.training_protocol).resolve())
+                                        if args.training_protocol else None),
+            "training_protocol": training_protocol,
             "model_py": str(model_py),
             "model_sha256": hashlib.sha256(model_py.read_bytes()).hexdigest(),
             "tensorflow_version": tf.__version__,

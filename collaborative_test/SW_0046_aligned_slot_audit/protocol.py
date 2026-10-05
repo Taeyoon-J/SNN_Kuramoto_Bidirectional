@@ -1,5 +1,28 @@
 """Pure NumPy helpers for the official Slot Attention transfer protocol."""
+import json
+from pathlib import Path
+
 import numpy as np
+
+
+def load_training_protocol(path, expected_seed):
+    """Load an optional checkpoint training record and verify its seed."""
+    if path is None:
+        return None
+    protocol = json.loads(Path(path).read_text(encoding="utf-8"))
+    return validate_training_protocol(protocol, expected_seed)
+
+
+def validate_training_protocol(protocol, expected_seed):
+    """Validate an already-loaded training record without filesystem access."""
+    if protocol.get("seed") != int(expected_seed):
+        raise ValueError("training protocol seed does not match checkpoint provenance")
+    return protocol
+
+
+def evaluation_description(protocol):
+    source = protocol.get("checkpoint_source", "unspecified")
+    return f"validation only; single checkpoint source={source}; not a three-seed mean"
 
 
 def validate_slice(start, count, total):
