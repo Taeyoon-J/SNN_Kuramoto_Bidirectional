@@ -1,0 +1,23 @@
+{
+  "experiment": "SW0061 label-free RGB patch feature pilot",
+  "comparison": "same checkpoint and fixed IDs1320-1351; T256/settle64; threshold .35",
+  "prediction_ground_truth_independent": true,
+  "metrics": {
+    "fg_ari": {
+      "autoencoder_gamma": 0.668520261873324,
+      "rgb_patch_gamma": 0.30802919653743704,
+      "delta": -0.360491065335887
+    },
+    "foreground_iou": {
+      "autoencoder_gamma": 0.6920255075800473,
+      "rgb_patch_gamma": 0.38308898619482334,
+      "delta": -0.308936521385224
+    },
+    "matched_object_iou": {
+      "autoencoder_gamma": 0.48987872185834525,
+      "rgb_patch_gamma": 0.19087116921150835,
+      "delta": -0.29900755264683687
+    }
+  },
+  "all_three_improved": false
+}
