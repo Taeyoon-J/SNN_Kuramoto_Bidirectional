@@ -1,0 +1,42 @@
+{
+  "pilot_slice": [
+    1320,
+    1351
+  ],
+  "readout": "spike CC synchrony threshold .35",
+  "baseline": {
+    "fg_ari": 0.7087568718226954,
+    "foreground_iou": 0.46810477545343715,
+    "matched_object_iou": 0.5098805140855838
+  },
+  "candidates": {
+    "w0p1": {
+      "metrics": {
+        "fg_ari": 0.7062003803074792,
+        "foreground_iou": 0.4640294344092494,
+        "matched_object_iou": 0.5136867399708791
+      },
+      "delta_vs_sw0072": {
+        "fg_ari": -0.002556491515216197,
+        "foreground_iou": -0.004075341044187775,
+        "matched_object_iou": 0.0038062258852953335
+      },
+      "all_three_strictly_improved": false
+    },
+    "w1x": {
+      "metrics": {
+        "fg_ari": 0.7075826634194311,
+        "foreground_iou": 0.4452721009528266,
+        "matched_object_iou": 0.507301892670188
+      },
+      "delta_vs_sw0072": {
+        "fg_ari": -0.0011742084032643207,
+        "foreground_iou": -0.02283267450061055,
+        "matched_object_iou": -0.0025786214153957765
+      },
+      "all_three_strictly_improved": false
+    }
+  },
+  "gate": "advance only if all three metrics strictly improve",
+  "validation_labels_used_for_training_or_weight_choice": false
+}

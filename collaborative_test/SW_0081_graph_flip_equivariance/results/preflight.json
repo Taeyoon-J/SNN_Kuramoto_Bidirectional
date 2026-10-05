@@ -1,0 +1,35 @@
+{
+  "source_core_sha256": "b90dc8e78aaacf7347952e2bb6fd2f2da1593679e7bc5c9430cc26888a38cd91",
+  "gamma_sha256": "7139439232d5717b66ffd1749572ab3faff9d0337d49c28b1602dce4d6c742aa",
+  "encoder_sha256": "9b9c9c59725f872084a6c9bfae1ebbd1b89de40d18ef4f8ab6b8ec014c2ab868",
+  "stats_sha256": "a9ec3281b9603021c37f7c346baa6cf62513c5ce7edde867ab7eddf24b18e127",
+  "trainer_sha256": "8c284988cc9ff8492c0d689f44e8b4a11be511ffe02e0701d83f13a704d383bf",
+  "equivariance_impl_sha256": "7159f953e9118ee9ec0c3c4481b81b57d477a21d061adbd542cbbfffe11f6407",
+  "code_dependencies_sha256": {
+    "snn_kuramoto_bidirectional/s2net_cls.py": "18313e5ee7358146703256e7e29d9846bfa60394feedba3237f2f7eac8791288",
+    "snn_kuramoto_bidirectional/graph_generator.py": "4f4c4d680a60822a5e4645eec3bbceb960846d4fac89e799076f6b4cf1bc6dde",
+    "snn_kuramoto_bidirectional/input_layer_generator.py": "83b7e83e6c05b849a7678113db43c2d85cb49b22f9f3d5102013dd4e47200db3",
+    "snn_kuramoto_bidirectional/gamma_initializer.py": "9b5f3e077c755738b1636b97ac9640321a5b7abf5ec85b9a12557209cf5ad50b",
+    "snn_kuramoto_bidirectional/loss_function.py": "6542d084f66c07101b75869709df9302db45e0dde87b6b5945d1790daa316543",
+    "snn_kuramoto_bidirectional/training/train_s2net_core.py": "6056ae4d98d36678ae680e868c6c40716c8b2380f6ab81437e60ce962e15efde"
+  },
+  "measured": {
+    "initial_raw_equivariance_mse": 0.00011066605657106265,
+    "binding_plus_spike_loss": 20.24876594543457,
+    "binding_gradient_norm": 30.257476806640625,
+    "raw_equivariance_gradient_norm": 0.0009226056281477213,
+    "proposed_weights_for_gradient_ratios": {
+      "weight_0p1x": 3279.5677680166946,
+      "weight_1x": 32795.67768016694
+    },
+    "equivariance_weight_used": 3279.5677680166946,
+    "weighted_equivariance_gradient_ratio": 0.10000000149011612,
+    "aligned_teacher_mse_after_flip": 0.00011066605657106265,
+    "loss_finite": true
+  },
+  "weights": {
+    "weight_0p1x": 3279.5677680166946,
+    "weight_1x": 32795.67768016694
+  },
+  "preflight_manifest": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0081_preflight_seed1/model/manifest.json"
+}

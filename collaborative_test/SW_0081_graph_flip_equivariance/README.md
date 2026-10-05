@@ -66,4 +66,20 @@ preflight measured raw flip-equivariance MSE `1.10666e-4`, binding/spike graph
 gradient norm `30.2575`, and raw equivariance gradient norm `9.22606e-4`.
 This fixes the 0.1x/1x arm weights at `3279.57` and `32795.68`. The update kept
 the encoder and every non-graph core tensor bitwise unchanged and changed the
-graph by `3.0041e-5`. Both five-epoch arms were launched on GPUs0/1.
+graph by `3.0041e-5`.
+
+Both five-epoch arms completed on GPUs0/1. Their fixed seed1 32-image pilot
+results are:
+
+| arm | FG-ARI | foreground IoU | matched-object IoU |
+|---|---:|---:|---:|
+| SW0072 baseline | .708757 | .468105 | .509881 |
+| equivariance 0.1x | .706200 | .464029 | .513687 |
+| equivariance 1x | .707583 | .445272 | .507302 |
+
+The 1x arm is rejected because all three metrics are lower. The 0.1x arm raises
+matched-object IoU by `.003806`, while FG-ARI and foreground IoU fall by
+`.002556` and `.004075`. It therefore does not pass the all-three pilot gate.
+Because the two losses are small and the 0.1x training history changes gradually,
+SW0082 will inspect the already specified epoch 1--5 trajectory once. No
+equivariance-weight sweep or full-320 promotion is justified by this result.
