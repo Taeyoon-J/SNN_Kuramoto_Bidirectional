@@ -18,6 +18,10 @@ theta/PLV를 직접 clustering한 점수는 진단에 사용할 수 있지만 �
 
 기존 Slot Attention checkpoint가 하나뿐이면 그 결과는 임시 참고값으로 명시한다. 단일 checkpoint를 반복 평가한 것을 독립적인 3-seed 학습 결과로 계산하지 않는다. 정식 목표 판정에는 비교 가능한 3-seed 결과가 필요하다.
 
+논문의 `CLEVR (with masks)`, 공개 Google checkpoint의 원본 CLEVR, 현재
+HDF5 matched-data 학습은 서로 다른 조건이다. 구체적인 provenance와 비교
+한계는 `SLOT_DATA_PROVENANCE.md`에 기록한다.
+
 ## 2. 작업 위치와 서버 연결
 
 - 로컬 코드 폴더: `ACMLab/patch_v2_sw`
