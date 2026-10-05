@@ -96,6 +96,7 @@ def main():
     p.add_argument("--core-lr", type=float, default=3e-4)
     p.add_argument("--encoder-lr", type=float, required=True)
     p.add_argument("--anchor-weight", type=float, default=0.0)
+    p.add_argument("--activity-anchor-weight", type=float, default=0.0)
     p.add_argument("--slot-reconstruction-weight", type=float, default=0.0)
     p.add_argument("--slot-num-slots", type=int, default=7)
     p.add_argument("--slot-temperature", type=float, default=0.3)
@@ -110,7 +111,10 @@ def main():
         raise ValueError("freeze-graph requires graph-checkpoint")
     if args.graph_checkpoint is not None and args.core_checkpoint is not None:
         raise ValueError("graph-checkpoint and core-checkpoint are mutually exclusive")
+    if args.activity_anchor_weight > 0 and not args.freeze_core:
+        raise ValueError("activity-anchor requires a frozen core")
     if (args.encoder_lr <= 0 or args.core_lr <= 0 or args.anchor_weight < 0
+            or args.activity_anchor_weight < 0
             or args.slot_reconstruction_weight < 0):
         raise ValueError("learning rates must be positive and loss weights nonnegative")
     if args.slot_num_slots < 2 or args.slot_temperature <= 0:
@@ -204,7 +208,8 @@ def main():
         core.train()
         encoder.train(epoch > args.warmup_epochs)
         totals = {"loss": 0.0, "primary": 0.0, "spike": 0.0,
-                  "anchor": 0.0, "slot_reconstruction": 0.0}
+                  "anchor": 0.0, "activity_anchor": 0.0,
+                  "slot_reconstruction": 0.0}
         seen = 0
         for image_batch, anchor_batch in loader:
             image_batch = image_batch.to(device)
@@ -214,6 +219,12 @@ def main():
             else:
                 gamma = gamma_from_images(encoder, patcher, image_batch,
                                           mean, std, clip)
+            if args.activity_anchor_weight > 0:
+                with torch.no_grad():
+                    _, _, baseline_core_out, _, _ = _forward_with_plv(
+                        core, anchor_batch, criterion, 32, "phase", "mean")
+                    baseline_activity = torch.sigmoid(
+                        baseline_core_out[..., 32:]).mean(dim=-1)
             groups, spikes, core_out, plv, theta = _forward_with_plv(
                 core, gamma, criterion, 32, "phase", "mean")
             values = _select_loss_signal(spikes, core_out, "sigmoid_membrane")
@@ -227,7 +238,12 @@ def main():
             spike_loss, _ = criterion(plv=component_plv, plv_settle=32)
             anchor_loss = (F.mse_loss(gamma, anchor_batch)
                            if epoch > args.warmup_epochs else gamma.new_zeros(()))
-            loss = primary + 5.0 * spike_loss + args.anchor_weight * anchor_loss
+            activity_anchor_loss = (
+                F.mse_loss(values[..., 32:].mean(dim=-1), baseline_activity)
+                if args.activity_anchor_weight > 0 else gamma.new_zeros(())
+            )
+            loss = (primary + 5.0 * spike_loss + args.anchor_weight * anchor_loss
+                    + args.activity_anchor_weight * activity_anchor_loss)
             if not torch.isfinite(loss):
                 raise FloatingPointError(f"nonfinite loss at epoch {epoch}")
             optimizer.zero_grad()
@@ -242,6 +258,7 @@ def main():
             totals["primary"] += float(primary.detach()) * batch
             totals["spike"] += float(spike_loss.detach()) * batch
             totals["anchor"] += float(anchor_loss.detach()) * batch
+            totals["activity_anchor"] += float(activity_anchor_loss.detach()) * batch
             totals["slot_reconstruction"] += float(
                 primary_parts.get("slot_reconstruction", gamma.new_zeros(())).detach()
             ) * batch
@@ -283,6 +300,7 @@ def main():
         "core_lr": args.core_lr, "encoder_lr": args.encoder_lr,
         "data_order": "global RNG after baseline-equivalent core initialization",
         "anchor_weight": args.anchor_weight,
+        "activity_anchor_weight": args.activity_anchor_weight,
         "slot_reconstruction_weight": args.slot_reconstruction_weight,
         "slot_num_slots": args.slot_num_slots,
         "slot_temperature": args.slot_temperature,

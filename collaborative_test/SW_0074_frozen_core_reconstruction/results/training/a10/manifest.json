@@ -1,0 +1,83 @@
+{
+  "experiment": "SW0068 joint native feature generator and core",
+  "seed": 1,
+  "graph_init_seed": 0,
+  "graph_checkpoint": null,
+  "freeze_graph": false,
+  "core_checkpoint": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0072_frozen_seed0_graph_s1_e10/core.pt",
+  "freeze_core": true,
+  "epochs": 5,
+  "warmup_epochs": 0,
+  "samples": 2500,
+  "training_ids": {
+    "first": 0,
+    "last": 3139,
+    "full_segments": [
+      [
+        0,
+        999
+      ],
+      [
+        1640,
+        3139
+      ]
+    ]
+  },
+  "core_lr": 0.0003,
+  "encoder_lr": 3e-05,
+  "data_order": "global RNG after baseline-equivalent core initialization",
+  "anchor_weight": 10.0,
+  "slot_reconstruction_weight": 1.0,
+  "slot_num_slots": 7,
+  "slot_temperature": 0.3,
+  "initial_gamma_max_abs_diff": 5.960464477539062e-07,
+  "final_gamma_rms_drift_n32": 0.02498583495616913,
+  "encoder_max_parameter_change": 0.00180106982588768,
+  "core_max_parameter_change": 0.0,
+  "graph_max_parameter_change": 0.0,
+  "source_encoder_sha256": "9b9c9c59725f872084a6c9bfae1ebbd1b89de40d18ef4f8ab6b8ec014c2ab868",
+  "stats_sha256": "a9ec3281b9603021c37f7c346baa6cf62513c5ce7edde867ab7eddf24b18e127",
+  "anchor_gamma_sha256": "7139439232d5717b66ffd1749572ab3faff9d0337d49c28b1602dce4d6c742aa",
+  "history": [
+    {
+      "epoch": 1,
+      "loss": 20.500173278808592,
+      "primary": 4.164223504257202,
+      "spike": 3.266999715042114,
+      "anchor": 9.512493036169904e-05,
+      "slot_reconstruction": 0.6371944909095764
+    },
+    {
+      "epoch": 2,
+      "loss": 20.484536791992188,
+      "primary": 4.162815873336792,
+      "spike": 3.2641645473480225,
+      "anchor": 8.982054248917847e-05,
+      "slot_reconstruction": 0.6372960515022278
+    },
+    {
+      "epoch": 3,
+      "loss": 20.46733369140625,
+      "primary": 4.149774606323242,
+      "spike": 3.262903977584839,
+      "anchor": 0.0003038998776115477,
+      "slot_reconstruction": 0.6344690330505371
+    },
+    {
+      "epoch": 4,
+      "loss": 20.45702403869629,
+      "primary": 4.134901392364502,
+      "spike": 3.263591231918335,
+      "anchor": 0.00041665669064968827,
+      "slot_reconstruction": 0.6341541387557983
+    },
+    {
+      "epoch": 5,
+      "loss": 20.43910088195801,
+      "primary": 4.12980580291748,
+      "spike": 3.2606130462646483,
+      "anchor": 0.0006229850430041552,
+      "slot_reconstruction": 0.634086579322815
+    }
+  ]
+}
