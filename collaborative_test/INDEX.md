@@ -29,6 +29,7 @@
 | PV2_0032 | completed | **ORACLE ceiling: true count + phase readout reaches 0.7338, below the 0.75 goal** | | | |
 | PV2_0033 | running | train the feature encoder alongside the core (`--encoder-lr`) | | | |
 | PV2_0034 | completed | **ORACLE features: this architecture reaches fg_ari 0.975; the encoder costs 0.27** | | | |
+| PV2_0035-36 | completed | **within-object consistency is worth +0.170 and alone reaches 0.8935; the margin adds +0.090** | | | |
 
 Three seeds on the test split, scored from spike masks. Peer experiments from
 `patch_v2_sw` use the `SW_` prefix and are reviewed under `peer_updates/`.
