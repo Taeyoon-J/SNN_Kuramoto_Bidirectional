@@ -31,6 +31,7 @@
 | PV2_0034 | completed | **ORACLE features: this architecture reaches fg_ari 0.975; the encoder costs 0.27** | | | |
 | PV2_0035-36 | completed | **within-object consistency is worth +0.170 and alone reaches 0.8935; the margin adds +0.090** | | | |
 | PV2_0037 | failed | DINO worse, encoder training a no-op, label-free clustering lowers fg_ari | | | |
+| PV2_0038 | failed | self-bootstrap from the model's own groups: +0.006, circular | | | |
 
 Three seeds on the test split, scored from spike masks. Peer experiments from
 `patch_v2_sw` use the `SW_` prefix and are reviewed under `peer_updates/`.
