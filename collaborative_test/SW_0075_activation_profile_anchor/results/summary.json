@@ -1,0 +1,38 @@
+{
+  "experiment": "SW0075 activity-profile anchored features",
+  "baseline_sw0072_seed1": {
+    "fg_ari": 0.7087568718226954,
+    "foreground_iou": 0.46810477545343715,
+    "matched_object_iou": 0.5098805140855838
+  },
+  "rows": {
+    "p1k": {
+      "metrics": {
+        "fg_ari": 0.6795761164252113,
+        "foreground_iou": 0.44108262634348555,
+        "matched_object_iou": 0.4997158651305459
+      },
+      "delta": {
+        "fg_ari": -0.029180755397484104,
+        "foreground_iou": -0.0270221491099516,
+        "matched_object_iou": -0.01016464895503788
+      },
+      "count_mae": 1.28125
+    },
+    "p10k": {
+      "metrics": {
+        "fg_ari": 0.7065757696397857,
+        "foreground_iou": 0.47769429856773343,
+        "matched_object_iou": 0.5006261467292205
+      },
+      "delta": {
+        "fg_ari": -0.0021811021829096777,
+        "foreground_iou": 0.009589523114296283,
+        "matched_object_iou": -0.009254367356363313
+      },
+      "count_mae": 1.34375
+    }
+  },
+  "advancing_arms": [],
+  "gate": "one arm must improve all three fixed seed1 metrics over SW0072"
+}

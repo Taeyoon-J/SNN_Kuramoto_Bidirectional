@@ -14,3 +14,22 @@ and `10000` make the measured drift contribute about `.14` and `1.4` loss units.
 An arm advances only if all three seed1 metrics exceed SW0072. No masks, counts,
 or validation labels enter training.
 
+## Result
+
+| seed1 pilot | FG-ARI | foreground IoU | matched-object IoU | count MAE |
+|---|---:|---:|---:|---:|
+| SW0072 baseline | 0.708757 | 0.468105 | 0.509881 | - |
+| activity anchor 1,000 | 0.679576 | 0.441083 | 0.499716 | 1.28125 |
+| activity anchor 10,000 | 0.706576 | 0.477694 | 0.500626 | 1.34375 |
+
+Neither arm passes the registered all-three gate. Weight 10,000 nearly preserves
+FG-ARI and improves foreground IoU by `0.009590`, but matched-object IoU falls by
+`0.009254`. Weight 1,000 lowers all three metrics. The frozen core and graph have
+exactly zero parameter change in both arms.
+
+The stronger anchor reduces gamma RMS drift to `0.005403`, so the negative result
+is not explained by a loose constraint. Matching time-averaged membrane activity
+preserves foreground extent better but does not preserve or improve object-wise
+binding. Stop this scalar activation-profile route and test preservation of the
+image-conditioned graph topology directly.
+

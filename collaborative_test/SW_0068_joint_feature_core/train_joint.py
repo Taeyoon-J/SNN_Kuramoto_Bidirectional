@@ -77,6 +77,25 @@ def gamma_from_images(encoder, patcher, images, mean, std, clip):
     return patcher(normalized)
 
 
+def compute_graph_output_anchor_loss(core, gamma, anchor_gamma):
+    """Match current image-conditioned adjacency to the frozen anchor-gamma adjacency."""
+    if getattr(core, "graph_generator", None) is None:
+        raise ValueError("graph-output anchor requires a learned graph generator")
+    with torch.no_grad():
+        reference = core.graph_generator(anchor_gamma)
+    current = core.graph_generator(gamma)
+    if current.shape != reference.shape:
+        raise ValueError(f"graph output shape mismatch: {tuple(current.shape)} vs {tuple(reference.shape)}")
+    return F.mse_loss(current, reference)
+
+
+def validate_graph_output_anchor(weight, freeze_core):
+    if not math.isfinite(weight) or weight < 0:
+        raise ValueError("graph-output anchor weight must be finite and nonnegative")
+    if weight > 0 and not freeze_core:
+        raise ValueError("graph-output anchor requires a frozen core")
+
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--dataset", required=True)
@@ -97,6 +116,8 @@ def main():
     p.add_argument("--encoder-lr", type=float, required=True)
     p.add_argument("--anchor-weight", type=float, default=0.0)
     p.add_argument("--activity-anchor-weight", type=float, default=0.0)
+    p.add_argument("--graph-output-anchor-weight", type=float, default=0.0,
+                   help="MSE anchor on frozen core ImageConditionedGraph output versus anchor-gamma graph.")
     p.add_argument("--slot-reconstruction-weight", type=float, default=0.0)
     p.add_argument("--slot-num-slots", type=int, default=7)
     p.add_argument("--slot-temperature", type=float, default=0.3)
@@ -111,10 +132,11 @@ def main():
         raise ValueError("freeze-graph requires graph-checkpoint")
     if args.graph_checkpoint is not None and args.core_checkpoint is not None:
         raise ValueError("graph-checkpoint and core-checkpoint are mutually exclusive")
-    if args.activity_anchor_weight > 0 and not args.freeze_core:
-        raise ValueError("activity-anchor requires a frozen core")
+    if (args.activity_anchor_weight > 0 or args.graph_output_anchor_weight > 0) and not args.freeze_core:
+        raise ValueError("activity/graph-output anchors require a frozen core")
+    validate_graph_output_anchor(args.graph_output_anchor_weight, args.freeze_core)
     if (args.encoder_lr <= 0 or args.core_lr <= 0 or args.anchor_weight < 0
-            or args.activity_anchor_weight < 0
+            or args.activity_anchor_weight < 0 or args.graph_output_anchor_weight < 0
             or args.slot_reconstruction_weight < 0):
         raise ValueError("learning rates must be positive and loss weights nonnegative")
     if args.slot_num_slots < 2 or args.slot_temperature <= 0:
@@ -209,6 +231,7 @@ def main():
         encoder.train(epoch > args.warmup_epochs)
         totals = {"loss": 0.0, "primary": 0.0, "spike": 0.0,
                   "anchor": 0.0, "activity_anchor": 0.0,
+                  "graph_output_anchor": 0.0,
                   "slot_reconstruction": 0.0}
         seen = 0
         for image_batch, anchor_batch in loader:
@@ -242,8 +265,17 @@ def main():
                 F.mse_loss(values[..., 32:].mean(dim=-1), baseline_activity)
                 if args.activity_anchor_weight > 0 else gamma.new_zeros(())
             )
+            if args.graph_output_anchor_weight > 0:
+                if core.graph_generator is None:
+                    raise RuntimeError("graph-output anchor requires learned graph mode")
+                graph_anchor_loss = compute_graph_output_anchor_loss(
+                    core, gamma, anchor_batch
+                )
+            else:
+                graph_anchor_loss = gamma.new_zeros(())
             loss = (primary + 5.0 * spike_loss + args.anchor_weight * anchor_loss
-                    + args.activity_anchor_weight * activity_anchor_loss)
+                    + args.activity_anchor_weight * activity_anchor_loss
+                    + args.graph_output_anchor_weight * graph_anchor_loss)
             if not torch.isfinite(loss):
                 raise FloatingPointError(f"nonfinite loss at epoch {epoch}")
             optimizer.zero_grad()
@@ -259,6 +291,7 @@ def main():
             totals["spike"] += float(spike_loss.detach()) * batch
             totals["anchor"] += float(anchor_loss.detach()) * batch
             totals["activity_anchor"] += float(activity_anchor_loss.detach()) * batch
+            totals["graph_output_anchor"] += float(graph_anchor_loss.detach()) * batch
             totals["slot_reconstruction"] += float(
                 primary_parts.get("slot_reconstruction", gamma.new_zeros(())).detach()
             ) * batch
@@ -292,6 +325,7 @@ def main():
         "seed": args.seed, "graph_init_seed": args.graph_init_seed,
         "graph_checkpoint": args.graph_checkpoint, "freeze_graph": args.freeze_graph,
         "core_checkpoint": args.core_checkpoint, "freeze_core": args.freeze_core,
+        "source_core_sha256": sha256(args.core_checkpoint) if args.core_checkpoint else None,
         "epochs": args.epochs, "warmup_epochs": args.warmup_epochs,
         "samples": len(ids),
         "training_ids": {"first": ids[0], "last": ids[-1],
@@ -301,6 +335,7 @@ def main():
         "data_order": "global RNG after baseline-equivalent core initialization",
         "anchor_weight": args.anchor_weight,
         "activity_anchor_weight": args.activity_anchor_weight,
+        "graph_output_anchor_weight": args.graph_output_anchor_weight,
         "slot_reconstruction_weight": args.slot_reconstruction_weight,
         "slot_num_slots": args.slot_num_slots,
         "slot_temperature": args.slot_temperature,
