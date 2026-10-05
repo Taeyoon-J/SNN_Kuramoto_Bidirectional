@@ -137,3 +137,5 @@
 - SW0060 preserved the per-component carrier and centered only the delayed mask. Static checks, six unit tests, and a real-asset smoke passed. The fixed 32-image pilot lowered all three metrics slightly, so this gate variant is rejected. Peer commits 084a2ef/96d74d6 instead identify input feature separation as the main bottleneck; see peer_updates/REVIEW_0006_20261005.md.
 
 - SW0061 tested the peer feature-bottleneck implication without labels by substituting RGB/chroma/edge patch gamma into the fixed checkpoint. It fell to .308029/.383089/.190871 and strongly under-counted, showing that the trained core does not accept an arbitrary feature basis. The next feature intervention must jointly train the encoder/core or adapt the core to the new basis.
+
+- SW0062 implements the peer-guided feature intervention: frozen DINOv2-small 16x16 patch tokens, an 8D PCA basis fitted only on training IDs0-999, and a freshly trained SNN/Kuramoto core. Feature extraction is label-free and running on CPU; a validated five-epoch seed0 direction pilot is queued after the existing SW0055/SW0057 GPU contract finishes.
