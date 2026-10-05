@@ -6,11 +6,24 @@ DIR="$ROOT/collaborative_test/SW_0055_unique_data_scale"
 GAMMA="$ROOT/data/SW_0055_unique_data_scale/gamma_train_2500.pt"
 MANIFEST="$ROOT/data/SW_0055_unique_data_scale/manifest.json"
 PY=/Data0/kevinswk/envs/snn/bin/python
-MARKER="$ROOT/data/SW_0055_unique_data_scale/TRAINING_PREFLIGHT_V1.txt"
+MARKER="$ROOT/data/SW_0055_unique_data_scale/TRAINING_PREFLIGHT_V2.txt"
 test -s "$GAMMA" -a -s "$MANIFEST" -a -x "$PY"
 GAMMA_SUM="$(sha256sum "$GAMMA" | awk '{print $1}')"
-CODE_SUM="$(sha256sum "$ROOT/snn_kuramoto_bidirectional/training/train_s2net_core.py" "$ROOT/snn_kuramoto_bidirectional/loss_function.py" "$DIR/run.sh" "$DIR/preflight_training.sh" | sha256sum | awk '{print $1}')"
-EXPECTED="SW0055_TRAINING_PREFLIGHT_V1 $GAMMA_SUM $CODE_SUM"
+CODE_FILES=(
+  "$ROOT/snn_kuramoto_bidirectional/s2net_cls.py"
+  "$ROOT/snn_kuramoto_bidirectional/graph_generator.py"
+  "$ROOT/snn_kuramoto_bidirectional/kuramoto_layer.py"
+  "$ROOT/snn_kuramoto_bidirectional/dendric_layer.py"
+  "$ROOT/snn_kuramoto_bidirectional/membrane_layer.py"
+  "$ROOT/snn_kuramoto_bidirectional/sinusoidal_gating.py"
+  "$ROOT/snn_kuramoto_bidirectional/hyperparameter.py"
+  "$ROOT/snn_kuramoto_bidirectional/loss_function.py"
+  "$ROOT/snn_kuramoto_bidirectional/training/train_s2net_core.py"
+  "$DIR/run.sh"
+  "$DIR/preflight_training.sh"
+)
+CODE_SUM="$(sha256sum "${CODE_FILES[@]}" | sha256sum | awk '{print $1}')"
+EXPECTED="SW0055_TRAINING_PREFLIGHT_V2 $GAMMA_SUM $CODE_SUM"
 if [[ -s "$MARKER" ]] && grep -Fxq "$EXPECTED" "$MARKER"; then echo "current SW0055 training preflight exists"; exit 0; fi
 PIDS="$(nvidia-smi --id="$GPU_ID" --query-compute-apps=pid --format=csv,noheader)"
 [[ ! "$PIDS" =~ [0-9] ]] || { echo "GPU $GPU_ID occupied" >&2; exit 2; }

@@ -34,7 +34,22 @@ absolute difference `0.0`. The full expanded asset then passed shape
 SHA-256 is `7139439232d5717b66ffd1749572ab3faff9d0337d49c28b1602dce4d6c742aa`;
 the versioned manifest is under `results/`. The matched-exposure runner's
 real-gamma one-update preflight passes and is bound to the gamma and
-training-code checksums. `launch_parallel.sh` refuses occupied GPUs and
-existing seed output directories before starting seeds 0/1/2, followed by
-fixed short and long aligned validation. Training is ready but remains
-unlaunched while the requested GPUs are occupied by another user.
+training-code checksums. The current preflight marker is V2; it intentionally
+invalidates V1 because the checksum now includes, in a fixed order, the S2Net,
+graph, Kuramoto, dendritic, membrane, gating, hyperparameter, loss, and training
+implementation files plus the run/preflight scripts.
+
+For the three-seed report, the primary endpoint is the aligned validation long
+window (T=1024, settle=512) at the fixed threshold 0.50. Report the mean across
+seeds 0/1/2 for FG-ARI, foreground IoU, and matched-object IoU. Threshold 0.35
+is a prespecified secondary endpoint. Do not select or describe a post-hoc
+best threshold. Short-window results are diagnostic only.
+
+Each seed output writes an exclusive `manifest.json` before training. It
+records the gamma and ordered code SHA-256 values, exact command arguments,
+recipe, git commit when available, training IDs, validation IDs, 25,000 image
+exposures, and 1,570 optimizer updates. Existing seed output or manifest paths
+are refused. `launch_parallel.sh` also rejects duplicate GPU IDs, checks all
+three devices for active compute processes, and refuses existing output
+directories before starting. No server run or evaluation was launched as part
+of this preparation.
