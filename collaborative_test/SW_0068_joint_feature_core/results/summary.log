@@ -1,0 +1,42 @@
+{
+  "experiment": "SW0068 joint feature/core stage1",
+  "baseline": {
+    "fg_ari": 0.6316519272381114,
+    "foreground_iou": 0.3852088450351232,
+    "matched_object_iou": 0.46168352926256573
+  },
+  "rows": {
+    "lr3e6": {
+      "metrics": {
+        "fg_ari": 0.6005796693235781,
+        "foreground_iou": 0.3531952494071135,
+        "matched_object_iou": 0.40805383314626253
+      },
+      "delta": {
+        "fg_ari": -0.031072257914533274,
+        "foreground_iou": -0.032013595628009706,
+        "matched_object_iou": -0.053629696116303194
+      },
+      "count_mae": 1.65625,
+      "predicted_count_mean": 5.0,
+      "predicted_foreground_fraction": 0.43603515625
+    },
+    "lr3e5": {
+      "metrics": {
+        "fg_ari": 0.615254255564667,
+        "foreground_iou": 0.35392686438901366,
+        "matched_object_iou": 0.4220736741361443
+      },
+      "delta": {
+        "fg_ari": -0.016397671673444414,
+        "foreground_iou": -0.03128198064610954,
+        "matched_object_iou": -0.039609855126421456
+      },
+      "count_mae": 1.6875,
+      "predicted_count_mean": 4.96875,
+      "predicted_foreground_fraction": 0.4364013671875
+    }
+  },
+  "advancing_arms": [],
+  "gate": "one arm must improve all three fixed seed1 metrics"
+}

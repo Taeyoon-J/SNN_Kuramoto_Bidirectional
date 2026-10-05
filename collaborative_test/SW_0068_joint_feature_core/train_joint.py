@@ -82,6 +82,8 @@ def main():
     p.add_argument("--output-dir", required=True)
     p.add_argument("--seed", type=int, required=True)
     p.add_argument("--graph-init-seed", type=int, default=0)
+    p.add_argument("--core-checkpoint", default=None)
+    p.add_argument("--freeze-core", action="store_true")
     p.add_argument("--epochs", type=int, default=10)
     p.add_argument("--warmup-epochs", type=int, default=2)
     p.add_argument("--batch-size", type=int, default=16)
@@ -93,6 +95,8 @@ def main():
     args = p.parse_args()
     if args.epochs < 1 or not 0 <= args.warmup_epochs < args.epochs:
         raise ValueError("require epochs >= 1 and 0 <= warmup < epochs")
+    if args.freeze_core and (args.core_checkpoint is None or args.warmup_epochs != 0):
+        raise ValueError("freeze-core requires a checkpoint and zero warmup epochs")
     if args.encoder_lr <= 0 or args.core_lr <= 0 or args.anchor_weight < 0:
         raise ValueError("learning rates must be positive and anchor weight nonnegative")
     out = Path(args.output_dir)
@@ -126,6 +130,13 @@ def main():
     hp = build_hparams()
     core = S2NetCore(hp, device=device).to(device)
     reset_graph_initialization(core, hp, device, args.graph_init_seed)
+    if args.core_checkpoint is not None:
+        core.load_state_dict(torch.load(args.core_checkpoint, map_location=device,
+                                        weights_only=True), strict=True)
+    initial_core = {key: value.detach().cpu().clone()
+                    for key, value in core.state_dict().items()}
+    if args.freeze_core:
+        core.requires_grad_(False)
     # The registered recipe has object_overlap_weight=0. Computing the legacy
     # maximal-clique classifier inside every training forward is therefore
     # unused and can become exponential on dense early-training affinities.
@@ -159,10 +170,10 @@ def main():
         plv_collapse_weight=1.0, plv_target_density=0.867,
         patch_grid_size=(16, 16),
     )
-    optimizer = torch.optim.Adam([
-        {"params": core.parameters(), "lr": args.core_lr},
-        {"params": encoder.parameters(), "lr": args.encoder_lr},
-    ])
+    groups = [{"params": encoder.parameters(), "lr": args.encoder_lr}]
+    if not args.freeze_core:
+        groups.insert(0, {"params": core.parameters(), "lr": args.core_lr})
+    optimizer = torch.optim.Adam(groups)
     history = []
     for epoch in range(1, args.epochs + 1):
         core.train()
@@ -194,8 +205,9 @@ def main():
                 raise FloatingPointError(f"nonfinite loss at epoch {epoch}")
             optimizer.zero_grad()
             loss.backward()
-            torch.nn.utils.clip_grad_norm_(
-                list(core.parameters()) + list(encoder.parameters()), 1.0)
+            trainable = [p for p in list(core.parameters()) + list(encoder.parameters())
+                         if p.requires_grad]
+            torch.nn.utils.clip_grad_norm_(trainable, 1.0)
             optimizer.step()
             batch = len(image_batch)
             seen += batch
@@ -216,11 +228,17 @@ def main():
         float((value.detach().cpu() - initial_encoder[key]).abs().max())
         for key, value in encoder.state_dict().items())
     gamma_drift = float((final_gamma - anchors[:32]).square().mean().sqrt())
+    core_change = max(
+        float((value.detach().cpu() - initial_core[key]).abs().max())
+        for key, value in core.state_dict().items())
     if encoder_change <= 0 or not math.isfinite(gamma_drift):
         raise AssertionError("joint path did not update the encoder finitely")
+    if args.freeze_core and core_change != 0.0:
+        raise AssertionError("frozen core changed")
     manifest = {
         "experiment": "SW0068 joint native feature generator and core",
         "seed": args.seed, "graph_init_seed": args.graph_init_seed,
+        "core_checkpoint": args.core_checkpoint, "freeze_core": args.freeze_core,
         "epochs": args.epochs, "warmup_epochs": args.warmup_epochs,
         "samples": len(ids),
         "training_ids": {"first": ids[0], "last": ids[-1],
@@ -232,6 +250,7 @@ def main():
         "initial_gamma_max_abs_diff": initial_max_diff,
         "final_gamma_rms_drift_n32": gamma_drift,
         "encoder_max_parameter_change": encoder_change,
+        "core_max_parameter_change": core_change,
         "source_encoder_sha256": sha256(args.encoder),
         "stats_sha256": sha256(args.stats),
         "anchor_gamma_sha256": sha256(args.anchor_gamma),

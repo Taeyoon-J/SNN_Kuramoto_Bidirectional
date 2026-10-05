@@ -1,0 +1,104 @@
+{
+  "experiment": "SW0068 joint native feature generator and core",
+  "seed": 1,
+  "graph_init_seed": 0,
+  "epochs": 10,
+  "warmup_epochs": 2,
+  "samples": 2500,
+  "training_ids": {
+    "first": 0,
+    "last": 3139,
+    "full_segments": [
+      [
+        0,
+        999
+      ],
+      [
+        1640,
+        3139
+      ]
+    ]
+  },
+  "core_lr": 0.0003,
+  "encoder_lr": 3e-05,
+  "data_order": "global RNG after baseline-equivalent core initialization",
+  "anchor_weight": 0.0,
+  "initial_gamma_max_abs_diff": 5.960464477539062e-07,
+  "final_gamma_rms_drift_n32": 0.08872054517269135,
+  "encoder_max_parameter_change": 0.006115417927503586,
+  "source_encoder_sha256": "9b9c9c59725f872084a6c9bfae1ebbd1b89de40d18ef4f8ab6b8ec014c2ab868",
+  "stats_sha256": "a9ec3281b9603021c37f7c346baa6cf62513c5ce7edde867ab7eddf24b18e127",
+  "anchor_gamma_sha256": "7139439232d5717b66ffd1749572ab3faff9d0337d49c28b1602dce4d6c742aa",
+  "history": [
+    {
+      "epoch": 1,
+      "loss": 23.741042721557616,
+      "primary": 4.550277101135254,
+      "spike": 3.838153139877319,
+      "anchor": 0.0
+    },
+    {
+      "epoch": 2,
+      "loss": 23.084678143310548,
+      "primary": 4.352431884002685,
+      "spike": 3.7464492374420164,
+      "anchor": 0.0
+    },
+    {
+      "epoch": 3,
+      "loss": 22.686263983154298,
+      "primary": 4.242193678283692,
+      "spike": 3.68881406211853,
+      "anchor": 0.0002557776825444955
+    },
+    {
+      "epoch": 4,
+      "loss": 22.522700106811524,
+      "primary": 4.188240386962891,
+      "spike": 3.6668919395446777,
+      "anchor": 0.0007193264180794358
+    },
+    {
+      "epoch": 5,
+      "loss": 22.38713782043457,
+      "primary": 4.170240769195557,
+      "spike": 3.643379413604736,
+      "anchor": 0.0010195958388969303
+    },
+    {
+      "epoch": 6,
+      "loss": 22.254652416992187,
+      "primary": 4.104134614562988,
+      "spike": 3.6301035499572754,
+      "anchor": 0.0018230200715363026
+    },
+    {
+      "epoch": 7,
+      "loss": 21.975004739379884,
+      "primary": 3.9955519859313964,
+      "spike": 3.595890542602539,
+      "anchor": 0.0029750898659229278
+    },
+    {
+      "epoch": 8,
+      "loss": 21.70094735107422,
+      "primary": 3.82552681350708,
+      "spike": 3.575084090042114,
+      "anchor": 0.004856756168603897
+    },
+    {
+      "epoch": 9,
+      "loss": 21.55526220703125,
+      "primary": 3.793155491256714,
+      "spike": 3.552421360015869,
+      "anchor": 0.005274749514460564
+    },
+    {
+      "epoch": 10,
+      "loss": 21.30600026245117,
+      "primary": 3.68869559173584,
+      "spike": 3.523460940551758,
+      "anchor": 0.006833368851244449
+    }
+  ]
+}

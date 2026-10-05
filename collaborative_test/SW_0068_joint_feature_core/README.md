@@ -24,3 +24,18 @@ generator changed the baseline shuffle order. The corrected `SW0068b` launch
 uses the same global RNG state reached after core construction as SW0066, so
 the warmup isolates the later encoder intervention. Corrected epoch1 loss is
 `23.7410427216`, matching SW0066's `23.74104272`.
+
+## Result
+
+Neither joint arm passes. Against SW0066 seed1
+`.6317/.3852/.4617`, LR `3e-6` scores `.6006/.3532/.4081` and LR
+`3e-5` scores `.6153/.3539/.4221`.
+
+A component swap localizes the loss. LR `3e-5` learned features in the frozen
+SW0066 core score `.6371/.3681/.4773`, improving FG-ARI and object IoU while
+trading off foreground IoU. The jointly trained core with native gamma scores
+`.6402/.3325/.4015`: grouping rises but both IoUs collapse. Feature diagnostics
+show only a small ratio change (`.22540 -> .22609`), so the main failure is
+harmful core co-adaptation rather than wholesale feature collapse. SW0069
+therefore freezes the good core and tunes only the encoder, with and without a
+strong gamma anchor.

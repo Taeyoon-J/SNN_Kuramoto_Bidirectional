@@ -40,6 +40,7 @@ def main():
     p.add_argument("--steps", type=int, default=256)
     p.add_argument("--settle", type=int, default=64)
     p.add_argument("--batch-size", type=int, default=4)
+    p.add_argument("--spike-threshold", type=float, default=0.35)
     p.add_argument("--device", default="cuda")
     args = p.parse_args()
     if args.global_start < 1320 or args.global_start + args.count > 1640:
@@ -70,7 +71,7 @@ def main():
             # The connected-component helper builds CPU bookkeeping tensors.
             # Keep its inputs on CPU; spectral affinities below are CPU too.
             cc_groups = spike_synchrony_components(
-                spikes.cpu(), synchrony_threshold=0.35, min_group_size=2,
+                spikes.cpu(), synchrony_threshold=args.spike_threshold, min_group_size=2,
                 settle=args.settle, components=component_spikes.cpu(),
                 background="largest_component")
             for bi, groups in enumerate(cc_groups):
@@ -112,7 +113,7 @@ def main():
                  "projection": "shared", "graph_spatial_decay": 0.35,
                  "geodesic_steps": 3, "kuramoto_backend": "factorized"},
         "readout": {"sigma": 1.5, "spectral_k": 10,
-                    "frozen_spike_cc_threshold": 0.35,
+                    "frozen_spike_cc_threshold": args.spike_threshold,
                     "prediction_uses_ground_truth": False,
                     "foreground_component_count_mean": float(np.mean(foreground_counts)),
                     "foreground_fraction_mean": float(np.mean(foreground_fractions))},

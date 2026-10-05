@@ -1,0 +1,35 @@
+{
+  "ids": [
+    1320,
+    1351
+  ],
+  "sweep": [
+    {
+      "affinity_mode": "spike",
+      "spatial_sigma": null,
+      "threshold": 0.35,
+      "target_foreground": null,
+      "predicted_foreground_fraction": 0.4090576171875,
+      "groups_per_image_mean": 5.375,
+      "empty_image_count": 0,
+      "targets": {
+        "our_hdf5": {
+          "metrics": {
+            "fg_ari": 0.6141489836628824,
+            "foreground_iou": 0.3789925478166908,
+            "matched_object_iou": 0.4585935991017107
+          },
+          "object_count": {
+            "exact_accuracy": 0.15625,
+            "mae": 1.59375,
+            "bias": -0.15625,
+            "within_one_accuracy": 0.625,
+            "predicted_mean": 5.375,
+            "target_mean": 5.53125
+          }
+        }
+      }
+    }
+  ],
+  "output": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0069_frozen_s1_anchor100/eval_n32.json"
+}
