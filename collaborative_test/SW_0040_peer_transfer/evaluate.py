@@ -44,25 +44,31 @@ def _count_metrics(predicted_counts, target_counts):
 
 def compact_sweep(rows):
     """Human-readable summary that preserves the per-target result structure."""
-    compact = [{
-        "affinity_mode": row.get("affinity_mode", "spike"),
-        "spatial_sigma": row.get("spatial_sigma"),
-        "threshold": row["synchrony_threshold"],
-        "target_foreground": row.get("target_foreground"),
-        "predicted_foreground_fraction": row.get("predicted_foreground_fraction"),
-        "groups_per_image_mean": row.get("predicted_object_count", {}).get("mean"),
-        "empty_image_count": row.get("predicted_object_count", {}).get("empty_image_count"),
-        "targets": {
+    compact = []
+    for row in rows:
+        item = {
+            "affinity_mode": row.get("affinity_mode", "spike"),
+            "spatial_sigma": row.get("spatial_sigma"),
+            "threshold": row["synchrony_threshold"],
+            "target_foreground": row.get("target_foreground"),
+            "predicted_foreground_fraction": row.get("predicted_foreground_fraction"),
+            "groups_per_image_mean": row.get("predicted_object_count", {}).get("mean"),
+            "empty_image_count": row.get("predicted_object_count", {}).get("empty_image_count"),
+            "targets": {
             name: {
                 "metrics": scored["metrics"],
                 "object_count": scored["object_count"],
             }
             for name, scored in row["scored_targets"].items()
-        },
-    } for row in rows]
-    for item, row in zip(compact, rows):
+            },
+        }
+        if "readout" in row:
+            item["readout"] = row["readout"]
+        if "rgb_border_distance_threshold" in row:
+            item["rgb_border_distance_threshold"] = row["rgb_border_distance_threshold"]
         if "spatial_permutation_seed" in row:
             item["spatial_permutation_seed"] = row["spatial_permutation_seed"]
+        compact.append(item)
     return compact
 
 
@@ -120,9 +126,9 @@ def main():
     parser.add_argument("--thresholds", type=float, nargs="+",
                         default=[0.05, 0.1, 0.15, 0.2, 0.25, 0.35, 0.5])
     parser.add_argument("--affinity-modes", nargs="+",
-                        choices=["spike", "spike_spatial", "spike_spatial_permuted", "spatial_only"],
+                        choices=["spike", "spike_binary", "spike_spatial", "spike_spatial_permuted", "spatial_only"],
                         default=["spike"],
-                        help="Optional spike-only, spatially weighted, permuted-spatial, and spatial-only controls.")
+                        help="Spike, per-component binary, spatial, permuted-spatial, or spatial-only affinity controls.")
     parser.add_argument("--spatial-sigmas", type=float, nargs="+", default=[float("inf")],
                         help="Gaussian patch-grid sigma values; use inf for the uniform kernel.")
     parser.add_argument("--spatial-permutation-seeds", type=int, nargs="+", default=[0],
@@ -140,6 +146,8 @@ def main():
               "a label-free threshold search to approach this coverage; the "
               "provided synchrony threshold is retained only as provenance."),
     )
+    parser.add_argument("--rgb-border-distance-thresholds", type=float, nargs="+", default=[],
+                        help="Optional GT-free whole-component veto using robust RGB color distance from border patches.")
     parser.add_argument("--phase-endpoint", action="store_true",
                         help="Score phase-PLV connected components as a diagnostic alongside spikes.")
     parser.add_argument("--dendritic-projection", choices=["shared", "per_region"], default="shared")
@@ -167,13 +175,18 @@ def main():
         raise ValueError("target foreground must lie strictly between 0 and 1")
     if args.target_foreground is not None and len(args.thresholds) != 1:
         raise ValueError("target foreground evaluation requires exactly one provenance threshold")
+    if any(not math.isfinite(x) or x <= 0 for x in args.rgb_border_distance_thresholds):
+        raise ValueError("RGB border distance thresholds must be finite and positive")
+    if args.rgb_border_distance_thresholds and any(
+            mode not in {"spike", "spike_binary"} for mode in args.affinity_modes):
+        raise ValueError("RGB border component filtering requires spike or spike_binary affinity")
     if not args.spatial_sigmas or any(x <= 0.0 or x != x for x in args.spatial_sigmas):
         raise ValueError("Spatial sigma values must be positive (or inf).")
     if not args.spatial_permutation_seeds or any(seed < 0 for seed in args.spatial_permutation_seeds):
         raise ValueError("Spatial permutation seeds must be non-negative integers.")
     affinity_runs = []
     for mode in args.affinity_modes:
-        sigmas = [None] if mode == "spike" else args.spatial_sigmas
+        sigmas = [None] if mode in {"spike", "spike_binary"} else args.spatial_sigmas
         for sigma in sigmas:
             seeds = args.spatial_permutation_seeds if mode == "spike_spatial_permuted" else [None]
             affinity_runs.extend((mode, sigma, seed) for seed in seeds)
@@ -188,6 +201,8 @@ def main():
             raise ValueError(f"Gamma manifest does not exist: {manifest_path}")
         gamma_manifest = json.loads(manifest_path.read_text())
     with h5py.File(args.dataset_path, "r") as dataset:
+        rgb_images = (torch.from_numpy(dataset["image"][ids]).permute(0, 3, 1, 2).contiguous()
+                      if args.rgb_border_distance_thresholds else None)
         target = clevr_mask_patch(torch.from_numpy(dataset["mask"][ids]), 8)["patch_labels"]
     targets = {"our_hdf5": target}
     target_provenance = {"our_hdf5": {"path": args.dataset_path, "ids": [ids[0], ids[-1]]}}
@@ -297,19 +312,19 @@ def main():
             affinity_mode=affinity_mode,
             spatial_permutation_seed=spatial_permutation_seed,
         )
-        prediction = spatial_components_to_patch_labels(groups, 16)
-        predicted_counts = [len(image_groups) for image_groups in groups]
-        scored_targets = {}
-        for target_name, target_labels in targets.items():
-            scores = evaluate_patch_masks(prediction, target_labels)
-            target_counts = [int(torch.unique(image[image != 0]).numel()) for image in target_labels]
-            scored_targets[target_name] = {
-                "metrics": {key: float(value) for key, value in scores["mean"].items()},
-                "valid_count": {key: int(value) for key, value in scores["valid_count"].items()},
-                "object_count": _count_metrics(predicted_counts, target_counts),
-                "target_foreground_fraction": float((target_labels != 0).float().mean()),
-                "per_image": {key: value.tolist() for key, value in scores["per_image"].items()},
-            }
+        prediction_candidates = [{"readout": "spike_connected_components", "groups": groups}]
+        if args.rgb_border_distance_thresholds:
+            from SW_0077_rgb_border_component_veto.rgb_filter import border_color_component_filter
+            for distance_threshold in args.rgb_border_distance_thresholds:
+                filtered, diagnostics = border_color_component_filter(
+                    rgb_images, groups, distance_threshold, grid_size=16
+                )
+                prediction_candidates.append({
+                    "readout": "spike_components_rgb_border_veto",
+                    "groups": filtered,
+                    "rgb_border_distance_threshold": float(distance_threshold),
+                    "rgb_diagnostics": diagnostics,
+                })
         phase_endpoint = None
         if args.phase_endpoint:
             phase_groups = phase_plv_components(phase, threshold, args.min_group_size)
@@ -333,23 +348,44 @@ def main():
                     torch.tensor(phase_counts, dtype=torch.float32).mean()),
                 "scored_targets": phase_scores,
             }
-        rows.append({
-            "affinity_mode": affinity_mode,
-            "spatial_sigma": ("inf" if spatial_sigma is not None and math.isinf(spatial_sigma)
-                              else spatial_sigma),
-            "synchrony_threshold": float(threshold),
-            "target_foreground": args.target_foreground,
-            "predicted_foreground_fraction": float((prediction != 0).float().mean()),
-            "predicted_object_count": {
-                "mean": float(torch.tensor(predicted_counts, dtype=torch.float32).mean()),
-                "per_image": predicted_counts,
-                "empty_image_count": int(sum(count == 0 for count in predicted_counts)),
-            },
-            "scored_targets": scored_targets,
-            "phase_endpoint": phase_endpoint,
-        })
-        if spatial_permutation_seed is not None:
-            rows[-1]["spatial_permutation_seed"] = int(spatial_permutation_seed)
+        for candidate in prediction_candidates:
+            candidate_groups = candidate["groups"]
+            prediction = spatial_components_to_patch_labels(candidate_groups, 16)
+            predicted_counts = [len(image_groups) for image_groups in candidate_groups]
+            scored_targets = {}
+            for target_name, target_labels in targets.items():
+                scores = evaluate_patch_masks(prediction, target_labels)
+                target_counts = [int(torch.unique(image[image != 0]).numel()) for image in target_labels]
+                scored_targets[target_name] = {
+                    "metrics": {key: float(value) for key, value in scores["mean"].items()},
+                    "valid_count": {key: int(value) for key, value in scores["valid_count"].items()},
+                    "object_count": _count_metrics(predicted_counts, target_counts),
+                    "target_foreground_fraction": float((target_labels != 0).float().mean()),
+                    "per_image": {key: value.tolist() for key, value in scores["per_image"].items()},
+                }
+            row = {
+                "affinity_mode": affinity_mode,
+                "spatial_sigma": ("inf" if spatial_sigma is not None and math.isinf(spatial_sigma)
+                                  else spatial_sigma),
+                "synchrony_threshold": float(threshold),
+                "target_foreground": args.target_foreground,
+                "predicted_foreground_fraction": float((prediction != 0).float().mean()),
+                "predicted_object_count": {
+                    "mean": float(torch.tensor(predicted_counts, dtype=torch.float32).mean()),
+                    "per_image": predicted_counts,
+                    "empty_image_count": int(sum(count == 0 for count in predicted_counts)),
+                },
+                "scored_targets": scored_targets,
+                "phase_endpoint": phase_endpoint if candidate["readout"] == "spike_connected_components" else None,
+            }
+            if candidate["readout"] != "spike_connected_components":
+                row["readout"] = candidate["readout"]
+            for key in ("rgb_border_distance_threshold", "rgb_diagnostics"):
+                if key in candidate:
+                    row[key] = candidate[key]
+            if spatial_permutation_seed is not None:
+                row["spatial_permutation_seed"] = int(spatial_permutation_seed)
+            rows.append(row)
 
     offdiag = ~torch.eye(phase.size(-1), dtype=torch.bool)
     report = {
@@ -384,7 +420,7 @@ def main():
             "synchrony_thresholds": args.thresholds,
             "target_foreground": args.target_foreground,
             "affinity_modes": args.affinity_modes,
-            "spatial_sigmas": [None if mode == "spike" else
+            "spatial_sigmas": [None if mode in {"spike", "spike_binary"} else
                                ["inf" if math.isinf(sigma) else sigma
                                 for sigma in args.spatial_sigmas]
                                 for mode in args.affinity_modes],
@@ -403,6 +439,15 @@ def main():
     }
     if "spike_spatial_permuted" in args.affinity_modes:
         report["spatial_permutation_seeds"] = [int(seed) for seed in args.spatial_permutation_seeds]
+    if args.rgb_border_distance_thresholds:
+        report["inference"]["rgb_border_distance_thresholds"] = args.rgb_border_distance_thresholds
+        report["inference"]["rgb_background_model"] = (
+            "per-image border-patch RGB median and 1.4826*MAD (scale floor 4/255 intensity levels)"
+        )
+    if "spike_binary" in args.affinity_modes:
+        report["inference"]["spike_binary_definition"] = (
+            "per-component crossing traces thresholded as components != 0 before the standard correlation product"
+        )
     output = Path(args.output_path)
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(report, indent=2))

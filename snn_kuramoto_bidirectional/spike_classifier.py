@@ -360,9 +360,10 @@ def spike_synchrony_affinity(activity, components=None, settle=0, eps=1e-8,
     """Build spike synchrony S, S*Gaussian, or Gaussian-only affinity."""
     if activity.dim() != 3:
         raise ValueError("activity must have shape [B, N, T].")
-    if affinity_mode not in {"spike", "spike_spatial", "spike_spatial_permuted", "spatial_only"}:
+    if affinity_mode not in {"spike", "spike_binary", "spike_spatial", "spike_spatial_permuted", "spatial_only"}:
         raise ValueError("Unknown affinity_mode.")
-    if affinity_mode != "spike" and spatial_sigma is None:
+    spatial_modes = {"spike_spatial", "spike_spatial_permuted", "spatial_only"}
+    if affinity_mode in spatial_modes and spatial_sigma is None:
         raise ValueError("spatial_sigma is required for spatial affinity modes.")
     if affinity_mode == "spike_spatial_permuted" and spatial_permutation_seed is None:
         raise ValueError("spatial_permutation_seed is required for permuted spatial affinity.")
@@ -378,7 +379,7 @@ def spike_synchrony_affinity(activity, components=None, settle=0, eps=1e-8,
         return (x @ x.transpose(-1, -2)).clamp(-1.0, 1.0)
 
     kernel = None
-    if affinity_mode != "spike":
+    if affinity_mode in spatial_modes:
         kernel = spatial_gaussian_kernel(
             activity.size(1), spatial_grid_size, spatial_sigma,
             device=activity.device, dtype=activity.dtype,
@@ -388,6 +389,10 @@ def spike_synchrony_affinity(activity, components=None, settle=0, eps=1e-8,
         kernel = permute_spatial_kernel(kernel, permutation)
     if affinity_mode == "spatial_only":
         return kernel.unsqueeze(0).expand(activity.size(0), -1, -1)
+    if affinity_mode == "spike_binary" and components is not None:
+        # Ablation control: retain only whether each component crossed its
+        # membrane threshold, then use the same per-component correlation rule.
+        components = (components != 0).to(dtype=activity.dtype)
     if components is None:
         similarity = correlate(activity)
     else:
@@ -470,9 +475,9 @@ def spike_synchrony_components(
         raise ValueError("activity must have shape [B, N, T].")
     if not 0.0 <= float(synchrony_threshold) <= 1.0:
         raise ValueError("synchrony_threshold must lie in [0, 1].")
-    if affinity_mode not in {"spike", "spike_spatial", "spike_spatial_permuted", "spatial_only"}:
+    if affinity_mode not in {"spike", "spike_binary", "spike_spatial", "spike_spatial_permuted", "spatial_only"}:
         raise ValueError("Unknown affinity_mode.")
-    if affinity_mode != "spike" and spatial_sigma is None:
+    if affinity_mode in {"spike_spatial", "spike_spatial_permuted", "spatial_only"} and spatial_sigma is None:
         raise ValueError("spatial_sigma is required for spatial affinity modes.")
 
     activity = activity.float()
