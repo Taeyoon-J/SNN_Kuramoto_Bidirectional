@@ -39,3 +39,10 @@ nohup bash collaborative_test/SW_0057_fixed_multireadout/wait_for_sw0055_and_eva
 ```
 
 It waits for `SW0055_unique2500_autolaunch/LAUNCH_COMPLETED` and verifies all three SW0055 seed checkpoints and base evaluations. It then runs seed 0 on GPU0 and seed 1 on GPU1 concurrently, with preflight followed by the full evaluation on each assigned GPU; only after both pass does it run seed2 on GPU0. Each preflight/evaluation phase checks its GPU immediately before invocation. It retries only an artifact-free start race where the GPU became occupied; any result/log or marker produced by a failed phase halts the scheduler and is retained for review. A single-instance lock protects the scheduler, stale locks are removed only when their recorded process is verifiably dead, and any existing/partial SW0057 outputs prevent restart. On success it validates and writes the three-seed JSON/Markdown summary plus a completion marker. GPUs 2 and 3 are never used.
+
+The evaluation completed. Spike CC reproduced the SW0055 primary mean at
+`.626965/.423564/.440859`. Membrane spatial spectral raised FG-ARI to `.738478`
+with lower seed spread, but foreground IoU/matched-object IoU were only
+`.222631/.368848`. Thus the membrane contains stable object-separation signal,
+while foreground/background assignment and object overlap are not preserved in
+that readout. The fixed result is in `results/sw0057_long_3seed.{json,md}`.

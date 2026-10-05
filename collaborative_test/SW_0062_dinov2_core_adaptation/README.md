@@ -19,3 +19,11 @@ images and original mixed phase plus component-spike loss. A one-update real
 asset preflight and a 32-image fixed short evaluation precede any longer or
 multi-seed run. If the direction is promising, it advances to the matched
 25-epoch three-seed contract.
+
+The direction pilot completed at `.612146/.182948/.363269`, below the native
+epoch25 reference `.668520/.692026/.489879`. A post-hoc feature diagnostic
+explained the failure: normalized DINO-PCA8 features had within/between object
+centroid ratio `1.018`, much worse than native gamma `0.225`. Full 384D output
+tokens measured `0.774` on 32 images, while last-layer attention keys measured
+`0.919`; neither provides the required CLEVR object consistency. The generic
+DINO direction is stopped before longer training. Reports are in `results/`.

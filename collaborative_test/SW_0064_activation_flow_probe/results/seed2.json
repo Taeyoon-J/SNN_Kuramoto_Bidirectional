@@ -1,0 +1,240 @@
+{
+  "experiment": "SW0064 layer/time activation-flow probe",
+  "seed": 2,
+  "checkpoint": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0055_unique2500_s2_e10_lr0p0003/core.pt",
+  "ids": [
+    1320,
+    1351
+  ],
+  "steps": 256,
+  "windows": {
+    "early": [
+      0,
+      64
+    ],
+    "middle": [
+      96,
+      160
+    ],
+    "late": [
+      192,
+      256
+    ]
+  },
+  "ground_truth_role": "diagnostic only after forward pass; never prediction input",
+  "pair_affinity": {
+    "dendritic_early": {
+      "same_foreground": 0.8216473532176244,
+      "different_foreground": 0.37614442606095383,
+      "foreground_background": 0.3127368981835663,
+      "object_margin": 0.44550292715667056,
+      "foreground_background_margin": 0.5089104550340581
+    },
+    "dendritic_late": {
+      "same_foreground": 0.7976862088270698,
+      "different_foreground": 0.3300537315701588,
+      "foreground_background": 0.3099780279495079,
+      "object_margin": 0.46763247725691093,
+      "foreground_background_margin": 0.48770818087756185
+    },
+    "dendritic_middle": {
+      "same_foreground": 0.8214842650817596,
+      "different_foreground": 0.3115962632829306,
+      "foreground_background": 0.30203395733396743,
+      "object_margin": 0.509888001798829,
+      "foreground_background_margin": 0.5194503077477922
+    },
+    "gamma": {
+      "same_foreground": 0.9906477775020323,
+      "different_foreground": 0.9546162985700292,
+      "foreground_background": 0.9498895226821603,
+      "object_margin": 0.03603147893200309,
+      "foreground_background_margin": 0.04075825481987194
+    },
+    "gate_early": {
+      "same_foreground": 0.9100013446664739,
+      "different_foreground": 0.5505633503656557,
+      "foreground_background": 0.5281132725270863,
+      "object_margin": 0.35943799430081813,
+      "foreground_background_margin": 0.3818880721393876
+    },
+    "gate_late": {
+      "same_foreground": 0.8940640058798931,
+      "different_foreground": 0.5187249406979871,
+      "foreground_background": 0.4821079534881317,
+      "object_margin": 0.37533906518190596,
+      "foreground_background_margin": 0.4119560523917614
+    },
+    "gate_middle": {
+      "same_foreground": 0.8769763604947005,
+      "different_foreground": 0.5511627778731465,
+      "foreground_background": 0.47189745342610206,
+      "object_margin": 0.325813582621554,
+      "foreground_background_margin": 0.40507890706859845
+    },
+    "graph": {
+      "same_foreground": 0.37140004633664486,
+      "different_foreground": 0.02177232145603698,
+      "foreground_background": 0.023371471783312486,
+      "object_margin": 0.3496277248806079,
+      "foreground_background_margin": 0.34802857455333236
+    },
+    "kuramoto_plv_early": {
+      "same_foreground": 0.8782495984320285,
+      "different_foreground": 0.374510608337815,
+      "foreground_background": 0.2764374715697626,
+      "object_margin": 0.5037389900942135,
+      "foreground_background_margin": 0.6018121268622659
+    },
+    "kuramoto_plv_late": {
+      "same_foreground": 0.8594016551732898,
+      "different_foreground": 0.3427072479304318,
+      "foreground_background": 0.25448206084329256,
+      "object_margin": 0.5166944072428581,
+      "foreground_background_margin": 0.6049195943299972
+    },
+    "kuramoto_plv_middle": {
+      "same_foreground": 0.8637044535451319,
+      "different_foreground": 0.34067712559902236,
+      "foreground_background": 0.24700186185747663,
+      "object_margin": 0.5230273279461095,
+      "foreground_background_margin": 0.6167025916876553
+    },
+    "membrane_early": {
+      "same_foreground": 0.8341606533247092,
+      "different_foreground": 0.3780860324102307,
+      "foreground_background": 0.3164344508570424,
+      "object_margin": 0.45607462091447853,
+      "foreground_background_margin": 0.5177262024676668
+    },
+    "membrane_late": {
+      "same_foreground": 0.7921321683791114,
+      "different_foreground": 0.3345730172540047,
+      "foreground_background": 0.30826123898974445,
+      "object_margin": 0.4575591511251067,
+      "foreground_background_margin": 0.48387092938936693
+    },
+    "membrane_middle": {
+      "same_foreground": 0.8114650220618121,
+      "different_foreground": 0.31671403675044174,
+      "foreground_background": 0.3038585873531966,
+      "object_margin": 0.4947509853113704,
+      "foreground_background_margin": 0.5076064347086156
+    },
+    "spike_early": {
+      "same_foreground": 0.9098592264882441,
+      "different_foreground": 0.5504823390442533,
+      "foreground_background": 0.5261538670291953,
+      "object_margin": 0.3593768874439909,
+      "foreground_background_margin": 0.3837053594590488
+    },
+    "spike_late": {
+      "same_foreground": 0.8909365449326225,
+      "different_foreground": 0.5167362149830017,
+      "foreground_background": 0.4803815499390042,
+      "object_margin": 0.3742003299496208,
+      "foreground_background_margin": 0.4105549949936183
+    },
+    "spike_middle": {
+      "same_foreground": 0.8736979756968328,
+      "different_foreground": 0.5500550891991107,
+      "foreground_background": 0.4701309793958316,
+      "object_margin": 0.3236428864977221,
+      "foreground_background_margin": 0.40356699630100124
+    }
+  },
+  "activity": {
+    "dendritic_early": {
+      "foreground": 0.6298744548222515,
+      "background": 0.591184017273434,
+      "foreground_minus_background": 0.03869043754881751
+    },
+    "dendritic_late": {
+      "foreground": 0.626871265966379,
+      "background": 0.6065333255062964,
+      "foreground_minus_background": 0.020337940460082637
+    },
+    "dendritic_middle": {
+      "foreground": 0.6272350308767976,
+      "background": 0.603003439152239,
+      "foreground_minus_background": 0.024231591724558577
+    },
+    "gate_early": {
+      "foreground": 0.4162064000444243,
+      "background": 0.48574688244166087,
+      "foreground_minus_background": -0.06954048239723659
+    },
+    "gate_late": {
+      "foreground": 0.4981174582003605,
+      "background": 0.4783142217895929,
+      "foreground_minus_background": 0.019803236410767644
+    },
+    "gate_middle": {
+      "foreground": 0.504168748384718,
+      "background": 0.5108351853946759,
+      "foreground_minus_background": -0.006666437009957837
+    },
+    "membrane_early": {
+      "foreground": 0.5963108446976321,
+      "background": 0.5526346772324104,
+      "foreground_minus_background": 0.04367616746522163
+    },
+    "membrane_late": {
+      "foreground": 0.5892276977378338,
+      "background": 0.5707078611012897,
+      "foreground_minus_background": 0.018519836636544107
+    },
+    "membrane_middle": {
+      "foreground": 0.5887165785306688,
+      "background": 0.5646134143145067,
+      "foreground_minus_background": 0.0241031642161621
+    },
+    "spike_early": {
+      "foreground": 0.41612715529642114,
+      "background": 0.48513273962001724,
+      "foreground_minus_background": -0.0690055843235961
+    },
+    "spike_late": {
+      "foreground": 0.497979596698653,
+      "background": 0.47795545617161744,
+      "foreground_minus_background": 0.02002414052703555
+    },
+    "spike_middle": {
+      "foreground": 0.5040639408957888,
+      "background": 0.51042187869522,
+      "foreground_minus_background": -0.006357937799431279
+    }
+  },
+  "late_stage_propagation": [
+    {
+      "from": "gamma",
+      "to": "graph",
+      "object_margin_delta": 0.3135962459486048
+    },
+    {
+      "from": "graph",
+      "to": "kuramoto_plv_late",
+      "object_margin_delta": 0.1670666823622502
+    },
+    {
+      "from": "kuramoto_plv_late",
+      "to": "gate_late",
+      "object_margin_delta": -0.14135534206095213
+    },
+    {
+      "from": "gate_late",
+      "to": "dendritic_late",
+      "object_margin_delta": 0.09229341207500497
+    },
+    {
+      "from": "dendritic_late",
+      "to": "membrane_late",
+      "object_margin_delta": -0.010073326131804228
+    },
+    {
+      "from": "membrane_late",
+      "to": "spike_late",
+      "object_margin_delta": -0.08335882117548588
+    }
+  ]
+}

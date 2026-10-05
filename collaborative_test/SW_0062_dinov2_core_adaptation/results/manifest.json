@@ -1,0 +1,45 @@
+{
+  "experiment": "SW0062 frozen DINOv2 patch features",
+  "model": "vit_small_patch14_dinov2.lvd142m",
+  "timm_version": "1.0.29",
+  "input_size": [
+    224,
+    224
+  ],
+  "patch_grid": [
+    16,
+    16
+  ],
+  "token_dim": 384,
+  "pca_dim": 8,
+  "pca_fit_ids": [
+    0,
+    999
+  ],
+  "train_ids": [
+    0,
+    999
+  ],
+  "validation_ids": [
+    1320,
+    1639
+  ],
+  "uses_masks_counts_or_labels": false,
+  "shapes": {
+    "train": [
+      1000,
+      8,
+      256
+    ],
+    "validation": [
+      320,
+      8,
+      256
+    ]
+  },
+  "sha256": {
+    "train": "b7a5de5c0c2c375be8e69b33d09b995743f0cbd15e24271b7e340f25ce70911c",
+    "validation": "d39a092aec5e268f9be42024a7809bf2cdffcdfeb8a0dcb2780c2c576b879e76",
+    "pca": "7d385010178cb46fb97057580feb06530d92717339c48686ac357d9bcf2a875a"
+  }
+}

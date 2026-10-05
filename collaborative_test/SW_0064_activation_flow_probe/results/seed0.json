@@ -1,0 +1,240 @@
+{
+  "experiment": "SW0064 layer/time activation-flow probe",
+  "seed": 0,
+  "checkpoint": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0055_unique2500_s0_e10_lr0p0003/core.pt",
+  "ids": [
+    1320,
+    1351
+  ],
+  "steps": 256,
+  "windows": {
+    "early": [
+      0,
+      64
+    ],
+    "middle": [
+      96,
+      160
+    ],
+    "late": [
+      192,
+      256
+    ]
+  },
+  "ground_truth_role": "diagnostic only after forward pass; never prediction input",
+  "pair_affinity": {
+    "dendritic_early": {
+      "same_foreground": 0.92289378331744,
+      "different_foreground": 0.34321888535024203,
+      "foreground_background": 0.39528019614279214,
+      "object_margin": 0.579674897967198,
+      "foreground_background_margin": 0.5276135871746479
+    },
+    "dendritic_late": {
+      "same_foreground": 0.9121893832658516,
+      "different_foreground": 0.31750534610947584,
+      "foreground_background": 0.36781952033020426,
+      "object_margin": 0.5946840371563757,
+      "foreground_background_margin": 0.5443698629356474
+    },
+    "dendritic_middle": {
+      "same_foreground": 0.9105908972552682,
+      "different_foreground": 0.3196298909905357,
+      "foreground_background": 0.40742550631668184,
+      "object_margin": 0.5909610062647326,
+      "foreground_background_margin": 0.5031653909385864
+    },
+    "gamma": {
+      "same_foreground": 0.9906477775020323,
+      "different_foreground": 0.9546162985700292,
+      "foreground_background": 0.9498895226821603,
+      "object_margin": 0.03603147893200309,
+      "foreground_background_margin": 0.04075825481987194
+    },
+    "gate_early": {
+      "same_foreground": 0.949551173291724,
+      "different_foreground": 0.5388189971117279,
+      "foreground_background": 0.6023663520387065,
+      "object_margin": 0.41073217617999613,
+      "foreground_background_margin": 0.34718482125301753
+    },
+    "gate_late": {
+      "same_foreground": 0.9469837091397261,
+      "different_foreground": 0.525010545164365,
+      "foreground_background": 0.5824706974712596,
+      "object_margin": 0.4219731639753611,
+      "foreground_background_margin": 0.3645130116684665
+    },
+    "gate_middle": {
+      "same_foreground": 0.9426997556395386,
+      "different_foreground": 0.5054858375929145,
+      "foreground_background": 0.6160159609937144,
+      "object_margin": 0.437213918046624,
+      "foreground_background_margin": 0.3266837946458242
+    },
+    "graph": {
+      "same_foreground": 0.06819160579740553,
+      "different_foreground": 0.0008777715700787859,
+      "foreground_background": 0.00042804802098036425,
+      "object_margin": 0.06731383422732674,
+      "foreground_background_margin": 0.06776355777642516
+    },
+    "kuramoto_plv_early": {
+      "same_foreground": 0.9177663599866339,
+      "different_foreground": 0.1084161014005899,
+      "foreground_background": 0.10575853811719461,
+      "object_margin": 0.809350258586044,
+      "foreground_background_margin": 0.8120078218694393
+    },
+    "kuramoto_plv_late": {
+      "same_foreground": 0.9091865024309029,
+      "different_foreground": 0.09244896666580135,
+      "foreground_background": 0.08539144398467868,
+      "object_margin": 0.8167375357651016,
+      "foreground_background_margin": 0.8237950584462242
+    },
+    "kuramoto_plv_middle": {
+      "same_foreground": 0.9086328015081759,
+      "different_foreground": 0.09307238503182381,
+      "foreground_background": 0.08516372384095092,
+      "object_margin": 0.8155604164763521,
+      "foreground_background_margin": 0.823469077667225
+    },
+    "membrane_early": {
+      "same_foreground": 0.9088393317752627,
+      "different_foreground": 0.33605317231256243,
+      "foreground_background": 0.3842517581517244,
+      "object_margin": 0.5727861594627002,
+      "foreground_background_margin": 0.5245875736235383
+    },
+    "membrane_late": {
+      "same_foreground": 0.9070578441076007,
+      "different_foreground": 0.3153483066664346,
+      "foreground_background": 0.36254899692953435,
+      "object_margin": 0.5917095374411661,
+      "foreground_background_margin": 0.5445088471780664
+    },
+    "membrane_middle": {
+      "same_foreground": 0.9053775239670616,
+      "different_foreground": 0.3184537862954729,
+      "foreground_background": 0.40197534581506905,
+      "object_margin": 0.5869237376715888,
+      "foreground_background_margin": 0.5034021781519926
+    },
+    "spike_early": {
+      "same_foreground": 0.949551173291724,
+      "different_foreground": 0.5388189971117279,
+      "foreground_background": 0.6023663520387065,
+      "object_margin": 0.41073217617999613,
+      "foreground_background_margin": 0.34718482125301753
+    },
+    "spike_late": {
+      "same_foreground": 0.9469837091397261,
+      "different_foreground": 0.525010545164365,
+      "foreground_background": 0.5824706974712596,
+      "object_margin": 0.4219731639753611,
+      "foreground_background_margin": 0.3645130116684665
+    },
+    "spike_middle": {
+      "same_foreground": 0.9426997556395386,
+      "different_foreground": 0.5054858375929145,
+      "foreground_background": 0.6160159609937144,
+      "object_margin": 0.437213918046624,
+      "foreground_background_margin": 0.3266837946458242
+    }
+  },
+  "activity": {
+    "dendritic_early": {
+      "foreground": 1.9766470009437747,
+      "background": 1.8588627546994418,
+      "foreground_minus_background": 0.11778424624433281
+    },
+    "dendritic_late": {
+      "foreground": 2.0828668570502797,
+      "background": 2.029160389670828,
+      "foreground_minus_background": 0.05370646737945162
+    },
+    "dendritic_middle": {
+      "foreground": 2.1260595968320546,
+      "background": 1.9626827780210363,
+      "foreground_minus_background": 0.1633768188110183
+    },
+    "gate_early": {
+      "foreground": 0.42691237931191883,
+      "background": 0.3548902605634998,
+      "foreground_minus_background": 0.07202211874841902
+    },
+    "gate_late": {
+      "foreground": 0.5010448352846368,
+      "background": 0.4632155985627131,
+      "foreground_minus_background": 0.03782923672192373
+    },
+    "gate_middle": {
+      "foreground": 0.5284329528004971,
+      "background": 0.42465183435843373,
+      "foreground_minus_background": 0.10378111844206334
+    },
+    "membrane_early": {
+      "foreground": 1.937777410611422,
+      "background": 1.8277501912733685,
+      "foreground_minus_background": 0.1100272193380536
+    },
+    "membrane_late": {
+      "foreground": 2.045383134431318,
+      "background": 1.9934149350109582,
+      "foreground_minus_background": 0.05196819942035957
+    },
+    "membrane_middle": {
+      "foreground": 2.086249888296422,
+      "background": 1.9305000276592705,
+      "foreground_minus_background": 0.15574986063715168
+    },
+    "spike_early": {
+      "foreground": 0.42691237931191883,
+      "background": 0.3548902605634998,
+      "foreground_minus_background": 0.07202211874841902
+    },
+    "spike_late": {
+      "foreground": 0.5010448352846368,
+      "background": 0.4632155985627131,
+      "foreground_minus_background": 0.03782923672192373
+    },
+    "spike_middle": {
+      "foreground": 0.5284329528004971,
+      "background": 0.42465183435843373,
+      "foreground_minus_background": 0.10378111844206334
+    }
+  },
+  "late_stage_propagation": [
+    {
+      "from": "gamma",
+      "to": "graph",
+      "object_margin_delta": 0.03128235529532365
+    },
+    {
+      "from": "graph",
+      "to": "kuramoto_plv_late",
+      "object_margin_delta": 0.7494237015377748
+    },
+    {
+      "from": "kuramoto_plv_late",
+      "to": "gate_late",
+      "object_margin_delta": -0.39476437178974044
+    },
+    {
+      "from": "gate_late",
+      "to": "dendritic_late",
+      "object_margin_delta": 0.17271087318101463
+    },
+    {
+      "from": "dendritic_late",
+      "to": "membrane_late",
+      "object_margin_delta": -0.0029744997152096886
+    },
+    {
+      "from": "membrane_late",
+      "to": "spike_late",
+      "object_margin_delta": -0.16973637346580495
+    }
+  ]
+}

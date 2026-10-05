@@ -86,3 +86,11 @@ checkpoint/code/gamma hashes, aligned IDs/counts and rollout windows, and
 reports long .50 as primary and long .35 as secondary against the fixed SW0053
 baselines. It refuses to overwrite the JSON/Markdown pair unless `--overwrite`
 is provided. It performs no threshold reselection.
+
+The three-seed run completed. At the primary long-window threshold `.50`, the
+mean changed from the SW0053 baseline `.562902/.381328/.356857` to
+`.626733/.423340/.440119` for FG-ARI/foreground IoU/matched-object IoU. All
+three means improved, by `.063831/.042012/.083262`. Seed FG-ARI values were
+`.817116/.614845/.448238`, so this is a real mean improvement with substantial
+initialization sensitivity. The validated summary is in
+`results/three_seed_summary.{json,md}`.

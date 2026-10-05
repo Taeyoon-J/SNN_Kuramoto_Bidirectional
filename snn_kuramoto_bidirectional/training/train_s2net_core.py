@@ -231,6 +231,30 @@ def _scale_primary_loss_parts(parts, weight):
     return scaled
 
 
+def reset_graph_initialization(core, hparams, device, graph_init_seed):
+    """Reset only the learned graph module from a deterministic model seed.
+
+    ``fork_rng`` preserves the caller's RNG state, so the run seed continues to
+    control every other module and the data order. Constructing the full
+    reference core reproduces the exact RNG consumption that originally
+    preceded graph-generator initialization.
+    """
+    if core.graph_generator is None:
+        raise ValueError("--graph-init-seed requires --graph-mode learned")
+    resolved = torch.device(device)
+    devices = []
+    if resolved.type == "cuda":
+        devices = [torch.cuda.current_device() if resolved.index is None else resolved.index]
+    with torch.random.fork_rng(devices=devices):
+        torch.manual_seed(int(graph_init_seed))
+        if resolved.type == "cuda":
+            torch.cuda.manual_seed_all(int(graph_init_seed))
+        reference = S2NetCore(hparams, device=device).to(device)
+    core.graph_generator.load_state_dict(reference.graph_generator.state_dict(), strict=True)
+    del reference
+    return core
+
+
 @torch.no_grad()
 def evaluate_s2net_core(core, dataloader, criterion=None, device=None, plv_settle=0):
     """Evaluate S2NetCore using its fixed SC and precomputed gamma sequences."""
@@ -487,6 +511,15 @@ def main():
     )
     parser.add_argument("--graph-top-k", type=int, default=32)
     parser.add_argument("--graph-hidden-dim", type=int, default=16)
+    parser.add_argument(
+        "--graph-init-seed",
+        type=int,
+        default=None,
+        help=(
+            "Initialize only the learned graph generator from this fixed model "
+            "seed while preserving --seed for all other modules and data order."
+        ),
+    )
     parser.add_argument("--graph-coupling-gain", type=float, default=8.0)
     parser.add_argument("--graph-temperature", type=float, default=0.1)
     parser.add_argument("--kuramoto-backend", choices=["pairwise", "factorized"],
@@ -794,6 +827,10 @@ def main():
     hparams.validate()
 
     core = S2NetCore(hparams, device=args.device)
+    if args.graph_init_seed is not None:
+        core = reset_graph_initialization(
+            core, hparams, args.device, args.graph_init_seed
+        )
     if float(args.edge_membrane_weight) != 0.0:
         if args.edge_image_hdf5 is None:
             raise ValueError("--edge-image-hdf5 is required when --edge-membrane-weight is nonzero")

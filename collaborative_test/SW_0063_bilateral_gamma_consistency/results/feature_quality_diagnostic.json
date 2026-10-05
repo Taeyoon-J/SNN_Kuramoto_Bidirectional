@@ -1,0 +1,23 @@
+{
+  "experiment": "SW0062 post-hoc feature-quality diagnostic",
+  "ids": [
+    1320,
+    1639
+  ],
+  "count": 320,
+  "ground_truth_role": "diagnostic only after label-free feature extraction; never training or prediction input",
+  "native_autoencoder_gamma": {
+    "within_centroid_distance": 0.07926130276393957,
+    "between_centroid_distance": 0.3516501456777445,
+    "within_between_ratio": 0.2253981798050366,
+    "same_segment_neighbor_cosine": 0.9970018040928956,
+    "cross_segment_neighbor_cosine": 0.9555113110068065
+  },
+  "dino_pca8_gamma": {
+    "within_centroid_distance": 0.07510687110151659,
+    "between_centroid_distance": 0.34248944388608704,
+    "within_between_ratio": 0.21929689350220485,
+    "same_segment_neighbor_cosine": 0.9976400293973077,
+    "cross_segment_neighbor_cosine": 0.9565471431683615
+  }
+}

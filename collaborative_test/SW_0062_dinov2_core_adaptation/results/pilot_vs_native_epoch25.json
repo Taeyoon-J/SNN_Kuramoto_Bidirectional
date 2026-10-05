@@ -1,0 +1,26 @@
+{
+  "experiment": "SW0062 DINOv2 core-adaptation direction pilot",
+  "comparison": "seed0; IDs1320-1351; T256/settle64; spike-CC threshold .35",
+  "candidate_epochs": 5,
+  "baseline_epochs": 25,
+  "prediction_ground_truth_independent": true,
+  "metrics": {
+    "fg_ari": {
+      "native_epoch25": 0.668520261873324,
+      "dino_epoch5": 0.6121459932831377,
+      "delta": -0.05637426859018635
+    },
+    "foreground_iou": {
+      "native_epoch25": 0.6920255075800473,
+      "dino_epoch5": 0.1829479384012998,
+      "delta": -0.5090775691787475
+    },
+    "matched_object_iou": {
+      "native_epoch25": 0.48987872185834525,
+      "dino_epoch5": 0.3632690918153434,
+      "delta": -0.12660963004300185
+    }
+  },
+  "all_three_above_native_epoch25": false,
+  "interpretation": "Direction pilot only; unequal epoch count prevents a final controlled claim."
+}
