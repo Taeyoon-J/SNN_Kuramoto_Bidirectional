@@ -150,6 +150,8 @@ def main():
                         help="Optional GT-free whole-component veto using robust RGB color distance from border patches.")
     parser.add_argument("--phase-endpoint", action="store_true",
                         help="Score phase-PLV connected components as a diagnostic alongside spikes.")
+    parser.add_argument("--event-diagnostics", action="store_true",
+                        help="Report GT-free component binary-event rate, always-on, constant-history and temporal-std diagnostics.")
     parser.add_argument("--dendritic-projection", choices=["shared", "per_region"], default="shared")
     parser.add_argument("--geodesic-steps", type=int, default=0)
     parser.add_argument("--geodesic-radius", type=float, default=1.5)
@@ -163,6 +165,10 @@ def main():
     parser.add_argument("--batch-size", type=int, default=8)
     parser.add_argument("--device", default="cuda")
     args = parser.parse_args()
+    reshape_binary_crossings = None
+    if args.event_diagnostics:
+        sys.path.insert(0, str(REPO_ROOT / "collaborative_test/SW_0083_threshold_recalibration"))
+        from event_diagnostics import reshape_binary_crossings
     import h5py
 
     if args.start < 1000 and args.start + args.count > 0:
@@ -278,21 +284,51 @@ def main():
         args.gate_mode,
     )
     model.membrane_layer.vth = float(args.membrane_vth)
-    spikes_rows, components_rows, phase_rows = [], [], []
-    with torch.no_grad():
-        for start in range(0, args.count, args.batch_size):
-            batch = gamma[start:start + args.batch_size].to(args.device)
-            _, spikes, _, theta = model(batch, return_core_out=True, return_theta=True)
-            spikes_rows.append(spikes.float().cpu())
-            component_activity = model.last_component_spikes
-            components_rows.append(
-                component_activity.float().cpu() if component_activity is not None else None
-            )
-            phase_rows.append(phase_locking_value(theta, settle=args.settle,
-                                                  combine="product").cpu())
+    spikes_rows, components_rows, phase_rows, event_rows = [], [], [], []
+    captured_binary_steps = []
+    def membrane_hook(module, inputs, output):
+        captured_binary_steps.append((output[0] > module.v_th).detach().cpu().numpy())
+    hook_handle = model.membrane_layer.register_forward_hook(membrane_hook) if args.event_diagnostics else None
+    try:
+        with torch.no_grad():
+            for start in range(0, args.count, args.batch_size):
+                batch = gamma[start:start + args.batch_size].to(args.device)
+                captured_binary_steps.clear()
+                _, spikes, _, theta = model(batch, return_core_out=True, return_theta=True)
+                spikes_rows.append(spikes.float().cpu())
+                component_activity = model.last_component_spikes
+                components_rows.append(
+                    component_activity.float().cpu() if component_activity is not None else None
+                )
+                if args.event_diagnostics:
+                    if component_activity is None:
+                        raise RuntimeError("event diagnostics require component dynamics")
+                    binary = reshape_binary_crossings(
+                        captured_binary_steps, len(batch), model.osc_dim,
+                        model.in_dim, args.steps)
+                    event_rows.append(binary)
+                phase_rows.append(phase_locking_value(theta, settle=args.settle,
+                                                      combine="product").cpu())
+    finally:
+        if hook_handle is not None:
+            hook_handle.remove()
     spikes = torch.cat(spikes_rows)
     components = torch.cat(components_rows) if components_rows[0] is not None else None
     phase = torch.cat(phase_rows)
+    event_diagnostics = None
+    if args.event_diagnostics:
+        import numpy as np
+        binary_events = np.concatenate(event_rows, axis=0)[..., args.settle:]
+        temporal_std = binary_events.astype(np.float32).std(axis=-1)
+        event_diagnostics = {
+            "binary_event_rate": float(binary_events.mean()),
+            "binary_always_on_fraction": float((binary_events.mean(axis=-1) == 1.0).mean()),
+            "binary_constant_history_fraction": float((temporal_std <= 1e-8).mean()),
+            "binary_temporal_std_mean": float(temporal_std.mean()),
+            "diagnostic_source": "membrane forward-hook (pre-threshold membrane > current v_th), after settle; no labels used",
+            "shape_after_settle": list(binary_events.shape),
+            "binary_values_only": bool(np.isin(binary_events, (False, True)).all()),
+        }
 
     rows = []
     for affinity_mode, spatial_sigma, spatial_permutation_seed in affinity_runs:
@@ -437,6 +473,8 @@ def main():
         "ground_truth_used_for_prediction": False,
         "sweep": rows,
     }
+    if event_diagnostics is not None:
+        report["event_diagnostics"] = event_diagnostics
     if "spike_spatial_permuted" in args.affinity_modes:
         report["spatial_permutation_seeds"] = [int(seed) for seed in args.spatial_permutation_seeds]
     if args.rgb_border_distance_thresholds:
