@@ -1,5 +1,6 @@
 import torch
 import sys
+import math
 from pathlib import Path
 from torch.utils.data import DataLoader, TensorDataset
 
@@ -52,6 +53,7 @@ def train_s2net_core(
     plv_source="phase",
     plv_combine="mean",
     spike_plv_weight=0.0,
+    primary_loss_weight=1.0,
     graph_teacher_weight=0.0,
     graph_teacher_temperature=0.1,
     graph_teacher_signal="membrane",
@@ -75,6 +77,8 @@ def train_s2net_core(
         core, loss_history
     """
     device = _resolve_device(device, core)
+    primary_loss_weight = _validate_loss_weight(primary_loss_weight, "primary_loss_weight")
+    spike_plv_weight = _validate_loss_weight(spike_plv_weight, "spike_plv_weight")
     core = core.to(device)
     criterion = criterion if criterion is not None else UnsupervisedS2NetLoss()
     optimizer = optimizer if optimizer is not None else torch.optim.Adam(core.parameters(), lr=lr)
@@ -112,6 +116,12 @@ def train_s2net_core(
                 plv_settle=int(plv_settle),
             )
 
+            primary_loss = loss
+            parts = _scale_primary_loss_parts(parts, primary_loss_weight)
+            loss = _scale_primary_loss(primary_loss, primary_loss_weight)
+            parts["primary_weighted_total"] = loss.detach()
+            parts["total"] = loss.detach()
+
             if float(spike_plv_weight) != 0.0:
                 spike_plv = _component_spike_synchrony(core, plv_settle)
                 if spike_plv is None:
@@ -120,8 +130,11 @@ def train_s2net_core(
                     plv=spike_plv,
                     plv_settle=int(plv_settle),
                 )
-                loss = loss + float(spike_plv_weight) * spike_loss
-                parts.update({f"spike_{name}": value for name, value in spike_parts.items()})
+                weighted_spike_loss = spike_plv_weight * spike_loss
+                loss = loss + weighted_spike_loss
+                parts.update({f"spike_{name}": value.detach()
+                              for name, value in spike_parts.items() if name != "total"})
+                parts["spike_weighted_total"] = weighted_spike_loss.detach()
 
             if float(graph_teacher_weight) != 0.0:
                 with torch.no_grad():
@@ -139,9 +152,10 @@ def train_s2net_core(
                     settle=int(plv_settle),
                     temperature=float(graph_teacher_temperature),
                 )
-                loss = loss + float(graph_teacher_weight) * teacher_loss
+                weighted_teacher_loss = float(graph_teacher_weight) * teacher_loss
+                loss = loss + weighted_teacher_loss
                 parts["graph_teacher_synchrony"] = teacher_loss.detach()
-                parts["total"] = loss.detach()
+                parts["graph_teacher_weighted"] = weighted_teacher_loss.detach()
 
             if float(edge_membrane_weight) != 0.0:
                 if not isinstance(batch, (tuple, list)) or len(batch) < 2:
@@ -151,9 +165,12 @@ def train_s2net_core(
                     core_out, images, edge_membrane_grid_size,
                     margin=float(edge_membrane_margin),
                 )
-                loss = loss + float(edge_membrane_weight) * edge_loss
+                weighted_edge_loss = float(edge_membrane_weight) * edge_loss
+                loss = loss + weighted_edge_loss
                 parts["edge_membrane_separation"] = edge_loss.detach()
-                parts["total"] = loss.detach()
+                parts["edge_membrane_weighted"] = weighted_edge_loss.detach()
+
+            parts["total"] = loss.detach()
 
             optimizer.zero_grad()
             loss.backward()
@@ -189,6 +206,29 @@ def train_s2net_core(
         save_s2net_core(core, save_path)
 
     return core, loss_history
+
+
+def _validate_loss_weight(value, name):
+    value = float(value)
+    if not math.isfinite(value) or value < 0.0:
+        raise ValueError(f"{name} must be finite and non-negative")
+    return value
+
+
+def _scale_primary_loss(loss, weight):
+    """Scale the full base criterion while leaving auxiliary terms independent."""
+    return loss * _validate_loss_weight(weight, "primary_loss_weight")
+
+
+def _scale_primary_loss_parts(parts, weight):
+    weight = _validate_loss_weight(weight, "primary_loss_weight")
+    scaled = {name: value.detach() * weight
+              for name, value in parts.items() if name != "total"}
+    scaled["primary_unscaled_total"] = parts["total"].detach()
+    scaled["primary_loss_weight"] = torch.as_tensor(weight, device=parts["total"].device,
+                                                    dtype=parts["total"].dtype)
+    scaled["total"] = parts["total"].detach() * weight
+    return scaled
 
 
 @torch.no_grad()
@@ -556,6 +596,11 @@ def main():
         ),
     )
     parser.add_argument(
+        "--primary-loss-weight", type=float, default=1.0,
+        help=("Scale the complete criterion loss before auxiliary losses are added. "
+              "Default 1.0 preserves the historical objective; 0 isolates auxiliary terms."),
+    )
+    parser.add_argument(
         "--membrane-vth",
         type=float,
         default=0.06,
@@ -652,6 +697,11 @@ def main():
     parser.add_argument("--checkpoint-epochs", type=int, nargs="*", default=[],
                         help="Epochs to checkpoint; requires --checkpoint-dir.")
     args = parser.parse_args()
+    try:
+        _validate_loss_weight(args.primary_loss_weight, "primary_loss_weight")
+        _validate_loss_weight(args.spike_plv_weight, "spike_plv_weight")
+    except ValueError as exc:
+        parser.error(str(exc))
     if args.checkpoint_epochs and args.checkpoint_dir is None:
         parser.error("--checkpoint-epochs requires --checkpoint-dir")
     if any(epoch <= 0 or epoch > args.epochs for epoch in args.checkpoint_epochs):
@@ -807,6 +857,7 @@ def main():
         plv_source=args.plv_source,
         plv_combine=args.plv_combine,
         spike_plv_weight=args.spike_plv_weight,
+        primary_loss_weight=args.primary_loss_weight,
         graph_teacher_weight=args.graph_teacher_weight,
         graph_teacher_temperature=args.graph_teacher_temperature,
         graph_teacher_signal=args.graph_teacher_signal,
