@@ -82,3 +82,14 @@ python -m pytest collaborative_test/SW_0056_matched_slot_2500/test_protocol.py -
 ```
 
 No training or evaluation was launched while preparing this experiment.
+
+## 2026-10-05 parallel execution update
+
+Seed0 was already live under the guarded CPU scheduler. At the user's explicit
+request to begin the matched-data comparison immediately, seeds1/2 were started
+concurrently after verifying 48 logical CPUs, more than 80 GiB available memory,
+and only two TensorFlow compute threads per run. This changes wall-clock
+concurrency only: every seed retains its own deterministic order, 2,500 unique
+images, ten exposures, 1,563 optimizer updates, checkpoint validation, and
+aligned 320-image scoring. `wait_parallel_summary.sh` independently waits for
+all three validated `COMPLETED` markers and then produces the exclusive summary.
