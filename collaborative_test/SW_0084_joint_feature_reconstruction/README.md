@@ -83,3 +83,14 @@ The summary reports all three fixed mask metrics and deltas for every arm and
 epoch. No validation label informs training or a per-image prediction choice.
 This is a seed1 experiment, not a multi-seed result. No preflight, training,
 or evaluation was launched while preparing the scripts.
+
+If all GPUs are occupied, register the durable evaluation queue instead. It
+waits without model interaction, never restarts training, resumes already
+completed evaluation JSONs, and writes a machine-readable queue state. It uses
+any idle GPU0--3 unless a `tkim1` GPU process exists, in which case it restricts
+itself to GPU0--1:
+
+```bash
+nohup bash collaborative_test/SW_0084_joint_feature_reconstruction/queue_evaluation.sh \
+  </dev/null >trained_models/SW0084_EVALUATION_QUEUE.log 2>&1 &
+```
