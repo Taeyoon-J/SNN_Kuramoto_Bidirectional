@@ -1,0 +1,78 @@
+{
+  "experiment": "SW0083 inference-only membrane threshold recalibration",
+  "fixed_ids": [
+    1320,
+    1351
+  ],
+  "steps": 256,
+  "settle": 64,
+  "readout": "spike connected components; synchrony threshold .35",
+  "thresholds": {
+    "v006": {
+      "membrane_vth": 0.06,
+      "fg_ari": 0.7087568718226954,
+      "foreground_iou": 0.46810477545343715,
+      "matched_object_iou": 0.5098805140855838,
+      "binary_event_rate": 1.0,
+      "binary_always_on_fraction": 1.0,
+      "binary_constant_history_fraction": 1.0,
+      "binary_temporal_std_mean": 0.0,
+      "metric_delta_vs_v006": {
+        "fg_ari": 0.0,
+        "foreground_iou": 0.0,
+        "matched_object_iou": 0.0
+      },
+      "all_three_metrics_improve_vs_v006": false
+    },
+    "v05": {
+      "membrane_vth": 0.5,
+      "fg_ari": 0.5952359606439612,
+      "foreground_iou": 0.3306309351646979,
+      "matched_object_iou": 0.48127847365766085,
+      "binary_event_rate": 0.9387907981872559,
+      "binary_always_on_fraction": 0.70184326171875,
+      "binary_constant_history_fraction": 0.703094482421875,
+      "binary_temporal_std_mean": 0.09943222999572754,
+      "metric_delta_vs_v006": {
+        "fg_ari": -0.1135209111787342,
+        "foreground_iou": -0.13747384028873927,
+        "matched_object_iou": -0.028602040427922915
+      },
+      "all_three_metrics_improve_vs_v006": false
+    },
+    "v10": {
+      "membrane_vth": 1.0,
+      "fg_ari": 0.01616768564304305,
+      "foreground_iou": 0.02937300520516237,
+      "matched_object_iou": 0.026014714597960394,
+      "binary_event_rate": 0.13603337605794272,
+      "binary_always_on_fraction": 0.0,
+      "binary_constant_history_fraction": 0.22967529296875,
+      "binary_temporal_std_mean": 0.28167814016342163,
+      "metric_delta_vs_v006": {
+        "fg_ari": -0.6925891861796524,
+        "foreground_iou": -0.43873177024827476,
+        "matched_object_iou": -0.48386579948762337
+      },
+      "all_three_metrics_improve_vs_v006": false
+    },
+    "v20": {
+      "membrane_vth": 2.0,
+      "fg_ari": 0.0,
+      "foreground_iou": 0.0,
+      "matched_object_iou": 0.0,
+      "binary_event_rate": 0.0,
+      "binary_always_on_fraction": 0.0,
+      "binary_constant_history_fraction": 1.0,
+      "binary_temporal_std_mean": 0.0,
+      "metric_delta_vs_v006": {
+        "fg_ari": -0.7087568718226954,
+        "foreground_iou": -0.46810477545343715,
+        "matched_object_iou": -0.5098805140855838
+      },
+      "all_three_metrics_improve_vs_v006": false
+    }
+  },
+  "prediction_used_validation_labels": false,
+  "interpretation": "thresholds are fixed globally per run; no per-image adaptive thresholding"
+}

@@ -42,4 +42,25 @@ python collaborative_test/SW_0083_threshold_recalibration/summarize.py \
 The table reports fixed-readout FG-ARI, foreground IoU, matched-object IoU,
 and binary event diagnostics relative to vth `.06`. It is a seed1 32-image
 pilot and does not select a threshold for deployment or retraining. No GPU
-evaluation has been launched for SW0083.
+evaluation uses a validation-adaptive threshold.
+
+## Result
+
+Server syntax checks, four focused unit tests, and a real one-image checkpoint
+smoke passed before the fixed sweep. The smoke caught and corrected the hook's
+actual `[batch*components, regions]` layout before the registered results were
+created.
+
+| vth | binary event rate | always on | FG-ARI | foreground IoU | matched-object IoU |
+|---:|---:|---:|---:|---:|---:|
+| .06 | 1.000000 | 1.000000 | .708757 | .468105 | .509881 |
+| .5 | .938791 | .701843 | .595236 | .330631 | .481278 |
+| 1.0 | .136033 | 0 | .016168 | .029373 | .026015 |
+| 2.0 | 0 | 0 | 0 | 0 | 0 |
+
+Raising vth to `.5` restores some temporal variation but lowers all three
+metrics. At `1.0` the readout nearly collapses, and at `2.0` no crossing remains.
+Thus SW0072's useful synchrony is carried primarily by continuous gate amplitude
+under this configuration; inference-time threshold recalibration cannot recover
+an additional binary-timing signal. Stop this direction without a finer sweep or
+full-320 promotion.
