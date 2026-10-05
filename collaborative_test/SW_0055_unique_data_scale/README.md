@@ -49,23 +49,28 @@ Each seed output writes an exclusive `manifest.json` before training. It
 records the gamma and ordered code SHA-256 values, exact command arguments,
 recipe, git commit when available, training IDs, validation IDs, 25,000 image
 exposures, and 1,570 optimizer updates. Existing seed output or manifest paths
-are refused. `launch_parallel.sh` also rejects duplicate GPU IDs, checks all
-three devices for active compute processes, and refuses existing output
-directories before starting. No server run or evaluation was launched as part
-of this preparation.
+are refused. The scheduler below uses only GPUs 0 and 1, checks occupancy
+before and after preflight, runs seeds 0 and 1 concurrently, then runs seed 2
+on GPU 0 after both first seeds complete. Existing seed outputs and partial
+state are refused rather than restarted. No server run or evaluation was
+launched as part of this preparation.
 
 To wait for an available GPU and run the SW0054 gate-invariant preflight plus
-its 32-image short pilot before launching SW0055 on GPUs 1/2/3, use:
+its 32-image short pilot before launching SW0055 on GPUs 0/1, use:
 
 ```bash
 bash collaborative_test/SW_0055_unique_data_scale/wait_for_idle_and_launch.sh
 ```
 
-The wrapper polls GPUs 1/2/3 every 30 seconds, takes a single-instance lock,
-logs timestamps, validates and reuses an existing successful SW0054 pilot, and
-does not retry a pilot that leaves a failed evaluator artifact. It refuses
-existing SW0055 seed outputs and writes a completion marker after successful
-launch. Inspect its log and marker before any later restart.
+The wrapper polls GPUs 0/1 every 30 seconds, takes a single-instance lock,
+logs timestamps and worker PIDs, validates and reuses an existing successful
+SW0054 pilot, and does not retry a pilot that leaves a failed evaluator
+artifact. It refuses existing SW0055 seed outputs and partial scheduler state.
+It writes the overall completion marker only after every seed has successful
+short/long evaluation artifacts. A verified dead wrapper PID permits safe
+stale-lock cleanup; a live or ambiguous PID blocks a second instance. The old
+`launch_parallel.sh` entry point is deprecated and forwards to this scheduler.
+Inspect its log, PIDs, phase markers, and outputs before any manual recovery.
 
 Once seed0/1/2 short and long validation JSON files exist, create the fixed
 threshold three-seed JSON/Markdown summary with:
