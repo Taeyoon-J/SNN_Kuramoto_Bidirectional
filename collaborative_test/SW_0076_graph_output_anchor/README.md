@@ -50,3 +50,22 @@ smoke changed the encoder while core and graph parameters remained exactly
 fixed. The two arms were launched on GPUs 0/1. Advance only if a candidate
 improves all three metrics over the SW0072 seed1 checkpoint
 `.70876/.46810/.50988` under the same 32-image short pilot.
+
+## Result
+
+| seed1 short pilot | FG-ARI | foreground IoU | matched-object IoU | count MAE |
+|---|---:|---:|---:|---:|
+| SW0072 baseline | 0.708757 | 0.468105 | 0.509881 | - |
+| graph anchor 1,000 | 0.680963 | 0.419769 | 0.500319 | 1.21875 |
+| graph anchor 10,000 | 0.667527 | 0.442960 | 0.505828 | 1.46875 |
+
+Neither arm advances. The 1,000 arm ends at graph-anchor MSE `1.05901e-5`
+and the 10,000 arm at `1.62804e-6`; stronger graph preservation reduces graph
+drift but does not recover any metric. Core and graph parameter changes are
+exactly zero in both runs.
+
+Together with SW0074 and SW0075, this closes the local-anchor sequence: raw
+gamma, mean downstream activation, and generated adjacency constraints all fail
+to turn reconstruction-driven encoder changes into an all-metric improvement.
+Do not refine these weights. Preserve the SW0072 activation path and address its
+foreground/count readout bottleneck directly.

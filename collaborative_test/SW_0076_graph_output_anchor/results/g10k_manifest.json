@@ -1,0 +1,96 @@
+{
+  "experiment": "SW0068 joint native feature generator and core",
+  "seed": 1,
+  "graph_init_seed": 0,
+  "graph_checkpoint": null,
+  "freeze_graph": false,
+  "core_checkpoint": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0072_frozen_seed0_graph_s1_e10/core.pt",
+  "freeze_core": true,
+  "source_core_sha256": "b90dc8e78aaacf7347952e2bb6fd2f2da1593679e7bc5c9430cc26888a38cd91",
+  "epochs": 5,
+  "warmup_epochs": 0,
+  "samples": 2500,
+  "training_ids": {
+    "first": 0,
+    "last": 3139,
+    "full_segments": [
+      [
+        0,
+        999
+      ],
+      [
+        1640,
+        3139
+      ]
+    ]
+  },
+  "core_lr": 0.0003,
+  "encoder_lr": 3e-05,
+  "data_order": "global RNG after baseline-equivalent core initialization",
+  "anchor_weight": 0.0,
+  "activity_anchor_weight": 0.0,
+  "graph_output_anchor_weight": 10000.0,
+  "slot_reconstruction_weight": 1.0,
+  "slot_num_slots": 7,
+  "slot_temperature": 0.3,
+  "initial_gamma_max_abs_diff": 5.960464477539062e-07,
+  "final_gamma_rms_drift_n32": 0.016157343983650208,
+  "encoder_max_parameter_change": 0.0017017703503370285,
+  "core_max_parameter_change": 0.0,
+  "graph_max_parameter_change": 0.0,
+  "source_encoder_sha256": "9b9c9c59725f872084a6c9bfae1ebbd1b89de40d18ef4f8ab6b8ec014c2ab868",
+  "stats_sha256": "a9ec3281b9603021c37f7c346baa6cf62513c5ce7edde867ab7eddf24b18e127",
+  "anchor_gamma_sha256": "7139439232d5717b66ffd1749572ab3faff9d0337d49c28b1602dce4d6c742aa",
+  "history": [
+    {
+      "epoch": 1,
+      "loss": 20.49436272277832,
+      "primary": 4.167455192565918,
+      "spike": 3.2644038036346434,
+      "anchor": 1.8948864738986545e-05,
+      "activity_anchor": 0.0,
+      "graph_output_anchor": 4.888603449715968e-07,
+      "slot_reconstruction": 0.6379597055435181
+    },
+    {
+      "epoch": 2,
+      "loss": 20.48877671203613,
+      "primary": 4.160128387069702,
+      "spike": 3.2638292724609377,
+      "anchor": 4.683129218174145e-05,
+      "activity_anchor": 0.0,
+      "graph_output_anchor": 9.502066901859507e-07,
+      "slot_reconstruction": 0.6373939521789551
+    },
+    {
+      "epoch": 3,
+      "loss": 20.479608486938478,
+      "primary": 4.147577898406983,
+      "spike": 3.2635777179718017,
+      "anchor": 0.00010891868802718818,
+      "activity_anchor": 0.0,
+      "graph_output_anchor": 1.414203065996844e-06,
+      "slot_reconstruction": 0.635325899887085
+    },
+    {
+      "epoch": 4,
+      "loss": 20.466869955444334,
+      "primary": 4.135210083770752,
+      "spike": 3.263580989074707,
+      "anchor": 0.00019446312938816844,
+      "activity_anchor": 0.0,
+      "graph_output_anchor": 1.37549293358461e-06,
+      "slot_reconstruction": 0.6344414360046386
+    },
+    {
+      "epoch": 5,
+      "loss": 20.457940365600585,
+      "primary": 4.133690364837647,
+      "spike": 3.2615939151763915,
+      "anchor": 0.00028690181216225026,
+      "activity_anchor": 0.0,
+      "graph_output_anchor": 1.628042260017537e-06,
+      "slot_reconstruction": 0.634606567287445
+    }
+  ]
+}

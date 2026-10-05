@@ -1,0 +1,38 @@
+{
+  "experiment": "SW0076 graph-output anchored features",
+  "baseline_sw0072_seed1": {
+    "fg_ari": 0.7087568718226954,
+    "foreground_iou": 0.46810477545343715,
+    "matched_object_iou": 0.5098805140855838
+  },
+  "rows": {
+    "g1k": {
+      "metrics": {
+        "fg_ari": 0.680962867483104,
+        "foreground_iou": 0.419768713886866,
+        "matched_object_iou": 0.5003188538957988
+      },
+      "delta": {
+        "fg_ari": -0.02779400433959145,
+        "foreground_iou": -0.048336061566571165,
+        "matched_object_iou": -0.009561660189784993
+      },
+      "count_mae": 1.21875
+    },
+    "g10k": {
+      "metrics": {
+        "fg_ari": 0.6675272417520983,
+        "foreground_iou": 0.44296025336562833,
+        "matched_object_iou": 0.5058275363362771
+      },
+      "delta": {
+        "fg_ari": -0.0412296300705971,
+        "foreground_iou": -0.025144522087808818,
+        "matched_object_iou": -0.004052977749306685
+      },
+      "count_mae": 1.46875
+    }
+  },
+  "advancing_arms": [],
+  "gate": "one arm must improve all three fixed seed1 metrics over SW0072"
+}
