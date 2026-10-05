@@ -43,4 +43,25 @@ and deltas from baseline. An epoch advances only if all three deltas are
 strictly positive; the summary does not choose a threshold or alter training.
 Training opens RGB images and cached gamma only, never masks or object counts.
 Scoring labels are used only after each checkpoint's predictions are formed.
-No GPU preflight, training, or evaluation has been launched for SW0082.
+
+## Result
+
+Server syntax checks, four focused unit tests, and the immutable SW0081
+preflight validator passed. Training completed 785 updates on GPU0. The encoder
+and every non-graph core tensor stayed bitwise unchanged; the graph maximum
+absolute change was `.00790281`. Epoch 5 matched the saved final checkpoint
+bitwise and reproduced the independent SW0081 0.1x evaluation exactly.
+
+| checkpoint | FG-ARI | foreground IoU | matched-object IoU |
+|---|---:|---:|---:|
+| SW0072 baseline | .708757 | .468105 | .509881 |
+| epoch 1 | .699289 | .463458 | .504113 |
+| epoch 2 | .697220 | .467795 | .507192 |
+| epoch 3 | .686575 | .465248 | .507033 |
+| epoch 4 | .682034 | .463918 | .501284 |
+| epoch 5 | .706200 | .464029 | .513687 |
+
+No epoch improves all three metrics. Epoch 2 comes closest on foreground IoU
+but remains below baseline on every metric, and epoch 5 improves only
+matched-object IoU. Horizontal-flip graph equivariance is therefore stopped:
+there is no further weight or epoch sweep and no full-320 promotion.

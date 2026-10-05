@@ -1,0 +1,87 @@
+{
+  "baseline": {
+    "fg_ari": 0.7087568718226954,
+    "foreground_iou": 0.46810477545343715,
+    "matched_object_iou": 0.5098805140855838
+  },
+  "sw0081_reference": {
+    "fg_ari": 0.7062003803074792,
+    "foreground_iou": 0.4640294344092494,
+    "matched_object_iou": 0.5136867399708791
+  },
+  "epoch5_delta_vs_sw0081": {
+    "fg_ari": 0.0,
+    "foreground_iou": 0.0,
+    "matched_object_iou": 0.0
+  },
+  "epochs": {
+    "1": {
+      "metrics": {
+        "fg_ari": 0.6992886926960046,
+        "foreground_iou": 0.4634583440603139,
+        "matched_object_iou": 0.5041127374391066
+      },
+      "delta_vs_sw0072": {
+        "fg_ari": -0.009468179126690845,
+        "foreground_iou": -0.004646431393123263,
+        "matched_object_iou": -0.005767776646477207
+      },
+      "advance": false
+    },
+    "2": {
+      "metrics": {
+        "fg_ari": 0.6972204744880004,
+        "foreground_iou": 0.4677946411295393,
+        "matched_object_iou": 0.5071917350747556
+      },
+      "delta_vs_sw0072": {
+        "fg_ari": -0.011536397334695025,
+        "foreground_iou": -0.00031013432389787043,
+        "matched_object_iou": -0.0026887790108282017
+      },
+      "advance": false
+    },
+    "3": {
+      "metrics": {
+        "fg_ari": 0.6865752141403909,
+        "foreground_iou": 0.46524817108063254,
+        "matched_object_iou": 0.5070328194724991
+      },
+      "delta_vs_sw0072": {
+        "fg_ari": -0.022181657682304512,
+        "foreground_iou": -0.0028566043728046053,
+        "matched_object_iou": -0.0028476946130846503
+      },
+      "advance": false
+    },
+    "4": {
+      "metrics": {
+        "fg_ari": 0.682033831542225,
+        "foreground_iou": 0.46391829647996385,
+        "matched_object_iou": 0.5012843502149353
+      },
+      "delta_vs_sw0072": {
+        "fg_ari": -0.026723040280470456,
+        "foreground_iou": -0.0041864789734732955,
+        "matched_object_iou": -0.008596163870648432
+      },
+      "advance": false
+    },
+    "5": {
+      "metrics": {
+        "fg_ari": 0.7062003803074792,
+        "foreground_iou": 0.4640294344092494,
+        "matched_object_iou": 0.5136867399708791
+      },
+      "delta_vs_sw0072": {
+        "fg_ari": -0.002556491515216197,
+        "foreground_iou": -0.004075341044187775,
+        "matched_object_iou": 0.0038062258852953335
+      },
+      "advance": false
+    }
+  },
+  "readout": "aligned IDs1320-1351, T256/settle64, spike CC threshold .35",
+  "advance_rule": "an epoch advances only when all three deltas are strictly positive",
+  "validation_threshold_or_epoch_postselected_for_training": false
+}
