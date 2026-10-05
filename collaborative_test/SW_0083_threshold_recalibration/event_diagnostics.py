@@ -6,7 +6,7 @@ def reshape_binary_crossings(captured_steps, batch, components, regions, steps):
     if len(captured_steps) != steps:
         raise ValueError(f"expected {steps} membrane hook calls, got {len(captured_steps)}")
     arrays = [np.asarray(value) for value in captured_steps]
-    expected = (batch, components * regions)
+    expected = (batch * components, regions)
     if any(array.shape != expected for array in arrays):
         raise ValueError(f"each captured crossing must have shape {expected}")
     stacked = np.stack(arrays, axis=-1).reshape(batch, components, regions, steps)
