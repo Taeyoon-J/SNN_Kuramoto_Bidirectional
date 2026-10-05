@@ -1,0 +1,369 @@
+{
+  "experiment": "SW0054 causal mechanism ablation summary",
+  "source_checkpoint": "/Data0/kevinswk/patch_v2_sw/trained_models/SW_0050_sample_diversity_s0_w0_lr0p0003_epoch25/checkpoints/epoch_25.pt",
+  "checkpoint_sha256": "d30147fbd460a702689cb59fea13dd4d36d70b4a7b460ffd020382b2334e8c85",
+  "count": 32,
+  "ids": [
+    1320,
+    1351
+  ],
+  "steps": 256,
+  "settle": 64,
+  "condition_set": "pilot",
+  "ground_truth_used_for_prediction": false,
+  "normal_reference": {
+    "distance_controlled_macro_auc": {
+      "phase": {
+        "macro_distance_auc": 0.8959951980713289,
+        "by_squared_distance": {
+          "1": 0.8780810355624531,
+          "2": 0.8899558022792771,
+          "3": null,
+          "4": 0.9008881560175048,
+          "5": 0.8965849465726398,
+          "6": null,
+          "7": null,
+          "8": 0.9010955819764409,
+          "9": 0.9093656660196584
+        }
+      },
+      "gate": {
+        "macro_distance_auc": 0.8851451447105768,
+        "by_squared_distance": {
+          "1": 0.8757842370778345,
+          "2": 0.8865612672930615,
+          "3": null,
+          "4": 0.8901383745273129,
+          "5": 0.8857545271629779,
+          "6": null,
+          "7": null,
+          "8": 0.8851188351449204,
+          "9": 0.8875136270573533
+        }
+      },
+      "carrier": {
+        "macro_distance_auc": 0.8924397487790331,
+        "by_squared_distance": {
+          "1": 0.8878866731233737,
+          "2": 0.8913154917074574,
+          "3": null,
+          "4": 0.8990589811285619,
+          "5": 0.8885546287433338,
+          "6": null,
+          "7": null,
+          "8": 0.8883039857531194,
+          "9": 0.899518732218352
+        }
+      },
+      "h_wave": {
+        "macro_distance_auc": 0.8897479363762851,
+        "by_squared_distance": {
+          "1": 0.8823751346767952,
+          "2": 0.8910685596044086,
+          "3": null,
+          "4": 0.8939438992962633,
+          "5": 0.8890855814498643,
+          "6": null,
+          "7": null,
+          "8": 0.8905124091427944,
+          "9": 0.8915020340875854
+        }
+      },
+      "membrane": {
+        "macro_distance_auc": 0.8846902883723348,
+        "by_squared_distance": {
+          "1": 0.8714492973469158,
+          "2": 0.8886367472478011,
+          "3": null,
+          "4": 0.8891532031585555,
+          "5": 0.8842062081225215,
+          "6": null,
+          "7": null,
+          "8": 0.8863583765146137,
+          "9": 0.8883378978436013
+        }
+      },
+      "spike": {
+        "macro_distance_auc": 0.8660618590392325,
+        "by_squared_distance": {
+          "1": 0.8429678292628852,
+          "2": 0.8629026712427249,
+          "3": null,
+          "4": 0.8725524648807432,
+          "5": 0.87075775038581,
+          "6": null,
+          "7": null,
+          "8": 0.8728607124224796,
+          "9": 0.8743297260407527
+        }
+      }
+    },
+    "fixed_readouts": {
+      "spike_cc": {
+        "metrics": {
+          "fg_ari": 0.668520261873324,
+          "foreground_iou": 0.6920255075800473,
+          "matched_object_iou": 0.48987872185834525
+        },
+        "predicted_foreground_fraction": 0.1650390625,
+        "predicted_object_count_mean": 3.78125
+      },
+      "membrane_spatial": {
+        "metrics": {
+          "fg_ari": 0.8210971588362624,
+          "foreground_iou": 0.17758842479930553,
+          "matched_object_iou": 0.39066874464885665
+        },
+        "predicted_foreground_fraction": 0.858154296875,
+        "predicted_object_count_mean": 9.0
+      }
+    },
+    "activity_scale": {
+      "spike_event_rate_mean": 0.9880410432815552,
+      "membrane_temporal_variance_mean": 0.3262251717969775,
+      "membrane_abs_mean": 1.4769739247858524,
+      "per_image": {
+        "spike_event_rate": [
+          0.9902076721191406,
+          0.9862174987792969,
+          0.9878883361816406,
+          0.9874191284179688,
+          0.9900894165039062,
+          0.9896469116210938,
+          0.9917411804199219,
+          0.9844970703125,
+          0.9832687377929688,
+          0.9893989562988281,
+          0.9877700805664062,
+          0.9867057800292969,
+          0.9940872192382812,
+          0.9859237670898438,
+          0.9885635375976562,
+          0.9883804321289062,
+          0.9875602722167969,
+          0.98870849609375,
+          0.9888954162597656,
+          0.9867057800292969,
+          0.986785888671875,
+          0.9852714538574219,
+          0.9856605529785156,
+          0.9901885986328125,
+          0.9873237609863281,
+          0.9882316589355469,
+          0.9892311096191406,
+          0.98883056640625,
+          0.9872817993164062,
+          0.9856758117675781,
+          0.9915390014648438,
+          0.9876174926757812
+        ],
+        "membrane_variance": [
+          0.29038575291633606,
+          0.3723544180393219,
+          0.3468041718006134,
+          0.319671094417572,
+          0.3010046184062958,
+          0.3084699511528015,
+          0.2689860463142395,
+          0.28070634603500366,
+          0.27431389689445496,
+          0.36219099164009094,
+          0.31208106875419617,
+          0.368328720331192,
+          0.36479634046554565,
+          0.2890468239784241,
+          0.32785630226135254,
+          0.36528411507606506,
+          0.3702518343925476,
+          0.3201936185359955,
+          0.3798753023147583,
+          0.34112927317619324,
+          0.36364203691482544,
+          0.3465231657028198,
+          0.2558613419532776,
+          0.34674304723739624,
+          0.33216923475265503,
+          0.35813161730766296,
+          0.37687423825263977,
+          0.32401150465011597,
+          0.2966405749320984,
+          0.27484002709388733,
+          0.29947996139526367,
+          0.30055806040763855
+        ],
+        "membrane_abs_mean": [
+          1.435399055480957,
+          1.4969416856765747,
+          1.500292420387268,
+          1.4899777173995972,
+          1.4631913900375366,
+          1.444018006324768,
+          1.4796794652938843,
+          1.4528589248657227,
+          1.455288290977478,
+          1.4845342636108398,
+          1.4804940223693848,
+          1.475560188293457,
+          1.500474452972412,
+          1.4650663137435913,
+          1.439752459526062,
+          1.511642336845398,
+          1.4749765396118164,
+          1.4609365463256836,
+          1.4989300966262817,
+          1.503355622291565,
+          1.488155484199524,
+          1.4761384725570679,
+          1.4794889688491821,
+          1.5116949081420898,
+          1.5022214651107788,
+          1.4978710412979126,
+          1.503808617591858,
+          1.4659395217895508,
+          1.4709762334823608,
+          1.446610450744629,
+          1.4510196447372437,
+          1.4558709859848022
+        ]
+      }
+    }
+  },
+  "intervention_deltas": {
+    "gate_perm_s0": {
+      "fixed_readout_metric_delta_vs_normal": {
+        "spike_cc": {
+          "fg_ari": -0.6740010527366275,
+          "foreground_iou": -0.6039982025413249,
+          "matched_object_iou": -0.46211172026831415
+        },
+        "membrane_spatial": {
+          "fg_ari": -0.17743371810307385,
+          "foreground_iou": 0.00776764789121448,
+          "matched_object_iou": -0.15292611038304127
+        }
+      },
+      "distance_controlled_macro_auc_delta_vs_normal": {
+        "phase": 0.0,
+        "gate": -0.3755437409440966,
+        "carrier": 0.0,
+        "h_wave": -0.22303106897497393,
+        "membrane": -0.21362482256019866,
+        "spike": -0.33751446010791075
+      },
+      "activity_scale_ratios_vs_normal": {
+        "spike_event_rate_ratio": 1.0005366608234825,
+        "membrane_variance_ratio": 0.9989897642671285,
+        "membrane_abs_mean_ratio": 1.0005336768039321
+      }
+    },
+    "carrier_perm_s0": {
+      "fixed_readout_metric_delta_vs_normal": {
+        "spike_cc": {
+          "fg_ari": -0.0048321261993988784,
+          "foreground_iou": -0.012222604828277972,
+          "matched_object_iou": -0.007555465367965308
+        },
+        "membrane_spatial": {
+          "fg_ari": -0.06445652183085637,
+          "foreground_iou": 0.0061436916204421765,
+          "matched_object_iou": -0.0613216248794482
+        }
+      },
+      "distance_controlled_macro_auc_delta_vs_normal": {
+        "phase": 0.0,
+        "gate": 0.0,
+        "carrier": -0.38081500213264674,
+        "h_wave": -0.08218718310478246,
+        "membrane": -0.08095467806393364,
+        "spike": -0.0092728344327071
+      },
+      "activity_scale_ratios_vs_normal": {
+        "spike_event_rate_ratio": 1.0005622390821556,
+        "membrane_variance_ratio": 1.0006399194047328,
+        "membrane_abs_mean_ratio": 1.0006340722493436
+      }
+    },
+    "gate_mean": {
+      "fixed_readout_metric_delta_vs_normal": {
+        "spike_cc": {
+          "fg_ari": -0.6666846936946454,
+          "foreground_iou": -0.5630006162821468,
+          "matched_object_iou": -0.4772293904504332
+        },
+        "membrane_spatial": {
+          "fg_ari": -0.128888772532468,
+          "foreground_iou": 0.0036133193260971808,
+          "matched_object_iou": -0.08499352806375887
+        }
+      },
+      "distance_controlled_macro_auc_delta_vs_normal": {
+        "phase": 0.0,
+        "gate": -0.391347361519746,
+        "carrier": 0.0,
+        "h_wave": 0.002204210581903787,
+        "membrane": -0.0037604260395238676,
+        "spike": -0.37226407584840165
+      },
+      "activity_scale_ratios_vs_normal": {
+        "spike_event_rate_ratio": 1.011894372891679,
+        "membrane_variance_ratio": 0.30244141120499757,
+        "membrane_abs_mean_ratio": 0.9809648732241784
+      }
+    },
+    "carrier_mean": {
+      "fixed_readout_metric_delta_vs_normal": {
+        "spike_cc": {
+          "fg_ari": 0.0057102725830209256,
+          "foreground_iou": -0.0016959407545688032,
+          "matched_object_iou": -0.006462557504224087
+        },
+        "membrane_spatial": {
+          "fg_ari": -0.008958645118764097,
+          "foreground_iou": 0.003036776321286183,
+          "matched_object_iou": 0.014261729716626925
+        }
+      },
+      "distance_controlled_macro_auc_delta_vs_normal": {
+        "phase": 0.0,
+        "gate": 0.0,
+        "carrier": -0.38636616990292305,
+        "h_wave": -0.00775819557134505,
+        "membrane": -0.007699388571761334,
+        "spike": 0.01908328567134432
+      },
+      "activity_scale_ratios_vs_normal": {
+        "spike_event_rate_ratio": 1.0120255217934606,
+        "membrane_variance_ratio": 0.5076867052549898,
+        "membrane_abs_mean_ratio": 1.0145205274168942
+      }
+    },
+    "K0": {
+      "fixed_readout_metric_delta_vs_normal": {
+        "spike_cc": {
+          "fg_ari": -0.43077158905774904,
+          "foreground_iou": -0.2532109995803043,
+          "matched_object_iou": -0.2687139042332845
+        },
+        "membrane_spatial": {
+          "fg_ari": -0.10341588772388155,
+          "foreground_iou": 0.005164191670753715,
+          "matched_object_iou": -0.12459690934144424
+        }
+      },
+      "distance_controlled_macro_auc_delta_vs_normal": {
+        "phase": -0.07622995750885542,
+        "gate": -0.17948002480966074,
+        "carrier": -0.2693587558526739,
+        "h_wave": -0.22804119042612836,
+        "membrane": -0.22717018616122941,
+        "spike": -0.16397935353682946
+      },
+      "activity_scale_ratios_vs_normal": {
+        "spike_event_rate_ratio": 1.0007519042832604,
+        "membrane_variance_ratio": 0.9781249807030264,
+        "membrane_abs_mean_ratio": 0.9929789624148877
+      }
+    }
+  },
+  "interpretation": "Numerical deltas only; this summary does not infer whether an effect is explained by activity-scale collapse."
+}

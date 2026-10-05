@@ -36,7 +36,15 @@ input and refuses to overwrite either unless `--overwrite` is passed. Deltas
 and activity ratios are descriptive; it deliberately makes no claim that an
 effect is explained by activity-scale collapse.
 
-All six tensor unit tests and a one-image/full-condition CPU smoke test pass
-against the real checkpoint, gamma, manifest, and HDF5 assets. The smoke test
-is a code-validity check, not validation evidence. GPU preflight and the
-32-image pilot remain pending.
+All six tensor unit tests and the real-asset preflight passed. The 32-image
+seed0 pilot also completed and passed the current report validator. On that
+small pilot, normal spike-CC scored `.6685/.6920/.4899`; local-carrier with a
+permuted gate scored `.0055/.0880/.0278` while spike event-rate and membrane
+variance ratios stayed near 1 (`1.0005` and `.9990`). Permuting the carrier
+instead preserved most of the score (`.6637/.6798/.4823`), while setting
+Kuramoto coupling to zero scored `.2377/.4388/.2212` with activity scale
+largely preserved. This supports gate identity and inter-region coupling as
+causal factors in this pilot and suggests carrier permutation is largely
+redundant under this condition. These are 32-image, seed0 pilot results, not a
+full-validation or general mechanism claim. Raw and validated summary JSON
+are under `results/seed0_epoch25_short_n32_pilot*`.

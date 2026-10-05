@@ -1,0 +1,2795 @@
+{
+  "experiment": "SW0054 causal mechanism ablation",
+  "checkpoint": "/Data0/kevinswk/patch_v2_sw/trained_models/SW_0050_sample_diversity_s0_w0_lr0p0003_epoch25/checkpoints/epoch_25.pt",
+  "checkpoint_sha256": "d30147fbd460a702689cb59fea13dd4d36d70b4a7b460ffd020382b2334e8c85",
+  "ids": [
+    1320,
+    1351
+  ],
+  "count": 32,
+  "gamma": {
+    "path": "/Data0/kevinswk/patch_v2_sw/data/SW_0042_hdf5_aligned/gamma_validation_1320_1639.pt",
+    "manifest_path": "/Data0/kevinswk/patch_v2_sw/data/SW_0042_hdf5_aligned/manifest.json",
+    "manifest": {
+      "dataset": "/Data0/kevinswk/datasets/object_centric_data/clevr_10-full.hdf5",
+      "image_ids": [
+        1320,
+        1639
+      ],
+      "shape": [
+        320,
+        8,
+        256
+      ],
+      "dtype": "torch.float32",
+      "source_run": "/Data0/kevinswk/patch_v2/trained_models/readme_patch_eval_20261002",
+      "encoder": "/Data0/kevinswk/patch_v2/trained_models/readme_patch_eval_20261002/input_encoder/input_layer_encoder.pt",
+      "encoder_sha256": "9b9c9c59725f872084a6c9bfae1ebbd1b89de40d18ef4f8ab6b8ec014c2ab868",
+      "preprocessing": "/Data0/kevinswk/patch_v2/trained_models/readme_patch_eval_20261002/feature_preprocessing.pt",
+      "preprocessing_sha256": "a9ec3281b9603021c37f7c346baa6cf62513c5ce7edde867ab7eddf24b18e127",
+      "gamma_sha256": "f20b019bd46adb378b2bfcecbb252d960da2592ef651dcd419753034c8b705f0",
+      "normalization": "train IDs 0-999 standardize, clip [-3,3]",
+      "patch_grid_size": 16
+    },
+    "global_start": 1320
+  },
+  "target": {
+    "path": "/Data0/kevinswk/datasets/object_centric_data/clevr_10-full.hdf5",
+    "ids": [
+      1320,
+      1351
+    ],
+    "ground_truth_used_for_prediction": false
+  },
+  "core": {
+    "steps": 256,
+    "settle": 64,
+    "vth": 0.06,
+    "projection": "shared",
+    "graph_decay": 0.35,
+    "geodesic_steps": 3,
+    "backend": "factorized",
+    "K_normal": 256.0,
+    "spike_pulse_gain": null
+  },
+  "interventions": {
+    "gate_permutation_seeds": {
+      "0": [
+        172,
+        55,
+        225,
+        105,
+        47,
+        214,
+        183,
+        140,
+        65,
+        13,
+        81,
+        102,
+        80,
+        133,
+        198,
+        245,
+        232,
+        75,
+        204,
+        154,
+        242,
+        130,
+        57,
+        137,
+        200,
+        246,
+        125,
+        87,
+        61,
+        161,
+        157,
+        193,
+        211,
+        40,
+        239,
+        56,
+        138,
+        156,
+        59,
+        50,
+        186,
+        174,
+        20,
+        71,
+        147,
+        210,
+        149,
+        0,
+        158,
+        119,
+        250,
+        165,
+        2,
+        114,
+        38,
+        240,
+        159,
+        7,
+        222,
+        11,
+        91,
+        77,
+        209,
+        113,
+        49,
+        164,
+        94,
+        24,
+        192,
+        99,
+        35,
+        171,
+        86,
+        12,
+        176,
+        73,
+        115,
+        248,
+        123,
+        231,
+        33,
+        150,
+        10,
+        26,
+        129,
+        177,
+        3,
+        72,
+        203,
+        54,
+        233,
+        8,
+        106,
+        39,
+        185,
+        196,
+        142,
+        67,
+        199,
+        16,
+        153,
+        107,
+        21,
+        151,
+        188,
+        1,
+        5,
+        144,
+        79,
+        44,
+        84,
+        120,
+        180,
+        48,
+        218,
+        187,
+        175,
+        216,
+        215,
+        31,
+        98,
+        34,
+        173,
+        136,
+        23,
+        95,
+        51,
+        62,
+        169,
+        213,
+        63,
+        237,
+        189,
+        191,
+        166,
+        162,
+        17,
+        110,
+        4,
+        224,
+        29,
+        163,
+        96,
+        127,
+        132,
+        121,
+        66,
+        179,
+        143,
+        234,
+        230,
+        88,
+        53,
+        212,
+        45,
+        139,
+        227,
+        117,
+        74,
+        109,
+        194,
+        202,
+        131,
+        195,
+        141,
+        78,
+        69,
+        28,
+        60,
+        89,
+        43,
+        103,
+        219,
+        221,
+        251,
+        76,
+        85,
+        152,
+        128,
+        190,
+        223,
+        184,
+        146,
+        9,
+        235,
+        236,
+        155,
+        243,
+        18,
+        46,
+        255,
+        160,
+        101,
+        92,
+        27,
+        217,
+        228,
+        244,
+        93,
+        30,
+        253,
+        36,
+        168,
+        182,
+        206,
+        116,
+        145,
+        207,
+        111,
+        170,
+        52,
+        58,
+        126,
+        97,
+        14,
+        82,
+        197,
+        241,
+        68,
+        201,
+        238,
+        100,
+        252,
+        208,
+        135,
+        112,
+        25,
+        181,
+        90,
+        254,
+        122,
+        124,
+        167,
+        83,
+        220,
+        64,
+        249,
+        178,
+        205,
+        247,
+        32,
+        41,
+        229,
+        118,
+        108,
+        148,
+        15,
+        226,
+        134,
+        42,
+        19,
+        22,
+        37,
+        6,
+        70,
+        104
+      ],
+      "1": [
+        37,
+        180,
+        88,
+        157,
+        119,
+        177,
+        247,
+        162,
+        175,
+        161,
+        144,
+        255,
+        200,
+        66,
+        63,
+        156,
+        118,
+        152,
+        120,
+        203,
+        234,
+        199,
+        13,
+        151,
+        155,
+        142,
+        210,
+        82,
+        237,
+        213,
+        96,
+        5,
+        55,
+        7,
+        83,
+        229,
+        39,
+        0,
+        254,
+        99,
+        109,
+        220,
+        36,
+        111,
+        91,
+        233,
+        64,
+        19,
+        129,
+        197,
+        182,
+        186,
+        140,
+        240,
+        93,
+        248,
+        167,
+        27,
+        97,
+        150,
+        238,
+        12,
+        145,
+        214,
+        85,
+        232,
+        28,
+        207,
+        164,
+        43,
+        173,
+        184,
+        108,
+        20,
+        26,
+        32,
+        141,
+        130,
+        24,
+        110,
+        239,
+        29,
+        1,
+        35,
+        44,
+        21,
+        62,
+        252,
+        98,
+        216,
+        16,
+        38,
+        49,
+        77,
+        3,
+        158,
+        183,
+        135,
+        170,
+        195,
+        105,
+        73,
+        149,
+        50,
+        53,
+        52,
+        116,
+        17,
+        159,
+        188,
+        131,
+        246,
+        201,
+        187,
+        22,
+        123,
+        166,
+        168,
+        51,
+        205,
+        18,
+        227,
+        9,
+        253,
+        76,
+        218,
+        46,
+        31,
+        75,
+        8,
+        181,
+        33,
+        71,
+        211,
+        65,
+        42,
+        172,
+        126,
+        219,
+        60,
+        6,
+        47,
+        174,
+        225,
+        40,
+        165,
+        244,
+        206,
+        160,
+        30,
+        121,
+        86,
+        87,
+        127,
+        230,
+        243,
+        103,
+        94,
+        231,
+        84,
+        215,
+        176,
+        11,
+        132,
+        209,
+        169,
+        190,
+        193,
+        196,
+        113,
+        228,
+        69,
+        222,
+        101,
+        124,
+        45,
+        194,
+        48,
+        58,
+        41,
+        236,
+        143,
+        112,
+        72,
+        122,
+        163,
+        224,
+        92,
+        136,
+        23,
+        2,
+        80,
+        137,
+        198,
+        212,
+        128,
+        100,
+        117,
+        4,
+        34,
+        57,
+        104,
+        250,
+        25,
+        54,
+        115,
+        78,
+        89,
+        241,
+        61,
+        107,
+        70,
+        67,
+        221,
+        223,
+        208,
+        249,
+        148,
+        59,
+        171,
+        185,
+        189,
+        14,
+        217,
+        139,
+        134,
+        226,
+        178,
+        95,
+        179,
+        81,
+        153,
+        251,
+        79,
+        125,
+        147,
+        114,
+        242,
+        192,
+        74,
+        245,
+        56,
+        15,
+        235,
+        68,
+        10,
+        90,
+        204,
+        138,
+        202,
+        154,
+        191,
+        133,
+        106,
+        146,
+        102
+      ],
+      "2": [
+        168,
+        43,
+        227,
+        101,
+        246,
+        215,
+        198,
+        143,
+        176,
+        241,
+        58,
+        147,
+        207,
+        32,
+        11,
+        14,
+        95,
+        233,
+        8,
+        124,
+        92,
+        10,
+        5,
+        183,
+        75,
+        232,
+        46,
+        163,
+        235,
+        181,
+        51,
+        162,
+        42,
+        211,
+        178,
+        177,
+        16,
+        121,
+        249,
+        77,
+        196,
+        173,
+        96,
+        0,
+        55,
+        127,
+        39,
+        184,
+        80,
+        34,
+        102,
+        88,
+        206,
+        228,
+        68,
+        210,
+        12,
+        17,
+        203,
+        89,
+        50,
+        223,
+        188,
+        24,
+        250,
+        137,
+        165,
+        118,
+        13,
+        186,
+        87,
+        172,
+        240,
+        100,
+        97,
+        234,
+        169,
+        187,
+        104,
+        120,
+        154,
+        40,
+        76,
+        93,
+        119,
+        2,
+        53,
+        189,
+        136,
+        199,
+        52,
+        71,
+        192,
+        197,
+        63,
+        229,
+        67,
+        19,
+        47,
+        201,
+        218,
+        37,
+        244,
+        70,
+        105,
+        103,
+        69,
+        82,
+        245,
+        220,
+        9,
+        252,
+        149,
+        133,
+        150,
+        45,
+        73,
+        106,
+        254,
+        193,
+        91,
+        66,
+        138,
+        25,
+        226,
+        128,
+        231,
+        61,
+        144,
+        81,
+        219,
+        209,
+        213,
+        237,
+        253,
+        135,
+        18,
+        54,
+        212,
+        7,
+        22,
+        38,
+        3,
+        180,
+        205,
+        157,
+        185,
+        159,
+        56,
+        200,
+        208,
+        21,
+        4,
+        111,
+        110,
+        216,
+        44,
+        15,
+        221,
+        84,
+        222,
+        153,
+        242,
+        115,
+        1,
+        86,
+        145,
+        79,
+        160,
+        35,
+        131,
+        195,
+        141,
+        108,
+        31,
+        156,
+        255,
+        107,
+        174,
+        27,
+        179,
+        182,
+        98,
+        134,
+        190,
+        224,
+        191,
+        59,
+        214,
+        116,
+        6,
+        142,
+        146,
+        248,
+        78,
+        139,
+        171,
+        129,
+        117,
+        20,
+        49,
+        123,
+        30,
+        243,
+        132,
+        28,
+        202,
+        29,
+        166,
+        36,
+        64,
+        217,
+        90,
+        167,
+        251,
+        158,
+        23,
+        126,
+        151,
+        125,
+        109,
+        239,
+        72,
+        225,
+        175,
+        148,
+        122,
+        236,
+        140,
+        114,
+        238,
+        204,
+        99,
+        170,
+        60,
+        57,
+        194,
+        161,
+        74,
+        230,
+        41,
+        62,
+        155,
+        33,
+        26,
+        113,
+        152,
+        65,
+        48,
+        85,
+        247,
+        130,
+        164,
+        112,
+        83,
+        94
+      ]
+    },
+    "gate_perm": "local sin(theta) carrier times permuted delayed raw mask; membrane gate uses the same permuted mask",
+    "carrier_perm": "permuted sin(theta) carrier times local dynamic delayed mask; membrane gate remains local",
+    "gate_mean": "local carrier times per-image/per-region time-mean delayed mask; membrane gate uses the same mean mask",
+    "carrier_mean": "per-image/per-region time-mean carrier times local dynamic mask; membrane gate remains local",
+    "condition_set": "pilot",
+    "K0": "sets inter-region Kuramoto stiffness K to exactly zero; gamma/frequency/theta init untouched",
+    "prediction_ground_truth_free": true
+  },
+  "conditions": {
+    "normal": {
+      "distance_controlled_macro_auc": {
+        "phase": {
+          "macro_distance_auc": 0.8959951980713289,
+          "by_squared_distance": {
+            "1": 0.8780810355624531,
+            "2": 0.8899558022792771,
+            "3": null,
+            "4": 0.9008881560175048,
+            "5": 0.8965849465726398,
+            "6": null,
+            "7": null,
+            "8": 0.9010955819764409,
+            "9": 0.9093656660196584
+          }
+        },
+        "gate": {
+          "macro_distance_auc": 0.8851451447105768,
+          "by_squared_distance": {
+            "1": 0.8757842370778345,
+            "2": 0.8865612672930615,
+            "3": null,
+            "4": 0.8901383745273129,
+            "5": 0.8857545271629779,
+            "6": null,
+            "7": null,
+            "8": 0.8851188351449204,
+            "9": 0.8875136270573533
+          }
+        },
+        "carrier": {
+          "macro_distance_auc": 0.8924397487790331,
+          "by_squared_distance": {
+            "1": 0.8878866731233737,
+            "2": 0.8913154917074574,
+            "3": null,
+            "4": 0.8990589811285619,
+            "5": 0.8885546287433338,
+            "6": null,
+            "7": null,
+            "8": 0.8883039857531194,
+            "9": 0.899518732218352
+          }
+        },
+        "h_wave": {
+          "macro_distance_auc": 0.8897479363762851,
+          "by_squared_distance": {
+            "1": 0.8823751346767952,
+            "2": 0.8910685596044086,
+            "3": null,
+            "4": 0.8939438992962633,
+            "5": 0.8890855814498643,
+            "6": null,
+            "7": null,
+            "8": 0.8905124091427944,
+            "9": 0.8915020340875854
+          }
+        },
+        "membrane": {
+          "macro_distance_auc": 0.8846902883723348,
+          "by_squared_distance": {
+            "1": 0.8714492973469158,
+            "2": 0.8886367472478011,
+            "3": null,
+            "4": 0.8891532031585555,
+            "5": 0.8842062081225215,
+            "6": null,
+            "7": null,
+            "8": 0.8863583765146137,
+            "9": 0.8883378978436013
+          }
+        },
+        "spike": {
+          "macro_distance_auc": 0.8660618590392325,
+          "by_squared_distance": {
+            "1": 0.8429678292628852,
+            "2": 0.8629026712427249,
+            "3": null,
+            "4": 0.8725524648807432,
+            "5": 0.87075775038581,
+            "6": null,
+            "7": null,
+            "8": 0.8728607124224796,
+            "9": 0.8743297260407527
+          }
+        }
+      },
+      "fixed_readouts": {
+        "spike_cc": {
+          "metrics": {
+            "fg_ari": 0.668520261873324,
+            "foreground_iou": 0.6920255075800473,
+            "matched_object_iou": 0.48987872185834525
+          },
+          "predicted_foreground_fraction": 0.1650390625,
+          "predicted_object_count_mean": 3.78125
+        },
+        "membrane_spatial": {
+          "metrics": {
+            "fg_ari": 0.8210971588362624,
+            "foreground_iou": 0.17758842479930553,
+            "matched_object_iou": 0.39066874464885665
+          },
+          "predicted_foreground_fraction": 0.858154296875,
+          "predicted_object_count_mean": 9.0
+        }
+      },
+      "activity_scale": {
+        "spike_event_rate_mean": 0.9880410432815552,
+        "membrane_temporal_variance_mean": 0.3262251717969775,
+        "membrane_abs_mean": 1.4769739247858524,
+        "per_image": {
+          "spike_event_rate": [
+            0.9902076721191406,
+            0.9862174987792969,
+            0.9878883361816406,
+            0.9874191284179688,
+            0.9900894165039062,
+            0.9896469116210938,
+            0.9917411804199219,
+            0.9844970703125,
+            0.9832687377929688,
+            0.9893989562988281,
+            0.9877700805664062,
+            0.9867057800292969,
+            0.9940872192382812,
+            0.9859237670898438,
+            0.9885635375976562,
+            0.9883804321289062,
+            0.9875602722167969,
+            0.98870849609375,
+            0.9888954162597656,
+            0.9867057800292969,
+            0.986785888671875,
+            0.9852714538574219,
+            0.9856605529785156,
+            0.9901885986328125,
+            0.9873237609863281,
+            0.9882316589355469,
+            0.9892311096191406,
+            0.98883056640625,
+            0.9872817993164062,
+            0.9856758117675781,
+            0.9915390014648438,
+            0.9876174926757812
+          ],
+          "membrane_variance": [
+            0.29038575291633606,
+            0.3723544180393219,
+            0.3468041718006134,
+            0.319671094417572,
+            0.3010046184062958,
+            0.3084699511528015,
+            0.2689860463142395,
+            0.28070634603500366,
+            0.27431389689445496,
+            0.36219099164009094,
+            0.31208106875419617,
+            0.368328720331192,
+            0.36479634046554565,
+            0.2890468239784241,
+            0.32785630226135254,
+            0.36528411507606506,
+            0.3702518343925476,
+            0.3201936185359955,
+            0.3798753023147583,
+            0.34112927317619324,
+            0.36364203691482544,
+            0.3465231657028198,
+            0.2558613419532776,
+            0.34674304723739624,
+            0.33216923475265503,
+            0.35813161730766296,
+            0.37687423825263977,
+            0.32401150465011597,
+            0.2966405749320984,
+            0.27484002709388733,
+            0.29947996139526367,
+            0.30055806040763855
+          ],
+          "membrane_abs_mean": [
+            1.435399055480957,
+            1.4969416856765747,
+            1.500292420387268,
+            1.4899777173995972,
+            1.4631913900375366,
+            1.444018006324768,
+            1.4796794652938843,
+            1.4528589248657227,
+            1.455288290977478,
+            1.4845342636108398,
+            1.4804940223693848,
+            1.475560188293457,
+            1.500474452972412,
+            1.4650663137435913,
+            1.439752459526062,
+            1.511642336845398,
+            1.4749765396118164,
+            1.4609365463256836,
+            1.4989300966262817,
+            1.503355622291565,
+            1.488155484199524,
+            1.4761384725570679,
+            1.4794889688491821,
+            1.5116949081420898,
+            1.5022214651107788,
+            1.4978710412979126,
+            1.503808617591858,
+            1.4659395217895508,
+            1.4709762334823608,
+            1.446610450744629,
+            1.4510196447372437,
+            1.4558709859848022
+          ]
+        }
+      }
+    },
+    "gate_perm_s0": {
+      "distance_controlled_macro_auc": {
+        "phase": {
+          "macro_distance_auc": 0.8959951980713289,
+          "by_squared_distance": {
+            "1": 0.8780810355624531,
+            "2": 0.8899558022792771,
+            "3": null,
+            "4": 0.9008881560175048,
+            "5": 0.8965849465726398,
+            "6": null,
+            "7": null,
+            "8": 0.9010955819764409,
+            "9": 0.9093656660196584
+          }
+        },
+        "gate": {
+          "macro_distance_auc": 0.5096014037664802,
+          "by_squared_distance": {
+            "1": 0.527007316304741,
+            "2": 0.5046448241155768,
+            "3": null,
+            "4": 0.5240480931827943,
+            "5": 0.5053021038854486,
+            "6": null,
+            "7": null,
+            "8": 0.5046227832410869,
+            "9": 0.49198330186923345
+          }
+        },
+        "carrier": {
+          "macro_distance_auc": 0.8924397487790331,
+          "by_squared_distance": {
+            "1": 0.8878866731233737,
+            "2": 0.8913154917074574,
+            "3": null,
+            "4": 0.8990589811285619,
+            "5": 0.8885546287433338,
+            "6": null,
+            "7": null,
+            "8": 0.8883039857531194,
+            "9": 0.899518732218352
+          }
+        },
+        "h_wave": {
+          "macro_distance_auc": 0.6667168674013112,
+          "by_squared_distance": {
+            "1": 0.667588497726539,
+            "2": 0.6549045716822015,
+            "3": null,
+            "4": 0.6763561875069457,
+            "5": 0.6655583989373132,
+            "6": null,
+            "7": null,
+            "8": 0.6713097166706546,
+            "9": 0.6645838318842121
+          }
+        },
+        "membrane": {
+          "macro_distance_auc": 0.6710654658121361,
+          "by_squared_distance": {
+            "1": 0.6677168539500655,
+            "2": 0.6598932253083526,
+            "3": null,
+            "4": 0.6816154407590626,
+            "5": 0.6700482506690629,
+            "6": null,
+            "7": null,
+            "8": 0.6763620245319358,
+            "9": 0.6707569996543381
+          }
+        },
+        "spike": {
+          "macro_distance_auc": 0.5285473989313217,
+          "by_squared_distance": {
+            "1": 0.5579645036698211,
+            "2": 0.5221973206303958,
+            "3": null,
+            "4": 0.5410483064363528,
+            "5": 0.5234756109472368,
+            "6": null,
+            "7": null,
+            "8": 0.5231021484076208,
+            "9": 0.5034965034965035
+          }
+        }
+      },
+      "fixed_readouts": {
+        "spike_cc": {
+          "metrics": {
+            "fg_ari": -0.005480790863303479,
+            "foreground_iou": 0.0880273050387225,
+            "matched_object_iou": 0.027767001590031086
+          },
+          "predicted_foreground_fraction": 0.1612548828125,
+          "predicted_object_count_mean": 3.6875
+        },
+        "membrane_spatial": {
+          "metrics": {
+            "fg_ari": 0.6436634407331886,
+            "foreground_iou": 0.18535607269052,
+            "matched_object_iou": 0.23774263426581538
+          },
+          "predicted_foreground_fraction": 0.8675537109375,
+          "predicted_object_count_mean": 9.0
+        }
+      },
+      "gate_invariants": [
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        }
+      ],
+      "activity_scale": {
+        "spike_event_rate_mean": 0.988571286201477,
+        "membrane_temporal_variance_mean": 0.32589560747146606,
+        "membrane_abs_mean": 1.4777621515095234,
+        "per_image": {
+          "spike_event_rate": [
+            0.9915924072265625,
+            0.9873008728027344,
+            0.98834228515625,
+            0.9872512817382812,
+            0.9888801574707031,
+            0.9895133972167969,
+            0.9929161071777344,
+            0.9861984252929688,
+            0.9844818115234375,
+            0.98907470703125,
+            0.9883384704589844,
+            0.9874114990234375,
+            0.9912490844726562,
+            0.9891929626464844,
+            0.9889297485351562,
+            0.9886894226074219,
+            0.9876823425292969,
+            0.9899253845214844,
+            0.9888114929199219,
+            0.9880790710449219,
+            0.9877586364746094,
+            0.9871826171875,
+            0.9878311157226562,
+            0.989990234375,
+            0.9877777099609375,
+            0.9884910583496094,
+            0.98876953125,
+            0.9891395568847656,
+            0.9869346618652344,
+            0.9864616394042969,
+            0.9910087585449219,
+            0.98907470703125
+          ],
+          "membrane_variance": [
+            0.28531941771507263,
+            0.36347252130508423,
+            0.34076929092407227,
+            0.33117175102233887,
+            0.3041774034500122,
+            0.29912564158439636,
+            0.2833103835582733,
+            0.28188133239746094,
+            0.28697147965431213,
+            0.35804834961891174,
+            0.31002238392829895,
+            0.37236374616622925,
+            0.3577910363674164,
+            0.3031010031700134,
+            0.33221548795700073,
+            0.3459925055503845,
+            0.3734677731990814,
+            0.31187373399734497,
+            0.3771093189716339,
+            0.3422969579696655,
+            0.3526419401168823,
+            0.3336755037307739,
+            0.26906663179397583,
+            0.35029134154319763,
+            0.3292815685272217,
+            0.35387349128723145,
+            0.36747118830680847,
+            0.34097254276275635,
+            0.28670287132263184,
+            0.2874751091003418,
+            0.29258596897125244,
+            0.30413976311683655
+          ],
+          "membrane_abs_mean": [
+            1.43320894241333,
+            1.49730384349823,
+            1.5003782510757446,
+            1.4893726110458374,
+            1.4609384536743164,
+            1.442673683166504,
+            1.4836444854736328,
+            1.4563862085342407,
+            1.4602152109146118,
+            1.4823662042617798,
+            1.4807504415512085,
+            1.4818010330200195,
+            1.4980125427246094,
+            1.4686161279678345,
+            1.442400336265564,
+            1.5102554559707642,
+            1.4761286973953247,
+            1.4596190452575684,
+            1.4987068176269531,
+            1.5036998987197876,
+            1.492003083229065,
+            1.4747591018676758,
+            1.4830552339553833,
+            1.5154558420181274,
+            1.5024757385253906,
+            1.496964454650879,
+            1.4995379447937012,
+            1.470789909362793,
+            1.4688113927841187,
+            1.4469870328903198,
+            1.4494308233261108,
+            1.4616400003433228
+          ]
+        }
+      }
+    },
+    "carrier_perm_s0": {
+      "distance_controlled_macro_auc": {
+        "phase": {
+          "macro_distance_auc": 0.8959951980713289,
+          "by_squared_distance": {
+            "1": 0.8780810355624531,
+            "2": 0.8899558022792771,
+            "3": null,
+            "4": 0.9008881560175048,
+            "5": 0.8965849465726398,
+            "6": null,
+            "7": null,
+            "8": 0.9010955819764409,
+            "9": 0.9093656660196584
+          }
+        },
+        "gate": {
+          "macro_distance_auc": 0.8851451447105768,
+          "by_squared_distance": {
+            "1": 0.8757842370778345,
+            "2": 0.8865612672930615,
+            "3": null,
+            "4": 0.8901383745273129,
+            "5": 0.8857545271629779,
+            "6": null,
+            "7": null,
+            "8": 0.8851188351449204,
+            "9": 0.8875136270573533
+          }
+        },
+        "carrier": {
+          "macro_distance_auc": 0.5116247466463864,
+          "by_squared_distance": {
+            "1": 0.5248330396698523,
+            "2": 0.49271394009864783,
+            "3": null,
+            "4": 0.5227085004069839,
+            "5": 0.5226676564239808,
+            "6": null,
+            "7": null,
+            "8": 0.5106675087179768,
+            "9": 0.49615783456087637
+          }
+        },
+        "h_wave": {
+          "macro_distance_auc": 0.8075607532715027,
+          "by_squared_distance": {
+            "1": 0.7707635639466816,
+            "2": 0.7962435063108344,
+            "3": null,
+            "4": 0.8155416790563981,
+            "5": 0.8211232443202907,
+            "6": null,
+            "7": null,
+            "8": 0.8221768072395492,
+            "9": 0.8195157187552625
+          }
+        },
+        "membrane": {
+          "macro_distance_auc": 0.8037356103084011,
+          "by_squared_distance": {
+            "1": 0.7671890376005943,
+            "2": 0.7929333658408507,
+            "3": null,
+            "4": 0.8112706007442849,
+            "5": 0.8171319177199117,
+            "6": null,
+            "7": null,
+            "8": 0.819682034103078,
+            "9": 0.8142067058416869
+          }
+        },
+        "spike": {
+          "macro_distance_auc": 0.8567890246065254,
+          "by_squared_distance": {
+            "1": 0.8221410596000731,
+            "2": 0.8525377743603209,
+            "3": null,
+            "4": 0.8652958367498956,
+            "5": 0.865268504229259,
+            "6": null,
+            "7": null,
+            "8": 0.8647330867325925,
+            "9": 0.8707578859670114
+          }
+        }
+      },
+      "fixed_readouts": {
+        "spike_cc": {
+          "metrics": {
+            "fg_ari": 0.6636881356739252,
+            "foreground_iou": 0.6798029027517694,
+            "matched_object_iou": 0.48232325649037994
+          },
+          "predicted_foreground_fraction": 0.1612548828125,
+          "predicted_object_count_mean": 3.65625
+        },
+        "membrane_spatial": {
+          "metrics": {
+            "fg_ari": 0.7566406370054061,
+            "foreground_iou": 0.1837321164197477,
+            "matched_object_iou": 0.32934711976940845
+          },
+          "predicted_foreground_fraction": 0.86181640625,
+          "predicted_object_count_mean": 9.0
+        }
+      },
+      "gate_invariants": [
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        }
+      ],
+      "activity_scale": {
+        "spike_event_rate_mean": 0.9885965585708618,
+        "membrane_temporal_variance_mean": 0.32643392961472273,
+        "membrane_abs_mean": 1.4779104329645634,
+        "per_image": {
+          "spike_event_rate": [
+            0.9908332824707031,
+            0.9870376586914062,
+            0.9886093139648438,
+            0.9874954223632812,
+            0.98828125,
+            0.9896240234375,
+            0.99261474609375,
+            0.9859123229980469,
+            0.9846992492675781,
+            0.9889373779296875,
+            0.9882278442382812,
+            0.9878616333007812,
+            0.9913482666015625,
+            0.9892730712890625,
+            0.9889297485351562,
+            0.9883537292480469,
+            0.9874649047851562,
+            0.9901313781738281,
+            0.9886398315429688,
+            0.9880523681640625,
+            0.9873046875,
+            0.98699951171875,
+            0.9873771667480469,
+            0.9900398254394531,
+            0.9879035949707031,
+            0.9889755249023438,
+            0.9892044067382812,
+            0.9894599914550781,
+            0.9875717163085938,
+            0.9872589111328125,
+            0.9913063049316406,
+            0.9893608093261719
+          ],
+          "membrane_variance": [
+            0.2864243686199188,
+            0.3639940321445465,
+            0.34318917989730835,
+            0.3299706280231476,
+            0.3036157488822937,
+            0.29946717619895935,
+            0.2827707827091217,
+            0.28159046173095703,
+            0.28922513127326965,
+            0.35764387249946594,
+            0.31069689989089966,
+            0.37101516127586365,
+            0.36058634519577026,
+            0.3042444884777069,
+            0.3320136070251465,
+            0.3455599844455719,
+            0.3733154833316803,
+            0.31274864077568054,
+            0.3780476748943329,
+            0.34533771872520447,
+            0.3512900173664093,
+            0.3316481113433838,
+            0.2687847912311554,
+            0.3533361852169037,
+            0.329571932554245,
+            0.3552131652832031,
+            0.3675103187561035,
+            0.33892470598220825,
+            0.2880111634731293,
+            0.29096996784210205,
+            0.2934586703777313,
+            0.3057093322277069
+          ],
+          "membrane_abs_mean": [
+            1.4334644079208374,
+            1.496977686882019,
+            1.5013283491134644,
+            1.4899383783340454,
+            1.4606631994247437,
+            1.442800521850586,
+            1.4823813438415527,
+            1.4560438394546509,
+            1.4612175226211548,
+            1.4818376302719116,
+            1.4809455871582031,
+            1.4829427003860474,
+            1.4977747201919556,
+            1.4699150323867798,
+            1.4421237707138062,
+            1.5093482732772827,
+            1.475669026374817,
+            1.4596939086914062,
+            1.4987705945968628,
+            1.5026267766952515,
+            1.492022156715393,
+            1.473515510559082,
+            1.4827146530151367,
+            1.5155493021011353,
+            1.5025634765625,
+            1.4978471994400024,
+            1.49978506565094,
+            1.472296118736267,
+            1.4695148468017578,
+            1.448815941810608,
+            1.4496541023254395,
+            1.4623922109603882
+          ]
+        }
+      }
+    },
+    "gate_mean": {
+      "distance_controlled_macro_auc": {
+        "phase": {
+          "macro_distance_auc": 0.8959951980713289,
+          "by_squared_distance": {
+            "1": 0.8780810355624531,
+            "2": 0.8899558022792771,
+            "3": null,
+            "4": 0.9008881560175048,
+            "5": 0.8965849465726398,
+            "6": null,
+            "7": null,
+            "8": 0.9010955819764409,
+            "9": 0.9093656660196584
+          }
+        },
+        "gate": {
+          "macro_distance_auc": 0.49379778319083084,
+          "by_squared_distance": {
+            "1": 0.510239326013139,
+            "2": 0.47912173440108025,
+            "3": null,
+            "4": 0.4939478039388833,
+            "5": 0.4845300931804419,
+            "6": null,
+            "7": null,
+            "8": 0.5092749859767076,
+            "9": 0.48567275563473283
+          }
+        },
+        "carrier": {
+          "macro_distance_auc": 0.8924397487790331,
+          "by_squared_distance": {
+            "1": 0.8878866731233737,
+            "2": 0.8913154917074574,
+            "3": null,
+            "4": 0.8990589811285619,
+            "5": 0.8885546287433338,
+            "6": null,
+            "7": null,
+            "8": 0.8883039857531194,
+            "9": 0.899518732218352
+          }
+        },
+        "h_wave": {
+          "macro_distance_auc": 0.8919521469581889,
+          "by_squared_distance": {
+            "1": 0.8849072529045457,
+            "2": 0.8905434381700769,
+            "3": null,
+            "4": 0.8998849632212701,
+            "5": 0.8879131097263191,
+            "6": null,
+            "7": null,
+            "8": 0.8877665896529676,
+            "9": 0.900697528073954
+          }
+        },
+        "membrane": {
+          "macro_distance_auc": 0.8809298623328109,
+          "by_squared_distance": {
+            "1": 0.8601228330163324,
+            "2": 0.8791157955277158,
+            "3": null,
+            "4": 0.8910574673286538,
+            "5": 0.8791967338008634,
+            "6": null,
+            "7": null,
+            "8": 0.8808706601342313,
+            "9": 0.8952156841890683
+          }
+        },
+        "spike": {
+          "macro_distance_auc": 0.49379778319083084,
+          "by_squared_distance": {
+            "1": 0.510239326013139,
+            "2": 0.47912173440108025,
+            "3": null,
+            "4": 0.4939478039388833,
+            "5": 0.4845300931804419,
+            "6": null,
+            "7": null,
+            "8": 0.5092749859767076,
+            "9": 0.48567275563473283
+          }
+        }
+      },
+      "fixed_readouts": {
+        "spike_cc": {
+          "metrics": {
+            "fg_ari": 0.0018355681786785501,
+            "foreground_iou": 0.12902489129790054,
+            "matched_object_iou": 0.012649331407912006
+          },
+          "predicted_foreground_fraction": 0.3907470703125,
+          "predicted_object_count_mean": 1.0
+        },
+        "membrane_spatial": {
+          "metrics": {
+            "fg_ari": 0.6922083863037944,
+            "foreground_iou": 0.18120174412540271,
+            "matched_object_iou": 0.3056752165850978
+          },
+          "predicted_foreground_fraction": 0.86083984375,
+          "predicted_object_count_mean": 9.0
+        }
+      },
+      "gate_invariants": [
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        }
+      ],
+      "activity_scale": {
+        "spike_event_rate_mean": 0.9997931718826294,
+        "membrane_temporal_variance_mean": 0.09866400132887065,
+        "membrane_abs_mean": 1.4488595388829708,
+        "per_image": {
+          "spike_event_rate": [
+            0.99981689453125,
+            0.999969482421875,
+            0.9997787475585938,
+            0.9999961853027344,
+            0.9991455078125,
+            0.9999122619628906,
+            0.9997596740722656,
+            0.9998703002929688,
+            0.9996261596679688,
+            0.9999961853027344,
+            1.0,
+            0.9996910095214844,
+            0.9999313354492188,
+            0.99969482421875,
+            1.0,
+            0.9996833801269531,
+            1.0,
+            0.9999809265136719,
+            0.9999923706054688,
+            0.999908447265625,
+            0.9998741149902344,
+            0.9996795654296875,
+            0.9997138977050781,
+            0.9991950988769531,
+            0.9997406005859375,
+            0.9999732971191406,
+            0.999969482421875,
+            0.9993972778320312,
+            0.9997787475585938,
+            0.9997978210449219,
+            0.9999580383300781,
+            0.9995498657226562
+          ],
+          "membrane_variance": [
+            0.08460087329149246,
+            0.1061018854379654,
+            0.1032172366976738,
+            0.10280545800924301,
+            0.11586894094944,
+            0.08581599593162537,
+            0.09095431864261627,
+            0.09081022441387177,
+            0.09631192684173584,
+            0.09948974847793579,
+            0.09354750066995621,
+            0.10569934546947479,
+            0.08799730986356735,
+            0.10258490592241287,
+            0.08925826847553253,
+            0.10542100667953491,
+            0.10149254649877548,
+            0.08706890046596527,
+            0.09885247051715851,
+            0.09836895763874054,
+            0.1022942066192627,
+            0.10549727082252502,
+            0.10240824520587921,
+            0.11267317086458206,
+            0.10681124031543732,
+            0.09514737129211426,
+            0.09842941910028458,
+            0.10672102123498917,
+            0.1014571338891983,
+            0.09599608182907104,
+            0.09038287401199341,
+            0.0931621864438057
+          ],
+          "membrane_abs_mean": [
+            1.4127764701843262,
+            1.4690734148025513,
+            1.4698352813720703,
+            1.4488115310668945,
+            1.4677791595458984,
+            1.4138399362564087,
+            1.4441618919372559,
+            1.4453067779541016,
+            1.4360631704330444,
+            1.4550806283950806,
+            1.4519790410995483,
+            1.4515670537948608,
+            1.4554678201675415,
+            1.456233024597168,
+            1.414064884185791,
+            1.4742809534072876,
+            1.446933627128601,
+            1.4227824211120605,
+            1.458675742149353,
+            1.445320725440979,
+            1.4579572677612305,
+            1.4613577127456665,
+            1.4666649103164673,
+            1.4613059759140015,
+            1.4694095849990845,
+            1.454629898071289,
+            1.453529953956604,
+            1.4536250829696655,
+            1.4481576681137085,
+            1.4481158256530762,
+            1.4170690774917603,
+            1.4316487312316895
+          ]
+        }
+      }
+    },
+    "carrier_mean": {
+      "distance_controlled_macro_auc": {
+        "phase": {
+          "macro_distance_auc": 0.8959951980713289,
+          "by_squared_distance": {
+            "1": 0.8780810355624531,
+            "2": 0.8899558022792771,
+            "3": null,
+            "4": 0.9008881560175048,
+            "5": 0.8965849465726398,
+            "6": null,
+            "7": null,
+            "8": 0.9010955819764409,
+            "9": 0.9093656660196584
+          }
+        },
+        "gate": {
+          "macro_distance_auc": 0.8851451447105768,
+          "by_squared_distance": {
+            "1": 0.8757842370778345,
+            "2": 0.8865612672930615,
+            "3": null,
+            "4": 0.8901383745273129,
+            "5": 0.8857545271629779,
+            "6": null,
+            "7": null,
+            "8": 0.8851188351449204,
+            "9": 0.8875136270573533
+          }
+        },
+        "carrier": {
+          "macro_distance_auc": 0.50607357887611,
+          "by_squared_distance": {
+            "1": 0.4996577167372626,
+            "2": 0.4994404956146109,
+            "3": null,
+            "4": 0.5040878604660942,
+            "5": 0.5147103983122033,
+            "6": null,
+            "7": null,
+            "8": 0.5124405235885507,
+            "9": 0.5061044785379386
+          }
+        },
+        "h_wave": {
+          "macro_distance_auc": 0.8819897408049401,
+          "by_squared_distance": {
+            "1": 0.8680128511806828,
+            "2": 0.8806630283253002,
+            "3": null,
+            "4": 0.8881349925060897,
+            "5": 0.8842187103201735,
+            "6": null,
+            "7": null,
+            "8": 0.8838871389737696,
+            "9": 0.8870217235236246
+          }
+        },
+        "membrane": {
+          "macro_distance_auc": 0.8769908998005734,
+          "by_squared_distance": {
+            "1": 0.8588878905627059,
+            "2": 0.8759619411989022,
+            "3": null,
+            "4": 0.8831070142399313,
+            "5": 0.8794967865445098,
+            "6": null,
+            "7": null,
+            "8": 0.8796193509667246,
+            "9": 0.8848724152906663
+          }
+        },
+        "spike": {
+          "macro_distance_auc": 0.8851451447105768,
+          "by_squared_distance": {
+            "1": 0.8757842370778345,
+            "2": 0.8865612672930615,
+            "3": null,
+            "4": 0.8901383745273129,
+            "5": 0.8857545271629779,
+            "6": null,
+            "7": null,
+            "8": 0.8851188351449204,
+            "9": 0.8875136270573533
+          }
+        }
+      },
+      "fixed_readouts": {
+        "spike_cc": {
+          "metrics": {
+            "fg_ari": 0.674230534456345,
+            "foreground_iou": 0.6903295668254785,
+            "matched_object_iou": 0.48341616435412116
+          },
+          "predicted_foreground_fraction": 0.1641845703125,
+          "predicted_object_count_mean": 3.59375
+        },
+        "membrane_spatial": {
+          "metrics": {
+            "fg_ari": 0.8121385137174983,
+            "foreground_iou": 0.18062520112059172,
+            "matched_object_iou": 0.4049304743654836
+          },
+          "predicted_foreground_fraction": 0.8448486328125,
+          "predicted_object_count_mean": 9.0
+        }
+      },
+      "gate_invariants": [
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        },
+        {
+          "graph_bitwise_equal": true,
+          "theta_max_abs_delta": 0.0,
+          "theta_allclose": true
+        }
+      ],
+      "activity_scale": {
+        "spike_event_rate_mean": 0.9999227523803711,
+        "membrane_temporal_variance_mean": 0.16562018264085054,
+        "membrane_abs_mean": 1.4984203651547432,
+        "per_image": {
+          "spike_event_rate": [
+            0.9999542236328125,
+            0.9999237060546875,
+            0.9999542236328125,
+            0.9998626708984375,
+            0.9999237060546875,
+            0.99993896484375,
+            0.99993896484375,
+            0.9998931884765625,
+            0.99993896484375,
+            0.9999542236328125,
+            0.99993896484375,
+            0.999969482421875,
+            0.9998931884765625,
+            0.9998321533203125,
+            0.9999542236328125,
+            0.9999237060546875,
+            0.999847412109375,
+            0.9999237060546875,
+            0.9998779296875,
+            0.99993896484375,
+            0.9999237060546875,
+            0.99993896484375,
+            0.9998779296875,
+            0.9999237060546875,
+            0.9999542236328125,
+            0.9999237060546875,
+            0.9999237060546875,
+            0.9999847412109375,
+            0.9998779296875,
+            0.999908447265625,
+            0.999969482421875,
+            0.99993896484375
+          ],
+          "membrane_variance": [
+            0.16539962589740753,
+            0.164425790309906,
+            0.1578991562128067,
+            0.16882282495498657,
+            0.16203822195529938,
+            0.16735315322875977,
+            0.17194625735282898,
+            0.1615317463874817,
+            0.15465261042118073,
+            0.16741211712360382,
+            0.16555754840373993,
+            0.16787195205688477,
+            0.19826683402061462,
+            0.15695731341838837,
+            0.15876859426498413,
+            0.16493622958660126,
+            0.16710209846496582,
+            0.16771571338176727,
+            0.17783531546592712,
+            0.16487689316272736,
+            0.16454607248306274,
+            0.16145411133766174,
+            0.15387487411499023,
+            0.17944689095020294,
+            0.1569312959909439,
+            0.17433597147464752,
+            0.1730792373418808,
+            0.1702069193124771,
+            0.14863060414791107,
+            0.17283792793750763,
+            0.1554267406463623,
+            0.15770520269870758
+          ],
+          "membrane_abs_mean": [
+            1.4626086950302124,
+            1.5133558511734009,
+            1.5086473226547241,
+            1.5026483535766602,
+            1.4732089042663574,
+            1.4779993295669556,
+            1.5039764642715454,
+            1.4971898794174194,
+            1.4994369745254517,
+            1.50375497341156,
+            1.494284987449646,
+            1.50530207157135,
+            1.5111736059188843,
+            1.4920015335083008,
+            1.470013976097107,
+            1.5180368423461914,
+            1.498147964477539,
+            1.481052279472351,
+            1.5205764770507812,
+            1.5266660451889038,
+            1.5040701627731323,
+            1.4917770624160767,
+            1.5091768503189087,
+            1.5290991067886353,
+            1.516837239265442,
+            1.5100353956222534,
+            1.513564109802246,
+            1.4874385595321655,
+            1.4750080108642578,
+            1.4853363037109375,
+            1.4742475748062134,
+            1.4927787780761719
+          ]
+        }
+      }
+    },
+    "K0": {
+      "distance_controlled_macro_auc": {
+        "phase": {
+          "macro_distance_auc": 0.8197652405624735,
+          "by_squared_distance": {
+            "1": 0.820390747461075,
+            "2": 0.8216806386476873,
+            "3": null,
+            "4": 0.8241198785355788,
+            "5": 0.8071926705866266,
+            "6": null,
+            "7": null,
+            "8": 0.8118564485570718,
+            "9": 0.833351059586801
+          }
+        },
+        "gate": {
+          "macro_distance_auc": 0.7056651199009161,
+          "by_squared_distance": {
+            "1": 0.6770285145295355,
+            "2": 0.7002494326813076,
+            "3": null,
+            "4": 0.7057100892961732,
+            "5": 0.7133832118927155,
+            "6": null,
+            "7": null,
+            "8": 0.7213503155731114,
+            "9": 0.7162691554326536
+          }
+        },
+        "carrier": {
+          "macro_distance_auc": 0.6230809929263592,
+          "by_squared_distance": {
+            "1": 0.6038226817115719,
+            "2": 0.6464713715046605,
+            "3": null,
+            "4": 0.6307529652757128,
+            "5": 0.6195956320446954,
+            "6": null,
+            "7": null,
+            "8": 0.6176681716372537,
+            "9": 0.6201751353842608
+          }
+        },
+        "h_wave": {
+          "macro_distance_auc": 0.6617067459501568,
+          "by_squared_distance": {
+            "1": 0.6503770950263909,
+            "2": 0.6678106812200322,
+            "3": null,
+            "4": 0.6800175408560779,
+            "5": 0.6631665722490282,
+            "6": null,
+            "7": null,
+            "8": 0.6536619425496111,
+            "9": 0.6552066437997996
+          }
+        },
+        "membrane": {
+          "macro_distance_auc": 0.6575201022111054,
+          "by_squared_distance": {
+            "1": 0.6481639225661909,
+            "2": 0.6627188787407088,
+            "3": null,
+            "4": 0.6764793339280405,
+            "5": 0.6580523920220351,
+            "6": null,
+            "7": null,
+            "8": 0.6481820713677712,
+            "9": 0.6515240146418854
+          }
+        },
+        "spike": {
+          "macro_distance_auc": 0.702082505502403,
+          "by_squared_distance": {
+            "1": 0.6702606409254095,
+            "2": 0.6985240336827891,
+            "3": null,
+            "4": 0.6998951753635072,
+            "5": 0.7141583481471352,
+            "6": null,
+            "7": null,
+            "8": 0.7151957573166283,
+            "9": 0.7144610775789483
+          }
+        }
+      },
+      "fixed_readouts": {
+        "spike_cc": {
+          "metrics": {
+            "fg_ari": 0.237748672815575,
+            "foreground_iou": 0.43881450799974303,
+            "matched_object_iou": 0.22116481762506074
+          },
+          "predicted_foreground_fraction": 0.134521484375,
+          "predicted_object_count_mean": 6.53125
+        },
+        "membrane_spatial": {
+          "metrics": {
+            "fg_ari": 0.7176812711123809,
+            "foreground_iou": 0.18275261647005925,
+            "matched_object_iou": 0.2660718353074124
+          },
+          "predicted_foreground_fraction": 0.8592529296875,
+          "predicted_object_count_mean": 9.0
+        }
+      },
+      "activity_scale": {
+        "spike_event_rate_mean": 0.9887839555740356,
+        "membrane_temporal_variance_mean": 0.3190889898687601,
+        "membrane_abs_mean": 1.4666040353477001,
+        "per_image": {
+          "spike_event_rate": [
+            0.9895477294921875,
+            0.9881172180175781,
+            0.9880867004394531,
+            0.9896316528320312,
+            0.9882354736328125,
+            0.9894371032714844,
+            0.9890556335449219,
+            0.9883537292480469,
+            0.9879341125488281,
+            0.98858642578125,
+            0.9894485473632812,
+            0.989349365234375,
+            0.9897270202636719,
+            0.988616943359375,
+            0.9895286560058594,
+            0.9876022338867188,
+            0.9884414672851562,
+            0.9890594482421875,
+            0.9885940551757812,
+            0.9907684326171875,
+            0.9888954162597656,
+            0.9878349304199219,
+            0.9876708984375,
+            0.9901008605957031,
+            0.9877700805664062,
+            0.9890480041503906,
+            0.9890823364257812,
+            0.9898033142089844,
+            0.9887428283691406,
+            0.9877967834472656,
+            0.9876480102539062,
+            0.9885711669921875
+          ],
+          "membrane_variance": [
+            0.31160709261894226,
+            0.3198036551475525,
+            0.31224048137664795,
+            0.31804510951042175,
+            0.29669591784477234,
+            0.3345174193382263,
+            0.32238203287124634,
+            0.33023032546043396,
+            0.3188096284866333,
+            0.32635563611984253,
+            0.31647878885269165,
+            0.32494819164276123,
+            0.3223096430301666,
+            0.3223349153995514,
+            0.324836403131485,
+            0.3199750483036041,
+            0.32333797216415405,
+            0.322455495595932,
+            0.33222097158432007,
+            0.31826481223106384,
+            0.31787577271461487,
+            0.30745676159858704,
+            0.3003045916557312,
+            0.31939607858657837,
+            0.3178427815437317,
+            0.3208411931991577,
+            0.3318694829940796,
+            0.31232011318206787,
+            0.30045610666275024,
+            0.3207974433898926,
+            0.31935805082321167,
+            0.32447975873947144
+          ],
+          "membrane_abs_mean": [
+            1.4597264528274536,
+            1.4683157205581665,
+            1.4616918563842773,
+            1.4651902914047241,
+            1.42638099193573,
+            1.4938486814498901,
+            1.4863758087158203,
+            1.4835199117660522,
+            1.4645637273788452,
+            1.4709571599960327,
+            1.461532711982727,
+            1.4721304178237915,
+            1.4849456548690796,
+            1.4773601293563843,
+            1.4705451726913452,
+            1.4575557708740234,
+            1.4649003744125366,
+            1.4699029922485352,
+            1.4809824228286743,
+            1.4627776145935059,
+            1.4712063074111938,
+            1.4518855810165405,
+            1.4402793645858765,
+            1.470749020576477,
+            1.468774437904358,
+            1.4773898124694824,
+            1.4800716638565063,
+            1.4480805397033691,
+            1.4437955617904663,
+            1.4665130376815796,
+            1.4558128118515015,
+            1.4735671281814575
+          ]
+        }
+      },
+      "kuramoto_K_during_rollout": 0.0,
+      "theta_max_abs_delta_from_normal": 91.89629364013672
+    }
+  },
+  "warning": "Validation diagnostic only; target masks are used only after prediction for pair labels and scores."
+}
