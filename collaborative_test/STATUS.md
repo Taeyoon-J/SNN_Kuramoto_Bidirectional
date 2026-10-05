@@ -33,6 +33,14 @@
   `.588565/.606040/.465839`. The foreground mask is exactly unchanged. This
   separates an ARI gain from a small object-IoU gain but provides no single
   dominant hybrid yet.
+- SW0052 evaluated both SW0050 trajectories at saved epochs20/25/30/35 after
+  per-checkpoint real-asset smoke tests. Low-LR epoch25 is the clear model
+  selection: long common .35 `.395707/.189112/.159085`, strictly above its
+  epoch40 `.347156/.167773/.135250`. Diversity epoch30
+  `.330248/.222187/.157874` and epoch35 `.302799/.231287/.132006` retain a
+  foreground-IoU tradeoff. Substituting low-LR epoch25 for collapsed seed2
+  gives diagnostic three-seed mean about `.485898/.436209/.336823`; this is
+  not yet a same-recipe three-seed result.
 - SW_0034 full320 complete: distance-controlled AUC phase .5788, gating .5871, h-wave .5842, membrane .5870, gated spike .5863, binary threshold .5000. Binary threshold is constant 1 after settle across all aggregate patch histories; gated spike variation is gate-driven. Continuous signal is weak upstream and roughly preserved downstream; no single sharp loss stage. Spatial-only/membrane-spatial/gated-spike-spatial readouts .491272/.190837/.178026, .494639/.191070/.170568, .479762/.185651/.164179. Phase PLV bypasses downstream gradients; membrane/spike losses connect them. No improvement claim.
 - SW_0035: adaptive object-count classifier baseline code prepared. It compares GT-free eigengap/eigen-threshold count inference, existing adaptive slots, and fixed-k grouping controls on membrane and gated-spike patterns. Not yet run.
 - SW_0035 pilot: gated-spike spatial eigengap range 5-10 reduces predicted groups 9.0→7.06 and count MAE 2.95→2.05; FG IoU .1746→.1997, but FG-ARI .4871→.4759 and object IoU .1605→.1413. Exact count only 4.7%. Existing membrane slots average 6.06 versus true 6.11 but exact count 7.8%, showing mean count is misleading. Selected full320 baseline running.
