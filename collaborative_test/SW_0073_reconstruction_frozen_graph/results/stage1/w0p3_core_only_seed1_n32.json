@@ -1,0 +1,314 @@
+{
+  "checkpoint": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0073_s1_w0p3/model/core.pt",
+  "split": "validation",
+  "ids": [
+    1320,
+    1351
+  ],
+  "images": 32,
+  "gamma_source": {
+    "path": "/Data0/kevinswk/patch_v2_sw/data/SW_0042_hdf5_aligned/gamma_validation_1320_1639.pt",
+    "global_start": 1320,
+    "manifest_path": "/Data0/kevinswk/patch_v2_sw/data/SW_0042_hdf5_aligned/manifest.json",
+    "manifest": {
+      "dataset": "/Data0/kevinswk/datasets/object_centric_data/clevr_10-full.hdf5",
+      "image_ids": [
+        1320,
+        1639
+      ],
+      "shape": [
+        320,
+        8,
+        256
+      ],
+      "dtype": "torch.float32",
+      "source_run": "/Data0/kevinswk/patch_v2/trained_models/readme_patch_eval_20261002",
+      "encoder": "/Data0/kevinswk/patch_v2/trained_models/readme_patch_eval_20261002/input_encoder/input_layer_encoder.pt",
+      "encoder_sha256": "9b9c9c59725f872084a6c9bfae1ebbd1b89de40d18ef4f8ab6b8ec014c2ab868",
+      "preprocessing": "/Data0/kevinswk/patch_v2/trained_models/readme_patch_eval_20261002/feature_preprocessing.pt",
+      "preprocessing_sha256": "a9ec3281b9603021c37f7c346baa6cf62513c5ce7edde867ab7eddf24b18e127",
+      "gamma_sha256": "f20b019bd46adb378b2bfcecbb252d960da2592ef651dcd419753034c8b705f0",
+      "normalization": "train IDs 0-999 standardize, clip [-3,3]",
+      "patch_grid_size": 16
+    }
+  },
+  "target_sources": {
+    "our_hdf5": {
+      "path": "/Data0/kevinswk/datasets/object_centric_data/clevr_10-full.hdf5",
+      "ids": [
+        1320,
+        1351
+      ]
+    }
+  },
+  "classifier": "peer_spike_synchrony_components",
+  "component_combination": "clamped-positive per-component correlation product",
+  "background": "largest_component",
+  "inference": {
+    "steps": 256,
+    "settle": 64,
+    "membrane_vth": 0.06,
+    "min_group_size": 2,
+    "dendritic_projection": "shared",
+    "graph_spatial_decay": 0.35,
+    "kuramoto_backend": "factorized",
+    "gate_mode": "raw",
+    "geodesic_steps": 3,
+    "geodesic_radius": 1.5,
+    "geodesic_contrast": 2.0,
+    "geodesic_temperature": 0.5,
+    "geodesic_cap": 16.0,
+    "synchrony_thresholds": [
+      0.35
+    ],
+    "target_foreground": null,
+    "affinity_modes": [
+      "spike"
+    ],
+    "spatial_sigmas": [
+      null
+    ],
+    "spatial_affinity_formula": "S_ij * exp(-d_ij^2/(2*sigma^2)); spatial_only uses G, spike uses S",
+    "spatial_grid_size": [
+      16,
+      16
+    ]
+  },
+  "settle": 64,
+  "gamma_global_start": 1320,
+  "phase_endpoint_diagnostic_only": true,
+  "phase_diagnostic": {
+    "product_plv_mean": 0.3817475438117981,
+    "per_image_mean_offdiagonal_plv": [
+      0.32889142632484436,
+      0.682684063911438,
+      0.3207584321498871,
+      0.30932876467704773,
+      0.24263402819633484,
+      0.29394400119781494,
+      0.3704364001750946,
+      0.37546536326408386,
+      0.3542417585849762,
+      0.6420136094093323,
+      0.42037850618362427,
+      0.29246965050697327,
+      0.3607465326786041,
+      0.3499433994293213,
+      0.3991827666759491,
+      0.3786054849624634,
+      0.49055686593055725,
+      0.36065518856048584,
+      0.3979431390762329,
+      0.19267021119594574,
+      0.26815065741539,
+      0.4358122646808624,
+      0.48903924226760864,
+      0.3213537633419037,
+      0.4516003429889679,
+      0.3901118040084839,
+      0.41203978657722473,
+      0.1931452751159668,
+      0.5686472058296204,
+      0.32499417662620544,
+      0.3031346797943115,
+      0.4167579710483551
+    ]
+  },
+  "ground_truth_used_for_prediction": false,
+  "sweep": [
+    {
+      "affinity_mode": "spike",
+      "spatial_sigma": null,
+      "synchrony_threshold": 0.35,
+      "target_foreground": null,
+      "predicted_foreground_fraction": 0.3826904296875,
+      "predicted_object_count": {
+        "mean": 5.375,
+        "per_image": [
+          4,
+          1,
+          5,
+          8,
+          8,
+          4,
+          4,
+          3,
+          7,
+          4,
+          7,
+          8,
+          4,
+          6,
+          4,
+          7,
+          3,
+          7,
+          3,
+          9,
+          7,
+          5,
+          4,
+          7,
+          2,
+          7,
+          4,
+          7,
+          2,
+          4,
+          13,
+          4
+        ],
+        "empty_image_count": 0
+      },
+      "scored_targets": {
+        "our_hdf5": {
+          "metrics": {
+            "fg_ari": 0.6664782597678578,
+            "foreground_iou": 0.4483299497237808,
+            "matched_object_iou": 0.4737165533303054
+          },
+          "valid_count": {
+            "fg_ari": 32,
+            "foreground_iou": 32,
+            "matched_object_iou": 32
+          },
+          "object_count": {
+            "exact_accuracy": 0.21875,
+            "mae": 1.46875,
+            "bias": -0.15625,
+            "within_one_accuracy": 0.625,
+            "predicted_mean": 5.375,
+            "target_mean": 5.53125
+          },
+          "target_foreground_fraction": 0.1854248046875,
+          "per_image": {
+            "fg_ari": [
+              0.9205670622343431,
+              0.4323056300268096,
+              0.5154565889834578,
+              0.9180524510448457,
+              0.844477810455175,
+              0.7191138937136955,
+              0.2964487412654351,
+              0.9822391240753897,
+              0.1694753780752388,
+              0.8858858858858859,
+              0.8352954429083461,
+              0.8604519993776256,
+              0.8825914539054495,
+              0.709180790960452,
+              1.0,
+              0.5372813984495581,
+              0.8176352705410821,
+              0.7990123456790124,
+              0.118979871430077,
+              0.8682810135234097,
+              0.803042060649101,
+              0.5580371769948232,
+              0.2902448951902856,
+              0.45567694978419787,
+              0.5869227180842792,
+              0.6564920273348519,
+              0.47956771361026673,
+              0.6718126628750353,
+              0.6648197323056588,
+              0.7771698342299518,
+              0.5205157741008626,
+              0.7502706148768453
+            ],
+            "foreground_iou": [
+              0.5042016806722689,
+              0.13636363636363635,
+              0.33620689655172414,
+              0.4152542372881356,
+              0.37714285714285717,
+              0.3722627737226277,
+              0.373015873015873,
+              0.85,
+              0.2361111111111111,
+              0.6296296296296297,
+              0.47540983606557374,
+              0.17582417582417584,
+              0.8727272727272727,
+              0.4180327868852459,
+              0.20202020202020202,
+              0.39344262295081966,
+              0.36,
+              0.2909090909090909,
+              0.3114754098360656,
+              0.6103896103896104,
+              0.5064102564102564,
+              0.37962962962962965,
+              0.29411764705882354,
+              0.8309859154929577,
+              0.5416666666666666,
+              0.24778761061946902,
+              0.7777777777777778,
+              0.5297619047619048,
+              0.5555555555555556,
+              0.4496124031007752,
+              0.46564885496183206,
+              0.42718446601941745
+            ],
+            "matched_object_iou": [
+              0.5581372549019608,
+              0.25,
+              0.4843966712898752,
+              0.5761005842973057,
+              0.4040871409292462,
+              0.5202614379084967,
+              0.18380291762013728,
+              0.8561703996486605,
+              0.35633213859020313,
+              0.4722222222222222,
+              0.5225772765246449,
+              0.6333333333333333,
+              0.5298481711525189,
+              0.38445378151260506,
+              0.6388888888888888,
+              0.32357985152102803,
+              0.5833333333333334,
+              0.32329545454545455,
+              0.35964912280701755,
+              0.6459183673469387,
+              0.7754312354312354,
+              0.6098014888337469,
+              0.2801724137931034,
+              0.5032407407407407,
+              0.3,
+              0.6325974025974025,
+              0.4694444444444444,
+              0.531386186919909,
+              0.2853046594982079,
+              0.27726289774482543,
+              0.47139917695473255,
+              0.4165007112375533
+            ]
+          }
+        }
+      },
+      "phase_endpoint": {
+        "diagnostic_only": true,
+        "readout": "phase_plv_threshold_connected_components",
+        "predicted_object_count_mean": 3.625,
+        "scored_targets": {
+          "our_hdf5": {
+            "metrics": {
+              "fg_ari": 0.6709924504661112,
+              "foreground_iou": 0.6820169313593913,
+              "matched_object_iou": 0.4520196123816296
+            },
+            "object_count": {
+              "exact_accuracy": 0.1875,
+              "mae": 1.96875,
+              "bias": -1.90625,
+              "within_one_accuracy": 0.34375,
+              "predicted_mean": 3.625,
+              "target_mean": 5.53125
+            }
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "experiment": "SW0073 component swap diagnosis",
+  "rows": {
+    "w0p3": {
+      "joint": {
+        "fg_ari": 0.678845366550907,
+        "foreground_iou": 0.39599980514190425,
+        "matched_object_iou": 0.49133496348438443
+      },
+      "feature_only": {
+        "fg_ari": 0.6874326203104605,
+        "foreground_iou": 0.4205040593621924,
+        "matched_object_iou": 0.5257439863326459
+      },
+      "core_only": {
+        "fg_ari": 0.6664782597678578,
+        "foreground_iou": 0.4483299497237808,
+        "matched_object_iou": 0.4737165533303054
+      }
+    },
+    "w1": {
+      "joint": {
+        "fg_ari": 0.6880164172030956,
+        "foreground_iou": 0.46849130485379964,
+        "matched_object_iou": 0.50853764975076
+      },
+      "feature_only": {
+        "fg_ari": 0.7189444668206151,
+        "foreground_iou": 0.4311917204451985,
+        "matched_object_iou": 0.530549316587392
+      },
+      "core_only": {
+        "fg_ari": 0.6532551814353686,
+        "foreground_iou": 0.4511551472769042,
+        "matched_object_iou": 0.462358381198561
+      }
+    }
+  },
+  "interpretation": "feature_only isolates learned RGB features in SW0072 core; core_only isolates the jointly trained core on native gamma"
+}

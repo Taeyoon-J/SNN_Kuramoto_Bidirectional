@@ -1,0 +1,38 @@
+{
+  "experiment": "SW0073 reconstruction-held frozen-graph stage1",
+  "baseline_sw0072_seed1": {
+    "fg_ari": 0.7087568718226954,
+    "foreground_iou": 0.46810477545343715,
+    "matched_object_iou": 0.5098805140855838
+  },
+  "rows": {
+    "w0p3": {
+      "metrics": {
+        "fg_ari": 0.678845366550907,
+        "foreground_iou": 0.39599980514190425,
+        "matched_object_iou": 0.49133496348438443
+      },
+      "delta": {
+        "fg_ari": -0.02991150527178843,
+        "foreground_iou": -0.0721049703115329,
+        "matched_object_iou": -0.018545550601199334
+      },
+      "count_mae": 1.53125
+    },
+    "w1": {
+      "metrics": {
+        "fg_ari": 0.6880164172030956,
+        "foreground_iou": 0.46849130485379964,
+        "matched_object_iou": 0.50853764975076
+      },
+      "delta": {
+        "fg_ari": -0.020740454619599835,
+        "foreground_iou": 0.00038652940036248973,
+        "matched_object_iou": -0.001342864334823779
+      },
+      "count_mae": 1.53125
+    }
+  },
+  "advancing_arms": [],
+  "gate": "one arm must improve all three fixed seed1 metrics over SW0072"
+}
