@@ -189,7 +189,8 @@ else
 fi
 
 if [[ -e "$VAL_OUT/SCORING_COMPLETED" ]]; then
-  if "$SNN_PY" "$RUN_DIR/validate_phase.py" scoring "$VAL_OUT" "$SEED"; then
+  if "$SNN_PY" "$RUN_DIR/validate_phase.py" scoring "$VAL_OUT" "$SEED" \
+      --training-protocol "$OUT/training_protocol.json"; then
     echo "Valid scoring artifacts found; skipping scoring for seed$SEED"
   else
     mark_failed scoring-recovery-validation 17 "$VAL_OUT"
@@ -212,7 +213,8 @@ else
   else
     rc=$?; mark_failed scoring "$rc" "$VAL_OUT/scoring.log"; echo "Scoring failed; partial output preserved" >&2; exit "$rc"
   fi
-  if "$SNN_PY" "$RUN_DIR/validate_phase.py" scoring "$VAL_OUT" "$SEED"; then :
+  if "$SNN_PY" "$RUN_DIR/validate_phase.py" scoring "$VAL_OUT" "$SEED" \
+      --training-protocol "$OUT/training_protocol.json"; then :
   else rc=$?; mark_failed scoring-validation "$rc" "$VAL_OUT"; exit "$rc"; fi
 fi
 

@@ -111,3 +111,9 @@ concurrency only: every seed retains its own deterministic order, 2,500 unique
 images, ten exposures, 1,563 optimizer updates, checkpoint validation, and
 aligned 320-image scoring. `wait_parallel_summary.sh` independently waits for
 all three validated `COMPLETED` markers and then produces the exclusive summary.
+
+If CPU seed0 remains the last bottleneck, `finish_gpu_all_seeds.sh` preserves
+the two running GPU jobs and reproduces seed0 with the same validated CUDA
+runner. It then validates and summarizes all three GPU outputs. Only the
+execution backend changes; the data, exposures, update count, model, optimizer,
+seeds, and evaluation contract remain fixed.
