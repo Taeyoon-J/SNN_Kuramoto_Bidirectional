@@ -48,6 +48,31 @@ def matching_train_process(output):
                and f'--save-path {output}/core.pt' in line for line in listing.splitlines())
 
 
+def recover_finished_training(output):
+    log = output / 'training.log'
+    files = [output / 'core.pt', *(output / 'checkpoints' / f'epoch_{epoch:02d}.pt' for epoch in (1, 3, 10))]
+    if not log.is_file() or not all(path.is_file() and path.stat().st_size for path in files):
+        return False
+    text = log.read_text()
+    if 'Epoch 0010/0010 |' not in text or f'trained S2NetCore: {output}/core.pt' not in text:
+        return False
+    import hashlib
+    import torch
+    models = [torch.load(path, map_location='cpu', weights_only=True) for path in files]
+    if not models[0] or any(set(model) != set(models[0]) for model in models):
+        raise RuntimeError(f'Checkpoint state keys do not match: {output}')
+    if any(not torch.isfinite(value).all().item() for model in models for value in model.values()):
+        raise RuntimeError(f'Nonfinite saved model: {output}')
+    if any(not torch.equal(models[0][key], models[-1][key]) for key in models[0]):
+        raise RuntimeError(f'Final model differs from epoch10: {output}')
+    evidence = {'reason': 'missing wrapper marker; completed trainer and saved states verified',
+                'epoch10_matches_final_state': True,
+                'checkpoint_sha256': {str(path.relative_to(output)): hashlib.sha256(path.read_bytes()).hexdigest() for path in files}}
+    (output / 'completion_recovery.json').write_text(json.dumps(evidence, indent=2) + '\n')
+    (output / 'TRAINING_COMPLETED').write_text('complete; recovered from validated artifacts\n')
+    return True
+
+
 def train_all_seeds():
     launched = {}
     last_seen = {}
@@ -68,7 +93,9 @@ def train_all_seeds():
                 last_seen[seed] = time.monotonic()
             elif output.exists():
                 # Allow the preserved trainer's wrapper to write its completion marker.
-                if seed in last_seen and time.monotonic() - last_seen[seed] < 60:
+                if recover_finished_training(output):
+                    completed.append(seed)
+                elif seed in last_seen and time.monotonic() - last_seen[seed] < 60:
                     running.append(seed)
                 else:
                     raise RuntimeError(f'Partial training output preserved; inspect {output}')
@@ -92,6 +119,11 @@ def train_all_seeds():
 
 def main():
     train_all_seeds()
+    # An independent early evaluation may still own seed1's output files.
+    while any(f'bash {DIR}/evaluate_seed1_early.sh' in line
+              for line in subprocess.check_output(['ps', '-eo', 'args'], text=True).splitlines()):
+        state('waiting_for_seed1_early_evaluation')
+        time.sleep(30)
     evaluation = ROOT / 'trained_models/SW0092_our_on_official_eval'
     for epoch in (1, 3, 10):
         for seed in (0, 1, 2):

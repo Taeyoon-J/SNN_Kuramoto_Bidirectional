@@ -101,3 +101,25 @@ This follows the user's request to use all four available GPUs. Experiment3's
 remaining seed0 evaluations use GPU2, so GPU3 is no longer required by its
 finish queue. Three-seed conclusions remain pending.
 
+### Experiment2 seed1 completed; missing marker recovered
+
+The trainer completed epoch10 and saved `core.pt` plus epochs01/03/10, but its
+wrapper did not write `TRAINING_COMPLETED`. The queue stopped conservatively;
+the other three training jobs remained alive. Recovery loaded all four saved
+state dictionaries on CPU, checked matching keys and finite values, and proved
+the final model tensors exactly equal the epoch10 model tensors. It also
+required the trainer's epoch10 and final-save log lines. Only then was the
+completion marker restored. Hash evidence and the completed training log are
+saved under `results/our_on_official/`; training was not repeated.
+
+The marker omission's root cause is unconfirmed. A launcher was updated while
+older wrappers were running, so future shell deployments should use a new
+file/inode rather than overwrite an executing script in place.
+
+The current coordinator PID3467736 reports completed seed1 and live seeds0/2.
+`evaluate_seed1_early.sh` PID3467737 evaluates seed1 epochs1/3/10 on the now-free
+GPU1 while the remaining jobs train on GPUs0/2/3. The final coordinator waits
+for this early-evaluation wrapper before reading or generating evaluation
+outputs, avoiding duplicate writes. Actual first evaluation PID3467744 was
+confirmed on GPU1. Model architecture and training parameters are unchanged.
+
