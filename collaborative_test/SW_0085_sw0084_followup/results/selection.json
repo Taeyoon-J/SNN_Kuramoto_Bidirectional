@@ -1,0 +1,33 @@
+{
+  "experiment": "SW0085 automatic SW0084 follow-up",
+  "selection_rule": "among all-three pilot advances, maximize the worst relative metric delta; if none advances, apply the same maximin rule to all candidates for diagnosis",
+  "baseline": {
+    "fg_ari": 0.7087568718226954,
+    "foreground_iou": 0.46810477545343715,
+    "matched_object_iou": 0.5098805140855838
+  },
+  "chosen": {
+    "arm": "A",
+    "epoch": "10",
+    "metrics": {
+      "fg_ari": 0.6463810148639106,
+      "foreground_iou": 0.4893106673937901,
+      "matched_object_iou": 0.4539135888653265
+    },
+    "delta": {
+      "fg_ari": -0.06237585695878478,
+      "foreground_iou": 0.02120589194035294,
+      "matched_object_iou": -0.05596692522025726
+    },
+    "relative_delta": {
+      "fg_ari": -0.08800741049377635,
+      "foreground_iou": 0.045301592832099426,
+      "matched_object_iou": -0.10976478542355744
+    },
+    "all_three_strictly_improved": false,
+    "minimum_relative_delta": -0.10976478542355744,
+    "mean_relative_delta": -0.050823534361744784
+  },
+  "full320_promotion": false,
+  "candidate_count": 8
+}

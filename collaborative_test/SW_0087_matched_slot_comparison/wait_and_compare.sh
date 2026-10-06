@@ -3,7 +3,7 @@ set -euo pipefail
 ROOT=/Data0/kevinswk/patch_v2_sw
 DIR="$ROOT/collaborative_test/SW_0087_matched_slot_comparison"
 SLOT="$ROOT/collaborative_test/SW_0056_matched_slot_2500/results/SW0056_three_seed_validation.json"
-MODEL="$ROOT/collaborative_test/SW_0072_frozen_trained_graph/results/long/summary.json"
+MODEL="$ROOT/trained_models/SW0072_full320_long/summary.json"
 OUT="$DIR/results/SW0087_goal_comparison.json"
 STATE="$ROOT/trained_models/SW0087_GOAL_COMPARISON_QUEUE.json"
 [[ ! -e "$STATE" ]] || { echo "refusing existing SW0087 state" >&2; exit 3; }

@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "experiment": "SW0087 fixed-contract matched Slot goal comparison",
+  "model": "SW0072 frozen trained graph",
+  "slot": "SW0056 matched-data Slot Attention",
+  "contract": "HDF5 validation IDs1320-1639; 16x16 patch masks; three-seed means",
+  "metrics": {
+    "fg_ari": {
+      "model_mean": 0.7814074870193034,
+      "slot_mean": 0.571055789122348,
+      "delta_model_minus_slot": 0.2103516978969554,
+      "strictly_exceeds_slot": true
+    },
+    "foreground_iou": {
+      "model_mean": 0.47803820820271564,
+      "slot_mean": 0.2255406492818574,
+      "delta_model_minus_slot": 0.25249755892085823,
+      "strictly_exceeds_slot": true
+    },
+    "matched_object_iou": {
+      "model_mean": 0.6167461822406115,
+      "slot_mean": 0.17165924517848025,
+      "delta_model_minus_slot": 0.44508693706213126,
+      "strictly_exceeds_slot": true
+    }
+  },
+  "goal_achieved": true
+}

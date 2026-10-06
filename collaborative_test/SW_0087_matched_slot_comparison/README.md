@@ -10,6 +10,13 @@ SW0056 mean for FG-ARI, foreground IoU, and matched-object IoU independently.
 No metrics are averaged into a composite score, and equality fails the gate.
 The JSON and Markdown outputs retain every mean, delta, and Boolean decision.
 
+The completed comparison passes the strict goal on all three metrics. SW0072
+scores `.781407/.478038/.616746`, while matched Slot scores
+`.571056/.225541/.171659`; the respective margins are
+`+.210352/+.252498/+.445087`. The absent watcher was resumed from the two
+complete summaries after correcting its SW0072 server path; no evaluation was
+repeated.
+
 The durable CPU-only watcher performs no model inference and consumes no GPU:
 
 ```bash

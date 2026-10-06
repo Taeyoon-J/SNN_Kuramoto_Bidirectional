@@ -1,0 +1,304 @@
+{
+  "schema_version": 1,
+  "experiment": "SW0056 matched-data Slot Attention three-seed summary",
+  "split": "HDF5 aligned validation",
+  "image_ids_inclusive": [
+    1320,
+    1639
+  ],
+  "count": 320,
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "patch_size": 8,
+  "patch_grid": [
+    16,
+    16
+  ],
+  "ground_truth_used_for_prediction": false,
+  "protocol_family": {
+    "background_rule": "most hard-assigned one-pixel perimeter pixels; smallest slot ID wins ties",
+    "batch_size": 1,
+    "checkpoint_source": "SW0056 scratch matched-data 10-pass budget",
+    "count": 320,
+    "dataset": "/Data0/kevinswk/datasets/object_centric_data/clevr_10-full.hdf5",
+    "evaluation_description": "validation only; single checkpoint source=SW0056 scratch matched-data 10-pass budget; not a three-seed mean",
+    "ground_truth_used_for_prediction": false,
+    "image_ids": [
+      1320,
+      1639
+    ],
+    "inference_seed": 0,
+    "iterations": 3,
+    "label_rule": "slot ID + 1; selected background slot set to 0",
+    "model_py": "/Data0/kevinswk/patch_v2/trained_models/slot_attention_official_patch_eval_20261002/model.py",
+    "model_sha256": "96c2b12d8b28c22fd2605eccf9027bda304f38bb9332f8c1620898f471c67ec4",
+    "num_slots": 11,
+    "preprocessing": "full HDF5 RGB image, float32 /127.5 - 1; no crop",
+    "resolution": [
+      128,
+      128
+    ],
+    "tensorflow_version": "2.15.1",
+    "tf_inter_threads": 1,
+    "tf_intra_threads": 2,
+    "training_protocol": {
+      "adam_epsilon": 1e-08,
+      "batch_policy": "ten independently seeded permutations concatenated; 1562 batches of 16 plus one 8-example static-signature batch; no padding and no dropped exposure; final batch gradients update the primary 16-signature variables with shared optimizer state",
+      "batch_policy_code_sha256": "9b4b56a2551252ab9cd4d4705d2a39294d7ffb08b419b1a413e95c07283975d9",
+      "batch_size": 16,
+      "checkpoint_format": "TensorFlow Checkpoint(network, optimizer, global_step)",
+      "checkpoint_source": "scratch initialization; no pretrained weights restored",
+      "dataset": "/Data0/kevinswk/datasets/object_centric_data/clevr_10-full.hdf5",
+      "dataset_mtime_ns": 1776053764504468257,
+      "dataset_size_bytes": 2188394103,
+      "decay_rate": 0.5,
+      "decay_steps": 1563,
+      "effective_image_exposures": 25000,
+      "exposures_per_image": 10,
+      "final_batch_size": 8,
+      "full_batch_updates": 1562,
+      "iterations": 3,
+      "learning_rate": 0.0004,
+      "loss": "mean squared reconstruction error",
+      "model_py": "/Data0/kevinswk/patch_v2/trained_models/slot_attention_official_patch_eval_20261002/model.py",
+      "model_sha256": "96c2b12d8b28c22fd2605eccf9027bda304f38bb9332f8c1620898f471c67ec4",
+      "num_slots": 11,
+      "optimizer_updates": 1563,
+      "preprocessing": "full HDF5 RGB, float32 /127.5 - 1; no crop",
+      "protocol_type": "matched-data unique-scene 10-pass budget candidate, not official 500k-step reproduction",
+      "resolution": [
+        128,
+        128
+      ],
+      "selected_training_ids_sha256": "28cb0f4d44383462d2310f764c4f3ed80b49e55310517192e1ab5e33d936611d",
+      "selected_training_images_sha256": "2774c0ba75f76b6c446ebd67b078e6632f77ef1ed87430171b56e6588ccf61f3",
+      "training_id_segments_inclusive": [
+        [
+          0,
+          999
+        ],
+        [
+          1640,
+          3139
+        ]
+      ],
+      "unique_training_images": 2500,
+      "validation_ids_inclusive": [
+        1320,
+        1639
+      ],
+      "warmup_steps": 156
+    }
+  },
+  "provenance": [
+    {
+      "seed": 0,
+      "checkpoint_prefix": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0056_matched_slot_2500_gpu_seed0/checkpoint/ckpt-1563",
+      "checkpoint_sha256": "1139599f4163895c80fed995391a2742e78c4a31422cbf51b56fb4767b82dafc",
+      "model_sha256": "96c2b12d8b28c22fd2605eccf9027bda304f38bb9332f8c1620898f471c67ec4",
+      "training_protocol": {
+        "seed": 0,
+        "training_id_segments_inclusive": [
+          [
+            0,
+            999
+          ],
+          [
+            1640,
+            3139
+          ]
+        ],
+        "validation_ids_inclusive": [
+          1320,
+          1639
+        ],
+        "unique_training_images": 2500,
+        "exposures_per_image": 10,
+        "effective_image_exposures": 25000,
+        "batch_size": 16,
+        "optimizer_updates": 1563,
+        "full_batch_updates": 1562,
+        "final_batch_size": 8,
+        "warmup_steps": 156,
+        "decay_steps": 1563,
+        "decay_rate": 0.5,
+        "learning_rate": 0.0004,
+        "adam_epsilon": 1e-08,
+        "resolution": [
+          128,
+          128
+        ],
+        "num_slots": 11,
+        "iterations": 3,
+        "loss": "mean squared reconstruction error",
+        "preprocessing": "full HDF5 RGB, float32 /127.5 - 1; no crop",
+        "batch_policy": "ten independently seeded permutations concatenated; 1562 batches of 16 plus one 8-example static-signature batch; no padding and no dropped exposure; final batch gradients update the primary 16-signature variables with shared optimizer state",
+        "protocol_type": "matched-data unique-scene 10-pass budget candidate, not official 500k-step reproduction",
+        "dataset": "/Data0/kevinswk/datasets/object_centric_data/clevr_10-full.hdf5",
+        "dataset_size_bytes": 2188394103,
+        "dataset_mtime_ns": 1776053764504468257,
+        "selected_training_images_sha256": "2774c0ba75f76b6c446ebd67b078e6632f77ef1ed87430171b56e6588ccf61f3",
+        "selected_training_ids_sha256": "28cb0f4d44383462d2310f764c4f3ed80b49e55310517192e1ab5e33d936611d",
+        "model_py": "/Data0/kevinswk/patch_v2/trained_models/slot_attention_official_patch_eval_20261002/model.py",
+        "model_sha256": "96c2b12d8b28c22fd2605eccf9027bda304f38bb9332f8c1620898f471c67ec4",
+        "trainer_sha256": "f0ce5099d7705f785fe61bcfc991c3fc26f88e4db274b872a7dd6e469775b6ad",
+        "execution_backend": "gpu_opt_in",
+        "batch_policy_code_sha256": "9b4b56a2551252ab9cd4d4705d2a39294d7ffb08b419b1a413e95c07283975d9",
+        "run_script_sha256": "11c19bd43db480a377ff1697513a22b4407475db26a8b22fb8d3179329cb8caa",
+        "checkpoint_source": "scratch initialization; no pretrained weights restored",
+        "checkpoint_format": "TensorFlow Checkpoint(network, optimizer, global_step)",
+        "checkpoint_prefix": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0056_matched_slot_2500_gpu_seed0/checkpoint/ckpt-1563"
+      }
+    },
+    {
+      "seed": 1,
+      "checkpoint_prefix": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0056_matched_slot_2500_gpu_seed1/checkpoint/ckpt-1563",
+      "checkpoint_sha256": "82e314c5b8830f08e3636f4d8e9025f0898aa6fc7fd3f0b7255231c67ebabcd0",
+      "model_sha256": "96c2b12d8b28c22fd2605eccf9027bda304f38bb9332f8c1620898f471c67ec4",
+      "training_protocol": {
+        "seed": 1,
+        "training_id_segments_inclusive": [
+          [
+            0,
+            999
+          ],
+          [
+            1640,
+            3139
+          ]
+        ],
+        "validation_ids_inclusive": [
+          1320,
+          1639
+        ],
+        "unique_training_images": 2500,
+        "exposures_per_image": 10,
+        "effective_image_exposures": 25000,
+        "batch_size": 16,
+        "optimizer_updates": 1563,
+        "full_batch_updates": 1562,
+        "final_batch_size": 8,
+        "warmup_steps": 156,
+        "decay_steps": 1563,
+        "decay_rate": 0.5,
+        "learning_rate": 0.0004,
+        "adam_epsilon": 1e-08,
+        "resolution": [
+          128,
+          128
+        ],
+        "num_slots": 11,
+        "iterations": 3,
+        "loss": "mean squared reconstruction error",
+        "preprocessing": "full HDF5 RGB, float32 /127.5 - 1; no crop",
+        "batch_policy": "ten independently seeded permutations concatenated; 1562 batches of 16 plus one 8-example static-signature batch; no padding and no dropped exposure; final batch gradients update the primary 16-signature variables with shared optimizer state",
+        "protocol_type": "matched-data unique-scene 10-pass budget candidate, not official 500k-step reproduction",
+        "dataset": "/Data0/kevinswk/datasets/object_centric_data/clevr_10-full.hdf5",
+        "dataset_size_bytes": 2188394103,
+        "dataset_mtime_ns": 1776053764504468257,
+        "selected_training_images_sha256": "2774c0ba75f76b6c446ebd67b078e6632f77ef1ed87430171b56e6588ccf61f3",
+        "selected_training_ids_sha256": "28cb0f4d44383462d2310f764c4f3ed80b49e55310517192e1ab5e33d936611d",
+        "model_py": "/Data0/kevinswk/patch_v2/trained_models/slot_attention_official_patch_eval_20261002/model.py",
+        "model_sha256": "96c2b12d8b28c22fd2605eccf9027bda304f38bb9332f8c1620898f471c67ec4",
+        "trainer_sha256": "f0ce5099d7705f785fe61bcfc991c3fc26f88e4db274b872a7dd6e469775b6ad",
+        "execution_backend": "gpu_opt_in",
+        "batch_policy_code_sha256": "9b4b56a2551252ab9cd4d4705d2a39294d7ffb08b419b1a413e95c07283975d9",
+        "run_script_sha256": "7d9e10fd8bfd5589b07d0454fe9a2488dce6687f2bbffa6295649ecc5a0ce545",
+        "checkpoint_source": "scratch initialization; no pretrained weights restored",
+        "checkpoint_format": "TensorFlow Checkpoint(network, optimizer, global_step)",
+        "checkpoint_prefix": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0056_matched_slot_2500_gpu_seed1/checkpoint/ckpt-1563"
+      }
+    },
+    {
+      "seed": 2,
+      "checkpoint_prefix": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0056_matched_slot_2500_gpu_seed2/checkpoint/ckpt-1563",
+      "checkpoint_sha256": "8da332996a83e13a773445dfe60d4568735c567c42a739cb547bb0af14b739db",
+      "model_sha256": "96c2b12d8b28c22fd2605eccf9027bda304f38bb9332f8c1620898f471c67ec4",
+      "training_protocol": {
+        "seed": 2,
+        "training_id_segments_inclusive": [
+          [
+            0,
+            999
+          ],
+          [
+            1640,
+            3139
+          ]
+        ],
+        "validation_ids_inclusive": [
+          1320,
+          1639
+        ],
+        "unique_training_images": 2500,
+        "exposures_per_image": 10,
+        "effective_image_exposures": 25000,
+        "batch_size": 16,
+        "optimizer_updates": 1563,
+        "full_batch_updates": 1562,
+        "final_batch_size": 8,
+        "warmup_steps": 156,
+        "decay_steps": 1563,
+        "decay_rate": 0.5,
+        "learning_rate": 0.0004,
+        "adam_epsilon": 1e-08,
+        "resolution": [
+          128,
+          128
+        ],
+        "num_slots": 11,
+        "iterations": 3,
+        "loss": "mean squared reconstruction error",
+        "preprocessing": "full HDF5 RGB, float32 /127.5 - 1; no crop",
+        "batch_policy": "ten independently seeded permutations concatenated; 1562 batches of 16 plus one 8-example static-signature batch; no padding and no dropped exposure; final batch gradients update the primary 16-signature variables with shared optimizer state",
+        "protocol_type": "matched-data unique-scene 10-pass budget candidate, not official 500k-step reproduction",
+        "dataset": "/Data0/kevinswk/datasets/object_centric_data/clevr_10-full.hdf5",
+        "dataset_size_bytes": 2188394103,
+        "dataset_mtime_ns": 1776053764504468257,
+        "selected_training_images_sha256": "2774c0ba75f76b6c446ebd67b078e6632f77ef1ed87430171b56e6588ccf61f3",
+        "selected_training_ids_sha256": "28cb0f4d44383462d2310f764c4f3ed80b49e55310517192e1ab5e33d936611d",
+        "model_py": "/Data0/kevinswk/patch_v2/trained_models/slot_attention_official_patch_eval_20261002/model.py",
+        "model_sha256": "96c2b12d8b28c22fd2605eccf9027bda304f38bb9332f8c1620898f471c67ec4",
+        "trainer_sha256": "f0ce5099d7705f785fe61bcfc991c3fc26f88e4db274b872a7dd6e469775b6ad",
+        "execution_backend": "gpu_opt_in",
+        "batch_policy_code_sha256": "9b4b56a2551252ab9cd4d4705d2a39294d7ffb08b419b1a413e95c07283975d9",
+        "run_script_sha256": "7d9e10fd8bfd5589b07d0454fe9a2488dce6687f2bbffa6295649ecc5a0ce545",
+        "checkpoint_source": "scratch initialization; no pretrained weights restored",
+        "checkpoint_format": "TensorFlow Checkpoint(network, optimizer, global_step)",
+        "checkpoint_prefix": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0056_matched_slot_2500_gpu_seed2/checkpoint/ckpt-1563"
+      }
+    }
+  ],
+  "metrics": {
+    "fg_ari": {
+      "per_seed": [
+        0.546834388897401,
+        0.5939189432720792,
+        0.5724140351975638
+      ],
+      "mean": 0.571055789122348,
+      "std_sample": 0.0235716448188525
+    },
+    "foreground_iou": {
+      "per_seed": [
+        0.22084643396018744,
+        0.2414449609704845,
+        0.2143305529149003
+      ],
+      "mean": 0.2255406492818574,
+      "std_sample": 0.01415360463506853
+    },
+    "matched_object_iou": {
+      "per_seed": [
+        0.15886759444477785,
+        0.19978231019699738,
+        0.15632783089366548
+      ],
+      "mean": 0.17165924517848025,
+      "std_sample": 0.024388372009027104
+    }
+  }
+}

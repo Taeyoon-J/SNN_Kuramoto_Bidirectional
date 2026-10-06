@@ -1,0 +1,70 @@
+{
+  "experiment": "SW0085 selected-candidate activation-flow diagnosis",
+  "chosen": {
+    "arm": "A",
+    "epoch": "10",
+    "metrics": {
+      "fg_ari": 0.6463810148639106,
+      "foreground_iou": 0.4893106673937901,
+      "matched_object_iou": 0.4539135888653265
+    },
+    "delta": {
+      "fg_ari": -0.06237585695878478,
+      "foreground_iou": 0.02120589194035294,
+      "matched_object_iou": -0.05596692522025726
+    },
+    "relative_delta": {
+      "fg_ari": -0.08800741049377635,
+      "foreground_iou": 0.045301592832099426,
+      "matched_object_iou": -0.10976478542355744
+    },
+    "all_three_strictly_improved": false,
+    "minimum_relative_delta": -0.10976478542355744,
+    "mean_relative_delta": -0.050823534361744784
+  },
+  "stages": [
+    {
+      "stage": "gamma",
+      "baseline_object_margin": 0.03603147893200309,
+      "candidate_object_margin": 0.04089999184435633,
+      "delta": 0.00486851291235324
+    },
+    {
+      "stage": "graph",
+      "baseline_object_margin": 0.06731383422732674,
+      "candidate_object_margin": 0.08413126359441248,
+      "delta": 0.01681742936708573
+    },
+    {
+      "stage": "kuramoto_plv_late",
+      "baseline_object_margin": 0.7147056839290264,
+      "candidate_object_margin": 0.7167081074249764,
+      "delta": 0.002002423495949923
+    },
+    {
+      "stage": "gate_late",
+      "baseline_object_margin": 0.38761954906896057,
+      "candidate_object_margin": 0.33024308783000045,
+      "delta": -0.05737646123896012
+    },
+    {
+      "stage": "dendritic_late",
+      "baseline_object_margin": 0.4493607787434557,
+      "candidate_object_margin": 0.41156506719631497,
+      "delta": -0.03779571154714073
+    },
+    {
+      "stage": "membrane_late",
+      "baseline_object_margin": 0.4493730605069862,
+      "candidate_object_margin": 0.41531237803864496,
+      "delta": -0.03406068246834126
+    },
+    {
+      "stage": "spike_late",
+      "baseline_object_margin": 0.38761954906896057,
+      "candidate_object_margin": 0.33024308783000045,
+      "delta": -0.05737646123896012
+    }
+  ],
+  "ground_truth_role": "diagnostic only after forward pass; never prediction input"
+}

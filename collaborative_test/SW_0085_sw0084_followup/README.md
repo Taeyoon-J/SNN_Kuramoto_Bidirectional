@@ -20,3 +20,12 @@ causal diagnostic, avoiding a costly long evaluation of a rejected direction.
 The durable queue follows the same GPU policy: any idle GPU0-3, restricted to
 GPU0-1 while a `tkim1` process is present.
 
+The completed selection chose A-epoch10 for diagnosis; it scores
+`.646381/.489311/.453914` against the seed1 baseline
+`.708757/.468105/.509881`, so it was not promoted. Its object-separation margin
+improves at gamma (`+.004869`), graph (`+.016817`), and late Kuramoto PLV
+(`+.002002`), then falls at the gate (`-.057376`). The lower separation remains
+at dendritic (`-.037796`), membrane (`-.034061`), and spike (`-.057376`). This
+localizes the rejected joint-training direction's first material loss to the
+gate transition.
+

@@ -1,0 +1,125 @@
+{
+  "experiment": "SW0084 jointly trainable RGB feature/core with phase-slot reconstruction",
+  "baseline_sw0072_seed1": {
+    "fg_ari": 0.7087568718226954,
+    "foreground_iou": 0.46810477545343715,
+    "matched_object_iou": 0.5098805140855838
+  },
+  "arms": {
+    "A": {
+      "05": {
+        "metrics": {
+          "fg_ari": 0.5737034677116899,
+          "foreground_iou": 0.44398826257068685,
+          "matched_object_iou": 0.37068808913227014
+        },
+        "delta_vs_sw0072_seed1": {
+          "fg_ari": -0.13505340411100553,
+          "foreground_iou": -0.024116512882750296,
+          "matched_object_iou": -0.13919242495331363
+        },
+        "all_three_strictly_improved": false
+      },
+      "10": {
+        "metrics": {
+          "fg_ari": 0.6463810148639106,
+          "foreground_iou": 0.4893106673937901,
+          "matched_object_iou": 0.4539135888653265
+        },
+        "delta_vs_sw0072_seed1": {
+          "fg_ari": -0.06237585695878478,
+          "foreground_iou": 0.02120589194035294,
+          "matched_object_iou": -0.05596692522025726
+        },
+        "all_three_strictly_improved": false
+      }
+    },
+    "B": {
+      "05": {
+        "metrics": {
+          "fg_ari": 0.5567416040835687,
+          "foreground_iou": 0.45807389314062363,
+          "matched_object_iou": 0.37086511285115437
+        },
+        "delta_vs_sw0072_seed1": {
+          "fg_ari": -0.15201526773912677,
+          "foreground_iou": -0.010030882312813516,
+          "matched_object_iou": -0.1390154012344294
+        },
+        "all_three_strictly_improved": false
+      },
+      "10": {
+        "metrics": {
+          "fg_ari": 0.6133451293567738,
+          "foreground_iou": 0.4725757062392084,
+          "matched_object_iou": 0.43978401593069877
+        },
+        "delta_vs_sw0072_seed1": {
+          "fg_ari": -0.09541174246592166,
+          "foreground_iou": 0.0044709307857712655,
+          "matched_object_iou": -0.070096498154885
+        },
+        "all_three_strictly_improved": false
+      }
+    },
+    "C": {
+      "05": {
+        "metrics": {
+          "fg_ari": 0.5767092264656778,
+          "foreground_iou": 0.5301226399822099,
+          "matched_object_iou": 0.44835464201193836
+        },
+        "delta_vs_sw0072_seed1": {
+          "fg_ari": -0.13204764535701763,
+          "foreground_iou": 0.062017864528772726,
+          "matched_object_iou": -0.061525872073645405
+        },
+        "all_three_strictly_improved": false
+      },
+      "10": {
+        "metrics": {
+          "fg_ari": 0.6086085830103676,
+          "foreground_iou": 0.630743651703351,
+          "matched_object_iou": 0.4712591280130828
+        },
+        "delta_vs_sw0072_seed1": {
+          "fg_ari": -0.10014828881232785,
+          "foreground_iou": 0.16263887624991386,
+          "matched_object_iou": -0.038621386072500985
+        },
+        "all_three_strictly_improved": false
+      }
+    },
+    "D": {
+      "05": {
+        "metrics": {
+          "fg_ari": 0.608041294011491,
+          "foreground_iou": 0.3707251035006064,
+          "matched_object_iou": 0.4029203867491796
+        },
+        "delta_vs_sw0072_seed1": {
+          "fg_ari": -0.10071557781120444,
+          "foreground_iou": -0.09737967195283076,
+          "matched_object_iou": -0.10696012733640414
+        },
+        "all_three_strictly_improved": false
+      },
+      "10": {
+        "metrics": {
+          "fg_ari": 0.622236741727838,
+          "foreground_iou": 0.3970042917582912,
+          "matched_object_iou": 0.4551975948830761
+        },
+        "delta_vs_sw0072_seed1": {
+          "fg_ari": -0.08652013009485737,
+          "foreground_iou": -0.07110048369514593,
+          "matched_object_iou": -0.054682919202507674
+        },
+        "all_three_strictly_improved": false
+      }
+    }
+  },
+  "readout": "aligned IDs1320-1351, T256/settle64, vth .06, spike CC threshold .35",
+  "selection": "report fixed epoch checkpoints; no per-image or threshold selection",
+  "ground_truth_used_for_training": false
+}
