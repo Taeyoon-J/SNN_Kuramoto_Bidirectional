@@ -77,3 +77,27 @@ reports running seeds0/1 and waiting seed2, which will start on the first free
 GPU0/1. Experiment3 finish queue PID3419065 remains live. No training restart
 or architecture change was performed.
 
+### First experiment3 evaluations and GPU3 reuse
+
+Experiment3 seeds1/2 completed ten epochs (21880 updates each); their six
+epoch1/3/10 evaluations are now saved under `results/slot_our70000/`. All six
+were checked for exact held-out IDs1320-1639, 320 valid scores per metric,
+16x16 patches, seed/checkpoint identity, the prescribed 70000 training IDs and
+no GT use during training or prediction. `partial_summary_seed12.json` reports
+**two seeds only**, not a final three-seed result:
+
+| Epoch | FG-ARI | Foreground IoU | Matched-object IoU |
+| --- | --- | --- | --- |
+| 1 | 0.617100 | 0.216267 | 0.176199 |
+| 3 | 0.745254 | 0.218597 | 0.202319 |
+| 10 | 0.853923 | 0.200172 | 0.212717 |
+
+Experiment3 seed0 is training on GPU2 (PID3444264). Once all six earlier
+evaluations finished, GPU3 became free and experiment2 seed2 started there
+(PID3447194). The coordinator permits GPU3 only after those six scoring
+completion markers exist and nvidia-smi confirms the GPU is free. Its new
+live handle is PID3447179; experiment2 seeds0/1 were preserved on GPUs0/1.
+This follows the user's request to use all four available GPUs. Experiment3's
+remaining seed0 evaluations use GPU2, so GPU3 is no longer required by its
+finish queue. Three-seed conclusions remain pending.
+

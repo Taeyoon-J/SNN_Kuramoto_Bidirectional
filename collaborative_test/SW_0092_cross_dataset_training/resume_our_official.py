@@ -17,8 +17,13 @@ def state(status, **details):
 
 
 def gpu_available(reserved=()):
-    for gpu in (0, 1):
+    for gpu in (0, 1, 3):
         if gpu in reserved:
+            continue
+        if gpu == 3 and not all(
+            (ROOT / f'trained_models/SW0092_slot_our70000_eval/seed{seed}_epoch{epoch}/SCORING_COMPLETED').is_file()
+            for seed in (1, 2) for epoch in (1, 3, 10)
+        ):
             continue
         result = subprocess.run(
             ['nvidia-smi', f'--id={gpu}', '--query-compute-apps=pid', '--format=csv,noheader'],

@@ -2,6 +2,7 @@
 import tempfile
 import unittest
 from pathlib import Path
+from types import SimpleNamespace
 from unittest.mock import patch
 
 import resume_our_official as queue
@@ -73,6 +74,21 @@ class SchedulingChecks(unittest.TestCase):
                 with self.assertRaisesRegex(RuntimeError, 'Partial training output preserved'):
                     queue.train_all_seeds()
                 launch.assert_not_called()
+
+    def test_gpu3_waits_for_all_slot_evaluations(self):
+        with tempfile.TemporaryDirectory(dir=Path(__file__).parent) as folder:
+            root = Path(folder)
+            def query(args, **kwargs):
+                return SimpleNamespace(stdout='' if '--id=3' in args else '12345')
+            with patch.object(queue, 'ROOT', root), patch.object(queue.subprocess, 'run', side_effect=query):
+                self.assertIsNone(queue.gpu_available())
+                for seed in (1, 2):
+                    for epoch in (1, 3, 10):
+                        marker = root / f'trained_models/SW0092_slot_our70000_eval/seed{seed}_epoch{epoch}/SCORING_COMPLETED'
+                        marker.parent.mkdir(parents=True)
+                        marker.write_text('complete')
+                self.assertEqual(queue.gpu_available(), 3)
+                self.assertIsNone(queue.gpu_available({3}))
 
 
 if __name__ == '__main__':

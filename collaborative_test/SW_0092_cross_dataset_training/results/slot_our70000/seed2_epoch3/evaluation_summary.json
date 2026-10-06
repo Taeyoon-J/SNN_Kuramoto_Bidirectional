@@ -1,0 +1,87 @@
+{
+  "protocol": {
+    "dataset": "/Data0/kevinswk/datasets/object_centric_data/clevr_10-full.hdf5",
+    "image_ids": [
+      1320,
+      1639
+    ],
+    "count": 320,
+    "seed": 2,
+    "inference_seed": 0,
+    "tf_intra_threads": 2,
+    "tf_inter_threads": 1,
+    "resolution": [
+      128,
+      128
+    ],
+    "batch_size": 1,
+    "num_slots": 11,
+    "iterations": 3,
+    "checkpoint_dir": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0092_slot_our70000_s2/checkpoint",
+    "checkpoint_prefix": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0092_slot_our70000_s2/checkpoint/ckpt-6564",
+    "checkpoint_sha256": "606b65f8c4a37d18b5eb7f0f586825d167ed6d94e4fb430a296df3d889681df0",
+    "checkpoint_files_sha256": {
+      "ckpt-6564.data-00000-of-00001": "acd2d5394a9447d86c3a5a4b5e102c62eeb72383a79f42e4d12461ea2e6729eb",
+      "ckpt-6564.index": "1ee18ca895575cbd81c63c4842691f181beea3341e56d24c4dedd1de0901df25"
+    },
+    "checkpoint_source": "SW0092 Slot scratch on our 70000 unique scenes epoch 3",
+    "evaluation_description": "validation only; single checkpoint source=SW0092 Slot scratch on our 70000 unique scenes epoch 3; not a three-seed mean",
+    "training_protocol_path": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0092_slot_our70000_s2/training_protocol.json",
+    "training_protocol": {
+      "experiment": "SW0092 Slot on our 70k",
+      "seed": 2,
+      "dataset": "/Data0/kevinswk/datasets/object_centric_data/clevr_10-full.hdf5",
+      "training_id_segments_inclusive": [
+        [
+          0,
+          999
+        ],
+        [
+          1640,
+          70639
+        ]
+      ],
+      "unique_training_images": 70000,
+      "epochs": 10,
+      "batch_size": 32,
+      "steps_per_epoch": 2188,
+      "total_steps": 21880,
+      "num_slots": 11,
+      "iterations": 3,
+      "learning_rate": 0.0004,
+      "warmup_steps": 2188,
+      "decay_steps": 21880,
+      "decay_rate": 0.5,
+      "loss": "reconstruction MSE",
+      "selected_images_sha256": "c20fa9d537ad25caf6bb6d84012a479971ec69907d0ee3dff1ee8de9cebe8f84",
+      "checkpoint_source": "scratch official architecture",
+      "ground_truth_used_for_training": false
+    },
+    "model_py": "/Data0/kevinswk/patch_v2/trained_models/slot_attention_official_patch_eval_20261002/model.py",
+    "model_sha256": "96c2b12d8b28c22fd2605eccf9027bda304f38bb9332f8c1620898f471c67ec4",
+    "tensorflow_version": "2.15.1",
+    "preprocessing": "full HDF5 RGB image, float32 /127.5 - 1; no crop",
+    "background_rule": "most hard-assigned one-pixel perimeter pixels; smallest slot ID wins ties",
+    "label_rule": "slot ID + 1; selected background slot set to 0",
+    "ground_truth_used_for_prediction": false
+  },
+  "evaluation": "validation only; single checkpoint source=SW0092 Slot scratch on our 70000 unique scenes epoch 3; not a three-seed mean",
+  "patch_size": 8,
+  "patch_grid": [
+    16,
+    16
+  ],
+  "ground_truth_used_for_prediction": false,
+  "scores": {
+    "mean": {
+      "fg_ari": 0.7578587959345582,
+      "foreground_iou": 0.21894692800659254,
+      "matched_object_iou": 0.20311220327258378
+    },
+    "valid_count": {
+      "fg_ari": 320.0,
+      "foreground_iou": 320.0,
+      "matched_object_iou": 320.0
+    }
+  }
+}

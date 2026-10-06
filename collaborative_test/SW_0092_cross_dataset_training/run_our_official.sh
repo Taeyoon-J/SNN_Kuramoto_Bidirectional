@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 GPU="${1:?gpu}"; SEED="${2:?seed}"
-case "$GPU" in 0|1) ;; *) exit 2;; esac; case "$SEED" in 0|1|2) ;; *) exit 2;; esac
+case "$GPU" in 0|1|3) ;; *) exit 2;; esac; case "$SEED" in 0|1|2) ;; *) exit 2;; esac
 ROOT=/Data0/kevinswk/patch_v2_sw
 GAMMA="$ROOT/data/SW_0092_cross_dataset/official_clevr6_gamma.pt"
 SOURCE="$ROOT/trained_models/SW0055_unique2500_s0_e10_lr0p0003/core.pt"
