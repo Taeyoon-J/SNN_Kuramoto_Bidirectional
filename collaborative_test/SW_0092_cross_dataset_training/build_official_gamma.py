@@ -29,7 +29,7 @@ with h5py.File(a.dataset, "r") as h5, torch.no_grad():
     for start in range(0, n, a.batch_size):
         x = torch.from_numpy(h5["image"][start:start+a.batch_size].astype("float32")).permute(0,3,1,2).to(device)
         features = encoder(x).cpu()
-        rows.append(feature_maps_to_patch_gamma(((features-mean)/std).clamp(-clip,clip), 16, "cpu").float())
+        rows.append(feature_maps_to_patch_gamma(((features-mean)/std).clamp(-clip,clip), grid_size=16, device="cpu").float())
 gamma = torch.cat(rows)
 if tuple(gamma.shape) != (n,8,256) or not torch.isfinite(gamma).all(): raise AssertionError(gamma.shape)
 out.parent.mkdir(parents=True, exist_ok=True); torch.save(gamma, out)
