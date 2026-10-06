@@ -33,8 +33,9 @@ Its log is `trained_models/SW0092/our_resume_queue.log`, and its state is
 `trained_models/SW0092_OUR_OFFICIAL_QUEUE.json`.
 
 `queue_slot_finish.sh` independently finishes experiment 3 on GPUs2/3:
-after seed1 completes, train seed0 on GPU2, then evaluate all three seeds at
-epochs1/3/10 and write their summary. No model modification tests are queued.
+after seed1 completes, train seed0 on GPU2 while evaluating the completed
+seeds1/2 on GPU3. Then evaluate seed0 at epochs1/3/10 and write the three-seed
+summary. No model modification tests are queued.
 After both experiments finish, retrieve results, record comparison, and pause
 goal mode as requested in `../ACTIVE_REQUEST_TEST123.md`.
 
