@@ -19,3 +19,26 @@ The first direction must use our validation domain for mask scores because TFDS
 CLEVR 3.1.0 does not provide instance masks. Consequently it is explicitly a
 cross-domain transfer test, while the second direction is a matched-data test.
 
+## Active scheduling (2026-10-06)
+
+Experiment 1 has completed all three seeds, epoch1/3/10 evaluations and mask
+visualizations. Experiment 2 seed1 remains live on GPU1; experiment 3 seeds1/2
+remain live on GPUs2/3. GPU0 currently belongs to another user.
+
+`resume_our_official.py` replaces the original experiment 2 waiting queue.
+It preserves existing live/completed seeds and uses whichever of GPUs0/1 is
+free for remaining seeds and evaluations. Only the old queue and its waiting
+seed0 wrapper were stopped; the live seed1 training process was preserved.
+Its log is `trained_models/SW0092/our_resume_queue.log`, and its state is
+`trained_models/SW0092_OUR_OFFICIAL_QUEUE.json`.
+
+`queue_slot_finish.sh` independently finishes experiment 3 on GPUs2/3:
+after seed1 completes, train seed0 on GPU2, then evaluate all three seeds at
+epochs1/3/10 and write their summary. No model modification tests are queued.
+After both experiments finish, retrieve results, record comparison, and pause
+goal mode as requested in `../ACTIVE_REQUEST_TEST123.md`.
+
+Experiment 2 reuses our existing encoder and frozen graph pretrained on our
+data; its downstream training uses released Slot data. It is not a complete
+model trained from scratch exclusively on released Slot data.
+
