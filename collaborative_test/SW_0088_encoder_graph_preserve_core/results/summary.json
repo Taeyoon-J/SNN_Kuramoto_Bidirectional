@@ -1,0 +1,51 @@
+{
+  "experiment": "SW0088 encoder+graph with frozen downstream core",
+  "baseline_sw0072_seed1": {
+    "fg_ari": 0.7087568718226954,
+    "foreground_iou": 0.46810477545343715,
+    "matched_object_iou": 0.5098805140855838
+  },
+  "arms": {
+    "E": {
+      "metrics": {
+        "fg_ari": 0.6894707503268347,
+        "foreground_iou": 0.4278923767028079,
+        "matched_object_iou": 0.5106950549818556
+      },
+      "delta_vs_sw0072_seed1": {
+        "fg_ari": -0.01928612149586073,
+        "foreground_iou": -0.040212398750629263,
+        "matched_object_iou": 0.0008145408962718648
+      },
+      "all_three_strictly_improved": false
+    },
+    "F": {
+      "metrics": {
+        "fg_ari": 0.6826061922743335,
+        "foreground_iou": 0.4257356448600467,
+        "matched_object_iou": 0.5225614285292672
+      },
+      "delta_vs_sw0072_seed1": {
+        "fg_ari": -0.02615067954836192,
+        "foreground_iou": -0.042369130593390425,
+        "matched_object_iou": 0.012680914443683466
+      },
+      "all_three_strictly_improved": false
+    },
+    "G": {
+      "metrics": {
+        "fg_ari": 0.674464946128477,
+        "foreground_iou": 0.48482800467668113,
+        "matched_object_iou": 0.49551067106718416
+      },
+      "delta_vs_sw0072_seed1": {
+        "fg_ari": -0.03429192569421846,
+        "foreground_iou": 0.016723229223243985,
+        "matched_object_iou": -0.014369843018399608
+      },
+      "all_three_strictly_improved": false
+    }
+  },
+  "readout": "IDs1320-1351 T256/settle64 vth.06 spike-CC .35",
+  "ground_truth_used_for_training": false
+}

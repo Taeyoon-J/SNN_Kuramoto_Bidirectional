@@ -1,0 +1,51 @@
+{
+  "experiment": "SW0089 classifier-aligned gate-affinity anchor",
+  "baseline_sw0072_seed1": {
+    "fg_ari": 0.7087568718226954,
+    "foreground_iou": 0.46810477545343715,
+    "matched_object_iou": 0.5098805140855838
+  },
+  "arms": {
+    "H": {
+      "metrics": {
+        "fg_ari": 0.6753766538247294,
+        "foreground_iou": 0.4546939330574104,
+        "matched_object_iou": 0.5123007581176906
+      },
+      "delta_vs_sw0072_seed1": {
+        "fg_ari": -0.03338021799796598,
+        "foreground_iou": -0.013410842396026745,
+        "matched_object_iou": 0.002420244032106833
+      },
+      "all_three_strictly_improved": false
+    },
+    "I": {
+      "metrics": {
+        "fg_ari": 0.7012794428570625,
+        "foreground_iou": 0.4819006010328224,
+        "matched_object_iou": 0.512234201133795
+      },
+      "delta_vs_sw0072_seed1": {
+        "fg_ari": -0.007477428965632971,
+        "foreground_iou": 0.013795825579385246,
+        "matched_object_iou": 0.0023536870482112615
+      },
+      "all_three_strictly_improved": false
+    },
+    "J": {
+      "metrics": {
+        "fg_ari": 0.6996880383268245,
+        "foreground_iou": 0.47597008546701947,
+        "matched_object_iou": 0.5165046527995283
+      },
+      "delta_vs_sw0072_seed1": {
+        "fg_ari": -0.009068833495870954,
+        "foreground_iou": 0.007865310013582316,
+        "matched_object_iou": 0.006624138713944516
+      },
+      "all_three_strictly_improved": false
+    }
+  },
+  "readout": "IDs1320-1351 T256/settle64 vth.06 spike-CC .35",
+  "ground_truth_used_for_training": false
+}
