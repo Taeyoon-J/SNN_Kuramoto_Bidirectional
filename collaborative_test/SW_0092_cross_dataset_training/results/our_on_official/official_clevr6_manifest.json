@@ -1,0 +1,13 @@
+{
+  "source": "TFDS clevr:3.1.0 train",
+  "tfds_data_dir": "/Data0/kevinswk/datasets/tfds",
+  "official_order_operations": [
+    "enumerate train",
+    "skip first 512",
+    "filter object_count <= 6"
+  ],
+  "preprocessing": "crop image[29:221,64:256], bilinear resize 128x128, float16 [0,1]",
+  "images": 34766,
+  "output": "/Data0/kevinswk/patch_v2_sw/data/SW_0092_cross_dataset/official_clevr6_train.hdf5",
+  "ground_truth_masks_available": false
+}
