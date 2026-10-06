@@ -1,0 +1,176 @@
+"""Run official Slot Attention inference on a parameterized HDF5 slice."""
+import os
+if os.environ.get("SW0092_ALLOW_GPU") != "1":
+    os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
+os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
+os.environ["OMP_NUM_THREADS"] = "4"
+
+import argparse
+import hashlib
+import importlib.util
+import json
+import sys
+import traceback
+from pathlib import Path
+
+import h5py
+import numpy as np
+import tensorflow as tf
+
+from protocol import (evaluation_description, load_training_protocol,
+                       perimeter_background, remap_foreground, validate_slice)
+
+
+def load_model_module(model_py):
+    model_py = Path(model_py).resolve()
+    if not model_py.is_file():
+        raise FileNotFoundError(f"Slot Attention model.py not found: {model_py}")
+    model_directory = str(model_py.parent)
+    if model_directory not in sys.path:
+        sys.path.insert(0, model_directory)
+    spec = importlib.util.spec_from_file_location("slot_attention_official_model", model_py)
+    if spec is None or spec.loader is None:
+        raise ImportError(f"Could not load model module from {model_py}")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def resolve_checkpoint(tf, checkpoint_dir, checkpoint_prefix=None):
+    checkpoint_dir = Path(checkpoint_dir).resolve()
+    if checkpoint_prefix:
+        prefix = Path(checkpoint_prefix)
+        if not prefix.is_absolute():
+            prefix = checkpoint_dir / prefix
+        checkpoint_path = str(prefix.resolve())
+    else:
+        checkpoint_path = tf.train.latest_checkpoint(str(checkpoint_dir))
+    if not checkpoint_path or not Path(checkpoint_path + ".index").is_file():
+        raise FileNotFoundError(
+            f"TensorFlow checkpoint index not found under {checkpoint_dir}: {checkpoint_path}")
+    return checkpoint_path
+
+
+def checkpoint_fingerprints(prefix):
+    prefix = Path(prefix)
+    files = sorted(prefix.parent.glob(prefix.name + ".*"))
+    if not files:
+        raise FileNotFoundError(f"No TensorFlow checkpoint shards for {prefix}")
+    per_file = {}
+    combined = hashlib.sha256()
+    for path in files:
+        digest = hashlib.sha256(path.read_bytes()).hexdigest()
+        per_file[path.name] = digest
+        combined.update(path.name.encode("utf-8"))
+        combined.update(bytes.fromhex(digest))
+    return combined.hexdigest(), per_file
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--checkpoint-dir", required=True)
+    parser.add_argument("--checkpoint-prefix", default=None,
+                        help="Optional prefix such as ckpt-500; otherwise use latest_checkpoint().")
+    parser.add_argument("--checkpoint-source", default="gs://gresearch/slot-attention/object-discovery/ckpt-500",
+                        help="Human-readable source/recipe label for provenance.")
+    parser.add_argument("--training-seed", type=int, default=0,
+                        help="Seed used to train this checkpoint (not the inference RNG seed).")
+    parser.add_argument("--inference-seed", type=int, default=0,
+                        help="Seed for stochastic slot initialization during prediction.")
+    parser.add_argument("--training-protocol", default=None,
+                        help="Optional JSON training protocol to embed in prediction provenance.")
+    parser.add_argument("--tf-intra-threads", type=int, default=4)
+    parser.add_argument("--tf-inter-threads", type=int, default=2)
+    parser.add_argument("--model-py", required=True)
+    parser.add_argument("--dataset", required=True)
+    parser.add_argument("--start", type=int, required=True)
+    parser.add_argument("--count", type=int, required=True)
+    parser.add_argument("--output-dir", required=True)
+    args = parser.parse_args()
+    output_dir = Path(args.output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    try:
+        if args.tf_intra_threads < 1 or args.tf_inter_threads < 1:
+            raise ValueError("TensorFlow thread counts must be positive")
+        tf.config.threading.set_intra_op_parallelism_threads(args.tf_intra_threads)
+        tf.config.threading.set_inter_op_parallelism_threads(args.tf_inter_threads)
+        tf.random.set_seed(args.inference_seed)
+        model_py = Path(args.model_py).resolve()
+        model = load_model_module(model_py)
+        checkpoint_path = resolve_checkpoint(tf, args.checkpoint_dir, args.checkpoint_prefix)
+        checkpoint_sha256, checkpoint_files_sha256 = checkpoint_fingerprints(checkpoint_path)
+        network = model.build_model((128, 128), 1, 11, 3, model_type="object_discovery")
+        checkpoint = tf.train.Checkpoint(network=network)
+        status = checkpoint.restore(checkpoint_path)
+        status.assert_existing_objects_matched()
+        status.expect_partial()  # Training optimizer/global_step are not inference variables.
+        print("ALL_MODEL_VARIABLES_RESTORED", len(network.weights), flush=True)
+
+        with h5py.File(args.dataset, "r") as source:
+            image_dataset = source["image"]
+            start, end = validate_slice(args.start, args.count, image_dataset.shape[0])
+            images = image_dataset[start:end]
+        predictions, background_slots, reconstruction_mse = [], [], []
+        for offset, rgb in enumerate(images):
+            # Faithful official protocol: full 128x128 HDF5 image, no extra crop.
+            x = rgb.astype(np.float32)[None] / 127.5 - 1.0
+            reconstruction, _, masks, _ = network(x, training=False)
+            slot_ids = masks.numpy()[0, ..., 0].argmax(axis=0)
+            bg = perimeter_background(slot_ids, num_slots=11)
+            labels = remap_foreground(slot_ids, bg, num_slots=11)
+            predictions.append(labels)
+            background_slots.append(bg)
+            reconstruction_mse.append(float(np.mean((reconstruction.numpy() - x) ** 2)))
+            if (offset + 1) % 20 == 0:
+                print(f"INFERENCE {offset + 1}/{args.count}", flush=True)
+
+        image_ids = np.arange(start, end, dtype=np.int64)
+        np.savez_compressed(
+            output_dir / "predictions.npz",
+            image_ids=image_ids,
+            labels=np.stack(predictions),
+            background_slots=np.asarray(background_slots, dtype=np.int64),
+            reconstruction_mse=np.asarray(reconstruction_mse, dtype=np.float32),
+        )
+        training_protocol = load_training_protocol(args.training_protocol, args.training_seed)
+        protocol = {
+            "dataset": str(Path(args.dataset).resolve()),
+            "image_ids": [start, end - 1],
+            "count": args.count,
+            "seed": args.training_seed,
+            "inference_seed": args.inference_seed,
+            "tf_intra_threads": args.tf_intra_threads,
+            "tf_inter_threads": args.tf_inter_threads,
+            "resolution": [128, 128],
+            "batch_size": 1,
+            "num_slots": 11,
+            "iterations": 3,
+            "checkpoint_dir": str(Path(args.checkpoint_dir).resolve()),
+            "checkpoint_prefix": checkpoint_path,
+            "checkpoint_sha256": checkpoint_sha256,
+            "checkpoint_files_sha256": checkpoint_files_sha256,
+            "checkpoint_source": args.checkpoint_source,
+            "evaluation_description": evaluation_description({"checkpoint_source": args.checkpoint_source}),
+            "training_protocol_path": (str(Path(args.training_protocol).resolve())
+                                        if args.training_protocol else None),
+            "training_protocol": training_protocol,
+            "model_py": str(model_py),
+            "model_sha256": hashlib.sha256(model_py.read_bytes()).hexdigest(),
+            "tensorflow_version": tf.__version__,
+            "preprocessing": "full HDF5 RGB image, float32 /127.5 - 1; no crop",
+            "background_rule": "most hard-assigned one-pixel perimeter pixels; smallest slot ID wins ties",
+            "label_rule": "slot ID + 1; selected background slot set to 0",
+            "ground_truth_used_for_prediction": False,
+        }
+        (output_dir / "protocol.json").write_text(
+            json.dumps(protocol, indent=2, allow_nan=False), encoding="utf-8")
+        (output_dir / "INFERENCE_COMPLETED").write_text(
+            f"{args.count} images\n", encoding="utf-8")
+        print("INFERENCE_COMPLETED", flush=True)
+    except Exception:
+        (output_dir / "FAILED").write_text(traceback.format_exc(), encoding="utf-8")
+        raise
+
+
+if __name__ == "__main__":
+    main()
