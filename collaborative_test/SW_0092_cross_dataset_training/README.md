@@ -43,3 +43,20 @@ Experiment 2 reuses our existing encoder and frozen graph pretrained on our
 data; its downstream training uses released Slot data. It is not a complete
 model trained from scratch exclusively on released Slot data.
 
+### Pending coordinator update after SSH reconnect
+
+The new local coordinator launches pending seeds on both available GPUs0/1,
+reserving a GPU immediately so two jobs cannot select it before CUDA registers.
+CPU-only `preflight_queue.py` passes three checks: preserve an existing seed,
+reserve distinct GPUs, and refuse partial output without launching a job.
+Windows sandbox temporary-file access failed; the identical checks passed when
+run with filesystem access outside that restriction.
+
+SSH multiplex broke during deployment. The pending local scp/SSH mutation
+commands were cancelled; this update is **not verified as deployed**. Last
+verified live training handles were experiment2 seed1 PID3415859 and experiment3
+seeds1/2 PID3336397/PID3336399. Last verified queue handles were experiment2
+PID3417653 and experiment3 PID3419065. After reconnect, inspect those handles,
+the remote coordinator file and its log before replacing any queue. Preserve
+all live training; never restart based only on this observation failure.
+

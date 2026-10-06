@@ -16,8 +16,10 @@ def state(status, **details):
     temporary.replace(STATE)
 
 
-def gpu_available():
+def gpu_available(reserved=()):
     for gpu in (0, 1):
+        if gpu in reserved:
+            continue
         result = subprocess.run(
             ['nvidia-smi', f'--id={gpu}', '--query-compute-apps=pid', '--format=csv,noheader'],
             capture_output=True, text=True, check=True,
@@ -41,23 +43,50 @@ def matching_train_process(output):
                and f'--save-path {output}/core.pt' in line for line in listing.splitlines())
 
 
-try:
-    for seed in (0, 1, 2):
-        output = ROOT / f'trained_models/SW0092_our_on_official_s{seed}'
-        complete = output / 'TRAINING_COMPLETED'
-        while matching_train_process(output):
-            state('training', seed=seed, preserved_live_process=True)
-            time.sleep(30)
-        if complete.is_file():
-            required = [output / 'core.pt', *(output / 'checkpoints' / f'epoch_{ep:02d}.pt' for ep in (1, 3, 10))]
-            if not all(path.is_file() and path.stat().st_size for path in required):
-                raise RuntimeError(f'Incomplete artifacts under {output}')
-            continue
-        if output.exists():
-            raise RuntimeError(f'Partial training output preserved; inspect {output}')
-        gpu = wait_gpu()
-        state('training', seed=seed, gpu=gpu)
-        subprocess.run(['bash', str(DIR / 'run_our_official.sh'), str(gpu), str(seed)], check=True)
+def train_all_seeds():
+    launched = {}
+    last_seen = {}
+    while True:
+        completed, running, pending = [], [], []
+        for seed in (0, 1, 2):
+            output = ROOT / f'trained_models/SW0092_our_on_official_s{seed}'
+            child = launched.get(seed)
+            if child is not None and child[0].poll() not in (None, 0):
+                raise RuntimeError(f'Training seed {seed} exited {child[0].returncode}')
+            if (output / 'TRAINING_COMPLETED').is_file():
+                required = [output / 'core.pt', *(output / 'checkpoints' / f'epoch_{ep:02d}.pt' for ep in (1, 3, 10))]
+                if not all(path.is_file() and path.stat().st_size for path in required):
+                    raise RuntimeError(f'Incomplete artifacts under {output}')
+                completed.append(seed)
+            elif (child is not None and child[0].poll() is None) or matching_train_process(output):
+                running.append(seed)
+                last_seen[seed] = time.monotonic()
+            elif output.exists():
+                # Allow the preserved trainer's wrapper to write its completion marker.
+                if seed in last_seen and time.monotonic() - last_seen[seed] < 60:
+                    running.append(seed)
+                else:
+                    raise RuntimeError(f'Partial training output preserved; inspect {output}')
+            else:
+                pending.append(seed)
+        if len(completed) == 3:
+            return
+        reserved = {gpu for process, gpu in launched.values() if process.poll() is None}
+        for seed in pending.copy():
+            gpu = gpu_available(reserved)
+            if gpu is None:
+                break
+            process = subprocess.Popen(['bash', str(DIR / 'run_our_official.sh'), str(gpu), str(seed)])
+            launched[seed] = (process, gpu)
+            reserved.add(gpu)
+            running.append(seed)
+            pending.remove(seed)
+        state('training', completed_seeds=completed, running_seeds=running, waiting_seeds=pending)
+        time.sleep(30)
+
+
+def main():
+    train_all_seeds()
     evaluation = ROOT / 'trained_models/SW0092_our_on_official_eval'
     for epoch in (1, 3, 10):
         for seed in (0, 1, 2):
@@ -72,6 +101,9 @@ try:
             subprocess.run(['bash', str(DIR / 'evaluate_our_official.sh'), str(gpu), str(seed), str(epoch)], check=True)
     subprocess.run([PY, str(DIR / 'summarize_our_official.py'), str(evaluation), str(evaluation / 'summary.json')], check=True)
     state('complete')
-except Exception as error:
-    state('failed', error=str(error))
-    raise
+if __name__ == '__main__':
+    try:
+        main()
+    except Exception as error:
+        state('failed', error=str(error))
+        raise
