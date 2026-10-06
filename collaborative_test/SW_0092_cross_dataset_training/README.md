@@ -60,3 +60,20 @@ PID3417653 and experiment3 PID3419065. After reconnect, inspect those handles,
 the remote coordinator file and its log before replacing any queue. Preserve
 all live training; never restart based only on this observation failure.
 
+### Reconnected and deployed
+
+The user reconnected successfully after forcing curve25519 key exchange for
+both SSH hops. The default WSL hybrid exchange stalled at the raptor key
+exchange reply; forcing curve25519 reached authentication. The underlying
+network cause remains unconfirmed.
+
+All four requested training jobs survived the observation outage. Experiment2
+seed0 started automatically when GPU0 became free (PID3428389, wrapper3428384),
+while seed1 continued on GPU1 (PID3415859). Experiment3 seeds1/2 continued on
+GPUs2/3. The parallel experiment2 coordinator is now deployed, remotely compiled
+and confirmed live as PID3442230. Only its previous parent PID3417653 was
+stopped; both training wrappers and trainers remained live. Its state explicitly
+reports running seeds0/1 and waiting seed2, which will start on the first free
+GPU0/1. Experiment3 finish queue PID3419065 remains live. No training restart
+or architecture change was performed.
+
