@@ -99,3 +99,27 @@ When SW0086 was added while every GPU remained occupied, the original SW0084
 waiter was replaced by `resume_after_sw0086.sh`. This gives the newer requested
 cross-contract evaluation the first newly idle GPU and resumes every SW0084 job
 afterward, avoiding a race in which two independent waiters claim one GPU.
+
+## Completed-training static diagnostic
+
+All four arms completed 1,570 updates and wrote validated epoch5/10
+checkpoints. Before the queued mask evaluation, the final manifests show:
+
+| Arm | Final total loss | Final primary | Final spike | Gamma RMS drift | Graph max change | Core max change |
+|:---:|---:|---:|---:|---:|---:|---:|
+| A | 21.1286 | 4.4749 | 3.3307 | .1551 | .07995 | .33946 |
+| B | 20.7217 | 3.7606 | 3.3922 | .1244 | .07068 | .35197 |
+| C | **19.2333** | 3.9501 | **3.0566** | **.0231** | **.06529** | .34328 |
+| D | 20.4952 | **3.7398** | 3.3511 | .1346 | .08559 | .40289 |
+
+Arm C, initialized from SW0072, changes the feature basis and graph least while
+ending with the lowest total and component-spike losses. This is evidence that
+the stable initialization constrains co-adaptation, but it is not performance
+evidence: prior experiments show that lower training loss need not predict the
+three mask metrics.
+
+The reconstruction term itself is nearly flat. It changes from `.6277` to
+`.6261` in A, `.6398` to `.6461` in C, and `.6288` to `.6242` in D. Therefore
+the queued fixed-mask evaluation remains necessary, and the next conditional
+test (SW0088) preserves every downstream core tensor while allowing only the
+encoder and graph to co-adapt.
