@@ -4,9 +4,9 @@ import json
 import math
 from pathlib import Path
 
-METRICS = ("patch_fg_ari", "patch_foreground_iou", "patch_matched_object_iou")
-SLOT = {"patch_fg_ari": .6195, "patch_foreground_iou": .1241,
-        "patch_matched_object_iou": .0920}
+METRICS = ("fg_ari", "foreground_iou", "matched_object_iou")
+SLOT = {"fg_ari": .6195, "foreground_iou": .1241,
+        "matched_object_iou": .0920}
 
 
 def summarize_reports(reports):

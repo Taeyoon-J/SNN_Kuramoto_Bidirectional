@@ -20,10 +20,10 @@ single-checkpoint Slot reference `.6195/.1241/.0920`. This is a transfer
 diagnostic, not a replacement for either branch's fixed-contract headline and
 not a matched-training comparison.
 
-The original GPU waiter is superseded by `resume_after_sw0056_gpu.sh` while it
-is still in `waiting_for_gpu`. This gives the newly available GPU pair to the
-matched Slot seed1/2 acceleration first, then runs SW0086 on the next allowed
-idle GPU. SW0084 already waits for SW0086, so the complete order is now matched
-Slot -> SW0086 -> SW0084 -> SW0085 -> conditional SW0088, without competing
-waiters racing for the same card.
+The evaluation completed before the matched Slot GPU acceleration began. Its
+three-seed mean is `.616852/.198362/.353836`: it is just below the peer's Slot
+reference in FG-ARI (`-.002648`) and above it in both IoUs (`+.074262/.261836`).
+This mixed result does not pass the all-three transfer gate. The initially
+failed summary was recovered directly from the three complete seed reports
+after correcting their metric-key contract; no evaluation was repeated.
 
