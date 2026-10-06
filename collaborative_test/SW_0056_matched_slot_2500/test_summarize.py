@@ -39,6 +39,16 @@ class SummaryTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             summarize_reports(bad)
 
+    def test_cpu_gpu_execution_provenance_does_not_split_model_protocol_family(self):
+        reports = {seed: report(seed) for seed in (0, 1, 2)}
+        reports[0]["protocol"]["training_protocol"].update(
+            trainer_sha256="cpu", execution_backend="cpu_forced")
+        for seed in (1, 2):
+            reports[seed]["protocol"]["training_protocol"].update(
+                trainer_sha256="gpu", execution_backend="gpu_opt_in")
+        result = summarize_reports(reports)
+        self.assertEqual(result["seeds"], [0, 1, 2])
+
 
 if __name__ == "__main__":
     unittest.main()

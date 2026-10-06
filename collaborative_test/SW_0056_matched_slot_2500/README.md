@@ -83,6 +83,24 @@ python -m pytest collaborative_test/SW_0056_matched_slot_2500/test_protocol.py -
 
 No training or evaluation was launched while preparing this experiment.
 
+## CUDA seed1/2 acceleration
+
+The original TensorFlow 2.15.1 environment is a CPU-only build. A separate
+Python 3.10 environment at `envs/slot_attention_gpu_tf215` was therefore
+created with `tensorflow[and-cuda]==2.15.1` and verified to report both
+`is_built_with_cuda=True` and all four server GPUs. The completed/near-complete
+CPU seed0 remains authoritative. Because CPU seeds1/2 were still near the start
+of the fixed schedule, `queue_gpu_seed12.sh` can reproduce them from scratch in
+separate immutable output directories when two allowed GPUs are idle.
+
+The GPU runner preserves the exact model, seeds, ID permutations, 25,000 real
+exposures, 1,563 updates, final batch of eight, learning-rate schedule,
+validation slice, and scorer. It first runs the existing real 16+8-image smoke
+on each GPU. CPU partial outputs are never modified. After both GPU seeds and
+the CPU seed0 validate, a symlink-only summary root maps the three selected
+outputs into the existing exclusive summarizer, which still checks the full
+protocol family before writing the standard SW0056 summary consumed by SW0087.
+
 ## 2026-10-05 parallel execution update
 
 Seed0 was already live under the guarded CPU scheduler. At the user's explicit

@@ -14,7 +14,8 @@ def _family_value(value):
     if isinstance(value, dict):
         return {k: _family_value(v) for k, v in sorted(value.items())
                 if k not in {"seed", "checkpoint_prefix", "checkpoint_sha256", "checkpoint_files_sha256",
-                             "checkpoint_dir", "training_protocol_path"}}
+                             "checkpoint_dir", "training_protocol_path", "trainer_sha256",
+                             "run_script_sha256", "execution_backend"}}
     if isinstance(value, list):
         return [_family_value(v) for v in value]
     return value

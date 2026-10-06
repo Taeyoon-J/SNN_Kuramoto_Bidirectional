@@ -1,4 +1,4 @@
-"""Train the CPU-only SW0056 2500-scene Slot Attention candidate."""
+"""Train the SW0056 2500-scene Slot Attention candidate."""
 import argparse
 import csv
 import hashlib
@@ -10,7 +10,9 @@ import sys
 import time
 from pathlib import Path
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
+EXECUTION_BACKEND = "gpu_opt_in" if os.environ.get("SW0056_ALLOW_GPU") == "1" else "cpu_forced"
+if EXECUTION_BACKEND == "cpu_forced":
+    os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 os.environ.setdefault("TF_CPP_MIN_LOG_LEVEL", "2")
 os.environ.setdefault("TF_NUM_INTRAOP_THREADS", "2")
 os.environ.setdefault("TF_NUM_INTEROP_THREADS", "1")
@@ -108,7 +110,7 @@ def main():
     manager = tf.train.CheckpointManager(ckpt, str(checkpoint_dir), max_to_keep=2)
     local_code = Path(__file__).resolve()
     protocol_file = Path(__file__).with_name("protocol.py")
-    run_script = Path(__file__).with_name("run_seed.sh")
+    run_script = Path(os.environ.get("SW0056_RUN_SCRIPT", Path(__file__).with_name("run_seed.sh"))).resolve()
     dataset_stat = Path(args.dataset).stat()
     if args.smoke:
         base_protocol = {
@@ -135,6 +137,7 @@ def main():
         "model_py": str(model_path),
         "model_sha256": sha256(model_path),
         "trainer_sha256": sha256(local_code),
+        "execution_backend": EXECUTION_BACKEND,
         "batch_policy_code_sha256": sha256(protocol_file),
         "run_script_sha256": sha256(run_script),
         "checkpoint_source": "scratch initialization; no pretrained weights restored",
