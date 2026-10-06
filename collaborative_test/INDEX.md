@@ -37,6 +37,7 @@
 | PV2_0043 | completed | **protocol check: spike timing carries the affinity, r=0.982 against binary-only** | | | |
 | PV2_0042 | exhausted | slot-term tuning: the defaults were already optimal (weight 2 gives 0.392) | | | |
 | PV2_0044 | completed | **ported the peer's graph freeze: best on all three, 0.7250 / 0.7188 / 0.4953** | **0.7250** | **0.7188** | **0.4953** |
+| PV2_0045 | failed | end-to-end under a frozen graph collapses to 0.011; the graph is image-conditioned | | | |
 | PV2_0046 | completed | contract diagnostic: a looser rule *lowers* fg_ari 0.724 to 0.533; cross-branch scores are not poolable | | | |
 
 Three seeds on the test split, scored from spike masks. Peer experiments from
