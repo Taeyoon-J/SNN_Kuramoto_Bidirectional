@@ -123,3 +123,22 @@ for this early-evaluation wrapper before reading or generating evaluation
 outputs, avoiding duplicate writes. Actual first evaluation PID3467744 was
 confirmed on GPU1. Model architecture and training parameters are unchanged.
 
+### Experiment2 seed1 early evaluation completed
+
+The three seed1 evaluations completed and are saved in
+`results/our_on_official/seed1_epoch{1,3,10}.json`. Validation checked 320
+held-out images, correct checkpoint/epoch, 1024 steps with settle512,
+membrane threshold .06, spike threshold .50, 16x16 patch scoring, finite
+scores with 320 per-image values and no GT used for prediction.
+`partial_summary_seed1.json` is explicitly a single-seed cross-domain result:
+
+| Epoch | FG-ARI | Foreground IoU | Matched-object IoU |
+| --- | --- | --- | --- |
+| 1 | 0.758584 | 0.345658 | 0.580763 |
+| 3 | 0.748688 | 0.371336 | 0.581524 |
+| 10 | 0.732275 | 0.409210 | 0.593392 |
+
+The early evaluator exited successfully and its completion marker exists.
+Experiment2 seeds0/2 and experiment3 seed0 are still training; both final
+three-seed summaries remain pending.
+

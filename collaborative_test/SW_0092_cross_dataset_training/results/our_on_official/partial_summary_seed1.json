@@ -1,0 +1,28 @@
+{
+  "experiment": "test2 our model downstream training on released Slot CLEVR6",
+  "training_images": 34766,
+  "status": "partial: seed1 only; seeds0/2 still training",
+  "seed": 1,
+  "evaluation_ids": [
+    1320,
+    1639
+  ],
+  "epochs": {
+    "1": {
+      "fg_ari": 0.7585844284287702,
+      "foreground_iou": 0.3456584191236473,
+      "matched_object_iou": 0.5807634917552754
+    },
+    "3": {
+      "fg_ari": 0.7486876168229674,
+      "foreground_iou": 0.37133562704630296,
+      "matched_object_iou": 0.5815236738866559
+    },
+    "10": {
+      "fg_ari": 0.7322745662622901,
+      "foreground_iou": 0.40921048317326136,
+      "matched_object_iou": 0.5933917997716553
+    }
+  },
+  "scope": "cross-domain evaluation; existing encoder and frozen graph retained"
+}
