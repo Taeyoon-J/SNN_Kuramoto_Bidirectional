@@ -56,6 +56,34 @@ The first version of this check reported the spike rate as NaN. `comp` is
 `[B, D, N, T]` and the slice `[:, :, 512:]` cut the **region** axis rather than
 time, giving an empty slice. That was the diagnostic, not the model.
 
+## Re-verified on the graph-frozen checkpoints, after the peer found otherwise
+
+The peer's SW0083 measured their frozen SW0072 model and found the opposite: at
+vth .06 the binary event and always-on fractions are **1.0 / 1.0**, and they
+concluded "the stable graph's scored structure is gate-amplitude dominated".
+
+Since `PV2_0044` ported that graph freeze and the current best checkpoints are
+`FZG_s0` and `FZG_s2`, the check above -- run on `BIM6_s1`, before the freeze --
+had to be repeated on them:
+
+| checkpoint | always-on | binary per-unit std | binary-only affinity vs the score |
+| --- | --- | --- | --- |
+| `FZG_s0` (current best) | **0.0028** | 0.4005 | **0.9808** |
+| `FZG_s2` (current best) | **0.0006** | 0.4039 | **0.9807** |
+| `BIM6_s1` (pre-freeze) | 0.0050 | 0.4041 | 0.9822 |
+| peer's frozen SW0072 | **1.0** | -- | -- |
+
+**Freezing the graph did not cause saturation here.** At most 0.3% of units are
+always on and the binary part alone still reproduces the scored affinity at
+r = 0.981, so the current best result is spike-timing driven.
+
+The cross-branch difference now has one explanation. Their always-on fraction of
+1.0 at vth .06 is the same phenomenon as the saturation diagnosed in `PV2_0023`,
+where this branch's seed 0 sat entirely above threshold and was chronically weak
+for it. Their frozen model is in that regime; these checkpoints are not. The same
+architecture saturates or does not depending on configuration, and now both
+branches have measured both sides of it.
+
 ## Conclusion
 
 The score satisfies the protocol: masks from a classifier on spikes, with phase
