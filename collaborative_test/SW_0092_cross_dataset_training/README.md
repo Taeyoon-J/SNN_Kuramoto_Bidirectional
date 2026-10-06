@@ -142,3 +142,19 @@ The early evaluator exited successfully and its completion marker exists.
 Experiment2 seeds0/2 and experiment3 seed0 are still training; both final
 three-seed summaries remain pending.
 
+### Experiment2 seed0 completed and recovered automatically
+
+Seed0 finished training. Its old running wrapper reported `line 30: 1: command
+not found` when returning from the trainer; the launcher had been overwritten
+in place while that wrapper was executing. This is consistent with its script
+read position no longer matching the rewritten file. The coordinator recovered
+the completion marker only after validating all four state dictionaries,
+finite values, final/epoch10 tensor equality and the completed trainer log.
+Evidence is saved in `completion_recovery_seed0.json` and `training_seed0.log`.
+No model training was repeated. Future launcher deployments must preserve
+running scripts by writing a new file and atomically replacing its pathname.
+
+Current live jobs are experiment2 seed2 PID3447194 and experiment3 seed0
+PID3444264. Both queues remain live; experiment2 will evaluate remaining
+checkpoints after seed2 finishes and reuse the completed seed1 evaluations.
+
