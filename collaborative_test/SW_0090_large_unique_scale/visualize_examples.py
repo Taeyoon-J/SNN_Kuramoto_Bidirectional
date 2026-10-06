@@ -63,7 +63,8 @@ def main():
     model.membrane_layer.vth = .06
     with torch.no_grad():
         _, spikes, _ = model(gamma, return_core_out=True)
-        components = model.last_component_spikes
+        components = model.last_component_spikes.detach().float().cpu()
+        spikes = spikes.detach().float().cpu()
     groups = spike_synchrony_components(
         spikes, synchrony_threshold=.50, min_group_size=2, settle=512,
         components=components, background="largest_component",

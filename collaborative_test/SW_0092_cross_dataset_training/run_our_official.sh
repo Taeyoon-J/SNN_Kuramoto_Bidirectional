@@ -7,7 +7,11 @@ GAMMA="$ROOT/data/SW_0092_cross_dataset/official_clevr6_gamma.pt"
 SOURCE="$ROOT/trained_models/SW0055_unique2500_s0_e10_lr0p0003/core.pt"
 OUT="$ROOT/trained_models/SW0092_our_on_official_s${SEED}"
 test -s "$GAMMA" -a -s "$SOURCE"; test ! -e "$OUT"
-p="$(nvidia-smi --id="$GPU" --query-compute-apps=pid --format=csv,noheader 2>&1)"; [[ ! "$p" =~ [0-9] ]]
+while true; do
+ p="$(nvidia-smi --id="$GPU" --query-compute-apps=pid --format=csv,noheader 2>&1)"
+ [[ "$p" =~ [0-9] ]] || break
+ sleep 30
+done
 mkdir -p "$OUT/cache" "$OUT/checkpoints"; export CUDA_VISIBLE_DEVICES="$GPU" TMPDIR="$OUT/cache" TRITON_CACHE_DIR="$OUT/cache"
 cd "$ROOT"
 /Data0/kevinswk/envs/snn/bin/python -u -m snn_kuramoto_bidirectional.training.train_s2net_core \

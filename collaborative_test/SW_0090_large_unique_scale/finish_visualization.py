@@ -22,7 +22,7 @@ seed = max(seeds, key=lambda item: score(seeds[item]))
 checkpoint = a.root / f"trained_models/SW0090_unique70000_s{seed}_e10/checkpoints/epoch_{int(epoch):02d}.pt"
 output = results / "visualizations"
 env = os.environ.copy()
-env["CUDA_VISIBLE_DEVICES"] = "0"
+env["CUDA_VISIBLE_DEVICES"] = "1"
 cmd = [
     "/Data0/kevinswk/envs/snn/bin/python",
     str(a.root / "collaborative_test/SW_0090_large_unique_scale/visualize_examples.py"),

@@ -13,6 +13,22 @@ and exports originals, ground-truth masks, predicted masks, and mask grids.
 
 ## Early seed0/1 result
 
+## Final three-seed result
+
+All three seeds completed. Mean FG-ARI / foreground IoU / matched-object IoU:
+epoch1 `.774323/.548028/.603848`; epoch3 `.752242/.548378/.614339`;
+epoch10 `.677605/.469147/.561948`. Relative to SW0072's 2,500-image mean,
+only foreground IoU improves. The early two-seed object-IoU improvement is
+not preserved after including seed2. Both unique data and optimizer updates
+increase in this comparison, so it does not isolate data diversity alone.
+
+The registered normalized-sum selection chooses epoch1, then seed0 for the
+qualitative exports. Three IDs1320-1322 were fixed before prediction. All
+original images, individual ground-truth/predicted masks, instance maps, and
+mask grids are under `results/full320/visualizations`. Prediction masks remain
+16x16 patch labels enlarged by nearest-neighbour; colors are instance IDs,
+not semantic categories or matching IDs across ground truth and prediction.
+
 While seed2 continues, the fixed full-320 evaluation is complete for seeds 0
 and 1. Their epoch-1 mean is `.782584/.615775/.623642`. Against the same-seed
 SW0072 mean `.785606/.553558/.607371`, 70,000 unique scenes change the metrics
