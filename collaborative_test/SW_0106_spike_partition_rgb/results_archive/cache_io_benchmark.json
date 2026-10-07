@@ -1,0 +1,18 @@
+{
+  "status": "benchmark_complete_cache_build_running",
+  "timestamp_utc": "2026-10-07 22:19:51 UTC",
+  "source_path": "/Data0/kevinswk/datasets/object_centric_data/clevr_10-full.hdf5",
+  "dataset": "image",
+  "shape": [100000, 128, 128, 3],
+  "dtype": "uint8",
+  "compression": "gzip",
+  "hdf5_chunks": [3125, 8, 8, 1],
+  "physical_read_chunk_images": 3125,
+  "physical_read_bytes": 153600000,
+  "first_two_reads": [
+    {"chunk": [0, 3125], "selected_source_pieces": [[0, 1000], [1640, 3125]], "seconds": 2.2435002327, "images_per_second": 1392.9127149, "sha256": "c41c1f9c566ace1fcea4e3f2f4fca4ac70b26cafedf512e3e6ad70f5ce1d6fa2"},
+    {"chunk": [3125, 6250], "selected_source_pieces": [[3125, 6250]], "seconds": 2.5375897884, "images_per_second": 1231.4835180, "sha256": "74488efc76efc2c6d265741348039e2b8f09defb47ebb8b9fd022f941eb1df7f"}
+  ],
+  "cache_builder_pid": 3997336,
+  "cache_builder_scope": "CPU only; selected 70000 training RGB IDs and separate 320 validation RGB IDs; no masks or holdouts"
+}
