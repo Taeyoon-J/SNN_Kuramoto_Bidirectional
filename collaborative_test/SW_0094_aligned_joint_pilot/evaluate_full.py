@@ -16,6 +16,7 @@ def main():
     p.add_argument("--gpu", type=int, choices=[0, 1, 2], required=True)
     p.add_argument("--wait", action="store_true")
     p.add_argument("--daemon", action="store_true")
+    p.add_argument("--allow-own-sharing", action="store_true")
     args = p.parse_args()
     folder = ROOT / "trained_models/SW0094_aligned_joint_pilot" / args.arm
     if not (folder / "COMPLETED").exists():
@@ -24,8 +25,11 @@ def main():
         if (folder / "full320_queue.json").exists():
             raise FileExistsError("inspect existing full validation queue")
         with (folder / "full320_queue.log").open("w") as log:
-            child = subprocess.Popen([sys.executable, __file__, "--arm", args.arm,
-                                      "--gpu", str(args.gpu), "--wait"], stdout=log,
+            queued = [sys.executable, __file__, "--arm", args.arm,
+                      "--gpu", str(args.gpu), "--wait"]
+            if args.allow_own_sharing:
+                queued.append("--allow-own-sharing")
+            child = subprocess.Popen(queued, stdout=log,
                                      stderr=log, stdin=subprocess.DEVNULL,
                                      start_new_session=True)
         record = {"queue_pid": child.pid, "gpu": args.gpu, "arm": args.arm}
@@ -40,6 +44,16 @@ def main():
                                 "--format=csv,noheader"], capture_output=True, text=True, check=True)
         if not any(c.isdigit() for c in probe.stdout):
             break
+        if args.allow_own_sharing:
+            pids = [int(line.strip()) for line in probe.stdout.splitlines() if line.strip().isdigit()]
+            try:
+                all_owned = bool(pids) and all(Path(f"/proc/{pid}").stat().st_uid == os.getuid() for pid in pids)
+            except FileNotFoundError:
+                all_owned = False
+            free = subprocess.run(["nvidia-smi", f"--id={args.gpu}", "--query-gpu=memory.free",
+                                   "--format=csv,noheader,nounits"], capture_output=True, text=True, check=True)
+            if all_owned and int(free.stdout.strip()) >= 8192:
+                break
         if not args.wait:
             raise RuntimeError("GPU is occupied")
         time.sleep(60)
@@ -52,6 +66,8 @@ def main():
                "--output-path", str(folder / "evaluation_full320.json"),
                "--start", "1320", "--count", "320", "--thresholds", ".50",
                "--background", "largest_component", "--device", "cuda"]
+    if args.allow_own_sharing:
+        command.extend(["--batch-size", "1"])
     for key in ("steps", "settle", "membrane_vth", "min_group_size", "dendritic_projection",
                 "graph_spatial_decay", "geodesic_steps", "geodesic_radius", "geodesic_contrast",
                 "geodesic_temperature", "geodesic_cap", "kuramoto_backend", "gate_mode"):

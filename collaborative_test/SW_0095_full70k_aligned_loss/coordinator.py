@@ -24,11 +24,15 @@ def state(value):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--daemon", action="store_true")
+    parser.add_argument("--allow-own-sharing", action="store_true")
     args = parser.parse_args()
     OUT.mkdir(parents=True, exist_ok=True)
     if args.daemon:
         with (OUT / "queue.log").open("a") as log:
-            proc = subprocess.Popen([sys.executable, __file__], stdout=log, stderr=log,
+            command = [sys.executable, __file__]
+            if args.allow_own_sharing:
+                command.append("--allow-own-sharing")
+            proc = subprocess.Popen(command, stdout=log, stderr=log,
                                     stdin=subprocess.DEVNULL, start_new_session=True)
         (OUT / "queue.pid").write_text(str(proc.pid) + "\n")
         print(f"QUEUE_PID={proc.pid}")
@@ -42,19 +46,23 @@ def main():
     for seed in pending:
         if (OUT / f"seed{seed}").exists():
             raise RuntimeError(f"inspect incomplete seed{seed} before resuming")
-    # Never contend with the pilot/full-validation follow-up or rewrite its jobs.
+    # The winning frozen arm is independent of the unfinished encoder arm.
     while True:
         pilot_state = json.loads((PILOT / "state.json").read_text())
         full = PILOT / "positive_frozen/evaluation_full320.json"
-        if pilot_state["status"] == "failed":
+        if not (PILOT / "positive_frozen/COMPLETED").exists():
             state({"status": "dependency_failed", "dependency": str(PILOT)})
             raise RuntimeError("pilot queue failed")
-        if pilot_state["status"] == "complete" and full.exists():
-            d = json.loads(full.read_text())
+        if full.exists():
+            try:
+                d = json.loads(full.read_text())
+            except json.JSONDecodeError:
+                time.sleep(60)
+                continue
             assert d["images"] == 320 and d["ids"] == [1320, 1639]
             assert not d["ground_truth_used_for_prediction"]
             break
-        state({"status": "waiting_for_pilot_and_full_validation", "queue_pid": os.getpid(),
+        state({"status": "waiting_for_full_validation", "queue_pid": os.getpid(),
                "updated": time.time(), "pending_seeds": pending})
         time.sleep(60)
     active = {}
@@ -74,7 +82,18 @@ def main():
                 continue
             probe = subprocess.run(["nvidia-smi", f"--id={gpu}", "--query-compute-apps=pid",
                                     "--format=csv,noheader"], capture_output=True, text=True)
-            if probe.returncode or any(c.isdigit() for c in probe.stdout):
+            occupied = any(c.isdigit() for c in probe.stdout)
+            owned_with_room = False
+            if probe.returncode == 0 and occupied and args.allow_own_sharing:
+                pids = [int(line.strip()) for line in probe.stdout.splitlines() if line.strip().isdigit()]
+                try:
+                    all_owned = bool(pids) and all(Path(f"/proc/{pid}").stat().st_uid == os.getuid() for pid in pids)
+                except FileNotFoundError:
+                    all_owned = False
+                free = subprocess.run(["nvidia-smi", f"--id={gpu}", "--query-gpu=memory.free",
+                                       "--format=csv,noheader,nounits"], capture_output=True, text=True)
+                owned_with_room = all_owned and free.returncode == 0 and int(free.stdout.strip()) >= 8192
+            if probe.returncode or (occupied and not owned_with_room):
                 continue
             seed = pending.pop(0)
             log = (OUT / f"seed{seed}.log").open("w")

@@ -28,9 +28,12 @@ Real-data CPU preflights for new source seeds1/2 passed before queue creation;
 source0 already passed the same recipe in SW0094. Existing running SW0094 Python
 workers retain their loaded code and are not restarted by this parameterization.
 
-Queue checks actual GPU compute processes and uses free GPUs0/1/2. It first
-waits for the four-arm pilot and positive_frozen full320 evaluation to finish.
-This keeps GPU follow-ups from racing each other. User authorized GPU2; GPU3 is
+Queue checks actual GPU compute processes and uses GPUs0/1/2. It first
+waits for positive_frozen full320 evaluation to finish; the independent slow
+encoder arm is not a prerequisite. With explicit `--allow-own-sharing`, it may
+share a GPU only if every compute PID belongs to our UID and free VRAM is at
+least8GiB; at most one SW0095 training job runs per GPU. Observed frozen-pilot
+training uses about4.5GiB. It never shares other users' GPUs. User authorized GPU2; GPU3 is
 reserved for the colleague. Duplicate queue copies are prevented by flock;
 failed/incomplete outputs require diagnosis and are never silently retrained.
 

@@ -20,6 +20,11 @@ the old-loss pilot .830922/.722971/.669574 on all3 metrics. Single-source pilot
 only. Full320 validation queue PID3560324 waits for GPU0; GPU2 is now occupied
 again by the colleague. SW0095 queue PID3562158 waits for pilot/full validation
 before three complete70k continuations. New source-seed CPU checks passed.
+Update2026-10-07: the full320 evaluator actually runs as PID3567321, GPU0,
+batch1, sharing only our own workers with ample free VRAM. The joint worker
+is CPU-I/O-bound and remains live. SW0095 manager was replaced before any
+training launch; PID3568428 waits only for full validation and can use our
+own GPU's8GiB-or-more free VRAM without waiting for the independent encoder arm.
 An independent CPU diagnosis completed on4 fixed validation images and the
 unchanged seed0/2 epoch1/10 cores: seed2 long-window same-object edge recall falls
 from .9109 to .4802 despite high pair AUC. Sign disagreement is larger in the

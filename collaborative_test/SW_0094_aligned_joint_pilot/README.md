@@ -128,6 +128,26 @@ SW0095 registers a complete additional70k pass for source seeds0/1/2; it waits
 for pilot/full320 confirmation to finish. This is additional evidence gathering,
 not a three-seed success claim from these80-image numbers.
 
+The serialized full-evaluation queue was superseded on2026-10-07: waiting
+manager PID3560324 had no child and was terminated without stopping training.
+New manager PID3567316 launched actual full320 evaluator PID3567321 onGPU0,
+batch1. Sharing is allowed only when all compute PIDs belong to our UID and
+free VRAM exceeds8GiB. Observed evaluation memory was496MiB alongside the
+existing joint worker's7,592MiB. This evaluates the same model/readout; compare
+overlapping80-image scores to check numerical stability across batch sizes
+before interpreting the full result. The three-seed SW0095 evaluations retain
+the original default evaluation batch.
+
+The joint pilot is slow because random RGB reads are CPU-bound: the live worker
+had CPU time advancing and92GB of logical reads after about24 minutes, with
+only603MB physical reads and momentarily0% GPU utilization. A16-image benchmark
+confirmed byte-identical alternative reads but **did not improve throughput**:
+fancy indexing12.79s, direct row reads15.02s. No access-method replacement was
+adopted on this evidence. If joint adaptation becomes promising, prepare a
+verified derived RGB cache or chunk-aware sequential loading before scaling it
+to70k. The running joint worker is preserved; no training has been restarted.
+Benchmark code and raw output are committed beside the experiment.
+
 ### Completed CPU temporal diagnosis
 
 `diagnose_windows.py` completed on unchanged SW0090 seed0/2 epoch1/10 cores,
