@@ -1,17 +1,26 @@
 {
-  "status": "waiting_for_free_gpu",
-  "queue_pid": 3546691,
-  "updated": 1791342738.6105537,
+  "status": "running",
+  "queue_pid": 3557827,
+  "updated": 1791344603.0251799,
   "pending": [
-    "absolute_frozen",
-    "positive_frozen",
-    "positive_graph",
     "positive_joint"
   ],
-  "active": [],
+  "active": [
+    {
+      "gpu": 0,
+      "arm": "positive_frozen",
+      "pid": 3557277
+    },
+    {
+      "gpu": 2,
+      "arm": "positive_graph",
+      "pid": 3557832
+    }
+  ],
   "failed": [],
   "allowed_gpus": [
     0,
-    1
+    1,
+    2
   ]
 }

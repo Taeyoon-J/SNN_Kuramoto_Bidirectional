@@ -12,6 +12,22 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 OUT = ROOT / "trained_models/SW0094_aligned_joint_pilot"
 ARMS = ("absolute_frozen", "positive_frozen", "positive_graph", "positive_joint")
+GPUS = (0, 1, 2)  # User explicitly requested use of free GPU2.
+
+
+class ExistingProcess:
+    """Observe an existing training child without relaunching its work."""
+    def __init__(self, pid, arm):
+        self.pid, self.arm = pid, arm
+
+    def poll(self):
+        try:
+            command = Path(f"/proc/{self.pid}/cmdline").read_bytes().split(b"\0")
+        except FileNotFoundError:
+            command = []
+        if b"--arm" in command and self.arm.encode() in command:
+            return None
+        return 0 if (OUT / self.arm / "COMPLETED").exists() else 1
 
 
 def state(value):
@@ -24,6 +40,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--preflight", action="store_true")
     parser.add_argument("--daemon", action="store_true")
+    parser.add_argument("--resume", action="store_true")
     args = parser.parse_args()
     OUT.mkdir(parents=True, exist_ok=True)
     if args.preflight:
@@ -42,7 +59,10 @@ def main():
         return
     if args.daemon:
         with (OUT / "queue.log").open("a") as log:
-            child = subprocess.Popen([sys.executable, str(HERE / "coordinator.py")],
+            command = [sys.executable, str(HERE / "coordinator.py")]
+            if args.resume:
+                command.append("--resume")
+            child = subprocess.Popen(command,
                                      stdin=subprocess.DEVNULL, stdout=log, stderr=log,
                                      start_new_session=True)
         (OUT / "queue.pid").write_text(str(child.pid) + "\n")
@@ -53,11 +73,22 @@ def main():
     for arm in ARMS:
         if not (OUT / f"preflight_{arm}/PREFLIGHT_COMPLETED").exists():
             raise RuntimeError(f"missing real-data preflight: {arm}")
-    pending = [arm for arm in ARMS if not (OUT / arm / "COMPLETED").exists()]
+    active = {}
+    adopted = set()
+    if args.resume:
+        previous = json.loads((OUT / "state.json").read_text())
+        for job in previous.get("active", []):
+            arm, gpu = job["arm"], job["gpu"]
+            process = ExistingProcess(job["pid"], arm)
+            if process.poll() is None:
+                gpu_lock = (OUT / f"gpu{gpu}.lock").open("a")
+                fcntl.flock(gpu_lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+                active[gpu] = (arm, process, (OUT / f"{arm}.log").open("a"), gpu_lock)
+                adopted.add(arm)
+    pending = [arm for arm in ARMS if arm not in adopted and not (OUT / arm / "COMPLETED").exists()]
     for arm in pending:
         if (OUT / arm).exists():
             raise RuntimeError(f"existing incomplete arm needs diagnosis: {arm}")
-    active = {}
     failed = []
     while pending or active:
         for gpu, (arm, process, log, gpu_lock) in list(active.items()):
@@ -71,7 +102,7 @@ def main():
         if failed:
             # Let already-running jobs finish, but never start more after failure.
             pending.clear()
-        for gpu in (0, 1):
+        for gpu in GPUS:
             if not pending or gpu in active:
                 continue
             probe = subprocess.run(["nvidia-smi", f"--id={gpu}", "--query-compute-apps=pid",
@@ -96,7 +127,7 @@ def main():
                "queue_pid": os.getpid(), "updated": time.time(), "pending": pending,
                "active": [{"gpu": gpu, "arm": arm, "pid": proc.pid}
                           for gpu, (arm, proc, _, _) in active.items()],
-               "failed": failed, "allowed_gpus": [0, 1]})
+               "failed": failed, "allowed_gpus": list(GPUS)})
         if pending or active:
             time.sleep(60)
     state({"status": "failed" if failed else "complete", "failed": failed,

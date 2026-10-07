@@ -65,12 +65,28 @@ Server:
 Outputs: `trained_models/SW0094_aligned_joint_pilot/`, including process PID,
 atomic queue state, per-arm logs/manifests/history/checkpoints/evaluations and
 final summary. The queue checks real GPU compute processes every60 seconds and
-starts only on completely free GPU0/1. The colleague is currently using GPU3,
-so the earlier user's restriction to0/1 applies. No busy-GPU sharing or stopping
+starts only on completely free GPU0/1/2. Initially it used0/1 under the earlier
+restriction; the user explicitly requested use of free GPU2 on2026-10-06.
+No busy-GPU sharing or stopping
 other users. GPU/queue locks prevent duplicate copies of this queue. A failed
 arm is terminal and requires diagnosis; the queue does not silently retry it.
 Already-live arms may finish after another arm fails. If restarted, completed
 arms are skipped; incomplete output directories require explicit inspection.
+
+GPU2 was added by stopping only the old queue manager (PID3546691), adopting
+its live GPU0 training child in the new manager (PID3557827), and retaining all
+completed arms. No training was restarted. GPU2 launched positive_graph as
+PID3557832; GPU0 subsequently launched positive_joint as PID3558132. CPU
+compilation and actual process/GPU checks verified the updated queue.
+
+User also proposed smaller patches. This is an open architectural candidate,
+not an added arm or promised gain: 8px ->4px changes native grid16x16 ->32x32,
+quadruples nodes and multiplies full pairwise affinity size by16. It may resolve
+small objects/boundaries but may worsen fragmentation and changes spatial
+priors, parameter shapes and compute needs. Any pilot must retain the fixed16x16
+comparison contract (project finer predictions back without GT), separately
+label native-grid diagnostics, and avoid direct comparisons across metrics
+computed on different grids. Current connectivity pilots take priority.
 
 ## Peer incorporation
 

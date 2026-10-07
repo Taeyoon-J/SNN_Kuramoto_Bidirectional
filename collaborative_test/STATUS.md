@@ -11,9 +11,11 @@ The user has restarted goal mode, explicitly targeting full70k training.
 continuations: old spike loss, classifier-aligned loss, graph adaptation, and
 joint encoder/graph/core adaptation. Server synthetic CPU checks and all4
 real-asset CPU backward/update checks passed. The server queue is live as
-PID3546691, waiting for a free GPU; its actual process was verified with `ps`.
-At the latest check all4 GPUs are occupied; only0/1 may be used while the
-colleague (`tkim1`) occupies GPUs2/3. No new GPU training has launched yet.
+PID3557827 after live-child adoption from the initial queue, without restarting
+training. The user explicitly authorized free GPU2; allowed GPUs are now0/1/2.
+The two frozen-graph arms completed training and pilot evaluation. At the latest
+check positive_graph runs onGPU2 (PID3557832), positive_joint onGPU0
+(PID3558132). GPU1/3 remain occupied by others. Results analysis is pending.
 An independent CPU diagnosis completed on4 fixed validation images and the
 unchanged seed0/2 epoch1/10 cores: seed2 long-window same-object edge recall falls
 from .9109 to .4802 despite high pair AUC. Sign disagreement is larger in the
