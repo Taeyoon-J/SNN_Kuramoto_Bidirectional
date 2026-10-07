@@ -6,7 +6,14 @@ As of 2026-10-06, the user requested renewed analysis of degradation with
 between the absolute spike correlation used by training and positive-only
 correlation used by prediction, and documents loss/FG-ARI divergence and
 oversegmentation. Its causal contribution still needs controlled testing.
-No new GPU training has been launched; the earlier goal was paused.
+The user has restarted goal mode, explicitly targeting full70k training.
+[SW0094](SW_0094_aligned_joint_pilot/README.md) registers four short controlled
+continuations: old spike loss, classifier-aligned loss, graph adaptation, and
+joint encoder/graph/core adaptation. Server synthetic CPU checks and all4
+real-asset CPU backward/update checks passed. The server queue is live as
+PID3546691, waiting for a free GPU; its actual process was verified with `ps`.
+At the latest check all4 GPUs are occupied; only0/1 may be used while the
+colleague (`tkim1`) occupies GPUs2/3. No new GPU training has launched yet.
 
 Experiments1/2/3 requested by the user are complete: all three training seeds
 and epoch1/3/10 evaluations per experiment, plus experiment1's three-image mask

@@ -2,6 +2,7 @@
 
 | ID | Status | Change | Validation result |
 |---|---|---|---|
+| SW0094 | all preflights passed; live queue waiting for free GPU | Continue full best70k core for256 updates; align spike loss with classifier, then train graph and encoder | Synthetic checks and all4 real-data CPU backward/update checks passed. Queue PID3546691 verified live. Pilot uses4,096 unique images from70k pool, validation80; not three-seed or full70k completion. |
 | SW0093 | analysis complete; causal tests proposed | Diagnose 70k scaling failure from completed checkpoints' scores, archived training logs and active loss/classifier code | Training uses absolute correlation; classifier uses positive correlation. All3 seeds reduce endpoint loss but lose FG-ARI; count MAE 1.776 -> 3.279. No new GPU training; see SW_0093_scaling_failure_analysis/README.md. |
 | SW_0034 | planned, execution pending SSH | Stage-wise object-signal AUC at fixed pair distances and training-loss gradient connectivity; unchanged core observed with hooks | No results yet; syntax check passed; spatial-only and membrane/spike spatial controls prepared |
 | SW_0035 | complete, classifier reference suite | GT-free adaptive spectral object-count baseline on actual membrane/gated-spike patterns, compared with adaptive slots and fixed-k controls | Full320 eigengap .490649/.204761/.140716, count MAE 1.925; improves fixed spike ARI/FG IoU/count but lowers object IoU; weakly adaptive |
