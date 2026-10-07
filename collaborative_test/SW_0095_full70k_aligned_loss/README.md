@@ -43,3 +43,33 @@ training-budget difference explicitly. This candidate must improve three-seed
 performance, and independent test evidence is still required to finish the goal.
 The released Slot checkpoint .894641 is a separate transfer reference. Neither
 an80-image pilot nor a single-seed gain proves full70k success.
+
+### Seed0 completed (2026-10-07)
+
+Full320 validation, original evaluator batch8, unchanged .50 spike classifier:
+
+| Source seed0 checkpoint | FG-ARI | Foreground IoU | Matched-object IoU |
+|---|---:|---:|---:|
+| Before continuation: SW0090 epoch1 | .818470 | .714993 | .660334 |
+| SW0095 additional complete70k pass | .824063 | .718180 | .653774 |
+
+Deltas are +.005592 / +.003187 / -.006560. Aligned-loss continuation modestly
+improves FG-ARI and foreground IoU but loses matched-object quality. It is not
+an all-metric improvement over its own source. Whether the three-seed mean
+exceeds the matched Slot benchmark remains unproven; seed1 is now training
+(PID3578370, GPU0), seed2 remains queued. No running job was restarted.
+
+Checked actual manifest: exactly70,000 distinct IDs, equal to0–999 plus
+1640–70639; no held-out IDs. 4,375 updates of batch16, all recorded losses and
+gradient norms finite. Source-model seed0 and whole-core source SHA match the
+registered source. Evaluation320 IDs1320–1639,1024/512 spike readout and
+threshold.50; GT absent from training/prediction. Source already had one70k
+pass, so total downstream exposures are140k versus Slot's700k; encoder/graph
+pretraining provenance differs and this is not a budget-matched scratch claim.
+
+Loss endpoints18.654997→16.718990 are on different minibatches, not a
+same-image loss comparison. Mean predicted object count is6.64375 versus
+GT6.196875; aggregate mean count alone does not prove accurate per-image counts.
+Raw manifest/history/evaluation and completion marker are archived in
+`results/seed0/`. The reused runner's legacy `pilot:true` manifest field does
+not describe data exposure; explicit training IDs/steps establish the full pass.
