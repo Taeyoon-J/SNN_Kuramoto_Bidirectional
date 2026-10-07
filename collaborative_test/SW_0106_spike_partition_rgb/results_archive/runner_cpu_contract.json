@@ -1,7 +1,7 @@
 {
     "timestamp_utc":  "2026-10-07 22:31:25 UTC",
     "status":  "runner_cpu_checks_passed_gpu_asset_preflight_not_run",
-    "runner_sha256":  "248d395184900d4b4e72660acbd27cd0336dc050c53c0cb886411cb9fdba274c",
+    "runner_sha256":  "c033656173db447810b10ffa4b7d5295c30a8ae5e8c096bc45f9ed4b81002dd5",
     "runner_sha256_local_equals_frontier":  true,
     "checks":  {
                    "py_compile":  "passed",
@@ -34,5 +34,15 @@
                                   "input_encoder":  true,
                                   "feature_preprocessing":  true
                               },
-    "cache_id_hashes_verified":  true
+    "cache_id_hashes_verified":  true,
+    "final_reviewed_guards":  [
+                                  "RGB scale matches native 94 pipeline",
+                                  "CPU production grouping for exact labels",
+                                  "variable component counts",
+                                  "shared per-seed decoder and optimizer warmup artifact frozen before throwaway step",
+                                  "same seed0 lambda used by paired arms and later authorized seeds",
+                                  "four TRAIN batches checked for nonzero reconstruction gradients by encoder/graph/core family",
+                                  "64-image row-scramble usage audit",
+                                  "seed0 expansion gate before seed1/2"
+                              ]
 }

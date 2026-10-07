@@ -249,9 +249,11 @@ def preflight(seed,device,output):
   _,recj,_=image_losses(qq,hh,encode(encoder,patcher,mean,std,clip,im),tt,decoder,True)
   og=torch.autograd.grad(oldj,[p for _,p in named_joint],retain_graph=True,allow_unused=True)
   rg=torch.autograd.grad(recj,[p for _,p in named_joint],retain_graph=False,allow_unused=True)
-  on=grad_norm(og); rn=grad_norm(rg)
+  on=grad_norm(og); rn=grad_norm(rg); rec_family=family_norm(named_joint,rg)
   if on<=0 or rn<=0: raise AssertionError(f'calibration batch {j} has inert objective gradients')
-  ratio=.25*on/rn; ratios.append(ratio); calibration.append({'batch':j,'old_joint_grad_norm':on,'reconstruction_joint_grad_norm':rn,'ratio':ratio})
+  for family in ('encoder','graph_generator','kuramoto'):
+   if rec_family.get(family,0.)<=0: raise AssertionError(f'calibration batch {j} reconstruction gradient is inert for {family}')
+  ratio=.25*on/rn; ratios.append(ratio); calibration.append({'batch':j,'old_joint_grad_norm':on,'reconstruction_joint_grad_norm':rn,'reconstruction_grad_norms_by_family':rec_family,'ratio':ratio})
  measured_lambda=float(np.median(np.asarray(ratios,dtype=np.float64)))
  if seed==0:
   lam=measured_lambda
@@ -262,14 +264,20 @@ def preflight(seed,device,output):
   if seed0.get('status')!='passed': raise RuntimeError('seed0 calibration did not pass')
   lam=float(seed0['lambda'])
  if not math.isfinite(lam) or lam<=0: raise AssertionError('invalid shared reconstruction coefficient')
- # Within-image mask row scrambling checks assignment use without labels or setting selection.
+ # Within-image mask row scrambling checks assignment use on the same four TRAIN batches.
  with torch.no_grad():
-  diffs=[]
-  for b in range(16):
-   rowperm=torch.randperm(256,generator=torch.Generator().manual_seed(106+b)).to(device)
-   _,orig,_=reconstruct_one(q[b],hard[b],gamma[b].transpose(0,1),target[b],decoder,False)
-   _,scrambled,_=reconstruct_one(q[b],hard[b][rowperm],gamma[b].transpose(0,1),target[b],decoder,False)
-   diffs.append(float((scrambled-orig).detach()))
+  diffs=[];shuffle_by_batch=[]
+  for j in range(4):
+   ix=inds[j*16:(j+1)*16].tolist();im=read_batch(train,ix,device)
+   gj,_,qj,_,hj,_,tj=forward_batch(core,encoder,patcher,mean,std,clip,im,criterion)
+   batch_diffs=[]
+   for b in range(16):
+    rowperm=torch.randperm(256,generator=torch.Generator().manual_seed(106+j*16+b)).to(device)
+    _,orig,_=reconstruct_one(qj[b],hj[b],gj[b].transpose(0,1),tj[b],decoder,False)
+    _,scrambled,_=reconstruct_one(qj[b],hj[b][rowperm],gj[b].transpose(0,1),tj[b],decoder,False)
+    batch_diffs.append(float((scrambled-orig).detach()))
+   shuffle_by_batch.append({'batch':j,'images':len(batch_diffs),'mean_shuffled_minus_original_mse':float(np.mean(batch_diffs))})
+   diffs.extend(batch_diffs)
  if float(np.mean(diffs))<=0: raise AssertionError('mean hard-partition row scrambling did not increase reconstruction loss')
  # Freeze the paired decoder and its optimizer state before the throwaway update.
  artifact=output.parent/f'preflight_decoder_seed{seed}.pt'
@@ -278,6 +286,7 @@ def preflight(seed,device,output):
  artifact_sha=sha(artifact)
  # One throwaway candidate update with the actual trainable parameter groups.
  joint,core_params,encoder_params,joint_opt,dec_opt=setup_optimizer(core,encoder,decoder)
+ dec_opt.load_state_dict(warm_opt.state_dict())
  _,rr,qq,ll,hh,_,tt=forward_batch(core,encoder,patcher,mean,std,clip,batch,criterion)
  _,ss,oo,pp,th=rr; prim,_=criterion(plv=pp,theta=th); sl,_=criterion(plv=qq); oldj=prim+5.*sl
  _,recj,_=image_losses(qq,hh,encode(encoder,patcher,mean,std,clip,batch),tt,decoder,True)
@@ -291,22 +300,27 @@ def preflight(seed,device,output):
  if any(p.grad is not None and not torch.isfinite(p.grad).all() for p in joint+decoder_params): raise FloatingPointError('nonfinite update preflight gradient')
  torch.nn.utils.clip_grad_norm_(joint,1.);torch.nn.utils.clip_grad_norm_(decoder_params,1.)
  core0={k:v.detach().clone() for k,v in core.state_dict().items()}; enc0={k:v.detach().clone() for k,v in encoder.state_dict().items()}
+ graph_param0={n:p.detach().clone() for n,p in core.graph_generator.named_parameters()}
+ encoder_param0={n:p.detach().clone() for n,p in encoder.named_parameters()}
  joint_opt.step();dec_opt.step()
  changed_core=[k for k,v in core0.items() if not torch.equal(v,core.state_dict()[k])]
  if not changed_core: raise AssertionError('throwaway update did not change core')
  if not any(k.startswith('graph_generator.') for k in changed_core): raise AssertionError('throwaway update did not change learned graph')
- if not any(not torch.equal(v,encoder.state_dict()[k]) for k,v in enc0.items()): raise AssertionError('throwaway update did not change encoder')
+ if not any(not torch.equal(v,dict(encoder.named_parameters())[k]) for k,v in encoder_param0.items()): raise AssertionError('throwaway update did not change encoder parameters')
+ if not any(not torch.equal(v,dict(core.graph_generator.named_parameters())[k]) for k,v in graph_param0.items()): raise AssertionError('throwaway update did not change learned graph parameters')
  if any(not torch.isfinite(p).all() for p in list(core.parameters())+list(encoder.parameters())+decoder_params): raise FloatingPointError('nonfinite parameter after update')
  report={'status':'passed','seed':seed,'device':str(device),'source_core_sha256':source_sha,'matched_control_core_sha256':control_sha,'input_encoder_sha256':sha(ENCODER_SOURCE),
-  'training_ids_first4096':ids,'shuffle_seed':117,'training_batch_size':16,'train_time_steps':64,'settle':32,
+  'training_ids_first4096':ids,'shuffle_seed':117+seed,'training_batch_size':16,'train_time_steps':64,'settle':32,
   'cached_gamma_max_abs_difference_first_batch':gamma_diff,'decoder_warmup_batches':32,'decoder_warmup_loss_first_last':[warm_losses[0],warm_losses[-1]],
   'warmup_source_core_and_encoder_unchanged':True,'initial_candidate_control_hard_forward_exact':True,
   'production_labels_exact':True,'candidate_reconstruction_gradient_norms_by_family':qnorms,
   'control_reconstruction_has_no_core_encoder_gradient':True,'lambda_calibration':calibration,'lambda':lam,
-  'row_scramble_delta_mean':float(np.mean(diffs)),'row_scramble_positive_count':sum(x>0 for x in diffs),
+  'row_scramble_images':len(diffs),'row_scramble_delta_mean':float(np.mean(diffs)),
+  'row_scramble_positive_count':sum(x>0 for x in diffs),'row_scramble_by_batch':shuffle_by_batch,
   'max_dynamic_K_seen':max_k,'throwaway_candidate_joint_grad_norm_preclip':joint_preclip,
   'throwaway_decoder_grad_norm_preclip':decoder_preclip,'throwaway_changed_core_keys':changed_core,
-  'throwaway_candidate_update_finite_and_changed_graph_encoder':True,
+  'throwaway_candidate_update_finite_and_changed_graph_encoder_parameters':True,
+  'throwaway_decoder_optimizer_state_loaded_from_shared_32_batch_warmup':True,
   'calibration_measured_lambda':measured_lambda,'fixed_lambda_source_seed':0,'warmup_artifact':str(artifact),'warmup_artifact_sha256':artifact_sha,
   'ground_truth_used':False,'cuda_peak_reserved_bytes':torch.cuda.max_memory_reserved() if device.type=='cuda' else 0}
  write(output,report)
@@ -315,8 +329,8 @@ def preflight(seed,device,output):
 def train(seed,arm,device,steps=256,batch_size=16):
  if seed not in (0,1,2) or arm not in ('candidate','control'): raise ValueError('invalid pilot pair member')
  if steps!=256 or batch_size!=16: raise ValueError('registered SW0106 pilot budget is fixed at 256x16')
- out=OUT/f'{arm}_seed{seed}';out.mkdir(parents=True,exist_ok=False)
  if seed>0: seed0_expansion_gate()
+ out=OUT/f'{arm}_seed{seed}';out.mkdir(parents=True,exist_ok=False)
  train=np.load(TRAIN_RGB,mmap_mode='r');inds,ids,source,source_sha,control_sha=verify_contract(seed)
  preflight_path=ROOT/f'collaborative_test/SW_0106_spike_partition_rgb/results_archive/preflight_seed{seed}.json'
  if not preflight_path.is_file(): raise RuntimeError(f'preflight missing: {preflight_path}')
@@ -359,7 +373,7 @@ def train(seed,arm,device,steps=256,batch_size=16):
  changed_core=[k for k in initial_core if not torch.equal(initial_core[k],core.state_dict()[k])]
  changed_enc=[k for k in initial_enc if not torch.equal(initial_enc[k],encoder.state_dict()[k])]
  if not any(k.startswith('graph_generator.') for k in changed_core): raise AssertionError('learned graph did not update')
- if not changed_enc: raise AssertionError('encoder did not update')
+ if not any(not torch.equal(initial_enc[k],dict(encoder.named_parameters())[k]) for k,_ in encoder.named_parameters()): raise AssertionError('encoder parameters did not update')
  torch.save(core.state_dict(),out/'core.pt');torch.save(encoder.state_dict(),out/'encoder.pt');torch.save(decoder.state_dict(),out/'decoder.pt')
  write(out/'history.json',history)
  write(out/'manifest.json',{'status':'training_complete','arm':arm,'seed':seed,'source_core_sha256':source_sha,
