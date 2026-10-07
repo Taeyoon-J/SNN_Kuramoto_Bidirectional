@@ -160,6 +160,16 @@ the better score. SW0095 already uses the original default batch8 throughout.
 Its seed0 full70k continuation began onGPU0 as PID3569312; this result does not
 depend on changing the evaluation batch.
 
+Original **batch8 full320** revalidation completed:
+`.822115/.718331/.661153`, compared with the unchanged SW0090 seed0 epoch1
+`.818470/.714993/.660334`. Deltas are `+.003644/+.003339/+.000818`.
+The overlapping first80 per-image scores exactly match the original batch8
+pilot for all3 metrics (maximum absolute difference0). Thus the small gain
+persists under the original batch condition. This is one source-model seed
+after4,096 additional training images, not a full70k additional pass or a
+three-seed win. Preserve batch1 as diagnostic only; batch8 is authoritative.
+Raw batch8 output and launch command are archived in `results/positive_frozen/`.
+
 ### Completed CPU temporal diagnosis
 
 `diagnose_windows.py` completed on unchanged SW0090 seed0/2 epoch1/10 cores,

@@ -29,6 +29,10 @@ Full320 batch1 result completed (.822781/.719916/.662139), but overlapping
 images reveal batch sensitivity; original batch8 revalidation is live.
 SW0095 seed0 actual full70k continuation runs as PID3569312 onGPU0, source
 seed1/2 pending. This is not three-seed success evidence yet.
+Original batch8 full320 confirmation completed: .822115/.718331/.661153,
+above unchanged source0 by .003644/.003339/.000818. First80 per-image scores
+match the batch8 pilot exactly. Batch1 is diagnostic only. SW0095's actual
+70k pass remains running and will use batch8 for all three model seeds.
 An independent CPU diagnosis completed on4 fixed validation images and the
 unchanged seed0/2 epoch1/10 cores: seed2 long-window same-object edge recall falls
 from .9109 to .4802 despite high pair AUC. Sign disagreement is larger in the
