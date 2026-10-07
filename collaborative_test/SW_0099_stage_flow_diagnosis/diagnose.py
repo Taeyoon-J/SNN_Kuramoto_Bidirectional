@@ -12,7 +12,8 @@ import numpy as np
 import torch
 from scipy.stats import rankdata
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = (Path(os.environ["SW0099_REPO_ROOT"]) if "SW0099_REPO_ROOT" in os.environ
+        else Path(__file__).resolve().parents[2])
 sys.path[:0] = [str(ROOT), str(ROOT / "snn_kuramoto_bidirectional"),
                 str(ROOT / "collaborative_test/SW_0094_aligned_joint_pilot"),
                 str(ROOT / "collaborative_test")]
@@ -110,6 +111,13 @@ def load_checkpoint(path, device):
     return core
 
 
+def sinusoidal_raw_gate(theta):
+    """Return the raw-mode delayed scalar gate and its per-component drive."""
+    delayed = torch.cat((theta[:, :1].expand(-1, 2, -1, -1), theta[:, :-2]), dim=1)
+    mask = .5 * (1. + delayed.mean(dim=-1).sin())
+    return mask, theta.sin() * mask.unsqueeze(-1)
+
+
 def stage_signals(core, gamma):
     dendrite_rows = []
     handle = core.dendric_layer.register_forward_hook(
@@ -124,9 +132,7 @@ def stage_signals(core, gamma):
     # Preserve the implementation's carrier*delayed-mask exactly: sin(theta[t])
     # multiplied by 0.5*(1+sin(mean(theta[t-2]))), gate_mode="raw".
     carrier = theta.sin()
-    delayed = torch.cat((theta[:, :1].expand(-1, 2, -1, -1), theta[:, :-2]), dim=1)
-    mask = .5 * (1. + delayed.mean(dim=-1).sin())
-    gated = carrier * mask.unsqueeze(-1)
+    mask, gated = sinusoidal_raw_gate(theta)
     dendrite = torch.stack(dendrite_rows, dim=1)
     # Hook outputs are [B*D,N] per step; stack(dim=1) is [B*D,T,N].
     # Unfold B,D before moving time last. Do not reinterpret as T-major.

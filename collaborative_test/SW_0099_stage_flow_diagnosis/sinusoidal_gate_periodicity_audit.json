@@ -1,0 +1,30 @@
+{
+  "audit": "synthetic_raw_sinusoidal_gate_representation_sensitivity",
+  "shape_batch_time_nodes_components": [
+    1,
+    5,
+    3,
+    4
+  ],
+  "dtype": "torch.float64",
+  "delay_steps": 2,
+  "phase_values_finite": true,
+  "single_component_plus_2pi": {
+    "carrier_max_abs_delta": 1.1102230246251565e-15,
+    "gate_max_abs_delta": 0.6992183171457147,
+    "gated_drive_max_abs_delta": 0.5332330429582688,
+    "gate_delta_nonzero": true,
+    "drive_delta_nonzero": true
+  },
+  "all_components_plus_2pi": {
+    "gate_max_abs_delta": 5.551115123125783e-16,
+    "gated_drive_max_abs_delta": 1.0824674490095276e-15
+  },
+  "component_permutation": {
+    "gate_max_abs_delta": 4.440892098500626e-16,
+    "gated_drive_after_inverse_permutation_max_abs_delta": 4.440892098500626e-16
+  },
+  "interpretation_limit": "synthetic mathematical representation-sensitivity only; no checkpoint, image, or model-performance inference",
+  "gate_helper_sha256": "56d3f6918ba02fe2fb4331044400bff33a3f3d60a7369f0566c88e710f30dace",
+  "audit_script_sha256": "fb40cacf69c1cc2321feef8d566164bb9db7f5cfbcd770b00f544a70c06525b6"
+}
