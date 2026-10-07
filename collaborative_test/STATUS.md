@@ -1,5 +1,14 @@
 # Current status
 
+Latest2026-10-07: SW0096 finished frozen holdout comparison. Independent
+IDs90000–90319: ours **.759817/.562696/.588620**, Slot
+**.777602/.196114/.201021**. Reference1000–1319: ours
+.763595/.561184/.584245, Slot .773277/.194499/.200663.
+FG-ARI exceedance did not generalize; final goal is not achieved.
+Keep the substantial IoU gains and improve object separation on validation
+only. Both holdouts are now observed; reserve90640–90959 unread for the next
+final frozen confirmation. All12 evaluations and per-seed records archived.
+
 2026-10-07 update: SW0094 four-arm pilot and full320 joint evaluation completed.
 Joint adaptation trades higher foreground IoU for lower FG-ARI/object IoU;
 the encoder/graph-frozen aligned spike-loss recipe was retained for SW0095.
