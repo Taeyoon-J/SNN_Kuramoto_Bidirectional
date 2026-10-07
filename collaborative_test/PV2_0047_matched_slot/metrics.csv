@@ -1,0 +1,8 @@
+# matched Slot Attention trained on OUR train split (images 0-5999), scored under
+# contract v1 on validation 300. Budget: 60000 steps x batch 32 = 1.92M presentations
+# = 320 epochs. Official recipe: 500k x 64 = 32M presentations, ~457 epochs.
+# Only two seeds: seed 2 died twice to CUDA OOM when the collaborator took GPUs 2-3.
+metric,sa_seed0,sa_seed1,sa_mean,sa_std,ours_3seed,delta_ours_minus_sa
+fg_ari,0.7223,0.7391,0.7307,0.0119,0.7250,-0.0057
+fg_iou,0.1134,0.1147,0.1140,0.0009,0.7188,+0.6048
+obj_iou,0.0918,0.0872,0.0895,0.0033,0.4953,+0.4058
