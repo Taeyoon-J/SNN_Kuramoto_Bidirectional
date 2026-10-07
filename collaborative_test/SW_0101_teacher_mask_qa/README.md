@@ -1,0 +1,23 @@
+﻿# SW0101 Stage 1: graph-teacher mask QA
+
+This is a validation-only gate for one proposed teacher mask. It does not train a model, tune thresholds, or implement a loss. The graph source is the frozen SW0095 seed-0 core; the script verifies that the learned graph-generator tensor state is bitwise identical in all three SW0095 seed checkpoints before using one teacher forward. The data are only validation IDs 1320-1335 in batch size 8.
+
+## Frozen mask definition (before any GT is read)
+
+For each gamma batch, compute the actual learned symmetric adjacency `A` by calling the checkpoint's `graph_generator(gamma)`. Capture the exact `graph_generator.projection` output from that call and L2-normalize it over its feature dimension, producing `z`; define `C = z @ z.T`. This uses the actual projection before temperature, spatial decay, geodesic adjustment, or top-k masking. It does not recompute a substitute encoder feature.
+
+Exclude the diagonal. In each row, choose the four largest entries of `A`; a pair is positive only when the choice is mutual and `C >= 0.8`. A pair is negative only when `A == 0` exactly and `C <= 0`. Partition both masks by Euclidean patch distance: near `(0,2]`, mid `(2,5]`. An anchor is eligible in a bin only if it has at least one positive and one negative candidate in that bin; only those anchors contribute directed anchor-neighbor mask decisions. The code computes and atomically writes `masks_frozen_pre_gt.json` with source/gamma/graph hashes, pre-GT counts and hashes for each mask before it opens the target-mask dataset. Ground truth has no role in mask generation, eligibility, or threshold selection.
+
+## Post-freeze audit and fixed acceptance gate
+
+Only after the pre-GT artifact is written does the script load the existing instance masks for the same 16 IDs. A pair is FG-relevant when at least one endpoint is foreground (`label > 0`); BG-BG pairs are reported separately and excluded from the two precision denominators. Positive precision is the fraction of FG-relevant positive decisions whose endpoints are the same foreground instance. Negative precision is the fraction of FG-relevant negative decisions that are not the same foreground instance. Thus FG-BG and distinct-instance FG-FG bridges are reported explicitly; the positive mask treats them as contaminants, while the negative mask treats them as correct separation. Counts and precision are accumulated over directed decisions from eligible anchors, with per-image detail retained.
+
+Positive-mask connected components are built from the union of frozen positive edges. Report components that merge multiple foreground instances and components that connect foreground to background. A bin passes only if each class reaches 95% precision, eligible anchors cover at least 12 of 16 images, and each class has at least 50 FG-relevant decisions. No mask threshold, bin, or acceptance criterion may change after GT scoring. If either bin fails, stop this teacher recipe without implementing/training its loss; send the evidence for a new design review.
+
+The measured projected cosine is the pre-temperature normalized projection used inside `graph_generator.forward`; `A` includes the original learned temperature, spatial prior, geodesic adjustment, top-k, and symmetrization. Records in this experiment identify the exact source/gamma/code hashes and preserve per-image eligibility, pair precision, and component-contamination evidence.
+
+## Result
+
+The fixed recipe failed and was stopped without threshold changes, loss implementation, or training. On the near `(0,2]` bin, coverage was 14/16 images with 422 eligible anchors; positive precision was `483/529 = .9130`, while negative precision was `732/732 = 1.0`. On the mid `(2,5]` bin, coverage was 10/16 images with 75 eligible anchors; positive precision was `50/74 = .6757`, while negative precision was `1278/1280 = .9984`. Positive precision misses the required `.95` in both bins, and mid coverage misses the required 12 images. Positive decisions included 17 near and 6 mid distinct-foreground bridges, plus 29 near and 18 mid foreground-background bridges. Across the union of positive masks, 8 components merged multiple foreground instances and 19 connected foreground to background.
+
+The graph-generator tensors were bitwise identical across all SW0095 seeds. The pre-ground-truth frozen-mask record was written before the validation labels were opened; its SHA-256 is `8376fab05fd7fc985807b1411da631c32d7debeb711febe69248ba9e76ec532e`. The audited script SHA-256 is `c0fa4d4fa388de354614c45b4add02c28aaa58cd96301752613e7bc6f23831ed`. See `qa_results.json`, `masks_frozen_pre_gt.json`, and `qa_run.log` for per-image counts, hashes, and the full audit.

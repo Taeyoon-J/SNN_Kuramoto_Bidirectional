@@ -271,3 +271,6 @@ SW_0100_phasor_imag_raw_gate/README.md and results_archive/summary.json.
 The user set a hard two-hour work deadline at 2026-10-07 10:37:49 UTC; the
 operator must not queue work beyond that deadline. The next approved work is
 SW0101 Stage1 teacher-mask QA only, before loss implementation/training.
+
+
+2026-10-07 update: SW0101 Stage 1 froze the prescribed graph/cosine teacher masks on validation IDs1320-1335 before opening labels, then failed the fixed acceptance gate. Near-bin positive precision was .9130 (483/529) and mid-bin positive precision .6757 (50/74), below .95 in both; mid coverage was 10/16, below 12/16. Negative precision was 1.0000 and .9984 respectively. Positive components merged multiple foreground instances in 8 cases and connected foreground to background in 19 cases. The teacher-mask recipe is stopped with no threshold tuning, loss implementation, or training. See SW_0101_teacher_mask_qa/README.md and qa_results.json; the frozen pre-GT mask artifact is preserved alongside the result.
