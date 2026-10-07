@@ -23,3 +23,19 @@ comparison whenever possible. Label pilots versus full validation and do
 not claim final success until the exact three-seed contract is verified.
 Do not silently discard a useful one-metric result; explain which track it
 advances and what must improve next.
+
+## GPU allocation — user update 2026-10-07
+
+Before launching a job, check GPU compute PIDs and their actual Unix owners.
+If either GPU2 or GPU3 is occupied by tkim1 (the user's colleague, referred to
+as tkim), our new jobs may use GPU0/1 only. Do not migrate, terminate or share
+the colleague's jobs. Existing SW0095 seed2 is already on GPU0 and remains
+running. Otherwise GPU2 retains its earlier authorization subject to the
+usual ownership/availability checks; GPU3 remains reserved for the colleague.
+
+Requested reasoning/work split: important design decisions on6.1 Sol,
+ordinary reasoning on5.6 Sol, implementation on the requested5.6 Luna.
+The current environment's callable model list contains6 Luna, not5.6 Luna.
+Do not claim that main-agent shell calls were performed by Luna or that
+these requested model assignments have been applied without execution evidence.
+Main-agent model switching is not exposed as a tool in this session.
