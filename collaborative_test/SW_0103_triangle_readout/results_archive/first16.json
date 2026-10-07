@@ -1,0 +1,5644 @@
+{
+  "status": "complete",
+  "purpose": "fixed one-pass triangle-supported readout diagnostic; frozen SW0097 source only",
+  "ground_truth_read": true,
+  "device": "cuda:0",
+  "ids": [
+    1320,
+    1321,
+    1322,
+    1323,
+    1324,
+    1325,
+    1326,
+    1327,
+    1328,
+    1329,
+    1330,
+    1331,
+    1332,
+    1333,
+    1334,
+    1335
+  ],
+  "batch": 8,
+  "steps": 1024,
+  "settle": 512,
+  "classifier_threshold": 0.5,
+  "rule": "A=(q>=.50), diag false, sym OR; keep A edges with at least one common neighbor; restore original edge only for each raw CC of exact size 2; one pass, no iteration or GT-based grouping",
+  "gamma_sha256": "f20b019bd46adb378b2bfcecbb252d960da2592ef651dcd419753034c8b705f0",
+  "started_unix": 1791367044.793395,
+  "seeds": {
+    "0": {
+      "checkpoint_sha256": "36f2481dd1fa51fa29bd4dc34275a876b71d8b76fbee13ac47a0a1bfe6766fbf",
+      "raw_means": {
+        "fg_ari": 0.870378187360569,
+        "foreground_iou": 0.7766516092492526,
+        "matched_object_iou": 0.7241524368459082
+      },
+      "triangle_means": {
+        "fg_ari": 0.8649043283281678,
+        "foreground_iou": 0.777821027537362,
+        "matched_object_iou": 0.7259280050277264
+      },
+      "metric_deltas": {
+        "fg_ari": -0.005473859032401274,
+        "foreground_iou": 0.0011694182881094584,
+        "matched_object_iou": 0.0017755681818181213
+      },
+      "mean_cross_instance_coassignment_raw": 0.008108893682475502,
+      "mean_cross_instance_coassignment_triangle": 0.008108893682475502,
+      "mean_same_instance_recall_raw": 0.8582153795028948,
+      "mean_same_instance_recall_triangle": 0.8538403795028948,
+      "mean_same_instance_recall_drop": 0.004375000000000018,
+      "legacy_matches_archived_first16": {
+        "fg_ari": {
+          "max_abs_difference": 0.0,
+          "exact_within_1e_9": true
+        },
+        "foreground_iou": {
+          "max_abs_difference": 0.0,
+          "exact_within_1e_9": true
+        },
+        "matched_object_iou": {
+          "max_abs_difference": 0.0,
+          "exact_within_1e_9": true
+        }
+      },
+      "mean_foreground_patch_loss_raw": 3.8125,
+      "mean_foreground_patch_loss_triangle": 3.9375,
+      "mean_raw_groups": 6.125,
+      "mean_triangle_groups": 6.0625,
+      "images_with_new_zero_groups_where_raw_nonzero": 0,
+      "removed_edge_classes_total": {
+        "same_instance_fg": 1,
+        "cross_instance_fg": 0,
+        "foreground_background": 4,
+        "background_background": 0
+      },
+      "removed_raw_graph_bridges_by_class_total": {
+        "same_instance_fg": 1,
+        "cross_instance_fg": 0,
+        "foreground_background": 4,
+        "background_background": 0
+      },
+      "removed_raw_graph_bridge_count_total": 5,
+      "per_image": [
+        {
+          "image_id": 1320,
+          "raw_metrics": {
+            "fg_ari": 0.891481142624784,
+            "foreground_iou": 0.6590909090909091,
+            "matched_object_iou": 0.6998039215686275
+          },
+          "triangle_metrics": {
+            "fg_ari": 0.891481142624784,
+            "foreground_iou": 0.6590909090909091,
+            "matched_object_iou": 0.6998039215686275
+          },
+          "raw_groups": 7,
+          "triangle_groups": 7,
+          "new_zero_groups": false,
+          "foreground_patch_loss_raw": 3,
+          "foreground_patch_loss_triangle": 3,
+          "coassignment_raw": {
+            "same_instance_coassignment_recall": 0.9119047619047619,
+            "cross_instance_coassignment_rate": 0.02127659574468085,
+            "same_instance_pairs": 420,
+            "cross_instance_pairs": 1410
+          },
+          "coassignment_triangle": {
+            "same_instance_coassignment_recall": 0.9119047619047619,
+            "cross_instance_coassignment_rate": 0.02127659574468085,
+            "same_instance_pairs": 420,
+            "cross_instance_pairs": 1410
+          },
+          "gt_object_fragments_raw": [
+            {
+              "object_id": 1,
+              "patches": 9,
+              "fragments": 2,
+              "largest_fraction": 0.8888888888888888
+            },
+            {
+              "object_id": 2,
+              "patches": 19,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 3,
+              "patches": 15,
+              "fragments": 3,
+              "largest_fraction": 0.8666666666666667
+            },
+            {
+              "object_id": 4,
+              "patches": 3,
+              "fragments": 2,
+              "largest_fraction": 0.6666666666666666
+            },
+            {
+              "object_id": 5,
+              "patches": 15,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            }
+          ],
+          "gt_object_fragments_triangle": [
+            {
+              "object_id": 1,
+              "patches": 9,
+              "fragments": 2,
+              "largest_fraction": 0.8888888888888888
+            },
+            {
+              "object_id": 2,
+              "patches": 19,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 3,
+              "patches": 15,
+              "fragments": 3,
+              "largest_fraction": 0.8666666666666667
+            },
+            {
+              "object_id": 4,
+              "patches": 3,
+              "fragments": 2,
+              "largest_fraction": 0.6666666666666666
+            },
+            {
+              "object_id": 5,
+              "patches": 15,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            }
+          ],
+          "restored_raw_size2_edges": 2,
+          "removed_edge_classes": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_raw_graph_bridges_by_class": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_edge_count": 0,
+          "removed_raw_graph_bridge_count": 0
+        },
+        {
+          "image_id": 1321,
+          "raw_metrics": {
+            "fg_ari": 0.9740128248396895,
+            "foreground_iou": 0.9130434782608695,
+            "matched_object_iou": 0.8333333333333334
+          },
+          "triangle_metrics": {
+            "fg_ari": 0.9740128248396895,
+            "foreground_iou": 0.9130434782608695,
+            "matched_object_iou": 0.8333333333333334
+          },
+          "raw_groups": 3,
+          "triangle_groups": 3,
+          "new_zero_groups": false,
+          "foreground_patch_loss_raw": 1,
+          "foreground_patch_loss_triangle": 1,
+          "coassignment_raw": {
+            "same_instance_coassignment_recall": 0.9736842105263158,
+            "cross_instance_coassignment_rate": 0.0,
+            "same_instance_pairs": 114,
+            "cross_instance_pairs": 117
+          },
+          "coassignment_triangle": {
+            "same_instance_coassignment_recall": 0.9736842105263158,
+            "cross_instance_coassignment_rate": 0.0,
+            "same_instance_pairs": 114,
+            "cross_instance_pairs": 117
+          },
+          "gt_object_fragments_raw": [
+            {
+              "object_id": 1,
+              "patches": 4,
+              "fragments": 2,
+              "largest_fraction": 0.75
+            },
+            {
+              "object_id": 2,
+              "patches": 15,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 3,
+              "patches": 3,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            }
+          ],
+          "gt_object_fragments_triangle": [
+            {
+              "object_id": 1,
+              "patches": 4,
+              "fragments": 2,
+              "largest_fraction": 0.75
+            },
+            {
+              "object_id": 2,
+              "patches": 15,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 3,
+              "patches": 3,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            }
+          ],
+          "restored_raw_size2_edges": 0,
+          "removed_edge_classes": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_raw_graph_bridges_by_class": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_edge_count": 0,
+          "removed_raw_graph_bridge_count": 0
+        },
+        {
+          "image_id": 1322,
+          "raw_metrics": {
+            "fg_ari": 0.8919375731672682,
+            "foreground_iou": 0.9047619047619048,
+            "matched_object_iou": 0.8728571428571429
+          },
+          "triangle_metrics": {
+            "fg_ari": 0.8919375731672682,
+            "foreground_iou": 0.9047619047619048,
+            "matched_object_iou": 0.8728571428571429
+          },
+          "raw_groups": 5,
+          "triangle_groups": 5,
+          "new_zero_groups": false,
+          "foreground_patch_loss_raw": 2,
+          "foreground_patch_loss_triangle": 2,
+          "coassignment_raw": {
+            "same_instance_coassignment_recall": 0.877742946708464,
+            "cross_instance_coassignment_rate": 0.0,
+            "same_instance_pairs": 319,
+            "cross_instance_pairs": 461
+          },
+          "coassignment_triangle": {
+            "same_instance_coassignment_recall": 0.877742946708464,
+            "cross_instance_coassignment_rate": 0.0,
+            "same_instance_pairs": 319,
+            "cross_instance_pairs": 461
+          },
+          "gt_object_fragments_raw": [
+            {
+              "object_id": 1,
+              "patches": 2,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 2,
+              "patches": 24,
+              "fragments": 2,
+              "largest_fraction": 0.9583333333333334
+            },
+            {
+              "object_id": 3,
+              "patches": 7,
+              "fragments": 2,
+              "largest_fraction": 0.8571428571428571
+            },
+            {
+              "object_id": 4,
+              "patches": 7,
+              "fragments": 2,
+              "largest_fraction": 0.7142857142857143
+            }
+          ],
+          "gt_object_fragments_triangle": [
+            {
+              "object_id": 1,
+              "patches": 2,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 2,
+              "patches": 24,
+              "fragments": 2,
+              "largest_fraction": 0.9583333333333334
+            },
+            {
+              "object_id": 3,
+              "patches": 7,
+              "fragments": 2,
+              "largest_fraction": 0.8571428571428571
+            },
+            {
+              "object_id": 4,
+              "patches": 7,
+              "fragments": 2,
+              "largest_fraction": 0.7142857142857143
+            }
+          ],
+          "restored_raw_size2_edges": 1,
+          "removed_edge_classes": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_raw_graph_bridges_by_class": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_edge_count": 0,
+          "removed_raw_graph_bridge_count": 0
+        },
+        {
+          "image_id": 1323,
+          "raw_metrics": {
+            "fg_ari": 0.9266639343129895,
+            "foreground_iou": 0.8301886792452831,
+            "matched_object_iou": 0.6780045351473923
+          },
+          "triangle_metrics": {
+            "fg_ari": 0.9266639343129895,
+            "foreground_iou": 0.8301886792452831,
+            "matched_object_iou": 0.6780045351473923
+          },
+          "raw_groups": 6,
+          "triangle_groups": 6,
+          "new_zero_groups": false,
+          "foreground_patch_loss_raw": 6,
+          "foreground_patch_loss_triangle": 6,
+          "coassignment_raw": {
+            "same_instance_coassignment_recall": 0.9212962962962963,
+            "cross_instance_coassignment_rate": 0.0,
+            "same_instance_pairs": 216,
+            "cross_instance_pairs": 1009
+          },
+          "coassignment_triangle": {
+            "same_instance_coassignment_recall": 0.9212962962962963,
+            "cross_instance_coassignment_rate": 0.0,
+            "same_instance_pairs": 216,
+            "cross_instance_pairs": 1009
+          },
+          "gt_object_fragments_raw": [
+            {
+              "object_id": 1,
+              "patches": 3,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 2,
+              "patches": 9,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 3,
+              "patches": 7,
+              "fragments": 2,
+              "largest_fraction": 0.8571428571428571
+            },
+            {
+              "object_id": 4,
+              "patches": 9,
+              "fragments": 2,
+              "largest_fraction": 0.8888888888888888
+            },
+            {
+              "object_id": 5,
+              "patches": 6,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 7,
+              "patches": 15,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            }
+          ],
+          "gt_object_fragments_triangle": [
+            {
+              "object_id": 1,
+              "patches": 3,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 2,
+              "patches": 9,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 3,
+              "patches": 7,
+              "fragments": 2,
+              "largest_fraction": 0.8571428571428571
+            },
+            {
+              "object_id": 4,
+              "patches": 9,
+              "fragments": 2,
+              "largest_fraction": 0.8888888888888888
+            },
+            {
+              "object_id": 5,
+              "patches": 6,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 7,
+              "patches": 15,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            }
+          ],
+          "restored_raw_size2_edges": 0,
+          "removed_edge_classes": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_raw_graph_bridges_by_class": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_edge_count": 0,
+          "removed_raw_graph_bridge_count": 0
+        },
+        {
+          "image_id": 1324,
+          "raw_metrics": {
+            "fg_ari": 0.8922888445738911,
+            "foreground_iou": 0.8526315789473684,
+            "matched_object_iou": 0.5889652014652015
+          },
+          "triangle_metrics": {
+            "fg_ari": 0.8922888445738911,
+            "foreground_iou": 0.8526315789473684,
+            "matched_object_iou": 0.5889652014652015
+          },
+          "raw_groups": 12,
+          "triangle_groups": 12,
+          "new_zero_groups": false,
+          "foreground_patch_loss_raw": 3,
+          "foreground_patch_loss_triangle": 3,
+          "coassignment_raw": {
+            "same_instance_coassignment_recall": 0.8909512761020881,
+            "cross_instance_coassignment_rate": 0.01524390243902439,
+            "same_instance_pairs": 862,
+            "cross_instance_pairs": 2624
+          },
+          "coassignment_triangle": {
+            "same_instance_coassignment_recall": 0.8909512761020881,
+            "cross_instance_coassignment_rate": 0.01524390243902439,
+            "same_instance_pairs": 862,
+            "cross_instance_pairs": 2624
+          },
+          "gt_object_fragments_raw": [
+            {
+              "object_id": 1,
+              "patches": 2,
+              "fragments": 2,
+              "largest_fraction": 0.5
+            },
+            {
+              "object_id": 2,
+              "patches": 5,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 3,
+              "patches": 6,
+              "fragments": 2,
+              "largest_fraction": 0.6666666666666666
+            },
+            {
+              "object_id": 4,
+              "patches": 14,
+              "fragments": 3,
+              "largest_fraction": 0.7142857142857143
+            },
+            {
+              "object_id": 6,
+              "patches": 15,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 8,
+              "patches": 5,
+              "fragments": 3,
+              "largest_fraction": 0.6
+            },
+            {
+              "object_id": 9,
+              "patches": 36,
+              "fragments": 2,
+              "largest_fraction": 0.9722222222222222
+            }
+          ],
+          "gt_object_fragments_triangle": [
+            {
+              "object_id": 1,
+              "patches": 2,
+              "fragments": 2,
+              "largest_fraction": 0.5
+            },
+            {
+              "object_id": 2,
+              "patches": 5,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 3,
+              "patches": 6,
+              "fragments": 2,
+              "largest_fraction": 0.6666666666666666
+            },
+            {
+              "object_id": 4,
+              "patches": 14,
+              "fragments": 3,
+              "largest_fraction": 0.7142857142857143
+            },
+            {
+              "object_id": 6,
+              "patches": 15,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 8,
+              "patches": 5,
+              "fragments": 3,
+              "largest_fraction": 0.6
+            },
+            {
+              "object_id": 9,
+              "patches": 36,
+              "fragments": 2,
+              "largest_fraction": 0.9722222222222222
+            }
+          ],
+          "restored_raw_size2_edges": 3,
+          "removed_edge_classes": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_raw_graph_bridges_by_class": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_edge_count": 0,
+          "removed_raw_graph_bridge_count": 0
+        },
+        {
+          "image_id": 1325,
+          "raw_metrics": {
+            "fg_ari": 0.9493856242439677,
+            "foreground_iou": 0.8793103448275862,
+            "matched_object_iou": 0.8888888888888888
+          },
+          "triangle_metrics": {
+            "fg_ari": 0.9493856242439677,
+            "foreground_iou": 0.8793103448275862,
+            "matched_object_iou": 0.8888888888888888
+          },
+          "raw_groups": 3,
+          "triangle_groups": 3,
+          "new_zero_groups": false,
+          "foreground_patch_loss_raw": 2,
+          "foreground_patch_loss_triangle": 2,
+          "coassignment_raw": {
+            "same_instance_coassignment_recall": 0.9304932735426009,
+            "cross_instance_coassignment_rate": 0.0,
+            "same_instance_pairs": 446,
+            "cross_instance_pairs": 932
+          },
+          "coassignment_triangle": {
+            "same_instance_coassignment_recall": 0.9304932735426009,
+            "cross_instance_coassignment_rate": 0.0,
+            "same_instance_pairs": 446,
+            "cross_instance_pairs": 932
+          },
+          "gt_object_fragments_raw": [
+            {
+              "object_id": 1,
+              "patches": 17,
+              "fragments": 2,
+              "largest_fraction": 0.8823529411764706
+            },
+            {
+              "object_id": 2,
+              "patches": 20,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 3,
+              "patches": 16,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            }
+          ],
+          "gt_object_fragments_triangle": [
+            {
+              "object_id": 1,
+              "patches": 17,
+              "fragments": 2,
+              "largest_fraction": 0.8823529411764706
+            },
+            {
+              "object_id": 2,
+              "patches": 20,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 3,
+              "patches": 16,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            }
+          ],
+          "restored_raw_size2_edges": 0,
+          "removed_edge_classes": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_raw_graph_bridges_by_class": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_edge_count": 0,
+          "removed_raw_graph_bridge_count": 0
+        },
+        {
+          "image_id": 1326,
+          "raw_metrics": {
+            "fg_ari": 0.7277811015738513,
+            "foreground_iou": 0.6181818181818182,
+            "matched_object_iou": 0.6167735042735042
+          },
+          "triangle_metrics": {
+            "fg_ari": 0.7277811015738513,
+            "foreground_iou": 0.6296296296296297,
+            "matched_object_iou": 0.6376068376068376
+          },
+          "raw_groups": 6,
+          "triangle_groups": 6,
+          "new_zero_groups": false,
+          "foreground_patch_loss_raw": 16,
+          "foreground_patch_loss_triangle": 16,
+          "coassignment_raw": {
+            "same_instance_coassignment_recall": 0.6586826347305389,
+            "cross_instance_coassignment_rate": 0.0,
+            "same_instance_pairs": 167,
+            "cross_instance_pairs": 1058
+          },
+          "coassignment_triangle": {
+            "same_instance_coassignment_recall": 0.6586826347305389,
+            "cross_instance_coassignment_rate": 0.0,
+            "same_instance_pairs": 167,
+            "cross_instance_pairs": 1058
+          },
+          "gt_object_fragments_raw": [
+            {
+              "object_id": 1,
+              "patches": 13,
+              "fragments": 2,
+              "largest_fraction": 0.9230769230769231
+            },
+            {
+              "object_id": 2,
+              "patches": 7,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 4,
+              "patches": 4,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 5,
+              "patches": 5,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 6,
+              "patches": 4,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 7,
+              "patches": 3,
+              "fragments": 2,
+              "largest_fraction": 0.6666666666666666
+            },
+            {
+              "object_id": 8,
+              "patches": 6,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 9,
+              "patches": 8,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            }
+          ],
+          "gt_object_fragments_triangle": [
+            {
+              "object_id": 1,
+              "patches": 13,
+              "fragments": 2,
+              "largest_fraction": 0.9230769230769231
+            },
+            {
+              "object_id": 2,
+              "patches": 7,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 4,
+              "patches": 4,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 5,
+              "patches": 5,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 6,
+              "patches": 4,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 7,
+              "patches": 3,
+              "fragments": 2,
+              "largest_fraction": 0.6666666666666666
+            },
+            {
+              "object_id": 8,
+              "patches": 6,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 9,
+              "patches": 8,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            }
+          ],
+          "restored_raw_size2_edges": 0,
+          "removed_edge_classes": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 1,
+            "background_background": 0
+          },
+          "removed_raw_graph_bridges_by_class": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 1,
+            "background_background": 0
+          },
+          "removed_edge_count": 1,
+          "removed_raw_graph_bridge_count": 1
+        },
+        {
+          "image_id": 1327,
+          "raw_metrics": {
+            "fg_ari": 0.9822391240753897,
+            "foreground_iou": 0.8717948717948718,
+            "matched_object_iou": 0.8864734299516909
+          },
+          "triangle_metrics": {
+            "fg_ari": 0.9822391240753897,
+            "foreground_iou": 0.8717948717948718,
+            "matched_object_iou": 0.8864734299516909
+          },
+          "raw_groups": 3,
+          "triangle_groups": 3,
+          "new_zero_groups": false,
+          "foreground_patch_loss_raw": 1,
+          "foreground_patch_loss_triangle": 1,
+          "coassignment_raw": {
+            "same_instance_coassignment_recall": 0.9783549783549783,
+            "cross_instance_coassignment_rate": 0.0,
+            "same_instance_pairs": 231,
+            "cross_instance_pairs": 364
+          },
+          "coassignment_triangle": {
+            "same_instance_coassignment_recall": 0.9783549783549783,
+            "cross_instance_coassignment_rate": 0.0,
+            "same_instance_pairs": 231,
+            "cross_instance_pairs": 364
+          },
+          "gt_object_fragments_raw": [
+            {
+              "object_id": 1,
+              "patches": 10,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 2,
+              "patches": 19,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 3,
+              "patches": 6,
+              "fragments": 2,
+              "largest_fraction": 0.8333333333333334
+            }
+          ],
+          "gt_object_fragments_triangle": [
+            {
+              "object_id": 1,
+              "patches": 10,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 2,
+              "patches": 19,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 3,
+              "patches": 6,
+              "fragments": 2,
+              "largest_fraction": 0.8333333333333334
+            }
+          ],
+          "restored_raw_size2_edges": 0,
+          "removed_edge_classes": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_raw_graph_bridges_by_class": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_edge_count": 0,
+          "removed_raw_graph_bridge_count": 0
+        },
+        {
+          "image_id": 1328,
+          "raw_metrics": {
+            "fg_ari": 0.7389111482473272,
+            "foreground_iou": 0.723404255319149,
+            "matched_object_iou": 0.6771284271284271
+          },
+          "triangle_metrics": {
+            "fg_ari": 0.6513294037289079,
+            "foreground_iou": 0.7111111111111111,
+            "matched_object_iou": 0.6695526695526696
+          },
+          "raw_groups": 8,
+          "triangle_groups": 7,
+          "new_zero_groups": false,
+          "foreground_patch_loss_raw": 5,
+          "foreground_patch_loss_triangle": 7,
+          "coassignment_raw": {
+            "same_instance_coassignment_recall": 0.69,
+            "cross_instance_coassignment_rate": 0.0,
+            "same_instance_pairs": 200,
+            "cross_instance_pairs": 541
+          },
+          "coassignment_triangle": {
+            "same_instance_coassignment_recall": 0.62,
+            "cross_instance_coassignment_rate": 0.0,
+            "same_instance_pairs": 200,
+            "cross_instance_pairs": 541
+          },
+          "gt_object_fragments_raw": [
+            {
+              "object_id": 1,
+              "patches": 7,
+              "fragments": 2,
+              "largest_fraction": 0.8571428571428571
+            },
+            {
+              "object_id": 2,
+              "patches": 3,
+              "fragments": 2,
+              "largest_fraction": 0.6666666666666666
+            },
+            {
+              "object_id": 3,
+              "patches": 2,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 4,
+              "patches": 18,
+              "fragments": 3,
+              "largest_fraction": 0.8333333333333334
+            },
+            {
+              "object_id": 5,
+              "patches": 2,
+              "fragments": 2,
+              "largest_fraction": 0.5
+            },
+            {
+              "object_id": 6,
+              "patches": 7,
+              "fragments": 2,
+              "largest_fraction": 0.8571428571428571
+            }
+          ],
+          "gt_object_fragments_triangle": [
+            {
+              "object_id": 1,
+              "patches": 7,
+              "fragments": 2,
+              "largest_fraction": 0.8571428571428571
+            },
+            {
+              "object_id": 2,
+              "patches": 3,
+              "fragments": 2,
+              "largest_fraction": 0.6666666666666666
+            },
+            {
+              "object_id": 3,
+              "patches": 2,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 4,
+              "patches": 18,
+              "fragments": 4,
+              "largest_fraction": 0.7777777777777778
+            },
+            {
+              "object_id": 5,
+              "patches": 2,
+              "fragments": 2,
+              "largest_fraction": 0.5
+            },
+            {
+              "object_id": 6,
+              "patches": 7,
+              "fragments": 2,
+              "largest_fraction": 0.8571428571428571
+            }
+          ],
+          "restored_raw_size2_edges": 4,
+          "removed_edge_classes": {
+            "same_instance_fg": 1,
+            "cross_instance_fg": 0,
+            "foreground_background": 2,
+            "background_background": 0
+          },
+          "removed_raw_graph_bridges_by_class": {
+            "same_instance_fg": 1,
+            "cross_instance_fg": 0,
+            "foreground_background": 2,
+            "background_background": 0
+          },
+          "removed_edge_count": 3,
+          "removed_raw_graph_bridge_count": 3
+        },
+        {
+          "image_id": 1329,
+          "raw_metrics": {
+            "fg_ari": 0.8858858858858859,
+            "foreground_iou": 0.8095238095238095,
+            "matched_object_iou": 0.6666666666666666
+          },
+          "triangle_metrics": {
+            "fg_ari": 0.8858858858858859,
+            "foreground_iou": 0.8095238095238095,
+            "matched_object_iou": 0.6666666666666666
+          },
+          "raw_groups": 4,
+          "triangle_groups": 4,
+          "new_zero_groups": false,
+          "foreground_patch_loss_raw": 2,
+          "foreground_patch_loss_triangle": 2,
+          "coassignment_raw": {
+            "same_instance_coassignment_recall": 0.8301886792452831,
+            "cross_instance_coassignment_rate": 0.0,
+            "same_instance_pairs": 53,
+            "cross_instance_pairs": 118
+          },
+          "coassignment_triangle": {
+            "same_instance_coassignment_recall": 0.8301886792452831,
+            "cross_instance_coassignment_rate": 0.0,
+            "same_instance_pairs": 53,
+            "cross_instance_pairs": 118
+          },
+          "gt_object_fragments_raw": [
+            {
+              "object_id": 1,
+              "patches": 9,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 2,
+              "patches": 2,
+              "fragments": 2,
+              "largest_fraction": 0.5
+            },
+            {
+              "object_id": 3,
+              "patches": 6,
+              "fragments": 2,
+              "largest_fraction": 0.6666666666666666
+            },
+            {
+              "object_id": 4,
+              "patches": 2,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            }
+          ],
+          "gt_object_fragments_triangle": [
+            {
+              "object_id": 1,
+              "patches": 9,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 2,
+              "patches": 2,
+              "fragments": 2,
+              "largest_fraction": 0.5
+            },
+            {
+              "object_id": 3,
+              "patches": 6,
+              "fragments": 2,
+              "largest_fraction": 0.6666666666666666
+            },
+            {
+              "object_id": 4,
+              "patches": 2,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            }
+          ],
+          "restored_raw_size2_edges": 1,
+          "removed_edge_classes": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_raw_graph_bridges_by_class": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_edge_count": 0,
+          "removed_raw_graph_bridge_count": 0
+        },
+        {
+          "image_id": 1330,
+          "raw_metrics": {
+            "fg_ari": 0.9680170240061705,
+            "foreground_iou": 0.9047619047619048,
+            "matched_object_iou": 0.9283088235294118
+          },
+          "triangle_metrics": {
+            "fg_ari": 0.9680170240061705,
+            "foreground_iou": 0.9047619047619048,
+            "matched_object_iou": 0.9283088235294118
+          },
+          "raw_groups": 7,
+          "triangle_groups": 7,
+          "new_zero_groups": false,
+          "foreground_patch_loss_raw": 2,
+          "foreground_patch_loss_triangle": 2,
+          "coassignment_raw": {
+            "same_instance_coassignment_recall": 0.9539641943734015,
+            "cross_instance_coassignment_rate": 0.0,
+            "same_instance_pairs": 391,
+            "cross_instance_pairs": 1320
+          },
+          "coassignment_triangle": {
+            "same_instance_coassignment_recall": 0.9539641943734015,
+            "cross_instance_coassignment_rate": 0.0,
+            "same_instance_pairs": 391,
+            "cross_instance_pairs": 1320
+          },
+          "gt_object_fragments_raw": [
+            {
+              "object_id": 1,
+              "patches": 15,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 2,
+              "patches": 2,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 3,
+              "patches": 18,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 4,
+              "patches": 16,
+              "fragments": 2,
+              "largest_fraction": 0.9375
+            },
+            {
+              "object_id": 5,
+              "patches": 4,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 6,
+              "patches": 4,
+              "fragments": 2,
+              "largest_fraction": 0.75
+            }
+          ],
+          "gt_object_fragments_triangle": [
+            {
+              "object_id": 1,
+              "patches": 15,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 2,
+              "patches": 2,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 3,
+              "patches": 18,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 4,
+              "patches": 16,
+              "fragments": 2,
+              "largest_fraction": 0.9375
+            },
+            {
+              "object_id": 5,
+              "patches": 4,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 6,
+              "patches": 4,
+              "fragments": 2,
+              "largest_fraction": 0.75
+            }
+          ],
+          "restored_raw_size2_edges": 2,
+          "removed_edge_classes": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_raw_graph_bridges_by_class": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_edge_count": 0,
+          "removed_raw_graph_bridge_count": 0
+        },
+        {
+          "image_id": 1331,
+          "raw_metrics": {
+            "fg_ari": 0.9107531562908141,
+            "foreground_iou": 0.8409090909090909,
+            "matched_object_iou": 0.7323232323232323
+          },
+          "triangle_metrics": {
+            "fg_ari": 0.9107531562908141,
+            "foreground_iou": 0.8604651162790697,
+            "matched_object_iou": 0.7474747474747474
+          },
+          "raw_groups": 5,
+          "triangle_groups": 5,
+          "new_zero_groups": false,
+          "foreground_patch_loss_raw": 4,
+          "foreground_patch_loss_triangle": 4,
+          "coassignment_raw": {
+            "same_instance_coassignment_recall": 0.8734177215189873,
+            "cross_instance_coassignment_rate": 0.0,
+            "same_instance_pairs": 158,
+            "cross_instance_pairs": 662
+          },
+          "coassignment_triangle": {
+            "same_instance_coassignment_recall": 0.8734177215189873,
+            "cross_instance_coassignment_rate": 0.0,
+            "same_instance_pairs": 158,
+            "cross_instance_pairs": 662
+          },
+          "gt_object_fragments_raw": [
+            {
+              "object_id": 1,
+              "patches": 10,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 2,
+              "patches": 4,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 3,
+              "patches": 4,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 4,
+              "patches": 2,
+              "fragments": 2,
+              "largest_fraction": 0.5
+            },
+            {
+              "object_id": 5,
+              "patches": 11,
+              "fragments": 3,
+              "largest_fraction": 0.8181818181818182
+            },
+            {
+              "object_id": 6,
+              "patches": 10,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            }
+          ],
+          "gt_object_fragments_triangle": [
+            {
+              "object_id": 1,
+              "patches": 10,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 2,
+              "patches": 4,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 3,
+              "patches": 4,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 4,
+              "patches": 2,
+              "fragments": 2,
+              "largest_fraction": 0.5
+            },
+            {
+              "object_id": 5,
+              "patches": 11,
+              "fragments": 3,
+              "largest_fraction": 0.8181818181818182
+            },
+            {
+              "object_id": 6,
+              "patches": 10,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            }
+          ],
+          "restored_raw_size2_edges": 0,
+          "removed_edge_classes": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 1,
+            "background_background": 0
+          },
+          "removed_raw_graph_bridges_by_class": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 1,
+            "background_background": 0
+          },
+          "removed_edge_count": 1,
+          "removed_raw_graph_bridge_count": 1
+        },
+        {
+          "image_id": 1332,
+          "raw_metrics": {
+            "fg_ari": 0.9101796407185628,
+            "foreground_iou": 0.32653061224489793,
+            "matched_object_iou": 0.7950885668276971
+          },
+          "triangle_metrics": {
+            "fg_ari": 0.9101796407185628,
+            "foreground_iou": 0.32653061224489793,
+            "matched_object_iou": 0.7950885668276971
+          },
+          "raw_groups": 8,
+          "triangle_groups": 8,
+          "new_zero_groups": false,
+          "foreground_patch_loss_raw": 3,
+          "foreground_patch_loss_triangle": 3,
+          "coassignment_raw": {
+            "same_instance_coassignment_recall": 0.927536231884058,
+            "cross_instance_coassignment_rate": 0.01827956989247312,
+            "same_instance_pairs": 345,
+            "cross_instance_pairs": 930
+          },
+          "coassignment_triangle": {
+            "same_instance_coassignment_recall": 0.927536231884058,
+            "cross_instance_coassignment_rate": 0.01827956989247312,
+            "same_instance_pairs": 345,
+            "cross_instance_pairs": 930
+          },
+          "gt_object_fragments_raw": [
+            {
+              "object_id": 1,
+              "patches": 5,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 2,
+              "patches": 3,
+              "fragments": 2,
+              "largest_fraction": 0.6666666666666666
+            },
+            {
+              "object_id": 3,
+              "patches": 17,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 4,
+              "patches": 20,
+              "fragments": 2,
+              "largest_fraction": 0.95
+            },
+            {
+              "object_id": 5,
+              "patches": 3,
+              "fragments": 2,
+              "largest_fraction": 0.6666666666666666
+            },
+            {
+              "object_id": 6,
+              "patches": 3,
+              "fragments": 2,
+              "largest_fraction": 0.6666666666666666
+            }
+          ],
+          "gt_object_fragments_triangle": [
+            {
+              "object_id": 1,
+              "patches": 5,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 2,
+              "patches": 3,
+              "fragments": 2,
+              "largest_fraction": 0.6666666666666666
+            },
+            {
+              "object_id": 3,
+              "patches": 17,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 4,
+              "patches": 20,
+              "fragments": 2,
+              "largest_fraction": 0.95
+            },
+            {
+              "object_id": 5,
+              "patches": 3,
+              "fragments": 2,
+              "largest_fraction": 0.6666666666666666
+            },
+            {
+              "object_id": 6,
+              "patches": 3,
+              "fragments": 2,
+              "largest_fraction": 0.6666666666666666
+            }
+          ],
+          "restored_raw_size2_edges": 4,
+          "removed_edge_classes": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_raw_graph_bridges_by_class": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_edge_count": 0,
+          "removed_raw_graph_bridge_count": 0
+        },
+        {
+          "image_id": 1333,
+          "raw_metrics": {
+            "fg_ari": 0.7175324675324676,
+            "foreground_iou": 0.6195652173913043,
+            "matched_object_iou": 0.6318993506493507
+          },
+          "triangle_metrics": {
+            "fg_ari": 0.7175324675324676,
+            "foreground_iou": 0.6195652173913043,
+            "matched_object_iou": 0.6318993506493507
+          },
+          "raw_groups": 10,
+          "triangle_groups": 10,
+          "new_zero_groups": false,
+          "foreground_patch_loss_raw": 2,
+          "foreground_patch_loss_triangle": 2,
+          "coassignment_raw": {
+            "same_instance_coassignment_recall": 0.7220338983050848,
+            "cross_instance_coassignment_rate": 0.0346045197740113,
+            "same_instance_pairs": 295,
+            "cross_instance_pairs": 1416
+          },
+          "coassignment_triangle": {
+            "same_instance_coassignment_recall": 0.7220338983050848,
+            "cross_instance_coassignment_rate": 0.0346045197740113,
+            "same_instance_pairs": 295,
+            "cross_instance_pairs": 1416
+          },
+          "gt_object_fragments_raw": [
+            {
+              "object_id": 1,
+              "patches": 12,
+              "fragments": 2,
+              "largest_fraction": 0.9166666666666666
+            },
+            {
+              "object_id": 2,
+              "patches": 14,
+              "fragments": 2,
+              "largest_fraction": 0.6428571428571429
+            },
+            {
+              "object_id": 3,
+              "patches": 10,
+              "fragments": 2,
+              "largest_fraction": 0.9
+            },
+            {
+              "object_id": 4,
+              "patches": 12,
+              "fragments": 2,
+              "largest_fraction": 0.9166666666666666
+            },
+            {
+              "object_id": 5,
+              "patches": 7,
+              "fragments": 2,
+              "largest_fraction": 0.8571428571428571
+            },
+            {
+              "object_id": 6,
+              "patches": 4,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            }
+          ],
+          "gt_object_fragments_triangle": [
+            {
+              "object_id": 1,
+              "patches": 12,
+              "fragments": 2,
+              "largest_fraction": 0.9166666666666666
+            },
+            {
+              "object_id": 2,
+              "patches": 14,
+              "fragments": 2,
+              "largest_fraction": 0.6428571428571429
+            },
+            {
+              "object_id": 3,
+              "patches": 10,
+              "fragments": 2,
+              "largest_fraction": 0.9
+            },
+            {
+              "object_id": 4,
+              "patches": 12,
+              "fragments": 2,
+              "largest_fraction": 0.9166666666666666
+            },
+            {
+              "object_id": 5,
+              "patches": 7,
+              "fragments": 2,
+              "largest_fraction": 0.8571428571428571
+            },
+            {
+              "object_id": 6,
+              "patches": 4,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            }
+          ],
+          "restored_raw_size2_edges": 3,
+          "removed_edge_classes": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_raw_graph_bridges_by_class": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_edge_count": 0,
+          "removed_raw_graph_bridge_count": 0
+        },
+        {
+          "image_id": 1334,
+          "raw_metrics": {
+            "fg_ari": 1.0,
+            "foreground_iou": 0.9090909090909091,
+            "matched_object_iou": 0.6388888888888888
+          },
+          "triangle_metrics": {
+            "fg_ari": 1.0,
+            "foreground_iou": 0.9090909090909091,
+            "matched_object_iou": 0.6388888888888888
+          },
+          "raw_groups": 2,
+          "triangle_groups": 2,
+          "new_zero_groups": false,
+          "foreground_patch_loss_raw": 1,
+          "foreground_patch_loss_triangle": 1,
+          "coassignment_raw": {
+            "same_instance_coassignment_recall": 1.0,
+            "cross_instance_coassignment_rate": 0.0,
+            "same_instance_pairs": 91,
+            "cross_instance_pairs": 119
+          },
+          "coassignment_triangle": {
+            "same_instance_coassignment_recall": 1.0,
+            "cross_instance_coassignment_rate": 0.0,
+            "same_instance_pairs": 91,
+            "cross_instance_pairs": 119
+          },
+          "gt_object_fragments_raw": [
+            {
+              "object_id": 1,
+              "patches": 11,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 4,
+              "patches": 9,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            }
+          ],
+          "gt_object_fragments_triangle": [
+            {
+              "object_id": 1,
+              "patches": 11,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 4,
+              "patches": 9,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            }
+          ],
+          "restored_raw_size2_edges": 0,
+          "removed_edge_classes": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_raw_graph_bridges_by_class": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_edge_count": 0,
+          "removed_raw_graph_bridge_count": 0
+        },
+        {
+          "image_id": 1335,
+          "raw_metrics": {
+            "fg_ari": 0.5589815056760444,
+            "foreground_iou": 0.7636363636363637,
+            "matched_object_iou": 0.451035076035076
+          },
+          "triangle_metrics": {
+            "fg_ari": 0.5589815056760444,
+            "foreground_iou": 0.7636363636363637,
+            "matched_object_iou": 0.451035076035076
+          },
+          "raw_groups": 9,
+          "triangle_groups": 9,
+          "new_zero_groups": false,
+          "foreground_patch_loss_raw": 8,
+          "foreground_patch_loss_triangle": 8,
+          "coassignment_raw": {
+            "same_instance_coassignment_recall": 0.5911949685534591,
+            "cross_instance_coassignment_rate": 0.040337711069418386,
+            "same_instance_pairs": 159,
+            "cross_instance_pairs": 1066
+          },
+          "coassignment_triangle": {
+            "same_instance_coassignment_recall": 0.5911949685534591,
+            "cross_instance_coassignment_rate": 0.040337711069418386,
+            "same_instance_pairs": 159,
+            "cross_instance_pairs": 1066
+          },
+          "gt_object_fragments_raw": [
+            {
+              "object_id": 1,
+              "patches": 6,
+              "fragments": 5,
+              "largest_fraction": 0.3333333333333333
+            },
+            {
+              "object_id": 2,
+              "patches": 2,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 3,
+              "patches": 3,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 4,
+              "patches": 4,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 5,
+              "patches": 11,
+              "fragments": 3,
+              "largest_fraction": 0.8181818181818182
+            },
+            {
+              "object_id": 6,
+              "patches": 3,
+              "fragments": 2,
+              "largest_fraction": 0.6666666666666666
+            },
+            {
+              "object_id": 7,
+              "patches": 4,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 8,
+              "patches": 11,
+              "fragments": 2,
+              "largest_fraction": 0.7272727272727273
+            },
+            {
+              "object_id": 9,
+              "patches": 6,
+              "fragments": 2,
+              "largest_fraction": 0.8333333333333334
+            }
+          ],
+          "gt_object_fragments_triangle": [
+            {
+              "object_id": 1,
+              "patches": 6,
+              "fragments": 5,
+              "largest_fraction": 0.3333333333333333
+            },
+            {
+              "object_id": 2,
+              "patches": 2,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 3,
+              "patches": 3,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 4,
+              "patches": 4,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 5,
+              "patches": 11,
+              "fragments": 3,
+              "largest_fraction": 0.8181818181818182
+            },
+            {
+              "object_id": 6,
+              "patches": 3,
+              "fragments": 2,
+              "largest_fraction": 0.6666666666666666
+            },
+            {
+              "object_id": 7,
+              "patches": 4,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 8,
+              "patches": 11,
+              "fragments": 2,
+              "largest_fraction": 0.7272727272727273
+            },
+            {
+              "object_id": 9,
+              "patches": 6,
+              "fragments": 2,
+              "largest_fraction": 0.8333333333333334
+            }
+          ],
+          "restored_raw_size2_edges": 2,
+          "removed_edge_classes": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_raw_graph_bridges_by_class": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_edge_count": 0,
+          "removed_raw_graph_bridge_count": 0
+        }
+      ]
+    },
+    "1": {
+      "checkpoint_sha256": "76f379d5a7e4cd9d12fdf0b701f3dd9dbbf28b5eea270a9cee2d30d87b4dad98",
+      "raw_means": {
+        "fg_ari": 0.7969275532498533,
+        "foreground_iou": 0.5232831690288482,
+        "matched_object_iou": 0.6272239971076993
+      },
+      "triangle_means": {
+        "fg_ari": 0.7969275532498533,
+        "foreground_iou": 0.5232831690288482,
+        "matched_object_iou": 0.6272239971076993
+      },
+      "metric_deltas": {
+        "fg_ari": 0.0,
+        "foreground_iou": 0.0,
+        "matched_object_iou": 0.0
+      },
+      "mean_cross_instance_coassignment_raw": 0.017855986326542724,
+      "mean_cross_instance_coassignment_triangle": 0.017855986326542724,
+      "mean_same_instance_recall_raw": 0.742832462595731,
+      "mean_same_instance_recall_triangle": 0.742832462595731,
+      "mean_same_instance_recall_drop": 0.0,
+      "legacy_matches_archived_first16": {
+        "fg_ari": {
+          "max_abs_difference": 0.0,
+          "exact_within_1e_9": true
+        },
+        "foreground_iou": {
+          "max_abs_difference": 0.0,
+          "exact_within_1e_9": true
+        },
+        "matched_object_iou": {
+          "max_abs_difference": 0.0,
+          "exact_within_1e_9": true
+        }
+      },
+      "mean_foreground_patch_loss_raw": 4.375,
+      "mean_foreground_patch_loss_triangle": 4.375,
+      "mean_raw_groups": 7.375,
+      "mean_triangle_groups": 7.375,
+      "images_with_new_zero_groups_where_raw_nonzero": 0,
+      "removed_edge_classes_total": {
+        "same_instance_fg": 0,
+        "cross_instance_fg": 0,
+        "foreground_background": 0,
+        "background_background": 0
+      },
+      "removed_raw_graph_bridges_by_class_total": {
+        "same_instance_fg": 0,
+        "cross_instance_fg": 0,
+        "foreground_background": 0,
+        "background_background": 0
+      },
+      "removed_raw_graph_bridge_count_total": 0,
+      "per_image": [
+        {
+          "image_id": 1320,
+          "raw_metrics": {
+            "fg_ari": 0.8322991124027963,
+            "foreground_iou": 0.5979381443298969,
+            "matched_object_iou": 0.6331372549019607
+          },
+          "triangle_metrics": {
+            "fg_ari": 0.8322991124027963,
+            "foreground_iou": 0.5979381443298969,
+            "matched_object_iou": 0.6331372549019607
+          },
+          "raw_groups": 6,
+          "triangle_groups": 6,
+          "new_zero_groups": false,
+          "foreground_patch_loss_raw": 3,
+          "foreground_patch_loss_triangle": 3,
+          "coassignment_raw": {
+            "same_instance_coassignment_recall": 0.8285714285714286,
+            "cross_instance_coassignment_rate": 0.02127659574468085,
+            "same_instance_pairs": 420,
+            "cross_instance_pairs": 1410
+          },
+          "coassignment_triangle": {
+            "same_instance_coassignment_recall": 0.8285714285714286,
+            "cross_instance_coassignment_rate": 0.02127659574468085,
+            "same_instance_pairs": 420,
+            "cross_instance_pairs": 1410
+          },
+          "gt_object_fragments_raw": [
+            {
+              "object_id": 1,
+              "patches": 9,
+              "fragments": 2,
+              "largest_fraction": 0.8888888888888888
+            },
+            {
+              "object_id": 2,
+              "patches": 19,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 3,
+              "patches": 15,
+              "fragments": 3,
+              "largest_fraction": 0.5333333333333333
+            },
+            {
+              "object_id": 4,
+              "patches": 3,
+              "fragments": 2,
+              "largest_fraction": 0.6666666666666666
+            },
+            {
+              "object_id": 5,
+              "patches": 15,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            }
+          ],
+          "gt_object_fragments_triangle": [
+            {
+              "object_id": 1,
+              "patches": 9,
+              "fragments": 2,
+              "largest_fraction": 0.8888888888888888
+            },
+            {
+              "object_id": 2,
+              "patches": 19,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 3,
+              "patches": 15,
+              "fragments": 3,
+              "largest_fraction": 0.5333333333333333
+            },
+            {
+              "object_id": 4,
+              "patches": 3,
+              "fragments": 2,
+              "largest_fraction": 0.6666666666666666
+            },
+            {
+              "object_id": 5,
+              "patches": 15,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            }
+          ],
+          "restored_raw_size2_edges": 0,
+          "removed_edge_classes": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_raw_graph_bridges_by_class": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_edge_count": 0,
+          "removed_raw_graph_bridge_count": 0
+        },
+        {
+          "image_id": 1321,
+          "raw_metrics": {
+            "fg_ari": 0.6891679748822606,
+            "foreground_iou": 0.22727272727272727,
+            "matched_object_iou": 0.47222222222222215
+          },
+          "triangle_metrics": {
+            "fg_ari": 0.6891679748822606,
+            "foreground_iou": 0.22727272727272727,
+            "matched_object_iou": 0.47222222222222215
+          },
+          "raw_groups": 2,
+          "triangle_groups": 2,
+          "new_zero_groups": false,
+          "foreground_patch_loss_raw": 17,
+          "foreground_patch_loss_triangle": 17,
+          "coassignment_raw": {
+            "same_instance_coassignment_recall": 0.03508771929824561,
+            "cross_instance_coassignment_rate": 0.0,
+            "same_instance_pairs": 114,
+            "cross_instance_pairs": 117
+          },
+          "coassignment_triangle": {
+            "same_instance_coassignment_recall": 0.03508771929824561,
+            "cross_instance_coassignment_rate": 0.0,
+            "same_instance_pairs": 114,
+            "cross_instance_pairs": 117
+          },
+          "gt_object_fragments_raw": [
+            {
+              "object_id": 1,
+              "patches": 4,
+              "fragments": 2,
+              "largest_fraction": 0.75
+            },
+            {
+              "object_id": 2,
+              "patches": 15,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 3,
+              "patches": 3,
+              "fragments": 2,
+              "largest_fraction": 0.6666666666666666
+            }
+          ],
+          "gt_object_fragments_triangle": [
+            {
+              "object_id": 1,
+              "patches": 4,
+              "fragments": 2,
+              "largest_fraction": 0.75
+            },
+            {
+              "object_id": 2,
+              "patches": 15,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 3,
+              "patches": 3,
+              "fragments": 2,
+              "largest_fraction": 0.6666666666666666
+            }
+          ],
+          "restored_raw_size2_edges": 1,
+          "removed_edge_classes": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_raw_graph_bridges_by_class": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_edge_count": 0,
+          "removed_raw_graph_bridge_count": 0
+        },
+        {
+          "image_id": 1322,
+          "raw_metrics": {
+            "fg_ari": 0.8925716017160998,
+            "foreground_iou": 0.23529411764705882,
+            "matched_object_iou": 0.6585714285714286
+          },
+          "triangle_metrics": {
+            "fg_ari": 0.8925716017160998,
+            "foreground_iou": 0.23529411764705882,
+            "matched_object_iou": 0.6585714285714286
+          },
+          "raw_groups": 5,
+          "triangle_groups": 5,
+          "new_zero_groups": false,
+          "foreground_patch_loss_raw": 8,
+          "foreground_patch_loss_triangle": 8,
+          "coassignment_raw": {
+            "same_instance_coassignment_recall": 0.8307210031347962,
+            "cross_instance_coassignment_rate": 0.0,
+            "same_instance_pairs": 319,
+            "cross_instance_pairs": 461
+          },
+          "coassignment_triangle": {
+            "same_instance_coassignment_recall": 0.8307210031347962,
+            "cross_instance_coassignment_rate": 0.0,
+            "same_instance_pairs": 319,
+            "cross_instance_pairs": 461
+          },
+          "gt_object_fragments_raw": [
+            {
+              "object_id": 1,
+              "patches": 2,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 2,
+              "patches": 24,
+              "fragments": 2,
+              "largest_fraction": 0.9583333333333334
+            },
+            {
+              "object_id": 3,
+              "patches": 7,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 4,
+              "patches": 7,
+              "fragments": 2,
+              "largest_fraction": 0.7142857142857143
+            }
+          ],
+          "gt_object_fragments_triangle": [
+            {
+              "object_id": 1,
+              "patches": 2,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 2,
+              "patches": 24,
+              "fragments": 2,
+              "largest_fraction": 0.9583333333333334
+            },
+            {
+              "object_id": 3,
+              "patches": 7,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 4,
+              "patches": 7,
+              "fragments": 2,
+              "largest_fraction": 0.7142857142857143
+            }
+          ],
+          "restored_raw_size2_edges": 1,
+          "removed_edge_classes": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_raw_graph_bridges_by_class": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_edge_count": 0,
+          "removed_raw_graph_bridge_count": 0
+        },
+        {
+          "image_id": 1323,
+          "raw_metrics": {
+            "fg_ari": 0.9508836230786829,
+            "foreground_iou": 0.37404580152671757,
+            "matched_object_iou": 0.7528344671201813
+          },
+          "triangle_metrics": {
+            "fg_ari": 0.9508836230786829,
+            "foreground_iou": 0.37404580152671757,
+            "matched_object_iou": 0.7528344671201813
+          },
+          "raw_groups": 12,
+          "triangle_groups": 12,
+          "new_zero_groups": false,
+          "foreground_patch_loss_raw": 1,
+          "foreground_patch_loss_triangle": 1,
+          "coassignment_raw": {
+            "same_instance_coassignment_recall": 0.9259259259259259,
+            "cross_instance_coassignment_rate": 0.0009910802775024777,
+            "same_instance_pairs": 216,
+            "cross_instance_pairs": 1009
+          },
+          "coassignment_triangle": {
+            "same_instance_coassignment_recall": 0.9259259259259259,
+            "cross_instance_coassignment_rate": 0.0009910802775024777,
+            "same_instance_pairs": 216,
+            "cross_instance_pairs": 1009
+          },
+          "gt_object_fragments_raw": [
+            {
+              "object_id": 1,
+              "patches": 3,
+              "fragments": 2,
+              "largest_fraction": 0.6666666666666666
+            },
+            {
+              "object_id": 2,
+              "patches": 9,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 3,
+              "patches": 7,
+              "fragments": 2,
+              "largest_fraction": 0.8571428571428571
+            },
+            {
+              "object_id": 4,
+              "patches": 9,
+              "fragments": 2,
+              "largest_fraction": 0.8888888888888888
+            },
+            {
+              "object_id": 5,
+              "patches": 6,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 7,
+              "patches": 15,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            }
+          ],
+          "gt_object_fragments_triangle": [
+            {
+              "object_id": 1,
+              "patches": 3,
+              "fragments": 2,
+              "largest_fraction": 0.6666666666666666
+            },
+            {
+              "object_id": 2,
+              "patches": 9,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 3,
+              "patches": 7,
+              "fragments": 2,
+              "largest_fraction": 0.8571428571428571
+            },
+            {
+              "object_id": 4,
+              "patches": 9,
+              "fragments": 2,
+              "largest_fraction": 0.8888888888888888
+            },
+            {
+              "object_id": 5,
+              "patches": 6,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 7,
+              "patches": 15,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            }
+          ],
+          "restored_raw_size2_edges": 3,
+          "removed_edge_classes": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_raw_graph_bridges_by_class": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_edge_count": 0,
+          "removed_raw_graph_bridge_count": 0
+        },
+        {
+          "image_id": 1324,
+          "raw_metrics": {
+            "fg_ari": 0.8278856901257227,
+            "foreground_iou": 0.4647058823529412,
+            "matched_object_iou": 0.5685972744360903
+          },
+          "triangle_metrics": {
+            "fg_ari": 0.8278856901257227,
+            "foreground_iou": 0.4647058823529412,
+            "matched_object_iou": 0.5685972744360903
+          },
+          "raw_groups": 11,
+          "triangle_groups": 11,
+          "new_zero_groups": false,
+          "foreground_patch_loss_raw": 5,
+          "foreground_patch_loss_triangle": 5,
+          "coassignment_raw": {
+            "same_instance_coassignment_recall": 0.8062645011600929,
+            "cross_instance_coassignment_rate": 0.014481707317073171,
+            "same_instance_pairs": 862,
+            "cross_instance_pairs": 2624
+          },
+          "coassignment_triangle": {
+            "same_instance_coassignment_recall": 0.8062645011600929,
+            "cross_instance_coassignment_rate": 0.014481707317073171,
+            "same_instance_pairs": 862,
+            "cross_instance_pairs": 2624
+          },
+          "gt_object_fragments_raw": [
+            {
+              "object_id": 1,
+              "patches": 2,
+              "fragments": 2,
+              "largest_fraction": 0.5
+            },
+            {
+              "object_id": 2,
+              "patches": 5,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 3,
+              "patches": 6,
+              "fragments": 2,
+              "largest_fraction": 0.6666666666666666
+            },
+            {
+              "object_id": 4,
+              "patches": 14,
+              "fragments": 3,
+              "largest_fraction": 0.6428571428571429
+            },
+            {
+              "object_id": 6,
+              "patches": 15,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 8,
+              "patches": 5,
+              "fragments": 3,
+              "largest_fraction": 0.6
+            },
+            {
+              "object_id": 9,
+              "patches": 36,
+              "fragments": 4,
+              "largest_fraction": 0.9166666666666666
+            }
+          ],
+          "gt_object_fragments_triangle": [
+            {
+              "object_id": 1,
+              "patches": 2,
+              "fragments": 2,
+              "largest_fraction": 0.5
+            },
+            {
+              "object_id": 2,
+              "patches": 5,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 3,
+              "patches": 6,
+              "fragments": 2,
+              "largest_fraction": 0.6666666666666666
+            },
+            {
+              "object_id": 4,
+              "patches": 14,
+              "fragments": 3,
+              "largest_fraction": 0.6428571428571429
+            },
+            {
+              "object_id": 6,
+              "patches": 15,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 8,
+              "patches": 5,
+              "fragments": 3,
+              "largest_fraction": 0.6
+            },
+            {
+              "object_id": 9,
+              "patches": 36,
+              "fragments": 4,
+              "largest_fraction": 0.9166666666666666
+            }
+          ],
+          "restored_raw_size2_edges": 2,
+          "removed_edge_classes": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_raw_graph_bridges_by_class": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_edge_count": 0,
+          "removed_raw_graph_bridge_count": 0
+        },
+        {
+          "image_id": 1325,
+          "raw_metrics": {
+            "fg_ari": 0.7114541531708714,
+            "foreground_iou": 0.53125,
+            "matched_object_iou": 0.7406746031746031
+          },
+          "triangle_metrics": {
+            "fg_ari": 0.7114541531708714,
+            "foreground_iou": 0.53125,
+            "matched_object_iou": 0.7406746031746031
+          },
+          "raw_groups": 10,
+          "triangle_groups": 10,
+          "new_zero_groups": false,
+          "foreground_patch_loss_raw": 2,
+          "foreground_patch_loss_triangle": 2,
+          "coassignment_raw": {
+            "same_instance_coassignment_recall": 0.6434977578475336,
+            "cross_instance_coassignment_rate": 0.0,
+            "same_instance_pairs": 446,
+            "cross_instance_pairs": 932
+          },
+          "coassignment_triangle": {
+            "same_instance_coassignment_recall": 0.6434977578475336,
+            "cross_instance_coassignment_rate": 0.0,
+            "same_instance_pairs": 446,
+            "cross_instance_pairs": 932
+          },
+          "gt_object_fragments_raw": [
+            {
+              "object_id": 1,
+              "patches": 17,
+              "fragments": 3,
+              "largest_fraction": 0.7058823529411765
+            },
+            {
+              "object_id": 2,
+              "patches": 20,
+              "fragments": 3,
+              "largest_fraction": 0.85
+            },
+            {
+              "object_id": 3,
+              "patches": 16,
+              "fragments": 2,
+              "largest_fraction": 0.8125
+            }
+          ],
+          "gt_object_fragments_triangle": [
+            {
+              "object_id": 1,
+              "patches": 17,
+              "fragments": 3,
+              "largest_fraction": 0.7058823529411765
+            },
+            {
+              "object_id": 2,
+              "patches": 20,
+              "fragments": 3,
+              "largest_fraction": 0.85
+            },
+            {
+              "object_id": 3,
+              "patches": 16,
+              "fragments": 2,
+              "largest_fraction": 0.8125
+            }
+          ],
+          "restored_raw_size2_edges": 3,
+          "removed_edge_classes": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_raw_graph_bridges_by_class": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_edge_count": 0,
+          "removed_raw_graph_bridge_count": 0
+        },
+        {
+          "image_id": 1326,
+          "raw_metrics": {
+            "fg_ari": 0.7569160733045408,
+            "foreground_iou": 0.3821138211382114,
+            "matched_object_iou": 0.6571504884004884
+          },
+          "triangle_metrics": {
+            "fg_ari": 0.7569160733045408,
+            "foreground_iou": 0.3821138211382114,
+            "matched_object_iou": 0.6571504884004884
+          },
+          "raw_groups": 11,
+          "triangle_groups": 11,
+          "new_zero_groups": false,
+          "foreground_patch_loss_raw": 3,
+          "foreground_patch_loss_triangle": 3,
+          "coassignment_raw": {
+            "same_instance_coassignment_recall": 0.7425149700598802,
+            "cross_instance_coassignment_rate": 0.026465028355387523,
+            "same_instance_pairs": 167,
+            "cross_instance_pairs": 1058
+          },
+          "coassignment_triangle": {
+            "same_instance_coassignment_recall": 0.7425149700598802,
+            "cross_instance_coassignment_rate": 0.026465028355387523,
+            "same_instance_pairs": 167,
+            "cross_instance_pairs": 1058
+          },
+          "gt_object_fragments_raw": [
+            {
+              "object_id": 1,
+              "patches": 13,
+              "fragments": 2,
+              "largest_fraction": 0.9230769230769231
+            },
+            {
+              "object_id": 2,
+              "patches": 7,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 4,
+              "patches": 4,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 5,
+              "patches": 5,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 6,
+              "patches": 4,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 7,
+              "patches": 3,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 8,
+              "patches": 6,
+              "fragments": 2,
+              "largest_fraction": 0.5
+            },
+            {
+              "object_id": 9,
+              "patches": 8,
+              "fragments": 3,
+              "largest_fraction": 0.5
+            }
+          ],
+          "gt_object_fragments_triangle": [
+            {
+              "object_id": 1,
+              "patches": 13,
+              "fragments": 2,
+              "largest_fraction": 0.9230769230769231
+            },
+            {
+              "object_id": 2,
+              "patches": 7,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 4,
+              "patches": 4,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 5,
+              "patches": 5,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 6,
+              "patches": 4,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 7,
+              "patches": 3,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 8,
+              "patches": 6,
+              "fragments": 2,
+              "largest_fraction": 0.5
+            },
+            {
+              "object_id": 9,
+              "patches": 8,
+              "fragments": 3,
+              "largest_fraction": 0.5
+            }
+          ],
+          "restored_raw_size2_edges": 1,
+          "removed_edge_classes": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_raw_graph_bridges_by_class": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_edge_count": 0,
+          "removed_raw_graph_bridge_count": 0
+        },
+        {
+          "image_id": 1327,
+          "raw_metrics": {
+            "fg_ari": 0.9822391240753897,
+            "foreground_iou": 0.8717948717948718,
+            "matched_object_iou": 0.8686868686868686
+          },
+          "triangle_metrics": {
+            "fg_ari": 0.9822391240753897,
+            "foreground_iou": 0.8717948717948718,
+            "matched_object_iou": 0.8686868686868686
+          },
+          "raw_groups": 3,
+          "triangle_groups": 3,
+          "new_zero_groups": false,
+          "foreground_patch_loss_raw": 1,
+          "foreground_patch_loss_triangle": 1,
+          "coassignment_raw": {
+            "same_instance_coassignment_recall": 0.9783549783549783,
+            "cross_instance_coassignment_rate": 0.0,
+            "same_instance_pairs": 231,
+            "cross_instance_pairs": 364
+          },
+          "coassignment_triangle": {
+            "same_instance_coassignment_recall": 0.9783549783549783,
+            "cross_instance_coassignment_rate": 0.0,
+            "same_instance_pairs": 231,
+            "cross_instance_pairs": 364
+          },
+          "gt_object_fragments_raw": [
+            {
+              "object_id": 1,
+              "patches": 10,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 2,
+              "patches": 19,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 3,
+              "patches": 6,
+              "fragments": 2,
+              "largest_fraction": 0.8333333333333334
+            }
+          ],
+          "gt_object_fragments_triangle": [
+            {
+              "object_id": 1,
+              "patches": 10,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 2,
+              "patches": 19,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 3,
+              "patches": 6,
+              "fragments": 2,
+              "largest_fraction": 0.8333333333333334
+            }
+          ],
+          "restored_raw_size2_edges": 0,
+          "removed_edge_classes": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_raw_graph_bridges_by_class": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_edge_count": 0,
+          "removed_raw_graph_bridge_count": 0
+        },
+        {
+          "image_id": 1328,
+          "raw_metrics": {
+            "fg_ari": 0.6183527190008155,
+            "foreground_iou": 0.75,
+            "matched_object_iou": 0.6960678210678211
+          },
+          "triangle_metrics": {
+            "fg_ari": 0.6183527190008155,
+            "foreground_iou": 0.75,
+            "matched_object_iou": 0.6960678210678211
+          },
+          "raw_groups": 9,
+          "triangle_groups": 9,
+          "new_zero_groups": false,
+          "foreground_patch_loss_raw": 3,
+          "foreground_patch_loss_triangle": 3,
+          "coassignment_raw": {
+            "same_instance_coassignment_recall": 0.54,
+            "cross_instance_coassignment_rate": 0.0018484288354898336,
+            "same_instance_pairs": 200,
+            "cross_instance_pairs": 541
+          },
+          "coassignment_triangle": {
+            "same_instance_coassignment_recall": 0.54,
+            "cross_instance_coassignment_rate": 0.0018484288354898336,
+            "same_instance_pairs": 200,
+            "cross_instance_pairs": 541
+          },
+          "gt_object_fragments_raw": [
+            {
+              "object_id": 1,
+              "patches": 7,
+              "fragments": 2,
+              "largest_fraction": 0.8571428571428571
+            },
+            {
+              "object_id": 2,
+              "patches": 3,
+              "fragments": 2,
+              "largest_fraction": 0.6666666666666666
+            },
+            {
+              "object_id": 3,
+              "patches": 2,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 4,
+              "patches": 18,
+              "fragments": 3,
+              "largest_fraction": 0.6666666666666666
+            },
+            {
+              "object_id": 5,
+              "patches": 2,
+              "fragments": 2,
+              "largest_fraction": 0.5
+            },
+            {
+              "object_id": 6,
+              "patches": 7,
+              "fragments": 2,
+              "largest_fraction": 0.8571428571428571
+            }
+          ],
+          "gt_object_fragments_triangle": [
+            {
+              "object_id": 1,
+              "patches": 7,
+              "fragments": 2,
+              "largest_fraction": 0.8571428571428571
+            },
+            {
+              "object_id": 2,
+              "patches": 3,
+              "fragments": 2,
+              "largest_fraction": 0.6666666666666666
+            },
+            {
+              "object_id": 3,
+              "patches": 2,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 4,
+              "patches": 18,
+              "fragments": 3,
+              "largest_fraction": 0.6666666666666666
+            },
+            {
+              "object_id": 5,
+              "patches": 2,
+              "fragments": 2,
+              "largest_fraction": 0.5
+            },
+            {
+              "object_id": 6,
+              "patches": 7,
+              "fragments": 2,
+              "largest_fraction": 0.8571428571428571
+            }
+          ],
+          "restored_raw_size2_edges": 3,
+          "removed_edge_classes": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_raw_graph_bridges_by_class": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_edge_count": 0,
+          "removed_raw_graph_bridge_count": 0
+        },
+        {
+          "image_id": 1329,
+          "raw_metrics": {
+            "fg_ari": 0.8858858858858859,
+            "foreground_iou": 0.6538461538461539,
+            "matched_object_iou": 0.6666666666666666
+          },
+          "triangle_metrics": {
+            "fg_ari": 0.8858858858858859,
+            "foreground_iou": 0.6538461538461539,
+            "matched_object_iou": 0.6666666666666666
+          },
+          "raw_groups": 5,
+          "triangle_groups": 5,
+          "new_zero_groups": false,
+          "foreground_patch_loss_raw": 2,
+          "foreground_patch_loss_triangle": 2,
+          "coassignment_raw": {
+            "same_instance_coassignment_recall": 0.8301886792452831,
+            "cross_instance_coassignment_rate": 0.0,
+            "same_instance_pairs": 53,
+            "cross_instance_pairs": 118
+          },
+          "coassignment_triangle": {
+            "same_instance_coassignment_recall": 0.8301886792452831,
+            "cross_instance_coassignment_rate": 0.0,
+            "same_instance_pairs": 53,
+            "cross_instance_pairs": 118
+          },
+          "gt_object_fragments_raw": [
+            {
+              "object_id": 1,
+              "patches": 9,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 2,
+              "patches": 2,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 3,
+              "patches": 6,
+              "fragments": 2,
+              "largest_fraction": 0.6666666666666666
+            },
+            {
+              "object_id": 4,
+              "patches": 2,
+              "fragments": 2,
+              "largest_fraction": 0.5
+            }
+          ],
+          "gt_object_fragments_triangle": [
+            {
+              "object_id": 1,
+              "patches": 9,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 2,
+              "patches": 2,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 3,
+              "patches": 6,
+              "fragments": 2,
+              "largest_fraction": 0.6666666666666666
+            },
+            {
+              "object_id": 4,
+              "patches": 2,
+              "fragments": 2,
+              "largest_fraction": 0.5
+            }
+          ],
+          "restored_raw_size2_edges": 1,
+          "removed_edge_classes": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_raw_graph_bridges_by_class": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_edge_count": 0,
+          "removed_raw_graph_bridge_count": 0
+        },
+        {
+          "image_id": 1330,
+          "raw_metrics": {
+            "fg_ari": 0.7733772470952152,
+            "foreground_iou": 0.8095238095238095,
+            "matched_object_iou": 0.6791666666666667
+          },
+          "triangle_metrics": {
+            "fg_ari": 0.7733772470952152,
+            "foreground_iou": 0.8095238095238095,
+            "matched_object_iou": 0.6791666666666667
+          },
+          "raw_groups": 8,
+          "triangle_groups": 8,
+          "new_zero_groups": false,
+          "foreground_patch_loss_raw": 8,
+          "foreground_patch_loss_triangle": 8,
+          "coassignment_raw": {
+            "same_instance_coassignment_recall": 0.7263427109974424,
+            "cross_instance_coassignment_rate": 0.0,
+            "same_instance_pairs": 391,
+            "cross_instance_pairs": 1320
+          },
+          "coassignment_triangle": {
+            "same_instance_coassignment_recall": 0.7263427109974424,
+            "cross_instance_coassignment_rate": 0.0,
+            "same_instance_pairs": 391,
+            "cross_instance_pairs": 1320
+          },
+          "gt_object_fragments_raw": [
+            {
+              "object_id": 1,
+              "patches": 15,
+              "fragments": 3,
+              "largest_fraction": 0.8666666666666667
+            },
+            {
+              "object_id": 2,
+              "patches": 2,
+              "fragments": 2,
+              "largest_fraction": 0.5
+            },
+            {
+              "object_id": 3,
+              "patches": 18,
+              "fragments": 2,
+              "largest_fraction": 0.8333333333333334
+            },
+            {
+              "object_id": 4,
+              "patches": 16,
+              "fragments": 3,
+              "largest_fraction": 0.875
+            },
+            {
+              "object_id": 5,
+              "patches": 4,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 6,
+              "patches": 4,
+              "fragments": 2,
+              "largest_fraction": 0.5
+            }
+          ],
+          "gt_object_fragments_triangle": [
+            {
+              "object_id": 1,
+              "patches": 15,
+              "fragments": 3,
+              "largest_fraction": 0.8666666666666667
+            },
+            {
+              "object_id": 2,
+              "patches": 2,
+              "fragments": 2,
+              "largest_fraction": 0.5
+            },
+            {
+              "object_id": 3,
+              "patches": 18,
+              "fragments": 2,
+              "largest_fraction": 0.8333333333333334
+            },
+            {
+              "object_id": 4,
+              "patches": 16,
+              "fragments": 3,
+              "largest_fraction": 0.875
+            },
+            {
+              "object_id": 5,
+              "patches": 4,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 6,
+              "patches": 4,
+              "fragments": 2,
+              "largest_fraction": 0.5
+            }
+          ],
+          "restored_raw_size2_edges": 3,
+          "removed_edge_classes": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_raw_graph_bridges_by_class": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_edge_count": 0,
+          "removed_raw_graph_bridge_count": 0
+        },
+        {
+          "image_id": 1331,
+          "raw_metrics": {
+            "fg_ari": 0.9132965439458632,
+            "foreground_iou": 0.3277310924369748,
+            "matched_object_iou": 0.5696581196581196
+          },
+          "triangle_metrics": {
+            "fg_ari": 0.9132965439458632,
+            "foreground_iou": 0.3277310924369748,
+            "matched_object_iou": 0.5696581196581196
+          },
+          "raw_groups": 7,
+          "triangle_groups": 7,
+          "new_zero_groups": false,
+          "foreground_patch_loss_raw": 2,
+          "foreground_patch_loss_triangle": 2,
+          "coassignment_raw": {
+            "same_instance_coassignment_recall": 0.8607594936708861,
+            "cross_instance_coassignment_rate": 0.0,
+            "same_instance_pairs": 158,
+            "cross_instance_pairs": 662
+          },
+          "coassignment_triangle": {
+            "same_instance_coassignment_recall": 0.8607594936708861,
+            "cross_instance_coassignment_rate": 0.0,
+            "same_instance_pairs": 158,
+            "cross_instance_pairs": 662
+          },
+          "gt_object_fragments_raw": [
+            {
+              "object_id": 1,
+              "patches": 10,
+              "fragments": 2,
+              "largest_fraction": 0.7
+            },
+            {
+              "object_id": 2,
+              "patches": 4,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 3,
+              "patches": 4,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 4,
+              "patches": 2,
+              "fragments": 2,
+              "largest_fraction": 0.5
+            },
+            {
+              "object_id": 5,
+              "patches": 11,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 6,
+              "patches": 10,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            }
+          ],
+          "gt_object_fragments_triangle": [
+            {
+              "object_id": 1,
+              "patches": 10,
+              "fragments": 2,
+              "largest_fraction": 0.7
+            },
+            {
+              "object_id": 2,
+              "patches": 4,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 3,
+              "patches": 4,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 4,
+              "patches": 2,
+              "fragments": 2,
+              "largest_fraction": 0.5
+            },
+            {
+              "object_id": 5,
+              "patches": 11,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 6,
+              "patches": 10,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            }
+          ],
+          "restored_raw_size2_edges": 1,
+          "removed_edge_classes": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_raw_graph_bridges_by_class": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_edge_count": 0,
+          "removed_raw_graph_bridge_count": 0
+        },
+        {
+          "image_id": 1332,
+          "raw_metrics": {
+            "fg_ari": 0.7277654594727766,
+            "foreground_iou": 0.8703703703703703,
+            "matched_object_iou": 0.37182539682539684
+          },
+          "triangle_metrics": {
+            "fg_ari": 0.7277654594727766,
+            "foreground_iou": 0.8703703703703703,
+            "matched_object_iou": 0.37182539682539684
+          },
+          "raw_groups": 3,
+          "triangle_groups": 3,
+          "new_zero_groups": false,
+          "foreground_patch_loss_raw": 4,
+          "foreground_patch_loss_triangle": 4,
+          "coassignment_raw": {
+            "same_instance_coassignment_recall": 0.9855072463768116,
+            "cross_instance_coassignment_rate": 0.16236559139784945,
+            "same_instance_pairs": 345,
+            "cross_instance_pairs": 930
+          },
+          "coassignment_triangle": {
+            "same_instance_coassignment_recall": 0.9855072463768116,
+            "cross_instance_coassignment_rate": 0.16236559139784945,
+            "same_instance_pairs": 345,
+            "cross_instance_pairs": 930
+          },
+          "gt_object_fragments_raw": [
+            {
+              "object_id": 1,
+              "patches": 5,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 2,
+              "patches": 3,
+              "fragments": 2,
+              "largest_fraction": 0.6666666666666666
+            },
+            {
+              "object_id": 3,
+              "patches": 17,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 4,
+              "patches": 20,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 5,
+              "patches": 3,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 6,
+              "patches": 3,
+              "fragments": 3,
+              "largest_fraction": 0.3333333333333333
+            }
+          ],
+          "gt_object_fragments_triangle": [
+            {
+              "object_id": 1,
+              "patches": 5,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 2,
+              "patches": 3,
+              "fragments": 2,
+              "largest_fraction": 0.6666666666666666
+            },
+            {
+              "object_id": 3,
+              "patches": 17,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 4,
+              "patches": 20,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 5,
+              "patches": 3,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 6,
+              "patches": 3,
+              "fragments": 3,
+              "largest_fraction": 0.3333333333333333
+            }
+          ],
+          "restored_raw_size2_edges": 1,
+          "removed_edge_classes": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_raw_graph_bridges_by_class": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_edge_count": 0,
+          "removed_raw_graph_bridge_count": 0
+        },
+        {
+          "image_id": 1333,
+          "raw_metrics": {
+            "fg_ari": 0.6665163472378806,
+            "foreground_iou": 0.6162790697674418,
+            "matched_object_iou": 0.6235449735449735
+          },
+          "triangle_metrics": {
+            "fg_ari": 0.6665163472378806,
+            "foreground_iou": 0.6162790697674418,
+            "matched_object_iou": 0.6235449735449735
+          },
+          "raw_groups": 8,
+          "triangle_groups": 8,
+          "new_zero_groups": false,
+          "foreground_patch_loss_raw": 6,
+          "foreground_patch_loss_triangle": 6,
+          "coassignment_raw": {
+            "same_instance_coassignment_recall": 0.6610169491525424,
+            "cross_instance_coassignment_rate": 0.02824858757062147,
+            "same_instance_pairs": 295,
+            "cross_instance_pairs": 1416
+          },
+          "coassignment_triangle": {
+            "same_instance_coassignment_recall": 0.6610169491525424,
+            "cross_instance_coassignment_rate": 0.02824858757062147,
+            "same_instance_pairs": 295,
+            "cross_instance_pairs": 1416
+          },
+          "gt_object_fragments_raw": [
+            {
+              "object_id": 1,
+              "patches": 12,
+              "fragments": 2,
+              "largest_fraction": 0.9166666666666666
+            },
+            {
+              "object_id": 2,
+              "patches": 14,
+              "fragments": 4,
+              "largest_fraction": 0.6428571428571429
+            },
+            {
+              "object_id": 3,
+              "patches": 10,
+              "fragments": 2,
+              "largest_fraction": 0.9
+            },
+            {
+              "object_id": 4,
+              "patches": 12,
+              "fragments": 3,
+              "largest_fraction": 0.8333333333333334
+            },
+            {
+              "object_id": 5,
+              "patches": 7,
+              "fragments": 2,
+              "largest_fraction": 0.8571428571428571
+            },
+            {
+              "object_id": 6,
+              "patches": 4,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            }
+          ],
+          "gt_object_fragments_triangle": [
+            {
+              "object_id": 1,
+              "patches": 12,
+              "fragments": 2,
+              "largest_fraction": 0.9166666666666666
+            },
+            {
+              "object_id": 2,
+              "patches": 14,
+              "fragments": 4,
+              "largest_fraction": 0.6428571428571429
+            },
+            {
+              "object_id": 3,
+              "patches": 10,
+              "fragments": 2,
+              "largest_fraction": 0.9
+            },
+            {
+              "object_id": 4,
+              "patches": 12,
+              "fragments": 3,
+              "largest_fraction": 0.8333333333333334
+            },
+            {
+              "object_id": 5,
+              "patches": 7,
+              "fragments": 2,
+              "largest_fraction": 0.8571428571428571
+            },
+            {
+              "object_id": 6,
+              "patches": 4,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            }
+          ],
+          "restored_raw_size2_edges": 2,
+          "removed_edge_classes": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_raw_graph_bridges_by_class": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_edge_count": 0,
+          "removed_raw_graph_bridge_count": 0
+        },
+        {
+          "image_id": 1334,
+          "raw_metrics": {
+            "fg_ari": 1.0,
+            "foreground_iou": 0.14925373134328357,
+            "matched_object_iou": 0.6388888888888888
+          },
+          "triangle_metrics": {
+            "fg_ari": 1.0,
+            "foreground_iou": 0.14925373134328357,
+            "matched_object_iou": 0.6388888888888888
+          },
+          "raw_groups": 5,
+          "triangle_groups": 5,
+          "new_zero_groups": false,
+          "foreground_patch_loss_raw": 1,
+          "foreground_patch_loss_triangle": 1,
+          "coassignment_raw": {
+            "same_instance_coassignment_recall": 1.0,
+            "cross_instance_coassignment_rate": 0.0,
+            "same_instance_pairs": 91,
+            "cross_instance_pairs": 119
+          },
+          "coassignment_triangle": {
+            "same_instance_coassignment_recall": 1.0,
+            "cross_instance_coassignment_rate": 0.0,
+            "same_instance_pairs": 91,
+            "cross_instance_pairs": 119
+          },
+          "gt_object_fragments_raw": [
+            {
+              "object_id": 1,
+              "patches": 11,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 4,
+              "patches": 9,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            }
+          ],
+          "gt_object_fragments_triangle": [
+            {
+              "object_id": 1,
+              "patches": 11,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 4,
+              "patches": 9,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            }
+          ],
+          "restored_raw_size2_edges": 1,
+          "removed_edge_classes": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_raw_graph_bridges_by_class": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_edge_count": 0,
+          "removed_raw_graph_bridge_count": 0
+        },
+        {
+          "image_id": 1335,
+          "raw_metrics": {
+            "fg_ari": 0.5222292966028528,
+            "foreground_iou": 0.5111111111111111,
+            "matched_object_iou": 0.4378908128908129
+          },
+          "triangle_metrics": {
+            "fg_ari": 0.5222292966028528,
+            "foreground_iou": 0.5111111111111111,
+            "matched_object_iou": 0.4378908128908129
+          },
+          "raw_groups": 13,
+          "triangle_groups": 13,
+          "new_zero_groups": false,
+          "foreground_patch_loss_raw": 4,
+          "foreground_patch_loss_triangle": 4,
+          "coassignment_raw": {
+            "same_instance_coassignment_recall": 0.49056603773584906,
+            "cross_instance_coassignment_rate": 0.0300187617260788,
+            "same_instance_pairs": 159,
+            "cross_instance_pairs": 1066
+          },
+          "coassignment_triangle": {
+            "same_instance_coassignment_recall": 0.49056603773584906,
+            "cross_instance_coassignment_rate": 0.0300187617260788,
+            "same_instance_pairs": 159,
+            "cross_instance_pairs": 1066
+          },
+          "gt_object_fragments_raw": [
+            {
+              "object_id": 1,
+              "patches": 6,
+              "fragments": 4,
+              "largest_fraction": 0.3333333333333333
+            },
+            {
+              "object_id": 2,
+              "patches": 2,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 3,
+              "patches": 3,
+              "fragments": 2,
+              "largest_fraction": 0.6666666666666666
+            },
+            {
+              "object_id": 4,
+              "patches": 4,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 5,
+              "patches": 11,
+              "fragments": 3,
+              "largest_fraction": 0.8181818181818182
+            },
+            {
+              "object_id": 6,
+              "patches": 3,
+              "fragments": 3,
+              "largest_fraction": 0.3333333333333333
+            },
+            {
+              "object_id": 7,
+              "patches": 4,
+              "fragments": 2,
+              "largest_fraction": 0.75
+            },
+            {
+              "object_id": 8,
+              "patches": 11,
+              "fragments": 3,
+              "largest_fraction": 0.5454545454545454
+            },
+            {
+              "object_id": 9,
+              "patches": 6,
+              "fragments": 2,
+              "largest_fraction": 0.8333333333333334
+            }
+          ],
+          "gt_object_fragments_triangle": [
+            {
+              "object_id": 1,
+              "patches": 6,
+              "fragments": 4,
+              "largest_fraction": 0.3333333333333333
+            },
+            {
+              "object_id": 2,
+              "patches": 2,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 3,
+              "patches": 3,
+              "fragments": 2,
+              "largest_fraction": 0.6666666666666666
+            },
+            {
+              "object_id": 4,
+              "patches": 4,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 5,
+              "patches": 11,
+              "fragments": 3,
+              "largest_fraction": 0.8181818181818182
+            },
+            {
+              "object_id": 6,
+              "patches": 3,
+              "fragments": 3,
+              "largest_fraction": 0.3333333333333333
+            },
+            {
+              "object_id": 7,
+              "patches": 4,
+              "fragments": 2,
+              "largest_fraction": 0.75
+            },
+            {
+              "object_id": 8,
+              "patches": 11,
+              "fragments": 3,
+              "largest_fraction": 0.5454545454545454
+            },
+            {
+              "object_id": 9,
+              "patches": 6,
+              "fragments": 2,
+              "largest_fraction": 0.8333333333333334
+            }
+          ],
+          "restored_raw_size2_edges": 3,
+          "removed_edge_classes": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_raw_graph_bridges_by_class": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_edge_count": 0,
+          "removed_raw_graph_bridge_count": 0
+        }
+      ]
+    },
+    "2": {
+      "checkpoint_sha256": "798ad3e9d4bf837b1bbeb1bd7c13900df511b5c76f5736d2b9f8b973d7fa5661",
+      "raw_means": {
+        "fg_ari": 0.7652172830218403,
+        "foreground_iou": 0.38408173553572,
+        "matched_object_iou": 0.5746476012042412
+      },
+      "triangle_means": {
+        "fg_ari": 0.7677833633922985,
+        "foreground_iou": 0.3816380174431316,
+        "matched_object_iou": 0.5814049063990463
+      },
+      "metric_deltas": {
+        "fg_ari": 0.0025660803704581348,
+        "foreground_iou": -0.0024437180925884205,
+        "matched_object_iou": 0.006757305194805108
+      },
+      "mean_cross_instance_coassignment_raw": 0.0568433257825266,
+      "mean_cross_instance_coassignment_triangle": 0.05207637662998424,
+      "mean_same_instance_recall_raw": 0.7429237999227853,
+      "mean_same_instance_recall_triangle": 0.7417445546397665,
+      "mean_same_instance_recall_drop": 0.001179245283018826,
+      "legacy_matches_archived_first16": {
+        "fg_ari": {
+          "max_abs_difference": 0.0,
+          "exact_within_1e_9": true
+        },
+        "foreground_iou": {
+          "max_abs_difference": 0.0,
+          "exact_within_1e_9": true
+        },
+        "matched_object_iou": {
+          "max_abs_difference": 0.0,
+          "exact_within_1e_9": true
+        }
+      },
+      "mean_foreground_patch_loss_raw": 6.0625,
+      "mean_foreground_patch_loss_triangle": 6.125,
+      "mean_raw_groups": 6.1875,
+      "mean_triangle_groups": 6.1875,
+      "images_with_new_zero_groups_where_raw_nonzero": 0,
+      "removed_edge_classes_total": {
+        "same_instance_fg": 1,
+        "cross_instance_fg": 0,
+        "foreground_background": 1,
+        "background_background": 2
+      },
+      "removed_raw_graph_bridges_by_class_total": {
+        "same_instance_fg": 1,
+        "cross_instance_fg": 0,
+        "foreground_background": 1,
+        "background_background": 2
+      },
+      "removed_raw_graph_bridge_count_total": 4,
+      "per_image": [
+        {
+          "image_id": 1320,
+          "raw_metrics": {
+            "fg_ari": 0.3122628907293615,
+            "foreground_iou": 0.5042016806722689,
+            "matched_object_iou": 0.3588636363636364
+          },
+          "triangle_metrics": {
+            "fg_ari": 0.3122628907293615,
+            "foreground_iou": 0.5042016806722689,
+            "matched_object_iou": 0.3588636363636364
+          },
+          "raw_groups": 4,
+          "triangle_groups": 4,
+          "new_zero_groups": false,
+          "foreground_patch_loss_raw": 1,
+          "foreground_patch_loss_triangle": 1,
+          "coassignment_raw": {
+            "same_instance_coassignment_recall": 0.8476190476190476,
+            "cross_instance_coassignment_rate": 0.40354609929078017,
+            "same_instance_pairs": 420,
+            "cross_instance_pairs": 1410
+          },
+          "coassignment_triangle": {
+            "same_instance_coassignment_recall": 0.8476190476190476,
+            "cross_instance_coassignment_rate": 0.40354609929078017,
+            "same_instance_pairs": 420,
+            "cross_instance_pairs": 1410
+          },
+          "gt_object_fragments_raw": [
+            {
+              "object_id": 1,
+              "patches": 9,
+              "fragments": 2,
+              "largest_fraction": 0.8888888888888888
+            },
+            {
+              "object_id": 2,
+              "patches": 19,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 3,
+              "patches": 15,
+              "fragments": 2,
+              "largest_fraction": 0.6
+            },
+            {
+              "object_id": 4,
+              "patches": 3,
+              "fragments": 2,
+              "largest_fraction": 0.6666666666666666
+            },
+            {
+              "object_id": 5,
+              "patches": 15,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            }
+          ],
+          "gt_object_fragments_triangle": [
+            {
+              "object_id": 1,
+              "patches": 9,
+              "fragments": 2,
+              "largest_fraction": 0.8888888888888888
+            },
+            {
+              "object_id": 2,
+              "patches": 19,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 3,
+              "patches": 15,
+              "fragments": 2,
+              "largest_fraction": 0.6
+            },
+            {
+              "object_id": 4,
+              "patches": 3,
+              "fragments": 2,
+              "largest_fraction": 0.6666666666666666
+            },
+            {
+              "object_id": 5,
+              "patches": 15,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            }
+          ],
+          "restored_raw_size2_edges": 0,
+          "removed_edge_classes": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_raw_graph_bridges_by_class": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_edge_count": 0,
+          "removed_raw_graph_bridge_count": 0
+        },
+        {
+          "image_id": 1321,
+          "raw_metrics": {
+            "fg_ari": 0.8443396226415094,
+            "foreground_iou": 0.2608695652173913,
+            "matched_object_iou": 0.5
+          },
+          "triangle_metrics": {
+            "fg_ari": 0.8443396226415094,
+            "foreground_iou": 0.2727272727272727,
+            "matched_object_iou": 0.5833333333333334
+          },
+          "raw_groups": 2,
+          "triangle_groups": 2,
+          "new_zero_groups": false,
+          "foreground_patch_loss_raw": 16,
+          "foreground_patch_loss_triangle": 16,
+          "coassignment_raw": {
+            "same_instance_coassignment_recall": 0.05263157894736842,
+            "cross_instance_coassignment_rate": 0.0,
+            "same_instance_pairs": 114,
+            "cross_instance_pairs": 117
+          },
+          "coassignment_triangle": {
+            "same_instance_coassignment_recall": 0.05263157894736842,
+            "cross_instance_coassignment_rate": 0.0,
+            "same_instance_pairs": 114,
+            "cross_instance_pairs": 117
+          },
+          "gt_object_fragments_raw": [
+            {
+              "object_id": 1,
+              "patches": 4,
+              "fragments": 2,
+              "largest_fraction": 0.75
+            },
+            {
+              "object_id": 2,
+              "patches": 15,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 3,
+              "patches": 3,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            }
+          ],
+          "gt_object_fragments_triangle": [
+            {
+              "object_id": 1,
+              "patches": 4,
+              "fragments": 2,
+              "largest_fraction": 0.75
+            },
+            {
+              "object_id": 2,
+              "patches": 15,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 3,
+              "patches": 3,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            }
+          ],
+          "restored_raw_size2_edges": 0,
+          "removed_edge_classes": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 1,
+            "background_background": 0
+          },
+          "removed_raw_graph_bridges_by_class": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 1,
+            "background_background": 0
+          },
+          "removed_edge_count": 1,
+          "removed_raw_graph_bridge_count": 1
+        },
+        {
+          "image_id": 1322,
+          "raw_metrics": {
+            "fg_ari": 0.9110671936758893,
+            "foreground_iou": 0.609375,
+            "matched_object_iou": 0.7189162561576354
+          },
+          "triangle_metrics": {
+            "fg_ari": 0.9110671936758893,
+            "foreground_iou": 0.609375,
+            "matched_object_iou": 0.7189162561576354
+          },
+          "raw_groups": 5,
+          "triangle_groups": 5,
+          "new_zero_groups": false,
+          "foreground_patch_loss_raw": 1,
+          "foreground_patch_loss_triangle": 1,
+          "coassignment_raw": {
+            "same_instance_coassignment_recall": 0.896551724137931,
+            "cross_instance_coassignment_rate": 0.0,
+            "same_instance_pairs": 319,
+            "cross_instance_pairs": 461
+          },
+          "coassignment_triangle": {
+            "same_instance_coassignment_recall": 0.896551724137931,
+            "cross_instance_coassignment_rate": 0.0,
+            "same_instance_pairs": 319,
+            "cross_instance_pairs": 461
+          },
+          "gt_object_fragments_raw": [
+            {
+              "object_id": 1,
+              "patches": 2,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 2,
+              "patches": 24,
+              "fragments": 2,
+              "largest_fraction": 0.9583333333333334
+            },
+            {
+              "object_id": 3,
+              "patches": 7,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 4,
+              "patches": 7,
+              "fragments": 2,
+              "largest_fraction": 0.7142857142857143
+            }
+          ],
+          "gt_object_fragments_triangle": [
+            {
+              "object_id": 1,
+              "patches": 2,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 2,
+              "patches": 24,
+              "fragments": 2,
+              "largest_fraction": 0.9583333333333334
+            },
+            {
+              "object_id": 3,
+              "patches": 7,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 4,
+              "patches": 7,
+              "fragments": 2,
+              "largest_fraction": 0.7142857142857143
+            }
+          ],
+          "restored_raw_size2_edges": 1,
+          "removed_edge_classes": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_raw_graph_bridges_by_class": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_edge_count": 0,
+          "removed_raw_graph_bridge_count": 0
+        },
+        {
+          "image_id": 1323,
+          "raw_metrics": {
+            "fg_ari": 0.7313104564049832,
+            "foreground_iou": 0.4351851851851852,
+            "matched_object_iou": 0.6099773242630385
+          },
+          "triangle_metrics": {
+            "fg_ari": 0.7313104564049832,
+            "foreground_iou": 0.4351851851851852,
+            "matched_object_iou": 0.6099773242630385
+          },
+          "raw_groups": 8,
+          "triangle_groups": 8,
+          "new_zero_groups": false,
+          "foreground_patch_loss_raw": 3,
+          "foreground_patch_loss_triangle": 3,
+          "coassignment_raw": {
+            "same_instance_coassignment_recall": 0.9259259259259259,
+            "cross_instance_coassignment_rate": 0.08919722497522299,
+            "same_instance_pairs": 216,
+            "cross_instance_pairs": 1009
+          },
+          "coassignment_triangle": {
+            "same_instance_coassignment_recall": 0.9259259259259259,
+            "cross_instance_coassignment_rate": 0.08919722497522299,
+            "same_instance_pairs": 216,
+            "cross_instance_pairs": 1009
+          },
+          "gt_object_fragments_raw": [
+            {
+              "object_id": 1,
+              "patches": 3,
+              "fragments": 2,
+              "largest_fraction": 0.6666666666666666
+            },
+            {
+              "object_id": 2,
+              "patches": 9,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 3,
+              "patches": 7,
+              "fragments": 2,
+              "largest_fraction": 0.8571428571428571
+            },
+            {
+              "object_id": 4,
+              "patches": 9,
+              "fragments": 2,
+              "largest_fraction": 0.8888888888888888
+            },
+            {
+              "object_id": 5,
+              "patches": 6,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 7,
+              "patches": 15,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            }
+          ],
+          "gt_object_fragments_triangle": [
+            {
+              "object_id": 1,
+              "patches": 3,
+              "fragments": 2,
+              "largest_fraction": 0.6666666666666666
+            },
+            {
+              "object_id": 2,
+              "patches": 9,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 3,
+              "patches": 7,
+              "fragments": 2,
+              "largest_fraction": 0.8571428571428571
+            },
+            {
+              "object_id": 4,
+              "patches": 9,
+              "fragments": 2,
+              "largest_fraction": 0.8888888888888888
+            },
+            {
+              "object_id": 5,
+              "patches": 6,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 7,
+              "patches": 15,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            }
+          ],
+          "restored_raw_size2_edges": 3,
+          "removed_edge_classes": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_raw_graph_bridges_by_class": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_edge_count": 0,
+          "removed_raw_graph_bridge_count": 0
+        },
+        {
+          "image_id": 1324,
+          "raw_metrics": {
+            "fg_ari": 0.8052030299267354,
+            "foreground_iou": 0.3764705882352941,
+            "matched_object_iou": 0.48712406015037596
+          },
+          "triangle_metrics": {
+            "fg_ari": 0.8052030299267354,
+            "foreground_iou": 0.3764705882352941,
+            "matched_object_iou": 0.48712406015037596
+          },
+          "raw_groups": 10,
+          "triangle_groups": 10,
+          "new_zero_groups": false,
+          "foreground_patch_loss_raw": 20,
+          "foreground_patch_loss_triangle": 20,
+          "coassignment_raw": {
+            "same_instance_coassignment_recall": 0.7262180974477959,
+            "cross_instance_coassignment_rate": 0.014481707317073171,
+            "same_instance_pairs": 862,
+            "cross_instance_pairs": 2624
+          },
+          "coassignment_triangle": {
+            "same_instance_coassignment_recall": 0.7262180974477959,
+            "cross_instance_coassignment_rate": 0.014481707317073171,
+            "same_instance_pairs": 862,
+            "cross_instance_pairs": 2624
+          },
+          "gt_object_fragments_raw": [
+            {
+              "object_id": 1,
+              "patches": 2,
+              "fragments": 2,
+              "largest_fraction": 0.5
+            },
+            {
+              "object_id": 2,
+              "patches": 5,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 3,
+              "patches": 6,
+              "fragments": 2,
+              "largest_fraction": 0.6666666666666666
+            },
+            {
+              "object_id": 4,
+              "patches": 14,
+              "fragments": 2,
+              "largest_fraction": 0.9285714285714286
+            },
+            {
+              "object_id": 6,
+              "patches": 15,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 8,
+              "patches": 5,
+              "fragments": 3,
+              "largest_fraction": 0.6
+            },
+            {
+              "object_id": 9,
+              "patches": 36,
+              "fragments": 3,
+              "largest_fraction": 0.9166666666666666
+            }
+          ],
+          "gt_object_fragments_triangle": [
+            {
+              "object_id": 1,
+              "patches": 2,
+              "fragments": 2,
+              "largest_fraction": 0.5
+            },
+            {
+              "object_id": 2,
+              "patches": 5,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 3,
+              "patches": 6,
+              "fragments": 2,
+              "largest_fraction": 0.6666666666666666
+            },
+            {
+              "object_id": 4,
+              "patches": 14,
+              "fragments": 2,
+              "largest_fraction": 0.9285714285714286
+            },
+            {
+              "object_id": 6,
+              "patches": 15,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 8,
+              "patches": 5,
+              "fragments": 3,
+              "largest_fraction": 0.6
+            },
+            {
+              "object_id": 9,
+              "patches": 36,
+              "fragments": 3,
+              "largest_fraction": 0.9166666666666666
+            }
+          ],
+          "restored_raw_size2_edges": 3,
+          "removed_edge_classes": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_raw_graph_bridges_by_class": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_edge_count": 0,
+          "removed_raw_graph_bridge_count": 0
+        },
+        {
+          "image_id": 1325,
+          "raw_metrics": {
+            "fg_ari": 0.7904126852303399,
+            "foreground_iou": 0.3541666666666667,
+            "matched_object_iou": 0.7897435897435897
+          },
+          "triangle_metrics": {
+            "fg_ari": 0.7904126852303399,
+            "foreground_iou": 0.3541666666666667,
+            "matched_object_iou": 0.7897435897435897
+          },
+          "raw_groups": 5,
+          "triangle_groups": 5,
+          "new_zero_groups": false,
+          "foreground_patch_loss_raw": 2,
+          "foreground_patch_loss_triangle": 2,
+          "coassignment_raw": {
+            "same_instance_coassignment_recall": 0.8497757847533632,
+            "cross_instance_coassignment_rate": 0.06437768240343347,
+            "same_instance_pairs": 446,
+            "cross_instance_pairs": 932
+          },
+          "coassignment_triangle": {
+            "same_instance_coassignment_recall": 0.8497757847533632,
+            "cross_instance_coassignment_rate": 0.06437768240343347,
+            "same_instance_pairs": 446,
+            "cross_instance_pairs": 932
+          },
+          "gt_object_fragments_raw": [
+            {
+              "object_id": 1,
+              "patches": 17,
+              "fragments": 3,
+              "largest_fraction": 0.7058823529411765
+            },
+            {
+              "object_id": 2,
+              "patches": 20,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 3,
+              "patches": 16,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            }
+          ],
+          "gt_object_fragments_triangle": [
+            {
+              "object_id": 1,
+              "patches": 17,
+              "fragments": 3,
+              "largest_fraction": 0.7058823529411765
+            },
+            {
+              "object_id": 2,
+              "patches": 20,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 3,
+              "patches": 16,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            }
+          ],
+          "restored_raw_size2_edges": 1,
+          "removed_edge_classes": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_raw_graph_bridges_by_class": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_edge_count": 0,
+          "removed_raw_graph_bridge_count": 0
+        },
+        {
+          "image_id": 1326,
+          "raw_metrics": {
+            "fg_ari": 0.8850343102886702,
+            "foreground_iou": 0.35833333333333334,
+            "matched_object_iou": 0.46797213441049057
+          },
+          "triangle_metrics": {
+            "fg_ari": 0.8850343102886702,
+            "foreground_iou": 0.35833333333333334,
+            "matched_object_iou": 0.46797213441049057
+          },
+          "raw_groups": 6,
+          "triangle_groups": 6,
+          "new_zero_groups": false,
+          "foreground_patch_loss_raw": 7,
+          "foreground_patch_loss_triangle": 7,
+          "coassignment_raw": {
+            "same_instance_coassignment_recall": 0.8383233532934131,
+            "cross_instance_coassignment_rate": 0.015122873345935728,
+            "same_instance_pairs": 167,
+            "cross_instance_pairs": 1058
+          },
+          "coassignment_triangle": {
+            "same_instance_coassignment_recall": 0.8383233532934131,
+            "cross_instance_coassignment_rate": 0.015122873345935728,
+            "same_instance_pairs": 167,
+            "cross_instance_pairs": 1058
+          },
+          "gt_object_fragments_raw": [
+            {
+              "object_id": 1,
+              "patches": 13,
+              "fragments": 2,
+              "largest_fraction": 0.9230769230769231
+            },
+            {
+              "object_id": 2,
+              "patches": 7,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 4,
+              "patches": 4,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 5,
+              "patches": 5,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 6,
+              "patches": 4,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 7,
+              "patches": 3,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 8,
+              "patches": 6,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 9,
+              "patches": 8,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            }
+          ],
+          "gt_object_fragments_triangle": [
+            {
+              "object_id": 1,
+              "patches": 13,
+              "fragments": 2,
+              "largest_fraction": 0.9230769230769231
+            },
+            {
+              "object_id": 2,
+              "patches": 7,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 4,
+              "patches": 4,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 5,
+              "patches": 5,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 6,
+              "patches": 4,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 7,
+              "patches": 3,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 8,
+              "patches": 6,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 9,
+              "patches": 8,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            }
+          ],
+          "restored_raw_size2_edges": 0,
+          "removed_edge_classes": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_raw_graph_bridges_by_class": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_edge_count": 0,
+          "removed_raw_graph_bridge_count": 0
+        },
+        {
+          "image_id": 1327,
+          "raw_metrics": {
+            "fg_ari": 0.9822391240753897,
+            "foreground_iou": 0.23776223776223776,
+            "matched_object_iou": 0.8686868686868686
+          },
+          "triangle_metrics": {
+            "fg_ari": 0.9822391240753897,
+            "foreground_iou": 0.23776223776223776,
+            "matched_object_iou": 0.8686868686868686
+          },
+          "raw_groups": 4,
+          "triangle_groups": 4,
+          "new_zero_groups": false,
+          "foreground_patch_loss_raw": 1,
+          "foreground_patch_loss_triangle": 1,
+          "coassignment_raw": {
+            "same_instance_coassignment_recall": 0.9783549783549783,
+            "cross_instance_coassignment_rate": 0.0,
+            "same_instance_pairs": 231,
+            "cross_instance_pairs": 364
+          },
+          "coassignment_triangle": {
+            "same_instance_coassignment_recall": 0.9783549783549783,
+            "cross_instance_coassignment_rate": 0.0,
+            "same_instance_pairs": 231,
+            "cross_instance_pairs": 364
+          },
+          "gt_object_fragments_raw": [
+            {
+              "object_id": 1,
+              "patches": 10,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 2,
+              "patches": 19,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 3,
+              "patches": 6,
+              "fragments": 2,
+              "largest_fraction": 0.8333333333333334
+            }
+          ],
+          "gt_object_fragments_triangle": [
+            {
+              "object_id": 1,
+              "patches": 10,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 2,
+              "patches": 19,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 3,
+              "patches": 6,
+              "fragments": 2,
+              "largest_fraction": 0.8333333333333334
+            }
+          ],
+          "restored_raw_size2_edges": 0,
+          "removed_edge_classes": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_raw_graph_bridges_by_class": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_edge_count": 0,
+          "removed_raw_graph_bridge_count": 0
+        },
+        {
+          "image_id": 1328,
+          "raw_metrics": {
+            "fg_ari": 0.6067672125579766,
+            "foreground_iou": 0.23776223776223776,
+            "matched_object_iou": 0.6544011544011544
+          },
+          "triangle_metrics": {
+            "fg_ari": 0.6067672125579766,
+            "foreground_iou": 0.23943661971830985,
+            "matched_object_iou": 0.6587301587301587
+          },
+          "raw_groups": 10,
+          "triangle_groups": 10,
+          "new_zero_groups": false,
+          "foreground_patch_loss_raw": 5,
+          "foreground_patch_loss_triangle": 5,
+          "coassignment_raw": {
+            "same_instance_coassignment_recall": 0.54,
+            "cross_instance_coassignment_rate": 0.0,
+            "same_instance_pairs": 200,
+            "cross_instance_pairs": 541
+          },
+          "coassignment_triangle": {
+            "same_instance_coassignment_recall": 0.54,
+            "cross_instance_coassignment_rate": 0.0,
+            "same_instance_pairs": 200,
+            "cross_instance_pairs": 541
+          },
+          "gt_object_fragments_raw": [
+            {
+              "object_id": 1,
+              "patches": 7,
+              "fragments": 2,
+              "largest_fraction": 0.8571428571428571
+            },
+            {
+              "object_id": 2,
+              "patches": 3,
+              "fragments": 2,
+              "largest_fraction": 0.6666666666666666
+            },
+            {
+              "object_id": 3,
+              "patches": 2,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 4,
+              "patches": 18,
+              "fragments": 3,
+              "largest_fraction": 0.6666666666666666
+            },
+            {
+              "object_id": 5,
+              "patches": 2,
+              "fragments": 2,
+              "largest_fraction": 0.5
+            },
+            {
+              "object_id": 6,
+              "patches": 7,
+              "fragments": 2,
+              "largest_fraction": 0.8571428571428571
+            }
+          ],
+          "gt_object_fragments_triangle": [
+            {
+              "object_id": 1,
+              "patches": 7,
+              "fragments": 2,
+              "largest_fraction": 0.8571428571428571
+            },
+            {
+              "object_id": 2,
+              "patches": 3,
+              "fragments": 2,
+              "largest_fraction": 0.6666666666666666
+            },
+            {
+              "object_id": 3,
+              "patches": 2,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 4,
+              "patches": 18,
+              "fragments": 3,
+              "largest_fraction": 0.6666666666666666
+            },
+            {
+              "object_id": 5,
+              "patches": 2,
+              "fragments": 2,
+              "largest_fraction": 0.5
+            },
+            {
+              "object_id": 6,
+              "patches": 7,
+              "fragments": 2,
+              "largest_fraction": 0.8571428571428571
+            }
+          ],
+          "restored_raw_size2_edges": 3,
+          "removed_edge_classes": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 1
+          },
+          "removed_raw_graph_bridges_by_class": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 1
+          },
+          "removed_edge_count": 1,
+          "removed_raw_graph_bridge_count": 1
+        },
+        {
+          "image_id": 1329,
+          "raw_metrics": {
+            "fg_ari": 0.6176777463109256,
+            "foreground_iou": 0.7894736842105263,
+            "matched_object_iou": 0.3712121212121212
+          },
+          "triangle_metrics": {
+            "fg_ari": 0.658735032238256,
+            "foreground_iou": 0.7368421052631579,
+            "matched_object_iou": 0.39166666666666666
+          },
+          "raw_groups": 2,
+          "triangle_groups": 2,
+          "new_zero_groups": false,
+          "foreground_patch_loss_raw": 4,
+          "foreground_patch_loss_triangle": 5,
+          "coassignment_raw": {
+            "same_instance_coassignment_recall": 0.8113207547169812,
+            "cross_instance_coassignment_rate": 0.15254237288135594,
+            "same_instance_pairs": 53,
+            "cross_instance_pairs": 118
+          },
+          "coassignment_triangle": {
+            "same_instance_coassignment_recall": 0.7924528301886793,
+            "cross_instance_coassignment_rate": 0.07627118644067797,
+            "same_instance_pairs": 53,
+            "cross_instance_pairs": 118
+          },
+          "gt_object_fragments_raw": [
+            {
+              "object_id": 1,
+              "patches": 9,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 2,
+              "patches": 2,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 3,
+              "patches": 6,
+              "fragments": 2,
+              "largest_fraction": 0.6666666666666666
+            },
+            {
+              "object_id": 4,
+              "patches": 2,
+              "fragments": 2,
+              "largest_fraction": 0.5
+            }
+          ],
+          "gt_object_fragments_triangle": [
+            {
+              "object_id": 1,
+              "patches": 9,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 2,
+              "patches": 2,
+              "fragments": 2,
+              "largest_fraction": 0.5
+            },
+            {
+              "object_id": 3,
+              "patches": 6,
+              "fragments": 2,
+              "largest_fraction": 0.6666666666666666
+            },
+            {
+              "object_id": 4,
+              "patches": 2,
+              "fragments": 2,
+              "largest_fraction": 0.5
+            }
+          ],
+          "restored_raw_size2_edges": 0,
+          "removed_edge_classes": {
+            "same_instance_fg": 1,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_raw_graph_bridges_by_class": {
+            "same_instance_fg": 1,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_edge_count": 1,
+          "removed_raw_graph_bridge_count": 1
+        },
+        {
+          "image_id": 1330,
+          "raw_metrics": {
+            "fg_ari": 0.8054093733522193,
+            "foreground_iou": 0.4198473282442748,
+            "matched_object_iou": 0.6989400584795322
+          },
+          "triangle_metrics": {
+            "fg_ari": 0.8054093733522193,
+            "foreground_iou": 0.4198473282442748,
+            "matched_object_iou": 0.6989400584795322
+          },
+          "raw_groups": 8,
+          "triangle_groups": 8,
+          "new_zero_groups": false,
+          "foreground_patch_loss_raw": 4,
+          "foreground_patch_loss_triangle": 4,
+          "coassignment_raw": {
+            "same_instance_coassignment_recall": 0.7672634271099744,
+            "cross_instance_coassignment_rate": 0.011363636363636364,
+            "same_instance_pairs": 391,
+            "cross_instance_pairs": 1320
+          },
+          "coassignment_triangle": {
+            "same_instance_coassignment_recall": 0.7672634271099744,
+            "cross_instance_coassignment_rate": 0.011363636363636364,
+            "same_instance_pairs": 391,
+            "cross_instance_pairs": 1320
+          },
+          "gt_object_fragments_raw": [
+            {
+              "object_id": 1,
+              "patches": 15,
+              "fragments": 3,
+              "largest_fraction": 0.8666666666666667
+            },
+            {
+              "object_id": 2,
+              "patches": 2,
+              "fragments": 2,
+              "largest_fraction": 0.5
+            },
+            {
+              "object_id": 3,
+              "patches": 18,
+              "fragments": 2,
+              "largest_fraction": 0.8333333333333334
+            },
+            {
+              "object_id": 4,
+              "patches": 16,
+              "fragments": 2,
+              "largest_fraction": 0.9375
+            },
+            {
+              "object_id": 5,
+              "patches": 4,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 6,
+              "patches": 4,
+              "fragments": 2,
+              "largest_fraction": 0.75
+            }
+          ],
+          "gt_object_fragments_triangle": [
+            {
+              "object_id": 1,
+              "patches": 15,
+              "fragments": 3,
+              "largest_fraction": 0.8666666666666667
+            },
+            {
+              "object_id": 2,
+              "patches": 2,
+              "fragments": 2,
+              "largest_fraction": 0.5
+            },
+            {
+              "object_id": 3,
+              "patches": 18,
+              "fragments": 2,
+              "largest_fraction": 0.8333333333333334
+            },
+            {
+              "object_id": 4,
+              "patches": 16,
+              "fragments": 2,
+              "largest_fraction": 0.9375
+            },
+            {
+              "object_id": 5,
+              "patches": 4,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 6,
+              "patches": 4,
+              "fragments": 2,
+              "largest_fraction": 0.75
+            }
+          ],
+          "restored_raw_size2_edges": 1,
+          "removed_edge_classes": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_raw_graph_bridges_by_class": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_edge_count": 0,
+          "removed_raw_graph_bridge_count": 0
+        },
+        {
+          "image_id": 1331,
+          "raw_metrics": {
+            "fg_ari": 0.9132965439458632,
+            "foreground_iou": 0.3391304347826087,
+            "matched_object_iou": 0.6318181818181818
+          },
+          "triangle_metrics": {
+            "fg_ari": 0.9132965439458632,
+            "foreground_iou": 0.3391304347826087,
+            "matched_object_iou": 0.6318181818181818
+          },
+          "raw_groups": 7,
+          "triangle_groups": 7,
+          "new_zero_groups": false,
+          "foreground_patch_loss_raw": 2,
+          "foreground_patch_loss_triangle": 2,
+          "coassignment_raw": {
+            "same_instance_coassignment_recall": 0.8607594936708861,
+            "cross_instance_coassignment_rate": 0.0,
+            "same_instance_pairs": 158,
+            "cross_instance_pairs": 662
+          },
+          "coassignment_triangle": {
+            "same_instance_coassignment_recall": 0.8607594936708861,
+            "cross_instance_coassignment_rate": 0.0,
+            "same_instance_pairs": 158,
+            "cross_instance_pairs": 662
+          },
+          "gt_object_fragments_raw": [
+            {
+              "object_id": 1,
+              "patches": 10,
+              "fragments": 2,
+              "largest_fraction": 0.7
+            },
+            {
+              "object_id": 2,
+              "patches": 4,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 3,
+              "patches": 4,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 4,
+              "patches": 2,
+              "fragments": 2,
+              "largest_fraction": 0.5
+            },
+            {
+              "object_id": 5,
+              "patches": 11,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 6,
+              "patches": 10,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            }
+          ],
+          "gt_object_fragments_triangle": [
+            {
+              "object_id": 1,
+              "patches": 10,
+              "fragments": 2,
+              "largest_fraction": 0.7
+            },
+            {
+              "object_id": 2,
+              "patches": 4,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 3,
+              "patches": 4,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 4,
+              "patches": 2,
+              "fragments": 2,
+              "largest_fraction": 0.5
+            },
+            {
+              "object_id": 5,
+              "patches": 11,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 6,
+              "patches": 10,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            }
+          ],
+          "restored_raw_size2_edges": 0,
+          "removed_edge_classes": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_raw_graph_bridges_by_class": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_edge_count": 0,
+          "removed_raw_graph_bridge_count": 0
+        },
+        {
+          "image_id": 1332,
+          "raw_metrics": {
+            "fg_ari": 0.7885437264782804,
+            "foreground_iou": 0.18421052631578946,
+            "matched_object_iou": 0.42104700854700855
+          },
+          "triangle_metrics": {
+            "fg_ari": 0.7885437264782804,
+            "foreground_iou": 0.18421052631578946,
+            "matched_object_iou": 0.42104700854700855
+          },
+          "raw_groups": 4,
+          "triangle_groups": 4,
+          "new_zero_groups": false,
+          "foreground_patch_loss_raw": 23,
+          "foreground_patch_loss_triangle": 23,
+          "coassignment_raw": {
+            "same_instance_coassignment_recall": 0.43478260869565216,
+            "cross_instance_coassignment_rate": 0.054838709677419356,
+            "same_instance_pairs": 345,
+            "cross_instance_pairs": 930
+          },
+          "coassignment_triangle": {
+            "same_instance_coassignment_recall": 0.43478260869565216,
+            "cross_instance_coassignment_rate": 0.054838709677419356,
+            "same_instance_pairs": 345,
+            "cross_instance_pairs": 930
+          },
+          "gt_object_fragments_raw": [
+            {
+              "object_id": 1,
+              "patches": 5,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 2,
+              "patches": 3,
+              "fragments": 2,
+              "largest_fraction": 0.6666666666666666
+            },
+            {
+              "object_id": 3,
+              "patches": 17,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 4,
+              "patches": 20,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 5,
+              "patches": 3,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 6,
+              "patches": 3,
+              "fragments": 3,
+              "largest_fraction": 0.3333333333333333
+            }
+          ],
+          "gt_object_fragments_triangle": [
+            {
+              "object_id": 1,
+              "patches": 5,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 2,
+              "patches": 3,
+              "fragments": 2,
+              "largest_fraction": 0.6666666666666666
+            },
+            {
+              "object_id": 3,
+              "patches": 17,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 4,
+              "patches": 20,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 5,
+              "patches": 3,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 6,
+              "patches": 3,
+              "fragments": 3,
+              "largest_fraction": 0.3333333333333333
+            }
+          ],
+          "restored_raw_size2_edges": 1,
+          "removed_edge_classes": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_raw_graph_bridges_by_class": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_edge_count": 0,
+          "removed_raw_graph_bridge_count": 0
+        },
+        {
+          "image_id": 1333,
+          "raw_metrics": {
+            "fg_ari": 0.7140544518027961,
+            "foreground_iou": 0.45528455284552843,
+            "matched_object_iou": 0.6191678691678691
+          },
+          "triangle_metrics": {
+            "fg_ari": 0.7140544518027961,
+            "foreground_iou": 0.45528455284552843,
+            "matched_object_iou": 0.6191678691678691
+          },
+          "raw_groups": 9,
+          "triangle_groups": 9,
+          "new_zero_groups": false,
+          "foreground_patch_loss_raw": 3,
+          "foreground_patch_loss_triangle": 3,
+          "coassignment_raw": {
+            "same_instance_coassignment_recall": 0.7220338983050848,
+            "cross_instance_coassignment_rate": 0.0346045197740113,
+            "same_instance_pairs": 295,
+            "cross_instance_pairs": 1416
+          },
+          "coassignment_triangle": {
+            "same_instance_coassignment_recall": 0.7220338983050848,
+            "cross_instance_coassignment_rate": 0.0346045197740113,
+            "same_instance_pairs": 295,
+            "cross_instance_pairs": 1416
+          },
+          "gt_object_fragments_raw": [
+            {
+              "object_id": 1,
+              "patches": 12,
+              "fragments": 2,
+              "largest_fraction": 0.9166666666666666
+            },
+            {
+              "object_id": 2,
+              "patches": 14,
+              "fragments": 2,
+              "largest_fraction": 0.6428571428571429
+            },
+            {
+              "object_id": 3,
+              "patches": 10,
+              "fragments": 2,
+              "largest_fraction": 0.9
+            },
+            {
+              "object_id": 4,
+              "patches": 12,
+              "fragments": 2,
+              "largest_fraction": 0.9166666666666666
+            },
+            {
+              "object_id": 5,
+              "patches": 7,
+              "fragments": 2,
+              "largest_fraction": 0.8571428571428571
+            },
+            {
+              "object_id": 6,
+              "patches": 4,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            }
+          ],
+          "gt_object_fragments_triangle": [
+            {
+              "object_id": 1,
+              "patches": 12,
+              "fragments": 2,
+              "largest_fraction": 0.9166666666666666
+            },
+            {
+              "object_id": 2,
+              "patches": 14,
+              "fragments": 2,
+              "largest_fraction": 0.6428571428571429
+            },
+            {
+              "object_id": 3,
+              "patches": 10,
+              "fragments": 2,
+              "largest_fraction": 0.9
+            },
+            {
+              "object_id": 4,
+              "patches": 12,
+              "fragments": 2,
+              "largest_fraction": 0.9166666666666666
+            },
+            {
+              "object_id": 5,
+              "patches": 7,
+              "fragments": 2,
+              "largest_fraction": 0.8571428571428571
+            },
+            {
+              "object_id": 6,
+              "patches": 4,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            }
+          ],
+          "restored_raw_size2_edges": 0,
+          "removed_edge_classes": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_raw_graph_bridges_by_class": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_edge_count": 0,
+          "removed_raw_graph_bridge_count": 0
+        },
+        {
+          "image_id": 1334,
+          "raw_metrics": {
+            "fg_ari": 1.0,
+            "foreground_iou": 0.20618556701030927,
+            "matched_object_iou": 0.6388888888888888
+          },
+          "triangle_metrics": {
+            "fg_ari": 1.0,
+            "foreground_iou": 0.20618556701030927,
+            "matched_object_iou": 0.6388888888888888
+          },
+          "raw_groups": 4,
+          "triangle_groups": 4,
+          "new_zero_groups": false,
+          "foreground_patch_loss_raw": 1,
+          "foreground_patch_loss_triangle": 1,
+          "coassignment_raw": {
+            "same_instance_coassignment_recall": 1.0,
+            "cross_instance_coassignment_rate": 0.0,
+            "same_instance_pairs": 91,
+            "cross_instance_pairs": 119
+          },
+          "coassignment_triangle": {
+            "same_instance_coassignment_recall": 1.0,
+            "cross_instance_coassignment_rate": 0.0,
+            "same_instance_pairs": 91,
+            "cross_instance_pairs": 119
+          },
+          "gt_object_fragments_raw": [
+            {
+              "object_id": 1,
+              "patches": 11,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 4,
+              "patches": 9,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            }
+          ],
+          "gt_object_fragments_triangle": [
+            {
+              "object_id": 1,
+              "patches": 11,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 4,
+              "patches": 9,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            }
+          ],
+          "restored_raw_size2_edges": 0,
+          "removed_edge_classes": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_raw_graph_bridges_by_class": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 0
+          },
+          "removed_edge_count": 0,
+          "removed_raw_graph_bridge_count": 0
+        },
+        {
+          "image_id": 1335,
+          "raw_metrics": {
+            "fg_ari": 0.5358581609285066,
+            "foreground_iou": 0.3770491803278688,
+            "matched_object_iou": 0.357602466977467
+          },
+          "triangle_metrics": {
+            "fg_ari": 0.5358581609285066,
+            "foreground_iou": 0.3770491803278688,
+            "matched_object_iou": 0.357602466977467
+          },
+          "raw_groups": 11,
+          "triangle_groups": 11,
+          "new_zero_groups": false,
+          "foreground_patch_loss_raw": 4,
+          "foreground_patch_loss_triangle": 4,
+          "coassignment_raw": {
+            "same_instance_coassignment_recall": 0.6352201257861635,
+            "cross_instance_coassignment_rate": 0.06941838649155722,
+            "same_instance_pairs": 159,
+            "cross_instance_pairs": 1066
+          },
+          "coassignment_triangle": {
+            "same_instance_coassignment_recall": 0.6352201257861635,
+            "cross_instance_coassignment_rate": 0.06941838649155722,
+            "same_instance_pairs": 159,
+            "cross_instance_pairs": 1066
+          },
+          "gt_object_fragments_raw": [
+            {
+              "object_id": 1,
+              "patches": 6,
+              "fragments": 3,
+              "largest_fraction": 0.5
+            },
+            {
+              "object_id": 2,
+              "patches": 2,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 3,
+              "patches": 3,
+              "fragments": 2,
+              "largest_fraction": 0.6666666666666666
+            },
+            {
+              "object_id": 4,
+              "patches": 4,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 5,
+              "patches": 11,
+              "fragments": 3,
+              "largest_fraction": 0.8181818181818182
+            },
+            {
+              "object_id": 6,
+              "patches": 3,
+              "fragments": 3,
+              "largest_fraction": 0.3333333333333333
+            },
+            {
+              "object_id": 7,
+              "patches": 4,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 8,
+              "patches": 11,
+              "fragments": 2,
+              "largest_fraction": 0.8181818181818182
+            },
+            {
+              "object_id": 9,
+              "patches": 6,
+              "fragments": 2,
+              "largest_fraction": 0.8333333333333334
+            }
+          ],
+          "gt_object_fragments_triangle": [
+            {
+              "object_id": 1,
+              "patches": 6,
+              "fragments": 3,
+              "largest_fraction": 0.5
+            },
+            {
+              "object_id": 2,
+              "patches": 2,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 3,
+              "patches": 3,
+              "fragments": 2,
+              "largest_fraction": 0.6666666666666666
+            },
+            {
+              "object_id": 4,
+              "patches": 4,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 5,
+              "patches": 11,
+              "fragments": 3,
+              "largest_fraction": 0.8181818181818182
+            },
+            {
+              "object_id": 6,
+              "patches": 3,
+              "fragments": 3,
+              "largest_fraction": 0.3333333333333333
+            },
+            {
+              "object_id": 7,
+              "patches": 4,
+              "fragments": 1,
+              "largest_fraction": 1.0
+            },
+            {
+              "object_id": 8,
+              "patches": 11,
+              "fragments": 2,
+              "largest_fraction": 0.8181818181818182
+            },
+            {
+              "object_id": 9,
+              "patches": 6,
+              "fragments": 2,
+              "largest_fraction": 0.8333333333333334
+            }
+          ],
+          "restored_raw_size2_edges": 2,
+          "removed_edge_classes": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 1
+          },
+          "removed_raw_graph_bridges_by_class": {
+            "same_instance_fg": 0,
+            "cross_instance_fg": 0,
+            "foreground_background": 0,
+            "background_background": 1
+          },
+          "removed_edge_count": 1,
+          "removed_raw_graph_bridge_count": 1
+        }
+      ]
+    }
+  },
+  "first16_gate": {
+    "mean_triangle_metrics": {
+      "fg_ari": 0.8098717483234399,
+      "foreground_iou": 0.5609140713364472,
+      "matched_object_iou": 0.644852302844824
+    },
+    "mean_fg_ari_delta": -0.0009692595539810464,
+    "seed_fg_ari_positive": 1,
+    "triangle_foreground_iou_over_slot": 0.3573249401364472,
+    "triangle_object_iou_over_slot": 0.437915323644824,
+    "mean_cross_instance_coassignment_raw": 0.027602735263848276,
+    "mean_cross_instance_coassignment_triangle": 0.026013752213000823,
+    "mean_cross_instance_coassignment_decreased": true,
+    "mean_same_instance_recall_drop": 0.0018514150943396146,
+    "no_new_zero_groups": true,
+    "pass": false,
+    "full320_authorized_by_preregistered_gate": false,
+    "checks": {
+      "fg_ari_mean_and_seed_gate": false,
+      "both_slot_iou_margins": true,
+      "mean_cross_instance_coassignment_decreased": true,
+      "same_instance_recall_drop_at_most_0p02": true,
+      "no_new_zero_groups": true
+    },
+    "failed_gate_clauses": [
+      "fg_ari_mean_and_seed_gate"
+    ]
+  },
+  "finished_unix": 1791367056.3003051,
+  "predictions_constructed_for_all_seeds_before_gt_read": true,
+  "execution_provenance": {
+    "runner_sha256": "df9eb0abf5d9a14860f0e497af4668680fd1dabe308e6ca7fbf7f2d78a9666fa",
+    "remote_runner_sha256": "df9eb0abf5d9a14860f0e497af4668680fd1dabe308e6ca7fbf7f2d78a9666fa",
+    "device": "cuda:0",
+    "gpu_owners_at_actual_launch": [
+      {
+        "gpu": 0,
+        "compute_processes": [],
+        "memory_used_mib": 19
+      },
+      {
+        "gpu": 1,
+        "compute_processes": [
+          "3528996, python, 15886 MiB"
+        ],
+        "memory_used_mib": 15891
+      },
+      {
+        "gpu": 2,
+        "compute_processes": [],
+        "memory_used_mib": 5
+      },
+      {
+        "gpu": 3,
+        "compute_processes": [],
+        "memory_used_mib": 5
+      }
+    ],
+    "pid_capture": null,
+    "pid_capture_note": "SSH background launcher returned no PID; output JSON existence and completion log verified terminal state.",
+    "full320_followup": "not run; predeclared first16 gate failed",
+    "paired_train_audit_pid": 3700569,
+    "paired_train_audit_runner_sha256": "9ac39d78139ab47b8374b6a69218b93189ed120fffa5db54cdb3f73eb8077e6e"
+  }
+}

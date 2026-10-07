@@ -1,0 +1,36 @@
+{
+  "experiment": "SW0103_triangle_readout",
+  "attempts": [
+    {
+      "attempt": 1,
+      "kind": "actual GPU0 first16 execution",
+      "status": "failed_before_ground_truth_or_result_write",
+      "failure": "spike_synchrony_components received CUDA tensors while its traversal state was CPU: RuntimeError expected all tensors on the same device, found cuda:0 and cpu",
+      "correction": "Run the classifier-equivalence check on detached CPU copies of spikes and component spikes; the actual q matrix and prediction construction remain unchanged.",
+      "preservation_note": "The SSH command output contained this traceback; the later successful launch reused the first16.log path. This structured record preserves the initial failure; no labels or weights were involved."
+    },
+    {
+      "attempt": 2,
+      "kind": "synthetic CPU tests",
+      "status": "failed_then_corrected",
+      "failure": "Initial fixtures passed NumPy arrays to a helper expecting a torch tensor. After fixture correction, one assertion counted predicted groups rather than raw connected components and overlooked the prescribed largest-component background removal.",
+      "correction": "Use torch tensor fixtures and assert the raw path component size directly before the post-readout background rule.",
+      "final_result": "4 of 4 focused tests passed: exact-size-two edge restoration, triangle-edge retention, path pruning in a larger raw component, and int32 common-neighbor counts beyond 255."
+    },
+    {
+      "attempt": 3,
+      "kind": "one-batch actual-control smoke",
+      "status": "passed",
+      "scope": "Frozen SW0097 seed0, one B8/T1024 forward, raw classifier equivalence and output shapes only; no GT read.",
+      "log": "results_archive/smoke.log"
+    },
+    {
+      "attempt": 4,
+      "kind": "registered all-seed first16 readout",
+      "status": "complete",
+      "scope": "Three frozen SW0097 seeds, IDs1320-1335, predictions constructed before GT access; no full320 follow-up because the preregistered gate failed.",
+      "result": "results_archive/first16.json",
+      "log": "results_archive/first16.log"
+    }
+  ]
+}
