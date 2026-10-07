@@ -2,6 +2,7 @@
 
 | ID | Status | Change | Validation result |
 |---|---|---|---|
+| SW0098 | CPU and full-batch GPU checks passed; launch pending | Train256/128 instead of64/32 from SW0095 whole cores, fixed graph/encoder | Reuse exact SW0097 frozen controls; same4,096 IDs/256 updates. Three CPU backward checks and actual batch16 GPU memory check passed (3.465GiB peak reserved). Validation-only selection. |
 | SW0097 | complete; graph adaptation loses all3 means | From each whole SW0095 core, compare graph frozen/trainable under identical aligned-loss256-update continuation | Frozen .776348/.577070/.601537 vs graph .769307/.575107/.596571. Graph FG-ARI lower in all3 seeds; do not expand this recipe to70k. All six raw results archived. |
 | SW0096 | complete; FG-ARI advantage did not generalize | Freeze SW0095 and Slot epoch10 cores on independent and previously inspected reference splits | Independent means ours .759817/.562696/.588620 vs Slot .777602/.196114/.201021. Two IoUs win; FG-ARI loses. All12 evaluations archived; reserve90640–90959 unread. |
 | SW0095 | complete; narrow numerical validation exceedance | Aligned-loss whole-core continuation for source seeds0/1/2, one complete additional70k pass each | Mean .775645/.574029/.599779 vs Slot .774933/.203589/.206937; margin .000711 FG-ARI. No final superiority claim: SW0096 holdout fails FG-ARI. Total downstream two70k passes vs Slot ten. |

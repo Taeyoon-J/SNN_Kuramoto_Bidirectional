@@ -91,16 +91,22 @@ def main():
     p.add_argument("--source-seed", type=int, choices=[0, 1, 2], default=0)
     p.add_argument("--source-checkpoint", type=Path, default=None)
     p.add_argument("--shuffle-seed", type=int, default=None)
+    p.add_argument("--train-time-steps", type=int, default=64)
+    p.add_argument("--train-settle", type=int, default=32)
     p.add_argument("--validation-count", type=int, choices=[80, 320], default=80)
     args = p.parse_args()
     if args.steps < 1 or args.batch < 1 or args.steps * args.batch > 70000:
         raise ValueError("pilot must use a positive, bounded without-replacement budget")
+    if not 0 <= args.train_settle < args.train_time_steps:
+        raise ValueError("training settle must be inside the temporal window")
     args.output.mkdir(parents=True, exist_ok=False)
     torch.set_num_threads(2)
     shuffle_seed = 17 + args.source_seed if args.shuffle_seed is None else args.shuffle_seed
     torch.manual_seed(shuffle_seed)
     source = args.source_checkpoint or ROOT / f"trained_models/SW0090_unique70000_s{args.source_seed}_e10/checkpoints/epoch_01.pt"
-    core = S2NetCore(hparams(), device=args.device).to(args.device)
+    hp = hparams()
+    hp.num_time_steps = args.train_time_steps
+    core = S2NetCore(hp.validate(), device=args.device).to(args.device)
     initial = torch.load(source, map_location=args.device, weights_only=True)
     core.load_state_dict(initial, strict=True)
     if args.arm.endswith("frozen"):
@@ -141,7 +147,7 @@ def main():
                 "source": str(source), "source_sha256": sha(source),
                 "seed": shuffle_seed, "source_model_seed": args.source_seed, "steps": args.steps,
                 "batch": args.batch, "core_lr": 3e-5, "encoder_lr": 3e-6,
-                "train_steps": 64, "train_settle": 32, "started": time.time(),
+                "train_steps": args.train_time_steps, "train_settle": args.train_settle, "started": time.time(),
                 "ground_truth_used_for_training": False,
                 "preflight": args.preflight, "device": args.device}
     assert not set(manifest["training_ids"]).intersection(range(1000, 1640))
@@ -160,10 +166,11 @@ def main():
                         raise AssertionError(f"RGB/cached gamma mismatch: {diff}")
                     manifest["initial_encoder_gamma_max_diff"] = diff
             gamma = encode(rgb) if args.arm == "positive_joint" else cached
-            _, spikes, out, plv, theta = _forward_with_plv(core, gamma, criterion, 32, "phase", "mean")
+            _, spikes, out, plv, theta = _forward_with_plv(core, gamma, criterion, args.train_settle, "phase", "mean")
+            assert core.last_component_spikes.shape[-1] == args.train_time_steps
             primary, _ = criterion(plv=plv, theta=theta)
-            absolute = _component_spike_synchrony(core, 32)
-            positive = aligned_affinity(core)
+            absolute = _component_spike_synchrony(core, args.train_settle)
+            positive = aligned_affinity(core, settle=args.train_settle)
             affinity = absolute if args.arm == "absolute_frozen" else positive
             spike_loss, _ = criterion(plv=affinity)
             loss = primary + 5. * spike_loss
@@ -193,7 +200,8 @@ def main():
     torch.save(stats, args.output / "feature_preprocessing.pt")
     write(args.output / "history.json", history)
     manifest.update(status="training_complete", completed=time.time(),
-                    changed_core_keys=[k for k, v in changed.items() if v])
+                    changed_core_keys=[k for k, v in changed.items() if v],
+                    cuda_peak_reserved_bytes=torch.cuda.max_memory_reserved() if str(args.device).startswith("cuda") else None)
     write(args.output / "manifest.json", manifest)
     if args.preflight:
         (args.output / "PREFLIGHT_COMPLETED").write_text("finite real-data backward and update\n")
