@@ -232,3 +232,37 @@ mask-quality tradeoffs per SELECTION_POLICY. Expand promising arms to all320
 validation images and three seed-specific starting cores, then full70k training.
 Use independent test evidence for final success; training/validation pilot gains
 cannot complete the goal. Do not discard a method based solely on one pilot seed.
+
+### Completed four-arm pilot (2026-10-07)
+
+All four training/evaluation arms completed. Original evaluation batch8,
+validation IDs1320–1399, source-model seed0, 4,096 additional unique images:
+
+| Arm | FG-ARI | Foreground IoU | Matched-object IoU |
+|---|---:|---:|---:|
+| Unchanged source | .823070 | .728778 | .672128 |
+| Absolute affinity, frozen graph/encoder | .830922 | .722971 | .669574 |
+| Positive affinity, frozen graph/encoder | .847604 | .729511 | .676380 |
+| Positive affinity, train graph | .828366 | .734116 | .667680 |
+| Positive affinity, train encoder + graph | .826403 | .733943 | .677628 |
+
+Joint adaptation did not collapse: all three metrics exceed the unchanged
+source on this subset. Compared with positive_frozen, FG-ARI drops .021201,
+foreground IoU rises .004432 and matched-object IoU rises .001248. This is a
+tradeoff, not evidence that joint adaptation is intrinsically bad or that a
+single-seed pilot beats the full320 three-seed Slot benchmark. positive_frozen
+remains the ongoing SW0095 full70k candidate; do not replace its running jobs.
+
+The joint manifest records 256 finite updates, initial RGB/gamma maximum
+difference 7.15e-7, and updates to graph, Kuramoto, dendritic and membrane
+parameters. Core/graph/encoder gradient norms were nonzero at the first and
+last steps. Updated encoder gamma is used for evaluation; GT is not used in
+training or prediction. Raw manifest/history/evaluation and gamma provenance
+are in `results/positive_joint/`; all-arm comparison is `results/summary.json`.
+
+Queue training status was complete with no failed arms. Its final aggregation
+initially lacked a baseline JSON on the server; the archived baseline was
+copied there and aggregation can run without repeating training. The local
+aggregation already passed. Full320 joint evaluation was launched with explicit
+batch8 on GPU0 (evaluation PID3576680), sharing only our own training process.
+Results remain pending at this registration. No readout threshold is retuned.
