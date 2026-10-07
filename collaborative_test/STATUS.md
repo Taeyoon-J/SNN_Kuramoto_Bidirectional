@@ -14,6 +14,11 @@ real-asset CPU backward/update checks passed. The server queue is live as
 PID3546691, waiting for a free GPU; its actual process was verified with `ps`.
 At the latest check all4 GPUs are occupied; only0/1 may be used while the
 colleague (`tkim1`) occupies GPUs2/3. No new GPU training has launched yet.
+An independent CPU diagnosis completed on4 fixed validation images and the
+unchanged seed0/2 epoch1/10 cores: seed2 long-window same-object edge recall falls
+from .9109 to .4802 despite high pair AUC. Sign disagreement is larger in the
+training window than long evaluation. See SW0094 for limitations and raw data;
+queued GPU arms remain unchanged.
 
 Experiments1/2/3 requested by the user are complete: all three training seeds
 and epoch1/3/10 evaluations per experiment, plus experiment1's three-image mask

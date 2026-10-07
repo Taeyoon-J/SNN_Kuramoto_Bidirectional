@@ -86,6 +86,48 @@ Fetched `origin/patch_v2` through `e2389f5` in this cycle. Read
 
 ## Next decision
 
+### Completed CPU temporal diagnosis
+
+`diagnose_windows.py` completed on unchanged SW0090 seed0/2 epoch1/10 cores,
+validation IDs1320–1323 only. It uses no GPU, no optimization, and no GT in the
+forward path. GT foreground pairs enter post-forward diagnostic scoring only.
+Foreground pair AUC is computed using tie-averaged ranks (scipy), so no new
+package installation is required. Raw32 image/checkpoint/window rows are in
+`window_diagnosis.json`. This diagnostic is not an evaluation of the queued arms.
+
+Mean actual classifier positive-product measurements on these4 images:
+
+| Seed / epoch | Window / settle | FG pair AUC | Same-object edges above .50 | Different-object edges above .50 |
+|---|---|---:|---:|---:|
+| 0 / 1 | 64 / 32 | .9549 | .8958 | .1031 |
+| 0 / 1 | 1024 / 512 | .9697 | .9253 | .0128 |
+| 0 / 10 | 64 / 32 | .9269 | .8968 | .3649 |
+| 0 / 10 | 1024 / 512 | .9575 | .8935 | .0057 |
+| 2 / 1 | 64 / 32 | .8894 | .7891 | .2270 |
+| 2 / 1 | 1024 / 512 | .9510 | .9109 | .0090 |
+| 2 / 10 | 64 / 32 | .8642 | .3620 | .0295 |
+| 2 / 10 | 1024 / 512 | .9613 | .4802 | .0007 |
+
+Seed2's long-window AUC stays high while same-object edge recall roughly halves:
+rank separation alone does not ensure sufficient edges for connected-component
+grouping. This supports checking affinity calibration/within-object connectivity
+as well as pair AUC. It does not establish activation death or prove which layer
+caused the change. No threshold is selected from these scores.
+
+Training absolute-affinity vs classifier-positive-affinity threshold disagreement
+over **all** off-diagonal patch pairs is3.00–22.58% in the short window, but
+0.00–3.54% in the long window. Thus the sign mismatch is meaningful in the actual
+training window; its long-window size can be small. We must not attribute all
+observed degradation to it. Short-window and long-window different-object edge
+rates also differ substantially, motivating a later controlled temporal-window
+or temporal-consistency loss test if the current aligned-loss arms cannot
+preserve connectivity. This four-image diagnostic is too narrow to conclude
+which mechanism dominates across the full validation set.
+
+The four queued GPU arms remain unchanged, so their controlled comparison is
+preserved. Extend this diagnosis to a larger fixed subset and per-layer traces
+when the pilot results identify which arm needs explanation.
+
 All four CPU asset preflights passed. RGB/cached gamma maximum error was zero;
 the modified downstream parameters include Kuramoto, dendritic and membrane
 tensors. The joint arm's first-step pre-clipping gradient norms were187.46 for
