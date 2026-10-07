@@ -73,3 +73,17 @@ GT6.196875; aggregate mean count alone does not prove accurate per-image counts.
 Raw manifest/history/evaluation and completion marker are archived in
 `results/seed0/`. The reused runner's legacy `pilot:true` manifest field does
 not describe data exposure; explicit training IDs/steps establish the full pass.
+
+### Seed1 completed; seed2 running
+
+Seed1 full320 scores: **.741306/.582172/.583384**. Its complete70k ID set,
+4,375 finite updates, held-out320 IDs and unchanged spike classifier passed
+the same audit as seed0. Raw records are in `results/seed1/`. Seed2 was
+automatically launched on GPU0 (PID3588623); no failures reported by the queue.
+
+The two completed seeds average **.782684/.650176/.618579**. This exceeds
+Slot's three-seed mean numerically but is an incomplete comparison and cannot
+establish the three-seed objective. Current two-seed best FG-ARI is .824063;
+Slot's three-seed best is .871053. Do not compare our best against Slot's mean
+as evidence of an overall win. Report best and mean separately, preserve all
+seeds, and use independent test evidence for the final selected recipe.
