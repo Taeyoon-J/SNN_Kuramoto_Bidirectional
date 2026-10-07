@@ -2,6 +2,7 @@
 
 | ID | Status | Change | Validation result |
 |---|---|---|---|
+| SW0095 | live queue; waiting for pilot/full320 evaluation | Aligned-loss whole-core continuation for source seeds0/1/2, one complete additional70k pass each | Real-asset CPU checks passed. Queue PID3562158; 4,375 updates x16, validation320. Total downstream budget two70k passes per seed, distinct from Slot10-pass budget; no result yet. |
 | SW0094 | running GPU0/2; two arms completed | Continue full best70k core for256 updates; align spike loss with classifier, then train graph and encoder | All preflights passed. New queue PID3557827 adopted existing training; GPU2 explicitly authorized. Frozen arms completed, graph/joint arms running. Pilot uses4,096 unique images from70k pool, validation80; not three-seed or full70k completion. |
 | SW0093 | analysis complete; causal tests proposed | Diagnose 70k scaling failure from completed checkpoints' scores, archived training logs and active loss/classifier code | Training uses absolute correlation; classifier uses positive correlation. All3 seeds reduce endpoint loss but lose FG-ARI; count MAE 1.776 -> 3.279. No new GPU training; see SW_0093_scaling_failure_analysis/README.md. |
 | SW_0034 | planned, execution pending SSH | Stage-wise object-signal AUC at fixed pair distances and training-loss gradient connectivity; unchanged core observed with hooks | No results yet; syntax check passed; spatial-only and membrane/spike spatial controls prepared |

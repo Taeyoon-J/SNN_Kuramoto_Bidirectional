@@ -1,0 +1,42 @@
+# SW0095 — complete70k continuation with classifier-aligned spike loss
+
+Registered following the SW0094 pilot's positive_frozen gain on all3 metrics
+against the old-loss continuation. SW0094 full320 confirmation remains pending
+at registration; the queue waits for its completion before launching this test.
+
+Three source-model seeds0/1/2: continue each SW0090 epoch1 **whole core**, not
+just the graph. Replace absolute component spike affinity in the loss with the
+actual prediction classifier's positive-correlation product. Other loss weights,
+graph/encoder freezing, spatial priors and classifier remain unchanged.
+
+- One complete additional pass through the same70,000 unique training images.
+- 4,375 optimizer updates x16 images, without replacement. Source cores already
+  saw one complete70k pass; total downstream exposures are140,000 per seed.
+- Native encoder/graph pretraining provenance remains that of SW0090; this is
+  continuation rather than a from-scratch or budget-matched ten-pass comparison.
+- Shuffle seeds17/18/19; each source-core seed remains separately identified.
+- Adam lr3e-5, clip1, training64 steps/settle32.
+- Training IDs0–999 and1640–70639 exactly; all IDs1000–1639 excluded.
+- Full320 validation IDs1320–1639, same1024/512 spike readout and threshold.50.
+- Full gamma pool, actual training IDs, source hashes, per-step finite loss and
+  gradient norms, checkpoints, per-image metrics and count diagnostics recorded.
+- No GT in training or prediction; validation selection only.
+
+Runner is SW0094 `run.py` with explicit `--source-seed`, `--steps 4375`,
+`--batch 16`, `--validation-count 320`. Default SW0094 arguments remain unchanged.
+Real-data CPU preflights for new source seeds1/2 passed before queue creation;
+source0 already passed the same recipe in SW0094. Existing running SW0094 Python
+workers retain their loaded code and are not restarted by this parameterization.
+
+Queue checks actual GPU compute processes and uses free GPUs0/1/2. It first
+waits for the four-arm pilot and positive_frozen full320 evaluation to finish.
+This keeps GPU follow-ups from racing each other. User authorized GPU2; GPU3 is
+reserved for the colleague. Duplicate queue copies are prevented by flock;
+failed/incomplete outputs require diagnosis and are never silently retrained.
+
+Interpret against the same held-out Slot70k epoch10 three-seed mean:
+FG-ARI .774933 / foreground IoU .203589 / matched-object IoU .206937. Report the
+training-budget difference explicitly. This candidate must improve three-seed
+performance, and independent test evidence is still required to finish the goal.
+The released Slot checkpoint .894641 is a separate transfer reference. Neither
+an80-image pilot nor a single-seed gain proves full70k success.

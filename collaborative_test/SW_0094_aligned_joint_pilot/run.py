@@ -1,4 +1,4 @@
-"""Controlled short continuation on the existing 70k training pool."""
+"""Controlled continuation on the existing 70k training pool."""
 import argparse
 import hashlib
 import json
@@ -88,14 +88,18 @@ def main():
     p.add_argument("--batch", type=int, default=16)
     p.add_argument("--device", default="cuda")
     p.add_argument("--preflight", action="store_true")
+    p.add_argument("--source-seed", type=int, choices=[0, 1, 2], default=0)
+    p.add_argument("--validation-count", type=int, choices=[80, 320], default=80)
     args = p.parse_args()
     if args.steps < 1 or args.batch < 1 or args.steps * args.batch > 70000:
         raise ValueError("pilot must use a positive, bounded without-replacement budget")
     args.output.mkdir(parents=True, exist_ok=False)
     torch.set_num_threads(2)
-    torch.manual_seed(17)
+    shuffle_seed = 17 + args.source_seed
+    torch.manual_seed(shuffle_seed)
+    source = ROOT / f"trained_models/SW0090_unique70000_s{args.source_seed}_e10/checkpoints/epoch_01.pt"
     core = S2NetCore(hparams(), device=args.device).to(args.device)
-    initial = torch.load(SOURCE, map_location=args.device, weights_only=True)
+    initial = torch.load(source, map_location=args.device, weights_only=True)
     core.load_state_dict(initial, strict=True)
     if args.arm.endswith("frozen"):
         core.graph_generator.requires_grad_(False)
@@ -128,12 +132,12 @@ def main():
     if args.arm == "positive_joint":
         groups.append({"params": encoder.parameters(), "lr": 3e-6})
     optimizer = torch.optim.Adam(groups)
-    indices = torch.randperm(70000, generator=torch.Generator().manual_seed(17))[:args.steps * args.batch]
+    indices = torch.randperm(70000, generator=torch.Generator().manual_seed(shuffle_seed))[:args.steps * args.batch]
     manifest = {"arm": args.arm, "status": "training", "pilot": True,
                 "training_pool": 70000, "unique_images_seen": len(indices),
                 "training_ids": [int(i) if i < 1000 else int(i) + 640 for i in indices],
-                "source": str(SOURCE), "source_sha256": sha(SOURCE),
-                "seed": 17, "source_model_seed": 0, "steps": args.steps,
+                "source": str(source), "source_sha256": sha(source),
+                "seed": shuffle_seed, "source_model_seed": args.source_seed, "steps": args.steps,
                 "batch": args.batch, "core_lr": 3e-5, "encoder_lr": 3e-6,
                 "train_steps": 64, "train_settle": 32, "started": time.time(),
                 "ground_truth_used_for_training": False,
@@ -212,7 +216,7 @@ def main():
                "--checkpoint", str(args.output / "core.pt"), "--gamma-path", str(gamma_path),
                "--gamma-global-start", "1320", "--gamma-manifest", str(gamma_manifest),
                "--dataset-path", str(DATASET), "--output-path", str(args.output / "evaluation.json"),
-               "--start", "1320", "--count", "80", "--steps", "1024", "--settle", "512",
+               "--start", "1320", "--count", str(args.validation_count), "--steps", "1024", "--settle", "512",
                "--membrane-vth", ".06", "--min-group-size", "2", "--background", "largest_component",
                "--thresholds", ".50", "--dendritic-projection", "shared", "--graph-spatial-decay", ".35",
                "--geodesic-steps", "3", "--geodesic-radius", "1.5", "--geodesic-contrast", "2",
@@ -220,7 +224,8 @@ def main():
                "--gate-mode", "raw", "--device", args.device]
     with (args.output / "evaluation.log").open("w") as log:
         subprocess.run(command, stdout=log, stderr=subprocess.STDOUT, check=True)
-    manifest.update(status="complete", evaluation_images=80, evaluation_ids=[1320, 1399])
+    manifest.update(status="complete", evaluation_images=args.validation_count,
+                    evaluation_ids=[1320, 1320 + args.validation_count - 1])
     write(args.output / "manifest.json", manifest)
     (args.output / "COMPLETED").write_text("training and pilot evaluation complete\n")
 

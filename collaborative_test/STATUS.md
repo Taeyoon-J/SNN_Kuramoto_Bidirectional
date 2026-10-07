@@ -14,8 +14,12 @@ real-asset CPU backward/update checks passed. The server queue is live as
 PID3557827 after live-child adoption from the initial queue, without restarting
 training. The user explicitly authorized free GPU2; allowed GPUs are now0/1/2.
 The two frozen-graph arms completed training and pilot evaluation. At the latest
-check positive_graph runs onGPU2 (PID3557832), positive_joint onGPU0
-(PID3558132). GPU1/3 remain occupied by others. Results analysis is pending.
+check positive_joint remains live onGPU0 (PID3558132); positive_graph completed.
+The aligned frozen pilot scores .847604/.729511/.676380 on80 images, above
+the old-loss pilot .830922/.722971/.669574 on all3 metrics. Single-source pilot
+only. Full320 validation queue PID3560324 waits for GPU0; GPU2 is now occupied
+again by the colleague. SW0095 queue PID3562158 waits for pilot/full validation
+before three complete70k continuations. New source-seed CPU checks passed.
 An independent CPU diagnosis completed on4 fixed validation images and the
 unchanged seed0/2 epoch1/10 cores: seed2 long-window same-object edge recall falls
 from .9109 to .4802 despite high pair AUC. Sign disagreement is larger in the

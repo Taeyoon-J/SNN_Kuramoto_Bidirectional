@@ -1,0 +1,39 @@
+{
+  "arm": "positive_frozen",
+  "status": "training_complete",
+  "pilot": true,
+  "training_pool": 70000,
+  "unique_images_seen": 2,
+  "training_ids": [
+    24285,
+    34011
+  ],
+  "source": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0090_unique70000_s2_e10/checkpoints/epoch_01.pt",
+  "source_sha256": "990254d74e1b7b3b4e6df7c6f2bf40ec69feb37b6326ca2372d899d74df2e017",
+  "seed": 19,
+  "source_model_seed": 2,
+  "steps": 1,
+  "batch": 2,
+  "core_lr": 3e-05,
+  "encoder_lr": 3e-06,
+  "train_steps": 64,
+  "train_settle": 32,
+  "started": 1791345235.524213,
+  "ground_truth_used_for_training": false,
+  "preflight": true,
+  "device": "cpu",
+  "initial_encoder_gamma_max_diff": 0.0,
+  "completed": 1791345239.8534172,
+  "changed_core_keys": [
+    "gamma_phase_gain",
+    "gamma_channel_proj.weight",
+    "kuramoto.freq_gain",
+    "kuramoto.omega",
+    "kuramoto.kappa",
+    "kuramoto.direction_learner",
+    "dendric_layer.tau_n",
+    "dendric_layer.oscillator_dense.weight",
+    "dendric_layer.oscillator_dense.bias",
+    "membrane_layer.tau_m"
+  ]
+}

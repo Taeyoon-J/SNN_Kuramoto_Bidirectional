@@ -102,6 +102,32 @@ Fetched `origin/patch_v2` through `e2389f5` in this cycle. Read
 
 ## Next decision
 
+### First completed GPU pilot results
+
+Validation80 only, same source core and256 updates:
+
+| Arm | FG-ARI | Foreground IoU | Matched-object IoU |
+|---|---:|---:|---:|
+| Unchanged source | .823070 | .728778 | .672128 |
+| Old absolute loss, frozen graph | .830922 | .722971 | .669574 |
+| Aligned positive loss, frozen graph | .847604 | .729511 | .676380 |
+| Aligned positive loss, trainable graph | .828366 | .734116 | .667680 |
+
+The aligned frozen-graph arm improves all3 metrics versus both the old-loss
+continuation and unchanged source on this subset. Graph adaptation improves
+foreground IoU and count MAE but loses FG-ARI/object IoU versus the aligned
+frozen arm; retain as a tradeoff, not a universal failure of graph learning.
+The joint encoder arm was still live when this partial report was written.
+Raw completed artifacts and explicitly partial summary are in `results/`.
+
+Full320 validation for positive_frozen is queued as PID3560324 onGPU0 after
+joint training/evaluation finishes. GPU2 was reoccupied by the colleague's next
+job, so the free-GPU check correctly prevented sharing it. The full evaluation
+reuses the unchanged pilot checkpoint and readout, without threshold selection.
+SW0095 registers a complete additional70k pass for source seeds0/1/2; it waits
+for pilot/full320 confirmation to finish. This is additional evidence gathering,
+not a three-seed success claim from these80-image numbers.
+
 ### Completed CPU temporal diagnosis
 
 `diagnose_windows.py` completed on unchanged SW0090 seed0/2 epoch1/10 cores,
