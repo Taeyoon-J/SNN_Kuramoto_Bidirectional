@@ -1,5 +1,13 @@
 # Current status
 
+Experiments1/2/3 requested by the user are complete: all three training seeds
+and epoch1/3/10 evaluations per experiment, plus experiment1's three-image mask
+visualizations. See [final comparison](TEST123_FINAL_RESULTS.md). The required
+next action after sharing results is to pause goal mode. Model modification
+tests remain suspended; the user has not authorized a further improvement cycle.
+
+## Earlier research history
+
 - User clarified classifier/count and stage-wise activation analysis are useful research direction, not strict sequential gates. Run classifier and core diagnostics in parallel when either can clarify the other.
 - The earlier 90-minute cap applied to the prior goal run and expired before the user explicitly restarted goal mode. No new runtime cap was set for the restarted goal.
 - Current aligned SW0042 three-seed result is complete. At the common long

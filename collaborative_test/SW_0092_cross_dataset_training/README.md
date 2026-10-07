@@ -191,3 +191,24 @@ evaluations. No model-improvement tests are authorized in the current scope.
 Pause goal mode only after experiment3 results are retrieved, verified,
 compared and shared.
 
+## Experiment3 final result and current completion state
+
+Experiment3 is complete: all three seeds trained ten passes over the same
+70000 HDF5 training IDs as experiment1, and all nine epoch1/3/10 evaluations
+completed. Its final three-seed means are epoch1 `.524048/.212999/.158664`,
+epoch3 `.684707/.215308/.195487`, epoch10 `.774933/.203589/.206937`.
+The earlier two-seed FG-ARI `.853923` was lowered by seed0's `.616953` and
+must not be reported as a three-seed mean.
+
+All training protocols, completion markers, logs, evaluation contracts,
+per-image CSVs, final summary and verification are under
+`results/slot_our70000/`. Independent checks confirmed 21880 updates per seed,
+all ten finite-loss epochs, exact training IDs shared with experiment1, full
+held-out scoring without GT prediction, and recomputed three-seed means.
+No requested GPU job remains live. Historical running-state entries earlier
+in this file are superseded by this section.
+
+See [final experiment1/2/3 comparison](../TEST123_FINAL_RESULTS.md). All
+requested deliverables are complete; pause goal mode after sharing final
+artifacts, as requested. Do not begin another model-modification cycle.
+

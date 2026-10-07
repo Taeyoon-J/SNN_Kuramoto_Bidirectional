@@ -1,19 +1,14 @@
 {
-  "experiment": "test3 Slot on our 70000",
-  "status": "historical two-seed snapshot; superseded by final three-seed summary",
-  "superseded_by": "summary.json",
-  "completed_seeds": [
-    1,
-    2
-  ],
-  "evaluation_ids": [
-    1320,
-    1639
-  ],
-  "count": 320,
+  "experiment": "Slot Attention trained on our 70000 unique scenes",
+  "evaluation": "fixed HDF5 IDs1320-1639",
   "epochs": {
     "1": {
       "seeds": {
+        "0": {
+          "fg_ari": 0.337942247413726,
+          "foreground_iou": 0.20646435936427196,
+          "matched_object_iou": 0.12359248114402739
+        },
         "1": {
           "fg_ari": 0.6054771332091748,
           "foreground_iou": 0.21297146882826273,
@@ -25,14 +20,19 @@
           "matched_object_iou": 0.18421893497263755
         }
       },
-      "two_seed_mean": {
-        "fg_ari": 0.6171004791992898,
-        "foreground_iou": 0.21626654539840356,
-        "matched_object_iou": 0.17619934510164523
+      "mean": {
+        "fg_ari": 0.5240477352707685,
+        "foreground_iou": 0.21299915005369305,
+        "matched_object_iou": 0.1586637237824393
       }
     },
     "3": {
       "seeds": {
+        "0": {
+          "fg_ari": 0.5636133656707971,
+          "foreground_iou": 0.20873068563102457,
+          "matched_object_iou": 0.18182292615737322
+        },
         "1": {
           "fg_ari": 0.7326499283825393,
           "foreground_iou": 0.2182472846515049,
@@ -44,14 +44,19 @@
           "matched_object_iou": 0.20311220327258378
         }
       },
-      "two_seed_mean": {
-        "fg_ari": 0.7452543621585488,
-        "foreground_iou": 0.21859710632904872,
-        "matched_object_iou": 0.20231894272007012
+      "mean": {
+        "fg_ari": 0.6847073633292982,
+        "foreground_iou": 0.21530829942970733,
+        "matched_object_iou": 0.19548693719917115
       }
     },
     "10": {
       "seeds": {
+        "0": {
+          "fg_ari": 0.6169534586553709,
+          "foreground_iou": 0.2104241185702159,
+          "matched_object_iou": 0.1953766475289241
+        },
         "1": {
           "fg_ari": 0.8367941109288608,
           "foreground_iou": 0.20226472333711332,
@@ -63,10 +68,10 @@
           "matched_object_iou": 0.20129176716908465
         }
       },
-      "two_seed_mean": {
-        "fg_ari": 0.8539234706838416,
-        "foreground_iou": 0.20017163744325595,
-        "matched_object_iou": 0.21271714496375338
+      "mean": {
+        "fg_ari": 0.7749334666743514,
+        "foreground_iou": 0.20358913115224261,
+        "matched_object_iou": 0.20693697915214362
       }
     }
   }

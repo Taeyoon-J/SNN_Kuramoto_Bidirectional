@@ -1,0 +1,30 @@
+{
+  "experiment": "SW0092 Slot on our 70k",
+  "seed": 2,
+  "dataset": "/Data0/kevinswk/datasets/object_centric_data/clevr_10-full.hdf5",
+  "training_id_segments_inclusive": [
+    [
+      0,
+      999
+    ],
+    [
+      1640,
+      70639
+    ]
+  ],
+  "unique_training_images": 70000,
+  "epochs": 10,
+  "batch_size": 32,
+  "steps_per_epoch": 2188,
+  "total_steps": 21880,
+  "num_slots": 11,
+  "iterations": 3,
+  "learning_rate": 0.0004,
+  "warmup_steps": 2188,
+  "decay_steps": 21880,
+  "decay_rate": 0.5,
+  "loss": "reconstruction MSE",
+  "selected_images_sha256": "c20fa9d537ad25caf6bb6d84012a479971ec69907d0ee3dff1ee8de9cebe8f84",
+  "checkpoint_source": "scratch official architecture",
+  "ground_truth_used_for_training": false
+}
