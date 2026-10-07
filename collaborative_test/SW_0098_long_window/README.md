@@ -1,4 +1,4 @@
-# SW0098 — longer training rhythm window
+# SW0098 ??longer training rhythm window
 
 SW0097 graph adaptation failed under the original64/32 training window.
 SW0094 temporal diagnostics found same-object connectivity loss despite
@@ -19,7 +19,7 @@ modal patch scoring,largest-component background and original batch8.
 Real CPU backward/update preflights for all3 source seeds and a GPU full-batch
 single-update memory check precede the pilot. GPU0/1 only when free; no
 sharing another user's GPU, no automatic restart of a failed output.
-Use validation1320–1639 only. Holdout90640–90959 remains unread.
+Use validation1320??639 only. Holdout90640??0959 remains unread.
 This is4,096 additional images on models trained on the entire70k pool;
 expand to another full70k pass only if the controlled three-seed pilot supports
 a meaningful grouping improvement. No extra training data or count labels.
@@ -29,3 +29,10 @@ Three real-source CPU backward/update checks passed. The actual batch16,
 The runner asserts actual component-history length, not only a configuration
 value. Raw preflight manifests/history/completion markers are in `preflights/`.
 Defaults64/32 remain unchanged for earlier recipes; no completed run is repeated.
+
+## Live run
+
+Queue PID3638273 remains active. Seed1 completed on GPU0; seed2 is running
+on GPU0 as PID3640127. Seed0 follows it in the registered sequential queue.
+No restart or altered configuration has been made. Results and manifests will
+be recorded here after the queue has completed all three seeds.
