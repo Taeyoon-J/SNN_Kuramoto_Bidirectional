@@ -1,0 +1,16 @@
+{
+  "first_suite": {
+    "status": "completed_but_dendritic_stage_invalid",
+    "remote_runner_sha256": "97860e09464e83417c5cc7d0a0a8c9b16300a8cff0e91eccce21d933572869b7",
+    "outputs": "results/ (all nine original JSON records preserved)",
+    "invalid_stage": "dendritic_output_product",
+    "reason": "hook rows are [B*D,N], stack(dim=1) gives [B*D,T,N], but the executed runner reshaped as [T,B,D,N] and mixed batch/component/time values",
+    "reusable_evidence": "No model parameters or inputs were changed. Smoke endpoint exactly matched archived scores; other stages are recomputed in corrected suite for direct regression."
+  },
+  "corrected_suite": {
+    "runner_sha256": "651f930319541382ffc620806a18e83b518c9242378ce09ed2aea50f17d44680",
+    "dendrite_unflattening": "[B*D,T,N] -> reshape[B,D,T,N] -> permute[B,D,N,T]",
+    "preflight": "synthetic sentinel check required before execution",
+    "output_namespace": "results_corrected_dendrite_order/"
+  }
+}

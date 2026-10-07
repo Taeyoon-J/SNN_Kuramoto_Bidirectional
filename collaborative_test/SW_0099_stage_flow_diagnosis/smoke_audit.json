@@ -1,0 +1,22 @@
+{
+  "first_attempt": {
+    "status": "failed_before_endpoint_scoring",
+    "error": "RuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!",
+    "stage": "spike_synchrony_components connected-component postprocessing",
+    "effect": "No checkpoint or data was modified; no endpoint metrics were produced. The smoke runner was corrected to move only post-forward classifier tensors to CPU, matching the established evaluator path."
+  },
+  "successful_smoke": {
+    "checkpoint": "SW0095 seed0 final core",
+    "ids": [1320, 1327],
+    "batch_size": 8,
+    "inference_steps": 1024,
+    "settle": 512,
+    "reference": "archived SW0095 seed0 original batch-8 evaluation per-image scores",
+    "max_absolute_difference": {
+      "fg_ari": 0.0,
+      "foreground_iou": 0.0,
+      "matched_object_iou": 0.0
+    },
+    "status": "passed"
+  }
+}
