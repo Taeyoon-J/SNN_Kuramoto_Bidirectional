@@ -25,6 +25,10 @@ batch1, sharing only our own workers with ample free VRAM. The joint worker
 is CPU-I/O-bound and remains live. SW0095 manager was replaced before any
 training launch; PID3568428 waits only for full validation and can use our
 own GPU's8GiB-or-more free VRAM without waiting for the independent encoder arm.
+Full320 batch1 result completed (.822781/.719916/.662139), but overlapping
+images reveal batch sensitivity; original batch8 revalidation is live.
+SW0095 seed0 actual full70k continuation runs as PID3569312 onGPU0, source
+seed1/2 pending. This is not three-seed success evidence yet.
 An independent CPU diagnosis completed on4 fixed validation images and the
 unchanged seed0/2 epoch1/10 cores: seed2 long-window same-object edge recall falls
 from .9109 to .4802 despite high pair AUC. Sign disagreement is larger in the

@@ -17,27 +17,31 @@ def main():
     p.add_argument("--wait", action="store_true")
     p.add_argument("--daemon", action="store_true")
     p.add_argument("--allow-own-sharing", action="store_true")
+    p.add_argument("--batch-size", type=int, choices=[1, 8], default=None)
     args = p.parse_args()
     folder = ROOT / "trained_models/SW0094_aligned_joint_pilot" / args.arm
+    suffix = "_batch8" if args.batch_size == 8 else ""
     if not (folder / "COMPLETED").exists():
         raise RuntimeError("pilot training/evaluation must complete first")
     if args.daemon:
-        if (folder / "full320_queue.json").exists():
+        if (folder / f"full320{suffix}_queue.json").exists():
             raise FileExistsError("inspect existing full validation queue")
-        with (folder / "full320_queue.log").open("w") as log:
+        with (folder / f"full320{suffix}_queue.log").open("w") as log:
             queued = [sys.executable, __file__, "--arm", args.arm,
                       "--gpu", str(args.gpu), "--wait"]
             if args.allow_own_sharing:
                 queued.append("--allow-own-sharing")
+            if args.batch_size is not None:
+                queued.extend(["--batch-size", str(args.batch_size)])
             child = subprocess.Popen(queued, stdout=log,
                                      stderr=log, stdin=subprocess.DEVNULL,
                                      start_new_session=True)
         record = {"queue_pid": child.pid, "gpu": args.gpu, "arm": args.arm}
-        (folder / "full320_queue.json").write_text(json.dumps(record, indent=2) + "\n")
+        (folder / f"full320{suffix}_queue.json").write_text(json.dumps(record, indent=2) + "\n")
         print(json.dumps(record))
         return
     result = json.loads((folder / "evaluation.json").read_text())
-    if (folder / "evaluation_full320.json").exists() or (folder / "full320_launch.json").exists():
+    if (folder / f"evaluation_full320{suffix}.json").exists() or (folder / f"full320{suffix}_launch.json").exists():
         raise FileExistsError("inspect existing evaluation before relaunching")
     while True:
         probe = subprocess.run(["nvidia-smi", f"--id={args.gpu}", "--query-compute-apps=pid",
@@ -63,21 +67,21 @@ def main():
                "--gamma-global-start", str(source["global_start"]),
                "--gamma-manifest", source["manifest_path"],
                "--dataset-path", result["target_sources"]["our_hdf5"]["path"],
-               "--output-path", str(folder / "evaluation_full320.json"),
+               "--output-path", str(folder / f"evaluation_full320{suffix}.json"),
                "--start", "1320", "--count", "320", "--thresholds", ".50",
                "--background", "largest_component", "--device", "cuda"]
-    if args.allow_own_sharing:
-        command.extend(["--batch-size", "1"])
+    if args.batch_size is not None or args.allow_own_sharing:
+        command.extend(["--batch-size", str(args.batch_size or 1)])
     for key in ("steps", "settle", "membrane_vth", "min_group_size", "dendritic_projection",
                 "graph_spatial_decay", "geodesic_steps", "geodesic_radius", "geodesic_contrast",
                 "geodesic_temperature", "geodesic_cap", "kuramoto_backend", "gate_mode"):
         command.extend(["--" + key.replace("_", "-"), str(result["inference"][key])])
-    with (folder / "full320.log").open("w") as log:
+    with (folder / f"full320{suffix}.log").open("w") as log:
         child = subprocess.Popen(command, stdout=log, stderr=log, stdin=subprocess.DEVNULL,
                                  env=dict(os.environ, CUDA_VISIBLE_DEVICES=str(args.gpu)),
                                  start_new_session=True)
     record = {"pid": child.pid, "gpu": args.gpu, "arm": args.arm, "command": command}
-    (folder / "full320_launch.json").write_text(json.dumps(record, indent=2) + "\n")
+    (folder / f"full320{suffix}_launch.json").write_text(json.dumps(record, indent=2) + "\n")
     print(json.dumps(record))
 
 

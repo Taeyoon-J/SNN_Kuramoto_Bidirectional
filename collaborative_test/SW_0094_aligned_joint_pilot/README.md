@@ -148,6 +148,18 @@ verified derived RGB cache or chunk-aware sequential loading before scaling it
 to70k. The running joint worker is preserved; no training has been restarted.
 Benchmark code and raw output are committed beside the experiment.
 
+Full320 batch1 evaluation completed: seed0 aligned pilot scores
+`.822781/.719916/.662139`, count MAE1.421875. This is not the final controlled
+comparison: overlapping80-image means differ from batch8 by about
+`.000277/.003828/.000197`, and maximum per-image differences reach
+`.027690/.282848/.156250`. Predictions therefore show batch sensitivity;
+an aggregate near-match does not establish per-image invariance. Full320
+**batch8** revalidation was launched through queue PID3570002 using the original
+evaluation batch. Keep both results and provenance; never choose the batch with
+the better score. SW0095 already uses the original default batch8 throughout.
+Its seed0 full70k continuation began onGPU0 as PID3569312; this result does not
+depend on changing the evaluation batch.
+
 ### Completed CPU temporal diagnosis
 
 `diagnose_windows.py` completed on unchanged SW0090 seed0/2 epoch1/10 cores,
