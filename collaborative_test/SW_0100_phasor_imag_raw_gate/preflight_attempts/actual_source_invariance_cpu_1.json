@@ -1,0 +1,13 @@
+﻿{
+  "attempt": "actual_source_invariance_cpu_1",
+  "status": "stopped_after_owned_process_inspection",
+  "coordinator_pid": 3665991,
+  "worker_pid": 3665993,
+  "duration_seconds_observed": 210,
+  "observed_worker_cpu_percent": 100,
+  "output_log_bytes": 0,
+  "cause": "The diagnostic core forward called its unused internal object-group/clique detector. This check only needs graph, theta, carrier, and gate outputs.",
+  "action": "Sent SIGTERM only to these verified kevinswk-owned SW0100 PIDs. No completion marker or output JSON was written; source/core/data remain unchanged.",
+  "correction": "Set core._detect_object_groups to the existing no-op diagnostic stub before the paired gate forwards, matching the training/evaluation harness.",
+  "retry": "isolated corrected preflight attempt; no training candidate started"
+}

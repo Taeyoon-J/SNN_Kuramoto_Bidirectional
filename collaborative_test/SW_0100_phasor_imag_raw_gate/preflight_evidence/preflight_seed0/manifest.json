@@ -1,0 +1,41 @@
+{
+  "arm": "positive_frozen",
+  "status": "training_complete",
+  "pilot": true,
+  "training_pool": 70000,
+  "unique_images_seen": 2,
+  "training_ids": [
+    6654,
+    40665
+  ],
+  "source": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0095_full70k_aligned_loss/seed0/core.pt",
+  "source_sha256": "aac44697906c835569e3bf900e5930ce900223d1aa95c0bedba899bee5ff155d",
+  "seed": 117,
+  "source_model_seed": 0,
+  "steps": 1,
+  "batch": 2,
+  "core_lr": 3e-05,
+  "encoder_lr": 3e-06,
+  "train_steps": 64,
+  "train_settle": 32,
+  "started": 1791360598.025087,
+  "gate_mode": "phasor_imag_raw",
+  "ground_truth_used_for_training": false,
+  "preflight": true,
+  "device": "cpu",
+  "initial_encoder_gamma_max_diff": 0.0,
+  "completed": 1791360601.4573648,
+  "changed_core_keys": [
+    "gamma_phase_gain",
+    "gamma_channel_proj.weight",
+    "kuramoto.freq_gain",
+    "kuramoto.omega",
+    "kuramoto.kappa",
+    "kuramoto.direction_learner",
+    "dendric_layer.tau_n",
+    "dendric_layer.oscillator_dense.weight",
+    "dendric_layer.oscillator_dense.bias",
+    "membrane_layer.tau_m"
+  ],
+  "cuda_peak_reserved_bytes": null
+}

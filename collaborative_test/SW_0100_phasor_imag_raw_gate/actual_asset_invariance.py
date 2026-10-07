@@ -44,6 +44,10 @@ def run_seed(seed, gamma_all):
             raise AssertionError("invariance audit requires graph feedback and spike pulse disabled")
         core = S2NetCore(hp.validate(), device="cpu").eval()
         core.load_state_dict(state, strict=True)
+        # This audit only compares phases and gate signals. Core's returned
+        # object-group helper is unused and can enumerate expensive cliques;
+        # bypass it exactly as the registered train/evaluation harnesses do.
+        core._detect_object_groups = lambda out, spikes: [[] for _ in range(spikes.size(0))]
         gates = []
         drives = []
 

@@ -1,0 +1,29 @@
+﻿{
+  "status": "running_at_record_time",
+  "coordinator_pid": 3669814,
+  "workers": [
+    {"seed": 1, "pid": 3669825, "physical_gpu": 0, "shuffle_seed": 118},
+    {"seed": 2, "pid": 3669826, "physical_gpu": 2, "shuffle_seed": 119}
+  ],
+  "pending_seed": 0,
+  "launch_gpu_snapshot": {
+    "gpu0": "SW0100 seed1; 4493 MiB in use after start",
+    "gpu1": "tdan PID 3528996; 16095 MiB; not used",
+    "gpu2": "SW0100 seed2; confirmed no tkim1 compute PID before start",
+    "gpu3": "tkim1 PID 3533168; 19033 MiB; not used"
+  },
+  "preflights": {
+    "three_seed_actual_source_cpu": "PREFLIGHT_COMPLETED",
+    "actual_source_graph_theta_carrier_max_delta": 0.0,
+    "isolated_gpu_batch": 16,
+    "isolated_gpu_steps": 1,
+    "isolated_gpu_device": 2,
+    "isolated_gpu_peak_reserved_bytes": 3393191936
+  },
+  "source_hashes": {
+    "actual_asset_invariance_py": "ffd54a24c131831fdec58ece4649377c2abbd39ef61484634a9a435ff6a678bc",
+    "coordinator_py": "d2dacf787939ac9a6534177419cfee174978d690f459e4c8e0505dbf8aa2bf94",
+    "runner_py": "9f4e9046a2960e7aa53bf16d7e0663bee162b3f56a11f11d45554d79889536a3"
+  },
+  "note": "The earlier 210-second unused internal-grouping diagnostic attempt is retained separately in preflight_attempts/; it was terminated only after verifying the two owned PIDs. Corrected gate-only diagnostic stubs unused grouping. No candidate code was changed during the live queue."
+}

@@ -1,4 +1,4 @@
-# Experiment continuation policy
+﻿# Experiment continuation policy
 
 The final goal remains a **three-seed mean above the saved Slot Attention
 reference on all three shared patch metrics**, using spike- or membrane-derived
@@ -24,12 +24,14 @@ not claim final success until the exact three-seed contract is verified.
 Do not silently discard a useful one-metric result; explain which track it
 advances and what must improve next.
 
-## GPU allocation ??user update 2026-10-07
-The user explicitly authorized using all four GPUs. Before launching a job,
-check current compute PIDs and owners on GPUs0-3. Use any genuinely free GPU;
-do not terminate, migrate, or share another user's running process. An
-authorization to use all four GPUs does not imply all four are free at launch.
-
+## GPU allocation — user updates 2026-10-07
+The user explicitly authorized use of all four GPUs. The latest clarification
+specifies GPUs 1 and 2 may be used when tkim1 is not using them. Before each
+launch, check current compute PIDs and owners on GPUs 0-3. Use a device only
+when it has no other compute process; never terminate, migrate, or share
+another user's process. The SW0100 coordinator checks this dynamically, so
+GPUs 1 and 2 are eligible when free and unused by tkim1. The authorization does
+not imply all four are free at any given launch.
 
 Requested reasoning/work split, as authorized by the user: important design decisions on6.1 Sol,
 ordinary analysis on5.6 Sol, and implementation/execution on6 Luna (replacing
