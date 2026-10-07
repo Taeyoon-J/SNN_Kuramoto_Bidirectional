@@ -263,6 +263,19 @@ are in `results/positive_joint/`; all-arm comparison is `results/summary.json`.
 Queue training status was complete with no failed arms. Its final aggregation
 initially lacked a baseline JSON on the server; the archived baseline was
 copied there and aggregation can run without repeating training. The local
-aggregation already passed. Full320 joint evaluation was launched with explicit
+aggregation and repaired server aggregation both passed. Full320 joint evaluation was launched with explicit
 batch8 on GPU0 (evaluation PID3576680), sharing only our own training process.
-Results remain pending at this registration. No readout threshold is retuned.
+No readout threshold was retuned.
+
+Full320 joint evaluation subsequently completed: **.809536/.722944/.652387**.
+Compared with positive_frozen full320 (.822115/.718331/.661153), foreground
+IoU improves .004612 but FG-ARI declines .012579 and matched-object IoU declines
+.008766. The80-image matched-object advantage did not generalize to all320.
+Compared with unchanged source full320 (.818470/.714993/.660334), joint
+adaptation likewise trades lower FG-ARI/matched-object IoU for higher foreground
+IoU. This supports keeping SW0095 on the frozen aligned-loss recipe. It does
+not justify concluding that encoder adaptation is impossible: this pilot has
+one source seed,256 updates and the original global loss. A future encoder
+candidate needs a mechanism targeting object grouping rather than longer
+training of this exact recipe. Raw full320 result is archived alongside its
+explicit batch8 launch command.
