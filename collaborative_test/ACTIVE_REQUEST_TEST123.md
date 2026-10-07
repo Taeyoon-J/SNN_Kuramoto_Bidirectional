@@ -19,3 +19,11 @@ explicitly requested by user. Do not initiate further model improvements.
 Use GPUs0-3 while available. Respect existing tkim1 ownership and earlier
 instruction to return to GPU0-1 if that user occupies GPUs. Avoid stopping any
 unrelated process. Do not pause just while waiting for authorized jobs.
+
+Latest verified state: experiments1/2 complete, locally archived and shared.
+Experiment2 final three-seed means at epoch10: .740027/.566435/.603881;
+official single transfer checkpoint on identical IDs: .894641/.223511/.245968.
+Both IoUs exceed that reference; FG-ARI does not. Experiment3 seed0 PID3444264
+is still training, finish queue PID3419065 live. Its seeds1/2 are complete and
+their six evaluations are archived. Finish seed0 and the final three-seed
+comparison, then pause as requested. Preserve running jobs on reconnect.

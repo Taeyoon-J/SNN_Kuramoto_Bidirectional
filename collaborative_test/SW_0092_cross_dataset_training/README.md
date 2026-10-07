@@ -158,3 +158,36 @@ Current live jobs are experiment2 seed2 PID3447194 and experiment3 seed0
 PID3444264. Both queues remain live; experiment2 will evaluate remaining
 checkpoints after seed2 finishes and reuse the completed seed1 evaluations.
 
+## Experiment2 final result
+
+All three seeds completed training and all nine epoch1/3/10 evaluations
+completed. `results/our_on_official/verification.json` validates all ten epochs
+in each training log, correct seed/epoch checkpoint paths, the full 320-image
+evaluation contract, finite per-image scores, and independently recomputed
+three-seed means. Raw evaluations, final summary and completion state are local.
+
+The user explicitly requested evaluation on our data and comparison against
+the public Slot checkpoint. Both reference and experiment2 use the same HDF5
+IDs1320-1639 and 16x16 patch metrics; neither uses GT to predict masks.
+
+| Model/checkpoint | FG-ARI | Foreground IoU | Matched-object IoU |
+| --- | --- | --- | --- |
+| Our model on released Slot data, epoch1, 3-seed mean | 0.769129 | 0.486582 | 0.608472 |
+| Our model on released Slot data, epoch3, 3-seed mean | 0.738899 | 0.569473 | 0.596554 |
+| Our model on released Slot data, epoch10, 3-seed mean | 0.740027 | 0.566435 | 0.603881 |
+| Official pretrained Slot transfer, single checkpoint | 0.894641 | 0.223511 | 0.245968 |
+
+Both IoUs exceed the official checkpoint; FG-ARI does not. This does not meet
+the original all-three-metric objective. The official row is a single pretrained
+checkpoint, not a three-seed training mean. Experiment2 is downstream training
+on 34766 filtered/cropped released images with our previous encoder and frozen
+graph retained; evaluation is cross-domain on our mask-bearing data. It is not
+matched training conditions with experiment1 or the official pretrained model.
+Experiment3 will provide the requested same-70000-training-image comparison.
+
+Experiment1 and experiment2 are complete. Experiment3 seed0 PID3444264 and its
+finish queue PID3419065 remain live; seeds1/2 already have six completed
+evaluations. No model-improvement tests are authorized in the current scope.
+Pause goal mode only after experiment3 results are retrieved, verified,
+compared and shared.
+

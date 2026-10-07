@@ -1,0 +1,47 @@
+{
+  "status": "complete",
+  "experiment": "test2",
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "epochs": [
+    1,
+    3,
+    10
+  ],
+  "evaluations_validated": 9,
+  "validation_ids": [
+    1320,
+    1639
+  ],
+  "validation_images": 320,
+  "training_images": 34766,
+  "evaluation_sha256": {
+    "seed0_epoch1.json": "c4611fd2b29a759bf8c3b208aa604b844e59ab1a89c7c93e7e4d94c51026f772",
+    "seed1_epoch1.json": "f0932ccfc6ec3ca5f21367b3e44a17e6e5a29906ac6be7acaec0f7450167d017",
+    "seed2_epoch1.json": "008c9260c81e4c5f836641eb8d2baa556e4ec146c0907c0ab645fd47a8a966aa",
+    "seed0_epoch3.json": "f0b9d6a9a1f0c4d1e1c1d384e00ecb20682d8f3733513ba102a38e80921c51f3",
+    "seed1_epoch3.json": "5b1badada22b9cf436a2681a96f6d57054be79865a2249509a91c78c588669a1",
+    "seed2_epoch3.json": "d5c3be4896b598afe46e9e99766cc4c4ba081540ceac6fde515d433fa2a4ef02",
+    "seed0_epoch10.json": "8212e34c593081a78e5ffd6a133940139c5129357147712a40c9a605bbf69fcd",
+    "seed1_epoch10.json": "f6226473b64f07143925a16614b11c925d58d757c4a79d213bcd32bd67d08d20",
+    "seed2_epoch10.json": "e7d467a1037a6292e06fedd1f4f799b4fcd68018221c4916016979556e45968e"
+  },
+  "official_slot_reference": {
+    "source": "collaborative_test\\SW_0046_aligned_slot_audit\\results\\seed0_validation1320_1639\\evaluation_summary.json",
+    "kind": "single pretrained transfer checkpoint; not three-seed mean",
+    "metrics": {
+      "fg_ari": 0.8946414574875314,
+      "foreground_iou": 0.22351117892035982,
+      "matched_object_iou": 0.24596825542415796
+    }
+  },
+  "epoch10_minus_official_slot": {
+    "fg_ari": -0.15461417473745143,
+    "foreground_iou": 0.3429234247868809,
+    "matched_object_iou": 0.35791286611173917
+  },
+  "all_three_metrics_exceed_official_slot": false
+}
