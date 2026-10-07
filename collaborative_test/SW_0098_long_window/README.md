@@ -30,9 +30,33 @@ The runner asserts actual component-history length, not only a configuration
 value. Raw preflight manifests/history/completion markers are in `preflights/`.
 Defaults64/32 remain unchanged for earlier recipes; no completed run is repeated.
 
-## Live run
 
-Queue PID3638273 remains active. Seed1 completed on GPU0; seed2 is running
-on GPU0 as PID3640127. Seed0 follows it in the registered sequential queue.
-No restart or altered configuration has been made. Results and manifests will
-be recorded here after the queue has completed all three seeds.
+## Completed validation results
+
+All three registered seeds completed 256 updates at the actual 256/128
+training window, with finite recorded losses/gradients, graph and encoder
+frozen, and 320/320 valid images for all three patch metrics. Each source SHA,
+training ID list, shuffle seed, batch, and optimizer update count matches its
+SW0097 positive_frozen control. Inference used the unchanged batch8, 1024/512
+spike classifier at threshold .50 on IDs1320-1639. Raw small records are in
+`results/`; model weights remain in `trained_models/` on the server.
+
+| Seed | FG-ARI | Foreground IoU | Matched-object IoU |
+|---:|---:|---:|---:|
+| 0 | .820852 | .723376 | .648856 |
+| 1 | .740108 | .590483 | .584255 |
+| 2 | .759277 | .423988 | .558246 |
+| Mean | **.773412** | **.579282** | **.597119** |
+| SW0097 matched frozen mean | .776348 | .577070 | .601537 |
+| SW0095 unchanged mean | .775645 | .574029 | .599779 |
+| Slot mean | .774933 | .203589 | .206937 |
+
+Against the matched SW0097 controls, the mean changes are -.002936 FG-ARI,
++.002212 foreground IoU, and -.004418 matched-object IoU. Per-seed FG-ARI
+falls for all3 seeds; foreground IoU rises in all3; matched-object IoU falls
+in all3. Against unchanged SW0095, SW0098 improves foreground IoU but lowers
+both grouping metrics. Its mean FG-ARI also misses the Slot mean. This
+validation-only result does not meet the all-metric target. Holdouts remain
+untouched; do not retune on them.
+
+`results/summary.json` records the per-seed provenance and comparisons.

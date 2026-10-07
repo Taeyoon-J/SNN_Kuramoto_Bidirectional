@@ -1,0 +1,155 @@
+﻿{
+    "experiment":  "SW0098",
+    "status":  "complete",
+    "split":  "validation",
+    "image_ids":  [
+                      1320,
+                      1639
+                  ],
+    "images_per_seed":  320,
+    "classifier":  "peer_spike_synchrony_components",
+    "threshold":  0.5,
+    "inference_steps":  1024,
+    "inference_settle":  512,
+    "seeds":  {
+                  "2":  {
+                            "metrics":  {
+                                            "fg_ari":  0.75927721068882337,
+                                            "foreground_iou":  0.42398844728781154,
+                                            "matched_object_iou":  0.55824648914118136
+                                        },
+                            "matched_SW0097_positive_frozen":  {
+                                                                   "fg_ari":  0.7615186097026635,
+                                                                   "foreground_iou":  0.42105607201574557,
+                                                                   "matched_object_iou":  0.56398543001284218
+                                                               },
+                            "delta":  {
+                                          "fg_ari":  -0.0022413990138401,
+                                          "foreground_iou":  0.00293237527206594,
+                                          "matched_object_iou":  -0.0057389408716608
+                                      },
+                            "source_sha256":  "c79a5cc7d4a4e18e85bbfd1336b4fbb6ccfba73f69e13f042cd79c333f241dcb",
+                            "source_model_seed":  2,
+                            "shuffle_seed":  119,
+                            "steps":  256,
+                            "batch":  16,
+                            "train_time_steps":  256,
+                            "train_settle":  128,
+                            "unique_images_seen":  4096,
+                            "history_entries":  256,
+                            "validation_images":  320,
+                            "valid_fg_ari":  320,
+                            "graph_gradient_max":  0,
+                            "encoder_gradient_max":  0,
+                            "status":  "complete"
+                        },
+                  "1":  {
+                            "metrics":  {
+                                            "fg_ari":  0.74010793750064274,
+                                            "foreground_iou":  0.590482527152661,
+                                            "matched_object_iou":  0.58425483431533276
+                                        },
+                            "matched_SW0097_positive_frozen":  {
+                                                                   "fg_ari":  0.742658188014352,
+                                                                   "foreground_iou":  0.59028319942393015,
+                                                                   "matched_object_iou":  0.58496404286231818
+                                                               },
+                            "delta":  {
+                                          "fg_ari":  -0.0025502505137093,
+                                          "foreground_iou":  0.0001993277287309,
+                                          "matched_object_iou":  -0.0007092085469854
+                                      },
+                            "source_sha256":  "b8b5d1d794dc0185b68526b713893f6d842518fde9c21d681bcdbe50549d43f6",
+                            "source_model_seed":  1,
+                            "shuffle_seed":  118,
+                            "steps":  256,
+                            "batch":  16,
+                            "train_time_steps":  256,
+                            "train_settle":  128,
+                            "unique_images_seen":  4096,
+                            "history_entries":  256,
+                            "validation_images":  320,
+                            "valid_fg_ari":  320,
+                            "graph_gradient_max":  0,
+                            "encoder_gradient_max":  0,
+                            "status":  "complete"
+                        },
+                  "0":  {
+                            "metrics":  {
+                                            "fg_ari":  0.82085214083484348,
+                                            "foreground_iou":  0.72337640595959285,
+                                            "matched_object_iou":  0.64885639828238217
+                                        },
+                            "matched_SW0097_positive_frozen":  {
+                                                                   "fg_ari":  0.82486772115617213,
+                                                                   "foreground_iou":  0.71987191671105388,
+                                                                   "matched_object_iou":  0.6556628993752277
+                                                               },
+                            "delta":  {
+                                          "fg_ari":  -0.0040155803213286,
+                                          "foreground_iou":  0.0035044892485389,
+                                          "matched_object_iou":  -0.0068065010928455
+                                      },
+                            "source_sha256":  "aac44697906c835569e3bf900e5930ce900223d1aa95c0bedba899bee5ff155d",
+                            "source_model_seed":  0,
+                            "shuffle_seed":  117,
+                            "steps":  256,
+                            "batch":  16,
+                            "train_time_steps":  256,
+                            "train_settle":  128,
+                            "unique_images_seen":  4096,
+                            "history_entries":  256,
+                            "validation_images":  320,
+                            "valid_fg_ari":  320,
+                            "graph_gradient_max":  0,
+                            "encoder_gradient_max":  0,
+                            "status":  "complete"
+                        }
+              },
+    "means":  {
+                  "fg_ari":  0.77341242967476986,
+                  "foreground_iou":  0.57928246013335516,
+                  "matched_object_iou":  0.59711924057963206
+              },
+    "baselines":  {
+                      "SW0097_matched_positive_frozen":  {
+                                                             "fg_ari":  0.77634817295772918,
+                                                             "foreground_iou":  0.57707039605024324,
+                                                             "matched_object_iou":  0.601537457416796
+                                                         },
+                      "SW0095_unchanged":  {
+                                               "fg_ari":  0.775645,
+                                               "foreground_iou":  0.574029,
+                                               "matched_object_iou":  0.599779
+                                           },
+                      "Slot_mean":  {
+                                        "fg_ari":  0.7749334667,
+                                        "foreground_iou":  0.2035891312,
+                                        "matched_object_iou":  0.2069369792
+                                    }
+                  },
+    "delta_vs_SW0097":  {
+                            "fg_ari":  -0.0029357432829593133,
+                            "foreground_iou":  0.00221206408311192,
+                            "matched_object_iou":  -0.0044182168371639241
+                        },
+    "delta_vs_SW0095":  {
+                            "fg_ari":  -0.0022325703252301654,
+                            "foreground_iou":  0.0052534601333551478,
+                            "matched_object_iou":  -0.0026597594203678909
+                        },
+    "delta_vs_Slot":  {
+                          "fg_ari":  -0.0015210370252300986,
+                          "foreground_iou":  0.37569332893335516,
+                          "matched_object_iou":  0.39018226137963208
+                      },
+    "audit":  {
+                  "all_runs_complete":  true,
+                  "history_length_256":  true,
+                  "source_sha_and_training_ids_match_SW0097_controls":  true,
+                  "encoder_and_graph_gradient_norms_zero":  true,
+                  "all_320_metrics_valid":  true,
+                  "holdout_scores_used":  false,
+                  "reserved_90640_90959_read":  false
+              }
+}
