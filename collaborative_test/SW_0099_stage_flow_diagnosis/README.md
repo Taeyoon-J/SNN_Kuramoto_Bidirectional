@@ -83,8 +83,10 @@ settings. It cannot establish full-validation performance or causation.
 ## Synthetic phase-representation audit
 
 After the image-trace analysis, a deterministic CPU-only audit called the
-same `sinusoidal_raw_gate` helper with finite float64 phases of shape
-`[1,5,3,4]`. Adding `2π` to one component across its history left its
+repository's actual `sinusoidal_gating` function at each time step, with
+finite float64 phases of shape `[1,5,3,4]` and `gate_mode="raw"`. The audit's
+vectorized helper matched the actual function exactly (zero maximum difference)
+for all four phase histories. Adding `2π` to one component across its history left its
 `sin(theta)` carrier unchanged to `1.2e-15`, but changed the delayed raw gate
 by up to `0.6992` and the gated drive by up to `0.5332`. Adding `2π` to all
 components preserved gate and drive within `1.1e-15`; permuting components
@@ -93,5 +95,5 @@ representation sensitivity of the implemented formula to a single-component
 phase lift, while its common-shift and component-permutation controls pass.
 It is synthetic mathematical evidence only: it reads no checkpoint or image
 and says nothing by itself about model performance or a design change. See
-`sinusoidal_gate_periodicity_audit.py` and its JSON output for exact deltas and
-source hashes.
+`sinusoidal_gate_periodicity_audit.py` and its JSON output for exact deltas,
+the actual gating source SHA, and audit source hashes.
