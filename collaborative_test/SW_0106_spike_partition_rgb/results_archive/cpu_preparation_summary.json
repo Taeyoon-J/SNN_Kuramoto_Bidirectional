@@ -1,40 +1,87 @@
 {
-  "status": "cpu_data_and_synthetic_preflight_complete_gpu_preflight_pending",
-  "scope": "SW0106 RGB decoder and exact RGB cache preparation only",
-  "source": {
-    "path": "/Data0/kevinswk/datasets/object_centric_data/clevr_10-full.hdf5",
-    "image_dataset_shape": [100000, 128, 128, 3],
-    "dtype": "uint8",
-    "compression": "gzip",
-    "chunks": [3125, 8, 8, 1],
-    "train_ids": "0-999 and 1640-70639 in registered pool order",
-    "validation_ids": "1320-1639 separate from training",
-    "mask_or_reserved_holdout_reads": false
-  },
-  "io_benchmark": {
-    "aligned_images_per_read": 3125,
-    "peak_source_array_bytes": 153600000,
-    "first_two_aligned_reads_seconds": [2.2435002327, 2.5375897884],
-    "first_two_aligned_reads_images_per_second": [1392.9127149, 1231.4835180]
-  },
-  "cache": {
-    "builder_pid": 3997336,
-    "builder_terminal": true,
-    "train_rows": 70000,
-    "train_blocks": 24,
-    "train_elapsed_seconds": 85.5054297447,
-    "train_ids_mapping_sha256": "4f6527527ab36aec1d45be1147a6a2d0af194e006db89a457d78e07e297bb4d6",
-    "validation_rows": 320,
-    "validation_blocks": 1,
-    "validation_elapsed_seconds": 2.3925833702,
-    "validation_ids_mapping_sha256": "1600abcc0b8fb403abeda33084611254be0651da1939c55db81ec1407921ab49",
-    "validation": "each output block was byte-compared with selected source RGB bytes; per-block SHA-256 recorded in completion manifests"
-  },
-  "synthetic_tests": {
-    "command": "OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 python -m unittest test_partition_rgb -v",
-    "passed": 4,
-    "failed": 0,
-    "checks": ["hard-forward labels preserved", "candidate reconstruction gives nonzero Q gradient", "control reconstruction gives no Q gradient", "slot-column permutation invariant within 1e-6", "RGB patch target and coordinate shapes"]
-  },
-  "gpu_preflight_or_training": "not run; still requires genuinely free GPU and separate root authorization"
+    "status":  "cpu_data_synthetic_and_runner_preparation_complete_gpu_asset_preflight_pending",
+    "scope":  "SW0106 RGB decoder and exact RGB cache preparation only",
+    "source":  {
+                   "path":  "/Data0/kevinswk/datasets/object_centric_data/clevr_10-full.hdf5",
+                   "image_dataset_shape":  [
+                                               100000,
+                                               128,
+                                               128,
+                                               3
+                                           ],
+                   "dtype":  "uint8",
+                   "compression":  "gzip",
+                   "chunks":  [
+                                  3125,
+                                  8,
+                                  8,
+                                  1
+                              ],
+                   "train_ids":  "0-999 and 1640-70639 in registered pool order",
+                   "validation_ids":  "1320-1639 separate from training",
+                   "mask_or_reserved_holdout_reads":  false
+               },
+    "io_benchmark":  {
+                         "aligned_images_per_read":  3125,
+                         "peak_source_array_bytes":  153600000,
+                         "first_two_aligned_reads_seconds":  [
+                                                                 2.2435002327,
+                                                                 2.5375897884
+                                                             ],
+                         "first_two_aligned_reads_images_per_second":  [
+                                                                           1392.9127149,
+                                                                           1231.4835180
+                                                                       ]
+                     },
+    "cache":  {
+                  "builder_pid":  3997336,
+                  "builder_terminal":  true,
+                  "train_rows":  70000,
+                  "train_blocks":  24,
+                  "train_elapsed_seconds":  85.5054297447,
+                  "train_ids_mapping_sha256":  "4f6527527ab36aec1d45be1147a6a2d0af194e006db89a457d78e07e297bb4d6",
+                  "validation_rows":  320,
+                  "validation_blocks":  1,
+                  "validation_elapsed_seconds":  2.3925833702,
+                  "validation_ids_mapping_sha256":  "1600abcc0b8fb403abeda33084611254be0651da1939c55db81ec1407921ab49",
+                  "validation":  "each output block was byte-compared with selected source RGB bytes; per-block SHA-256 recorded in completion manifests"
+              },
+    "synthetic_tests":  {
+                            "passed":  7,
+                            "test_file_sha256":  "A2E6FAC6720FBD129FE2FEC1115B9964C78181848CD375DCB99C6FB9E5E2F0CF",
+                            "failed":  0,
+                            "command":  "OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 python -m unittest test_partition_rgb -v",
+                            "runner_sha256":  "248d395184900d4b4e72660acbd27cd0336dc050c53c0cb886411cb9fdba274c",
+                            "checks":  [
+                                           "hard-forward labels preserved",
+                                           "candidate reconstruction gives nonzero Q gradient",
+                                           "control reconstruction gives no Q gradient",
+                                           "slot-column permutation invariant within 1e-6",
+                                           "RGB patch target and coordinate shapes",
+                                           "production spatial-components label conversion exact",
+                                           "CPU production classifier uses actual group traversal and supports ragged K"
+                                       ],
+                            "partition_module_sha256":  "2B023A788007AFD2C03C45928CB4864E7BC57204DC8C13166F2FBE6B435C7261"
+                        },
+    "gpu_preflight_or_training":  "not run; continue only when an authorized GPU is genuinely free and the remaining approved runtime guards pass",
+    "synthetic_tests_initial":  {
+                                    "command":  "OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 python -m unittest test_partition_rgb -v",
+                                    "passed":  4,
+                                    "failed":  0,
+                                    "checks":  [
+                                                   "hard-forward labels preserved",
+                                                   "candidate reconstruction gives nonzero Q gradient",
+                                                   "control reconstruction gives no Q gradient",
+                                                   "slot-column permutation invariant within 1e-6",
+                                                   "RGB patch target and coordinate shapes"
+                                               ]
+                                },
+    "runner_cpu_checks":  {
+                              "py_compile":  "passed",
+                              "runner_sha256":  "248d395184900d4b4e72660acbd27cd0336dc050c53c0cb886411cb9fdba274c",
+                              "cli_import":  "passed",
+                              "model_weights_loaded":  false,
+                              "gpu_used":  false,
+                              "matched_sw0097_contract":  "passed read-only"
+                          }
 }

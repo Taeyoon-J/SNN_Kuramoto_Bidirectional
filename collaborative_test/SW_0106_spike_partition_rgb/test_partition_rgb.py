@@ -5,6 +5,7 @@ ROOT=Path(__file__).resolve().parents[2]
 sys.path[:0]=[str(ROOT),str(Path(__file__).resolve().parent)]
 import torch
 from partition_rgb import SharedRGBDecoder,assignment_weights,groups_to_onehot,patch_centers,reconstruct_one,rgb_patch_means
+from run import hard_labels,image_losses
 from snn_kuramoto_bidirectional.evaluation import spatial_components_to_patch_labels
 
 class PartitionRGBTests(unittest.TestCase):
@@ -30,6 +31,21 @@ class PartitionRGBTests(unittest.TestCase):
   labels=spatial_components_to_patch_labels([groups],16).reshape(-1)
   expected=torch.nn.functional.one_hot(labels,num_classes=3).float()
   self.assertTrue(torch.equal(groups_to_onehot(groups),expected))
+ def test_hard_label_batch_uses_production_cpu_classifier(self):
+  torch.manual_seed(1061)
+  spikes=torch.randn(2,256,64)
+  components=torch.randn(2,4,256,64)
+  labels,hard,groups=hard_labels(spikes,components)
+  self.assertEqual(tuple(labels.shape),(2,256));self.assertEqual(len(hard),2)
+  self.assertTrue(all(torch.equal(h.argmax(-1),lab) for h,lab in zip(hard,labels)))
+ def test_batched_dynamic_component_counts(self):
+  q=torch.rand(2,256,256,requires_grad=True)
+  hard=[groups_to_onehot([list(range(16))]),groups_to_onehot([list(range(16)),list(range(16,24))])]
+  gamma=torch.randn(2,8,256,requires_grad=True);target=torch.rand(2,256,3);decoder=SharedRGBDecoder()
+  pred,loss,diag=image_losses(q,hard,gamma,target,decoder,True)
+  self.assertEqual(tuple(pred.shape),(2,256,3));self.assertTrue(torch.isfinite(loss))
+  self.assertEqual([d['K'] for d in diag],[2,3])
+  loss.backward();self.assertIsNotNone(q.grad);self.assertGreater(float(q.grad.abs().sum()),0.)
  def test_control_has_no_q_gradient(self):
   h=groups_to_onehot([list(range(10))])
   q=torch.rand(256,256,requires_grad=True); f=torch.randn(256,8); target=torch.rand(256,3); d=SharedRGBDecoder()
