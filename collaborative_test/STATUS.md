@@ -257,3 +257,17 @@ comparisons are archived in SW_0098_long_window; independent reserve
 90640-90959 remains unread.
 
 2026-10-07 update: SW0099 completed a corrected validation-only trace on 16 IDs 1320-1335, batch 8, for SW0095/97/98 seeds 0/1/2. The graph-generator states are bitwise equal. SW0098 endpoint means were .810284/.555407/.641283, slightly below matched SW0097 on all three metrics; these small-subset scores are not full-320 results. Product-PLV AUC rises slightly, while the first repeatable distance-controlled decline is at the delayed raw gate: near and mid-bin AUC fall for all three seeds and the decline persists at spike. This is an observational stage association, not a causal bottleneck finding. Fixed-threshold connectivity worsens only for seed 0, so there is no universal fragmentation result. The first run's dendrite trace was invalidated for a fold-order error; corrected traces passed a synthetic ordering check, exactly matched all endpoints, and reproduced all non-dendrite stages. Only GPU 0 was used after checking ownership. See SW_0099_stage_flow_diagnosis/README.md and summary.json for results and execution provenance.
+
+2026-10-07 update: SW0100 phasor-imaginary raw gate completed its matched
+three-seed 256-update continuation and full320 validation. Mean
+.763415/.706827/.590691 (FG-ARI/foreground IoU/object IoU); vs frozen SW0097,
+paired mean deltas are -.012933/+.129757/-.010846. FG-ARI falls all3, foreground
+IoU rises all3, and object IoU rises 1/3. The exact user-priority 70k gate
+requires mean FG-ARI +.01 and gains in at least2 seeds, and both IoUs +.05 over
+matched Slot; the FG-ARI clauses fail, so no 70k training was launched.
+Corrected fixed16 source/candidate gate-swap records are archived; first-pass
+schema/settle errors and their outputs are retained and labeled. See
+SW_0100_phasor_imag_raw_gate/README.md and results_archive/summary.json.
+The user set a hard two-hour work deadline at 2026-10-07 10:37:49 UTC; the
+operator must not queue work beyond that deadline. The next approved work is
+SW0101 Stage1 teacher-mask QA only, before loss implementation/training.

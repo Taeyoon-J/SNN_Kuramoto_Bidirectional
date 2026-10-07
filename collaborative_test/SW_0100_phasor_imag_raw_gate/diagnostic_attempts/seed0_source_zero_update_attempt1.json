@@ -1,0 +1,11 @@
+{
+  "attempt": "seed0_source_zero_update_attempt1",
+  "status": "failed_after_forward",
+  "checkpoint": "SW0095 seed0 final core",
+  "images": "fixed IDs 1320-1335, first forward batch IDs 1320-1327",
+  "failure": "KeyError: 'same_minus_different' while reading the near-bin spike-pair separation",
+  "cause": "SW0099 auc_stats omits same_minus_different when a distance bin has no positive or no negative pairs; AUC is null in the same case.",
+  "preserved_log": "../preflight_evidence/first_run_coordinator.log",
+  "correction": "Read separation as optional null, preserve pair counts/AUC null, aggregate gate/drive variance over all 16 images, and derive gated-drive AUC from the gate function outputs already captured during each forward.",
+  "training_or_endpoint_rerun": false
+}

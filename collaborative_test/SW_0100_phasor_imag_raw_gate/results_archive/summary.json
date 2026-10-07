@@ -1,0 +1,536 @@
+{
+    "experiment":  "SW0100_phasor_imag_raw_gate",
+    "status":  "candidate training, full-320 evaluation, corrected 16-image zero-update diagnostics complete; 70k promotion rejected by original and updated gates",
+    "baseline":  "matched SW0097 positive_frozen per seed",
+    "seeds":  [
+                  {
+                      "seed":  0,
+                      "candidate":  {
+                                        "fg_ari":  0.7979299716100867,
+                                        "foreground_iou":  0.7520741023379671,
+                                        "matched_object_iou":  0.6324490513536507,
+                                        "valid_count":  {
+                                                            "fg_ari":  320,
+                                                            "foreground_iou":  320,
+                                                            "matched_object_iou":  320
+                                                        }
+                                    },
+                      "matched_sw0097":  {
+                                             "fg_ari":  0.8248677211561721,
+                                             "foreground_iou":  0.7198719167110539,
+                                             "matched_object_iou":  0.6556628993752277
+                                         },
+                      "sw0095_source":  {
+                                            "fg_ari":  0.8240625702999186,
+                                            "foreground_iou":  0.7181798410294304,
+                                            "matched_object_iou":  0.6537740854268259
+                                        },
+                      "delta_vs_sw0097":  {
+                                              "fg_ari":  -0.0269377495460854,
+                                              "foreground_iou":  0.0322021856269132,
+                                              "matched_object_iou":  -0.0232138480215770
+                                          },
+                      "delta_vs_sw0095":  {
+                                              "fg_ari":  -0.0261325986898319,
+                                              "foreground_iou":  0.0338942613085367,
+                                              "matched_object_iou":  -0.0213250340731752
+                                          },
+                      "training_contract":  {
+                                                "status":  "complete",
+                                                "gate_mode":  "phasor_imag_raw",
+                                                "seed":  117,
+                                                "steps":  256,
+                                                "batch":  16,
+                                                "unique_images_seen":  4096,
+                                                "train_steps":  64,
+                                                "train_settle":  32,
+                                                "core_lr":  3E-05,
+                                                "source_sha_matches_control":  true,
+                                                "ordered_training_ids_match_control":  true,
+                                                "history_finite_and_frozen_grads":  true,
+                                                "graph_changed":  false,
+                                                "evaluation_images":  320,
+                                                "evaluation_ids":  [
+                                                                       1320,
+                                                                       1639
+                                                                   ],
+                                                "all_metrics_valid320":  true
+                                            }
+                  },
+                  {
+                      "seed":  1,
+                      "candidate":  {
+                                        "fg_ari":  0.736369929461697,
+                                        "foreground_iou":  0.6985945266856766,
+                                        "matched_object_iou":  0.5746309782401401,
+                                        "valid_count":  {
+                                                            "fg_ari":  320,
+                                                            "foreground_iou":  320,
+                                                            "matched_object_iou":  320
+                                                        }
+                                    },
+                      "matched_sw0097":  {
+                                             "fg_ari":  0.742658188014352,
+                                             "foreground_iou":  0.5902831994239301,
+                                             "matched_object_iou":  0.5849640428623182
+                                         },
+                      "sw0095_source":  {
+                                            "fg_ari":  0.7413057802823013,
+                                            "foreground_iou":  0.5821719853142833,
+                                            "matched_object_iou":  0.5833840436112434
+                                        },
+                      "delta_vs_sw0097":  {
+                                              "fg_ari":  -0.006288258552655,
+                                              "foreground_iou":  0.1083113272617465,
+                                              "matched_object_iou":  -0.0103330646221781
+                                          },
+                      "delta_vs_sw0095":  {
+                                              "fg_ari":  -0.0049358508206043,
+                                              "foreground_iou":  0.1164225413713933,
+                                              "matched_object_iou":  -0.0087530653711033
+                                          },
+                      "training_contract":  {
+                                                "status":  "complete",
+                                                "gate_mode":  "phasor_imag_raw",
+                                                "seed":  118,
+                                                "steps":  256,
+                                                "batch":  16,
+                                                "unique_images_seen":  4096,
+                                                "train_steps":  64,
+                                                "train_settle":  32,
+                                                "core_lr":  3E-05,
+                                                "source_sha_matches_control":  true,
+                                                "ordered_training_ids_match_control":  true,
+                                                "history_finite_and_frozen_grads":  true,
+                                                "graph_changed":  false,
+                                                "evaluation_images":  320,
+                                                "evaluation_ids":  [
+                                                                       1320,
+                                                                       1639
+                                                                   ],
+                                                "all_metrics_valid320":  true
+                                            }
+                  },
+                  {
+                      "seed":  2,
+                      "candidate":  {
+                                        "fg_ari":  0.7559457943789837,
+                                        "foreground_iou":  0.6698135902342425,
+                                        "matched_object_iou":  0.5649938711377948,
+                                        "valid_count":  {
+                                                            "fg_ari":  320,
+                                                            "foreground_iou":  320,
+                                                            "matched_object_iou":  320
+                                                        }
+                                    },
+                      "matched_sw0097":  {
+                                             "fg_ari":  0.7615186097026635,
+                                             "foreground_iou":  0.4210560720157456,
+                                             "matched_object_iou":  0.5639854300128422
+                                         },
+                      "sw0095_source":  {
+                                            "fg_ari":  0.7615662896693578,
+                                            "foreground_iou":  0.42173477785022084,
+                                            "matched_object_iou":  0.5621784544118219
+                                        },
+                      "delta_vs_sw0097":  {
+                                              "fg_ari":  -0.0055728153236798,
+                                              "foreground_iou":  0.2487575182184969,
+                                              "matched_object_iou":  0.0010084411249526
+                                          },
+                      "delta_vs_sw0095":  {
+                                              "fg_ari":  -0.0056204952903741,
+                                              "foreground_iou":  0.24807881238402166,
+                                              "matched_object_iou":  0.0028154167259729
+                                          },
+                      "training_contract":  {
+                                                "status":  "complete",
+                                                "gate_mode":  "phasor_imag_raw",
+                                                "seed":  119,
+                                                "steps":  256,
+                                                "batch":  16,
+                                                "unique_images_seen":  4096,
+                                                "train_steps":  64,
+                                                "train_settle":  32,
+                                                "core_lr":  3E-05,
+                                                "source_sha_matches_control":  true,
+                                                "ordered_training_ids_match_control":  true,
+                                                "history_finite_and_frozen_grads":  true,
+                                                "graph_changed":  false,
+                                                "evaluation_images":  320,
+                                                "evaluation_ids":  [
+                                                                       1320,
+                                                                       1639
+                                                                   ],
+                                                "all_metrics_valid320":  true
+                                            }
+                  }
+              ],
+    "candidate_three_seed_mean":  {
+                                      "fg_ari":  0.76341523181692239,
+                                      "foreground_iou":  0.70682740641929531,
+                                      "matched_object_iou":  0.59069130024386185
+                                  },
+    "mean_delta_vs_sw0097":  {
+                                 "fg_ari":  -0.012932941140806732,
+                                 "foreground_iou":  0.12975701036905221,
+                                 "matched_object_iou":  -0.010846157172934167
+                             },
+    "promotion_checks":  {
+                             "fg_ari_gained_seed_count":  0,
+                             "foreground_iou_gained_seed_count":  3,
+                             "matched_object_iou_gained_seed_count":  1,
+                             "all_three_contracts_valid":  true,
+                             "all_three_metrics_valid320":  true
+                         },
+    "scope":  "70k promotion requires FG-ARI and matched-object IoU gains in at least two seeds.",
+    "corrected_zero_update_swaps":  [
+                                        {
+                                            "seed":  0,
+                                            "condition":  "source_zero_update",
+                                            "checkpoint_sha256":  "aac44697906c835569e3bf900e5930ce900223d1aa95c0bedba899bee5ff155d",
+                                            "endpoint_mean":  {
+                                                                  "fg_ari":  0.85258850985183765,
+                                                                  "foreground_iou":  0.83686966153334574,
+                                                                  "matched_object_iou":  0.707619650577689
+                                                              },
+                                            "stats":  {
+                                                          "images":  16,
+                                                          "settle_steps":  512,
+                                                          "pooled_gate_mean":  0.4764387011528015,
+                                                          "pooled_gate_variance":  0.030476806685328484,
+                                                          "pooled_gated_drive_variance":  0.12630286812782288,
+                                                          "variance_scope":  "pooled over all recorded images, 512 settle steps, and 256 patches (drive includes four oscillator components)",
+                                                          "component_sine_cancellation_index":  0.5500698991979986
+                                                      },
+                                            "spike_pair":  {
+                                                               "auc_near":  {
+                                                                                "mean":  0.9540885122877683,
+                                                                                "valid_images":  14,
+                                                                                "images":  16
+                                                                            },
+                                                               "auc_mid":  {
+                                                                               "mean":  0.965797137646443,
+                                                                               "valid_images":  16,
+                                                                               "images":  16
+                                                                           },
+                                                               "separation_near_mean":  0.70561326827321735,
+                                                               "separation_near_valid_images":  14,
+                                                               "separation_mid_mean":  0.69121633842587471,
+                                                               "separation_mid_valid_images":  16
+                                                           },
+                                            "gated_drive_pair":  {
+                                                                     "auc_near":  {
+                                                                                      "mean":  0.9424613780871092,
+                                                                                      "valid_images":  14,
+                                                                                      "images":  16
+                                                                                  },
+                                                                     "auc_mid":  {
+                                                                                     "mean":  0.9344803714822713,
+                                                                                     "valid_images":  16,
+                                                                                     "images":  16
+                                                                                 },
+                                                                     "separation_near_mean":  0.76745301697935375,
+                                                                     "separation_near_valid_images":  14,
+                                                                     "separation_mid_mean":  0.71855764463543892,
+                                                                     "separation_mid_valid_images":  16
+                                                                 }
+                                        },
+                                        {
+                                            "seed":  0,
+                                            "condition":  "trained_candidate_zero_update",
+                                            "checkpoint_sha256":  "9b530c99cfab42c132c6732de7125294e9d80a969336cb9f6f30ceeecb75515c",
+                                            "endpoint_mean":  {
+                                                                  "fg_ari":  0.85094355275965294,
+                                                                  "foreground_iou":  0.77473381733683078,
+                                                                  "matched_object_iou":  0.70679021568932965
+                                                              },
+                                            "stats":  {
+                                                          "images":  16,
+                                                          "settle_steps":  512,
+                                                          "pooled_gate_mean":  0.5028157234191895,
+                                                          "pooled_gate_variance":  0.1250847727060318,
+                                                          "pooled_gated_drive_variance":  0.18709692358970642,
+                                                          "variance_scope":  "pooled over all recorded images, 512 settle steps, and 256 patches (drive includes four oscillator components)",
+                                                          "component_sine_cancellation_index":  0.5404087490670026
+                                                      },
+                                            "spike_pair":  {
+                                                               "auc_near":  {
+                                                                                "mean":  0.9156181836342036,
+                                                                                "valid_images":  14,
+                                                                                "images":  16
+                                                                            },
+                                                               "auc_mid":  {
+                                                                               "mean":  0.9096342805810077,
+                                                                               "valid_images":  16,
+                                                                               "images":  16
+                                                                           },
+                                                               "separation_near_mean":  0.72241867440087459,
+                                                               "separation_near_valid_images":  14,
+                                                               "separation_mid_mean":  0.701275423169136,
+                                                               "separation_mid_valid_images":  16
+                                                           },
+                                            "gated_drive_pair":  {
+                                                                     "auc_near":  {
+                                                                                      "mean":  0.9410114502867991,
+                                                                                      "valid_images":  14,
+                                                                                      "images":  16
+                                                                                  },
+                                                                     "auc_mid":  {
+                                                                                     "mean":  0.9260617510271874,
+                                                                                     "valid_images":  16,
+                                                                                     "images":  16
+                                                                                 },
+                                                                     "separation_near_mean":  0.771058514714241,
+                                                                     "separation_near_valid_images":  14,
+                                                                     "separation_mid_mean":  0.72292919270694256,
+                                                                     "separation_mid_valid_images":  16
+                                                                 }
+                                        },
+                                        {
+                                            "seed":  1,
+                                            "condition":  "source_zero_update",
+                                            "checkpoint_sha256":  "b8b5d1d794dc0185b68526b713893f6d842518fde9c21d681bcdbe50549d43f6",
+                                            "endpoint_mean":  {
+                                                                  "fg_ari":  0.79779668768208334,
+                                                                  "foreground_iou":  0.747830761235246,
+                                                                  "matched_object_iou":  0.62208142350852635
+                                                              },
+                                            "stats":  {
+                                                          "images":  16,
+                                                          "settle_steps":  512,
+                                                          "pooled_gate_mean":  0.5755991339683533,
+                                                          "pooled_gate_variance":  0.029740579426288605,
+                                                          "pooled_gated_drive_variance":  0.18015602231025696,
+                                                          "variance_scope":  "pooled over all recorded images, 512 settle steps, and 256 patches (drive includes four oscillator components)",
+                                                          "component_sine_cancellation_index":  0.5374750723477032
+                                                      },
+                                            "spike_pair":  {
+                                                               "auc_near":  {
+                                                                                "mean":  0.9405028516467737,
+                                                                                "valid_images":  14,
+                                                                                "images":  16
+                                                                            },
+                                                               "auc_mid":  {
+                                                                               "mean":  0.9478129132611587,
+                                                                               "valid_images":  16,
+                                                                               "images":  16
+                                                                           },
+                                                               "separation_near_mean":  0.72726700135639732,
+                                                               "separation_near_valid_images":  14,
+                                                               "separation_mid_mean":  0.67153681442141533,
+                                                               "separation_mid_valid_images":  16
+                                                           },
+                                            "gated_drive_pair":  {
+                                                                     "auc_near":  {
+                                                                                      "mean":  0.8821760326430222,
+                                                                                      "valid_images":  14,
+                                                                                      "images":  16
+                                                                                  },
+                                                                     "auc_mid":  {
+                                                                                     "mean":  0.852848660208537,
+                                                                                     "valid_images":  16,
+                                                                                     "images":  16
+                                                                                 },
+                                                                     "separation_near_mean":  0.67240540470395771,
+                                                                     "separation_near_valid_images":  14,
+                                                                     "separation_mid_mean":  0.57805772591382265,
+                                                                     "separation_mid_valid_images":  16
+                                                                 }
+                                        },
+                                        {
+                                            "seed":  1,
+                                            "condition":  "trained_candidate_zero_update",
+                                            "checkpoint_sha256":  "aa7986dd779d75c9366e6285b75b56c8576c0582854e03932618a5d56b56365a",
+                                            "endpoint_mean":  {
+                                                                  "fg_ari":  0.81130058990203524,
+                                                                  "foreground_iou":  0.52025259266687574,
+                                                                  "matched_object_iou":  0.646115989055647
+                                                              },
+                                            "stats":  {
+                                                          "images":  16,
+                                                          "settle_steps":  512,
+                                                          "pooled_gate_mean":  0.5002601742744446,
+                                                          "pooled_gate_variance":  0.1257198303937912,
+                                                          "pooled_gated_drive_variance":  0.1950046271085739,
+                                                          "variance_scope":  "pooled over all recorded images, 512 settle steps, and 256 patches (drive includes four oscillator components)",
+                                                          "component_sine_cancellation_index":  0.5408225715263516
+                                                      },
+                                            "spike_pair":  {
+                                                               "auc_near":  {
+                                                                                "mean":  0.9165586388505444,
+                                                                                "valid_images":  14,
+                                                                                "images":  16
+                                                                            },
+                                                               "auc_mid":  {
+                                                                               "mean":  0.8764770504575987,
+                                                                               "valid_images":  16,
+                                                                               "images":  16
+                                                                           },
+                                                               "separation_near_mean":  0.77068410175187252,
+                                                               "separation_near_valid_images":  14,
+                                                               "separation_mid_mean":  0.7124821599572897,
+                                                               "separation_mid_valid_images":  16
+                                                           },
+                                            "gated_drive_pair":  {
+                                                                     "auc_near":  {
+                                                                                      "mean":  0.8769549958070024,
+                                                                                      "valid_images":  14,
+                                                                                      "images":  16
+                                                                                  },
+                                                                     "auc_mid":  {
+                                                                                     "mean":  0.8383078373930092,
+                                                                                     "valid_images":  16,
+                                                                                     "images":  16
+                                                                                 },
+                                                                     "separation_near_mean":  0.68956465380532406,
+                                                                     "separation_near_valid_images":  14,
+                                                                     "separation_mid_mean":  0.58665369264781475,
+                                                                     "separation_mid_valid_images":  16
+                                                                 }
+                                        },
+                                        {
+                                            "seed":  2,
+                                            "condition":  "source_zero_update",
+                                            "checkpoint_sha256":  "c79a5cc7d4a4e18e85bbfd1336b4fbb6ccfba73f69e13f042cd79c333f241dcb",
+                                            "endpoint_mean":  {
+                                                                  "fg_ari":  0.8318874582657878,
+                                                                  "foreground_iou":  0.6841358559171038,
+                                                                  "matched_object_iou":  0.62717715465994783
+                                                              },
+                                            "stats":  {
+                                                          "images":  16,
+                                                          "settle_steps":  512,
+                                                          "pooled_gate_mean":  0.4867043197154999,
+                                                          "pooled_gate_variance":  0.031201744452118874,
+                                                          "pooled_gated_drive_variance":  0.13055256009101868,
+                                                          "variance_scope":  "pooled over all recorded images, 512 settle steps, and 256 patches (drive includes four oscillator components)",
+                                                          "component_sine_cancellation_index":  0.5430437156821522
+                                                      },
+                                            "spike_pair":  {
+                                                               "auc_near":  {
+                                                                                "mean":  0.9521314204757229,
+                                                                                "valid_images":  14,
+                                                                                "images":  16
+                                                                            },
+                                                               "auc_mid":  {
+                                                                               "mean":  0.955768429373981,
+                                                                               "valid_images":  16,
+                                                                               "images":  16
+                                                                           },
+                                                               "separation_near_mean":  0.738604336977005,
+                                                               "separation_near_valid_images":  14,
+                                                               "separation_mid_mean":  0.70897540636360645,
+                                                               "separation_mid_valid_images":  16
+                                                           },
+                                            "gated_drive_pair":  {
+                                                                     "auc_near":  {
+                                                                                      "mean":  0.930237990495184,
+                                                                                      "valid_images":  14,
+                                                                                      "images":  16
+                                                                                  },
+                                                                     "auc_mid":  {
+                                                                                     "mean":  0.9206293488557624,
+                                                                                     "valid_images":  16,
+                                                                                     "images":  16
+                                                                                 },
+                                                                     "separation_near_mean":  0.73286424151488716,
+                                                                     "separation_near_valid_images":  14,
+                                                                     "separation_mid_mean":  0.68929984606802464,
+                                                                     "separation_mid_valid_images":  16
+                                                                 }
+                                        },
+                                        {
+                                            "seed":  2,
+                                            "condition":  "trained_candidate_zero_update",
+                                            "checkpoint_sha256":  "e53558b32643056fa9dcfc49d5fbcf6ffa98a06a753af5f1d960091349ba0db9",
+                                            "endpoint_mean":  {
+                                                                  "fg_ari":  0.78958232626097535,
+                                                                  "foreground_iou":  0.39494857107460773,
+                                                                  "matched_object_iou":  0.61645087930322839
+                                                              },
+                                            "stats":  {
+                                                          "images":  16,
+                                                          "settle_steps":  512,
+                                                          "pooled_gate_mean":  0.508414626121521,
+                                                          "pooled_gate_variance":  0.12371671944856644,
+                                                          "pooled_gated_drive_variance":  0.18800489604473114,
+                                                          "variance_scope":  "pooled over all recorded images, 512 settle steps, and 256 patches (drive includes four oscillator components)",
+                                                          "component_sine_cancellation_index":  0.5349502926038214
+                                                      },
+                                            "spike_pair":  {
+                                                               "auc_near":  {
+                                                                                "mean":  0.9034164768051305,
+                                                                                "valid_images":  14,
+                                                                                "images":  16
+                                                                            },
+                                                               "auc_mid":  {
+                                                                               "mean":  0.9033445998650984,
+                                                                               "valid_images":  16,
+                                                                               "images":  16
+                                                                           },
+                                                               "separation_near_mean":  0.68934366106987,
+                                                               "separation_near_valid_images":  14,
+                                                               "separation_mid_mean":  0.70562375336885452,
+                                                               "separation_mid_valid_images":  16
+                                                           },
+                                            "gated_drive_pair":  {
+                                                                     "auc_near":  {
+                                                                                      "mean":  0.9273257931505222,
+                                                                                      "valid_images":  14,
+                                                                                      "images":  16
+                                                                                  },
+                                                                     "auc_mid":  {
+                                                                                     "mean":  0.9090911346708932,
+                                                                                     "valid_images":  16,
+                                                                                     "images":  16
+                                                                                 },
+                                                                     "separation_near_mean":  0.73151305956499912,
+                                                                     "separation_near_valid_images":  14,
+                                                                     "separation_mid_mean":  0.68622678890824318,
+                                                                     "separation_mid_valid_images":  16
+                                                                 }
+                                        }
+                                    ],
+    "matched_slot_mean":  {
+                              "fg_ari":  0.7749334667,
+                              "foreground_iou":  0.2035891312,
+                              "matched_object_iou":  0.2069369792
+                          },
+    "user_priority_70k_gate":  {
+                                   "mean_fgari_gain_vs_sw0097":  -0.012932941140806732,
+                                   "required_mean_fgari_gain":  0.01,
+                                   "mean_fgari_gate_pass":  false,
+                                   "fgari_gaining_seeds":  0,
+                                   "required_fgari_gaining_seeds":  2,
+                                   "per_seed_fgari_gate_pass":  false,
+                                   "foreground_iou_mean":  0.70682740641929531,
+                                   "foreground_iou_slot_plus_005":  0.2535891312,
+                                   "foreground_iou_gate_pass":  true,
+                                   "object_iou_mean":  0.59069130024386185,
+                                   "object_iou_slot_plus_005":  0.2569369792,
+                                   "object_iou_gate_pass":  true,
+                                   "paired_bootstrap_status":  "not run because mandatory FG-ARI gates failed",
+                                   "distance_controlled_support_status":  "measured on fixed16 source and trained/raw swaps; cannot override failed FG-ARI gates",
+                                   "promote_70k":  false
+                               },
+    "corrected_swaps_script_sha256":  "d2b0fa428efa9cdca3e923ab0796ea42fa45c2eee7fed46cadaa4bce6636951e",
+    "execution_deadline_utc":  "2026-10-07T10:37:49Z",
+    "first_batch_postprocessing_smoke":  {
+                                             "status":  "complete",
+                                             "images":  8,
+                                             "captured_settle_frames":  512,
+                                             "finite_nonempty_gated_drive_affinity":  true,
+                                             "source_script_sha256":  "d2b0fa428efa9cdca3e923ab0796ea42fa45c2eee7fed46cadaa4bce6636951e"
+                                         },
+    "original_registered_promotion_gate":  {
+                                               "registered_balanced_mean_gate_pass":  false,
+                                               "mean_delta_vs_sw0097":  {
+                                                                            "fg_ari":  -0.012932941140806732,
+                                                                            "foreground_iou":  0.12975701036905221,
+                                                                            "matched_object_iou":  -0.010846157172934167
+                                                                        },
+                                               "seeds_improving_both_fgari_and_object_iou":  0,
+                                               "required_seeds_improving_both":  2
+                                           }
+}

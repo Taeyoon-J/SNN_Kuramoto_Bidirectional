@@ -1,0 +1,19 @@
+{
+  "attempt": "first_fixed16_swap_set",
+  "status": "preserved_invalidated_gated_drive_pair_metrics_only",
+  "outputs": [
+    "seed0_source_zero_update.json",
+    "seed0_trained_candidate_zero_update.json",
+    "seed1_source_zero_update.json",
+    "seed1_trained_candidate_zero_update.json",
+    "seed2_source_zero_update.json",
+    "seed2_trained_candidate_zero_update.json"
+  ],
+  "path": "first_pass_invalid_gated_drive_auc/",
+  "executed_swaps_py_sha256": "fdf80ec39b58aa84f0354bfbd9956489d1fe6d26dfe9ff8c942f5ac17f739af6",
+  "cause": "Captured drive history contains only t>=512 (512 frames); product_affinity default settle=512 discarded all captured frames, making the gated-drive AUC/separation invalid.",
+  "valid_sections": ["fixed-threshold endpoint metrics", "actual spike AUC/separation", "actual gate/drive capture and pooled variance", "component-sine cancellation"],
+  "correction": "Use product_affinity(..., settle=0) on the captured 512 settle frames; assert the trace is exactly 512 frames and affinity is finite with shape [B,256,256]. Variance fields explicitly state their pooled scope.",
+  "corrected_rerun": "results_archive/trained_models/SW0100_phasor_imag_raw_gate/swaps/",
+  "training_or_full320_rerun": false
+}
