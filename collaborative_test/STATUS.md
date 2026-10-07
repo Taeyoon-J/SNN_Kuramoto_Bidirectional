@@ -1,5 +1,20 @@
 # Current status
 
+2026-10-07 update: SW0094 four-arm pilot and full320 joint evaluation completed.
+Joint adaptation trades higher foreground IoU for lower FG-ARI/object IoU;
+the encoder/graph-frozen aligned spike-loss recipe was retained for SW0095.
+SW0095 completed an additional whole70k pass for every source seed0/1/2.
+Full320 validation mean is **.775645/.574029/.599779**, numerically above the
+matched SW0092 Slot epoch10 mean **.774933/.203589/.206937** on all3 metrics.
+FG-ARI margin is only .000711; no reliable statistical superiority claim.
+Training budgets differ (140k downstream exposures plus pretraining vs700k
+scratch Slot exposures). Archived raw results and audits are in SW0095.
+SW0096 registers frozen-checkpoint comparisons on new IDs90000–90319 and
+previously inspected reference IDs1000–1319; independent evidence remains
+pending. Goal remains active. If tkim1 occupies GPU2 or3, our new jobs use0/1
+only; SW0096 is restricted to0/1. Older process/status paragraphs below are
+historical, superseded by this update and the numbered experiment records.
+
 As of 2026-10-06, the user requested renewed analysis of degradation with
 70,000-image training and improvement toward beating Slot Attention. The
 [SW0093 analysis](SW_0093_scaling_failure_analysis/README.md) verifies a mismatch

@@ -87,3 +87,27 @@ establish the three-seed objective. Current two-seed best FG-ARI is .824063;
 Slot's three-seed best is .871053. Do not compare our best against Slot's mean
 as evidence of an overall win. Report best and mean separately, preserve all
 seeds, and use independent test evidence for the final selected recipe.
+
+### All three seeds complete
+
+| Model / seed | FG-ARI | Foreground IoU | Matched-object IoU |
+|---|---:|---:|---:|
+| SW0095 seed0 | .824063 | .718180 | .653774 |
+| SW0095 seed1 | .741306 | .582172 | .583384 |
+| SW0095 seed2 | .761566 | .421735 | .562178 |
+| SW0095 three-seed mean | **.775645** | **.574029** | **.599779** |
+| Comparable SW0092 Slot epoch10 mean | .774933 | .203589 | .206937 |
+
+All three complete70k manifests, finite-update histories and full320 spike
+evaluations passed the same audit. Queue completed with no failed seeds.
+Strict numerical exceedance holds for all3 validation means, but FG-ARI margin
+is only .000711. Sample seed SD is .043137 for ours; three runs do not establish
+statistical superiority. Do not claim a reliable FG-ARI advantage or a win over
+the released single Slot checkpoint (.894641), which is a different reference.
+Raw results are archived for every seed; `results/summary.json` records the
+means, seed SD, training-budget difference and incomplete independent audit.
+
+Freeze this exact recipe for SW0096 holdout checks before any new tuning.
+Separate reference IDs1000–1319 (previously inspected) and preregistered
+independent IDs90000–90319. No data was added to training. Final goal remains
+active until the required independent comparison and evidence audit pass.
