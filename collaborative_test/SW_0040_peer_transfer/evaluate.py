@@ -160,7 +160,7 @@ def main():
     parser.add_argument("--geodesic-cap", type=float, default=16.0)
     parser.add_argument("--graph-spatial-decay", type=float, default=0.55)
     parser.add_argument("--kuramoto-backend", choices=["pairwise", "factorized"], default="pairwise")
-    parser.add_argument("--gate-mode", choices=["sigmoid", "raw", "phase_mean", "centered_raw", "signed_mask"], default="raw",
+    parser.add_argument("--gate-mode", choices=["sigmoid", "raw", "phase_mean", "centered_raw", "signed_mask", "phasor_imag_raw"], default="raw",
                         help="Transduction/gating mode; centered modes retain raw mask membrane gating.")
     parser.add_argument("--batch-size", type=int, default=8)
     parser.add_argument("--device", default="cuda")

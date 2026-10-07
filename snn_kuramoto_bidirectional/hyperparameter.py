@@ -138,7 +138,9 @@ class S2NetHyperparameters:
     # "sigmoid" reproduces the original gate, compressed to [0.5, 0.731] so it
     # never closes. "raw" leaves it spanning [0, 1]. "phase_mean" reduces the
     # osc_dim axis before the sine, which measured 0.216 against 0.067 for the
-    # same information reduced the other way round.
+    # same information reduced the other way round. "phasor_imag_raw" averages
+    # sin(theta_d) across components before constructing the raw mask; this is
+    # invariant to independent 2pi phase lifts and component permutations.
     gate_mode: str = "raw"
 
     # Object-group based classification

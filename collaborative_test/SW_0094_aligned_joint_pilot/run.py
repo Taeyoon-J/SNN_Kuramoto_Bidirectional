@@ -42,7 +42,7 @@ def sha(path):
     return h.hexdigest()
 
 
-def hparams():
+def hparams(gate_mode="raw"):
     return S2NetHyperparameters(
         num_feature_maps=8, num_regions=256, osc_dim=4,
         gamma_drive_mode="static", num_time_steps=64,
@@ -52,7 +52,7 @@ def hparams():
         geodesic_temperature=.5, geodesic_cap=16., kuramoto_backend="factorized",
         k=256., freq_gain=2., membrane_vth=.06, membrane_low_m=-4.,
         membrane_high_m=0., low_n=-4., high_n=0., branch=4,
-        gate_mode="raw", spike_per_component=True, dendritic_projection="shared",
+        gate_mode=gate_mode, spike_per_component=True, dendritic_projection="shared",
         spike_spatial_grid_size=16,
     ).validate()
 
@@ -94,6 +94,7 @@ def main():
     p.add_argument("--train-time-steps", type=int, default=64)
     p.add_argument("--train-settle", type=int, default=32)
     p.add_argument("--validation-count", type=int, choices=[80, 320], default=80)
+    p.add_argument("--gate-mode", choices=["raw", "phasor_imag_raw"], default="raw")
     args = p.parse_args()
     if args.steps < 1 or args.batch < 1 or args.steps * args.batch > 70000:
         raise ValueError("pilot must use a positive, bounded without-replacement budget")
@@ -104,7 +105,7 @@ def main():
     shuffle_seed = 17 + args.source_seed if args.shuffle_seed is None else args.shuffle_seed
     torch.manual_seed(shuffle_seed)
     source = args.source_checkpoint or ROOT / f"trained_models/SW0090_unique70000_s{args.source_seed}_e10/checkpoints/epoch_01.pt"
-    hp = hparams()
+    hp = hparams(args.gate_mode)
     hp.num_time_steps = args.train_time_steps
     core = S2NetCore(hp.validate(), device=args.device).to(args.device)
     initial = torch.load(source, map_location=args.device, weights_only=True)
@@ -124,6 +125,7 @@ def main():
                                  num_kernels=8, kernel_size=3, channels=3, device=args.device)
     encoder.train(args.arm == "positive_joint")
     encoder.requires_grad_(args.arm == "positive_joint")
+    initial_encoder = {k: v.detach().clone() for k, v in encoder.state_dict().items()}
     patcher = FeaturePatchGammaInitializer(grid_size=16).to(args.device)
 
     def encode(images):
@@ -148,6 +150,7 @@ def main():
                 "seed": shuffle_seed, "source_model_seed": args.source_seed, "steps": args.steps,
                 "batch": args.batch, "core_lr": 3e-5, "encoder_lr": 3e-6,
                 "train_steps": args.train_time_steps, "train_settle": args.train_settle, "started": time.time(),
+                "gate_mode": args.gate_mode,
                 "ground_truth_used_for_training": False,
                 "preflight": args.preflight, "device": args.device}
     assert not set(manifest["training_ids"]).intersection(range(1000, 1640))
@@ -195,6 +198,10 @@ def main():
         raise AssertionError("frozen graph changed")
     if not any(v for k, v in changed.items() if not k.startswith("graph_generator.")):
         raise AssertionError("downstream core did not update")
+    if args.arm.endswith("frozen") and any(
+            not torch.equal(v.detach(), initial_encoder[k])
+            for k, v in encoder.state_dict().items()):
+        raise AssertionError("frozen encoder changed")
     torch.save(core.state_dict(), args.output / "core.pt")
     torch.save(encoder.state_dict(), args.output / "encoder.pt")
     torch.save(stats, args.output / "feature_preprocessing.pt")
@@ -231,7 +238,7 @@ def main():
                "--thresholds", ".50", "--dendritic-projection", "shared", "--graph-spatial-decay", ".35",
                "--geodesic-steps", "3", "--geodesic-radius", "1.5", "--geodesic-contrast", "2",
                "--geodesic-temperature", ".5", "--geodesic-cap", "16", "--kuramoto-backend", "factorized",
-               "--gate-mode", "raw", "--device", args.device]
+               "--gate-mode", args.gate_mode, "--device", args.device]
     with (args.output / "evaluation.log").open("w") as log:
         subprocess.run(command, stdout=log, stderr=subprocess.STDOUT, check=True)
     manifest.update(status="complete", evaluation_images=args.validation_count,

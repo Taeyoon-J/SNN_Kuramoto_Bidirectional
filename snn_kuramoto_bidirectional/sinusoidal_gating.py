@@ -10,7 +10,12 @@ def sinusoidal_gating(theta_hist, t, phase_delay_steps, gate_mode="sigmoid"):
     """
     theta = theta_hist[t]
     delayed = theta_hist[max(0, t - phase_delay_steps)]
-    mask = 0.5 * (1.0 + torch.sin(delayed.mean(dim=-1)))
+    if gate_mode == "phasor_imag_raw":
+        # Average component-wise imaginary phasors. Unlike sin(mean(theta)),
+        # this is invariant to independent 2pi lifts and component ordering.
+        mask = 0.5 * (1.0 + torch.sin(delayed).mean(dim=-1))
+    else:
+        mask = 0.5 * (1.0 + torch.sin(delayed.mean(dim=-1)))
     if gate_mode == "phase_mean":  # readout mode: README 4.3 training
         gamma_wave_t = torch.sin(theta.mean(dim=-1)).unsqueeze(-1)
     elif gate_mode == "centered_raw":
@@ -22,6 +27,8 @@ def sinusoidal_gating(theta_hist, t, phase_delay_steps, gate_mode="sigmoid"):
         # Preserve the current per-component carrier while centering only the
         # delayed modulation. The membrane still receives the raw mask below.
         gamma_wave_t = torch.sin(theta) * (2.0 * mask - 1.0).unsqueeze(-1)
+    elif gate_mode == "phasor_imag_raw":
+        gamma_wave_t = torch.sin(theta) * mask.unsqueeze(-1)
     else:
         gamma_wave_t = torch.sin(theta) * mask.unsqueeze(-1)
     g_wave_t = torch.sigmoid(mask) if gate_mode == "sigmoid" else mask  # readout mode: else -> mask (phase_mean)
