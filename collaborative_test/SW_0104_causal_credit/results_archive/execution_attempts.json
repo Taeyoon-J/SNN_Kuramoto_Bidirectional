@@ -1,0 +1,37 @@
+{
+  "experiment": "SW0104",
+  "attempts": [
+    {
+      "name": "initial_train_smoke",
+      "status": "failed_before_forward",
+      "cause": "Incorrectly compared SW0095 source core hash to SW0097 manifest source_sha256 field; preserved log. Corrected provenance by recording source core and control checkpoint hashes separately."
+    },
+    {
+      "name": "train_smoke_retry",
+      "status": "passed",
+      "evidence": "train_smoke.json and train_smoke_retry.log",
+      "result": "one-batch reconstruction, equal-loss and gradient decomposition smoke passed."
+    },
+    {
+      "name": "matched_train_audit",
+      "status": "completed_with_strict_partial_failure",
+      "pid": 3708922,
+      "evidence": "train_credit.json and train_credit.log",
+      "result": "12 no-GT/no-optimizer batches completed; strict parameter-gradient identity failed 4 family/batch checks in seed2. No tolerance change or rerun."
+    },
+    {
+      "name": "first_validation16",
+      "status": "completed_forwards_then_strict_formula_check_failed",
+      "pid": 3709749,
+      "evidence": "validation16.log",
+      "result": "All fixed predictions were produced before labels; after GT inspection scalar-gate formula check exceeded 1e-6 and aborted archival."
+    },
+    {
+      "name": "validation16_retry",
+      "status": "completed_with_formula_check_failure_preserved",
+      "pid": 3710507,
+      "evidence": "validation16.json and validation16_retry.log",
+      "result": "Same fixed readouts rerun once under exact classifier normalization order; maximum scalar-formula discrepancy remained 5.54e-6 to 6.62e-6. No further forward runs."
+    }
+  ]
+}

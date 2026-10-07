@@ -1,0 +1,1718 @@
+{
+  "status": "complete",
+  "purpose": "SW0104 explicit output event/gate credit decomposition; no GT, no optimizer",
+  "gamma_cache_sha256": "75e8a872b0dad319e58934b48177858511845c057cc370c330ff7ea968023490",
+  "device": "cuda:0",
+  "contract": {
+    "batches_per_seed": 4,
+    "batch": 16,
+    "steps": 64,
+    "settle": 32,
+    "shuffle": [
+      117,
+      118,
+      119
+    ]
+  },
+  "seeds": {
+    "0": {
+      "source_sha256": "aac44697906c835569e3bf900e5930ce900223d1aa95c0bedba899bee5ff155d",
+      "no_optimizer_or_gt": true,
+      "batches": [
+        {
+          "batch": 0,
+          "training_ids": [
+            6654,
+            40665,
+            43310,
+            46803,
+            60279,
+            63392,
+            65737,
+            30426,
+            61273,
+            35977,
+            230,
+            28080,
+            15085,
+            19171,
+            23380,
+            66871
+          ],
+          "source_sha256": "aac44697906c835569e3bf900e5930ce900223d1aa95c0bedba899bee5ff155d",
+          "control_checkpoint_sha256": "36f2481dd1fa51fa29bd4dc34275a876b71d8b76fbee13ac47a0a1bfe6766fbf",
+          "full_weighted_spike_loss": 13.653931617736816,
+          "gate_detached_readout_loss": 13.653931617736816,
+          "event_detached_readout_loss": 13.653931617736816,
+          "loss_values_exactly_equal": true,
+          "gradient_credit_decomposition": {
+            "parameters_by_family": {
+              "dendric_layer": {
+                "full_norm": 0.15941557423887034,
+                "gate_credit_norm": 0.0,
+                "event_credit_norm": 0.15941557423887034,
+                "gate_event_cosine": null,
+                "sum_relative_residual": 0.0,
+                "sum_max_abs_residual": 0.0,
+                "sum_tolerance": 1e-05,
+                "sum_identity_pass": true
+              },
+              "kuramoto": {
+                "full_norm": 3.6396142958912794,
+                "gate_credit_norm": 3.8615355513140117,
+                "event_credit_norm": 4.143818860555773,
+                "gate_event_cosine": -0.5885661016105644,
+                "sum_relative_residual": 2.316074069072907e-06,
+                "sum_max_abs_residual": 8.106231689453125e-06,
+                "sum_tolerance": 2.319135904312134e-05,
+                "sum_identity_pass": true
+              },
+              "membrane_layer": {
+                "full_norm": 0.0016548246573278517,
+                "gate_credit_norm": 0.0,
+                "event_credit_norm": 0.0016548246573278517,
+                "gate_event_cosine": null,
+                "sum_relative_residual": 0.0,
+                "sum_max_abs_residual": 0.0,
+                "sum_tolerance": 1e-05,
+                "sum_identity_pass": true
+              },
+              "other": {
+                "full_norm": 68.5994142574367,
+                "gate_credit_norm": 58.16994814594923,
+                "event_credit_norm": 24.99355970373335,
+                "gate_event_cosine": 0.23986887235600943,
+                "sum_relative_residual": 2.6065889928343165e-06,
+                "sum_max_abs_residual": 8.20159912109375e-05,
+                "sum_tolerance": 0.00035100540161132817,
+                "sum_identity_pass": true
+              }
+            },
+            "captured_node_gradient_norms": {
+              "theta": {
+                "full": 5.953926300657965,
+                "gate_credit": 2.8887958730191934,
+                "event_credit": 3.7475395672397442
+              },
+              "h": {
+                "full": 0.025440308769615776,
+                "gate_credit": 0.0,
+                "event_credit": 0.025440308769615776
+              },
+              "mem": {
+                "full": 0.029231152635696558,
+                "gate_credit": 0.0,
+                "event_credit": 0.029231152635696558
+              },
+              "x": {
+                "full": 0.026362423852556736,
+                "gate_credit": 0.0,
+                "event_credit": 0.026362423852556736
+              },
+              "gate": {
+                "full": 0.4351967205471937,
+                "gate_credit": 0.4293836398294053,
+                "event_credit": 0.024228135250319992
+              }
+            },
+            "all_parameter_families_sum_identity_pass": true
+          },
+          "event_statistics": {
+            "event_logit_quantiles": {
+              "min": -0.9634114503860474,
+              "p01": 0.12200960516929626,
+              "p10": 0.5736084580421448,
+              "p50": 0.8785306215286255,
+              "p90": 2.1151018142700195,
+              "p99": 3.1188697814941406,
+              "max": 3.498589515686035
+            },
+            "event_binary_rate": 0.9982938766479492,
+            "always_on_unit_fraction": 0.979248046875,
+            "always_off_unit_fraction": 0.0,
+            "constant_unit_fraction": 0.979248046875,
+            "gate_mean": 0.35956689715385437,
+            "gate_variance": 0.09703096002340317,
+            "spike_activity_occupancy": 0.3582732379436493
+          },
+          "captured_steps": {
+            "x": 64,
+            "event": 64,
+            "gate": 64,
+            "h": 64,
+            "mem": 64,
+            "theta": 64
+          },
+          "gate_folded_shape": [
+            16,
+            4,
+            256,
+            64
+          ],
+          "event_folded_shape": [
+            16,
+            4,
+            256,
+            64
+          ],
+          "actual_event_times_gate_exactly_reconstructs_spikes": true,
+          "feedback_disabled": true,
+          "pulse_disabled": true
+        },
+        {
+          "batch": 1,
+          "training_ids": [
+            56987,
+            10050,
+            5576,
+            29473,
+            52430,
+            445,
+            36453,
+            3400,
+            66942,
+            6639,
+            8034,
+            37757,
+            13349,
+            19090,
+            66608,
+            62029
+          ],
+          "source_sha256": "aac44697906c835569e3bf900e5930ce900223d1aa95c0bedba899bee5ff155d",
+          "control_checkpoint_sha256": "36f2481dd1fa51fa29bd4dc34275a876b71d8b76fbee13ac47a0a1bfe6766fbf",
+          "full_weighted_spike_loss": 12.995615005493164,
+          "gate_detached_readout_loss": 12.995615005493164,
+          "event_detached_readout_loss": 12.995615005493164,
+          "loss_values_exactly_equal": true,
+          "gradient_credit_decomposition": {
+            "parameters_by_family": {
+              "dendric_layer": {
+                "full_norm": 0.09973059637347154,
+                "gate_credit_norm": 0.0,
+                "event_credit_norm": 0.09973059637347154,
+                "gate_event_cosine": null,
+                "sum_relative_residual": 0.0,
+                "sum_max_abs_residual": 0.0,
+                "sum_tolerance": 1e-05,
+                "sum_identity_pass": true
+              },
+              "kuramoto": {
+                "full_norm": 0.9017643118930031,
+                "gate_credit_norm": 0.9015964485779892,
+                "event_credit_norm": 0.3558728982029279,
+                "gate_event_cosine": -0.19688646443655874,
+                "sum_relative_residual": 1.9974219327016826e-06,
+                "sum_max_abs_residual": 1.6093254089355469e-06,
+                "sum_tolerance": 1e-05,
+                "sum_identity_pass": true
+              },
+              "membrane_layer": {
+                "full_norm": 0.0015742852048177243,
+                "gate_credit_norm": 0.0,
+                "event_credit_norm": 0.0015742852048177243,
+                "gate_event_cosine": null,
+                "sum_relative_residual": 0.0,
+                "sum_max_abs_residual": 0.0,
+                "sum_tolerance": 1e-05,
+                "sum_identity_pass": true
+              },
+              "other": {
+                "full_norm": 25.96425349460368,
+                "gate_credit_norm": 22.304253438026205,
+                "event_credit_norm": 7.712051838687882,
+                "gate_event_cosine": 0.3406468835295504,
+                "sum_relative_residual": 3.136360758186618e-06,
+                "sum_max_abs_residual": 5.245208740234375e-05,
+                "sum_tolerance": 0.00014744009017944338,
+                "sum_identity_pass": true
+              }
+            },
+            "captured_node_gradient_norms": {
+              "theta": {
+                "full": 1.524970980619286,
+                "gate_credit": 1.4933612896141455,
+                "event_credit": 0.24059095851663614
+              },
+              "h": {
+                "full": 0.023241006761624577,
+                "gate_credit": 0.0,
+                "event_credit": 0.023241006761624577
+              },
+              "mem": {
+                "full": 0.030404066688721098,
+                "gate_credit": 0.0,
+                "event_credit": 0.030404066688721098
+              },
+              "x": {
+                "full": 0.024677563284629608,
+                "gate_credit": 0.0,
+                "event_credit": 0.024677563284629608
+              },
+              "gate": {
+                "full": 0.20101765757098833,
+                "gate_credit": 0.19467890571242571,
+                "event_credit": 0.022521489306972932
+              }
+            },
+            "all_parameter_families_sum_identity_pass": true
+          },
+          "event_statistics": {
+            "event_logit_quantiles": {
+              "min": -0.9614642262458801,
+              "p01": 0.1392059326171875,
+              "p10": 0.5921512842178345,
+              "p50": 0.8749078512191772,
+              "p90": 2.059384346008301,
+              "p99": 3.0727601051330566,
+              "max": 3.4985125064849854
+            },
+            "event_binary_rate": 0.9989709854125977,
+            "always_on_unit_fraction": 0.985595703125,
+            "always_off_unit_fraction": 0.0,
+            "constant_unit_fraction": 0.985595703125,
+            "gate_mean": 0.3441449999809265,
+            "gate_variance": 0.09276097267866135,
+            "spike_activity_occupancy": 0.34342214465141296
+          },
+          "captured_steps": {
+            "x": 64,
+            "event": 64,
+            "gate": 64,
+            "h": 64,
+            "mem": 64,
+            "theta": 64
+          },
+          "gate_folded_shape": [
+            16,
+            4,
+            256,
+            64
+          ],
+          "event_folded_shape": [
+            16,
+            4,
+            256,
+            64
+          ],
+          "actual_event_times_gate_exactly_reconstructs_spikes": true,
+          "feedback_disabled": true,
+          "pulse_disabled": true
+        },
+        {
+          "batch": 2,
+          "training_ids": [
+            36593,
+            3173,
+            18734,
+            33979,
+            25545,
+            1711,
+            4211,
+            62811,
+            53752,
+            13370,
+            47830,
+            25103,
+            68654,
+            49581,
+            36936,
+            53480
+          ],
+          "source_sha256": "aac44697906c835569e3bf900e5930ce900223d1aa95c0bedba899bee5ff155d",
+          "control_checkpoint_sha256": "36f2481dd1fa51fa29bd4dc34275a876b71d8b76fbee13ac47a0a1bfe6766fbf",
+          "full_weighted_spike_loss": 13.242733001708984,
+          "gate_detached_readout_loss": 13.242733001708984,
+          "event_detached_readout_loss": 13.242733001708984,
+          "loss_values_exactly_equal": true,
+          "gradient_credit_decomposition": {
+            "parameters_by_family": {
+              "dendric_layer": {
+                "full_norm": 0.41665523087122697,
+                "gate_credit_norm": 0.0,
+                "event_credit_norm": 0.41665523087122697,
+                "gate_event_cosine": null,
+                "sum_relative_residual": 0.0,
+                "sum_max_abs_residual": 0.0,
+                "sum_tolerance": 1e-05,
+                "sum_identity_pass": true
+              },
+              "kuramoto": {
+                "full_norm": 6.82817315711027,
+                "gate_credit_norm": 6.436922462985239,
+                "event_credit_norm": 0.4265407615074923,
+                "gate_event_cosine": 0.9120290925947255,
+                "sum_relative_residual": 1.2335036187822783e-06,
+                "sum_max_abs_residual": 8.314847946166992e-06,
+                "sum_tolerance": 6.68766736984253e-05,
+                "sum_identity_pass": true
+              },
+              "membrane_layer": {
+                "full_norm": 0.0014693178211661498,
+                "gate_credit_norm": 0.0,
+                "event_credit_norm": 0.0014693178211661498,
+                "gate_event_cosine": null,
+                "sum_relative_residual": 0.0,
+                "sum_max_abs_residual": 0.0,
+                "sum_tolerance": 1e-05,
+                "sum_identity_pass": true
+              },
+              "other": {
+                "full_norm": 66.81476453273115,
+                "gate_credit_norm": 61.21505068328652,
+                "event_credit_norm": 8.282702596749148,
+                "gate_event_cosine": 0.6393550141308779,
+                "sum_relative_residual": 2.243244697280821e-06,
+                "sum_max_abs_residual": 7.832050323486328e-05,
+                "sum_tolerance": 0.00030919944763183597,
+                "sum_identity_pass": true
+              }
+            },
+            "captured_node_gradient_norms": {
+              "theta": {
+                "full": 2.4175386921287787,
+                "gate_credit": 2.40305907673938,
+                "event_credit": 0.2715534569163719
+              },
+              "h": {
+                "full": 0.02277844674236337,
+                "gate_credit": 0.0,
+                "event_credit": 0.02277844674236337
+              },
+              "mem": {
+                "full": 0.027779102888631873,
+                "gate_credit": 0.0,
+                "event_credit": 0.027779102888631873
+              },
+              "x": {
+                "full": 0.023675110022243994,
+                "gate_credit": 0.0,
+                "event_credit": 0.023675110022243994
+              },
+              "gate": {
+                "full": 0.3566423571593204,
+                "gate_credit": 0.35133690472905854,
+                "event_credit": 0.02217968118275486
+              }
+            },
+            "all_parameter_families_sum_identity_pass": true
+          },
+          "event_statistics": {
+            "event_logit_quantiles": {
+              "min": -0.9003324508666992,
+              "p01": 0.13474883139133453,
+              "p10": 0.580744743347168,
+              "p50": 0.8732975721359253,
+              "p90": 2.1325881481170654,
+              "p99": 3.1212317943573,
+              "max": 3.498786687850952
+            },
+            "event_binary_rate": 0.9988574981689453,
+            "always_on_unit_fraction": 0.98248291015625,
+            "always_off_unit_fraction": 0.0,
+            "constant_unit_fraction": 0.98248291015625,
+            "gate_mean": 0.3589891493320465,
+            "gate_variance": 0.0992552638053894,
+            "spike_activity_occupancy": 0.35817086696624756
+          },
+          "captured_steps": {
+            "x": 64,
+            "event": 64,
+            "gate": 64,
+            "h": 64,
+            "mem": 64,
+            "theta": 64
+          },
+          "gate_folded_shape": [
+            16,
+            4,
+            256,
+            64
+          ],
+          "event_folded_shape": [
+            16,
+            4,
+            256,
+            64
+          ],
+          "actual_event_times_gate_exactly_reconstructs_spikes": true,
+          "feedback_disabled": true,
+          "pulse_disabled": true
+        },
+        {
+          "batch": 3,
+          "training_ids": [
+            3104,
+            23864,
+            27437,
+            55437,
+            8061,
+            36714,
+            2278,
+            18381,
+            34619,
+            50234,
+            45170,
+            60178,
+            31876,
+            34014,
+            17145,
+            60409
+          ],
+          "source_sha256": "aac44697906c835569e3bf900e5930ce900223d1aa95c0bedba899bee5ff155d",
+          "control_checkpoint_sha256": "36f2481dd1fa51fa29bd4dc34275a876b71d8b76fbee13ac47a0a1bfe6766fbf",
+          "full_weighted_spike_loss": 12.990342140197754,
+          "gate_detached_readout_loss": 12.990342140197754,
+          "event_detached_readout_loss": 12.990342140197754,
+          "loss_values_exactly_equal": true,
+          "gradient_credit_decomposition": {
+            "parameters_by_family": {
+              "dendric_layer": {
+                "full_norm": 0.561133678900327,
+                "gate_credit_norm": 0.0,
+                "event_credit_norm": 0.561133678900327,
+                "gate_event_cosine": null,
+                "sum_relative_residual": 0.0,
+                "sum_max_abs_residual": 0.0,
+                "sum_tolerance": 1e-05,
+                "sum_identity_pass": true
+              },
+              "kuramoto": {
+                "full_norm": 3.8795992457613306,
+                "gate_credit_norm": 2.8459968473987125,
+                "event_credit_norm": 1.277101395221775,
+                "gate_event_cosine": 0.7319403205190895,
+                "sum_relative_residual": 2.112031749228528e-06,
+                "sum_max_abs_residual": 8.106231689453125e-06,
+                "sum_tolerance": 3.376866102218628e-05,
+                "sum_identity_pass": true
+              },
+              "membrane_layer": {
+                "full_norm": 0.0062346270544946505,
+                "gate_credit_norm": 0.0,
+                "event_credit_norm": 0.0062346270544946505,
+                "gate_event_cosine": null,
+                "sum_relative_residual": 0.0,
+                "sum_max_abs_residual": 0.0,
+                "sum_tolerance": 1e-05,
+                "sum_identity_pass": true
+              },
+              "other": {
+                "full_norm": 54.59731441437643,
+                "gate_credit_norm": 34.957655978504086,
+                "event_credit_norm": 29.695676628408822,
+                "gate_event_cosine": 0.4224036041858081,
+                "sum_relative_residual": 3.3191357366257673e-06,
+                "sum_max_abs_residual": 9.059906005859375e-05,
+                "sum_tolerance": 0.00020292800903320315,
+                "sum_identity_pass": true
+              }
+            },
+            "captured_node_gradient_norms": {
+              "theta": {
+                "full": 2.8931360381221163,
+                "gate_credit": 2.899510187579818,
+                "event_credit": 0.2008853911929376
+              },
+              "h": {
+                "full": 0.032723411714707704,
+                "gate_credit": 0.0,
+                "event_credit": 0.032723411714707704
+              },
+              "mem": {
+                "full": 0.039226640152633704,
+                "gate_credit": 0.0,
+                "event_credit": 0.039226640152633704
+              },
+              "x": {
+                "full": 0.03449771982415307,
+                "gate_credit": 0.0,
+                "event_credit": 0.03449771982415307
+              },
+              "gate": {
+                "full": 0.9164090033875643,
+                "gate_credit": 0.9109698437067706,
+                "event_credit": 0.03151937057708252
+              }
+            },
+            "all_parameter_families_sum_identity_pass": true
+          },
+          "event_statistics": {
+            "event_logit_quantiles": {
+              "min": -1.039149522781372,
+              "p01": 0.14097723364830017,
+              "p10": 0.5848466157913208,
+              "p50": 0.8675316572189331,
+              "p90": 2.052870750427246,
+              "p99": 3.07873272895813,
+              "max": 3.4983086585998535
+            },
+            "event_binary_rate": 0.9987192153930664,
+            "always_on_unit_fraction": 0.98291015625,
+            "always_off_unit_fraction": 0.0,
+            "constant_unit_fraction": 0.98291015625,
+            "gate_mean": 0.34163519740104675,
+            "gate_variance": 0.09168615192174911,
+            "spike_activity_occupancy": 0.3406488299369812
+          },
+          "captured_steps": {
+            "x": 64,
+            "event": 64,
+            "gate": 64,
+            "h": 64,
+            "mem": 64,
+            "theta": 64
+          },
+          "gate_folded_shape": [
+            16,
+            4,
+            256,
+            64
+          ],
+          "event_folded_shape": [
+            16,
+            4,
+            256,
+            64
+          ],
+          "actual_event_times_gate_exactly_reconstructs_spikes": true,
+          "feedback_disabled": true,
+          "pulse_disabled": true
+        }
+      ]
+    },
+    "1": {
+      "source_sha256": "b8b5d1d794dc0185b68526b713893f6d842518fde9c21d681bcdbe50549d43f6",
+      "no_optimizer_or_gt": true,
+      "batches": [
+        {
+          "batch": 0,
+          "training_ids": [
+            68304,
+            49032,
+            70041,
+            7829,
+            16499,
+            31675,
+            67612,
+            54671,
+            17331,
+            2330,
+            23312,
+            50490,
+            56080,
+            20867,
+            3891,
+            34682
+          ],
+          "source_sha256": "b8b5d1d794dc0185b68526b713893f6d842518fde9c21d681bcdbe50549d43f6",
+          "control_checkpoint_sha256": "76f379d5a7e4cd9d12fdf0b701f3dd9dbbf28b5eea270a9cee2d30d87b4dad98",
+          "full_weighted_spike_loss": 12.844271659851074,
+          "gate_detached_readout_loss": 12.844271659851074,
+          "event_detached_readout_loss": 12.844271659851074,
+          "loss_values_exactly_equal": true,
+          "gradient_credit_decomposition": {
+            "parameters_by_family": {
+              "dendric_layer": {
+                "full_norm": 0.02761573368123544,
+                "gate_credit_norm": 0.0,
+                "event_credit_norm": 0.02761573368123544,
+                "gate_event_cosine": null,
+                "sum_relative_residual": 0.0,
+                "sum_max_abs_residual": 0.0,
+                "sum_tolerance": 1e-05,
+                "sum_identity_pass": true
+              },
+              "kuramoto": {
+                "full_norm": 2.80918761038663,
+                "gate_credit_norm": 3.017210291460572,
+                "event_credit_norm": 0.23125961417912658,
+                "gate_event_cosine": -0.906833820261954,
+                "sum_relative_residual": 1.5032008520899387e-07,
+                "sum_max_abs_residual": 2.682209014892578e-07,
+                "sum_tolerance": 2.6538980007171635e-05,
+                "sum_identity_pass": true
+              },
+              "membrane_layer": {
+                "full_norm": 0.000926725042674354,
+                "gate_credit_norm": 0.0,
+                "event_credit_norm": 0.000926725042674354,
+                "gate_event_cosine": null,
+                "sum_relative_residual": 0.0,
+                "sum_max_abs_residual": 0.0,
+                "sum_tolerance": 1e-05,
+                "sum_identity_pass": true
+              },
+              "other": {
+                "full_norm": 18.15633666197406,
+                "gate_credit_norm": 16.44743874666929,
+                "event_credit_norm": 2.3811615743070242,
+                "gate_event_cosine": 0.6825706818069779,
+                "sum_relative_residual": 1.0226948617168303e-06,
+                "sum_max_abs_residual": 1.0192394256591797e-05,
+                "sum_tolerance": 0.00011020397186279298,
+                "sum_identity_pass": true
+              }
+            },
+            "captured_node_gradient_norms": {
+              "theta": {
+                "full": 1.4545661994267887,
+                "gate_credit": 1.4694460275874732,
+                "event_credit": 0.11078225236419348
+              },
+              "h": {
+                "full": 0.0035481294397875906,
+                "gate_credit": 0.0,
+                "event_credit": 0.0035481294397875906
+              },
+              "mem": {
+                "full": 0.004763828576750972,
+                "gate_credit": 0.0,
+                "event_credit": 0.004763828576750972
+              },
+              "x": {
+                "full": 0.003701904061920859,
+                "gate_credit": 0.0,
+                "event_credit": 0.003701904061920859
+              },
+              "gate": {
+                "full": 0.49281091003322,
+                "gate_credit": 0.4959259107429846,
+                "event_credit": 0.005457646682448504
+              }
+            },
+            "all_parameter_families_sum_identity_pass": true
+          },
+          "event_statistics": {
+            "event_logit_quantiles": {
+              "min": -0.7913144826889038,
+              "p01": 1.1481783390045166,
+              "p10": 1.513229489326477,
+              "p50": 1.7314364910125732,
+              "p90": 3.3314671516418457,
+              "p99": 5.007133483886719,
+              "max": 5.419803619384766
+            },
+            "event_binary_rate": 0.999725341796875,
+            "always_on_unit_fraction": 0.9981689453125,
+            "always_off_unit_fraction": 0.0,
+            "constant_unit_fraction": 0.9981689453125,
+            "gate_mean": 0.32156050205230713,
+            "gate_variance": 0.08433566242456436,
+            "spike_activity_occupancy": 0.32130205631256104
+          },
+          "captured_steps": {
+            "x": 64,
+            "event": 64,
+            "gate": 64,
+            "h": 64,
+            "mem": 64,
+            "theta": 64
+          },
+          "gate_folded_shape": [
+            16,
+            4,
+            256,
+            64
+          ],
+          "event_folded_shape": [
+            16,
+            4,
+            256,
+            64
+          ],
+          "actual_event_times_gate_exactly_reconstructs_spikes": true,
+          "feedback_disabled": true,
+          "pulse_disabled": true
+        },
+        {
+          "batch": 1,
+          "training_ids": [
+            5746,
+            38390,
+            7809,
+            50726,
+            4399,
+            52411,
+            29823,
+            21285,
+            47112,
+            67877,
+            21002,
+            41777,
+            64222,
+            59885,
+            43545,
+            21030
+          ],
+          "source_sha256": "b8b5d1d794dc0185b68526b713893f6d842518fde9c21d681bcdbe50549d43f6",
+          "control_checkpoint_sha256": "76f379d5a7e4cd9d12fdf0b701f3dd9dbbf28b5eea270a9cee2d30d87b4dad98",
+          "full_weighted_spike_loss": 12.467863082885742,
+          "gate_detached_readout_loss": 12.467863082885742,
+          "event_detached_readout_loss": 12.467863082885742,
+          "loss_values_exactly_equal": true,
+          "gradient_credit_decomposition": {
+            "parameters_by_family": {
+              "dendric_layer": {
+                "full_norm": 0.017863517110658256,
+                "gate_credit_norm": 0.0,
+                "event_credit_norm": 0.017863517110658256,
+                "gate_event_cosine": null,
+                "sum_relative_residual": 0.0,
+                "sum_max_abs_residual": 0.0,
+                "sum_tolerance": 1e-05,
+                "sum_identity_pass": true
+              },
+              "kuramoto": {
+                "full_norm": 2.5314263126767833,
+                "gate_credit_norm": 2.7553469999030424,
+                "event_credit_norm": 0.27802272030733055,
+                "gate_event_cosine": -0.8231279431770601,
+                "sum_relative_residual": 5.609819206676349e-07,
+                "sum_max_abs_residual": 1.341104507446289e-06,
+                "sum_tolerance": 1.5284065008163452e-05,
+                "sum_identity_pass": true
+              },
+              "membrane_layer": {
+                "full_norm": 0.0011524634701580935,
+                "gate_credit_norm": 0.0,
+                "event_credit_norm": 0.0011524634701580935,
+                "gate_event_cosine": null,
+                "sum_relative_residual": 0.0,
+                "sum_max_abs_residual": 0.0,
+                "sum_tolerance": 1e-05,
+                "sum_identity_pass": true
+              },
+              "other": {
+                "full_norm": 38.26948913431649,
+                "gate_credit_norm": 40.94219276183597,
+                "event_credit_norm": 2.8480633041761947,
+                "gate_event_cosine": -0.9425799815050715,
+                "sum_relative_residual": 5.015940594347383e-07,
+                "sum_max_abs_residual": 8.761882781982422e-06,
+                "sum_tolerance": 0.0001887501907348633,
+                "sum_identity_pass": true
+              }
+            },
+            "captured_node_gradient_norms": {
+              "theta": {
+                "full": 4.87631413881637,
+                "gate_credit": 5.310949904449784,
+                "event_credit": 0.4439301852789993
+              },
+              "h": {
+                "full": 0.0024050731927014,
+                "gate_credit": 0.0,
+                "event_credit": 0.0024050731927014
+              },
+              "mem": {
+                "full": 0.0030459337054081857,
+                "gate_credit": 0.0,
+                "event_credit": 0.0030459337054081857
+              },
+              "x": {
+                "full": 0.0025190356697885755,
+                "gate_credit": 0.0,
+                "event_credit": 0.0025190356697885755
+              },
+              "gate": {
+                "full": 0.3411303699847665,
+                "gate_credit": 0.34333926511608087,
+                "event_credit": 0.003685348443098194
+              }
+            },
+            "all_parameter_families_sum_identity_pass": true
+          },
+          "event_statistics": {
+            "event_logit_quantiles": {
+              "min": -0.5038619041442871,
+              "p01": 1.163619041442871,
+              "p10": 1.5191540718078613,
+              "p50": 1.7308558225631714,
+              "p90": 3.2658090591430664,
+              "p99": 4.933076858520508,
+              "max": 5.439608097076416
+            },
+            "event_binary_rate": 0.9998769760131836,
+            "always_on_unit_fraction": 0.99920654296875,
+            "always_off_unit_fraction": 0.0,
+            "constant_unit_fraction": 0.99920654296875,
+            "gate_mean": 0.31496021151542664,
+            "gate_variance": 0.08119216561317444,
+            "spike_activity_occupancy": 0.3148457407951355
+          },
+          "captured_steps": {
+            "x": 64,
+            "event": 64,
+            "gate": 64,
+            "h": 64,
+            "mem": 64,
+            "theta": 64
+          },
+          "gate_folded_shape": [
+            16,
+            4,
+            256,
+            64
+          ],
+          "event_folded_shape": [
+            16,
+            4,
+            256,
+            64
+          ],
+          "actual_event_times_gate_exactly_reconstructs_spikes": true,
+          "feedback_disabled": true,
+          "pulse_disabled": true
+        },
+        {
+          "batch": 2,
+          "training_ids": [
+            31483,
+            45842,
+            53351,
+            20671,
+            14491,
+            36271,
+            40780,
+            7730,
+            5602,
+            34315,
+            70355,
+            45835,
+            20381,
+            51668,
+            20039,
+            63282
+          ],
+          "source_sha256": "b8b5d1d794dc0185b68526b713893f6d842518fde9c21d681bcdbe50549d43f6",
+          "control_checkpoint_sha256": "76f379d5a7e4cd9d12fdf0b701f3dd9dbbf28b5eea270a9cee2d30d87b4dad98",
+          "full_weighted_spike_loss": 13.655948638916016,
+          "gate_detached_readout_loss": 13.655948638916016,
+          "event_detached_readout_loss": 13.655948638916016,
+          "loss_values_exactly_equal": true,
+          "gradient_credit_decomposition": {
+            "parameters_by_family": {
+              "dendric_layer": {
+                "full_norm": 0.07746728063027314,
+                "gate_credit_norm": 0.0,
+                "event_credit_norm": 0.07746728063027314,
+                "gate_event_cosine": null,
+                "sum_relative_residual": 0.0,
+                "sum_max_abs_residual": 0.0,
+                "sum_tolerance": 1e-05,
+                "sum_identity_pass": true
+              },
+              "kuramoto": {
+                "full_norm": 1.6457064622679662,
+                "gate_credit_norm": 1.9803169435723844,
+                "event_credit_norm": 0.43466033223148876,
+                "gate_event_cosine": -0.8145241606637048,
+                "sum_relative_residual": 1.6688737552316256e-06,
+                "sum_max_abs_residual": 2.652406692504883e-06,
+                "sum_tolerance": 1.2829452753067017e-05,
+                "sum_identity_pass": true
+              },
+              "membrane_layer": {
+                "full_norm": 0.0017248355594452992,
+                "gate_credit_norm": 0.0,
+                "event_credit_norm": 0.0017248355594452992,
+                "gate_event_cosine": null,
+                "sum_relative_residual": 0.0,
+                "sum_max_abs_residual": 0.0,
+                "sum_tolerance": 1e-05,
+                "sum_identity_pass": true
+              },
+              "other": {
+                "full_norm": 8.723836040225335,
+                "gate_credit_norm": 11.098826010843215,
+                "event_credit_norm": 2.831879339417464,
+                "gate_event_cosine": -0.8765084036494107,
+                "sum_relative_residual": 1.890856301009123e-06,
+                "sum_max_abs_residual": 8.58306884765625e-06,
+                "sum_tolerance": 3.707809209823609e-05,
+                "sum_identity_pass": true
+              }
+            },
+            "captured_node_gradient_norms": {
+              "theta": {
+                "full": 1.8693699886898911,
+                "gate_credit": 2.0366306858409793,
+                "event_credit": 0.4245526000453258
+              },
+              "h": {
+                "full": 0.00869814529345981,
+                "gate_credit": 0.0,
+                "event_credit": 0.00869814529345981
+              },
+              "mem": {
+                "full": 0.011712064244482767,
+                "gate_credit": 0.0,
+                "event_credit": 0.011712064244482767
+              },
+              "x": {
+                "full": 0.009197939542671604,
+                "gate_credit": 0.0,
+                "event_credit": 0.009197939542671604
+              },
+              "gate": {
+                "full": 0.9254352826699312,
+                "gate_credit": 0.9344604518072107,
+                "event_credit": 0.01351224562624786
+              }
+            },
+            "all_parameter_families_sum_identity_pass": true
+          },
+          "event_statistics": {
+            "event_logit_quantiles": {
+              "min": -0.6496050953865051,
+              "p01": 1.1485768556594849,
+              "p10": 1.512886643409729,
+              "p50": 1.7591578960418701,
+              "p90": 3.516371726989746,
+              "p99": 5.070090293884277,
+              "max": 5.454331874847412
+            },
+            "event_binary_rate": 0.9996528625488281,
+            "always_on_unit_fraction": 0.9981689453125,
+            "always_off_unit_fraction": 0.0,
+            "constant_unit_fraction": 0.9981689453125,
+            "gate_mean": 0.3491347134113312,
+            "gate_variance": 0.0933280661702156,
+            "spike_activity_occupancy": 0.3488081991672516
+          },
+          "captured_steps": {
+            "x": 64,
+            "event": 64,
+            "gate": 64,
+            "h": 64,
+            "mem": 64,
+            "theta": 64
+          },
+          "gate_folded_shape": [
+            16,
+            4,
+            256,
+            64
+          ],
+          "event_folded_shape": [
+            16,
+            4,
+            256,
+            64
+          ],
+          "actual_event_times_gate_exactly_reconstructs_spikes": true,
+          "feedback_disabled": true,
+          "pulse_disabled": true
+        },
+        {
+          "batch": 3,
+          "training_ids": [
+            37032,
+            7827,
+            28066,
+            63060,
+            47558,
+            49035,
+            34477,
+            62328,
+            29686,
+            14722,
+            42204,
+            67199,
+            35885,
+            23583,
+            15281,
+            50611
+          ],
+          "source_sha256": "b8b5d1d794dc0185b68526b713893f6d842518fde9c21d681bcdbe50549d43f6",
+          "control_checkpoint_sha256": "76f379d5a7e4cd9d12fdf0b701f3dd9dbbf28b5eea270a9cee2d30d87b4dad98",
+          "full_weighted_spike_loss": 12.293929100036621,
+          "gate_detached_readout_loss": 12.293929100036621,
+          "event_detached_readout_loss": 12.293929100036621,
+          "loss_values_exactly_equal": true,
+          "gradient_credit_decomposition": {
+            "parameters_by_family": {
+              "dendric_layer": {
+                "full_norm": 0.01135883345012307,
+                "gate_credit_norm": 0.0,
+                "event_credit_norm": 0.01135883345012307,
+                "gate_event_cosine": null,
+                "sum_relative_residual": 0.0,
+                "sum_max_abs_residual": 0.0,
+                "sum_tolerance": 1e-05,
+                "sum_identity_pass": true
+              },
+              "kuramoto": {
+                "full_norm": 3.3295319964763146,
+                "gate_credit_norm": 3.314837928224439,
+                "event_credit_norm": 0.0291434630062159,
+                "gate_event_cosine": 0.5008765812067043,
+                "sum_relative_residual": 3.972440748656935e-07,
+                "sum_max_abs_residual": 1.278705894947052e-06,
+                "sum_tolerance": 3.245084524154663e-05,
+                "sum_identity_pass": true
+              },
+              "membrane_layer": {
+                "full_norm": 0.0004088760062073465,
+                "gate_credit_norm": 0.0,
+                "event_credit_norm": 0.0004088760062073465,
+                "gate_event_cosine": null,
+                "sum_relative_residual": 0.0,
+                "sum_max_abs_residual": 0.0,
+                "sum_tolerance": 1e-05,
+                "sum_identity_pass": true
+              },
+              "other": {
+                "full_norm": 21.401605357737168,
+                "gate_credit_norm": 21.605640351767807,
+                "event_credit_norm": 0.46075949678188644,
+                "gate_event_cosine": -0.4513772215091831,
+                "sum_relative_residual": 6.367290098605797e-07,
+                "sum_max_abs_residual": 9.462237358093262e-06,
+                "sum_tolerance": 9.724494934082032e-05,
+                "sum_identity_pass": true
+              }
+            },
+            "captured_node_gradient_norms": {
+              "theta": {
+                "full": 1.1480686022000413,
+                "gate_credit": 1.146105236419451,
+                "event_credit": 0.037667361593332796
+              },
+              "h": {
+                "full": 0.001711653000764199,
+                "gate_credit": 0.0,
+                "event_credit": 0.001711653000764199
+              },
+              "mem": {
+                "full": 0.0021322972580069296,
+                "gate_credit": 0.0,
+                "event_credit": 0.0021322972580069296
+              },
+              "x": {
+                "full": 0.00178424757806585,
+                "gate_credit": 0.0,
+                "event_credit": 0.00178424757806585
+              },
+              "gate": {
+                "full": 0.3795006114088566,
+                "gate_credit": 0.38080159608691216,
+                "event_credit": 0.0026167408149222328
+              }
+            },
+            "all_parameter_families_sum_identity_pass": true
+          },
+          "event_statistics": {
+            "event_logit_quantiles": {
+              "min": -0.42226332426071167,
+              "p01": 1.1841703653335571,
+              "p10": 1.5265507698059082,
+              "p50": 1.729901909828186,
+              "p90": 3.188861608505249,
+              "p99": 4.9403204917907715,
+              "max": 5.453606128692627
+            },
+            "event_binary_rate": 0.9998636245727539,
+            "always_on_unit_fraction": 0.9990234375,
+            "always_off_unit_fraction": 0.0,
+            "constant_unit_fraction": 0.9990234375,
+            "gate_mean": 0.30873987078666687,
+            "gate_variance": 0.0789223313331604,
+            "spike_activity_occupancy": 0.308610200881958
+          },
+          "captured_steps": {
+            "x": 64,
+            "event": 64,
+            "gate": 64,
+            "h": 64,
+            "mem": 64,
+            "theta": 64
+          },
+          "gate_folded_shape": [
+            16,
+            4,
+            256,
+            64
+          ],
+          "event_folded_shape": [
+            16,
+            4,
+            256,
+            64
+          ],
+          "actual_event_times_gate_exactly_reconstructs_spikes": true,
+          "feedback_disabled": true,
+          "pulse_disabled": true
+        }
+      ]
+    },
+    "2": {
+      "source_sha256": "c79a5cc7d4a4e18e85bbfd1336b4fbb6ccfba73f69e13f042cd79c333f241dcb",
+      "no_optimizer_or_gt": true,
+      "batches": [
+        {
+          "batch": 0,
+          "training_ids": [
+            61826,
+            56863,
+            10472,
+            49514,
+            29018,
+            43736,
+            59533,
+            53869,
+            10948,
+            8852,
+            17300,
+            48668,
+            43098,
+            44993,
+            9691,
+            2644
+          ],
+          "source_sha256": "c79a5cc7d4a4e18e85bbfd1336b4fbb6ccfba73f69e13f042cd79c333f241dcb",
+          "control_checkpoint_sha256": "798ad3e9d4bf837b1bbeb1bd7c13900df511b5c76f5736d2b9f8b973d7fa5661",
+          "full_weighted_spike_loss": 21.503612518310547,
+          "gate_detached_readout_loss": 21.503612518310547,
+          "event_detached_readout_loss": 21.503612518310547,
+          "loss_values_exactly_equal": true,
+          "gradient_credit_decomposition": {
+            "parameters_by_family": {
+              "dendric_layer": {
+                "full_norm": 0.25641486216398557,
+                "gate_credit_norm": 0.0,
+                "event_credit_norm": 0.25641486216398557,
+                "gate_event_cosine": null,
+                "sum_relative_residual": 0.0,
+                "sum_max_abs_residual": 0.0,
+                "sum_tolerance": 1e-05,
+                "sum_identity_pass": true
+              },
+              "kuramoto": {
+                "full_norm": 1.5746691042379881,
+                "gate_credit_norm": 1.768439332368112,
+                "event_credit_norm": 1.052067880912349,
+                "gate_event_cosine": -0.47154346713246104,
+                "sum_relative_residual": 1.8346819428259716e-05,
+                "sum_max_abs_residual": 2.8848648071289062e-05,
+                "sum_tolerance": 1e-05,
+                "sum_identity_pass": false
+              },
+              "membrane_layer": {
+                "full_norm": 0.001461739658893813,
+                "gate_credit_norm": 0.0,
+                "event_credit_norm": 0.001461739658893813,
+                "gate_event_cosine": null,
+                "sum_relative_residual": 0.0,
+                "sum_max_abs_residual": 0.0,
+                "sum_tolerance": 1e-05,
+                "sum_identity_pass": true
+              },
+              "other": {
+                "full_norm": 15.69219396177306,
+                "gate_credit_norm": 16.482134883566758,
+                "event_credit_norm": 3.2335341731485716,
+                "gate_event_cosine": -0.33654138585665827,
+                "sum_relative_residual": 5.410136469330309e-06,
+                "sum_max_abs_residual": 6.628036499023438e-05,
+                "sum_tolerance": 6.313628673553468e-05,
+                "sum_identity_pass": false
+              }
+            },
+            "captured_node_gradient_norms": {
+              "theta": {
+                "full": 2.13265229426207,
+                "gate_credit": 2.1541903301194956,
+                "event_credit": 0.12433903019819993
+              },
+              "h": {
+                "full": 0.023352488337258483,
+                "gate_credit": 0.0,
+                "event_credit": 0.023352488337258483
+              },
+              "mem": {
+                "full": 0.028445158618949584,
+                "gate_credit": 0.0,
+                "event_credit": 0.028445158618949584
+              },
+              "x": {
+                "full": 0.024264614321472935,
+                "gate_credit": 0.0,
+                "event_credit": 0.024264614321472935
+              },
+              "gate": {
+                "full": 1.3028104313755584,
+                "gate_credit": 1.3021126935329292,
+                "event_credit": 0.004875913609249367
+              }
+            },
+            "all_parameter_families_sum_identity_pass": false
+          },
+          "event_statistics": {
+            "event_logit_quantiles": {
+              "min": -0.259813517332077,
+              "p01": 0.20673349499702454,
+              "p10": 0.6014999151229858,
+              "p50": 0.8975217342376709,
+              "p90": 1.3098974227905273,
+              "p99": 1.9474577903747559,
+              "max": 2.2636609077453613
+            },
+            "event_binary_rate": 0.9996738433837891,
+            "always_on_unit_fraction": 0.9932861328125,
+            "always_off_unit_fraction": 0.0,
+            "constant_unit_fraction": 0.9932861328125,
+            "gate_mean": 0.27129504084587097,
+            "gate_variance": 0.06196336820721626,
+            "spike_activity_occupancy": 0.2709929943084717
+          },
+          "captured_steps": {
+            "x": 64,
+            "event": 64,
+            "gate": 64,
+            "h": 64,
+            "mem": 64,
+            "theta": 64
+          },
+          "gate_folded_shape": [
+            16,
+            4,
+            256,
+            64
+          ],
+          "event_folded_shape": [
+            16,
+            4,
+            256,
+            64
+          ],
+          "actual_event_times_gate_exactly_reconstructs_spikes": true,
+          "feedback_disabled": true,
+          "pulse_disabled": true
+        },
+        {
+          "batch": 1,
+          "training_ids": [
+            46750,
+            10533,
+            69138,
+            42782,
+            49554,
+            41524,
+            57020,
+            14519,
+            9432,
+            32092,
+            26683,
+            41510,
+            5388,
+            56351,
+            40898,
+            577
+          ],
+          "source_sha256": "c79a5cc7d4a4e18e85bbfd1336b4fbb6ccfba73f69e13f042cd79c333f241dcb",
+          "control_checkpoint_sha256": "798ad3e9d4bf837b1bbeb1bd7c13900df511b5c76f5736d2b9f8b973d7fa5661",
+          "full_weighted_spike_loss": 20.92138671875,
+          "gate_detached_readout_loss": 20.92138671875,
+          "event_detached_readout_loss": 20.92138671875,
+          "loss_values_exactly_equal": true,
+          "gradient_credit_decomposition": {
+            "parameters_by_family": {
+              "dendric_layer": {
+                "full_norm": 0.380225597152285,
+                "gate_credit_norm": 0.0,
+                "event_credit_norm": 0.380225597152285,
+                "gate_event_cosine": null,
+                "sum_relative_residual": 0.0,
+                "sum_max_abs_residual": 0.0,
+                "sum_tolerance": 1e-05,
+                "sum_identity_pass": true
+              },
+              "kuramoto": {
+                "full_norm": 4.217399964818696,
+                "gate_credit_norm": 5.250204292893059,
+                "event_credit_norm": 1.054539549960654,
+                "gate_event_cosine": -0.983481180704394,
+                "sum_relative_residual": 1.5669297350970142e-06,
+                "sum_max_abs_residual": 6.556510925292969e-06,
+                "sum_tolerance": 4.1444563865661626e-05,
+                "sum_identity_pass": true
+              },
+              "membrane_layer": {
+                "full_norm": 0.0011823905359289724,
+                "gate_credit_norm": 0.0,
+                "event_credit_norm": 0.0011823905359289724,
+                "gate_event_cosine": null,
+                "sum_relative_residual": 0.0,
+                "sum_max_abs_residual": 0.0,
+                "sum_tolerance": 1e-05,
+                "sum_identity_pass": true
+              },
+              "other": {
+                "full_norm": 21.41270045894828,
+                "gate_credit_norm": 22.976858283080777,
+                "event_credit_norm": 4.490183344608466,
+                "gate_event_cosine": -0.4342040502259483,
+                "sum_relative_residual": 1.6436733952675603e-06,
+                "sum_max_abs_residual": 2.9087066650390625e-05,
+                "sum_tolerance": 0.00011970691680908204,
+                "sum_identity_pass": true
+              }
+            },
+            "captured_node_gradient_norms": {
+              "theta": {
+                "full": 1.2889967605751418,
+                "gate_credit": 1.2831170786143187,
+                "event_credit": 0.19378836872133517
+              },
+              "h": {
+                "full": 0.02283666319450788,
+                "gate_credit": 0.0,
+                "event_credit": 0.02283666319450788
+              },
+              "mem": {
+                "full": 0.02708595487626087,
+                "gate_credit": 0.0,
+                "event_credit": 0.02708595487626087
+              },
+              "x": {
+                "full": 0.023506807539407218,
+                "gate_credit": 0.0,
+                "event_credit": 0.023506807539407218
+              },
+              "gate": {
+                "full": 1.0429289092058012,
+                "gate_credit": 1.04218679271798,
+                "event_credit": 0.004941914249320036
+              }
+            },
+            "all_parameter_families_sum_identity_pass": true
+          },
+          "event_statistics": {
+            "event_logit_quantiles": {
+              "min": -0.3102826476097107,
+              "p01": 0.21700958907604218,
+              "p10": 0.5968858599662781,
+              "p50": 0.8977270126342773,
+              "p90": 1.3201379776000977,
+              "p99": 1.9339022636413574,
+              "max": 2.261942148208618
+            },
+            "event_binary_rate": 0.9998598098754883,
+            "always_on_unit_fraction": 0.99652099609375,
+            "always_off_unit_fraction": 0.0,
+            "constant_unit_fraction": 0.99652099609375,
+            "gate_mean": 0.2748291492462158,
+            "gate_variance": 0.06145032122731209,
+            "spike_activity_occupancy": 0.2747018039226532
+          },
+          "captured_steps": {
+            "x": 64,
+            "event": 64,
+            "gate": 64,
+            "h": 64,
+            "mem": 64,
+            "theta": 64
+          },
+          "gate_folded_shape": [
+            16,
+            4,
+            256,
+            64
+          ],
+          "event_folded_shape": [
+            16,
+            4,
+            256,
+            64
+          ],
+          "actual_event_times_gate_exactly_reconstructs_spikes": true,
+          "feedback_disabled": true,
+          "pulse_disabled": true
+        },
+        {
+          "batch": 2,
+          "training_ids": [
+            10797,
+            542,
+            68101,
+            29360,
+            44224,
+            19765,
+            11939,
+            27839,
+            56520,
+            63226,
+            68773,
+            29451,
+            45375,
+            68363,
+            18772,
+            61156
+          ],
+          "source_sha256": "c79a5cc7d4a4e18e85bbfd1336b4fbb6ccfba73f69e13f042cd79c333f241dcb",
+          "control_checkpoint_sha256": "798ad3e9d4bf837b1bbeb1bd7c13900df511b5c76f5736d2b9f8b973d7fa5661",
+          "full_weighted_spike_loss": 21.404956817626953,
+          "gate_detached_readout_loss": 21.404956817626953,
+          "event_detached_readout_loss": 21.404956817626953,
+          "loss_values_exactly_equal": true,
+          "gradient_credit_decomposition": {
+            "parameters_by_family": {
+              "dendric_layer": {
+                "full_norm": 0.6823348424225857,
+                "gate_credit_norm": 0.0,
+                "event_credit_norm": 0.6823348424225857,
+                "gate_event_cosine": null,
+                "sum_relative_residual": 0.0,
+                "sum_max_abs_residual": 0.0,
+                "sum_tolerance": 1e-05,
+                "sum_identity_pass": true
+              },
+              "kuramoto": {
+                "full_norm": 2.4855976141546776,
+                "gate_credit_norm": 3.039403903624679,
+                "event_credit_norm": 0.5878907107389655,
+                "gate_event_cosine": -0.9529609394621531,
+                "sum_relative_residual": 1.5401537825471333e-05,
+                "sum_max_abs_residual": 3.820657730102539e-05,
+                "sum_tolerance": 2.299022436141968e-05,
+                "sum_identity_pass": false
+              },
+              "membrane_layer": {
+                "full_norm": 0.0015081413531487409,
+                "gate_credit_norm": 0.0,
+                "event_credit_norm": 0.0015081413531487409,
+                "gate_event_cosine": null,
+                "sum_relative_residual": 0.0,
+                "sum_max_abs_residual": 0.0,
+                "sum_tolerance": 1e-05,
+                "sum_identity_pass": true
+              },
+              "other": {
+                "full_norm": 19.973261825618426,
+                "gate_credit_norm": 18.087518857177994,
+                "event_credit_norm": 6.674581235908182,
+                "gate_event_cosine": 0.11274995714308356,
+                "sum_relative_residual": 7.984810866553639e-06,
+                "sum_max_abs_residual": 8.428096771240234e-05,
+                "sum_tolerance": 0.00010951999664306642,
+                "sum_identity_pass": true
+              }
+            },
+            "captured_node_gradient_norms": {
+              "theta": {
+                "full": 1.8663780002500199,
+                "gate_credit": 1.9781594621655916,
+                "event_credit": 0.22875832471632074
+              },
+              "h": {
+                "full": 0.042847218698865173,
+                "gate_credit": 0.0,
+                "event_credit": 0.042847218698865173
+              },
+              "mem": {
+                "full": 0.052668032161540784,
+                "gate_credit": 0.0,
+                "event_credit": 0.052668032161540784
+              },
+              "x": {
+                "full": 0.04379025496693163,
+                "gate_credit": 0.0,
+                "event_credit": 0.04379025496693163
+              },
+              "gate": {
+                "full": 1.173179678889,
+                "gate_credit": 1.17185946586995,
+                "event_credit": 0.00938508942334827
+              }
+            },
+            "all_parameter_families_sum_identity_pass": false
+          },
+          "event_statistics": {
+            "event_logit_quantiles": {
+              "min": -0.25078365206718445,
+              "p01": 0.193464457988739,
+              "p10": 0.5999448299407959,
+              "p50": 0.8971750140190125,
+              "p90": 1.3053643703460693,
+              "p99": 1.965041160583496,
+              "max": 2.2607576847076416
+            },
+            "event_binary_rate": 0.9997653961181641,
+            "always_on_unit_fraction": 0.99395751953125,
+            "always_off_unit_fraction": 0.0,
+            "constant_unit_fraction": 0.99395751953125,
+            "gate_mean": 0.2721720337867737,
+            "gate_variance": 0.06500540673732758,
+            "spike_activity_occupancy": 0.27195650339126587
+          },
+          "captured_steps": {
+            "x": 64,
+            "event": 64,
+            "gate": 64,
+            "h": 64,
+            "mem": 64,
+            "theta": 64
+          },
+          "gate_folded_shape": [
+            16,
+            4,
+            256,
+            64
+          ],
+          "event_folded_shape": [
+            16,
+            4,
+            256,
+            64
+          ],
+          "actual_event_times_gate_exactly_reconstructs_spikes": true,
+          "feedback_disabled": true,
+          "pulse_disabled": true
+        },
+        {
+          "batch": 3,
+          "training_ids": [
+            54399,
+            11289,
+            30777,
+            32376,
+            52668,
+            58370,
+            60002,
+            57615,
+            17741,
+            8219,
+            45105,
+            43241,
+            34643,
+            22865,
+            49583,
+            3577
+          ],
+          "source_sha256": "c79a5cc7d4a4e18e85bbfd1336b4fbb6ccfba73f69e13f042cd79c333f241dcb",
+          "control_checkpoint_sha256": "798ad3e9d4bf837b1bbeb1bd7c13900df511b5c76f5736d2b9f8b973d7fa5661",
+          "full_weighted_spike_loss": 20.255929946899414,
+          "gate_detached_readout_loss": 20.255929946899414,
+          "event_detached_readout_loss": 20.255929946899414,
+          "loss_values_exactly_equal": true,
+          "gradient_credit_decomposition": {
+            "parameters_by_family": {
+              "dendric_layer": {
+                "full_norm": 0.435282085279877,
+                "gate_credit_norm": 0.0,
+                "event_credit_norm": 0.435282085279877,
+                "gate_event_cosine": null,
+                "sum_relative_residual": 0.0,
+                "sum_max_abs_residual": 0.0,
+                "sum_tolerance": 1e-05,
+                "sum_identity_pass": true
+              },
+              "kuramoto": {
+                "full_norm": 1.2725469671118461,
+                "gate_credit_norm": 2.659724882578947,
+                "event_credit_norm": 1.511149978038221,
+                "gate_event_cosine": -0.9626571325494914,
+                "sum_relative_residual": 1.0799028264925137e-05,
+                "sum_max_abs_residual": 1.3709068298339844e-05,
+                "sum_tolerance": 1.053728222846985e-05,
+                "sum_identity_pass": false
+              },
+              "membrane_layer": {
+                "full_norm": 0.0009701102940373251,
+                "gate_credit_norm": 0.0,
+                "event_credit_norm": 0.0009701102940373251,
+                "gate_event_cosine": null,
+                "sum_relative_residual": 0.0,
+                "sum_max_abs_residual": 0.0,
+                "sum_tolerance": 1e-05,
+                "sum_identity_pass": true
+              },
+              "other": {
+                "full_norm": 16.102825536386504,
+                "gate_credit_norm": 19.232721948797078,
+                "event_credit_norm": 6.543930996989343,
+                "gate_event_cosine": -0.6094977017254744,
+                "sum_relative_residual": 3.288136461692943e-06,
+                "sum_max_abs_residual": 2.5033950805664062e-05,
+                "sum_tolerance": 0.00010133405685424805,
+                "sum_identity_pass": true
+              }
+            },
+            "captured_node_gradient_norms": {
+              "theta": {
+                "full": 1.2252270808951404,
+                "gate_credit": 1.2471951960109577,
+                "event_credit": 0.12055448361607302
+              },
+              "h": {
+                "full": 0.02026362810918875,
+                "gate_credit": 0.0,
+                "event_credit": 0.02026362810918875
+              },
+              "mem": {
+                "full": 0.023979485825410003,
+                "gate_credit": 0.0,
+                "event_credit": 0.023979485825410003
+              },
+              "x": {
+                "full": 0.020895197004995408,
+                "gate_credit": 0.0,
+                "event_credit": 0.020895197004995408
+              },
+              "gate": {
+                "full": 1.0456012298669501,
+                "gate_credit": 1.0449951665939392,
+                "event_credit": 0.004238518484876875
+              }
+            },
+            "all_parameter_families_sum_identity_pass": false
+          },
+          "event_statistics": {
+            "event_logit_quantiles": {
+              "min": -0.25375428795814514,
+              "p01": 0.2163565754890442,
+              "p10": 0.6285004615783691,
+              "p50": 0.8976167440414429,
+              "p90": 1.2738728523254395,
+              "p99": 1.9317023754119873,
+              "max": 2.263458728790283
+            },
+            "event_binary_rate": 0.9997692108154297,
+            "always_on_unit_fraction": 0.995361328125,
+            "always_off_unit_fraction": 0.0,
+            "constant_unit_fraction": 0.995361328125,
+            "gate_mean": 0.25259414315223694,
+            "gate_variance": 0.05717676132917404,
+            "spike_activity_occupancy": 0.25237759947776794
+          },
+          "captured_steps": {
+            "x": 64,
+            "event": 64,
+            "gate": 64,
+            "h": 64,
+            "mem": 64,
+            "theta": 64
+          },
+          "gate_folded_shape": [
+            16,
+            4,
+            256,
+            64
+          ],
+          "event_folded_shape": [
+            16,
+            4,
+            256,
+            64
+          ],
+          "actual_event_times_gate_exactly_reconstructs_spikes": true,
+          "feedback_disabled": true,
+          "pulse_disabled": true
+        }
+      ]
+    }
+  },
+  "created_unix": 1791367814.532026
+}

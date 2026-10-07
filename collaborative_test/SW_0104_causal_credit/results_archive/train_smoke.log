@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0104_causal_credit/diagnose.py", line 380, in <module>
+    main()
+  File "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0104_causal_credit/diagnose.py", line 365, in main
+    result = run_train(device, smoke_only=args.stage == "train-smoke")
+  File "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0104_causal_credit/diagnose.py", line 249, in run_train
+    raise AssertionError(f"seed{seed}: source hash mismatch")
+AssertionError: seed0: source hash mismatch

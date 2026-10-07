@@ -1,0 +1,166 @@
+{
+  "status": "smoke_passed",
+  "purpose": "SW0104 explicit output event/gate credit decomposition; no GT, no optimizer",
+  "gamma_cache_sha256": "75e8a872b0dad319e58934b48177858511845c057cc370c330ff7ea968023490",
+  "device": "cuda:0",
+  "contract": {
+    "batches_per_seed": 1,
+    "batch": 16,
+    "steps": 64,
+    "settle": 32,
+    "shuffle": [
+      117,
+      118,
+      119
+    ]
+  },
+  "seeds": {
+    "0": {
+      "source_sha256": "aac44697906c835569e3bf900e5930ce900223d1aa95c0bedba899bee5ff155d",
+      "no_optimizer_or_gt": true,
+      "batches": [
+        {
+          "batch": 0,
+          "training_ids": [
+            6654,
+            40665,
+            43310,
+            46803,
+            60279,
+            63392,
+            65737,
+            30426,
+            61273,
+            35977,
+            230,
+            28080,
+            15085,
+            19171,
+            23380,
+            66871
+          ],
+          "source_sha256": "aac44697906c835569e3bf900e5930ce900223d1aa95c0bedba899bee5ff155d",
+          "control_checkpoint_sha256": "36f2481dd1fa51fa29bd4dc34275a876b71d8b76fbee13ac47a0a1bfe6766fbf",
+          "full_weighted_spike_loss": 13.653931617736816,
+          "gate_detached_readout_loss": 13.653931617736816,
+          "event_detached_readout_loss": 13.653931617736816,
+          "loss_values_exactly_equal": true,
+          "gradient_credit_decomposition": {
+            "parameters_by_family": {
+              "dendric_layer": {
+                "full_norm": 0.15941557423887034,
+                "gate_credit_norm": 0.0,
+                "event_credit_norm": 0.15941557423887034,
+                "gate_event_cosine": null,
+                "sum_relative_residual": 0.0,
+                "sum_max_abs_residual": 0.0,
+                "sum_tolerance": 1e-05,
+                "sum_identity_pass": true
+              },
+              "kuramoto": {
+                "full_norm": 3.6396142958912794,
+                "gate_credit_norm": 3.8615355513140117,
+                "event_credit_norm": 4.143818860555773,
+                "gate_event_cosine": -0.5885661016105644,
+                "sum_relative_residual": 2.316074069072907e-06,
+                "sum_max_abs_residual": 8.106231689453125e-06,
+                "sum_tolerance": 2.319135904312134e-05,
+                "sum_identity_pass": true
+              },
+              "membrane_layer": {
+                "full_norm": 0.0016548246573278517,
+                "gate_credit_norm": 0.0,
+                "event_credit_norm": 0.0016548246573278517,
+                "gate_event_cosine": null,
+                "sum_relative_residual": 0.0,
+                "sum_max_abs_residual": 0.0,
+                "sum_tolerance": 1e-05,
+                "sum_identity_pass": true
+              },
+              "other": {
+                "full_norm": 68.5994142574367,
+                "gate_credit_norm": 58.16994814594923,
+                "event_credit_norm": 24.99355970373335,
+                "gate_event_cosine": 0.23986887235600943,
+                "sum_relative_residual": 2.6065889928343165e-06,
+                "sum_max_abs_residual": 8.20159912109375e-05,
+                "sum_tolerance": 0.00035100540161132817,
+                "sum_identity_pass": true
+              }
+            },
+            "captured_node_gradient_norms": {
+              "theta": {
+                "full": 5.953926300657965,
+                "gate_credit": 2.8887958730191934,
+                "event_credit": 3.7475395672397442
+              },
+              "h": {
+                "full": 0.025440308769615776,
+                "gate_credit": 0.0,
+                "event_credit": 0.025440308769615776
+              },
+              "mem": {
+                "full": 0.029231152635696558,
+                "gate_credit": 0.0,
+                "event_credit": 0.029231152635696558
+              },
+              "x": {
+                "full": 0.026362423852556736,
+                "gate_credit": 0.0,
+                "event_credit": 0.026362423852556736
+              },
+              "gate": {
+                "full": 0.4351967205471937,
+                "gate_credit": 0.4293836398294053,
+                "event_credit": 0.024228135250319992
+              }
+            },
+            "all_parameter_families_sum_identity_pass": true
+          },
+          "event_statistics": {
+            "event_logit_quantiles": {
+              "min": -0.9634114503860474,
+              "p01": 0.12200960516929626,
+              "p10": 0.5736084580421448,
+              "p50": 0.8785306215286255,
+              "p90": 2.1151018142700195,
+              "p99": 3.1188697814941406,
+              "max": 3.498589515686035
+            },
+            "event_binary_rate": 0.9982938766479492,
+            "always_on_unit_fraction": 0.979248046875,
+            "always_off_unit_fraction": 0.0,
+            "constant_unit_fraction": 0.979248046875,
+            "gate_mean": 0.35956689715385437,
+            "gate_variance": 0.09703096002340317,
+            "spike_activity_occupancy": 0.3582732379436493
+          },
+          "captured_steps": {
+            "x": 64,
+            "event": 64,
+            "gate": 64,
+            "h": 64,
+            "mem": 64,
+            "theta": 64
+          },
+          "gate_folded_shape": [
+            16,
+            4,
+            256,
+            64
+          ],
+          "event_folded_shape": [
+            16,
+            4,
+            256,
+            64
+          ],
+          "actual_event_times_gate_exactly_reconstructs_spikes": true,
+          "feedback_disabled": true,
+          "pulse_disabled": true
+        }
+      ]
+    }
+  },
+  "created_unix": 1791367717.1531956
+}

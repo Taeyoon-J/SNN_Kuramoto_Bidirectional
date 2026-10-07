@@ -1,0 +1,120 @@
+{
+  "experiment": "SW0104 explicit event/gate output-credit diagnostic",
+  "status": "complete_diagnostic_with_strict_checks_failing",
+  "scope": {
+    "training_seeds": [
+      0,
+      1,
+      2
+    ],
+    "train_batches_per_seed": 4,
+    "train_batch_size": 16,
+    "train_steps": 64,
+    "loss_settle": 32,
+    "event_statistics_frames": 64,
+    "validation_ids": [
+      1320,
+      1335
+    ],
+    "validation_batch_size": 8,
+    "validation_steps": 1024,
+    "validation_settle": 512,
+    "predictions_before_ground_truth": true,
+    "optimizer_used": false,
+    "training_ground_truth_used": false,
+    "full320_run": false
+  },
+  "checks": {
+    "actual_event_times_gate_reconstructs_component_spikes_all_batches": true,
+    "three_loss_values_exactly_equal_all_batches": true,
+    "gradient_sum_strict_failures": [
+      {
+        "seed": 2,
+        "batch": 0,
+        "family": "kuramoto",
+        "relative_residual": 1.8346819428259716e-05,
+        "max_absolute_residual": 2.8848648071289062e-05,
+        "tolerance": 1e-05
+      },
+      {
+        "seed": 2,
+        "batch": 0,
+        "family": "other",
+        "relative_residual": 5.410136469330309e-06,
+        "max_absolute_residual": 6.628036499023438e-05,
+        "tolerance": 6.313628673553468e-05
+      },
+      {
+        "seed": 2,
+        "batch": 2,
+        "family": "kuramoto",
+        "relative_residual": 1.5401537825471333e-05,
+        "max_absolute_residual": 3.820657730102539e-05,
+        "tolerance": 2.299022436141968e-05
+      },
+      {
+        "seed": 2,
+        "batch": 3,
+        "family": "kuramoto",
+        "relative_residual": 1.0799028264925137e-05,
+        "max_absolute_residual": 1.3709068298339844e-05,
+        "tolerance": 1.053728222846985e-05
+      }
+    ],
+    "gradient_sum_passed_all_families_seeds_0_1": true,
+    "validation_actual_exactly_matches_archived_SW0097_per_image": true,
+    "gate_scalar_pearson_fourth_power_within_1e_6": {
+      "0": false,
+      "1": false,
+      "2": false
+    },
+    "no_readout_or_checkpoint_changes": true
+  },
+  "validation16_mean_metrics": {
+    "actual": {
+      "fg_ari": 0.810841007877421,
+      "foreground_iou": 0.5613388379379403,
+      "matched_object_iou": 0.6420080117192829
+    },
+    "gate": {
+      "fg_ari": 0.8107527596192433,
+      "foreground_iou": 0.5614613869575481,
+      "matched_object_iou": 0.6415274809653146
+    },
+    "event": {
+      "fg_ari": 0.0,
+      "foreground_iou": 0.0,
+      "matched_object_iou": 0.0
+    }
+  },
+  "validation16_edge_agreement_actual_vs_gate_q_ge_050": {
+    "0": 0.9985294342041016,
+    "1": 1.0,
+    "2": 0.9886354804039001
+  },
+  "validation16_event_occupancy_and_always_on_fraction": {
+    "0": {
+      "occupancy": 0.9988477230072021,
+      "always_on_fraction": 0.86163330078125
+    },
+    "1": {
+      "occupancy": 0.9999759793281555,
+      "always_on_fraction": 0.99755859375
+    },
+    "2": {
+      "occupancy": 0.9972125291824341,
+      "always_on_fraction": 0.7076416015625
+    }
+  },
+  "interpretation": "Output-factor gradient decomposition only; strict parameter gradient identity fails 4 checks in seed2. Binary event readout yields zero Pearson affinity/groups because event traces are nearly constant. The scalar gate formula discrepancy 5.54e-6 to 6.62e-6 exceeds the predeclared 1e-6 check. No causal bottleneck or candidate-promotion claim.",
+  "files": {
+    "training": "train_credit.json",
+    "validation": "validation16.json",
+    "failed_attempts": [
+      "train_smoke.log",
+      "validation16.log"
+    ],
+    "successful_smoke": "train_smoke_retry.log",
+    "final_validation_log": "validation16_retry.log"
+  }
+}
