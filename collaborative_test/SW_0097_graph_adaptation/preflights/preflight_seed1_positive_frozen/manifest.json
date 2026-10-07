@@ -1,0 +1,39 @@
+{
+  "arm": "positive_frozen",
+  "status": "training_complete",
+  "pilot": true,
+  "training_pool": 70000,
+  "unique_images_seen": 2,
+  "training_ids": [
+    68304,
+    49032
+  ],
+  "source": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0095_full70k_aligned_loss/seed1/core.pt",
+  "source_sha256": "b8b5d1d794dc0185b68526b713893f6d842518fde9c21d681bcdbe50549d43f6",
+  "seed": 118,
+  "source_model_seed": 1,
+  "steps": 1,
+  "batch": 2,
+  "core_lr": 3e-05,
+  "encoder_lr": 3e-06,
+  "train_steps": 64,
+  "train_settle": 32,
+  "started": 1791353329.0569937,
+  "ground_truth_used_for_training": false,
+  "preflight": true,
+  "device": "cpu",
+  "initial_encoder_gamma_max_diff": 0.0,
+  "completed": 1791353332.4267068,
+  "changed_core_keys": [
+    "gamma_phase_gain",
+    "gamma_channel_proj.weight",
+    "kuramoto.freq_gain",
+    "kuramoto.omega",
+    "kuramoto.kappa",
+    "kuramoto.direction_learner",
+    "dendric_layer.tau_n",
+    "dendric_layer.oscillator_dense.weight",
+    "dendric_layer.oscillator_dense.bias",
+    "membrane_layer.tau_m"
+  ]
+}

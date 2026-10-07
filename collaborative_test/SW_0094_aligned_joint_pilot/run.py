@@ -89,15 +89,17 @@ def main():
     p.add_argument("--device", default="cuda")
     p.add_argument("--preflight", action="store_true")
     p.add_argument("--source-seed", type=int, choices=[0, 1, 2], default=0)
+    p.add_argument("--source-checkpoint", type=Path, default=None)
+    p.add_argument("--shuffle-seed", type=int, default=None)
     p.add_argument("--validation-count", type=int, choices=[80, 320], default=80)
     args = p.parse_args()
     if args.steps < 1 or args.batch < 1 or args.steps * args.batch > 70000:
         raise ValueError("pilot must use a positive, bounded without-replacement budget")
     args.output.mkdir(parents=True, exist_ok=False)
     torch.set_num_threads(2)
-    shuffle_seed = 17 + args.source_seed
+    shuffle_seed = 17 + args.source_seed if args.shuffle_seed is None else args.shuffle_seed
     torch.manual_seed(shuffle_seed)
-    source = ROOT / f"trained_models/SW0090_unique70000_s{args.source_seed}_e10/checkpoints/epoch_01.pt"
+    source = args.source_checkpoint or ROOT / f"trained_models/SW0090_unique70000_s{args.source_seed}_e10/checkpoints/epoch_01.pt"
     core = S2NetCore(hparams(), device=args.device).to(args.device)
     initial = torch.load(source, map_location=args.device, weights_only=True)
     core.load_state_dict(initial, strict=True)
