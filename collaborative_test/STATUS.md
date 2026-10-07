@@ -1,10 +1,18 @@
 # Current status
 
+As of 2026-10-06, the user requested renewed analysis of degradation with
+70,000-image training and improvement toward beating Slot Attention. The
+[SW0093 analysis](SW_0093_scaling_failure_analysis/README.md) verifies a mismatch
+between the absolute spike correlation used by training and positive-only
+correlation used by prediction, and documents loss/FG-ARI divergence and
+oversegmentation. Its causal contribution still needs controlled testing.
+No new GPU training has been launched; the earlier goal was paused.
+
 Experiments1/2/3 requested by the user are complete: all three training seeds
 and epoch1/3/10 evaluations per experiment, plus experiment1's three-image mask
 visualizations. See [final comparison](TEST123_FINAL_RESULTS.md). The required
-next action after sharing results is to pause goal mode. Model modification
-tests remain suspended; the user has not authorized a further improvement cycle.
+next action after sharing those results was to pause goal mode, which was done.
+The new analysis request supersedes the earlier restriction on research scope.
 
 ## Earlier research history
 

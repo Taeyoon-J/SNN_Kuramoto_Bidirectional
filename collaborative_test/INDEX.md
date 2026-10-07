@@ -2,6 +2,7 @@
 
 | ID | Status | Change | Validation result |
 |---|---|---|---|
+| SW0093 | analysis complete; causal tests proposed | Diagnose 70k scaling failure from completed checkpoints' scores, archived training logs and active loss/classifier code | Training uses absolute correlation; classifier uses positive correlation. All3 seeds reduce endpoint loss but lose FG-ARI; count MAE 1.776 -> 3.279. No new GPU training; see SW_0093_scaling_failure_analysis/README.md. |
 | SW_0034 | planned, execution pending SSH | Stage-wise object-signal AUC at fixed pair distances and training-loss gradient connectivity; unchanged core observed with hooks | No results yet; syntax check passed; spatial-only and membrane/spike spatial controls prepared |
 | SW_0035 | complete, classifier reference suite | GT-free adaptive spectral object-count baseline on actual membrane/gated-spike patterns, compared with adaptive slots and fixed-k controls | Full320 eigengap .490649/.204761/.140716, count MAE 1.925; improves fixed spike ARI/FG IoU/count but lowers object IoU; weakly adaptive |
 | SW_0036 | complete, spike all-metric calibration gain | Frozen checkpoint threshold sweep after binary event saturation diagnosis | Full320 vth2 spike spatial k10 .487351/.192635/.172932 vs vth.06 .479762/.185651/.164179; event rate 1.0→.299, but object AUC remains weak |
