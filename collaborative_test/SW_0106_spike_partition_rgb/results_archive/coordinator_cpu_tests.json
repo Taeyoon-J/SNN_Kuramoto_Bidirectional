@@ -1,18 +1,25 @@
 {
   "timestamp_utc": "2026-10-07 22:46:46 UTC",
-  "status": "cpu_scheduler_tests_passed_no_gpu_launched",
-  "coordinator_sha256": "CB4F389B6CF94C1AC257B42145B06AD748E38D01062ADB4367348C79E90ABEDC",
-  "test_file_sha256": "2FEDAE5C476B96335B6CAFC032A1AD946483A93C14970A2E58829402B71F9485",
+  "status": "prior_scheduler_tests_passed_dependency_guard_added_tests_pending_rerun",
+  "tested_commit": "76bcd3e",
+  "tested_coordinator_sha256": "CB4F389B6CF94C1AC257B42145B06AD748E38D01062ADB4367348C79E90ABEDC",
+  "tested_file_sha256": "2FEDAE5C476B96335B6CAFC032A1AD946483A93C14970A2E58829402B71F9485",
+  "current_coordinator_sha256": "D85320545953563074491BAAF5487F476A71D9F0B5D2E613036D1A2797DF4FBF",
+  "current_test_file_sha256": "BA53AB9DB48BFD549863CD656F110ED84883DA197B7EE9D3CF362B26F1B29E93",
+  "current_dependency_guard_tests": "not yet run; will execute on Frontier after parent review/push",
   "command": "OMP_NUM_THREADS=2 python -m unittest test_coordinator -v",
   "passed": 6,
   "failed": 0,
-  "covered": [
+  "prior_passed_coverage": [
     "busy and residual-memory GPUs are excluded",
     "preflight failure is terminal and never enqueues pilots",
     "preflight success enqueues only candidate/control seed0",
     "pilot training success schedules only its own full evaluation",
     "failed training/evaluation never requeues",
     "preflight validation requires finite nonzero family gradients, 64-image mask scramble, and exact shared warmup artifact SHA"
+  ],
+  "current_added_coverage_pending": [
+    "SW0106 waits while SW0105 queue is active or its valid three-seed full320 results are incomplete"
   ],
   "actual_gpu_or_model_run": false,
   "sharing_policy": "exclusive; no foreign-owner sharing"

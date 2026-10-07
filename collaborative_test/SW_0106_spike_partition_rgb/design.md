@@ -1,6 +1,6 @@
 # SW0106: teach the actual spike partition through image explanation
 
-Status: approved design and preparation. Training requires a genuinely free authorized GPU and root's runner/preflight review. All GPUs were occupied by other users at the latest ownership check. This document does not authorize an automatic queue or interrupt other users. SW0105 has completed training but its evaluation is pending; SW0106 uses SW0095 rather than assuming SW0105 improves FG-ARI.
+Status: approved design, runner, and owner-aware queue. The queue waits for SW0105's terminal state and valid full320 evaluations for all three seeds, then for a genuinely free GPU. It does not share or interrupt another user's GPU. SW0106 uses SW0095 rather than assuming SW0105 improves FG-ARI.
 
 ## Question and controlled change
 

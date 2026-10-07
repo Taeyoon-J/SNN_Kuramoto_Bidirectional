@@ -9,6 +9,8 @@ OUT=ROOT/'trained_models/SW0106_spike_partition_rgb'
 RUNNER=HERE/'run.py'
 CONTROL=ROOT/'trained_models/SW0097_graph_adaptation'
 SOURCE=ROOT/'trained_models/SW0095_full70k_aligned_loss'
+SW0105_STATE=ROOT/'collaborative_test/SW_0105_event_detach_aux/results_archive/queue_state.json'
+SW0105_OUT=ROOT/'trained_models/SW0105_event_detach_aux'
 GPUS=(0,1,2,3)
 MAX_CONCURRENT_ARMS=2
 MAX_USED_MIB=512
@@ -98,6 +100,19 @@ def valid_full320(path):
   if len(vals)!=320 or not all(math.isfinite(float(x)) for x in vals):return False
   if not math.isfinite(float(scored.get('metrics',{}).get(metric,float('nan')))):return False
  return True
+def sw0105_dependency(state_path=SW0105_STATE,output_root=SW0105_OUT):
+ """Do not contend with the existing SW0105 evaluation queue."""
+ state_path=Path(state_path);output_root=Path(output_root)
+ if not state_path.is_file():return 'waiting'
+ try: state=read_json(state_path)
+ except (OSError,json.JSONDecodeError):return 'waiting'
+ if state.get('status') in ('error','failed'):return 'failed'
+ if state.get('status')!='complete' or state.get('active'):return 'waiting'
+ statuses=state.get('seed_status',{})
+ for seed in range(3):
+  if statuses.get(str(seed)) not in ('evaluation_complete','evaluation_already_complete'):return 'waiting'
+  if not valid_full320(output_root/f'seed{seed}'/'evaluation.json'):return 'failed'
+ return 'ready'
 def valid_training(seed,arm,preflight):
  folder=OUT/f'{arm}_seed{seed}';m=read_json(folder/'manifest.json');hist=read_json(folder/'history.json')
  cm=read_json(CONTROL/f'seed{seed}_positive_frozen/manifest.json')
@@ -145,12 +160,21 @@ def main():
    LOCK.unlink();raise FileExistsError(f'preserve existing partial pilot output and inspect: {folder}')
  state={'status':'waiting_for_free_gpu','mode':'exclusive_no_foreign_gpu_sharing','queue_pid':os.getpid(),'created':time.time(),
   'eligible_gpus':list(GPUS),'max_concurrent_arms':MAX_CONCURRENT_ARMS,'max_idle_gpu_used_mib':MAX_USED_MIB,
+  'wait_for_SW0105_evaluation_queue_complete':str(SW0105_STATE),
   'poll_seconds':a.poll_seconds,'current_stage':'preflight','preflight_status':'pending',
   'arm_status':{'candidate':'blocked_on_preflight','control':'blocked_on_preflight'},'pending':[{'stage':'preflight','seed':0}],
   'active':{},'attempts':[],'failed':None,'training_restarted':False}
  save_state(state)
  try:
   while state['pending'] or state['active']:
+   dependency=sw0105_dependency()
+   state['upstream_SW0105_status']=dependency
+   if dependency=='failed':
+    state['status']='failed';state['failed']={'dependency':'SW0105_full320_evaluations','status':dependency};state['pending']=[];save_state(state)
+    raise RuntimeError('SW0105 evaluation queue failed or a required full320 result is invalid; preserving SW0106 without GPU launch')
+   if dependency=='waiting':
+    state['status']='waiting_for_SW0105_evaluations';save_state(state);time.sleep(a.poll_seconds);continue
+   if state['status']=='waiting_for_SW0105_evaluations':state['status']='waiting_for_free_gpu'
    for key,job in list(state['active'].items()):
     proc=job['proc'];rc=proc.poll()
     if rc is not None:

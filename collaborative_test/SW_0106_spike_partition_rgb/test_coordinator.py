@@ -1,7 +1,7 @@
 import unittest
 import tempfile
 from pathlib import Path
-from coordinator import eligible_gpus,transition,valid_preflight,sha
+from coordinator import eligible_gpus,transition,valid_preflight,sha,sw0105_dependency
 
 class CoordinatorTests(unittest.TestCase):
  def test_busy_or_residual_memory_gpus_are_excluded(self):
@@ -45,5 +45,20 @@ class CoordinatorTests(unittest.TestCase):
    record['lambda_calibration'][2]['reconstruction_grad_norms_by_family']['encoder']=0.
    path.write_text(__import__('json').dumps(record))
    self.assertFalse(valid_preflight(path))
+ def test_waits_for_sw0105_terminal_queue_and_valid_results_before_gpu_use(self):
+  with tempfile.TemporaryDirectory() as td:
+   root=Path(td);state=root/'queue.json';out=root/'out';out.mkdir()
+   state.write_text(__import__('json').dumps({'status':'running','active':{},'seed_status':{}}))
+   self.assertEqual(sw0105_dependency(state,out),'waiting')
+   state.write_text(__import__('json').dumps({'status':'complete','active':{'1':{'pid':42}},'seed_status':{str(i):'evaluation_complete' for i in range(3)}}))
+   self.assertEqual(sw0105_dependency(state,out),'waiting')
+   state.write_text(__import__('json').dumps({'status':'complete','active':{},'seed_status':{str(i):'evaluation_complete' for i in range(3)}}))
+   scores={m:[.5]*320 for m in ('fg_ari','foreground_iou','matched_object_iou')}
+   metrics={m:.5 for m in scores};counts={m:320 for m in scores}
+   evaluation={'images':320,'ids':[1320,1639],'sweep':[{'scored_targets':{'our_hdf5':{'per_image':scores,'metrics':metrics,'valid_count':counts}}}]}
+   for seed in range(3):(out/f'seed{seed}').mkdir();(out/f'seed{seed}'/'evaluation.json').write_text(__import__('json').dumps(evaluation))
+   self.assertEqual(sw0105_dependency(state,out),'ready')
+   (out/'seed2'/'evaluation.json').write_text('{}')
+   self.assertEqual(sw0105_dependency(state,out),'failed')
 
 if __name__=='__main__':unittest.main()
