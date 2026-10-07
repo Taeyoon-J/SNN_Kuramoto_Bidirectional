@@ -1,0 +1,19 @@
+{
+  "timestamp_utc": "2026-10-07 22:46:46 UTC",
+  "status": "cpu_scheduler_tests_passed_no_gpu_launched",
+  "coordinator_sha256": "CB4F389B6CF94C1AC257B42145B06AD748E38D01062ADB4367348C79E90ABEDC",
+  "test_file_sha256": "2FEDAE5C476B96335B6CAFC032A1AD946483A93C14970A2E58829402B71F9485",
+  "command": "OMP_NUM_THREADS=2 python -m unittest test_coordinator -v",
+  "passed": 6,
+  "failed": 0,
+  "covered": [
+    "busy and residual-memory GPUs are excluded",
+    "preflight failure is terminal and never enqueues pilots",
+    "preflight success enqueues only candidate/control seed0",
+    "pilot training success schedules only its own full evaluation",
+    "failed training/evaluation never requeues",
+    "preflight validation requires finite nonzero family gradients, 64-image mask scramble, and exact shared warmup artifact SHA"
+  ],
+  "actual_gpu_or_model_run": false,
+  "sharing_policy": "exclusive; no foreign-owner sharing"
+}
