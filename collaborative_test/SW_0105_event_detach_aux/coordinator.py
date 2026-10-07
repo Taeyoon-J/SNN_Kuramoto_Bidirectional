@@ -1,4 +1,4 @@
-import argparse, json, os, signal, subprocess, sys, time
+import argparse, json, math, os, signal, subprocess, sys, time
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
 OUT=ROOT/'trained_models/SW0105_event_detach_aux'
@@ -29,6 +29,16 @@ def process_descendants(roots):
   for pid,ppid in parents.items():
    if ppid in keep and pid not in keep: keep.add(pid); changed=True
  return keep
+def valid_full320_evaluation(path):
+ data=read_json(path)
+ if data.get('images')!=320 or data.get('ids')!=[1320,1639]: return False
+ scored=data['sweep'][0]['scored_targets']['our_hdf5']
+ for metric in ('fg_ari','foreground_iou','matched_object_iou'):
+  if scored['valid_count'][metric]!=320 or len(scored['per_image'][metric])!=320: return False
+  if not all(math.isfinite(float(x)) for x in scored['per_image'][metric]): return False
+  if not math.isfinite(float(scored['metrics'][metric])): return False
+ return True
+
 def verify_trained(seed):
  folder=OUT/f'seed{seed}'; m=read_json(folder/'manifest.json'); hist=read_json(folder/'history.json')
  c=read_json(CONTROL/f'seed{seed}_positive_frozen/manifest.json')
@@ -37,9 +47,7 @@ def verify_trained(seed):
  if m.get('source_sha256')!=c.get('source_sha256') or m.get('control_sha256') is None: raise AssertionError(f'seed{seed} source contract mismatch')
  if not (folder/'core.pt').is_file(): raise FileNotFoundError(folder/'core.pt')
  ev=folder/'evaluation.json'
- if ev.exists():
-  data=read_json(ev)
-  if data.get('images')!=320 or data.get('ids')!=[1320,1639]: raise AssertionError(f'existing seed{seed} evaluation incomplete; preserve and inspect')
+ if ev.exists() and not valid_full320_evaluation(ev): raise AssertionError(f'existing seed{seed} evaluation invalid; preserve and inspect')
  return folder
 
 def command(seed):
@@ -69,14 +77,16 @@ def main():
   while pending or state['active']:
    # Revalidate workers and resource isolation before scheduling.
    for seed,job in list(state['active'].items()):
-    proc=job['proc']; dev=job['gpu']; owners=gpu_processes(dev); descendants=process_descendants([proc.pid])
+    proc=job['proc']
+    if proc.poll() is not None: continue
+    dev=job['gpu']; owners=gpu_processes(dev); descendants=process_descendants([proc.pid])
     foreign=[pid for pid in owners if pid not in descendants]
     if foreign:
      terminate_owned(proc); rc=proc.wait(); job['log'].close()
      attempt={'seed':int(seed),'gpu':dev,'pid':proc.pid,'return_code':rc,'foreign_gpu_pids':foreign,'log':job['log_path'],'status':'stopped_on_foreign_gpu_owner'}
      state['foreign_overlap_stopped'].append(attempt); state['attempts'].append(attempt); del state['active'][seed]
      existing=(OUT/f'seed{seed}'/'evaluation.json')
-     if existing.exists() and read_json(existing).get('images')==320: state['seed_status'][seed]='evaluation_complete'
+     if existing.exists() and valid_full320_evaluation(existing): state['seed_status'][seed]='evaluation_complete'
      else: pending.insert(0,int(seed))
      save_state(state)
    for gpu in free_gpus():
@@ -88,9 +98,9 @@ def main():
     seed=pending.pop(0); folder=verify_trained(seed)
     if (folder/'evaluation.json').exists():
      data=read_json(folder/'evaluation.json')
-     if data.get('images')==320 and data.get('ids')==[1320,1639]: state['seed_status'][str(seed)]='evaluation_complete'; save_state(state); continue
+     if valid_full320_evaluation(folder/'evaluation.json'): state['seed_status'][str(seed)]='evaluation_complete'; save_state(state); continue
      raise AssertionError(f'existing seed{seed} evaluation is incomplete; inspect instead of overwriting')
-    logpath=OUT/'queue'/f'eval_seed{seed}_attempt{sum(1 for x in state["attempts"] if x["seed"]==seed)+1}_gpu{gpu}.log'
+    logpath=OUT/'queue'/f'eval_seed{seed}_attempt{sum(1 for x in state["attempts"] if x.get("seed")==seed)+1}_gpu{gpu}.log'
     log=logpath.open('w'); env=dict(os.environ,CUDA_VISIBLE_DEVICES=str(gpu),OMP_NUM_THREADS='2')
     before={str(g):gpu_processes(g) for g in GPUS}
     proc=subprocess.Popen(command(seed),cwd=ROOT,stdout=log,stderr=subprocess.STDOUT,env=env,start_new_session=True)
@@ -100,7 +110,7 @@ def main():
      terminate_owned(proc); rc=proc.wait(); log.close(); attempt={'seed':seed,'gpu':gpu,'pid':proc.pid,'return_code':rc,'foreign_gpu_pids':foreign,'owners_before':before,'log':str(logpath),'status':'launch_race_stopped'}
      state['foreign_overlap_stopped'].append(attempt); state['attempts'].append(attempt)
      existing=(OUT/f'seed{seed}'/'evaluation.json')
-     if existing.exists() and read_json(existing).get('images')==320: state['seed_status'][str(seed)]='evaluation_complete'
+     if existing.exists() and valid_full320_evaluation(existing): state['seed_status'][str(seed)]='evaluation_complete'
      else: pending.insert(0,seed)
      save_state(state); continue
     state['active'][str(seed)]={'gpu':gpu,'pid':proc.pid,'proc':proc,'log':log,'log_path':str(logpath),'owners_before':before,'started':time.time()}
@@ -111,10 +121,12 @@ def main():
     job['log'].close(); folder=verify_trained(int(seed))
     if rc!=0: raise RuntimeError(f'eval seed{seed} failed rc={rc}; inspect {job["log_path"]}')
     data=read_json(folder/'evaluation.json')
-    if data.get('images')!=320 or data.get('ids')!=[1320,1639]: raise AssertionError(f'eval seed{seed} invalid 320-image evaluation')
+    if not valid_full320_evaluation(folder/'evaluation.json'): raise AssertionError(f'eval seed{seed} invalid 320-image evaluation')
     state['seed_status'][seed]='evaluation_complete'; state['attempts'].append({'seed':int(seed),'gpu':job['gpu'],'pid':job['proc'].pid,'return_code':0,'images':320,'status':'complete'}); del state['active'][seed]; save_state(state)
    if pending or state['active']: time.sleep(a.poll_seconds)
   state['status']='complete'; state['completed']=time.time(); save_state(state)
+ except Exception as exc:
+  state['status']='error'; state['error']=f'{type(exc).__name__}: {exc}'; state['failed_at']=time.time(); save_state(state); raise
  finally:
   for job in state['active'].values(): terminate_owned(job['proc'])
   try: lockpath.unlink()
