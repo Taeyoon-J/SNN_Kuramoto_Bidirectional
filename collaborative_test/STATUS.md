@@ -1,5 +1,12 @@
 # Current status
 
+SW0097 complete: matched graph adaptation loses all3 mean metrics and FG-ARI
+in every seed versus graph-frozen continuation. Frozen mean
+.776348/.577070/.601537; graph-adaptive mean .769307/.575107/.596571.
+Do not expand this exact graph-learning objective to a full70k pass.
+Next investigate temporal-window mismatch (training64/32 vs evaluation1024/512)
+on original validation only; no new independent-test selection.
+
 Latest2026-10-07: SW0096 finished frozen holdout comparison. Independent
 IDs90000–90319: ours **.759817/.562696/.588620**, Slot
 **.777602/.196114/.201021**. Reference1000–1319: ours
