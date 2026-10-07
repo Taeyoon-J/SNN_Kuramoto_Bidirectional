@@ -1,0 +1,100 @@
+{
+  "resume_utc": "2026-10-07T20:17Z",
+  "user_authorization": "Resume testing; parent explicitly authorized SW0105 implementation/preflight/matched three-seed run. No new deadline imposed.",
+  "branch_head_at_start": "4dee139d2dcd5c4a00eea8280e8800aa11765fa4",
+  "source_control_preflight": "All 3 seeds passed trace-off/on exact forward, event*gate reconstruction, full-vs-aux affinity/loss identity, direct-reference aux values/parameter gradients, finite B16 backward/update, and graph/dendrite/membrane bitwise invariance.",
+  "launch_attempts": [
+    {
+      "attempt": "first combined launch",
+      "details": "Shell backgrounding precedence resulted in seed0 only; seed1/2 log paths failed because the remote working directory was not applied to those commands. Seed0 PID3925572 launched. The delayed ownership output from that combined shell command showed tdan processes active; no foreign process was stopped."
+    },
+    {
+      "attempt": "seed1/seed2 launch",
+      "details": "Seed1 PID3925997 and seed2 PID3925998 launched after their exact paths were corrected."
+    }
+  ],
+  "gpu_resource_interference": {
+    "detected": "Post-launch audit found tdan-owned experiments/run_review_exps.py processes on GPUs0-3: PIDs3925410-3925412 on GPU0, 3925414-3925416 on GPU1, 3925418-3925420 on GPU2, 3925422-3925424 on GPU3. They were not ours and were not touched. Their presence overlapped the candidate training interval; exact shared interval is not inferred beyond owner snapshots and candidate start/end timestamps.",
+    "candidate_workers": {
+      "0": 3925572,
+      "1": 3925997,
+      "2": 3925998
+    },
+    "response": "Only candidate PIDs were targeted with SIGTERM after checking. Kill reported all three already absent; manifests/history then confirmed each had completed 256 updates. Preserve existing completed checkpoints/history and do not repeat training.",
+    "foreign_gpu_owners": {
+      "0": [
+        3925410,
+        3925411,
+        3925412
+      ],
+      "1": [
+        3925414,
+        3925415,
+        3925416
+      ],
+      "2": [
+        3925418,
+        3925419,
+        3925420
+      ],
+      "3": [
+        3925422,
+        3925423,
+        3925424
+      ]
+    },
+    "observed_commands": "tdan-owned python experiments/run_review_exps.py --device cuda:N --exps p10 (three processes per GPU).",
+    "targeted_stop_attempt": {
+      "candidate_pids": [
+        3925572,
+        3925997,
+        3925998
+      ],
+      "command": "SIGTERM only the three candidate PIDs after checking exact args",
+      "outcome": "all three PIDs had already exited (kill reported no such process); subsequent manifests and history confirmed full 256-step completion."
+    }
+  },
+  "training_completion_times_utc": {
+    "0": {
+      "started_unix": 1791404832.9577346,
+      "completed_unix": 1791404930.3979955,
+      "elapsed_seconds": 97.440260887146
+    },
+    "1": {
+      "started_unix": 1791404878.3278887,
+      "completed_unix": 1791404976.2243564,
+      "elapsed_seconds": 97.89646768569946
+    },
+    "2": {
+      "started_unix": 1791404878.5575523,
+      "completed_unix": 1791404977.9797614,
+      "elapsed_seconds": 99.42220902442932
+    }
+  },
+  "evaluation": "Not yet run. An evaluation-only coordinator waits for unowned GPU devices, audits ownership before/after launch and stops only its own process group on foreign overlap. Existing complete evaluation is never repeated.",
+  "weights": "Remain on server only; no checkpoint copied into repository.",
+  "expected_next_action": "Run owner-aware evaluation-only queue on existing complete seed0/1/2 checkpoints; collect exactly320 actual-classifier metrics and compare matched SW0097 controls.",
+  "initial_owner_snapshot": {
+    "result": "all devices appeared idle immediately before the first launch check",
+    "gpu_memory_mib": {
+      "0": 16,
+      "1": 2,
+      "2": 2,
+      "3": 2
+    },
+    "compute_app_list": "empty"
+  },
+  "evaluation_queue": {
+    "status": "implemented_not_started_pending_review",
+    "mode": "evaluation_only_existing_complete_checkpoints",
+    "free_gpu_poll_seconds": 60,
+    "allowed_devices": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "never_share_or_terminate_foreign_processes": true,
+    "skip_existing_valid_320_evaluations": true
+  }
+}

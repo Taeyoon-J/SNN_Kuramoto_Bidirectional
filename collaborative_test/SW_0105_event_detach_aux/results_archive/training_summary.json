@@ -1,0 +1,133 @@
+{
+  "status": "training_complete_evaluation_pending",
+  "experiment": "SW0105 event.detach() * actual_gate auxiliary, three matched seeds",
+  "seeds": {
+    "0": {
+      "manifest_status": "training_complete",
+      "updates": 256,
+      "manifest_updates": 256,
+      "source_sha256": "aac44697906c835569e3bf900e5930ce900223d1aa95c0bedba899bee5ff155d",
+      "control_sha256": "36f2481dd1fa51fa29bd4dc34275a876b71d8b76fbee13ac47a0a1bfe6766fbf",
+      "training_id_count": 4096,
+      "shuffle_seed": 117,
+      "started_unix": 1791404832.9577346,
+      "completed_unix": 1791404930.3979955,
+      "elapsed_seconds": 97.440260887146,
+      "history_finite": true,
+      "initial_loss": 17.94008445739746,
+      "final_loss": 16.99311065673828,
+      "min_loss": 15.132580757141113,
+      "max_loss": 21.74043846130371,
+      "changed_keys": [
+        "gamma_phase_gain",
+        "gamma_channel_proj.weight",
+        "kuramoto.freq_gain",
+        "kuramoto.omega",
+        "kuramoto.kappa",
+        "kuramoto.direction_learner"
+      ],
+      "graph_dendrite_membrane_bitwise_fixed": true,
+      "weights_retained_on_server_only": true,
+      "evaluation_status": "pending",
+      "training_ids_order_sha256": "0ea8c53509bfaaf6f9b8108023024c4297d35623852e96dca28ea1a2b1623f8f"
+    },
+    "1": {
+      "manifest_status": "training_complete",
+      "updates": 256,
+      "manifest_updates": 256,
+      "source_sha256": "b8b5d1d794dc0185b68526b713893f6d842518fde9c21d681bcdbe50549d43f6",
+      "control_sha256": "76f379d5a7e4cd9d12fdf0b701f3dd9dbbf28b5eea270a9cee2d30d87b4dad98",
+      "training_id_count": 4096,
+      "shuffle_seed": 118,
+      "started_unix": 1791404878.3278887,
+      "completed_unix": 1791404976.2243564,
+      "elapsed_seconds": 97.89646768569946,
+      "history_finite": true,
+      "initial_loss": 16.39584732055664,
+      "final_loss": 15.912324905395508,
+      "min_loss": 15.560876846313477,
+      "max_loss": 19.877483367919922,
+      "changed_keys": [
+        "gamma_phase_gain",
+        "gamma_channel_proj.weight",
+        "kuramoto.freq_gain",
+        "kuramoto.omega",
+        "kuramoto.kappa",
+        "kuramoto.direction_learner"
+      ],
+      "graph_dendrite_membrane_bitwise_fixed": true,
+      "weights_retained_on_server_only": true,
+      "evaluation_status": "pending",
+      "training_ids_order_sha256": "b536e9398fa943da86570fd620c11b4b28a0ce1f84f868213c16021dd45c3f94"
+    },
+    "2": {
+      "manifest_status": "training_complete",
+      "updates": 256,
+      "manifest_updates": 256,
+      "source_sha256": "c79a5cc7d4a4e18e85bbfd1336b4fbb6ccfba73f69e13f042cd79c333f241dcb",
+      "control_sha256": "798ad3e9d4bf837b1bbeb1bd7c13900df511b5c76f5736d2b9f8b973d7fa5661",
+      "training_id_count": 4096,
+      "shuffle_seed": 119,
+      "started_unix": 1791404878.5575523,
+      "completed_unix": 1791404977.9797614,
+      "elapsed_seconds": 99.42220902442932,
+      "history_finite": true,
+      "initial_loss": 25.923900604248047,
+      "final_loss": 25.682201385498047,
+      "min_loss": 23.569461822509766,
+      "max_loss": 27.42930793762207,
+      "changed_keys": [
+        "gamma_phase_gain",
+        "gamma_channel_proj.weight",
+        "kuramoto.freq_gain",
+        "kuramoto.omega",
+        "kuramoto.kappa",
+        "kuramoto.direction_learner"
+      ],
+      "graph_dendrite_membrane_bitwise_fixed": true,
+      "weights_retained_on_server_only": true,
+      "evaluation_status": "pending",
+      "training_ids_order_sha256": "500701b50b11911d1b8871480086f265194913e253cf2fafeacabcbc92cbaf50"
+    }
+  },
+  "matched_contract": {
+    "source": "SW0095 full70k final cores",
+    "control": "SW0097 positive_frozen",
+    "training_ids_per_seed": 4096,
+    "updates": 256,
+    "batch_size": 16,
+    "train_steps": 64,
+    "settle": 32,
+    "learning_rate": 3e-05,
+    "gradient_clip": 1.0,
+    "spike_aux_coefficient": 5.0,
+    "shuffle_seeds": [
+      117,
+      118,
+      119
+    ],
+    "ground_truth_used_for_training": false,
+    "actual_inference_forward_unchanged": true
+  },
+  "preflight_passed": {
+    "0": true,
+    "1": true,
+    "2": true
+  },
+  "resource_note": "All candidate training workers completed 256 updates and wrote histories/checkpoints while another user process was active on GPUs0-3. This overlap was discovered in a post-launch owner audit; preserve it as provenance. No evidence indicates training data or code changed, but GPU isolation was not maintained. Do not retrain already-completed seeds. Evaluation is still pending and must run only on genuinely free GPUs.",
+  "evaluation_contract": {
+    "ids": [
+      1320,
+      1639
+    ],
+    "images": 320,
+    "batch_size": 8,
+    "steps": 1024,
+    "settle": 512,
+    "threshold": 0.5,
+    "min_group_size": 2,
+    "background": "largest_component",
+    "classifier": "actual event*gate spikes"
+  },
+  "no_weights_archived": true
+}

@@ -1,0 +1,45 @@
+{
+  "status": "passed",
+  "seed": 1,
+  "device": "cuda:1",
+  "training_ids_first16": [
+    68304,
+    49032,
+    70041,
+    7829,
+    16499,
+    31675,
+    67612,
+    54671,
+    17331,
+    2330,
+    23312,
+    50490,
+    56080,
+    20867,
+    3891,
+    34682
+  ],
+  "source_sha256": "b8b5d1d794dc0185b68526b713893f6d842518fde9c21d681bcdbe50549d43f6",
+  "matched_control_sha256": "76f379d5a7e4cd9d12fdf0b701f3dd9dbbf28b5eea270a9cee2d30d87b4dad98",
+  "trace_on_off_actual_forward_exact": true,
+  "event_gate_reconstruction_exact": true,
+  "full_vs_aux_affinity_exact": true,
+  "full_vs_aux_spike_loss_exact": true,
+  "direct_reference_values_and_parameter_gradients_exact": true,
+  "trainable_gradient_norms_by_family": {
+    "gamma_phase_gain": 1.5913605690002441,
+    "gamma_channel_proj": 14.091771993468944,
+    "kuramoto": 1.083613954786411
+  },
+  "updated_keys": [
+    "gamma_phase_gain",
+    "gamma_channel_proj.weight",
+    "kuramoto.freq_gain",
+    "kuramoto.omega",
+    "kuramoto.kappa",
+    "kuramoto.direction_learner"
+  ],
+  "graph_dendrite_membrane_bitwise_fixed": true,
+  "core_key_count": 17
+}
