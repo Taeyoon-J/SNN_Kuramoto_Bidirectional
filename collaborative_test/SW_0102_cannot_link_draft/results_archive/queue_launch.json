@@ -1,0 +1,187 @@
+{
+  "status": "complete",
+  "lambda": 3.692937560668443,
+  "seed_order": [
+    0,
+    1,
+    2
+  ],
+  "steps": 256,
+  "batch": 16,
+  "training_ids_per_seed": 4096,
+  "train_steps": 64,
+  "train_settle": 32,
+  "lr": 3e-05,
+  "evaluation_images": 320,
+  "evaluation_batch": 8,
+  "evaluation_steps": 1024,
+  "evaluation_settle": 512,
+  "ground_truth_used_for_training": false,
+  "deadline_unix": 1791369469,
+  "owners_before_launch": [
+    {
+      "gpu": 0,
+      "compute_processes": [],
+      "memory_used_mib": 19
+    },
+    {
+      "gpu": 1,
+      "compute_processes": [
+        "3528996, python, 16092 MiB"
+      ],
+      "memory_used_mib": 16097
+    },
+    {
+      "gpu": 2,
+      "compute_processes": [],
+      "memory_used_mib": 5
+    },
+    {
+      "gpu": 3,
+      "compute_processes": [],
+      "memory_used_mib": 5
+    }
+  ],
+  "workers": [
+    {
+      "seed": 0,
+      "gpu": 0,
+      "pid": 3695023,
+      "log": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0102_cannot_link_draft/preflight_attempts/seed0_gpu0.log",
+      "output": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0102_cannot_link_draft/seed0",
+      "source_sha256": "aac44697906c835569e3bf900e5930ce900223d1aa95c0bedba899bee5ff155d",
+      "control_source_sha256": "aac44697906c835569e3bf900e5930ce900223d1aa95c0bedba899bee5ff155d",
+      "shuffle_seed": 117,
+      "started_unix": 1791365374.354405,
+      "owners_at_worker_launch": [
+        {
+          "gpu": 0,
+          "compute_processes": [],
+          "memory_used_mib": 19
+        },
+        {
+          "gpu": 1,
+          "compute_processes": [
+            "3528996, python, 16092 MiB"
+          ],
+          "memory_used_mib": 16097
+        },
+        {
+          "gpu": 2,
+          "compute_processes": [],
+          "memory_used_mib": 5
+        },
+        {
+          "gpu": 3,
+          "compute_processes": [],
+          "memory_used_mib": 5
+        }
+      ],
+      "completed_unix": 1791365694.5746047,
+      "exit_code": 0,
+      "status": "complete",
+      "evaluation_path": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0102_cannot_link_draft/seed0/evaluation.json",
+      "evaluation_sha256": "8fb512bf56bd4e7f61b1fb5e2532dca0c957a42df3e9d84b675914a826490f65",
+      "metrics": {
+        "fg_ari": 0.8227570765689155,
+        "foreground_iou": 0.7190545733632278,
+        "matched_object_iou": 0.6568351462373292
+      },
+      "training_id_order_matches_control": true
+    },
+    {
+      "seed": 1,
+      "gpu": 2,
+      "pid": 3695024,
+      "log": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0102_cannot_link_draft/preflight_attempts/seed1_gpu2.log",
+      "output": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0102_cannot_link_draft/seed1",
+      "source_sha256": "b8b5d1d794dc0185b68526b713893f6d842518fde9c21d681bcdbe50549d43f6",
+      "control_source_sha256": "b8b5d1d794dc0185b68526b713893f6d842518fde9c21d681bcdbe50549d43f6",
+      "shuffle_seed": 118,
+      "started_unix": 1791365374.3587174,
+      "owners_at_worker_launch": [
+        {
+          "gpu": 0,
+          "compute_processes": [],
+          "memory_used_mib": 19
+        },
+        {
+          "gpu": 1,
+          "compute_processes": [
+            "3528996, python, 16092 MiB"
+          ],
+          "memory_used_mib": 16097
+        },
+        {
+          "gpu": 2,
+          "compute_processes": [],
+          "memory_used_mib": 5
+        },
+        {
+          "gpu": 3,
+          "compute_processes": [],
+          "memory_used_mib": 5
+        }
+      ],
+      "completed_unix": 1791365694.578966,
+      "exit_code": 0,
+      "status": "complete",
+      "evaluation_path": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0102_cannot_link_draft/seed1/evaluation.json",
+      "evaluation_sha256": "98d47457ba6c033ef778b5fdec72c9da48e29f465b54eff1db4e242c56d91b03",
+      "metrics": {
+        "fg_ari": 0.737694419841807,
+        "foreground_iou": 0.5933393576836293,
+        "matched_object_iou": 0.5811646182198807
+      },
+      "training_id_order_matches_control": true
+    },
+    {
+      "seed": 2,
+      "gpu": 3,
+      "pid": 3695025,
+      "log": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0102_cannot_link_draft/preflight_attempts/seed2_gpu3.log",
+      "output": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0102_cannot_link_draft/seed2",
+      "source_sha256": "c79a5cc7d4a4e18e85bbfd1336b4fbb6ccfba73f69e13f042cd79c333f241dcb",
+      "control_source_sha256": "c79a5cc7d4a4e18e85bbfd1336b4fbb6ccfba73f69e13f042cd79c333f241dcb",
+      "shuffle_seed": 119,
+      "started_unix": 1791365374.3630931,
+      "owners_at_worker_launch": [
+        {
+          "gpu": 0,
+          "compute_processes": [],
+          "memory_used_mib": 19
+        },
+        {
+          "gpu": 1,
+          "compute_processes": [
+            "3528996, python, 16092 MiB"
+          ],
+          "memory_used_mib": 16097
+        },
+        {
+          "gpu": 2,
+          "compute_processes": [],
+          "memory_used_mib": 5
+        },
+        {
+          "gpu": 3,
+          "compute_processes": [],
+          "memory_used_mib": 5
+        }
+      ],
+      "completed_unix": 1791365653.4982202,
+      "exit_code": 0,
+      "status": "complete",
+      "evaluation_path": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0102_cannot_link_draft/seed2/evaluation.json",
+      "evaluation_sha256": "52c185012192734d9eb0e88b9e20350032d6f558fd9c9470109b94a98d4e2e23",
+      "metrics": {
+        "fg_ari": 0.7607079390262129,
+        "foreground_iou": 0.4214816520448566,
+        "matched_object_iou": 0.5632642643671721
+      },
+      "training_id_order_matches_control": true
+    }
+  ],
+  "started_unix": 1791365374.0933049,
+  "completed_unix": 1791365694.5831912
+}

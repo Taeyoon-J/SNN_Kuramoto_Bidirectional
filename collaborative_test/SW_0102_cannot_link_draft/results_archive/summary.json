@@ -1,0 +1,290 @@
+{
+  "status": "complete",
+  "experiment": "SW0102_cannot_link_draft",
+  "training": {
+    "source": "SW0095 whole-core seed matched to SW0097 frozen control",
+    "steps": 256,
+    "batch": 16,
+    "unique_ids_per_seed": 4096,
+    "shuffle_seeds": {
+      "0": 117,
+      "1": 118,
+      "2": 119
+    },
+    "train_steps": 64,
+    "settle": 32,
+    "lr": 3e-05,
+    "optimizer": "Adam",
+    "gate_mode": "raw",
+    "encoder_frozen": true,
+    "graph_frozen": true,
+    "ground_truth_used_for_training": false,
+    "loss": "old primary + 5x old positive-product spike criterion + shared-lambda*Lcut",
+    "shared_lambda": 3.692937560668443,
+    "calibration_batches": 12,
+    "calibration_samecc_q_ge_050_by_seed": {
+      "0": 1882,
+      "1": 3954,
+      "2": 5294
+    },
+    "calibration_indirect_samecc_q_le_040_by_seed": {
+      "0": 891,
+      "1": 1199,
+      "2": 3640
+    }
+  },
+  "evaluation": {
+    "split": "validation",
+    "ids": [
+      1320,
+      1639
+    ],
+    "images": 320,
+    "batch": 8,
+    "steps": 1024,
+    "settle": 512,
+    "membrane_threshold": 0.06,
+    "classifier_threshold": 0.5,
+    "background": "largest_component",
+    "min_group_size": 2,
+    "authoritative_metric_path": "sweep[0].scored_targets.our_hdf5.metrics",
+    "valid_count_required": 320
+  },
+  "baseline": {
+    "name": "matched SW0097_positive_frozen controls",
+    "slot_mean": {
+      "fg_ari": 0.7749334667,
+      "foreground_iou": 0.2035891312,
+      "matched_object_iou": 0.2069369792
+    }
+  },
+  "per_seed": {
+    "0": {
+      "source_sha256": "aac44697906c835569e3bf900e5930ce900223d1aa95c0bedba899bee5ff155d",
+      "matched_control_source_sha256": "aac44697906c835569e3bf900e5930ce900223d1aa95c0bedba899bee5ff155d",
+      "training_ids_and_order_match": true,
+      "updates": 256,
+      "lambda": 3.692937560668443,
+      "candidate_metrics": {
+        "fg_ari": 0.8227570765689155,
+        "foreground_iou": 0.7190545733632278,
+        "matched_object_iou": 0.6568351462373292
+      },
+      "matched_control_metrics": {
+        "fg_ari": 0.8248677211561721,
+        "foreground_iou": 0.7198719167110539,
+        "matched_object_iou": 0.6556628993752277
+      },
+      "paired_metric_deltas": {
+        "fg_ari": -0.002110644587256627,
+        "foreground_iou": -0.0008173433478261272,
+        "matched_object_iou": 0.0011722468621014892
+      },
+      "mean_cut_loss": 0.05226991058589192,
+      "cut_loss_first4_mean": 0.0538664348423481,
+      "cut_loss_last4_mean": 0.05129887443035841,
+      "cut_loss_min": 0.011989641934633255,
+      "cut_loss_max": 0.10544829815626144,
+      "mean_primary_loss": 4.060834515839815,
+      "mean_unweighted_spike_loss": 2.6913206335157156,
+      "mean_total_loss": 17.71046717837453,
+      "evaluation_images": 320,
+      "training_conflicts": {
+        "selected_directed_negative_decisions_total": 541145,
+        "connected_at_forest_margin_directed_negative_total": 182728,
+        "connected_fraction": 0.3376692014155171,
+        "mean_selected_per_update": 2113.84765625,
+        "mean_connected_per_update": 713.78125,
+        "definition": "Forest connectivity uses detached symmetrized classifier q=max(qij,qji) with strict edge margin q>.40; this is not the classifier .50 conflict count."
+      }
+    },
+    "1": {
+      "source_sha256": "b8b5d1d794dc0185b68526b713893f6d842518fde9c21d681bcdbe50549d43f6",
+      "matched_control_source_sha256": "b8b5d1d794dc0185b68526b713893f6d842518fde9c21d681bcdbe50549d43f6",
+      "training_ids_and_order_match": true,
+      "updates": 256,
+      "lambda": 3.692937560668443,
+      "candidate_metrics": {
+        "fg_ari": 0.737694419841807,
+        "foreground_iou": 0.5933393576836293,
+        "matched_object_iou": 0.5811646182198807
+      },
+      "matched_control_metrics": {
+        "fg_ari": 0.742658188014352,
+        "foreground_iou": 0.5902831994239301,
+        "matched_object_iou": 0.5849640428623182
+      },
+      "paired_metric_deltas": {
+        "fg_ari": -0.004963768172545069,
+        "foreground_iou": 0.003056158259699182,
+        "matched_object_iou": -0.0037994246424374323
+      },
+      "mean_cut_loss": 0.09453419248166028,
+      "cut_loss_first4_mean": 0.07525907922536135,
+      "cut_loss_last4_mean": 0.08042825013399124,
+      "cut_loss_min": 0.021671324968338013,
+      "cut_loss_max": 0.15110452473163605,
+      "mean_primary_loss": 3.4115100344642997,
+      "mean_unweighted_spike_loss": 2.6885428754612803,
+      "mean_total_loss": 17.203333262354136,
+      "evaluation_images": 320,
+      "training_conflicts": {
+        "selected_directed_negative_decisions_total": 543946,
+        "connected_at_forest_margin_directed_negative_total": 321145,
+        "connected_fraction": 0.5903986792806639,
+        "mean_selected_per_update": 2124.7890625,
+        "mean_connected_per_update": 1254.47265625,
+        "definition": "Forest connectivity uses detached symmetrized classifier q=max(qij,qji) with strict edge margin q>.40; this is not the classifier .50 conflict count."
+      }
+    },
+    "2": {
+      "source_sha256": "c79a5cc7d4a4e18e85bbfd1336b4fbb6ccfba73f69e13f042cd79c333f241dcb",
+      "matched_control_source_sha256": "c79a5cc7d4a4e18e85bbfd1336b4fbb6ccfba73f69e13f042cd79c333f241dcb",
+      "training_ids_and_order_match": true,
+      "updates": 256,
+      "lambda": 3.692937560668443,
+      "candidate_metrics": {
+        "fg_ari": 0.7607079390262129,
+        "foreground_iou": 0.4214816520448566,
+        "matched_object_iou": 0.5632642643671721
+      },
+      "matched_control_metrics": {
+        "fg_ari": 0.7615186097026635,
+        "foreground_iou": 0.4210560720157456,
+        "matched_object_iou": 0.5639854300128422
+      },
+      "paired_metric_deltas": {
+        "fg_ari": -0.0008106706764505756,
+        "foreground_iou": 0.0004255800291110279,
+        "matched_object_iou": -0.000721165645670041
+      },
+      "mean_cut_loss": 0.10772630861902144,
+      "cut_loss_first4_mean": 0.12161479704082012,
+      "cut_loss_last4_mean": 0.1137812938541174,
+      "cut_loss_min": 0.05352165922522545,
+      "cut_loss_max": 0.15902426838874817,
+      "mean_primary_loss": 4.323754845187068,
+      "mean_unweighted_spike_loss": 4.249352612532675,
+      "mean_total_loss": 25.968344405293465,
+      "evaluation_images": 320,
+      "training_conflicts": {
+        "selected_directed_negative_decisions_total": 517508,
+        "connected_at_forest_margin_directed_negative_total": 389280,
+        "connected_fraction": 0.7522202555322817,
+        "mean_selected_per_update": 2021.515625,
+        "mean_connected_per_update": 1520.625,
+        "definition": "Forest connectivity uses detached symmetrized classifier q=max(qij,qji) with strict edge margin q>.40; this is not the classifier .50 conflict count."
+      }
+    }
+  },
+  "notes": [
+    "No paired bootstrap was run because the required aggregate FG-ARI improvement and at least two per-seed FG-ARI gains did not pass.",
+    "The SW0097 matched-control history does not contain cannot-link mask/conflict counts; candidate connected-negative totals use the strict q>.40 forest margin and must not be interpreted as q>=.50 control counts."
+  ],
+  "execution_provenance": {
+    "queue_started_unix": 1791365374.0933049,
+    "queue_completed_unix": 1791365694.5831912,
+    "workers": [
+      {
+        "seed": 0,
+        "gpu": 0,
+        "pid": 3695023,
+        "status": "complete",
+        "exit_code": 0,
+        "source_sha256": "aac44697906c835569e3bf900e5930ce900223d1aa95c0bedba899bee5ff155d",
+        "control_source_sha256": "aac44697906c835569e3bf900e5930ce900223d1aa95c0bedba899bee5ff155d"
+      },
+      {
+        "seed": 1,
+        "gpu": 2,
+        "pid": 3695024,
+        "status": "complete",
+        "exit_code": 0,
+        "source_sha256": "b8b5d1d794dc0185b68526b713893f6d842518fde9c21d681bcdbe50549d43f6",
+        "control_source_sha256": "b8b5d1d794dc0185b68526b713893f6d842518fde9c21d681bcdbe50549d43f6"
+      },
+      {
+        "seed": 2,
+        "gpu": 3,
+        "pid": 3695025,
+        "status": "complete",
+        "exit_code": 0,
+        "source_sha256": "c79a5cc7d4a4e18e85bbfd1336b4fbb6ccfba73f69e13f042cd79c333f241dcb",
+        "control_source_sha256": "c79a5cc7d4a4e18e85bbfd1336b4fbb6ccfba73f69e13f042cd79c333f241dcb"
+      }
+    ],
+    "gpu_owners_before_launch": [
+      {
+        "gpu": 0,
+        "compute_processes": [],
+        "memory_used_mib": 19
+      },
+      {
+        "gpu": 1,
+        "compute_processes": [
+          "3528996, python, 16092 MiB"
+        ],
+        "memory_used_mib": 16097
+      },
+      {
+        "gpu": 2,
+        "compute_processes": [],
+        "memory_used_mib": 5
+      },
+      {
+        "gpu": 3,
+        "compute_processes": [],
+        "memory_used_mib": 5
+      }
+    ],
+    "code_sha256": {
+      "forest_loss.py": "4e69bdf9eefcaf9854566eb515957ea0a47addd232c76136fbebafcb23a6b1d2",
+      "run.py": "58d5171aa5d133ff2ef78eef2aa71dff760fdcb3ef33049307089a95b0e4b8dc",
+      "coordinator.py": "4aff094106e9dc71ac031124228d254bb7ff8be8256d7fb41c16c06d744350c3",
+      "calibration_preflight.py": "68e785382041ca29a3f10bce0b8e7dfa1a74032f05e57964ee1fc58bbec950dc",
+      "summarize_results.py": "4862d48cc26a2c861734106b5ce8cbd0cdfc45a83ee44c7ed85a87579daa9e5d"
+    },
+    "cycle_peer_check": {
+      "time_utc": "2026-10-07 09:37",
+      "head": "e2389f5",
+      "result": "no newer peer commit observed"
+    }
+  },
+  "means": {
+    "fg_ari": 0.7737198118123118,
+    "foreground_iou": 0.5779585276972379,
+    "matched_object_iou": 0.6004213429414608
+  },
+  "matched_control_means": {
+    "fg_ari": 0.7763481729577292,
+    "foreground_iou": 0.5770703960502432,
+    "matched_object_iou": 0.601537457416796
+  },
+  "paired_mean_deltas": {
+    "fg_ari": -0.002628361145417424,
+    "foreground_iou": 0.0008881316469946388,
+    "matched_object_iou": -0.001116114475335217
+  },
+  "seed_gains_by_metric": {
+    "fg_ari": 0,
+    "foreground_iou": 2,
+    "matched_object_iou": 1
+  },
+  "promotion_gate": {
+    "mean_fg_ari_gain_minimum": 0.01,
+    "seed_fg_ari_gains_minimum": 2,
+    "iou_margin_over_slot_minimum": 0.05,
+    "mean_fg_ari_delta": -0.002628361145417424,
+    "seed_fg_ari_gains": 0,
+    "mean_foreground_iou_delta": 0.0008881316469946388,
+    "mean_object_iou_delta": -0.001116114475335217,
+    "foreground_iou_over_slot_margin": 0.3743693964972379,
+    "object_iou_over_slot_margin": 0.3934843637414608,
+    "fg_ari_gate_pass": false,
+    "iou_gate_pass": true,
+    "candidate_for_70k": false,
+    "bootstrap_fg_ari_positive": null
+  },
+  "paired_image_bootstrap": null,
+  "decision": "stop_recipe_no_70k"
+}
