@@ -1,0 +1,49 @@
+{
+    "status":  "protocol_registered_runner_pending",
+    "study":  "Matched-compute unique downstream data scaling",
+    "sources":  "source_audit.json",
+    "unique_counts":  [
+                          2500,
+                          10000,
+                          70000
+                      ],
+    "seeds":  [
+                  0,
+                  1,
+                  2
+              ],
+    "original2500_retained_in_all_pools":  true,
+    "additional_pool_order_seed":  108,
+    "pool_segments":  [
+                          [
+                              0,
+                              999
+                          ],
+                          [
+                              1640,
+                              70639
+                          ]
+                      ],
+    "validation_ids":  [
+                           1320,
+                           1639
+                       ],
+    "primary_endpoint_updates":  4375,
+    "batch_size":  16,
+    "additional_exposures":  70000,
+    "no_drop_last_or_partial_epoch_batches":  true,
+    "source":  "Common pre-large-data2500 checkpoints, one per seed",
+    "optimizer":  "fresh Adam",
+    "learning_rate":  3E-05,
+    "training_steps":  64,
+    "settle":  32,
+    "encoder_graph":  "fixed shared pretraining, disclosed",
+    "loss":  "phase primary plus5 positive actual-spike product affinity",
+    "eval":  "native320 B8 T1024 settle512 .50 min2 largest background same3 patch metrics",
+    "prefix_checkpoint_updates":  256,
+    "prefix_results_not_full70000_claim":  true,
+    "best_epoch_selection":  false,
+    "improvement_test":  "FG70k minus2500 mean\u003e=.01,2positive seed deltas, paired image bootstrap lower bound\u003e0; report10k and allIoUs; monotonicclaim only if actualFGmeans nondecreasing",
+    "ultimate_goal":  "70k all3 metric means strictly above comparable Slot, with frozen independent confirmation",
+    "gpu_jobs_started":  false
+}
