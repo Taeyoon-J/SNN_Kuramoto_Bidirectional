@@ -1,3 +1,13 @@
+2026-10-08 deployment update: explicit user approval received; approved
+SW0108/SW0109 sources deployed with SHA verification. Frontier compile and
+SW0108 six/SW0109 thirteen CPU tests passed. Live research coordinators:
+SW0108 waits for free GPU, seven tasks pending; SW0109
+waits for SW0108 completion, twenty-four tasks pending. Reviewed SW0106
+queue dependency is complete, active empty. All devices currently occupied
+by foreign jobs; no new GPU worker or endpoint result yet. Queues remain
+server-side and do not share GPUs. Runtime snapshots require live PID
+verification before treating a later wait as current.
+
 Latest 2026-10-08: SW0107 official-CLEVR additional70k continuation is complete.
 Native320 validation mean .769423/.532391/.591882 loses FG-ARI to matched
 own-data Slot SW0092 .774933/.203589/.206937, while retaining both IoU gains.

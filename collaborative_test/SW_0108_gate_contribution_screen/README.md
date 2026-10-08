@@ -29,8 +29,13 @@ transfer is necessary.
 ## Deployment status
 
 2026-10-08: user explicitly authorized corrected source transfer and testing.
-Deployment and validation are now permitted; verify live queue state before
-reporting that evaluation has started.
+Deployment is complete with SHA-verified source files. Frontier Python
+compilation, six SW0108 unit tests and thirteen SW0109 unit tests passed.
+The coordinator was verified alive, using the original
+native validation gamma cache. Its observed state is waiting_for_free_gpu:
+seven tasks pending and no GPU worker started. All devices are occupied by
+foreign processes. The coordinator will run actual-model preflight and the
+full320 registered baseline before permitting intervention evaluations.
 
 Historical blocker: corrected code was prepared locally but execution had not restarted.
 Automatic approval review rejected transferring the four corrected source

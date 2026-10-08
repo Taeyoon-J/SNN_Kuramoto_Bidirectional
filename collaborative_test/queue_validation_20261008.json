@@ -1,0 +1,27 @@
+{
+  "deployment": "User-approved corrected experiment source deployed and verified",
+  "validation": {
+    "python_compile_passed": true,
+    "protocol_json_parse_passed": true,
+    "SW0108_unit_tests_passed": 6,
+    "SW0109_unit_tests_passed": 13
+  },
+  "SW0108": {
+    "coordinator_verified_live": true,
+    "observed_status": "waiting_for_free_gpu",
+    "pending_task_count": 7,
+    "active_gpu_worker_count": 0,
+    "plan": "Real-model preflight, exact registered full320 baseline reproduction, then five separate gating interventions"
+  },
+  "SW0109": {
+    "coordinator_verified_live": true,
+    "observed_status": "waiting_for_upstream_completion",
+    "pending_task_count": 24,
+    "active_gpu_worker_count": 0,
+    "upstream_SW0106_complete": true,
+    "plan": "Three seeds and three nested unique-image counts at equal70k additional exposures; exclusive dependency-aware GPU concurrency"
+  },
+  "new_endpoint_results_available": false,
+  "goal_achieved": false,
+  "operational_details": "Detailed runtime evidence preserved locally and on the research server; excluded from this shared research summary"
+}
