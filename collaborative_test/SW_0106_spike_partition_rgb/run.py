@@ -327,11 +327,11 @@ def preflight(seed,device,output):
  write(output,report)
  return report
 
-def train(seed,arm,device,steps=256,batch_size=16):
+def train(seed,arm,device,steps=256,batch_size=16,output_dir=None):
  if seed not in (0,1,2) or arm not in ('candidate','control'): raise ValueError('invalid pilot pair member')
  if steps!=256 or batch_size!=16: raise ValueError('registered SW0106 pilot budget is fixed at 256x16')
  if seed>0: seed0_expansion_gate()
- out=OUT/f'{arm}_seed{seed}';out.mkdir(parents=True,exist_ok=False)
+ out=Path(output_dir) if output_dir is not None else OUT/f'{arm}_seed{seed}';out.mkdir(parents=True,exist_ok=False)
  train=np.load(TRAIN_RGB,mmap_mode='r');inds,ids,source,source_sha,control_sha=verify_contract(seed)
  preflight_path=ROOT/f'collaborative_test/SW_0106_spike_partition_rgb/results_archive/preflight_seed{seed}.json'
  if not preflight_path.is_file(): raise RuntimeError(f'preflight missing: {preflight_path}')
@@ -391,13 +391,18 @@ def train(seed,arm,device,steps=256,batch_size=16):
   'ground_truth_used_for_training':False,'started':started,'completed':time.time(),
   'changed_core_keys':changed_core,'changed_encoder_keys':changed_enc,
   'optimizer_state_artifact':'optimizer_state.pt','optimizer_state_sha256':optimizer_sha,
+  'shared_decoder_warmup_artifact':str(artifact.resolve()),'shared_decoder_warmup_artifact_sha256':preflight_record['warmup_artifact_sha256'],
+  'shared_decoder_warmup_preflight_sha256':sha(preflight_path),
   'joint_optimizer_steps':256,'decoder_optimizer_steps':288,
+  'runner_sha256':sha(Path(__file__)),
   'cuda_peak_reserved_bytes':torch.cuda.max_memory_reserved() if device.type=='cuda' else 0})
  (out/'TRAINING_COMPLETED').write_text('SW0106 fixed256-update pilot complete\n')
  return out
 
-def evaluate(seed,arm,device):
- out=OUT/f'{arm}_seed{seed}';train=np.load(VAL_RGB,mmap_mode='r')
+def evaluate(seed,arm,device,output_dir=None):
+ out=Path(output_dir) if output_dir is not None else OUT/f'{arm}_seed{seed}';train=np.load(VAL_RGB,mmap_mode='r')
+ if not (out/'core.pt').is_file() or not (out/'encoder.pt').is_file():raise FileNotFoundError(f'trained checkpoint missing in {out}')
+ if (out/'evaluation.json').exists():raise FileExistsError(f'preserve existing evaluation output in {out}')
  core,encoder,patcher,mean,std,clip,decoder=load_models(device,seed)
  core.load_state_dict(torch.load(out/'core.pt',map_location=device,weights_only=True),strict=True)
  encoder.load_state_dict(torch.load(out/'encoder.pt',map_location=device,weights_only=True),strict=True)
@@ -588,13 +593,13 @@ def full_evaluate(seed,arm,device):
 def main():
  p=argparse.ArgumentParser();p.add_argument('--stage',choices=['preflight','train','eval','full-train','full-eval'],required=True)
  p.add_argument('--seed',type=int,choices=[0,1,2],default=0);p.add_argument('--arm',choices=['candidate','control'],default='candidate')
- p.add_argument('--device',default='cuda:0');p.add_argument('--output',type=Path,default=None)
+ p.add_argument('--device',default='cuda:0');p.add_argument('--output',type=Path,default=None);p.add_argument('--output-dir',type=Path,default=None)
  a=p.parse_args();torch.set_num_threads(2);seed_process(a.seed,torch.device(a.device))
  if a.stage=='preflight':
   output=a.output or ROOT/f'collaborative_test/SW_0106_spike_partition_rgb/results_archive/preflight_seed{a.seed}.json'
   result=preflight(a.seed,torch.device(a.device),output)
- elif a.stage=='train': result=train(a.seed,a.arm,torch.device(a.device))
- elif a.stage=='eval': result=evaluate(a.seed,a.arm,torch.device(a.device))
+ elif a.stage=='train': result=train(a.seed,a.arm,torch.device(a.device),output_dir=a.output_dir)
+ elif a.stage=='eval': result=evaluate(a.seed,a.arm,torch.device(a.device),output_dir=a.output_dir)
  elif a.stage=='full-train': result=full_train(a.seed,a.arm,torch.device(a.device))
  else: result=full_evaluate(a.seed,a.arm,torch.device(a.device))
  print(json.dumps({'stage':a.stage,'result':str(result)},default=str),flush=True)

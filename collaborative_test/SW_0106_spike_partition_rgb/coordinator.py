@@ -1,6 +1,7 @@
 """Exclusive owner-aware SW0106 seed0 preflight/pair queue."""
 import argparse, hashlib, json, math, os, signal, subprocess, sys, time
 from pathlib import Path
+import re
 
 ROOT=Path(__file__).resolve().parents[2]
 HERE=Path(__file__).resolve().parent
@@ -18,6 +19,7 @@ ACTIVE_OWNER_POLL_SECONDS=5
 STATE=ARCHIVE/'gpu_queue_state.json'
 LOCK=OUT/'gpu_queue.lock'
 METRICS=('fg_ari','foreground_iou','matched_object_iou')
+HISTORICAL_RUNNER_SHA256='27de2cb8e3852b66e247467dd2ccd702eff3f7f36e7fd60da22c3f61014849a8'
 
 def read_json(path): return json.loads(Path(path).read_text())
 def write_atomic(path,obj):
@@ -113,21 +115,143 @@ def sw0105_dependency(state_path=SW0105_STATE,output_root=SW0105_OUT):
   if statuses.get(str(seed)) not in ('evaluation_complete','evaluation_already_complete'):return 'waiting'
   if not valid_full320(output_root/f'seed{seed}'/'evaluation.json'):return 'failed'
  return 'ready'
-def valid_training(seed,arm,preflight):
- folder=OUT/f'{arm}_seed{seed}';m=read_json(folder/'manifest.json');hist=read_json(folder/'history.json')
+def valid_training(seed,arm,preflight,folder=None,reviewed_warmup_sha=None):
+ folder=Path(folder) if folder is not None else OUT/f'{arm}_seed{seed}'
+ m=read_json(folder/'manifest.json');hist=read_json(folder/'history.json')
  cm=read_json(CONTROL/f'seed{seed}_positive_frozen/manifest.json')
  if not (folder/'TRAINING_COMPLETED').is_file():return False
  if m.get('status')!='training_complete' or m.get('seed')!=seed or m.get('arm')!=arm:return False
  if m.get('updates')!=256 or m.get('batch_size')!=16 or len(hist)!=256 or m.get('ground_truth_used_for_training') is not False:return False
  if m.get('training_ids')!=cm.get('training_ids') or m.get('source_core_sha256')!=cm.get('source_sha256'):return False
- if m.get('shared_lambda')!=preflight.get('lambda') or m.get('shared_decoder_warmup_artifact_sha256')!=preflight.get('warmup_artifact_sha256'):return False
- for f in ('core.pt','encoder.pt','decoder.pt'):
+ if m.get('shared_lambda')!=preflight.get('lambda'):return False
+ artifact=Path(preflight.get('warmup_artifact',''))
+ actual_warmup=preflight.get('warmup_artifact_sha256')
+ if not artifact.is_file() or sha(artifact)!=actual_warmup:return False
+ declared=m.get('shared_decoder_warmup_artifact_sha256')
+ if not warmup_provenance_ok(m,artifact,actual_warmup,sha(ARCHIVE/'preflight_seed0.json'),reviewed=reviewed_warmup_sha is not None):return False
+ if reviewed_warmup_sha is not None and reviewed_warmup_sha!=actual_warmup:return False
+ for f in ('core.pt','encoder.pt','decoder.pt','optimizer_state.pt'):
   if not (folder/f).is_file():return False
+ if m.get('optimizer_state_sha256')!=sha(folder/'optimizer_state.pt'):return False
+ if m.get('joint_optimizer_steps')!=256 or m.get('decoder_optimizer_steps')!=288:return False
  for row in hist:
   for k in ('total','old_objective','primary','positive_product_spike_unweighted','reconstruction_unweighted','joint_grad_norm_preclip','decoder_grad_norm_preclip'):
    if not math.isfinite(float(row[k])):return False
   if float(row['joint_grad_norm_preclip'])<=0 or float(row['decoder_grad_norm_preclip'])<=0:return False
  return True
+
+def warmup_provenance_ok(manifest,artifact,artifact_sha,preflight_sha,reviewed=False):
+ """New runs require all provenance; reviewed legacy runs may omit these fields only."""
+ expected_path=str(Path(artifact).resolve())
+ fields=(('shared_decoder_warmup_artifact',expected_path),
+         ('shared_decoder_warmup_artifact_sha256',artifact_sha),
+         ('shared_decoder_warmup_preflight_sha256',preflight_sha))
+ for key,expected in fields:
+  actual=manifest.get(key)
+  if actual is None:
+   if not reviewed:return False
+  elif actual!=expected:return False
+ return True
+
+def directory_sha256(folder):
+ """Hash an archived partial tree by sorted relative path and each file SHA; symlinks are rejected."""
+ root=Path(folder)
+ if not root.is_dir():raise FileNotFoundError(root)
+ h=hashlib.sha256()
+ files=sorted(root.rglob('*'),key=lambda p:p.relative_to(root).as_posix())
+ for p in files:
+  if p.is_symlink():raise ValueError(f'symlink in recovery archive: {p}')
+  if p.is_file():
+   h.update(p.relative_to(root).as_posix().encode('utf-8'));h.update(b'\0');h.update(bytes.fromhex(sha(p)))
+ return h.hexdigest()
+
+def validate_reviewed_resume_sidecar(sidecar_path):
+ """Validate a root-reviewed historical control exception and archived partial candidate."""
+ s=read_json(sidecar_path)
+ if s.get('schema_version')!=1 or s.get('status')!='reviewed' or not str(s.get('reviewed_by','')).strip():
+  raise ValueError('resume sidecar must be schema1 and explicitly reviewed')
+ if s.get('seed')!=0 or s.get('arm')!='control' or s.get('historical_runner_sha256')!=HISTORICAL_RUNNER_SHA256:
+  raise ValueError('resume sidecar is not for the reviewed historical seed0 control run')
+ resume_id=s.get('resume_id','')
+ if not isinstance(resume_id,str) or not re.fullmatch(r'[A-Za-z0-9_.-]{1,64}',resume_id):raise ValueError('invalid recovery identifier')
+ pf=Path(s.get('preflight_path',''))
+ if pf.resolve()!= (ARCHIVE/'preflight_seed0.json').resolve() or sha(pf)!=s.get('preflight_sha256') or not valid_preflight(pf):
+  raise ValueError('reviewed preflight path/hash/validator mismatch')
+ preflight=read_json(pf);warm=Path(s.get('warmup_artifact_path',''))
+ if warm.resolve()!=Path(preflight['warmup_artifact']).resolve() or s.get('warmup_artifact_sha256')!=preflight.get('warmup_artifact_sha256') or sha(warm)!=s.get('warmup_artifact_sha256'):
+  raise ValueError('reviewed shared warmup path or SHA mismatch')
+ control=OUT/'control_seed0';c=s.get('control_artifacts',{})
+ if Path(c.get('directory','')).resolve()!=control.resolve():raise ValueError('sidecar control directory mismatch')
+ expected={'manifest':'manifest.json','history':'history.json','training_marker':'TRAINING_COMPLETED',
+  'core':'core.pt','encoder':'encoder.pt','decoder':'decoder.pt','optimizer_state':'optimizer_state.pt'}
+ if set(c.get('sha256',{}))!=set(expected):raise ValueError('sidecar must hash all control outputs')
+ for key,name in expected.items():
+  p=control/name
+  if not p.is_file() or sha(p)!=c['sha256'][key]:raise ValueError(f'historical control artifact SHA mismatch: {p}')
+ manifest=read_json(control/'manifest.json')
+ for key,expected in (('shared_decoder_warmup_artifact',str(warm.resolve())),
+                      ('shared_decoder_warmup_artifact_sha256',s['warmup_artifact_sha256']),
+                      ('shared_decoder_warmup_preflight_sha256',s['preflight_sha256'])):
+  if manifest.get(key) is not None and manifest.get(key)!=expected:
+   raise ValueError(f'historical control has mismatched warmup provenance field {key}')
+ if not valid_training(0,'control',preflight,folder=control,reviewed_warmup_sha=s['warmup_artifact_sha256']):
+  raise ValueError('historical control fails checks beyond explicitly missing warmup provenance fields')
+ hist=Path(s.get('historical_runner_path',''))
+ if not hist.is_file() or sha(hist)!=HISTORICAL_RUNNER_SHA256:raise ValueError('archived historical runner SHA mismatch')
+ q=Path(s.get('queue_state_path',''))
+ if ARCHIVE.resolve() not in q.resolve().parents or not q.is_file() or sha(q)!=s.get('queue_state_sha256'):raise ValueError('historical queue state must be an archived path with matching SHA')
+ qs=read_json(q);failed=qs.get('failed',{})
+ if qs.get('status')!='failed' or failed.get('task')!={'stage':'train','arm':'control','seed':0} or failed.get('return_code')!=0 or failed.get('validation_passed') is not False:
+  raise ValueError('historical queue state does not show the reviewed validator-only control rejection')
+ assert_reviewed_state_workers_gone(qs)
+ log=Path(s.get('control_train_log_path',''))
+ if not log.is_file() or sha(log)!=s.get('control_train_log_sha256') or failed.get('log')!=str(log):raise ValueError('control train log SHA/path mismatch')
+ partial=Path(s.get('candidate_partial_archive_path',''));original=OUT/'candidate_seed0'
+ recovery_root=OUT/'recovery'
+ if original.exists() or not partial.is_dir() or recovery_root.resolve() not in partial.resolve().parents:
+  raise ValueError('candidate partial must first be archived under the recovery directory; canonical output must be absent')
+ if directory_sha256(partial)!=s.get('candidate_partial_tree_sha256'):raise ValueError('archived candidate partial tree hash mismatch')
+ new_output=Path(s.get('candidate_output_dir',''))
+ if new_output.resolve()!=original.resolve() or new_output.exists():raise ValueError('resume must use the now-vacant canonical candidate output only')
+ return s
+
+def assert_reviewed_state_workers_gone(state,kill_fn=os.kill):
+ """Archived failed snapshots may retain stale active records, but no worker may still live."""
+ for job in state.get('active',{}).values():
+  pid=job.get('pid')
+  if not isinstance(pid,int) or pid<=0:raise ValueError('archived failed state has invalid active PID')
+  try:kill_fn(pid,0)
+  except ProcessLookupError:continue
+  except PermissionError:raise ValueError(f'cannot prove archived queue worker PID {pid} is gone')
+  else:raise ValueError(f'archived queue worker PID {pid} is still live')
+
+def reviewed_resume_tasks(sidecar,control_dir=None,candidate_dir=None):
+ """Reuse validated preflight/control; evaluate control only when its endpoint is absent."""
+ control=Path(control_dir) if control_dir is not None else OUT/'control_seed0'
+ candidate=Path(candidate_dir) if candidate_dir is not None else OUT/'candidate_seed0'
+ tasks=[]
+ ev=control/'evaluation.json';marker=control/'COMPLETED'
+ if ev.exists() or marker.exists():
+  if not (ev.is_file() and marker.is_file() and valid_full320(ev)):
+   raise ValueError('existing control evaluation is partial/invalid; preserve it rather than overwrite')
+ else:
+  tasks.append({'stage':'eval','arm':'control','seed':0,'output_dir':str(control)})
+ tasks.append({'stage':'train','arm':'candidate','seed':0,'output_dir':str(candidate)})
+ return tasks
+
+def resume_task_plan(control_dir,candidate_dir,control_evaluation_valid=False):
+ """Pure selector used after the reviewed sidecar has authenticated prior artifacts."""
+ control=Path(control_dir);candidate=Path(candidate_dir)
+ if candidate.exists():raise ValueError('candidate output must be vacant; preserve partials in recovery archive')
+ tasks=[]
+ ev=control/'evaluation.json';marker=control/'COMPLETED'
+ if ev.exists() or marker.exists():
+  if not (ev.is_file() and marker.is_file() and control_evaluation_valid):
+   raise ValueError('existing control evaluation is partial/invalid; preserve it rather than overwrite')
+ else:tasks.append({'stage':'eval','arm':'control','seed':0,'output_dir':str(control)})
+ tasks.extend(({'stage':'train','arm':'candidate','seed':0,'output_dir':str(candidate)},
+               {'stage':'eval','arm':'candidate','seed':0,'output_dir':str(candidate)}))
+ return tasks
 def transition(task,returncode,valid):
  """Pure stage transition; failures never requeue or overwrite attempts."""
  if returncode!=0 or not valid:return 'failed',[]
@@ -138,14 +262,100 @@ def transition(task,returncode,valid):
 def worker_command(task):
  if task['stage']=='preflight':
   return [sys.executable,str(RUNNER),'--stage','preflight','--seed','0','--device','cuda:0','--output',str(ARCHIVE/'preflight_seed0.json')]
- return [sys.executable,str(RUNNER),'--stage',task['stage'],'--seed',str(task['seed']),'--arm',task['arm'],'--device','cuda:0']
+ cmd=[sys.executable,str(RUNNER),'--stage',task['stage'],'--seed',str(task['seed']),'--arm',task['arm'],'--device','cuda:0']
+ if task.get('output_dir'):cmd.extend(['--output-dir',str(task['output_dir'])])
+ return cmd
 def save_state(state):
  snapshot={k:v for k,v in state.items() if k!='active'}
  snapshot['active']={key:{k:v for k,v in job.items() if k in ('gpu','pid','stage','arm','seed','log_path','owners_before','started')} for key,job in state.get('active',{}).items()}
  write_atomic(STATE,snapshot)
 def key_for(task):return f"{task['stage']}:{task.get('arm','')}:seed{task['seed']}"
+
+def run_reviewed_resume(sidecar_path,poll_seconds=10):
+ """Explicit single-worker recovery; original queue state and attempt directories are immutable."""
+ sidecar=validate_reviewed_resume_sidecar(sidecar_path)
+ recovery_id=sidecar['resume_id'];state_path=ARCHIVE/f'reviewed_resume_{recovery_id}_queue_state.json'
+ lock_path=OUT/'queue'/f'reviewed_resume_{recovery_id}.lock'
+ if state_path.exists():raise FileExistsError(f'preserve prior recovery state: {state_path}')
+ control=OUT/'control_seed0';candidate=OUT/'candidate_seed0'
+ control_eval_valid=(control/'evaluation.json').is_file() and valid_full320(control/'evaluation.json')
+ tasks=resume_task_plan(control,candidate,control_evaluation_valid=control_eval_valid)
+ lock_path.parent.mkdir(parents=True,exist_ok=True)
+ fd=os.open(lock_path,os.O_CREAT|os.O_EXCL|os.O_WRONLY);os.write(fd,str(os.getpid()).encode());os.close(fd)
+ state={'status':'waiting_for_free_gpu','mode':'explicit_reviewed_resume','resume_id':recovery_id,
+  'sidecar_path':str(Path(sidecar_path).resolve()),'sidecar_sha256':sha(sidecar_path),
+  'queue_pid':os.getpid(),'created':time.time(),'historical_state_preserved':str(STATE),
+  'pending':tasks,'active':{},'attempts':[],'failed':None,'training_restarted':False}
+ save_atomic=lambda:write_atomic(state_path,state)
+ save_atomic()
+ proc=None
+ try:
+  for index,task in enumerate(tasks):
+   output=Path(task.get('output_dir',control))
+   if task['stage']=='train' and output.exists():raise FileExistsError(f'refusing to overwrite recovery output {output}')
+   if task['stage']=='eval' and (output/'evaluation.json').exists():raise FileExistsError(f'refusing to overwrite evaluation {output}')
+   logpath=OUT/'queue'/f'reviewed_resume_{recovery_id}_{index}_{task["stage"]}_{task["arm"]}.log'
+   if logpath.exists():raise FileExistsError(f'preserve prior recovery log {logpath}')
+   state['status']='waiting_for_free_gpu';state['current_task']=task;state['pending']=tasks[index:];save_atomic()
+   gpu=None
+   while gpu is None:
+    available=eligible_gpus()
+    for candidate_gpu in available:
+     if not gpu_owners(candidate_gpu) and gpu_used_mib(candidate_gpu)<=MAX_USED_MIB:
+      gpu=candidate_gpu;break
+    if gpu is None:time.sleep(poll_seconds)
+   owners_before={str(g):gpu_owners(g) for g in GPUS}
+   with logpath.open('x') as log:
+    env=dict(os.environ,CUDA_VISIBLE_DEVICES=str(gpu),OMP_NUM_THREADS='2',MKL_NUM_THREADS='2')
+    proc=subprocess.Popen(worker_command(task),cwd=ROOT,stdout=log,stderr=subprocess.STDOUT,env=env,start_new_session=True)
+    state['active']={key_for(task):{'pid':proc.pid,'gpu':gpu,'task':task,'log':str(logpath)}};state['status']='running';save_atomic()
+    while proc.poll() is None:
+     owners=gpu_owners(gpu);desc=process_descendants([proc.pid]);foreign=[pid for pid in owners if pid not in desc]
+     if foreign:
+      terminate_owned(proc);raise RuntimeError(f'recovery worker encountered foreign GPU owner(s) {foreign}; log preserved at {logpath}')
+     time.sleep(ACTIVE_OWNER_POLL_SECONDS)
+    rc=proc.returncode
+   state['active']={}
+   valid=False
+   if rc==0:
+    if task['stage']=='train':
+     pf=read_json(ARCHIVE/'preflight_seed0.json')
+     valid=valid_training(0,'candidate',pf,folder=output)
+    else:valid=(output/'COMPLETED').is_file() and valid_full320(output/'evaluation.json')
+   attempt={'task':task,'gpu':gpu,'pid':proc.pid,'owners_before':owners_before,'return_code':rc,
+    'validation_passed':valid,'log':str(logpath),'completed':time.time()}
+   state['attempts'].append(attempt)
+   if not valid:
+    state['status']='failed';state['failed']=attempt;state['pending']=[];save_atomic()
+    raise RuntimeError(f'reviewed recovery task failed validation; artifacts/log preserved: {logpath}')
+   state['pending']=tasks[index+1:];save_atomic()
+  state['status']='complete';state['pending']=[];state['completed']=time.time();save_atomic()
+  # Downstream SW0107 uses the canonical queue sentinel. The immutable failed snapshot
+  # remains byte-for-byte available at the archived path authenticated by the sidecar.
+  if sha(STATE)!=sidecar['queue_state_sha256']:
+   raise RuntimeError('canonical historical queue state changed after sidecar review; refusing to publish completion')
+  write_atomic(STATE,{**state,'canonicalized_from_reviewed_resume':recovery_id,
+   'historical_failed_state_archive':str(Path(sidecar['queue_state_path']).resolve()),
+   'historical_failed_state_sha256':sidecar['queue_state_sha256']})
+  return state
+ except Exception as exc:
+  if state.get('status') not in ('failed','complete'):
+   state['status']='error';state['error']=f'{type(exc).__name__}: {exc}';state['pending']=[];save_atomic()
+  raise
+ finally:
+  if proc is not None and proc.poll() is None:terminate_owned(proc)
+  try:lock_path.unlink()
+  except FileNotFoundError:pass
+
 def main():
- p=argparse.ArgumentParser();p.add_argument('--run',action='store_true');p.add_argument('--poll-seconds',type=int,default=60);a=p.parse_args()
+ p=argparse.ArgumentParser();p.add_argument('--run',action='store_true');p.add_argument('--poll-seconds',type=int,default=60)
+ p.add_argument('--resume-reviewed',type=Path,default=None);a=p.parse_args()
+ if a.resume_reviewed is not None:
+  if not a.run:raise SystemExit('Reviewed recovery requires --run; default remains readiness-only.')
+  if a.poll_seconds<5:raise ValueError('poll interval must be at least5 seconds')
+  result=run_reviewed_resume(a.resume_reviewed,a.poll_seconds)
+  print(json.dumps({'status':result['status'],'resume_id':result['resume_id'],'attempts':result['attempts']},indent=2),flush=True)
+  return
  if not a.run:raise SystemExit('Readiness only by default. Add --run for the approved exclusive SW0106 queue.')
  if a.poll_seconds<5:raise ValueError('poll interval must be at least5 seconds')
  ARCHIVE.mkdir(parents=True,exist_ok=True);(OUT/'queue').mkdir(parents=True,exist_ok=True)

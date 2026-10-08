@@ -1,0 +1,40 @@
+{
+  "status": "waiting_for_free_gpu",
+  "mode": "explicit_reviewed_resume",
+  "resume_id": "warmup_manifest_v1",
+  "sidecar_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0106_spike_partition_rgb/results_archive/cache_failure_recovery/reviewed_resume_warmup_manifest_v1.json",
+  "sidecar_sha256": "f09fac89aba5cd514c27a279e12e178c882f42dadf736b3bffae9fcd66a0b64d",
+  "queue_pid": 190919,
+  "created": 1791453660.4738526,
+  "historical_state_preserved": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0106_spike_partition_rgb/results_archive/gpu_queue_state.json",
+  "pending": [
+    {
+      "stage": "eval",
+      "arm": "control",
+      "seed": 0,
+      "output_dir": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0106_spike_partition_rgb/control_seed0"
+    },
+    {
+      "stage": "train",
+      "arm": "candidate",
+      "seed": 0,
+      "output_dir": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0106_spike_partition_rgb/candidate_seed0"
+    },
+    {
+      "stage": "eval",
+      "arm": "candidate",
+      "seed": 0,
+      "output_dir": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0106_spike_partition_rgb/candidate_seed0"
+    }
+  ],
+  "active": {},
+  "attempts": [],
+  "failed": null,
+  "training_restarted": false,
+  "current_task": {
+    "stage": "eval",
+    "arm": "control",
+    "seed": 0,
+    "output_dir": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0106_spike_partition_rgb/control_seed0"
+  }
+}

@@ -1,7 +1,7 @@
 import unittest
 import tempfile
 from pathlib import Path
-from coordinator import eligible_gpus,transition,valid_preflight,sha,sw0105_dependency
+from coordinator import eligible_gpus,transition,valid_preflight,sha,sw0105_dependency,warmup_provenance_ok,resume_task_plan,assert_reviewed_state_workers_gone
 
 class CoordinatorTests(unittest.TestCase):
  def test_busy_or_residual_memory_gpus_are_excluded(self):
@@ -26,6 +26,37 @@ class CoordinatorTests(unittest.TestCase):
   for task in ({'stage':'train','arm':'control','seed':0},{'stage':'eval','arm':'control','seed':0}):
    status,tasks=transition(task,2,False)
    self.assertEqual(status,'failed');self.assertEqual(tasks,[])
+ def test_reviewed_legacy_warmup_exception_is_narrow_and_new_runs_require_fields(self):
+  manifest={}; artifact=Path('warmup.pt')
+  self.assertFalse(warmup_provenance_ok(manifest,artifact,'abc','def',reviewed=False))
+  self.assertTrue(warmup_provenance_ok(manifest,artifact,'abc','def',reviewed=True))
+  complete={'shared_decoder_warmup_artifact':str(artifact.resolve()),
+   'shared_decoder_warmup_artifact_sha256':'abc','shared_decoder_warmup_preflight_sha256':'def'}
+  self.assertTrue(warmup_provenance_ok(complete,artifact,'abc','def',reviewed=False))
+  for key,value in (('shared_decoder_warmup_artifact_sha256','wrong'),
+                    ('shared_decoder_warmup_artifact','wrong-path'),
+                    ('shared_decoder_warmup_preflight_sha256','wrong-preflight')):
+   bad=dict(complete);bad[key]=value
+   self.assertFalse(warmup_provenance_ok(bad,artifact,'abc','def',reviewed=True),key)
+ def test_resume_plan_reuses_verified_control_and_never_overwrites_candidate(self):
+  with tempfile.TemporaryDirectory() as td:
+   root=Path(td);control=root/'control_seed0';candidate=root/'candidate_seed0';control.mkdir()
+   tasks=resume_task_plan(control,candidate)
+   self.assertEqual([t['stage'] for t in tasks],['eval','train','eval'])
+   self.assertEqual([t['arm'] for t in tasks],['control','candidate','candidate'])
+   (control/'evaluation.json').write_text('{}');(control/'COMPLETED').write_text('done')
+   tasks=resume_task_plan(control,candidate,control_evaluation_valid=True)
+   self.assertEqual([(t['stage'],t['arm']) for t in tasks],[('train','candidate'),('eval','candidate')])
+   with self.assertRaises(ValueError):resume_task_plan(control,candidate,control_evaluation_valid=False)
+   candidate.mkdir()
+   with self.assertRaises(ValueError):resume_task_plan(control,candidate,control_evaluation_valid=True)
+ def test_archived_failed_queue_may_retain_only_proven_dead_pid_records(self):
+  state={'active':{'train:candidate:seed0':{'pid':176302}}}
+  def gone(pid,sig):raise ProcessLookupError(pid)
+  assert_reviewed_state_workers_gone(state,kill_fn=gone)
+  def live(pid,sig):return None
+  with self.assertRaisesRegex(ValueError,'still live'):
+   assert_reviewed_state_workers_gone(state,kill_fn=live)
  def test_preflight_validator_requires_shared_artifact_and_all_family_guards(self):
   with tempfile.TemporaryDirectory() as td:
    artifact=Path(td)/'warm.pt';artifact.write_bytes(b'cpu test artifact')
