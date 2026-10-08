@@ -1,0 +1,275 @@
+{
+  "status": "running",
+  "queue_pid": 183903,
+  "created_unix": 1791452707.5527442,
+  "phase": "sw107_train_all3",
+  "eligible_gpus": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "max_workers": 4,
+  "exclusive_no_foreign_sharing": true,
+  "upstream_queue_state": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0106_spike_partition_rgb/results_archive/gpu_queue_state.json",
+  "pending": [],
+  "completed": {
+    "sw107-export::": {
+      "task": {
+        "stage": "sw107-export"
+      },
+      "resource": "cpu",
+      "validated_existing": true,
+      "completed_unix": 1791452707.5534582
+    },
+    "sw107-encode::": {
+      "task": {
+        "stage": "sw107-encode"
+      },
+      "resource": "cpu",
+      "validated_existing": true,
+      "completed_unix": 1791452709.3208423
+    },
+    "sw107-preflight::0": {
+      "task": {
+        "stage": "sw107-preflight",
+        "seed": 0
+      },
+      "gpu": 0,
+      "pid": 183994,
+      "completed_unix": 1791452760.184256
+    },
+    "sw107-preflight::1": {
+      "task": {
+        "stage": "sw107-preflight",
+        "seed": 1
+      },
+      "gpu": 1,
+      "pid": 184013,
+      "completed_unix": 1791452765.3388824
+    },
+    "sw107-preflight::2": {
+      "task": {
+        "stage": "sw107-preflight",
+        "seed": 2
+      },
+      "gpu": 3,
+      "pid": 184034,
+      "completed_unix": 1791452765.3395188
+    }
+  },
+  "attempts": [
+    {
+      "task": {
+        "stage": "sw107-preflight",
+        "seed": 0
+      },
+      "gpu": 0,
+      "pid": 183994,
+      "owners_before": {
+        "0": [],
+        "1": [],
+        "2": [
+          152314
+        ],
+        "3": []
+      },
+      "launch_owners": [],
+      "log": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0106_spike_partition_rgb/followup_queue_logs/sw107-preflight_none_seed0_gpu0.log",
+      "status": "running"
+    },
+    {
+      "task": {
+        "stage": "sw107-preflight",
+        "seed": 1
+      },
+      "gpu": 1,
+      "pid": 184013,
+      "owners_before": {
+        "0": [],
+        "1": [],
+        "2": [
+          152314
+        ],
+        "3": []
+      },
+      "launch_owners": [],
+      "log": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0106_spike_partition_rgb/followup_queue_logs/sw107-preflight_none_seed1_gpu1.log",
+      "status": "running"
+    },
+    {
+      "task": {
+        "stage": "sw107-preflight",
+        "seed": 2
+      },
+      "gpu": 3,
+      "pid": 184034,
+      "owners_before": {
+        "0": [],
+        "1": [],
+        "2": [
+          152314
+        ],
+        "3": []
+      },
+      "launch_owners": [],
+      "log": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0106_spike_partition_rgb/followup_queue_logs/sw107-preflight_none_seed2_gpu3.log",
+      "status": "running"
+    },
+    {
+      "task": {
+        "stage": "sw107-preflight",
+        "seed": 0
+      },
+      "gpu": 0,
+      "pid": 183994,
+      "return_code": 0,
+      "log": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0106_spike_partition_rgb/followup_queue_logs/sw107-preflight_none_seed0_gpu0.log",
+      "status": "complete",
+      "finished_unix": 1791452760.1842532
+    },
+    {
+      "task": {
+        "stage": "sw107-preflight",
+        "seed": 1
+      },
+      "gpu": 1,
+      "pid": 184013,
+      "return_code": 0,
+      "log": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0106_spike_partition_rgb/followup_queue_logs/sw107-preflight_none_seed1_gpu1.log",
+      "status": "complete",
+      "finished_unix": 1791452765.3388803
+    },
+    {
+      "task": {
+        "stage": "sw107-preflight",
+        "seed": 2
+      },
+      "gpu": 3,
+      "pid": 184034,
+      "return_code": 0,
+      "log": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0106_spike_partition_rgb/followup_queue_logs/sw107-preflight_none_seed2_gpu3.log",
+      "status": "complete",
+      "finished_unix": 1791452765.3395169
+    },
+    {
+      "task": {
+        "stage": "sw107-train",
+        "seed": 0
+      },
+      "gpu": 0,
+      "pid": 184409,
+      "owners_before": {
+        "0": [],
+        "1": [],
+        "2": [
+          152314
+        ],
+        "3": []
+      },
+      "launch_owners": [],
+      "log": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0106_spike_partition_rgb/followup_queue_logs/sw107-train_none_seed0_gpu0.log",
+      "status": "running"
+    },
+    {
+      "task": {
+        "stage": "sw107-train",
+        "seed": 1
+      },
+      "gpu": 1,
+      "pid": 184428,
+      "owners_before": {
+        "0": [],
+        "1": [],
+        "2": [
+          152314
+        ],
+        "3": []
+      },
+      "launch_owners": [],
+      "log": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0106_spike_partition_rgb/followup_queue_logs/sw107-train_none_seed1_gpu1.log",
+      "status": "running"
+    },
+    {
+      "task": {
+        "stage": "sw107-train",
+        "seed": 2
+      },
+      "gpu": 3,
+      "pid": 184455,
+      "owners_before": {
+        "0": [],
+        "1": [],
+        "2": [
+          152314
+        ],
+        "3": []
+      },
+      "launch_owners": [],
+      "log": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0106_spike_partition_rgb/followup_queue_logs/sw107-train_none_seed2_gpu3.log",
+      "status": "running"
+    }
+  ],
+  "training_restarted": false,
+  "reserve_read_started": false,
+  "sw107_first": true,
+  "sw0107_cpu_cache_status": "complete",
+  "sw0106_outcome": "independent_user_requested_priority",
+  "sw0107_status": "queued",
+  "active": {
+    "sw107-train::0": {
+      "task": {
+        "stage": "sw107-train",
+        "seed": 0
+      },
+      "gpu": 0,
+      "pid": 184409,
+      "log": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0106_spike_partition_rgb/followup_queue_logs/sw107-train_none_seed0_gpu0.log",
+      "owners_before": {
+        "0": [],
+        "1": [],
+        "2": [
+          152314
+        ],
+        "3": []
+      },
+      "started": 1791452766.8930836
+    },
+    "sw107-train::1": {
+      "task": {
+        "stage": "sw107-train",
+        "seed": 1
+      },
+      "gpu": 1,
+      "pid": 184428,
+      "log": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0106_spike_partition_rgb/followup_queue_logs/sw107-train_none_seed1_gpu1.log",
+      "owners_before": {
+        "0": [],
+        "1": [],
+        "2": [
+          152314
+        ],
+        "3": []
+      },
+      "started": 1791452768.1732128
+    },
+    "sw107-train::2": {
+      "task": {
+        "stage": "sw107-train",
+        "seed": 2
+      },
+      "gpu": 3,
+      "pid": 184455,
+      "log": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0106_spike_partition_rgb/followup_queue_logs/sw107-train_none_seed2_gpu3.log",
+      "owners_before": {
+        "0": [],
+        "1": [],
+        "2": [
+          152314
+        ],
+        "3": []
+      },
+      "started": 1791452769.4514909
+    }
+  }
+}

@@ -11,6 +11,18 @@ def result(value):
  return {'metrics':{k:float(v.mean()) for k,v in per.items()},'per_image':per}
 
 class FollowupTests(unittest.TestCase):
+ def test_completed_sw107_is_not_queued_again_after_sw106(self):
+  state={'sw0107_status':'complete','pending':[]}
+  queue.start_sw107(state,'seed0_expansion_gate_failed')
+  self.assertEqual(state['status'],'complete');self.assertEqual(state['pending'],[])
+
+ def test_priority_sw107_finishes_before_waiting_on_sw106(self):
+  state={'phase':'sw107_eval_all3','sw107_first':True,'active':{},'pending':[],
+   'completed':{f'sw107-eval::{s}':{} for s in range(3)}}
+  with patch.object(queue.subprocess,'run'):
+   queue.next_phase(state)
+  self.assertEqual(state['phase'],'wait_seed0');self.assertEqual(state['sw0107_status'],'complete')
+
  def test_paired_bootstrap_is_deterministic_and_uses_same_image_delta(self):
   a=np.tile(np.linspace(.2,.8,320),(3,1));b=a-.02
   x=paired_image_bootstrap(a,b);y=paired_image_bootstrap(a,b)

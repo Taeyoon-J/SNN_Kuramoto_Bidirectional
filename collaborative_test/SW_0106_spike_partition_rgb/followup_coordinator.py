@@ -185,6 +185,8 @@ def validate_task(t):
 
 def start_sw107(state,reason):
  state['sw0106_outcome']=reason
+ if state.get('sw0107_status')=='complete':
+  state['phase']='complete';state['status']='complete';state['completed_unix']=time.time();return
  state['phase']='sw107_preflight_all3';state['status']='running'
  state['pending']=[task('sw107-preflight',s) for s in range(3)]
  state['sw0107_status']='queued'
@@ -237,7 +239,11 @@ def next_phase(state):
  elif phase=='sw107_eval_all3':
   if not all(f'sw107-eval::{s}' in done for s in range(3)):raise RuntimeError('SW0107 three-seed endpoint phase incomplete')
   subprocess.run([sys.executable,str(SW107_SUMMARIZE)],cwd=ROOT,check=True)
-  state['phase']='complete';state['status']='complete';state['sw0107_status']='complete';state['completed_unix']=time.time()
+  state['sw0107_status']='complete'
+  if state.get('sw107_first') and not state.get('upstream_status')=='complete':
+   state['phase']='wait_seed0';state['status']='waiting_for_seed0_pilot_terminal'
+  else:
+   state['phase']='complete';state['status']='complete';state['completed_unix']=time.time()
  else:raise ValueError(f'unknown queue phase {phase}')
  if state['phase']!='freeze_before_reserve':state['pending']=state['pending'] or []
 
@@ -283,7 +289,9 @@ def run_cpu_preparation(s,t,cmd):
  s['completed'][key(t)]={'task':t,'pid':proc.pid,'resource':'cpu','validated':True,'completed_unix':time.time()};save_state(s)
 
 def main():
- p=argparse.ArgumentParser();p.add_argument('--run',action='store_true');p.add_argument('--poll-seconds',type=int,default=POLL_SECONDS);a=p.parse_args()
+ p=argparse.ArgumentParser();p.add_argument('--run',action='store_true');p.add_argument('--poll-seconds',type=int,default=POLL_SECONDS)
+ p.add_argument('--sw107-first',action='store_true',help='Run independent SW0107 before waiting for SW0106; do not repeat it later')
+ a=p.parse_args()
  if not a.run:raise SystemExit('readiness only; --run starts the approved conditional follow-up queue')
  if a.poll_seconds<10:raise ValueError('poll interval must be >=10 seconds')
  ARCHIVE.mkdir(parents=True,exist_ok=True);(OUT/'followup_queue_logs').mkdir(parents=True,exist_ok=True)
@@ -292,7 +300,7 @@ def main():
  s={'status':'waiting_for_seed0_pilot_terminal','queue_pid':os.getpid(),'created_unix':time.time(),
   'phase':'wait_seed0','eligible_gpus':list(GPUS),'max_workers':MAX_WORKERS,'exclusive_no_foreign_sharing':True,
   'upstream_queue_state':str(UPSTREAM),'pending':[],'active':{},'completed':{},'attempts':[],
-  'training_restarted':False,'reserve_read_started':False}
+  'training_restarted':False,'reserve_read_started':False,'sw107_first':a.sw107_first}
  save_state(s)
  try:
   s['status']='preparing_sw0107_cpu_data';s['phase']='sw107_cpu_prepare';save_state(s)
@@ -301,6 +309,8 @@ def main():
    '--manifest',str(SW107_POOL/'official_export_manifest.json'),'--gamma',str(SW107_GAMMA),
    '--gamma-manifest',str(SW107_POOL/'official_gamma_manifest.json'),'--device','cpu'])
   s['status']='waiting_for_seed0_pilot_terminal';s['phase']='wait_seed0';s['sw0107_cpu_cache_status']='complete';save_state(s)
+  if a.sw107_first:
+   start_sw107(s,'independent_user_requested_priority');save_state(s)
   while s['status'] not in ('complete','failed','complete_validation_gate_failed'):
    if s['phase']=='wait_seed0':
     if not UPSTREAM.is_file():s['upstream_status']='waiting';save_state(s);time.sleep(a.poll_seconds);continue
