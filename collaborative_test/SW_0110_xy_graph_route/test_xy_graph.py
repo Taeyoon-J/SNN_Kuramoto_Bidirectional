@@ -1,5 +1,10 @@
 import unittest
+import contextlib
+import io
+import json
+from unittest import mock
 
+import numpy as np
 import torch
 from torch import nn
 
@@ -10,6 +15,21 @@ from collaborative_test.SW_0110_xy_graph_route.xy_graph import XYGraphAdapter, a
 
 
 class XYGraphAdapterTests(unittest.TestCase):
+    def test_cli_success_json_flush_is_a_print_argument(self):
+        from collaborative_test.SW_0110_xy_graph_route import run as runner
+        old_argv = runner.sys.argv
+        output = io.StringIO()
+        try:
+            runner.sys.argv = ["run.py", "preflight", "--seed", "0", "--arm", "control",
+                               "--device", "cpu", "--output", "unused.json"]
+            with mock.patch.object(runner, "preflight", return_value={"status": "passed"}), \
+                 mock.patch.object(runner, "write"), contextlib.redirect_stdout(output):
+                runner.main()
+        finally:
+            runner.sys.argv = old_argv
+        record = json.loads(output.getvalue())
+        self.assertEqual(record, {"status": "complete", "command": "preflight", "seed": 0, "arm": "control"})
+
     def make_graph(self):
         return ImageConditionedGraph(
             in_channels=8, hidden_dim=16, top_k=32, coupling_gain=8.0,
@@ -41,10 +61,15 @@ class XYGraphAdapterTests(unittest.TestCase):
         holder = nn.Module()
         holder.graph_generator = self.make_graph().to(device)
         attach_xy_graph(holder)
-        self.assertEqual(holder.graph_generator.xy_projection.device, device)
-        self.assertEqual(holder.graph_generator.xy.device, device)
+        expected_index = (torch.cuda.current_device()
+                          if device.type == "cuda" and device.index is None else device.index)
+        for value in (holder.graph_generator.xy_projection, holder.graph_generator.xy):
+            self.assertEqual(value.device.type, device.type)
+            self.assertEqual(value.device.index, expected_index)
         gamma = torch.randn(2, 8, 256, device=device)
-        self.assertEqual(holder.graph_generator(gamma).device, device)
+        output_device = holder.graph_generator(gamma).device
+        self.assertEqual(output_device.type, device.type)
+        self.assertEqual(output_device.index, expected_index)
 
     def test_roundtrip_preserves_legacy_graph_and_xy_parameter(self):
         torch.manual_seed(13)

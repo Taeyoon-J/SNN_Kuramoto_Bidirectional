@@ -1,9 +1,9 @@
 {
-  "status": "training_active_recovery_pending",
+  "status": "SW0110_seed0_complete_SW0111_guard_failed_SW0112_seed0_training",
   "registered_task_count": 100,
   "experiments": ["SW0108", "SW0109", "SW0110", "SW0111", "SW0112", "SW0114"],
   "scope": "Scientific execution status; no live process IDs or GPU-owner metadata",
-  "active_training_conditions_verified": [
+  "previously_active_training_conditions": [
     {"experiment": "SW0109", "seed": 0, "unique_images": 2500},
     {"experiment": "SW0109", "seed": 0, "unique_images": 10000},
     {"experiment": "SW0109", "seed": 0, "unique_images": 70000}
@@ -34,13 +34,29 @@
     },
     "limits": "CPU suites and command construction do not establish real CUDA preflight success"
   },
+  "local_runtime_fix_verification": {
+    "SW0109_schedule_and_exposure_key_tests": {"passed": 14, "total": 14},
+    "SW0110_xy_and_cli_entrypoint_tests": {"passed": 6, "total": 6},
+    "SW0112_gate_and_cli_entrypoint_tests": {"passed": 5, "total": 5},
+    "queued_python_sources_ast_parsed": 25,
+    "misplaced_json_flush_keywords_after_local_fix": 0,
+    "independent_review": "Sol6.1 reviewed the exact frozen six-file bundle and verified all SHA256 values. PASS covers metadata-key and CLI-print fixes, with no forward/loss/data/optimizer changes; it excludes the separate recovery helper.",
+    "deployment_status": "The reviewed bundle was deployed to Frontier. Root independently verified all three runner SHA256 values against the frozen manifest. Server suites passed SW0109 14/14, SW0110 6/6 and SW0112 5/5; py_compile passed.",
+    "real_corrected_preflight": "Fresh SW0110 seed0 control and xy_candidate preflights completed on exclusively leased GPU0. The foreground control command returned numeric exit_code=0; candidate also returned 0. Preserve old passed-artifact/rc1 attempt separately."
+  },
   "preserved_technical_failures": [
     "Missing archived source-evidence manifests caused SW0110/111/112 preflight failures; exact existing server manifests were copied only after matching registered SHA256 values.",
-    "An incorrect runtime HDF5 argument caused SW0108 membrane/events and SW0109 baseline evaluation failures; their empty failed-attempt directories and logs are preserved."
+    "An incorrect runtime HDF5 argument caused SW0108 membrane/events and SW0109 baseline evaluation failures; their empty failed-attempt directories and logs are preserved.",
+    "SW0109 post-training metadata construction used integer exposure-count keys but indexed them as strings. Root independently inspected the original deployed source and all three seed0 logs (N2500/N10000/N70000): each ended with KeyError '4096' after core/history save. They lack required manifest/completion markers; preserve as unvalidated technical packaging failures and do not retrain merely to regenerate metadata.",
+    "A single SW0110 control probe stopped before producing scientific output when a foreign GPU owner appeared during CUDA startup. Preserve the attempt and restrict the replacement probe to explicitly leased GPU0."
   ],
   "recovery": {
-    "status": "waiting_for_actual_control_preflight_and_safe_training_drain",
-    "single_real_preflight": "SW0110 seed0 control queued behind the same exclusive global GPU leases",
+    "status": "waiting_for_actual_control_preflight_and_verified_post_training_artifacts",
+    "previous_dispatcher": "Stopped only after verifying its identity, empty active state and zero children; original state and logs were archived with per-file hashes before termination.",
+    "runner_hash_dependency": "SW0109 preflight validates runner SHA256; preserve original preflight evidence and review fresh preflight requirements before deploying even a metadata-only runner fix.",
+    "single_real_preflight": "SW0110 seed0 control ran on exclusively leased GPU0 and produced a contract-valid passed artifact. The process subsequently exited rc1 because flush=True was passed to json.dumps rather than print. Preserve this distinction: numerical/contract checks passed, CLI execution did not.",
+    "single_real_preflight_artifact_sha256": "c69f3d2cb57b6d10823346f0cbc1f650b176b935411a6a4775da92583d755a5d",
+    "cli_regression_scope": "The same misplaced flush keyword occurs in SW0110 and SW0112 run.py. Correct and exercise their actual main entrypoints before expanding training; no multi-seed fanout based solely on a written passed artifact.",
     "corrected_launch": "independently reviewed; execute only after worker/output/state invariants pass",
     "completed_training_reuse": "Requires completion marker, 4375 history entries and matching source/core SHA256; do not retrain valid completed outputs",
     "retry_scope": "Missing-evidence or file-not-found attempts with no scientific result, plus their dependency-skipped tasks; numerical failures remain failures",
@@ -52,6 +68,53 @@
     "original_bundle": "deployed and content SHA256 verified",
     "local_scheduler_and_device_test_deltas": "not deployed; do not assume local code fixes are running on the server"
   },
-  "endpoint_results": "No new SW0109 endpoint is reported here",
+  "SW0110_seed0_paired_training": {
+    "control_exit_code": 0,
+    "xy_candidate_exit_code": 0,
+    "updates": 256,
+    "batch_size": 16,
+    "training_time_steps": 64,
+    "settle": 32,
+    "control_core_sha256": "05bb32de0a303d51734c2860df74593a0b7502daec9bbc52d32f7885f3f28b89",
+    "control_history_sha256": "81f6689ec7ab3d8eb52965fc5d6884afc7af3f3278d952faad5c5c6764f8fe1a",
+    "interpretation": "Successful paired pilot training, not a metric improvement claim. Verify candidate artifacts and perform the registered full320 evaluations before selecting a direction."
+  },
+  "SW0110_seed0_control_evaluation": {
+    "exit_code": 0,
+    "ids": [1320, 1639],
+    "images": 320,
+    "valid_count_each_metric": 320,
+    "ground_truth_used_for_prediction": false,
+    "fg_ari": 0.8245657658755523,
+    "foreground_iou": 0.7183717430136797,
+    "matched_object_iou": 0.655629993204592,
+    "object_count_exact_accuracy": 0.234375,
+    "object_count_mae": 1.4406249523162842,
+    "interpretation": "Control result only; await xy_candidate paired evaluation. It is neither a three-seed mean nor a new70k-trained candidate."
+  },
+  "SW0110_seed0_candidate_evaluation": {
+    "exit_code": 0,
+    "ids": [1320, 1639],
+    "images": 320,
+    "valid_count_each_metric": 320,
+    "ground_truth_used_for_prediction": false,
+    "fg_ari": 0.8241682932160493,
+    "foreground_iou": 0.7197940867909944,
+    "matched_object_iou": 0.6541307029239365,
+    "decision": "No FG-ARI improvement in seed0; deprioritize more XY seeds and proceed to registered SW0111 partition-aligned loss pilot."
+  },
+  "SW0111_seed0_preflight": {
+    "exit_code": 1,
+    "result": "Registered hard-partition row-scramble reconstruction-sensitivity guard failed; no paired training started.",
+    "decision": "Retain the unchanged guard and failure; continue independent SW0112 pilot rather than train with unverified assignment-sensitive credit."
+  },
+  "SW0112_seed0": {
+    "control_preflight_exit_code": 0,
+    "gate_candidate_preflight_exit_code": 0,
+    "registered_preflight_validators": [true, true],
+    "status": "paired_training_started_under_exclusive_gpu_leases",
+    "scientific_change": "Registered shared sinusoidal/cosine residual correction of gating; legacy encoder and graph remain fixed. No new performance metric claimed."
+  },
+  "endpoint_results": "SW0110 seed0 paired full320 scores and SW0111 seed0 guard failure are recorded; no three-seed improvement or SW0109 scaling endpoint is established yet",
   "publication": "Local record; GitHub publication awaits its payload-specific approval"
 }

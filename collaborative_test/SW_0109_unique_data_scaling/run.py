@@ -46,6 +46,11 @@ def training_order(seed,size):
  order=np.concatenate([rng.permutation(pool) for _ in range(reps)])
  if len(order)!=EXPOSURES or len(order)%BATCH:raise AssertionError('training order is not exact full-batch exposure budget')
  return pool,order
+def exposure_count_map(order):
+ # JSON object keys are strings; prepare them as strings before indexing.
+ # Otherwise each 4,375-update run fails after saving core/history but before
+ # writing the manifest because Python's integer dict keys do not round-trip.
+ return {str(n):int(np.unique(order[:n]).size) for n in (BATCH*256,EXPOSURES)}
 def nested_pool_summary():
  pools={n:set(pool_ids(n).tolist()) for n in SIZES}
  if not pools[2500]<=pools[10000]<=pools[70000]:raise AssertionError('data pools are not nested')
@@ -192,7 +197,7 @@ def train(seed,size,device,train_gamma,train_manifest,output):
  if any(not torch.equal(v,core.graph_generator.state_dict()[k]) for k,v in graph_initial.items()):raise AssertionError('frozen graph changed')
  if any(not torch.isfinite(p).all() for p in core.parameters()):raise FloatingPointError('nonfinite final parameter')
  torch.save(core.state_dict(),out/'core.pt');write(out/'history.json',hist)
- exposure_counts={n:int(np.unique(order[:n]).size) for n in (BATCH*256,EXPOSURES)}
+ exposure_counts=exposure_count_map(order)
  write(out/'manifest.json',{'status':'training_complete','seed':seed,'unique_image_count':size,
   'pool_unique_sha256':hashlib.sha256(np.asarray(sorted(pool),dtype='<i8').tobytes()).hexdigest(),
   'training_order_sha256':hashlib.sha256(np.asarray(order,dtype='<i8').tobytes()).hexdigest(),

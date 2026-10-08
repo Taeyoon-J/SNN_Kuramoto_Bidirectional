@@ -8,6 +8,14 @@ from coordinator import (task_plan,free_gpus,upstream_complete,ready_tasks,reser
 from summarize import paired_bootstrap,scores_from_report
 
 class ScalingScheduleTests(unittest.TestCase):
+ def test_exposure_count_map_uses_manifest_json_keys(self):
+  from run import exposure_count_map
+  order=np.concatenate((np.arange(2500),np.arange(2500)))
+  counts=exposure_count_map(order)
+  decoded=json.loads(json.dumps(counts))
+  self.assertEqual(set(counts),{str(BATCH*256),str(EXPOSURES)})
+  self.assertEqual(decoded[str(BATCH*256)],2500)
+  self.assertEqual(decoded[str(EXPOSURES)],2500)
  def test_pools_are_nested_and_exact_unique_counts(self):
   pools={n:set(pool_ids(n).tolist()) for n in SIZES}
   self.assertEqual({n:len(x) for n,x in pools.items()},{2500:2500,10000:10000,70000:70000})

@@ -1,0 +1,18 @@
+{
+  "experiment": "SW0111",
+  "seed": 0,
+  "status": "registered_scientific_preflight_guard_failed",
+  "process_exit_code": 1,
+  "guard": "Mean reconstruction loss increase under hard-partition row scrambling must be finite and strictly positive across the first four training batches.",
+  "observed_failure": "AssertionError: registered hard-partition row scramble did not increase reconstruction loss",
+  "stage": "After 32 decoder-only warmup steps and assignment-gradient calibration; before saving the accepted shared decoder/preflight record and before paired training.",
+  "ground_truth_used": false,
+  "paired_training_started": false,
+  "assignment_gradient_guard": "Passed before the row-scramble guard: code checks finite, nonzero reconstruction credit to core and no leaked reconstruction credit in the detached control. This is inferred from the verified execution order, not a recorded numerical norm.",
+  "interpretation": "The proposed reconstruction loss has not passed its predeclared grouping-sensitivity check. This does not establish that spike grouping is useless or that a different reconstruction design cannot work.",
+  "possible_explanations": ["Decoder reliance on coordinates or global color", "Insufficient learned pooled-content mapping after the fixed warmup"],
+  "explanation_status": "Hypotheses from the architecture; neither was verified by the failed guard.",
+  "decision": "Preserve the failure, do not tune the guard after observing it, and proceed with the independent registered SW0112 gate-residual pilot.",
+  "unobserved": "The failure trace does not report the exact scramble mean or per-batch values; no numerical diagnostic values are invented here.",
+  "publication": "Local scientific record; no runtime identifiers or GPU-owner metadata."
+}

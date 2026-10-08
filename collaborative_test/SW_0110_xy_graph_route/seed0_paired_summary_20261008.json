@@ -1,0 +1,38 @@
+{
+  "experiment": "SW0110",
+  "status": "seed0_paired_pilot_complete",
+  "hypothesis": "A learnable projection of patch XY coordinates into graph node embeddings improves spike-derived object segmentation.",
+  "source_core_sha256": "36f2481dd1fa51fa29bd4dc34275a876b71d8b76fbee13ac47a0a1bfe6766fbf",
+  "runner_sha256": "b7d4b90cbf74c8085d2a5cfc8b78a5772f77bc086240939a332f429c1ca344fd",
+  "training": {
+    "seed": 0,
+    "updates_per_arm": 256,
+    "batch_size": 16,
+    "unique_training_images_per_arm": 4096,
+    "same_training_ids_and_order": true,
+    "ground_truth_used_for_training": false,
+    "encoder_frozen": true,
+    "legacy_graph_parameters_frozen": true,
+    "candidate_new_parameters": 32,
+    "both_training_exit_codes": 0
+  },
+  "evaluation": {
+    "ids": [1320, 1639],
+    "images": 320,
+    "valid_images_per_metric": 320,
+    "ground_truth_used_for_prediction": false,
+    "both_evaluation_exit_codes": 0,
+    "metrics_order": ["fg_ari", "foreground_iou", "matched_object_iou"],
+    "control": [0.8245657658755523, 0.7183717430136797, 0.655629993204592],
+    "xy_candidate": [0.8241682932160493, 0.7197940867909944, 0.6541307029239365],
+    "candidate_minus_control": [-0.0003974726595030, 0.0014223437773147, -0.0014992902806555],
+    "object_count_exact_accuracy_control": 0.234375,
+    "object_count_exact_accuracy_candidate": 0.25312501192092896,
+    "object_count_mae_control": 1.4406249523162842,
+    "object_count_mae_candidate": 1.412500023841858
+  },
+  "decision": "Deprioritize additional SW0110 seeds for now; move to the registered SW0111 partition-aligned reconstruction-loss pilot.",
+  "limits": "One seed on the established validation split; no three-seed mean, no untouched-reserve result, no70k training result and no evidence that XY augmentation is generally ineffective.",
+  "runtime_repairs": "Corrected only metadata key typing and CLI JSON printing; original failed-attempt records retained. CPU tests and fresh real CUDA exit-code-zero preflights preceded this paired training.",
+  "publication": "Recorded locally; external publication remains subject to the previously reported approval limitation."
+}

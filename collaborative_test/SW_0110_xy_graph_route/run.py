@@ -473,7 +473,7 @@ def main():
     else:
         evaluate(args.seed, args.arm, args.checkpoint, args.output, args.device)
     print(json.dumps({"status": "complete", "command": args.command,
-                      "seed": args.seed, "arm": args.arm}, flush=True))
+                      "seed": args.seed, "arm": args.arm}), flush=True)
 
 
 if __name__ == "__main__":

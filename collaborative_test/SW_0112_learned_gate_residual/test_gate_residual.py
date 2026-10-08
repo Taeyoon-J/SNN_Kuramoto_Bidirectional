@@ -1,5 +1,10 @@
 import unittest
+import contextlib
+import io
+import json
+from unittest import mock
 
+import numpy as np
 import torch
 from torch import nn
 
@@ -22,6 +27,21 @@ class FakeCore(nn.Module):
 
 
 class GateResidualTests(unittest.TestCase):
+    def test_cli_success_json_flush_is_a_print_argument(self):
+        from collaborative_test.SW_0112_learned_gate_residual import run as runner
+        old_argv = runner.sys.argv
+        output = io.StringIO()
+        try:
+            runner.sys.argv = ["run.py", "preflight", "--seed", "0", "--arm", "control",
+                               "--device", "cpu", "--output", "unused.json"]
+            with mock.patch.object(runner, "preflight", return_value={"status": "passed"}), \
+                 mock.patch.object(runner, "write"), contextlib.redirect_stdout(output):
+                runner.main()
+        finally:
+            runner.sys.argv = old_argv
+        record = json.loads(output.getvalue())
+        self.assertEqual(record, {"status": "complete", "stage": "preflight", "seed": 0, "arm": "control"})
+
     def test_zero_initialization_is_bitwise_identity(self):
         gate = SharedGateResidual()
         delayed = torch.randn(3, 7, 4)
