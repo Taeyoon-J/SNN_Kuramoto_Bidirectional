@@ -1,0 +1,25 @@
+{
+    "experiment":  "SW0112",
+    "status":  "actual_core_zero_residual_smoke_passed",
+    "checked_at_utc":  "2026-10-08T18:27:34.2494307Z",
+    "source":  "synthetic initialized registered core",
+    "device":  "CPU",
+    "batch_size":  1,
+    "time_steps":  4,
+    "bitwise_equal":  [
+                          "spikes",
+                          "membrane",
+                          "phase",
+                          "component_spikes"
+                      ],
+    "binding_restored":  true,
+    "limitations":  [
+                        "No trained checkpoint or real dataset used",
+                        "No gradient or full rollout preflight claim"
+                    ],
+    "peer_review":  {
+                        "branch":  "patch_v2",
+                        "commit":  "697eeb6",
+                        "new_commits_found":  false
+                    }
+}
