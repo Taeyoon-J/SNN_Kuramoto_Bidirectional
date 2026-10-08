@@ -17,6 +17,7 @@ from snn_kuramoto_bidirectional.gamma_initializer import FeaturePatchGammaInitia
 from snn_kuramoto_bidirectional.training.train_s2net_core import _forward_with_plv
 
 OUT=ROOT/'trained_models/SW0106_spike_partition_rgb'
+ARCHIVE=ROOT/'collaborative_test/SW_0106_spike_partition_rgb/results_archive'
 SOURCE_ROOT=ROOT/'trained_models/SW0095_full70k_aligned_loss'
 CONTROL_ROOT=ROOT/'trained_models/SW0097_graph_adaptation'
 CACHE=ROOT/'data/SW_0106_spike_partition_rgb'
@@ -375,15 +376,22 @@ def train(seed,arm,device,steps=256,batch_size=16):
  if not any(k.startswith('graph_generator.') for k in changed_core): raise AssertionError('learned graph did not update')
  if not any(not torch.equal(initial_enc[k],dict(encoder.named_parameters())[k]) for k,_ in encoder.named_parameters()): raise AssertionError('encoder parameters did not update')
  torch.save(core.state_dict(),out/'core.pt');torch.save(encoder.state_dict(),out/'encoder.pt');torch.save(decoder.state_dict(),out/'decoder.pt')
+ optimizer_artifact=out/'optimizer_state.pt'
+ torch.save({'joint_optimizer_state_dict':joint_opt.state_dict(),'decoder_optimizer_state_dict':dec_opt.state_dict(),
+  'seed':seed,'arm':arm,'updates':256,'shared_lambda':lam},optimizer_artifact)
+ optimizer_sha=sha(optimizer_artifact)
  write(out/'history.json',history)
  write(out/'manifest.json',{'status':'training_complete','arm':arm,'seed':seed,'source_core_sha256':source_sha,
   'matched_control_core_sha256':control_sha,
-  'encoder_source_sha256':sha(ENCODER_SOURCE),'training_ids':ids,'training_pool_indices':inds.tolist(),'shuffle_seed':117+seed,
+  'encoder_source_sha256':sha(ENCODER_SOURCE),'feature_preprocessing_sha256':sha(FEATURE_STATS),
+  'feature_preprocessing_path':str(FEATURE_STATS),'training_ids':ids,'training_pool_indices':inds.tolist(),'shuffle_seed':117+seed,
   'updates':256,'batch_size':16,'train_steps':64,'settle':32,'old_spike_aux_weight':5.,'shared_lambda':lam,
   'lambda_calibration':calibration,'decoder_warmup_batches':32,'decoder_lr':3e-4,'joint_core_lr':3e-5,'joint_encoder_lr':3e-6,
   'gradient_clip_joint':1.,'gradient_clip_decoder':1.,'forward_prediction':'unchanged actual event*gate spike classifier',
   'ground_truth_used_for_training':False,'started':started,'completed':time.time(),
   'changed_core_keys':changed_core,'changed_encoder_keys':changed_enc,
+  'optimizer_state_artifact':'optimizer_state.pt','optimizer_state_sha256':optimizer_sha,
+  'joint_optimizer_steps':256,'decoder_optimizer_steps':288,
   'cuda_peak_reserved_bytes':torch.cuda.max_memory_reserved() if device.type=='cuda' else 0})
  (out/'TRAINING_COMPLETED').write_text('SW0106 fixed256-update pilot complete\n')
  return out
@@ -412,8 +420,173 @@ def evaluate(seed,arm,device):
  (out/'COMPLETED').write_text('SW0106 training and full320 actual-spike evaluation complete\n')
  return out/'evaluation.json'
 
+def optimizer_steps(state_dict):
+ steps=[]
+ for state in state_dict.get('state',{}).values():
+  step=state.get('step')
+  if step is None: continue
+  steps.append(int(step.item()) if torch.is_tensor(step) else int(step))
+ return steps
+
+def optimizer_step_map(state_dict):
+ result={}
+ for key,state in state_dict.get('state',{}).items():
+  step=state.get('step')
+  if step is not None:result[str(key)]=int(step.item()) if torch.is_tensor(step) else int(step)
+ return result
+
+def full_train(seed,arm,device):
+ """One additional matched pass over all70k cached RGBs; never resets pilot Adam."""
+ if seed not in (0,1,2) or arm not in ('candidate','control'): raise ValueError('invalid SW0106 full continuation')
+ pilot=OUT/f'{arm}_seed{seed}';out=OUT/f'full70k_{arm}_seed{seed}'
+ if out.exists(): raise FileExistsError(f'preserve existing full70k output; do not overwrite: {out}')
+ gate_path=ARCHIVE/'full70k_promotion_gate.json'
+ if not gate_path.is_file() or json.loads(gate_path.read_text()).get('status')!='passed':
+  raise RuntimeError('full70k promotion gate has not passed')
+ if not (pilot/'TRAINING_COMPLETED').is_file() or not (pilot/'evaluation.json').is_file():
+  raise FileNotFoundError(f'completed/evaluated pilot is required: {pilot}')
+ pilot_manifest=json.loads((pilot/'manifest.json').read_text())
+ optimizer_path=pilot/'optimizer_state.pt'
+ if not optimizer_path.is_file(): raise FileNotFoundError(f'pilot Adam artifact missing; never reset optimizer: {optimizer_path}')
+ optimizer_sha=sha(optimizer_path)
+ if optimizer_sha!=pilot_manifest.get('optimizer_state_sha256') or pilot_manifest.get('optimizer_state_artifact')!='optimizer_state.pt':
+  raise AssertionError('pilot optimizer artifact SHA/manifest mismatch')
+ if pilot_manifest.get('seed')!=seed or pilot_manifest.get('arm')!=arm or pilot_manifest.get('updates')!=256:
+  raise AssertionError('pilot manifest does not match requested full continuation')
+ pilot_joint_steps=pilot_manifest.get('joint_optimizer_steps')
+ pilot_decoder_steps=pilot_manifest.get('decoder_optimizer_steps')
+ if pilot_joint_steps!=256 or pilot_decoder_steps!=288: raise AssertionError('pilot optimizer step counts are not the registered 256/288')
+ fullgate=json.loads(gate_path.read_text())
+ if fullgate.get('seed0_pilot_gate',{}).get('status')!='passed': raise AssertionError('seed0 expansion gate is not recorded as passed')
+ inds,ids,source,source_sha,control_sha=verify_contract(seed)
+ if fullgate.get('three_seed_pilot_gate',{}).get('status')!='passed':
+  raise AssertionError('three-seed pilot gate is not recorded as passed')
+ train=np.load(TRAIN_RGB,mmap_mode='r')
+ if train.shape!=(70000,128,128,3): raise AssertionError('exact70k RGB cache shape mismatch')
+ order=torch.randperm(70000,generator=torch.Generator(device='cpu').manual_seed(117+seed)).tolist()
+ if len(order)!=70000 or len(set(order))!=70000: raise AssertionError('full-pool order is not a permutation')
+ ids_order=[int(i) if int(i)<1000 else int(i)+640 for i in order]
+ expected_pilot=torch.randperm(70000,generator=torch.Generator(device='cpu').manual_seed(117+seed))[:4096].tolist()
+ if order[:4096]!=expected_pilot or ids_order[:4096]!=pilot_manifest.get('training_ids'):
+  raise AssertionError('full-pool order does not continue the registered pilot exposure order')
+ torch.manual_seed(117+seed)
+ if device.type=='cuda':torch.cuda.manual_seed_all(117+seed)
+ core,encoder,patcher,mean,std,clip,decoder=load_models(device,seed)
+ stats_sha=sha(FEATURE_STATS)
+ if pilot_manifest.get('feature_preprocessing_sha256')!=stats_sha:
+  raise AssertionError('registered feature preprocessing changed or was not frozen in pilot manifest')
+ if pilot_manifest.get('encoder_source_sha256')!=sha(ENCODER_SOURCE):
+  raise AssertionError('registered input encoder source changed since pilot')
+ core.load_state_dict(torch.load(pilot/'core.pt',map_location=device,weights_only=True),strict=True)
+ encoder.load_state_dict(torch.load(pilot/'encoder.pt',map_location=device,weights_only=True),strict=True)
+ decoder.load_state_dict(torch.load(pilot/'decoder.pt',map_location=device,weights_only=True),strict=True)
+ joint,core_params,encoder_params,joint_opt,dec_opt=setup_optimizer(core,encoder,decoder)
+ saved=torch.load(optimizer_path,map_location=device,weights_only=True)
+ if saved.get('seed')!=seed or saved.get('arm')!=arm or saved.get('updates')!=256 or saved.get('shared_lambda')!=pilot_manifest.get('shared_lambda'):
+  raise AssertionError('optimizer state artifact contract mismatch')
+ js=saved['joint_optimizer_state_dict'];ds=saved['decoder_optimizer_state_dict']
+ joint_steps_before=optimizer_step_map(js);decoder_steps_before=optimizer_step_map(ds)
+ if not joint_steps_before or not decoder_steps_before or max(joint_steps_before.values())!=256 or max(decoder_steps_before.values())!=288:
+  raise AssertionError('optimizer artifact does not contain required 256/288 pilot Adam moment steps')
+ if min(joint_steps_before.values())<1 or min(decoder_steps_before.values())<1:
+  raise AssertionError('optimizer artifact contains an invalid per-parameter step')
+ joint_opt.load_state_dict(js);dec_opt.load_state_dict(ds)
+ lam=float(pilot_manifest['shared_lambda'])
+ pf=json.loads((ARCHIVE/f'preflight_seed{seed}.json').read_text())
+ if pf.get('status')!='passed' or pf.get('lambda')!=lam: raise AssertionError('seed preflight lambda mismatch')
+ out.mkdir(parents=True,exist_ok=False)
+ criterion=make_criterion();core.train();encoder.train();decoder.train();history=[];started=time.time()
+ for step in range(4375):
+  batch=read_batch(train,order[step*16:(step+1)*16],device)
+  gamma,res,q,labels,hard,groups,target=forward_batch(core,encoder,patcher,mean,std,clip,batch,criterion)
+  _,spikes,out0,plv,theta=res;primary,_=criterion(plv=plv,theta=theta);spike,_=criterion(plv=q);old=primary+5.*spike
+  _,rec,diags=image_losses(q,hard,gamma,target,decoder,arm=='candidate')
+  total=old+(lam*rec if arm=='candidate' else 0.)
+  if not torch.isfinite(total+rec):raise FloatingPointError(f'nonfinite full70k loss at update{step}')
+  joint_opt.zero_grad(set_to_none=True);dec_opt.zero_grad(set_to_none=True)
+  jg=torch.autograd.grad(total,joint,retain_graph=True,allow_unused=True)
+  dg=torch.autograd.grad(rec,decoder.parameters(),allow_unused=True)
+  for p,g in zip(joint,jg):p.grad=None if g is None else g.detach().clone()
+  for p,g in zip(decoder.parameters(),dg):p.grad=None if g is None else g.detach().clone()
+  jnorm=grad_norm([p.grad for p in joint]);dnorm=grad_norm([p.grad for p in decoder.parameters()])
+  if jnorm<=0 or dnorm<=0:raise AssertionError(f'empty full70k gradient at update{step}')
+  torch.nn.utils.clip_grad_norm_(joint,1.);torch.nn.utils.clip_grad_norm_(decoder.parameters(),1.)
+  joint_opt.step();dec_opt.step()
+  history.append({'update':step+1,'total':float(total.detach()),'old_objective':float(old.detach()),
+   'primary':float(primary.detach()),'positive_product_spike_unweighted':float(spike.detach()),
+   'reconstruction_unweighted':float(rec.detach()),'joint_grad_norm_preclip':jnorm,
+   'decoder_grad_norm_preclip':dnorm,'predicted_groups_mean':float(np.mean([len(g) for g in groups])),
+   'K_max':max(d['K'] for d in diags)})
+  if step==0 or (step+1)%128==0:write(out/'progress.json',{'status':'training','stage':'full70k','arm':arm,'seed':seed,'update':step+1,'total_updates':4375,'updated':time.time()})
+ if len(history)!=4375:raise AssertionError('full70k pass did not consume exactly 70000 images')
+ joint_steps_after=optimizer_step_map(joint_opt.state_dict());decoder_steps_after=optimizer_step_map(dec_opt.state_dict())
+ for name,before,after in (('joint',joint_steps_before,joint_steps_after),('decoder',decoder_steps_before,decoder_steps_after)):
+  if not after or not set(before).issubset(after):raise AssertionError(f'{name} Adam state was reset or lost during full70k continuation')
+  deltas=[after[k]-v for k,v in before.items()]
+  if any(delta<0 or delta>4375 for delta in deltas) or max(deltas)!=4375:
+   raise AssertionError(f'{name} Adam moments did not advance through the complete 4375-update pass')
+ torch.save(core.state_dict(),out/'core.pt');torch.save(encoder.state_dict(),out/'encoder.pt');torch.save(decoder.state_dict(),out/'decoder.pt')
+ full_optimizer=out/'optimizer_state.pt'
+ torch.save({'joint_optimizer_state_dict':joint_opt.state_dict(),'decoder_optimizer_state_dict':dec_opt.state_dict(),
+  'seed':seed,'arm':arm,'pilot_updates':256,'full70k_updates':4375,'joint_total_steps':4631,
+  'decoder_total_steps':4663,'shared_lambda':lam},full_optimizer)
+ full_optimizer_sha=sha(full_optimizer)
+ write(out/'history.json',history)
+ write(out/'manifest.json',{'status':'full70k_training_complete','stage':'full70k','arm':arm,'seed':seed,
+  'pilot_core_sha256':sha(pilot/'core.pt'),'pilot_encoder_sha256':sha(pilot/'encoder.pt'),
+  'pilot_decoder_sha256':sha(pilot/'decoder.pt'),'pilot_optimizer_sha256':optimizer_sha,
+  'feature_preprocessing_path':str(FEATURE_STATS),'feature_preprocessing_sha256':stats_sha,
+  'pilot_optimizer_artifact':str(optimizer_path),'pilot_optimizer_steps':{'joint':256,'decoder':288},
+  'full_optimizer_state_sha256':full_optimizer_sha,'full_updates':4375,'full_images':70000,
+  'cumulative_update_budgets':{'joint':4631,'decoder':4663},
+  'pilot_optimizer_per_parameter_steps':{'joint_min':min(joint_steps_before.values()),'joint_max':max(joint_steps_before.values()),
+   'decoder_min':min(decoder_steps_before.values()),'decoder_max':max(decoder_steps_before.values())},
+  'final_optimizer_per_parameter_steps':{'joint_min':min(joint_steps_after.values()),'joint_max':max(joint_steps_after.values()),
+   'decoder_min':min(decoder_steps_after.values()),'decoder_max':max(decoder_steps_after.values())},
+  'batch_size':16,'train_steps':64,'settle':32,
+  'pool_indices_sha256':hashlib.sha256(np.asarray(order,dtype='<i8').tobytes()).hexdigest(),
+  'training_ids_sha256':hashlib.sha256(np.asarray(ids_order,dtype='<i8').tobytes()).hexdigest(),
+  'training_ids_first4096_match_pilot':ids_order[:4096]==pilot_manifest.get('training_ids'),
+  'shuffle_seed':117+seed,'shared_lambda':lam,'loss':'old phase + 5x positive-product spike; candidate-only lambda*RGB assignment MSE',
+  'ground_truth_used_for_training':False,'started':started,'completed':time.time(),
+  'runner_sha256':sha(Path(__file__)),'cuda_peak_reserved_bytes':torch.cuda.max_memory_reserved() if device.type=='cuda' else 0})
+ (out/'FULL70K_TRAINING_COMPLETED').write_text('SW0106 additional full70000-image continuation complete\n')
+ return out
+
+def full_evaluate(seed,arm,device):
+ """Regenerate validation gamma from the full-pass encoder; preserve actual spike readout."""
+ out=OUT/f'full70k_{arm}_seed{seed}'
+ if not (out/'FULL70K_TRAINING_COMPLETED').is_file():raise FileNotFoundError('completed full70k model required')
+ full_manifest=json.loads((out/'manifest.json').read_text())
+ if full_manifest.get('feature_preprocessing_sha256')!=sha(FEATURE_STATS):
+  raise AssertionError('feature preprocessing changed since full70k training')
+ if (out/'evaluation.json').exists():raise FileExistsError('preserve existing full70k evaluation; do not overwrite')
+ val=np.load(VAL_RGB,mmap_mode='r')
+ core,encoder,patcher,mean,std,clip,decoder=load_models(device,seed)
+ core.load_state_dict(torch.load(out/'core.pt',map_location=device,weights_only=True),strict=True)
+ encoder.load_state_dict(torch.load(out/'encoder.pt',map_location=device,weights_only=True),strict=True)
+ encoder.eval();core.eval();gamma=[]
+ with torch.no_grad():
+  for start in range(0,320,16):
+   im=read_batch(val,list(range(start,min(start+16,320))),device)
+   gamma.append(encode(encoder,patcher,mean,std,clip,im).cpu())
+ path=out/'gamma_validation.pt';torch.save(torch.cat(gamma),path)
+ gm=out/'gamma_manifest.json';write(gm,{'source':'SW0106 full70k trained registered input encoder','image_ids':[1320,1639],
+  'gamma_global_start':1320,'shape':[320,8,256],'encoder_sha256':sha(out/'encoder.pt'),'gamma_sha256':sha(path),
+  'ground_truth_used_for_prediction':False})
+ cmd=[sys.executable,str(ROOT/'collaborative_test/SW_0040_peer_transfer/evaluate.py'),'--checkpoint',str(out/'core.pt'),
+  '--gamma-path',str(path),'--gamma-global-start','1320','--gamma-manifest',str(gm),'--dataset-path',str(DATASET),
+  '--output-path',str(out/'evaluation.json'),'--start','1320','--count','320','--batch-size','8','--steps','1024','--settle','512',
+  '--membrane-vth','.06','--min-group-size','2','--background','largest_component','--thresholds','.50',
+  '--dendritic-projection','shared','--graph-spatial-decay','.35','--geodesic-steps','3','--geodesic-radius','1.5',
+  '--geodesic-contrast','2','--geodesic-temperature','.5','--geodesic-cap','16','--kuramoto-backend','factorized','--device',str(device)]
+ subprocess.run(cmd,check=True,cwd=ROOT)
+ read_full320_metrics(out/'evaluation.json')
+ (out/'COMPLETED').write_text('SW0106 full70k training and full320 actual-spike evaluation complete\n')
+ return out/'evaluation.json'
+
 def main():
- p=argparse.ArgumentParser();p.add_argument('--stage',choices=['preflight','train','eval'],required=True)
+ p=argparse.ArgumentParser();p.add_argument('--stage',choices=['preflight','train','eval','full-train','full-eval'],required=True)
  p.add_argument('--seed',type=int,choices=[0,1,2],default=0);p.add_argument('--arm',choices=['candidate','control'],default='candidate')
  p.add_argument('--device',default='cuda:0');p.add_argument('--output',type=Path,default=None)
  a=p.parse_args();torch.set_num_threads(2);seed_process(a.seed,torch.device(a.device))
@@ -421,6 +594,8 @@ def main():
   output=a.output or ROOT/f'collaborative_test/SW_0106_spike_partition_rgb/results_archive/preflight_seed{a.seed}.json'
   result=preflight(a.seed,torch.device(a.device),output)
  elif a.stage=='train': result=train(a.seed,a.arm,torch.device(a.device))
- else: result=evaluate(a.seed,a.arm,torch.device(a.device))
+ elif a.stage=='eval': result=evaluate(a.seed,a.arm,torch.device(a.device))
+ elif a.stage=='full-train': result=full_train(a.seed,a.arm,torch.device(a.device))
+ else: result=full_evaluate(a.seed,a.arm,torch.device(a.device))
  print(json.dumps({'stage':a.stage,'result':str(result)},default=str),flush=True)
 if __name__=='__main__': main()

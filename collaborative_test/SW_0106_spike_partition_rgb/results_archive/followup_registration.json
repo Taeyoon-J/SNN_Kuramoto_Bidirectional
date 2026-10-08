@@ -1,0 +1,46 @@
+{
+    "registered_utc":  "2026-10-08T04:05:45.1076457Z",
+    "queue_pid":  71323,
+    "preserved_upstream_pid":  4012262,
+    "queue_process_verified_alive":  true,
+    "status":  "preparing_sw0107_cpu_data",
+    "official_export_images":  70000,
+    "official_export_validated":  true,
+    "official_rgb_sha256":  "600fb6fcb8193e6bcffef56839ad2de72ce34335bceba09320b473ce21b3e94c",
+    "official_source_freeze_sha256":  "510600d31b39aa4f49bbd42eba02e41a620d84ea94fa800579e9d00217b8800a",
+    "gpu_preflight_completed":  false,
+    "training_started":  false,
+    "evaluation_available":  false,
+    "eligible_gpus":  [
+                          0,
+                          1,
+                          2,
+                          3
+                      ],
+    "foreign_gpu_sharing":  false,
+    "server_cpu_tests_passed":  21,
+    "cpu_test_modules":  [
+                             "test_followup",
+                             "test_coordinator",
+                             "test_partition_rgb"
+                         ],
+    "deployed_code_sha256":  {
+                                 "collaborative_test/SW_0107_official_full70k_transfer/prepare_official.py":  "3e7b94dfbc48e3f2e7b8652d09b8ca3225da07db836abc087ea1468d207a56a2",
+                                 "collaborative_test/SW_0106_spike_partition_rgb/followup_policy.py":  "ea6c09fbbdc6cc1104d06bc15d96314c5c771f07cf9718ceff9098d5a0bacf84",
+                                 "collaborative_test/SW_0106_spike_partition_rgb/test_followup.py":  "27f60437943a90b9b029fb5e0c2d123c23a6691dfd5bf525cdcf4c325bae3a6d",
+                                 "collaborative_test/SW_0106_spike_partition_rgb/followup_coordinator.py":  "f29553413f78894ddaa033042e7faa7e124e241ce06ddbfbeb409185a3d82734",
+                                 "collaborative_test/SW_0107_official_full70k_transfer/summarize.py":  "c8c749bf78d23a991456bb88dd47f416471fb4dfba3640c8a4eb03c69a91c431",
+                                 "collaborative_test/SW_0106_spike_partition_rgb/final_confirmation.py":  "0ff4f1345baa20657ad3f75b0537502456d1f3bde7e6fcb5ea3239c3c6a2aac0",
+                                 "collaborative_test/SW_0107_official_full70k_transfer/run.py":  "43118d9acc6f4890c18bc363f5543dc6e4cbf125887a89188dc00030a295dca2",
+                                 "collaborative_test/SW_0106_spike_partition_rgb/run.py":  "27de2cb8e3852b66e247467dd2ccd702eff3f7f36e7fd60da22c3f61014849a8"
+                             },
+    "stages":  [
+                   "SW0106 existing seed0 paired pilot and evaluation",
+                   "conditional SW0106 seeds1/2 paired pilots",
+                   "conditional SW0106 all six full70000 continuations and evaluations",
+                   "conditional frozen reserve all nine candidate/control/Slot evaluations",
+                   "independent SW0107 all three preflights, official70000 continuations, own320 evaluations"
+               ],
+    "reserve_read_started":  false,
+    "goal_complete":  false
+}
