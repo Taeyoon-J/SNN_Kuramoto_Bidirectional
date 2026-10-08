@@ -1,0 +1,32 @@
+{
+    "status":  "local_checks_passed_server_preflight_pending",
+    "experiments":  [
+                        "SW0112",
+                        "SW0113",
+                        "SW0114"
+                    ],
+    "checks":  [
+                   {
+                       "suite":  "SW0112 gate residual",
+                       "passed":  4,
+                       "scope":  "zero identity, bounded finite gradients, delayed binding and restoration, shape rejection"
+                   },
+                   {
+                       "suite":  "SW0113 scheduler",
+                       "passed":  7,
+                       "scope":  "local scheduler tests"
+                   }
+               ],
+    "correction":  "SW0112 evaluation validator uses its bound SHA helper, independent of transient run-module aliases",
+    "training_started":  false,
+    "server_deployment":  "expanded payload blocked by automatic approval review",
+    "resolution32":  "protocol reviewed; local implementation in progress",
+    "hashes":  {
+                   "collaborative_test/SW_0112_learned_gate_residual/gate_residual.py":  "b973d4165293c1189eabc9c03071e6c88061a4149ba20ca281d757853e7708f6",
+                   "collaborative_test/SW_0114_resolution32_pilot/protocol.json":  "a8a2c20245cd43530a20f264d7f92e2ecb1a9329c0b2e400ec1e3d270b7d3330",
+                   "collaborative_test/SW_0112_learned_gate_residual/coordinator.py":  "acedbefe0325d84c5aba984aafcbdea3835fbf11eb25ef66e25a92a56492e1cd",
+                   "collaborative_test/SW_0110_xy_graph_route/run.py":  "1812e348e40cec6bece85ff07ab51d050cc41c9aebe2e9c0186818552006d801",
+                   "collaborative_test/SW_0112_learned_gate_residual/run.py":  "73d26a9e4b19ccd57b9b6714f593b2cf49c20131f9fbaca79950f7b28668aa88"
+               },
+    "provenance_check":  "PASS: registered encoder/stat hashes, encoder directory, eight required implementation files and preflight-to-training identity guard"
+}

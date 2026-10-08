@@ -1,0 +1,101 @@
+{
+  "status": "preregistered_pending_implementation_review_and_real_preflight",
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "source": "trained_models/SW0097_graph_adaptation/seed{seed}_positive_frozen/core.pt",
+  "source_policy": "Resolve and freeze SHA256 of whole cores, registered encoder and normalization artifacts before preflight; no source95 substitution.",
+  "train": {
+    "pool_ids": "0..999 plus 1640..70639 (70000 unique IDs)",
+    "selection": "torch.randperm(70000, generator seeded 117+seed)[:4096]; map i<1000 to i, otherwise i+640; preserve this order",
+    "updates": 256,
+    "batch_size": 16,
+    "T": 64,
+    "settle": 32,
+    "core_adam_lr": 0.00003,
+    "core_gradient_clip_norm": 1,
+    "optimizer_start": "fresh Adam, not historical optimizer continuation",
+    "old_loss": "unchanged phase primary + 5 * positive-product actual-spike loss",
+    "encoder": "frozen registered native encoder and fixed normalization",
+    "legacy_graph": "all legacy graph parameters frozen",
+    "ground_truth": false
+  },
+  "eval": {
+    "image_ids": "1320..1639",
+    "images": 320,
+    "batch_size": 8,
+    "T": 1024,
+    "settle": 512,
+    "gamma": "registered native standardized/clipped 8-channel gamma",
+    "readout": "actual event * gate traces; unchanged production positive component-Pearson product, threshold 0.50, min group size 2, largest component background",
+    "metrics": [
+      "FG-ARI",
+      "foreground-IoU",
+      "matched-object-IoU"
+    ],
+    "reserve": "90640..90959 must remain unread"
+  },
+  "promotion": {
+    "mean_FG_ARI_delta_vs_matched_control": 0.01,
+    "mean_FG_ARI_delta_vs_initial_SW0097": 0.01,
+    "positive_seed_deltas_required": 2,
+    "comparisons": "both matched control and initial SW0097",
+    "foreground_IoU_min": 0.25358913,
+    "object_IoU_min": 0.25693698,
+    "bootstrap": "10000 paired resamples, RNG seed113; draw the SAME image indices across all three seeds; mean seed-wise paired deltas; two-sided percentile 95% CI lower bound >0 against both references; conditional on these fixed seeds"
+  },
+  "integrity": {
+    "labels": "GT only for frozen endpoint scoring; never for training, mask construction, thresholds, preflight selection or coefficient tuning",
+    "mask_contract": "no decoder mask, GT object count, gate-only final prediction, or alternate classifier",
+    "failures": "Technical preflight failure stops this branch without parameter retuning; endpoint failure is retained and does not cancel unrelated experiments.",
+    "dependencies": "own source/cache/implementation/preflight checks only; no SW108 or SW109 completion barrier"
+  },
+  "matched_control_reuse": "Allowed only after SHA-verified identical source, train IDs/order, eligible legacy core parameters, old loss, optimizer, clipping, forward and core update identity. Otherwise run a fresh paired control. SW0097 initial metrics are a separate reference, never the 256-update matched control.",
+  "experiment": "SW0111",
+  "hypothesis": "Assignment-only RGB credit can improve actual-spike grouping while preventing SW106 joint encoder/graph drift.",
+  "intervention": {
+    "H": "Exact production classification of detached actual q. One-hot background plus predicted FG groups, ragged K >=1; no cap or GT object count; singleton/discarded nodes obey production background policy.",
+    "Q": "actual positive-product q; Q0=Q*(1-I)",
+    "affinity": "A=(Q0 @ H) / maximum(count[None,:]-H,1); Psoft=softmax(A/0.10,dim=groups)",
+    "candidate_weights": "W=H+(Psoft-Psoft.detach())",
+    "control_weights": "W=H with no assignment credit",
+    "content": "F is native standardized/clipped 8-D gamma; z=(W.T @ F.detach()) / clamp(W.sum(nodes),min=1e-8)",
+    "decoder": "shared MLP [pooled gamma8, patch XY2] ->64 ReLU->64 ReLU->3 sigmoid; no mask head or slot ID",
+    "target": "mean RGB of each native 8x8 patch from the exact 128x128 preprocessing, [0,1]",
+    "prediction": "sum_k W[n,k] * decoder(z[k],xy[n])",
+    "reconstruction_loss": "RGB MSE mean over 256 patches and 3 channels per image, then batch mean",
+    "core_losses": "candidate old + lambda*reconstruction; control old only",
+    "decoder_loss": "unweighted reconstruction in BOTH arms via separate gradients; do not multiply by lambda or accumulate decoder gradients twice"
+  },
+  "warmup": {
+    "batches": 32,
+    "batch_size": 16,
+    "source": "fresh whole SW97 per seed",
+    "trainable": "decoder only; source core/encoder/graph bitwise immutable",
+    "shared": "both arms load exact same decoder weights AND decoder Adam state",
+    "decoder_adam_lr": 0.0003,
+    "decoder_clip_norm": 1,
+    "forbidden": "Do not reuse SW106 source95 decoder warmup or calibration."
+  },
+  "calibration": {
+    "seed": 0,
+    "batches": 4,
+    "data": "first four ordered TRAIN batches after shared warmup",
+    "lambda": "0.25 * median(||grad_old||2 / ||grad_reconstruction||2)",
+    "parameters": "unique eligible core parameter union only, excluding encoder/legacy graph/decoder",
+    "guards": "Both norms finite and strictly positive in every batch; no epsilon rescue or val-selected lambda.",
+    "sharing": "One frozen seed0 lambda reused for all three seeds; no per-seed calibration."
+  },
+  "preflight": [
+    "Freeze encoder and every legacy graph parameter through warmup, calibration and pilot; detach content inside pool as an additional structural guard.",
+    "Actual q-to-W reconstruction gradients finite/nonzero at eligible core; K1, zero/one FG group and ragged batch shapes handled.",
+    "First four TRAIN batches after warmup: deterministic row-permutation of H with seed 106+16*seed+batch, recompute pooling; mean shuffled reconstruction loss must exceed real loss. No GT and no warmup retuning.",
+    "Candidate/control same warmup checkpoint and Adam SHA; core fresh Adam starts after warmup.",
+    "Use autograd.grad separately: core receives old+lambda*rec (candidate) or old (control), decoder receives unweighted rec exactly once; clip each optimizer family separately.",
+    "Cache may reuse verified exact RGB bytes and ID mapping from SW106, but source95-derived model/warmup/calibration artifacts may not be reused.",
+    "Decoder never provides masks; native actual-spike classifier is the only endpoint."
+  ],
+  "budget": "32 shared decoder-only warmup steps per seed, then exactly 256 core and 256 decoder steps per arm; decoder optimizer resumes shared warm state."
+}

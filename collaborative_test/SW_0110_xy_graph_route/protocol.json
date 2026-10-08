@@ -1,0 +1,73 @@
+{
+  "status": "preregistered_pending_implementation_review_and_real_preflight",
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "source": "trained_models/SW0097_graph_adaptation/seed{seed}_positive_frozen/core.pt",
+  "source_policy": "Resolve and freeze SHA256 of whole cores, registered encoder and normalization artifacts before preflight; no source95 substitution.",
+  "train": {
+    "pool_ids": "0..999 plus 1640..70639 (70000 unique IDs)",
+    "selection": "torch.randperm(70000, generator seeded 117+seed)[:4096]; map i<1000 to i, otherwise i+640; preserve this order",
+    "updates": 256,
+    "batch_size": 16,
+    "T": 64,
+    "settle": 32,
+    "core_adam_lr": 0.00003,
+    "core_gradient_clip_norm": 1,
+    "optimizer_start": "fresh Adam, not historical optimizer continuation",
+    "old_loss": "unchanged phase primary + 5 * positive-product actual-spike loss",
+    "encoder": "frozen registered native encoder and fixed normalization",
+    "legacy_graph": "all legacy graph parameters frozen",
+    "ground_truth": false
+  },
+  "eval": {
+    "image_ids": "1320..1639",
+    "images": 320,
+    "batch_size": 8,
+    "T": 1024,
+    "settle": 512,
+    "gamma": "registered native standardized/clipped 8-channel gamma",
+    "readout": "actual event * gate traces; unchanged production positive component-Pearson product, threshold 0.50, min group size 2, largest component background",
+    "metrics": [
+      "FG-ARI",
+      "foreground-IoU",
+      "matched-object-IoU"
+    ],
+    "reserve": "90640..90959 must remain unread"
+  },
+  "promotion": {
+    "mean_FG_ARI_delta_vs_matched_control": 0.01,
+    "mean_FG_ARI_delta_vs_initial_SW0097": 0.01,
+    "positive_seed_deltas_required": 2,
+    "comparisons": "both matched control and initial SW0097",
+    "foreground_IoU_min": 0.25358913,
+    "object_IoU_min": 0.25693698,
+    "bootstrap": "10000 paired resamples, RNG seed113; draw the SAME image indices across all three seeds; mean seed-wise paired deltas; two-sided percentile 95% CI lower bound >0 against both references; conditional on these fixed seeds"
+  },
+  "integrity": {
+    "labels": "GT only for frozen endpoint scoring; never for training, mask construction, thresholds, preflight selection or coefficient tuning",
+    "mask_contract": "no decoder mask, GT object count, gate-only final prediction, or alternate classifier",
+    "failures": "Technical preflight failure stops this branch without parameter retuning; endpoint failure is retained and does not cancel unrelated experiments.",
+    "dependencies": "own source/cache/implementation/preflight checks only; no SW108 or SW109 completion barrier"
+  },
+  "matched_control_reuse": "Allowed only after SHA-verified identical source, train IDs/order, eligible legacy core parameters, old loss, optimizer, clipping, forward and core update identity. Otherwise run a fresh paired control. SW0097 initial metrics are a separate reference, never the 256-update matched control.",
+  "experiment": "SW0110",
+  "hypothesis": "Explicit absolute XY in graph node embedding can separate similar-looking objects beyond the existing pairwise spatial-distance prior.",
+  "intervention": {
+    "formula": "h=legacy_projection(gamma); z=normalize(h + xy @ P.T); P shape[16,2]",
+    "xy": "fixed 16x16 patch-center coordinates mapped to [-1,1], identical for all images",
+    "initialization": "P=zeros, no RNG consumed",
+    "candidate": "train P and the same eligible non-graph core parameters as control",
+    "control": "P fixed zero; same eligible legacy core parameters train",
+    "unchanged": "original native 8-channel gamma, oscillator sensory drive/theta initialization, spatial/geodesic distance, top-k, temperature, graph gain and symmetry"
+  },
+  "preflight": [
+    "Zero-P graph, core traces, actual spikes, q and losses equal legacy source under deterministic execution.",
+    "First four matched TRAIN batches: P gradients finite and nonzero, no GT.",
+    "Freeze audit every legacy graph/encoder parameter and preserve source checkpoint.",
+    "Adapter checkpoint roundtrip includes P/config and reproduces q/readout; combined eligible core+P clipping norm1."
+  ],
+  "claims": "Adds node position features to a graph that already has a spatial distance prior; not evidence of first positional information or of every gate's causal contribution."
+}
