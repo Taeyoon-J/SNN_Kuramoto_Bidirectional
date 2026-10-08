@@ -1,0 +1,29 @@
+{
+    "experiment":  "SW0114",
+    "status":  "local_synthetic_cpu_smoke_passed",
+    "checked_at_utc":  "2026-10-08T18:17:57.0560298Z",
+    "source":  "synthetic initialized registered core, not trained checkpoint",
+    "grid":  32,
+    "batch_size":  1,
+    "time_steps":  2,
+    "component_spikes_shape":  [
+                                   1,
+                                   4,
+                                   1024,
+                                   2
+                               ],
+    "finite_output":  true,
+    "finite_backward":  true,
+    "gradient_tensor_count":  10,
+    "elapsed_seconds":  5.71,
+    "integration_tests_passed":  5,
+    "limitations":  [
+                        "No real dataset used",
+                        "Does not replace GPU memory or full rollout preflight",
+                        "No training or segmentation evaluation result"
+                    ],
+    "source_hashes":  {
+                          "resolution":  "e46e57865b83d4bc76e45ca8bfc7cb16b144de6c4902661296c32fab93f2ea2e",
+                          "tests":  "3eb9d4da8319f50069a19341ce77633949ab722c72407f34fc2a362418885630"
+                      }
+}

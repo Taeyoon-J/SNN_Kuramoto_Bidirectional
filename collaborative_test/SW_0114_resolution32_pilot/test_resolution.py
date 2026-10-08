@@ -2,7 +2,8 @@ import unittest
 
 import torch
 
-from resolution import convert_state_dict, geodesic_distance_chunked, grid_distance, parent_index
+from resolution import (convert_state_dict, downsample_component_labels,
+                        geodesic_distance_chunked, grid_distance, parent_index)
 
 
 class ResolutionTests(unittest.TestCase):
@@ -71,6 +72,44 @@ class ResolutionTests(unittest.TestCase):
         d32 = d16[:, idx][:, :, idx]
         fine = geodesic_distance_chunked(z32, d32, 1., steps=1, chunk=5, log4=True)
         self.assertTrue(torch.allclose(fine, coarse[:, idx][:, :, idx], atol=2e-6, rtol=2e-6))
+
+    def test_registered_core_strict_loads_both_grids(self):
+        import sys
+        from pathlib import Path
+        root = Path(__file__).resolve().parents[2]
+        sys.path[:0] = [str(root), str(root / "collaborative_test")]
+        from SW_0094_aligned_joint_pilot.run import hparams
+        from snn_kuramoto_bidirectional.s2net_cls import S2NetCore
+        from resolution import build_core
+        source = S2NetCore(hparams("raw"), device="cpu").state_dict()
+        control = build_core(source, grid_size=16)
+        candidate = build_core(source, grid_size=32)
+        self.assertEqual(control.kuramoto.N, 256)
+        self.assertEqual(candidate.kuramoto.N, 1024)
+        self.assertEqual(candidate.graph_generator.top_k, 128)
+        self.assertFalse(any(p.requires_grad for p in candidate.graph_generator.parameters()))
+        self.assertTrue(torch.equal(candidate.kuramoto.omega, source["kuramoto.omega"][parent_index()]))
+
+    def test_downsample_vote_ties_and_component_renaming(self):
+        labels = torch.zeros((1, 32, 32), dtype=torch.int64)
+        labels[0, 0, 0] = 1
+        labels[0, 0, 1] = 1
+        labels[0, 0, 2] = 2
+        labels[0, 0, 3] = 2
+        # 2-vs-2 foreground tie: larger full component wins (label 2).
+        groups = [[(9,), tuple(range(20))]]
+        pooled = downsample_component_labels(labels, groups)
+        self.assertEqual(pooled[0, 0, 0].item(), 2)
+        # Background wins a 2-vs-2 tie against any foreground label.
+        labels[0, 0, 4:6] = 1
+        labels[0, 1, 4:6] = 0
+        pooled = downsample_component_labels(labels, groups)
+        self.assertEqual(pooled[0, 0, 2].item(), 0)
+        renamed = torch.where(labels == 1, 2, torch.where(labels == 2, 1, 0))
+        renamed_groups = [[groups[0][1], groups[0][0]]]
+        renamed_pooled = downsample_component_labels(renamed, renamed_groups)
+        self.assertTrue(torch.equal((pooled != 0), (renamed_pooled != 0)))
+        self.assertTrue(torch.equal(pooled == 2, renamed_pooled == 1))
 
 
 if __name__ == "__main__":
