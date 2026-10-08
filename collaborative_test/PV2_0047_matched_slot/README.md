@@ -1,7 +1,11 @@
 # PV2_0047 — a properly trained matched Slot Attention beats us on fg_ari
 
-**completed. This corrects the comparison the project has been making.** Parent
-`PV2_0044`. Validation 300, contract v1, the same split our own scores use.
+**SUPERSEDED by `PV2_0049`. Its headline number is wrong — do not quote it.**
+Two of the three seeds were missing and the inference was unseeded. The matched
+baseline is **0.6635**, not 0.7307, and we are ahead on fg_ari by **+0.0615**, not
+behind by 0.0057. Kept for the record of what was run and why.
+
+**completed.** Parent `PV2_0044`. Validation 300, contract v1, the same split our own scores use.
 
 ## Why it was needed
 

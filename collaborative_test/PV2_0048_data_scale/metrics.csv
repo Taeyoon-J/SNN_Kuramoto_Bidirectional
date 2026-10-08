@@ -1,0 +1,12 @@
+# End-to-end encoder with --slot-reconstruction-weight 1.0, seed 0, validation 300,
+# contract v1, readout window 1024/512. Updates held at ~240k presentations so data
+# diversity is the only intended variable -- but exposures per image fall 40 -> 6,
+# which is the confound PV2_0051 resolves. Extra images from IDs 8000+ only.
+train_images,epochs,sync,fg_ari,fg_iou,obj_iou,groups_per_image,pred_foreground,final_loss
+6000,40,best,0.6779,,,,,
+20000,12,0.02,0.5483,0.6411,0.3058,3.7700,0.1449,15.5495
+20000,12,0.05,0.5513,0.6419,0.3082,3.7867,0.1448,15.5495
+20000,12,0.20,0.5983,0.6453,0.3455,4.0033,0.1427,15.5495
+40000,6,0.02,0.4755,0.5340,0.3451,5.4500,0.1365,16.0136
+40000,6,0.05,0.4790,0.5302,0.3487,5.5300,0.1365,16.0136
+40000,6,0.20,0.4756,0.5189,0.3609,5.5533,0.1297,16.0136

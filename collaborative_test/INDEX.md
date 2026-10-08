@@ -38,7 +38,13 @@
 | PV2_0042 | exhausted | slot-term tuning: the defaults were already optimal (weight 2 gives 0.392) | | | |
 | PV2_0044 | completed | **ported the peer's graph freeze: best on all three, 0.7250 / 0.7188 / 0.4953** | **0.7250** | **0.7188** | **0.4953** |
 | PV2_0045 | failed | end-to-end under a frozen graph collapses to 0.011; the graph is image-conditioned | | | |
-| PV2_0047 | completed | **matched Slot Attention trained on our split: fg_ari 0.7307 vs our 0.7250 -- it wins on ARI, we win both IoUs** | | | |
+| PV2_0047 | superseded | matched Slot Attention at two seeds and unseeded inference: reported 0.7307. Wrong -- see PV2_0049 | | | |
+| PV2_0048 | exhausted | more training images at matched compute: 0.6779 -> 0.5983 -> 0.4790, monotonically worse | | | |
+| PV2_0049 | completed | **matched Slot at three seeds and seeded draws: 0.6635 vs our 0.7250 -- we win ALL THREE** | | | |
+| PV2_0051 | exhausted | data scale closed on the mechanism too: w/b improved only 7% while fg_ari fell; 27-hour run cancelled | | | |
+| PV2_0052 | exhausted | integration window saturated: +0.0005 from 1024 to 4096, inside the seed spread | | | |
+| PV2_0053 | completed | **38.8% of images hold an object pair the graph's cosine cannot separate; position takes it to 18.1%** | | | |
+| PV2_0054 | running | position channels in the code the graph compares, w in {0.5, 1, 2}, seed 0 | | | |
 | PV2_0046 | completed | contract diagnostic: a looser rule *lowers* fg_ari 0.724 to 0.533; cross-branch scores are not poolable | | | |
 
 Three seeds on the test split, scored from spike masks. Peer experiments from
@@ -55,39 +61,62 @@ Not a 3-seed training mean, and trained on a different render; see
 
 ## Where the goal stands
 
-The goal is foreground IoU above 0.7. `PV2_0004` reaches **0.497**, up from the
-baseline's 0.412, and is the first setting above baseline on all three metrics.
+The active goal has three parts: exceed **0.75** `patch_fg_ari`; review and apply
+the peer's results; and if 0.75 is unreachable in this architecture, find a route
+to **0.9+** that keeps SNN + Kuramoto bidirectional.
 
-`PV2_0008` is the best result: test, three seeds, foreground IoU **0.6755**
-(+0.1788 over `PV2_0004`, +36%), fg_ari 0.6075, matched-object IoU 0.4298. **The
-goal is not met** -- 0.0245 short of 0.700 -- and fg_ari is 0.0120 below the Slot
-Attention reference, so the all-three condition is not met either.
+**Best on validation**, three seeds, window 1024/512, spatial kernel sigma 1.0,
+scored from classifier masks on the model's own spikes (`PV2_0044`):
 
-`PV2_0013` improves on it: raising the bimodality weight to 6 gives fg_ari
-**0.6756**, foreground IoU 0.6878 and matched-object IoU 0.4728 on the full
-validation split at three seeds, up on all three.
+| metric | value | std |
+| --- | --- | --- |
+| `patch_fg_ari` | **0.7250** | 0.0022 |
+| `patch_foreground_iou` | **0.7188** | |
+| `patch_matched_object_iou` | **0.4953** | |
 
-Two things block the goal. **The setting is unreliable** -- `PV2_0012` ran seeds 3,
-4 and 5 of the same configuration and got foreground IoU 0.163, 0.430 and 0.000,
-seed 5 having not trained at all, so `PV2_0008`'s test number is a lucky draw of
-the three protocol seeds. And **the phase readout still beats the spike readout**,
-0.7120 against 0.6756 on fg_ari.
+Last confirmed **test** result is still `PV2_0008`: fg_ari 0.6075, foreground IoU
+0.6755, matched-object IoU 0.4298. Everything since is validation only.
 
-`PV2_0015` explains why the second one cannot be fixed with a loss. The spiking
-path holds 1,292 of 200,114 parameters, and the map from phase into it --
-`oscillator_dense` -- is 8 weights shared across all 256 regions. Gradients reach
-it and the alignment term will not move at any weight. The leak is an almost
-parameterless transduction bottleneck, not a training failure, which is also why
-`PV2_0007` and `PV2_0014` failed. Closing it needs a core change: give that
-transduction per-region capacity.
+### The Slot Attention comparison is settled, and we win it
 
-The graph is spent: `PV2_0005` found a ground-truth coupling graph worth only
-about +0.06. `PV2_0006` located the real gap by adding `--readout plv`: with one
-classifier and one evaluation, the phase readout reaches 0.660 where the spike
-readout reaches 0.486, so theta already carries what the goal needs and the
-spiking path loses 0.174 of it. `PV2_0007` tried to close that by MSE-matching the
-phase matrix and failed badly -- matching values fuses the graph; what the readout
-needs is the contrast.
+`PV2_0049` trained the official architecture on our own train split at three seeds
+and evaluated each under three seeded inference draws:
+
+| metric | ours | matched SA | absolute | relative |
+| --- | --- | --- | --- | --- |
+| `patch_fg_ari` | **0.7250** | 0.6635 | +0.0615 | +9.3% |
+| `patch_foreground_iou` | **0.7188** | 0.1184 | +0.6004 | +507% |
+| `patch_matched_object_iou` | **0.4953** | 0.0869 | +0.4084 | +470% |
+
+Ahead on all three. Read with its budget caveat: 320 epochs against the official
+457, so this is a lower bound on Slot Attention. `PV2_0047` reported the opposite
+from two seeds and unseeded inference and is superseded.
+
+### What the ceiling is, and where the loss sits
+
+`PV2_0034` put oracle features through this pipeline unchanged and reached fg_ari
+**0.9754**. The architecture is not the limit; the encoder costs 0.27.
+`PV2_0035/0036` split that: within-object spread 0.465 -> 0.000 is worth +0.170
+(reaching 0.8935), and the between-object margin carries the rest.
+
+### Closed
+
+Feature routes: DINOv2, label-free clustering, self-bootstrapping (circular),
+encoder capacity (diverges), slot-term defaults (already optimal), end-to-end alone
+(0.6779), frozen core (collapses). The graph's *quality* is spent — a ground-truth
+coupling graph is worth +0.06 (`PV2_0005`). Data scale is closed on the score
+(`PV2_0048`) and on the mechanism (`PV2_0051`, 7% ratio gain). The integration
+window is saturated (`PV2_0052`, +0.0005 from 1024 to 4096).
+
+### Open
+
+`PV2_0053` found a loss never measured before: **38.8% of validation images hold an
+object pair whose centroids sit closer together than the objects are internally
+spread** — pairs the graph's feature cosine cannot keep apart, because
+`graph_generator.py:123` builds every edge from eight appearance channels and
+**position never enters that code**. Appending coordinates takes that rate to 18.1%
+at w=1 and 4.3% at w=4, against 0% for the oracle code. `PV2_0054` tests whether it
+converts into fg_ari.
 
 ## Diagnostics kept out of the headline
 

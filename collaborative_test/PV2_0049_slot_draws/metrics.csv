@@ -1,0 +1,10 @@
+# matched Slot Attention, official architecture, trained on OUR train split (images
+# 0-5999), scored under contract v1 on validation 300, background slot chosen per
+# image. Budget 60000 steps x batch 32 = 1.92M presentations = 320 epochs; the
+# official recipe is 500k x 64 = 32M presentations, ~457 epochs, so this is a LOWER
+# BOUND on Slot Attention. Three seeded inference draws per checkpoint.
+# Supersedes PV2_0047, which had two seeds and unseeded inference.
+metric,sa_ckpt0,sa_ckpt1,sa_ckpt2,sa_mean,sa_std,ours_3seed,delta_ours_minus_sa,relative
+fg_ari,0.7234,0.7294,0.5377,0.6635,0.1090,0.7250,+0.0615,+9.3%
+fg_iou,0.1126,0.1135,0.1291,0.1184,0.0093,0.7188,+0.6004,+507.1%
+obj_iou,0.0910,0.0838,0.0858,0.0869,0.0037,0.4953,+0.4084,+470.2%
