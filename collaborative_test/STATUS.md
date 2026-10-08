@@ -1,3 +1,20 @@
+Latest 2026-10-08: SW0107 official-CLEVR additional70k continuation is complete.
+Native320 validation mean .769423/.532391/.591882 loses FG-ARI to matched
+own-data Slot SW0092 .774933/.203589/.206937, while retaining both IoU gains.
+Released Slot .894641/.223511/.245968 is also evaluated on our native data.
+SW0107 continues existing SW0097 cores: this is not a data-only comparison.
+
+SW0106 seed0 pilot candidate .832810/.723735/.667637 improves its control,
+but fails the registered +.01 FG margin against SW0097 seed0. No expansion.
+SW0108 attempt1 used evaluator default threshold2.0 instead of .06 and is
+invalid under the registered contract. All old outputs are preserved; a
+corrected baseline must reproduce all320 registered per-image scores before
+any intervention. Read current server process/state for restart status.
+SW0109 prepares matched-compute2500/10000/70000 unique-image comparisons
+from audited pre-large-data cores. No SW0109 training has started.
+Peer branch697eeb6 reviewed this cycle. Reserve90640-90959 remains unread.
+Goal remains active; no independently confirmed three-metric superiority.
+
 # Current status
 
 SW0097 complete: matched graph adaptation loses all3 mean metrics and FG-ARI
