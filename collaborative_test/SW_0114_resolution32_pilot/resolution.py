@@ -131,3 +131,28 @@ def build_core(seed_state, *, grid_size: int, device="cpu"):
     core.graph_generator.requires_grad_(False)
     core._detect_object_groups = lambda out, spikes: [[] for _ in range(spikes.size(0))]
     return core
+
+
+def downsample_component_labels(labels32, groups):
+    """Prediction-only 2x2 label vote with preregistered deterministic ties."""
+    if labels32.ndim != 3 or tuple(labels32.shape[-2:]) != (32, 32):
+        raise ValueError("expected [B,32,32] native labels")
+    if len(groups) != labels32.shape[0]:
+        raise ValueError("groups batch does not match labels")
+    out = torch.zeros((labels32.shape[0], 16, 16), dtype=labels32.dtype,
+                      device=labels32.device)
+    for b, image_groups in enumerate(groups):
+        areas = {i + 1: int(len(group)) for i, group in enumerate(image_groups)}
+        first_node = {i + 1: min(group) for i, group in enumerate(image_groups) if group}
+        for r in range(16):
+            for c in range(16):
+                block = labels32[b, 2*r:2*r+2, 2*c:2*c+2].reshape(-1)
+                values, counts = torch.unique(block, return_counts=True)
+                max_count = int(counts.max())
+                tied = [int(v) for v, n in zip(values.tolist(), counts.tolist()) if n == max_count]
+                if 0 in tied:
+                    winner = 0
+                else:
+                    winner = min(tied, key=lambda label: (-areas.get(label, 0), first_node.get(label, 1 << 30)))
+                out[b, r, c] = winner
+    return out

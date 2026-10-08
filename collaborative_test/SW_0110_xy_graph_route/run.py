@@ -14,6 +14,7 @@ import torch
 
 ROOT = Path(__file__).resolve().parents[2]
 HERE = Path(__file__).resolve().parent
+RUNNER = HERE / "run.py"
 sys.path[:0] = [str(ROOT), str(ROOT / "collaborative_test")]
 from SW_0094_aligned_joint_pilot.run import ASSETS, hparams
 from snn_kuramoto_bidirectional.s2net_cls import S2NetCore

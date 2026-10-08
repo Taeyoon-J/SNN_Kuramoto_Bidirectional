@@ -4,6 +4,7 @@ import torch
 
 from resolution import (convert_state_dict, downsample_component_labels,
                         geodesic_distance_chunked, grid_distance, parent_index)
+from gamma_cache import cache_rows, hdf5_indices
 
 
 class ResolutionTests(unittest.TestCase):
@@ -90,16 +91,45 @@ class ResolutionTests(unittest.TestCase):
         self.assertFalse(any(p.requires_grad for p in candidate.graph_generator.parameters()))
         self.assertTrue(torch.equal(candidate.kuramoto.omega, source["kuramoto.omega"][parent_index()]))
 
+    def test_candidate_core_short_forward_backward_cpu(self):
+        import sys
+        from pathlib import Path
+        root = Path(__file__).resolve().parents[2]
+        sys.path[:0] = [str(root), str(root / "collaborative_test")]
+        from SW_0094_aligned_joint_pilot.run import hparams
+        from snn_kuramoto_bidirectional.s2net_cls import S2NetCore
+        from resolution import build_core
+        torch.set_num_threads(2)
+        source = S2NetCore(hparams("raw"), device="cpu").state_dict()
+        candidate = build_core(source, grid_size=32, device="cpu")
+        gamma = torch.randn(1, 8, 1024)
+        groups, spikes, core_out = candidate(gamma, return_core_out=True, num_time_steps=2)
+        component_spikes = candidate.last_component_spikes
+        self.assertEqual(tuple(component_spikes.shape), (1, 4, 1024, 2))
+        loss = spikes.float().mean() + core_out.square().mean()
+        loss.backward()
+        grads = [p.grad for p in candidate.parameters() if p.requires_grad and p.grad is not None]
+        self.assertTrue(grads)
+        self.assertTrue(all(torch.isfinite(g).all() for g in grads))
+        from run import predict_frozen
+        labels, groups, diag = predict_frozen(candidate, gamma.detach(), 32,
+                                               time_steps=2, settle=1)
+        self.assertEqual(tuple(labels.shape), (1, 32, 32))
+        self.assertEqual(len(groups), 1)
+        self.assertIn("empty_images", diag)
+
     def test_downsample_vote_ties_and_component_renaming(self):
         labels = torch.zeros((1, 32, 32), dtype=torch.int64)
         labels[0, 0, 0] = 1
         labels[0, 0, 1] = 1
         labels[0, 0, 2] = 2
         labels[0, 0, 3] = 2
-        # 2-vs-2 foreground tie: larger full component wins (label 2).
-        groups = [[(9,), tuple(range(20))]]
+        labels[0, 1, 0:2] = 1
+        labels[0, 1, 2:4] = 2
+        # 2-vs-2 foreground tie: larger full component wins (label 1).
+        groups = [[tuple(range(20)), (9,)]]
         pooled = downsample_component_labels(labels, groups)
-        self.assertEqual(pooled[0, 0, 0].item(), 2)
+        self.assertEqual(pooled[0, 0, 0].item(), 1)
         # Background wins a 2-vs-2 tie against any foreground label.
         labels[0, 0, 4:6] = 1
         labels[0, 1, 4:6] = 0
@@ -109,7 +139,24 @@ class ResolutionTests(unittest.TestCase):
         renamed_groups = [[groups[0][1], groups[0][0]]]
         renamed_pooled = downsample_component_labels(renamed, renamed_groups)
         self.assertTrue(torch.equal((pooled != 0), (renamed_pooled != 0)))
-        self.assertTrue(torch.equal(pooled == 2, renamed_pooled == 1))
+        self.assertTrue(torch.equal(pooled == 1, renamed_pooled == 2))
+
+    def test_rgb_indices_are_global_but_cache_rows_are_packed(self):
+        ids = [999, 1640, 70639]
+        self.assertEqual(hdf5_indices(ids).tolist(), ids)
+        self.assertEqual(cache_rows(ids).tolist(), [999, 1000, 69999])
+        with self.assertRaisesRegex(ValueError, "reserved validation gap"):
+            hdf5_indices([1000])
+        self.assertEqual(hdf5_indices([1320, 1639], allow_validation=True).tolist(), [1320, 1639])
+
+    def test_immutable_sw0097_batch8_reference_artifacts(self):
+        from run import registered_source_evaluation
+        for seed in (0, 1, 2):
+            path, digest, scores = registered_source_evaluation(seed)
+            self.assertEqual(digest, __import__("run").SOURCE_EVAL_SHAS[seed])
+            for metric in ("fg_ari", "foreground_iou", "matched_object_iou"):
+                self.assertEqual(scores["valid_count"][metric], 320)
+                self.assertEqual(len(scores["per_image"][metric]), 320)
 
 
 if __name__ == "__main__":

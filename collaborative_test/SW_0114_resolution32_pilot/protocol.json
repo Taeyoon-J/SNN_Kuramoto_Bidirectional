@@ -1,121 +1,143 @@
 {
-  "experiment": "SW0114",
-  "status": "preregistered_design_pending_root_review_implementation_and_real_memory_preflight",
-  "question": "Does a physically calibrated 32x32 oscillator grid improve actual-spike grouping compared with a matched16x16 continuation?",
-  "seeds": [
-    0,
-    1,
-    2
-  ],
-  "source": "trained_models/SW0097_graph_adaptation/seed{seed}_positive_frozen/core.pt",
-  "source_integrity": "Freeze whole-source, registered native encoder and preprocessing SHA256 before preparation. No dependence on SW105/106 promotion. Do not alter existing SW107 jobs.",
-  "arms": [
-    "resolution16_control",
-    "resolution32_candidate"
-  ],
-  "input": {
-    "images": "same exact native128x128 RGB bytes and preprocessing as registered baseline",
-    "encoder": "same frozen registered8-channel valid-convolution CNN",
-    "statistics": "same frozen standardization and clipping, applied to feature maps BEFORE patch pooling",
-    "pooling": "FeaturePatchGammaInitializer adaptive_avg_pool2d to16x16 or32x32; row-major flatten",
-    "cache": "Only selected4096 per-seed train images and320 validation images need regeneration at32. Reuse deduplicated exact RGB cache after ID/SHA audit. Do not interpolate16-grid gamma.",
-    "caveat": "The valid3x3 convolution gives126x126 features; adaptive pooling bins need not be disjoint4-pixel image patches. This follows the legacy pooling convention, not exact image-pixel alignment."
-  },
-  "warmstart": {
-    "parent_index": "p(r,c)=(r//2)*16+(c//2), row-major32x32",
-    "replicated_parameters": {
-      "kuramoto.omega": "old[p,:]",
-      "kuramoto.kappa": "old[p,:]",
-      "kuramoto.direction_learner": "old[p[:,None],p[None,:]]",
-      "dendric_layer.tau_n": "old[p,:]",
-      "membrane_layer.tau_m": "old[p]"
-    },
-    "unchanged_parameters": "Every remaining trainable parameter copied exactly, including shared oscillator_dense, graph projection/temperature/gain/spatial_rate/contrast, gamma projection/phase gain and scalar frequency gain.",
-    "regenerated_buffers": "sc identity1024, graph grid_distance32 measured in old8-pixel patch units; all dimensional fields1024/grid32 updated consistently. Explicit key/shape conversion map, strict resulting-state load; no blanket strict=False.",
-    "forbidden": "No new random spatial weights, GT-derived interpolation, per-region dense projection mode, reset or source substitution."
-  },
-  "geometry": {
-    "control": {
-      "N": 256,
-      "K": 256,
-      "top_k": 32,
-      "min_group_size": 2,
-      "grid_distance_scale": 1,
-      "coherence_weight": 0.5
-    },
-    "candidate": {
-      "N": 1024,
-      "K": 1024,
-      "top_k": 128,
-      "min_group_size": 8,
-      "grid_distance_scale": 0.5,
-      "coherence_weight": 1
-    },
-    "invariants": "K/N stays1 and graph row coupling gain stays unchanged. top_k scales4x to preserve neighbor area budget; min retained component image area stays128 pixels. Distance is in original8-pixel units, so spatial decay/geodesic radius/cap/temperature retain their physical scale. Coherence derivative weight doubles with grid sampling density.",
-    "geodesic": {
-      "steps": 3,
-      "radius": 1.5,
-      "contrast": 2,
-      "temperature": 0.5,
-      "cap": 16,
-      "spatial_decay": 0.35,
-      "softmin": "control original -temperature*logsumexp(-through/temperature); candidate -temperature*(logsumexp(-through/temperature)-log(4)). Apply normalization at EACH relaxation before minimum(distance,relaxed).",
-      "normalization_reason": "Fourfold intermediate-node sampling otherwise changes unnormalized softmin by -temperature*log4 even for exactly duplicated coarse nodes. Fixed quadrature correction, no GT calibration.",
-      "limitations": "Top-k cardinality preserves area budget, not identical selected physical neighbors. Three geodesic iterations remain the same algorithm. This is resolution adaptation with stated geometry changes, not a node-count-only causal test."
-    }
-  },
-  "training": {
-    "images": "exact SW0097 manifest4096 ordered image IDs per seed; no resampling",
-    "logical_batch_size": 16,
-    "microbatch_size": 1,
-    "accumulation_steps": 16,
-    "updates": 256,
-    "unique_images": 4096,
-    "T": 64,
-    "settle": 32,
-    "optimizer": "fresh Adam LR3e-5 over same eligible non-graph core parameter families in both arms; no encoder/legacy-graph updates",
-    "loss": "unchanged phase-primary +5*actual positive-product spike criterion; bimodality6, balance10, collapse1, density.867; only physical coherence weight differs .5->1",
-    "aggregation": "Each per-image total /16 backward; zero_grad once per logical batch; clip global eligible norm1 once after all16; Adam step once. Log averaged per-image parts, no mean-over-batch density before squaring.",
-    "ground_truth": false
-  },
-  "memory": {
-    "graph": "Frozen graph under no_grad. Exact outer-i chunk32 of distance.unsqueeze(2)+distance.unsqueeze(1); retain full j and k, same k reduction/dtype/order per row. Concatenate complete row blocks before next relaxation.",
-    "largest_chunk": "B1,32x1024x1024 float32 through is128MiB; logits/logsumexp may add temporaries. Full unchunked B1 tensor4GiB; B16 tensor64GiB. Never construct it.",
-    "backend": "existing factorized Kuramoto; no pairwise B*N*N*D recurrent phase tensor; existing matrix-multiply PLV and actual q.",
-    "measurement": "Record peak allocated/reserved memory and seconds for one real B1 forward/backward64/32, then one full logical16 update, and one B1 inference1024/512. Stop branch on OOM/nonfinite; no hidden N/T/feature reduction. Log projected pilot time before queue eligibility."
-  },
-  "evaluation": {
-    "ids": "1320..1639 all320",
-    "microbatch_size": 1,
-    "T": 1024,
-    "settle": 512,
-    "threshold": 0.5,
-    "background": "unchanged production largest connected component",
-    "actual_mask": "same actual event*raw-gate positive component-product affinity and connected-components driver",
-    "freeze": "Freeze both complete predicted-label arrays before GT scoring.",
-    "primary": "Downsample candidate native32 predicted labels to16 by2x2 majority, then score against ORIGINAL modal8-pixel16-grid GT with unchanged metric functions. Control16 scored on same GT. No recomputation of q/CC after label pooling.",
-    "prediction_ties": "Background wins if tied; otherwise native component with larger total area wins, then component with smallest native row-major node wins. Uses prediction only and is invariant to arbitrary component ID renaming.",
-    "native_secondary": "Score candidate native32 against modal4-pixel32-grid GT. Separately nearest-repeat control16 predictions to32 and score on the SAME32-grid GT. Do not compare native32 metrics directly to historical16-grid metrics.",
-    "slot": "For any native32 Slot claim, score the registered frozen Slot pixel-label prediction on the same modal4-pixel target/IDs using the registered loader/preprocessing/background rule. Historical16-grid Slot means support only the primary16-grid comparison; no Slot retraining or native32 superiority claim without this evaluation.",
-    "reserve": "90640..90959 remain unread"
-  },
-  "preflight": [
-    "CPU spatial replication tests include distinct row/column patterns and pair-axis direction matrix. All nonconverted keys exact and source files unchanged; convert/strict-load/checkpoint-roundtrip.",
-    "Exact chunked geodesic versus original dense implementation at16 on real/fixed synthetic gamma; compare distances/adjacency, including ties and cap. Require numerical audit with declared precision, not altered thresholds.",
-    "Candidate quadrature-normalized relaxation reproduces original16 operator when coarse distance/step matrices are duplicated exactly4x; verify before physical32-grid distances.",
-    "TRAIN source16 gamma regenerated from identical RGB matches registered cache within existing tolerance2e-5; standardize/clip order, uint8/255 exactly once and row-major dimensions audited.",
-    "Control B16 versus16 B1 loss, gradients and one disposable Adam update audit; numerical residuals recorded. Maximum relative gradient norm discrepancy<=1e-4 with absolute error<=1e-5+1e-4*reference_max for each eligible family. Do not relax after results.",
-    "First four matched TRAIN logical batches per seed: finite loss/gradient, nonzero eligible gradients, frozen graph/encoder invariant; disposable optimizer step changes eligible parameters.",
-    "Native readout consumes component spikes[B,4,1024,1024] at eval; classifier minsize8/threshold.50. Predicted downsampling tested for ties, background and component-ID permutations without GT.",
-    "Real memory/time checks pass on genuinely free GPU before training eligibility; no server transfer until parent's pending auto-review approval is resolved."
-  ],
-  "promotion": {
-    "primary_FG_mean_delta_vs_paired_control": 0.01,
-    "primary_FG_mean_delta_vs_original_SW97": 0.01,
-    "positive_seeds_required": 2,
-    "IoU_floors": "primary16-grid mean foreground-IoU>=.25358913 and object-IoU>=.25693698",
-    "uncertainty": "10000 paired-image bootstrap resamples seed114, same sampled320 IDs across fixed seeds, two-sided95% lower bound>0 against control and originalSW97; no seed-population claim.",
-    "budget": "Complete all three paired short pilots unless a technical invalidity stops the branch. Only a successful preregistered primary gate makes a separately reviewed matched70k extension eligible. No parameter/readout/GT-size sweep."
-  },
-  "queue": "Register as an independent SW113 branch after reviewed implementation and own preflight; no SW108/109 completion dependency, source97 baseline validity required. Respect transfer review block and global GPU leases."
+    "experiment":  "SW0114",
+    "status":  "preregistered_pending_implementation_review_and_real_preflight",
+    "question":  "Does a physically calibrated 32x32 oscillator grid improve actual-spike grouping compared with a matched16x16 continuation?",
+    "seeds":  [
+                  0,
+                  1,
+                  2
+              ],
+    "source":  "trained_models/SW0097_graph_adaptation/seed{seed}_positive_frozen/core.pt",
+    "source_integrity":  "Freeze whole-source, registered native encoder and preprocessing SHA256 before preparation. No dependence on SW105/106 promotion. Do not alter existing SW107 jobs.",
+    "arms":  [
+                 "resolution16_control",
+                 "resolution32_candidate"
+             ],
+    "input":  {
+                  "images":  "same exact native128x128 RGB bytes and preprocessing as registered baseline",
+                  "encoder":  "same frozen registered8-channel valid-convolution CNN",
+                  "statistics":  "same frozen standardization and clipping, applied to feature maps BEFORE patch pooling",
+                  "pooling":  "FeaturePatchGammaInitializer adaptive_avg_pool2d to16x16 or32x32; row-major flatten",
+                  "cache":  "Only selected4096 per-seed train images and320 validation images need regeneration at32. Reuse deduplicated exact RGB cache after ID/SHA audit. Do not interpolate16-grid gamma.",
+                  "caveat":  "The valid3x3 convolution gives126x126 features; adaptive pooling bins need not be disjoint4-pixel image patches. This follows the legacy pooling convention, not exact image-pixel alignment."
+              },
+    "warmstart":  {
+                      "parent_index":  "p(r,c)=(r//2)*16+(c//2), row-major32x32",
+                      "replicated_parameters":  {
+                                                    "kuramoto.omega":  "old[p,:]",
+                                                    "kuramoto.kappa":  "old[p,:]",
+                                                    "kuramoto.direction_learner":  "old[p[:,None],p[None,:]]",
+                                                    "dendric_layer.tau_n":  "old[p,:]",
+                                                    "membrane_layer.tau_m":  "old[p]"
+                                                },
+                      "unchanged_parameters":  "Every remaining trainable parameter copied exactly, including shared oscillator_dense, graph projection/temperature/gain/spatial_rate/contrast, gamma projection/phase gain and scalar frequency gain.",
+                      "regenerated_buffers":  "sc identity1024, graph grid_distance32 measured in old8-pixel patch units; all dimensional fields1024/grid32 updated consistently. Explicit key/shape conversion map, strict resulting-state load; no blanket strict=False.",
+                      "forbidden":  "No new random spatial weights, GT-derived interpolation, per-region dense projection mode, reset or source substitution."
+                  },
+    "geometry":  {
+                     "control":  {
+                                     "N":  256,
+                                     "K":  256,
+                                     "top_k":  32,
+                                     "min_group_size":  2,
+                                     "grid_distance_scale":  1,
+                                     "coherence_weight":  0.5
+                                 },
+                     "candidate":  {
+                                       "N":  1024,
+                                       "K":  1024,
+                                       "top_k":  128,
+                                       "min_group_size":  8,
+                                       "grid_distance_scale":  0.5,
+                                       "coherence_weight":  1
+                                   },
+                     "invariants":  "K/N stays1 and graph row coupling gain stays unchanged. top_k scales4x to preserve neighbor area budget; min retained component image area stays128 pixels. Distance is in original8-pixel units, so spatial decay/geodesic radius/cap/temperature retain their physical scale. Coherence derivative weight doubles with grid sampling density.",
+                     "geodesic":  {
+                                      "steps":  3,
+                                      "radius":  1.5,
+                                      "contrast":  2,
+                                      "temperature":  0.5,
+                                      "cap":  16,
+                                      "spatial_decay":  0.35,
+                                      "softmin":  "control original -temperature*logsumexp(-through/temperature); candidate -temperature*(logsumexp(-through/temperature)-log(4)). Apply normalization at EACH relaxation before minimum(distance,relaxed).",
+                                      "normalization_reason":  "Fourfold intermediate-node sampling otherwise changes unnormalized softmin by -temperature*log4 even for exactly duplicated coarse nodes. Fixed quadrature correction, no GT calibration.",
+                                      "limitations":  "Top-k cardinality preserves area budget, not identical selected physical neighbors. Three geodesic iterations remain the same algorithm. This is resolution adaptation with stated geometry changes, not a node-count-only causal test."
+                                  }
+                 },
+    "training":  {
+                     "images":  "exact SW0097 manifest4096 ordered image IDs per seed; no resampling",
+                     "logical_batch_size":  16,
+                     "batch_size":  {
+                                        "source_and_16_grid_control":  8,
+                                        "32_grid_candidate":  1
+                                    },
+                     "accumulation_steps":  16,
+                     "updates":  256,
+                     "unique_images":  4096,
+                     "T":  64,
+                     "settle":  32,
+                     "optimizer":  "fresh Adam LR3e-5 over same eligible non-graph core parameter families in both arms; no encoder/legacy-graph updates",
+                     "loss":  "unchanged phase-primary +5*actual positive-product spike criterion; bimodality6, balance10, collapse1, density.867; only physical coherence weight differs .5-\u003e1",
+                     "aggregation":  "Each per-image total /16 backward; zero_grad once per logical batch; clip global eligible norm1 once after all16; Adam step once. Log averaged per-image parts, no mean-over-batch density before squaring.",
+                     "ground_truth":  false
+                 },
+    "memory":  {
+                   "graph":  "Frozen graph under no_grad. Exact outer-i chunk32 of distance.unsqueeze(2)+distance.unsqueeze(1); retain full j and k, same k reduction/dtype/order per row. Concatenate complete row blocks before next relaxation.",
+                   "largest_chunk":  "B1,32x1024x1024 float32 through is128MiB; logits/logsumexp may add temporaries. Full unchunked B1 tensor4GiB; B16 tensor64GiB. Never construct it.",
+                   "backend":  "existing factorized Kuramoto; no pairwise B*N*N*D recurrent phase tensor; existing matrix-multiply PLV and actual q.",
+                   "measurement":  "Record peak allocated/reserved memory and seconds for one real B1 forward/backward64/32, then one full logical16 update, and one B1 inference1024/512. Stop branch on OOM/nonfinite; no hidden N/T/feature reduction. Log projected pilot time before queue eligibility."
+               },
+    "evaluation":  {
+                       "ids":  "1320..1639 all320",
+                       "microbatch_size":  1,
+                       "T":  1024,
+                       "settle":  512,
+                       "threshold":  0.5,
+                       "background":  "unchanged production largest connected component",
+                       "actual_mask":  "same actual event*raw-gate positive component-product affinity and connected-components driver",
+                       "freeze":  "Freeze complete source, control and candidate predicted-label arrays before GT scoring. Source16 B8 per-image metrics must reproduce the immutable matched SW0097 evaluation within 1e-10 or the pilot endpoint is invalid.",
+                       "primary":  "Downsample candidate native32 predicted labels to16 by2x2 majority, then score against ORIGINAL modal8-pixel16-grid GT with unchanged metric functions. Control16 scored on same GT. No recomputation of q/CC after label pooling.",
+                       "prediction_ties":  "Background wins if tied; otherwise native component with larger total area wins, then component with smallest native row-major node wins. Uses prediction only and is invariant to arbitrary component ID renaming.",
+                       "native_secondary":  "Score candidate native32 against modal4-pixel32-grid GT. Separately nearest-repeat control16 predictions to32 and score on the SAME32-grid GT. Do not compare native32 metrics directly to historical16-grid metrics.",
+                       "slot":  "For any native32 Slot claim, score the registered frozen Slot pixel-label prediction on the same modal4-pixel target/IDs using the registered loader/preprocessing/background rule. Historical16-grid Slot means support only the primary16-grid comparison; no Slot retraining or native32 superiority claim without this evaluation.",
+                       "source_batch8_reference":  {
+                                                       "path_pattern":  "collaborative_test/SW_0097_graph_adaptation/results/seed{seed}_positive_frozen/evaluation.json",
+                                                       "sha256_by_seed":  {
+                                                                              "0":  "009da533e0f3e7fa86d9840a85d87640d9424acf660512f64232ad1669fe61e0",
+                                                                              "1":  "3576ad632d1caba7d396ce65e0d094e86ff2eb9d812f8ef03d5c5e8a30a54278",
+                                                                              "2":  "2d4eb351a530058f307c5c907aa078b9a197323c69fc4e44754d237531e9538c"
+                                                                          },
+                                                       "guard":  "Source16 inference uses B8 and must reproduce all320 per-image source FG-ARI, foreground-IoU, and object-IoU within1e-10 before accepting endpoint comparisons."
+                                                   },
+                       "reserve":  "90640..90959 remain unread"
+                   },
+    "preflight":  [
+                      "CPU spatial replication tests include distinct row/column patterns and pair-axis direction matrix. All nonconverted keys exact and source files unchanged; convert/strict-load/checkpoint-roundtrip.",
+                      "Exact chunked geodesic versus original dense implementation at16 on real/fixed synthetic gamma; compare distances/adjacency, including ties and cap. Require numerical audit with declared precision, not altered thresholds.",
+                      "Candidate quadrature-normalized relaxation reproduces original16 operator when coarse distance/step matrices are duplicated exactly4x; verify before physical32-grid distances.",
+                      "TRAIN source16 gamma regenerated from identical RGB matches registered cache within existing tolerance2e-5; standardize/clip order, uint8/255 exactly once and row-major dimensions audited.",
+                      "Control B16 versus16 B1 loss, gradients and one disposable Adam update audit; numerical residuals recorded. Maximum relative gradient norm discrepancy\u003c=1e-4 with absolute error\u003c=1e-5+1e-4*reference_max for each eligible family. Do not relax after results.",
+                      "First four matched TRAIN logical batches per seed: finite loss/gradient, nonzero eligible gradients, frozen graph/encoder invariant; disposable optimizer step changes eligible parameters.",
+                      "Native readout consumes component spikes[B,4,1024,1024] at eval; classifier minsize8/threshold.50. Predicted downsampling tested for ties, background and component-ID permutations without GT.",
+                      "Real memory/time checks pass on genuinely free GPU before training eligibility; no server transfer until parent\u0027s pending auto-review approval is resolved."
+                  ],
+    "promotion":  {
+                      "primary_FG_mean_delta_vs_paired_control":  0.01,
+                      "primary_FG_mean_delta_vs_original_SW97":  0.01,
+                      "positive_seeds_required":  2,
+                      "IoU_floors":  "primary16-grid mean foreground-IoU\u003e=.25358913 and object-IoU\u003e=.25693698",
+                      "uncertainty":  "10000 paired-image bootstrap resamples seed114, same sampled320 IDs across fixed seeds, two-sided95% lower bound\u003e0 against control and originalSW97; no seed-population claim.",
+                      "budget":  "Complete all three paired short pilots unless a technical invalidity stops the branch. Only a successful preregistered primary gate makes a separately reviewed matched70k extension eligible. No parameter/readout/GT-size sweep."
+                  },
+    "queue":  "Register as an independent SW113 branch after reviewed implementation and own preflight; no SW108/109 completion dependency, source97 baseline validity required. Respect transfer review block and global GPU leases.",
+    "implementation_review":  {
+                                  "server_cpu_tests":  "pending",
+                                  "local_status":  "reviewed",
+                                  "real_gpu_preflight":  "pending",
+                                  "candidate_eval_batch":  1,
+                                  "source_reproduction_tolerance":  1E-10,
+                                  "training_started":  false,
+                                  "source_control_eval_batch":  8,
+                                  "immutable_source_references":  "all three checked locally"
+                              }
 }

@@ -22,4 +22,4 @@ The primary comparison pools predicted32-grid labels by a GT-free2x2 majority ru
 
 All masks are formed from actual component spikes, frozen before GT scoring. The unread reserve stays untouched. The all-three-seed primary promotion gate, paired-image bootstrap and IoU floors are fixed in the protocol. A matched70k extension is conditional on improvement and a further reviewed execution plan.
 
-This folder contains design only. No server payload, job or transfer is authorized by writing these files while the parent's automatic-review approval question is pending.
+The local implementation contains 20 tasks: shared cache preparation, paired preflights/training/evaluation, and a three-seed summary. Local CPU tests and source-reference checks pass. Real data preparation, CUDA preflight, training, and evaluation remain unrun; server deployment is pending resolution of automatic approval review. Source/control inference retains batch8 and must reproduce all immutable SW0097 per-image scores before comparison; candidate32 uses batch1.
