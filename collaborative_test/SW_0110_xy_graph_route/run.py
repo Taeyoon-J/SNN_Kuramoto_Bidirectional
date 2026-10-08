@@ -20,7 +20,7 @@ from snn_kuramoto_bidirectional.s2net_cls import S2NetCore
 from snn_kuramoto_bidirectional.loss_function import UnsupervisedS2NetLoss
 from snn_kuramoto_bidirectional.spike_classifier import spike_synchrony_affinity
 from snn_kuramoto_bidirectional.training.train_s2net_core import _forward_with_plv
-from xy_graph import attach_xy_graph
+from collaborative_test.SW_0110_xy_graph_route.xy_graph import attach_xy_graph
 
 SEEDS = (0, 1, 2)
 ARMS = ("control", "xy_candidate")

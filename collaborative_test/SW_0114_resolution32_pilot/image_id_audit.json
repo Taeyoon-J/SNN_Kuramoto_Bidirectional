@@ -1,0 +1,35 @@
+{
+    "experiment":  "SW0114",
+    "status":  "verified_existing_data_alignment",
+    "checked_at_utc":  "2026-10-08T18:21:00.8440387Z",
+    "global_image_ids":  [
+                             0,
+                             999,
+                             1640,
+                             70639
+                         ],
+    "gamma_cache_rows":  [
+                             0,
+                             999,
+                             1000,
+                             69999
+                         ],
+    "hdf5_image_indices":  [
+                               0,
+                               999,
+                               1640,
+                               70639
+                           ],
+    "max_absolute_gamma_errors":  [
+                                      0,
+                                      0,
+                                      0,
+                                      0
+                                  ],
+    "encoder":  "registered frozen encoder",
+    "preprocessing":  "registered scalar standardization and clipping",
+    "device":  "CPU",
+    "source_cache_unchanged":  true,
+    "conclusion":  "HDF5 indices are global image IDs. The -640 offset belongs only to packed gamma rows; do not add 640 to global IDs.",
+    "scope":  "Four boundary samples; full selected-ID and validation reproduction remain preflight requirements"
+}
