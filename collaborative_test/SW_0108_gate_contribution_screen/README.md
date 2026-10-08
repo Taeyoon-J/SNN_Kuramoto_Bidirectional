@@ -28,11 +28,16 @@ transfer is necessary.
 
 ## Deployment status
 
-Corrected code is prepared locally. Server execution has not restarted.
+2026-10-08: user explicitly authorized corrected source transfer and testing.
+Deployment and validation are now permitted; verify live queue state before
+reporting that evaluation has started.
+
+Historical blocker: corrected code was prepared locally but execution had not restarted.
 Automatic approval review rejected transferring the four corrected source
 files to Frontier, citing missing explicit source-transfer authorization
 and prohibiting a different transfer route. An explicit user approval
-request is pending. Do not bypass this rejection or label the test running.
+request was subsequently approved. No transfer workaround was used while
+the request was pending.
 After authorization, deploy the frozen files, run server unit tests and
 actual-model preflight, then start the baseline-first exclusive GPU queue.
 Foreign GPU jobs must not be shared or stopped.
