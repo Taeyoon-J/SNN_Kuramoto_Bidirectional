@@ -1,0 +1,89 @@
+{
+  "status": "complete",
+  "mode": "evaluation_only_completed_seed_checkpoints",
+  "created": 1791406048.7340837,
+  "eligible_gpus": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "poll_seconds": 60,
+  "seed_status": {
+    "0": "evaluation_complete",
+    "1": "evaluation_complete",
+    "2": "evaluation_complete"
+  },
+  "active": {},
+  "attempts": [
+    {
+      "seed": 0,
+      "gpu": 0,
+      "pid": 50517,
+      "owners_before": {
+        "0": [],
+        "1": [],
+        "2": [],
+        "3": []
+      },
+      "launch_owners": [],
+      "log": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0105_event_detach_aux/queue/eval_seed0_attempt1_gpu0.log",
+      "status": "running"
+    },
+    {
+      "seed": 1,
+      "gpu": 1,
+      "pid": 50533,
+      "owners_before": {
+        "0": [],
+        "1": [],
+        "2": [],
+        "3": []
+      },
+      "launch_owners": [],
+      "log": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0105_event_detach_aux/queue/eval_seed1_attempt1_gpu1.log",
+      "status": "running"
+    },
+    {
+      "seed": 2,
+      "gpu": 2,
+      "pid": 50567,
+      "owners_before": {
+        "0": [],
+        "1": [],
+        "2": [],
+        "3": []
+      },
+      "launch_owners": [],
+      "log": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0105_event_detach_aux/queue/eval_seed2_attempt1_gpu2.log",
+      "status": "running"
+    },
+    {
+      "seed": 0,
+      "gpu": 0,
+      "pid": 50517,
+      "return_code": 0,
+      "images": 320,
+      "status": "complete"
+    },
+    {
+      "seed": 1,
+      "gpu": 1,
+      "pid": 50533,
+      "return_code": 0,
+      "images": 320,
+      "status": "complete"
+    },
+    {
+      "seed": 2,
+      "gpu": 2,
+      "pid": 50567,
+      "return_code": 0,
+      "images": 320,
+      "status": "complete"
+    }
+  ],
+  "foreign_overlap_stopped": [],
+  "training_restarted": false,
+  "completed": 1791428295.0920985
+}

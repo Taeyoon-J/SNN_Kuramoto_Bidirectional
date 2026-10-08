@@ -1,5 +1,5 @@
 {
-  "status": "training_complete_evaluation_pending",
+  "status": "training_and_evaluation_complete",
   "experiment": "SW0105 event.detach() * actual_gate auxiliary, three matched seeds",
   "seeds": {
     "0": {
@@ -28,8 +28,13 @@
       ],
       "graph_dendrite_membrane_bitwise_fixed": true,
       "weights_retained_on_server_only": true,
-      "evaluation_status": "pending",
-      "training_ids_order_sha256": "0ea8c53509bfaaf6f9b8108023024c4297d35623852e96dca28ea1a2b1623f8f"
+      "evaluation_status": "completed_valid_320",
+      "training_ids_order_sha256": "0ea8c53509bfaaf6f9b8108023024c4297d35623852e96dca28ea1a2b1623f8f",
+      "evaluation_metrics": {
+        "fg_ari": 0.8269714597381196,
+        "foreground_iou": 0.7213342092271409,
+        "matched_object_iou": 0.6561327585841414
+      }
     },
     "1": {
       "manifest_status": "training_complete",
@@ -57,8 +62,13 @@
       ],
       "graph_dendrite_membrane_bitwise_fixed": true,
       "weights_retained_on_server_only": true,
-      "evaluation_status": "pending",
-      "training_ids_order_sha256": "b536e9398fa943da86570fd620c11b4b28a0ce1f84f868213c16021dd45c3f94"
+      "evaluation_status": "completed_valid_320",
+      "training_ids_order_sha256": "b536e9398fa943da86570fd620c11b4b28a0ce1f84f868213c16021dd45c3f94",
+      "evaluation_metrics": {
+        "fg_ari": 0.7410614183229443,
+        "foreground_iou": 0.5883145077831031,
+        "matched_object_iou": 0.5848353967668294
+      }
     },
     "2": {
       "manifest_status": "training_complete",
@@ -86,8 +96,13 @@
       ],
       "graph_dendrite_membrane_bitwise_fixed": true,
       "weights_retained_on_server_only": true,
-      "evaluation_status": "pending",
-      "training_ids_order_sha256": "500701b50b11911d1b8871480086f265194913e253cf2fafeacabcbc92cbaf50"
+      "evaluation_status": "completed_valid_320",
+      "training_ids_order_sha256": "500701b50b11911d1b8871480086f265194913e253cf2fafeacabcbc92cbaf50",
+      "evaluation_metrics": {
+        "fg_ari": 0.7607580531395697,
+        "foreground_iou": 0.4193764254537607,
+        "matched_object_iou": 0.5635848459520127
+      }
     }
   },
   "matched_contract": {
@@ -129,5 +144,11 @@
     "background": "largest_component",
     "classifier": "actual event*gate spikes"
   },
-  "no_weights_archived": true
+  "no_weights_archived": true,
+  "evaluation_summary": "evaluation_summary.json",
+  "evaluation_mean_metrics": {
+    "fg_ari": 0.7762636437335445,
+    "foreground_iou": 0.5763417141546682,
+    "matched_object_iou": 0.6015176671009945
+  }
 }
