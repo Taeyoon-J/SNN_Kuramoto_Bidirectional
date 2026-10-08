@@ -1,0 +1,53 @@
+{
+    "status":  "design_review_pending_implementation",
+    "requested_utc":  "2026-10-08T10:04:48.1628443Z",
+    "final_requirement":  "With70000 unique training images, actual spike/membrane masks seed0/1/2 means strictly exceed comparable Slot on all3 fixed patch metrics",
+    "priorities":  [
+                       "Causal contribution of Kuramoto phase dynamics, sinusoidal modulation, dendritic integration and membrane/spike dynamics",
+                       "Improvement with increasing unique training data and with learning progress"
+                   ],
+    "preserve_running_SW0107":  true,
+    "fixed_evaluation":  {
+                             "validation_ids":  [
+                                                    1320,
+                                                    1639
+                                                ],
+                             "images":  320,
+                             "metrics":  [
+                                             "patch_fg_ari",
+                                             "patch_foreground_iou",
+                                             "patch_matched_object_iou"
+                                         ],
+                             "prediction_uses_ground_truth":  false,
+                             "final_independent_reserve":  [
+                                                               90640,
+                                                               90959
+                                                           ],
+                             "reserve_unread_until_frozen_promotion":  true
+                         },
+    "gating_study":  {
+                         "first_stage":  "Seed0 frozen-checkpoint sensitivity screening with amplitude/activity controls and stage-specific mask diagnostics",
+                         "second_stage":  "All3 seeds plus matched retrained ablations needed for stronger contribution evidence",
+                         "interpretation":  "A frozen ablation drop alone does not prove a mechanism; report degenerate firing and off-distribution effects",
+                         "pending":  "Exact interventions and code hooks under Sol6.1 review before implementation"
+                     },
+    "data_scaling_study":  {
+                               "proposed_unique_counts":  [
+                                                              2500,
+                                                              10000,
+                                                              35000,
+                                                              70000
+                                                          ],
+                               "same_nested_training_pool":  true,
+                               "same_validation_data":  true,
+                               "same_common_initial_weights_across_sizes":  true,
+                               "fixed_optimizer_updates_for_unique_data_effect":  true,
+                               "separate_additional_updates_on_same70000_pool":  true,
+                               "all_seeds_reported":  true,
+                               "initialization_and_inherited_encoder_graph_exposures_disclosed":  true,
+                               "pending":  "Confirm common initialization and budget from repository manifests before launching"
+                           },
+    "failure_policy":  "Diagnose failed contribution/scaling hypotheses and change structure/loss based on evidence, while retaining final70k Slot requirement",
+    "new_studies_gpu_jobs_started":  false,
+    "goal_complete":  false
+}
