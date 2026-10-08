@@ -1,0 +1,220 @@
+{
+  "experiment": "SW0108_gate_contribution_screen",
+  "status": "partial_four_of_six_arms_validated",
+  "data_scope": {
+    "seed": 0,
+    "global_ids_inclusive": [
+      1320,
+      1639
+    ],
+    "images": 320,
+    "batch_size": 8,
+    "steps": 1024,
+    "settle": 512,
+    "prediction_gt_used": false
+  },
+  "provenance": {
+    "source": "SW0097_graph_adaptation/seed0_positive_frozen/core.pt",
+    "source_core_sha256": "36f2481dd1fa51fa29bd4dc34275a876b71d8b76fbee13ac47a0a1bfe6766fbf",
+    "screen_runner_sha256": "dea706aa452a36877a884c18d9130b685fb43490c10731f95294e98cbae8d162",
+    "shared_evaluator_sha256": "b3d7b2344329940c05adcd0139108feacea4dd2eeb495295bf0e7db5595feab1",
+    "protocol_sha256": "86917031c6ec5a91189abf39c5be277275f69153ac3175a1be631d3d7929586f",
+    "baseline_reference_sha256": "009da533e0f3e7fa86d9840a85d87640d9424acf660512f64232ad1669fe61e0"
+  },
+  "activations": {
+    "baseline": {
+      "settled_gate": {
+        "mean": 0.500497579574585,
+        "std": 0.35367527902208434
+      },
+      "settled_event_before_intervention": {
+        "mean": 0.9987438201904297,
+        "std": 0.03542035886120194
+      },
+      "settled_actual_spike_output": {
+        "mean": 0.4992257595062256,
+        "std": 0.35371552967696146
+      },
+      "per_unit_temporal": {
+        "gate_temporal_std_mean": 0.3511151894927025,
+        "gate_constant_unit_fraction_mean": 0.0,
+        "event_temporal_std_mean": 0.010049435961991548,
+        "event_constant_unit_fraction_mean": 0.908441162109375,
+        "event_always_on_fraction_mean": 0.9084320068359375
+      }
+    },
+    "kuramoto_K0": {
+      "settled_gate": {
+        "mean": 0.49997916221618655,
+        "std": 0.3536258077072115
+      },
+      "settled_event_before_intervention": {
+        "mean": 0.998771858215332,
+        "std": 0.03502332726090993
+      },
+      "settled_actual_spike_output": {
+        "mean": 0.49880595207214357,
+        "std": 0.3536700742659005
+      },
+      "per_unit_temporal": {
+        "gate_temporal_std_mean": 0.3496058158576488,
+        "gate_constant_unit_fraction_mean": 0.0,
+        "event_temporal_std_mean": 0.00903164865449071,
+        "event_constant_unit_fraction_mean": 0.917108154296875,
+        "event_always_on_fraction_mean": 0.9171051025390625
+      }
+    },
+    "constant_gate_half": {
+      "settled_gate": {
+        "mean": 0.5,
+        "std": 0.0
+      },
+      "settled_event_before_intervention": {
+        "mean": 0.99998779296875,
+        "std": 0.0034938348899831483
+      },
+      "settled_actual_spike_output": {
+        "mean": 0.499993896484375,
+        "std": 0.0017469174449915741
+      },
+      "per_unit_temporal": {
+        "gate_temporal_std_mean": 0.0,
+        "gate_constant_unit_fraction_mean": 1.0,
+        "event_temporal_std_mean": 0.0,
+        "event_constant_unit_fraction_mean": 1.0,
+        "event_always_on_fraction_mean": 0.9999603271484375
+      }
+    },
+    "dendrite_no_retention": {
+      "settled_gate": {
+        "mean": 0.500497579574585,
+        "std": 0.35367527902208434
+      },
+      "settled_event_before_intervention": {
+        "mean": 0.9953166961669921,
+        "std": 0.06827423011807293
+      },
+      "settled_actual_spike_output": {
+        "mean": 0.49586853981018064,
+        "std": 0.35372837727750267
+      },
+      "per_unit_temporal": {
+        "gate_temporal_std_mean": 0.3511151894927025,
+        "gate_constant_unit_fraction_mean": 0.0,
+        "event_temporal_std_mean": 0.04002510542050004,
+        "event_constant_unit_fraction_mean": 0.621051025390625,
+        "event_always_on_fraction_mean": 0.6210418701171875
+      }
+    }
+  },
+  "endpoint_metrics": {
+    "baseline": {
+      "fg_ari": 0.8248677211561721,
+      "foreground_iou": 0.7198719167110539,
+      "matched_object_iou": 0.6556628993752277
+    },
+    "kuramoto_K0": {
+      "fg_ari": 0.01703502504537336,
+      "foreground_iou": 0.26760800545920216,
+      "matched_object_iou": 0.1580882219002726
+    },
+    "constant_gate_half": {
+      "fg_ari": 0.0,
+      "foreground_iou": 0.0,
+      "matched_object_iou": 0.0
+    },
+    "dendrite_no_retention": {
+      "fg_ari": 0.8261560374558851,
+      "foreground_iou": 0.7192650909739571,
+      "matched_object_iou": 0.6565064319995232
+    }
+  },
+  "paired_image_comparisons_to_baseline": {
+    "kuramoto_K0": {
+      "fg_ari": {
+        "mean_delta": -0.8078326961107987,
+        "paired_image_ci95": [
+          -0.8268328863630818,
+          -0.7882729350924714
+        ]
+      },
+      "foreground_iou": {
+        "mean_delta": -0.4522639112518518,
+        "paired_image_ci95": [
+          -0.47453153889766897,
+          -0.42950805853657914
+        ]
+      },
+      "matched_object_iou": {
+        "mean_delta": -0.4975746774749551,
+        "paired_image_ci95": [
+          -0.5153143657946195,
+          -0.4791706526350845
+        ]
+      }
+    },
+    "constant_gate_half": {
+      "fg_ari": {
+        "mean_delta": -0.824867721156172,
+        "paired_image_ci95": [
+          -0.8420033072585331,
+          -0.8069711432628841
+        ]
+      },
+      "foreground_iou": {
+        "mean_delta": -0.7198719167110539,
+        "paired_image_ci95": [
+          -0.7391010756414905,
+          -0.700253075579141
+        ]
+      },
+      "matched_object_iou": {
+        "mean_delta": -0.6556628993752277,
+        "paired_image_ci95": [
+          -0.6730721827481922,
+          -0.637796128845305
+        ]
+      }
+    },
+    "dendrite_no_retention": {
+      "fg_ari": {
+        "mean_delta": 0.0012883162997128989,
+        "paired_image_ci95": [
+          -0.0015506258472483571,
+          0.0054068352896630605
+        ]
+      },
+      "foreground_iou": {
+        "mean_delta": -0.0006068257370969606,
+        "paired_image_ci95": [
+          -0.0018598626187867715,
+          0.0003675286946673961
+        ]
+      },
+      "matched_object_iou": {
+        "mean_delta": 0.0008435326242954535,
+        "paired_image_ci95": [
+          -0.0015596604546611538,
+          0.0034174118758699213
+        ]
+      }
+    }
+  },
+  "bootstrap_scope": {
+    "resamples": 10000,
+    "seed": 108,
+    "unit": "paired image",
+    "interpretation": "conditional on this single trained seed; no training-seed generalization"
+  },
+  "remaining_arms": [
+    "membrane_no_retention",
+    "events_forced_on"
+  ],
+  "interpretation_limits": [
+    "One frozen seed and one-at-a-time inference interventions; not a trained causal effect or data-scaling explanation.",
+    "Scalar hooks do not provide per-object mask correlation.",
+    "Constant gate changes both carrier amplitude/temporal modulation and membrane gate.",
+    "K=0 collapse is evidence only in this frozen-parameter context.",
+    "Dendrite-retention paired intervals include zero; no clear endpoint change is resolved."
+  ]
+}
