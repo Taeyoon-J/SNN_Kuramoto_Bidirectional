@@ -11,6 +11,7 @@
     {"name": "membrane_no_retention", "intervention": "set tau_m=-inf so sigmoid(tau_m)=0; retain reset and event threshold"},
     {"name": "events_forced_on", "intervention": "replace actual membrane act_fun_adp output with ones during rollout; retain gate and feedback"}
   ],
-  "evaluation": {"dataset": "registered CLEVR HDF5", "global_ids": [1320, 1639], "count": 320, "batch_size": 8, "steps": 1024, "settle": 512, "threshold": 0.5, "minimum_group_size": 2, "background": "largest_component", "metrics": ["fg_ari", "foreground_iou", "matched_object_iou"]},
+  "evaluation": {"dataset": "registered CLEVR HDF5", "global_ids": [1320, 1639], "count": 320, "batch_size": 8, "steps": 1024, "settle": 512, "membrane_vth": 0.06, "threshold": 0.5, "minimum_group_size": 2, "background": "largest_component", "metrics": ["fg_ari", "foreground_iou", "matched_object_iou"]},
+  "baseline_guard": {"reference_candidates": ["collaborative_test/SW_0097_graph_adaptation/results/seed0_positive_frozen/evaluation.json", "trained_models/SW0097_graph_adaptation/seed0_positive_frozen/evaluation.json"], "required_sha256": "009da533e0f3e7fa86d9840a85d87640d9424acf660512f64232ad1669fe61e0", "requirement": "Baseline must match all three registered per-image metrics within 1e-10 before any intervention arm proceeds."},
   "constraints": ["frozen SW0097 positive_frozen seed0 checkpoint", "actual-spike classifier unchanged", "no training or parameter updates", "no reserved IDs", "GT excluded from prediction and GT-free diagnostics", "screening result is forward sensitivity evidence, not a trained causal effect or promotion gate", "seed1/2 and scaling are outside this registration"]
 }

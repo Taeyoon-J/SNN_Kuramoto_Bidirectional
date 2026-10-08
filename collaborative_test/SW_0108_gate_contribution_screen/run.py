@@ -13,6 +13,11 @@ ROOT=Path(__file__).resolve().parents[2]
 EVALUATOR=ROOT/'collaborative_test/SW_0040_peer_transfer/evaluate.py'
 ARMS=('baseline','kuramoto_K0','constant_gate_half','dendrite_no_retention','membrane_no_retention','events_forced_on')
 SOURCE_DEFAULT=ROOT/'trained_models/SW0097_graph_adaptation/seed0_positive_frozen/core.pt'
+BASELINE_REFERENCE_SHA256='009da533e0f3e7fa86d9840a85d87640d9424acf660512f64232ad1669fe61e0'
+BASELINE_REFERENCE_LOCAL=ROOT/'collaborative_test/SW_0097_graph_adaptation/results/seed0_positive_frozen/evaluation.json'
+BASELINE_REFERENCE_REMOTE=ROOT/'trained_models/SW0097_graph_adaptation/seed0_positive_frozen/evaluation.json'
+METRICS=('fg_ari','foreground_iou','matched_object_iou')
+BASELINE_TOLERANCE=1e-10
 
 def constant_half_gate(theta):
  return .5*torch.sin(theta),torch.full(theta.shape[:-1],.5,device=theta.device,dtype=theta.dtype)
@@ -22,6 +27,67 @@ def sha(path):
  with Path(path).open('rb') as stream:
   for block in iter(lambda:stream.read(1<<20),b''):h.update(block)
  return h.hexdigest()
+
+def choose_baseline_reference():
+ for path in (BASELINE_REFERENCE_LOCAL,BASELINE_REFERENCE_REMOTE):
+  if path.is_file() and sha(path)==BASELINE_REFERENCE_SHA256:return path
+ raise FileNotFoundError('neither registered SW0097 baseline path exists with the expected SHA256')
+
+BASELINE_REFERENCE=choose_baseline_reference()
+
+def baseline_match(candidate,reference=None,tolerance=BASELINE_TOLERANCE):
+ candidate=json.loads(Path(candidate).read_text()) if isinstance(candidate,(str,Path)) else candidate
+ if reference is None:reference=BASELINE_REFERENCE
+ reference_path=Path(reference) if isinstance(reference,(str,Path)) else BASELINE_REFERENCE
+ if not reference_path.is_file() or sha(reference_path)!=BASELINE_REFERENCE_SHA256:
+  refsha=None
+  reference_error='registered_reference_sha_mismatch_or_missing'
+ else:
+  refsha=sha(reference_path);reference_error=None
+ if not isinstance(reference,dict):reference=json.loads(reference_path.read_text())
+ expected={'ids':[1320,1639],'images':320,'ground_truth_used_for_prediction':False,
+  'inference':{'steps':1024,'settle':512,'membrane_vth':.06,'min_group_size':2,
+   'dendritic_projection':'shared','graph_spatial_decay':.35,'kuramoto_backend':'factorized','gate_mode':'raw',
+   'geodesic_steps':3,'geodesic_radius':1.5,'geodesic_contrast':2.,'geodesic_temperature':.5,'geodesic_cap':16.}}
+ mismatches=[]
+ for key,value in expected.items():
+  if key=='inference':
+   for ik,iv in value.items():
+    if candidate.get('inference',{}).get(ik)!=iv:mismatches.append(f'inference.{ik}')
+    if reference.get('inference',{}).get(ik)!=iv:mismatches.append(f'reference.inference.{ik}')
+  elif candidate.get(key)!=value or reference.get(key)!=value:mismatches.append(key)
+ if reference_error:mismatches.append(reference_error)
+ result={'passed':not mismatches,'tolerance':tolerance,'mismatches':mismatches,'max_abs_delta':{},
+  'reference_path':str(reference_path),'reference_sha256':refsha,'expected_reference_sha256':BASELINE_REFERENCE_SHA256}
+ try:
+  cscore=candidate['sweep'][0]['scored_targets']['our_hdf5'];rscore=reference['sweep'][0]['scored_targets']['our_hdf5']
+  if candidate['sweep'][0].get('synchrony_threshold')!=.5 or reference['sweep'][0].get('synchrony_threshold')!=.5:
+   mismatches.append('synchrony_threshold')
+  for metric in METRICS:
+   cv=cscore['per_image'][metric];rv=rscore['per_image'][metric]
+   if len(cv)!=320 or len(rv)!=320 or cscore['valid_count'].get(metric)!=320 or rscore['valid_count'].get(metric)!=320:
+    mismatches.append(f'{metric}.valid_count');continue
+   cvals=[float(a) for a in cv];rvals=[float(b) for b in rv]
+   if not all(math.isfinite(x) for x in cvals+rvals):mismatches.append(f'{metric}.nonfinite_per_image');continue
+   delta=max(abs(a-b) for a,b in zip(cvals,rvals))
+   result['max_abs_delta'][metric]=delta
+   if not math.isfinite(delta) or delta>tolerance:mismatches.append(f'{metric}.per_image_delta')
+   cm=float(cscore['metrics'][metric]);rm=float(rscore['metrics'][metric])
+   if not math.isfinite(cm) or not math.isfinite(rm):mismatches.append(f'{metric}.nonfinite_mean')
+   elif abs(cm-rm)>tolerance:mismatches.append(f'{metric}.mean_delta')
+ except (KeyError,IndexError,TypeError,ValueError) as exc:
+  mismatches.append(f'invalid_baseline_payload:{type(exc).__name__}')
+ result['passed']=not mismatches;result['mismatches']=mismatches
+ return result
+
+def build_evaluator_argv(checkpoint,gamma_path,dataset_path,output_path,device='cuda:0'):
+ return ['evaluate.py','--checkpoint',str(checkpoint),'--gamma-path',str(gamma_path),
+  '--gamma-global-start','1320','--dataset-path',str(dataset_path),'--output-path',str(output_path),
+  '--start','1320','--count','320','--steps','1024','--settle','512','--thresholds','.50',
+  '--min-group-size','2','--background','largest_component','--dendritic-projection','shared',
+  '--graph-spatial-decay','.35','--geodesic-steps','3','--geodesic-radius','1.5',
+  '--geodesic-contrast','2','--geodesic-temperature','.5','--geodesic-cap','16',
+  '--kuramoto-backend','factorized','--gate-mode','raw','--batch-size','8','--membrane-vth','.06','--device',device]
 
 def load_evaluator():
  sys.path.insert(0,str(ROOT));sys.path.insert(0,str(ROOT/'collaborative_test'))
@@ -157,13 +223,7 @@ def run_evaluation(arm,checkpoint,gamma_path,dataset_path,output_dir,device='cud
  def factory(*args,**kwargs):
   model=original(*args,**kwargs);restorers.append(patch_actual_model_globals(model,arm,trace));return model
  evaluator._core=factory
- argv=['evaluate.py','--checkpoint',str(checkpoint),'--gamma-path',str(gamma_path),
-  '--gamma-global-start','1320','--dataset-path',str(dataset_path),'--output-path',str(report_path),
-  '--start','1320','--count','320','--steps','1024','--settle','512','--thresholds','.50',
-  '--min-group-size','2','--background','largest_component','--dendritic-projection','shared',
-  '--graph-spatial-decay','.35','--geodesic-steps','3','--geodesic-radius','1.5',
-  '--geodesic-contrast','2','--geodesic-temperature','.5','--geodesic-cap','16',
-  '--kuramoto-backend','factorized','--gate-mode','raw','--batch-size','8','--device',device]
+ argv=build_evaluator_argv(checkpoint,gamma_path,dataset_path,report_path,device)
  old_argv=sys.argv;sys.argv=argv
  try:
   evaluator.main()
@@ -177,7 +237,13 @@ def run_evaluation(arm,checkpoint,gamma_path,dataset_path,output_dir,device='cud
   'screen_runner_sha256':sha(Path(__file__)),'shared_evaluator_sha256':sha(EVALUATOR),
   'protocol_sha256':sha(Path(__file__).with_name('protocol.json')),
   'trace':trace.summary(),'scope':'scalar summaries from real forward hooks; no activation histories retained'}
+ if arm=='baseline':
+  guard=baseline_match(report)
+  trace_record['registered_SW0097_baseline_match']=guard
+  trace_record['status']='complete' if guard['passed'] else 'baseline_mismatch'
  diag_path.write_text(json.dumps(trace_record,indent=2,allow_nan=False)+'\n')
+ if arm=='baseline' and not guard['passed']:
+  raise RuntimeError(f'reproduced SW0097 baseline does not match registered result: {guard}')
  return report_path
 
 def smoke_all(checkpoint,gamma_path,device='cuda:0',steps=32):
@@ -187,6 +253,8 @@ def smoke_all(checkpoint,gamma_path,device='cuda:0',steps=32):
  results=[];baseline_outputs=None
  for arm in ARMS:
   trace=Trace(steps=steps,settle=steps//2,arm=arm);model=evaluator._core(device,str(checkpoint),steps,'shared',3,1.5,2.,.5,16.,.35,'factorized','raw')
+  model.membrane_layer.vth=.06
+  if model.membrane_layer.vth!=.06:raise AssertionError('registered .06 membrane threshold not installed in preflight model')
   state={k:v.detach().clone() for k,v in model.state_dict().items()};initial_k=model.kuramoto.K
   restore=patch_actual_model_globals(model,arm,trace)
   variant_outputs=[]

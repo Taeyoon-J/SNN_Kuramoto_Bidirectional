@@ -1,7 +1,7 @@
 """Exclusive seed0 sensitivity-screen queue; readiness only unless --run is supplied."""
 import argparse,hashlib,json,os,signal,subprocess,sys,time
 from pathlib import Path
-from run import ARMS,ROOT,SOURCE_DEFAULT,sha
+from run import ARMS,BASELINE_REFERENCE,BASELINE_REFERENCE_SHA256,ROOT,SOURCE_DEFAULT,baseline_match,sha
 
 HERE=Path(__file__).resolve().parent;OUT=ROOT/'trained_models/SW0108_gate_contribution_screen'
 ARCHIVE=HERE/'results_archive';EVAL=HERE/'run.py';GPUS=(0,1,2,3);MAX_USED_MIB=512
@@ -70,7 +70,9 @@ def valid_result(arm,folder):
   if not all(__import__('math').isfinite(float(v)) for v in values):return False
   if not __import__('math').isfinite(float(q.get('metrics',{}).get(metric,float('nan')))):return False
  trace=read_json(dpath)
- return trace.get('arm')==arm and trace.get('ground_truth_used') is False
+ if trace.get('arm')!=arm or trace.get('ground_truth_used') is not False:return False
+ if arm=='baseline':return baseline_match(d)['passed'] and trace.get('registered_SW0097_baseline_match',{}).get('passed') is True
+ return True
 def worker_cmd(task,source,gamma,dataset,device):
  cmd=[sys.executable,str(EVAL),'--stage',task['stage'],'--checkpoint',str(source),'--gamma-path',str(gamma),
   '--dataset-path',str(dataset),'--output-dir',str(ARCHIVE/'preflight_seed0.json' if task['stage']=='preflight' else OUT/task['arm']),
@@ -92,6 +94,9 @@ def run_queue(sw107_state,source,gamma,dataset,poll=30):
   'source_checkpoint':str(Path(source).resolve()),'source_sha256':sha(source),'gamma_path':str(Path(gamma).resolve()),'gamma_sha256':sha(gamma),
   'runner_sha256':sha(EVAL),'shared_evaluator_sha256':sha(ROOT/'collaborative_test/SW_0040_peer_transfer/evaluate.py'),
   'protocol_sha256':sha(HERE/'protocol.json'),
+  'registered_baseline_reference':str(BASELINE_REFERENCE.resolve()),
+  'registered_baseline_reference_sha256':sha(BASELINE_REFERENCE),
+  'registered_baseline_expected_sha256':BASELINE_REFERENCE_SHA256,
   'dataset_path':str(Path(dataset).resolve()),'upstream_SW0107_state':str(Path(sw107_state).resolve()),'pending':tasks,'active':{},'attempts':[],'failed':None}
  st=Path(dataset).stat();state['dataset_identity']={'size_bytes':st.st_size,'mtime_ns':st.st_mtime_ns}
  write(state_path,state);proc=None

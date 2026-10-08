@@ -3,7 +3,7 @@ from types import SimpleNamespace
 
 import torch
 
-from run import ARMS,apply_model_intervention,constant_half_gate,patch_function_modules
+from run import ARMS,BASELINE_REFERENCE,BASELINE_REFERENCE_SHA256,apply_model_intervention,baseline_match,build_evaluator_argv,constant_half_gate,patch_function_modules,sha
 from coordinator import screen_tasks,upstream_ready
 
 class InterventionTests(unittest.TestCase):
@@ -42,6 +42,21 @@ class InterventionTests(unittest.TestCase):
   tasks=screen_tasks()
   self.assertEqual([x['arm'] for x in tasks],['all',*ARMS])
   self.assertEqual(len(set(x['arm'] for x in tasks)),7)
+ def test_evaluator_uses_registered_membrane_threshold_and_baseline_guard_is_strict(self):
+  argv=build_evaluator_argv('core.pt','gamma.pt','data.h5','out.json')
+  self.assertEqual(argv[argv.index('--membrane-vth')+1],'.06')
+  self.assertEqual(argv[argv.index('--batch-size')+1],'8')
+  import json
+  reference=json.loads(BASELINE_REFERENCE.read_text())
+  self.assertEqual(sha(BASELINE_REFERENCE),BASELINE_REFERENCE_SHA256)
+  self.assertTrue(baseline_match(reference)['passed'])
+  changed=json.loads(json.dumps(reference))
+  changed['sweep'][0]['scored_targets']['our_hdf5']['per_image']['fg_ari'][0]+=1e-6
+  self.assertFalse(baseline_match(changed)['passed'])
+  nan_result=json.loads(json.dumps(reference));nan_result['sweep'][0]['scored_targets']['our_hdf5']['per_image']['fg_ari'][-1]=float('nan')
+  self.assertFalse(baseline_match(nan_result)['passed'])
+  wrong_vth=json.loads(json.dumps(reference));wrong_vth['inference']['membrane_vth']=2.0
+  self.assertFalse(baseline_match(wrong_vth)['passed'])
  def test_upstream_allows_sw0107_terminal_even_if_shared_queue_continues(self):
   state={'status':'waiting_for_seed0_pilot_terminal','sw0107_status':'complete',
    'active':{'sw0106':{'task':{'stage':'train'}}},'cpu_preparation':[]}
