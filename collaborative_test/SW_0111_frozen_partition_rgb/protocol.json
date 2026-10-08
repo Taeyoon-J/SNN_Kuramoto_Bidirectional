@@ -91,7 +91,7 @@
   "preflight": [
     "Freeze encoder and every legacy graph parameter through warmup, calibration and pilot; detach content inside pool as an additional structural guard.",
     "Actual q-to-W reconstruction gradients finite/nonzero at eligible core; K1, zero/one FG group and ragged batch shapes handled.",
-    "First four TRAIN batches after warmup: deterministic row-permutation of H with seed 106+16*seed+batch, recompute pooling; mean shuffled reconstruction loss must exceed real loss. No GT and no warmup retuning.",
+    "First four TRAIN batches after warmup: per-image deterministic row-permutation of H with seed 106+16*seed+16*batch+image_index, recompute pooling; mean shuffled reconstruction loss must exceed real loss. No GT and no warmup retuning.",
     "Candidate/control same warmup checkpoint and Adam SHA; core fresh Adam starts after warmup.",
     "Use autograd.grad separately: core receives old+lambda*rec (candidate) or old (control), decoder receives unweighted rec exactly once; clip each optimizer family separately.",
     "Cache may reuse verified exact RGB bytes and ID mapping from SW106, but source95-derived model/warmup/calibration artifacts may not be reused.",

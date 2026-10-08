@@ -1,12 +1,13 @@
 {
     "status":  "local_registry_validated_server_deployment_pending",
-    "tasks_total":  87,
+    "tasks_total":  100,
     "tasks_by_experiment":  {
                                 "SW0114":  20,
                                 "SW0110":  18,
                                 "SW0108":  7,
                                 "SW0112":  18,
-                                "SW0109":  24
+                                "SW0109":  24,
+                                "SW0111":  13
                             },
     "unique_task_ids":  true,
     "all_dependencies_resolve":  true,
@@ -19,6 +20,8 @@
                                         ],
     "training_started":  false,
     "gpu_preflight":  "not executed",
-    "server_deployment":  "blocked by automatic approval review",
-    "public_runtime_metadata_included":  false
+    "server_deployment":  "automatic review rejected transfer; payload-specific confirmation pending",
+    "public_runtime_metadata_included":  false,
+    "partition_rgb_cpu_tests_passed":  4,
+    "partition_rgb_cli_correction":  "Entry point runs after helper definitions, preventing dispatch-time NameError"
 }
