@@ -71,6 +71,14 @@ class SchedulerContracts(unittest.TestCase):
                                  "lease_stream": io.StringIO(), "lease_path": "/tmp/gpu1.lock"})
         self.assertEqual(payload, {"pid": 42, "gpu": 1, "lease_path": "/tmp/gpu1.lock"})
 
+    def test_resolution_branch_can_append_without_replacing_existing_tasks(self):
+        payload = {"version": 2, "experiments": ["SW0112", "SW0114"]}
+        with patch.object(Path, "is_file", return_value=True), \
+             patch.object(Path, "read_text", return_value=json.dumps(payload)), \
+             patch("coordinator.sha", return_value="resolution-registry"):
+            self.assertEqual(read_append_manifest(Path("registry.json"), 1, ["SW0112"]),
+                             (2, ["SW0112", "SW0114"], "resolution-registry"))
+
     def test_adapter_loading_restores_import_state_even_when_import_fails(self):
         original_path = list(coordinator.sys.path)
         prior_run = object()

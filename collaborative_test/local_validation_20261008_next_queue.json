@@ -13,7 +13,7 @@
                    },
                    {
                        "suite":  "SW0113 scheduler",
-                       "passed":  7,
+                       "passed":  8,
                        "scope":  "local scheduler tests"
                    }
                ],
@@ -28,5 +28,10 @@
                    "collaborative_test/SW_0110_xy_graph_route/run.py":  "1812e348e40cec6bece85ff07ab51d050cc41c9aebe2e9c0186818552006d801",
                    "collaborative_test/SW_0112_learned_gate_residual/run.py":  "73d26a9e4b19ccd57b9b6714f593b2cf49c20131f9fbaca79950f7b28668aa88"
                },
-    "provenance_check":  "PASS: registered encoder/stat hashes, encoder directory, eight required implementation files and preflight-to-training identity guard"
+    "provenance_check":  "PASS: registered encoder/stat hashes, encoder directory, eight required implementation files and preflight-to-training identity guard",
+    "resolution_geometry_checks":  {
+                                       "scope":  "spatial state conversion, pair-axis replication, chunked dense equivalence, duplicated-grid cardinality correction",
+                                       "training_started":  false,
+                                       "passed":  4
+                                   }
 }

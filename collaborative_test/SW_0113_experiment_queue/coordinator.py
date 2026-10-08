@@ -160,9 +160,10 @@ def registered_tasks(args):
 
 
 def appended_tasks(experiments):
-    """Load reviewed append-only task plans for later SW0111/SW0112 runners."""
+    """Load reviewed append-only task plans for later scientific runners."""
     folders = {"SW0111": "collaborative_test/SW_0111_frozen_partition_rgb",
-               "SW0112": "collaborative_test/SW_0112_learned_gate_residual"}
+               "SW0112": "collaborative_test/SW_0112_learned_gate_residual",
+               "SW0114": "collaborative_test/SW_0114_resolution32_pilot"}
     result = []
     for experiment in experiments:
         if experiment not in folders:
@@ -204,7 +205,7 @@ def read_append_manifest(path, previous_version, previous_experiments):
         return version, list(experiments), sha(path)
     if version != previous_version + 1 or experiments[:len(previous_experiments)] != list(previous_experiments):
         raise ValueError("append registry must increase by one and preserve the prior experiment prefix")
-    if any(not isinstance(name, str) or name not in ("SW0111", "SW0112")
+    if any(not isinstance(name, str) or name not in ("SW0111", "SW0112", "SW0114")
            for name in experiments[len(previous_experiments):]):
         raise ValueError("append registry contains an unapproved experiment name")
     return version, list(experiments), sha(path)
