@@ -1,0 +1,26 @@
+{
+  "reason": "Triton cuda_utils.so on NFS stale file handle; no model training completed",
+  "previous_pids": [
+    4012262,
+    71323
+  ],
+  "failed_gpu_preflight_pid": 152165,
+  "smoke_test": "CUDA bmm forward/backward passed with isolated local cache",
+  "triton_cache_dir": "/tmp/kevinswk_sw0106_triton_recovery",
+  "archived_prior_states_and_log": true,
+  "source_or_loss_changed": false,
+  "no_trained_checkpoint_overwritten": true,
+  "launched": [
+    {
+      "name": "coordinator",
+      "pid": 176025,
+      "log": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0106_spike_partition_rgb/coordinator_cache_recovery.log"
+    },
+    {
+      "name": "followup_coordinator",
+      "pid": 176026,
+      "log": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0106_spike_partition_rgb/followup_coordinator_cache_recovery.log"
+    }
+  ],
+  "created_unix": 1791451214.4241657
+}

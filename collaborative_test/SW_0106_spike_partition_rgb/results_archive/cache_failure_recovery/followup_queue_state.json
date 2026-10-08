@@ -1,0 +1,70 @@
+{
+  "status": "failed",
+  "queue_pid": 71323,
+  "created_unix": 1791432065.7142766,
+  "phase": "wait_seed0",
+  "eligible_gpus": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "max_workers": 4,
+  "exclusive_no_foreign_sharing": true,
+  "upstream_queue_state": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0106_spike_partition_rgb/results_archive/gpu_queue_state.json",
+  "pending": [],
+  "completed": {
+    "sw107-export::": {
+      "task": {
+        "stage": "sw107-export"
+      },
+      "pid": 71372,
+      "resource": "cpu",
+      "validated": true,
+      "completed_unix": 1791432185.7926433
+    },
+    "sw107-encode::": {
+      "task": {
+        "stage": "sw107-encode"
+      },
+      "pid": 72125,
+      "resource": "cpu",
+      "validated": true,
+      "completed_unix": 1791432367.8204756
+    }
+  },
+  "attempts": [],
+  "training_restarted": false,
+  "reserve_read_started": false,
+  "cpu_preparation": [
+    {
+      "task": {
+        "stage": "sw107-export"
+      },
+      "pid": 71372,
+      "log": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0106_spike_partition_rgb/followup_queue_logs/sw107-export_cpu.log",
+      "status": "complete",
+      "started": 1791432065.7156281,
+      "return_code": 0,
+      "finished": 1791432185.792641
+    },
+    {
+      "task": {
+        "stage": "sw107-encode"
+      },
+      "pid": 72125,
+      "log": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0106_spike_partition_rgb/followup_queue_logs/sw107-encode_cpu.log",
+      "status": "complete",
+      "started": 1791432185.7937467,
+      "return_code": 0,
+      "finished": 1791432367.8204536
+    }
+  ],
+  "sw0107_cpu_cache_status": "complete",
+  "upstream_status": "waiting",
+  "failed": {
+    "phase": "wait_seed0",
+    "upstream_status": "failed"
+  },
+  "active": {}
+}

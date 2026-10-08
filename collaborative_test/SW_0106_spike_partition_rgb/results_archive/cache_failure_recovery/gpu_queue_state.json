@@ -1,0 +1,71 @@
+{
+  "status": "failed",
+  "mode": "exclusive_no_foreign_gpu_sharing",
+  "queue_pid": 4012262,
+  "created": 1791413711.4358845,
+  "eligible_gpus": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "max_concurrent_arms": 2,
+  "max_idle_gpu_used_mib": 512,
+  "wait_for_SW0105_evaluation_queue_complete": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0105_event_detach_aux/results_archive/queue_state.json",
+  "poll_seconds": 60,
+  "current_stage": "preflight",
+  "preflight_status": "pending",
+  "arm_status": {
+    "candidate": "blocked_on_preflight",
+    "control": "blocked_on_preflight"
+  },
+  "pending": [],
+  "attempts": [
+    {
+      "task": {
+        "stage": "preflight",
+        "seed": 0
+      },
+      "gpu": 2,
+      "pid": 152165,
+      "owners_before": {
+        "0": [
+          51023,
+          51024
+        ],
+        "1": [
+          51027,
+          51026
+        ],
+        "2": [],
+        "3": []
+      },
+      "log": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0106_spike_partition_rgb/queue/preflight_preflight_attempt1_gpu2.log",
+      "status": "running"
+    },
+    {
+      "task": {
+        "stage": "preflight",
+        "seed": 0
+      },
+      "gpu": 2,
+      "pid": 152165,
+      "return_code": 1,
+      "log": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0106_spike_partition_rgb/queue/preflight_preflight_attempt1_gpu2.log",
+      "terminal_status": "failed",
+      "completed": 1791446331.846737
+    }
+  ],
+  "failed": {
+    "task": {
+      "stage": "preflight",
+      "seed": 0
+    },
+    "return_code": 1,
+    "log": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0106_spike_partition_rgb/queue/preflight_preflight_attempt1_gpu2.log",
+    "validation_passed": false
+  },
+  "training_restarted": false,
+  "upstream_SW0105_status": "ready",
+  "active": {}
+}

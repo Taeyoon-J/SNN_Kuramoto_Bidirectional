@@ -1,0 +1,45 @@
+Traceback (most recent call last):
+  File "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0106_spike_partition_rgb/run.py", line 601, in <module>
+    if __name__=='__main__': main()
+  File "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0106_spike_partition_rgb/run.py", line 595, in main
+    result=preflight(a.seed,torch.device(a.device),output)
+  File "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0106_spike_partition_rgb/run.py", line 222, in preflight
+    rec.backward(); torch.nn.utils.clip_grad_norm_(decoder_params,1.); warm_opt.step()
+  File "/Data0/kevinswk/envs/snn/lib/python3.10/site-packages/torch/_tensor.py", line 623, in backward
+    torch.autograd.backward(
+  File "/Data0/kevinswk/envs/snn/lib/python3.10/site-packages/torch/autograd/__init__.py", line 395, in backward
+    _engine_run_backward(
+  File "/Data0/kevinswk/envs/snn/lib/python3.10/site-packages/torch/autograd/graph.py", line 979, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+  File "/Data0/kevinswk/envs/snn/lib/python3.10/site-packages/torch/_native/registry.py", line 923, in eager_router
+    result = _dispatch(args, kwargs, swallow_cond_exceptions=False)
+  File "/Data0/kevinswk/envs/snn/lib/python3.10/site-packages/torch/_native/registry.py", line 919, in _dispatch
+    return getattr(torch.ops._native, impl_name)(*args, **kwargs)
+  File "/Data0/kevinswk/envs/snn/lib/python3.10/site-packages/torch/_ops.py", line 1279, in __call__
+    return self._op(*args, **kwargs)
+  File "/Data0/kevinswk/envs/snn/lib/python3.10/site-packages/torch/_native/ops/bmm_outer_product/triton_impl.py", line 28, in _bmm_outer_product_impl
+    return bmm_outer_product(a, b)
+  File "/Data0/kevinswk/envs/snn/lib/python3.10/site-packages/torch/_native/ops/bmm_outer_product/triton_kernels.py", line 76, in bmm_outer_product
+    _bmm_outer_product_kernel[(B * triton.cdiv(M, BLOCK_M) * triton.cdiv(N, BLOCK_N),)](
+  File "/Data0/kevinswk/envs/snn/lib/python3.10/site-packages/triton/runtime/jit.py", line 370, in <lambda>
+    return lambda *args, **kwargs: self.run(grid=grid, warmup=False, *args, **kwargs)
+  File "/Data0/kevinswk/envs/snn/lib/python3.10/site-packages/triton/runtime/jit.py", line 713, in run
+    device = driver.active.get_current_device()
+  File "/Data0/kevinswk/envs/snn/lib/python3.10/site-packages/triton/runtime/driver.py", line 39, in active
+    self._active = self.default
+  File "/Data0/kevinswk/envs/snn/lib/python3.10/site-packages/triton/runtime/driver.py", line 33, in default
+    self._default = _create_driver()
+  File "/Data0/kevinswk/envs/snn/lib/python3.10/site-packages/triton/runtime/driver.py", line 21, in _create_driver
+    return active_drivers[0]()
+  File "/Data0/kevinswk/envs/snn/lib/python3.10/site-packages/triton/backends/nvidia/driver.py", line 336, in __init__
+    self.utils = CudaUtils()  # TODO: make static
+  File "/Data0/kevinswk/envs/snn/lib/python3.10/site-packages/triton/backends/nvidia/driver.py", line 66, in __init__
+    mod = compile_module_from_src(
+  File "/Data0/kevinswk/envs/snn/lib/python3.10/site-packages/triton/runtime/build.py", line 97, in compile_module_from_src
+    return _load_module_from_path(name, cache_path)
+  File "/Data0/kevinswk/envs/snn/lib/python3.10/site-packages/triton/runtime/build.py", line 69, in _load_module_from_path
+    mod = importlib.util.module_from_spec(spec)
+  File "<frozen importlib._bootstrap>", line 571, in module_from_spec
+  File "<frozen importlib._bootstrap_external>", line 1176, in create_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+ImportError: /export_home/kevinswk/.triton/cache/MIH4X24CEAJDWYGXCZ4EKW6DTWSUG2ZBSBPV7NGI62HAUKJ7F7BQ/cuda_utils.cpython-310-x86_64-linux-gnu.so: cannot read file data: Stale file handle
