@@ -1,0 +1,57 @@
+{
+  "status": "training_active_recovery_pending",
+  "registered_task_count": 100,
+  "experiments": ["SW0108", "SW0109", "SW0110", "SW0111", "SW0112", "SW0114"],
+  "scope": "Scientific execution status; no live process IDs or GPU-owner metadata",
+  "active_training_conditions_verified": [
+    {"experiment": "SW0109", "seed": 0, "unique_images": 2500},
+    {"experiment": "SW0109", "seed": 0, "unique_images": 10000},
+    {"experiment": "SW0109", "seed": 0, "unique_images": 70000}
+  ],
+  "training_comparison": {
+    "updates_per_condition": 4375,
+    "batch_size": 16,
+    "image_exposures_per_condition": 70000,
+    "encoder_frozen": true,
+    "graph_frozen": true,
+    "interpretation": "Matched-compute unique-image scaling from the separately audited 2500-image initializations; not the SW0097 source used by the short model pilots"
+  },
+  "server_checks": {
+    "SW0110_cpu_tests": {"passed": 5, "total": 5},
+    "SW0111_cpu_tests": {"passed": 4, "total": 4},
+    "SW0112_cpu_tests": {"passed": 4, "total": 4},
+    "SW0113_original_cpu_tests": {"passed": 8, "total": 8},
+    "SW0114_cpu_tests": {"passed": 14, "total": 14, "method": "13 original passes plus the formerly failing immutable-reference test rerun after hash-verified internal artifact copies"},
+    "py_compile": "passed",
+    "immutable_source_contract_checks": "all three SW0097 seeds passed after exact archived evidence was restored",
+    "corrected_command_plan": {
+      "tasks": 100,
+      "unique_ids": true,
+      "explicit_dataset_flags": 31,
+      "dataset_flag_mismatches": 0,
+      "dataset_size_bytes": 2188394103,
+      "embedded_dataset_constants": "reviewed against the canonical HDF5 path"
+    },
+    "limits": "CPU suites and command construction do not establish real CUDA preflight success"
+  },
+  "preserved_technical_failures": [
+    "Missing archived source-evidence manifests caused SW0110/111/112 preflight failures; exact existing server manifests were copied only after matching registered SHA256 values.",
+    "An incorrect runtime HDF5 argument caused SW0108 membrane/events and SW0109 baseline evaluation failures; their empty failed-attempt directories and logs are preserved."
+  ],
+  "recovery": {
+    "status": "waiting_for_actual_control_preflight_and_safe_training_drain",
+    "single_real_preflight": "SW0110 seed0 control queued behind the same exclusive global GPU leases",
+    "corrected_launch": "independently reviewed; execute only after worker/output/state invariants pass",
+    "completed_training_reuse": "Requires completion marker, 4375 history entries and matching source/core SHA256; do not retrain valid completed outputs",
+    "retry_scope": "Missing-evidence or file-not-found attempts with no scientific result, plus their dependency-skipped tasks; numerical failures remain failures",
+    "append_sequence": "Original deployed dispatcher requires a fresh private version1 registry followed by the unchanged approved version2 registry",
+    "completion_audit": "Verify every registered scientific task ID and artifact; original dispatcher termination counting includes external dependency IDs"
+  },
+  "deployment": {
+    "original_reviewed_files": 38,
+    "original_bundle": "deployed and content SHA256 verified",
+    "local_scheduler_and_device_test_deltas": "not deployed; do not assume local code fixes are running on the server"
+  },
+  "endpoint_results": "No new SW0109 endpoint is reported here",
+  "publication": "Local record; GitHub publication awaits its payload-specific approval"
+}
