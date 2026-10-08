@@ -1,0 +1,87 @@
+{
+  "status": "running",
+  "queue_pid": 199115,
+  "mode": "exclusive_no_foreign_sharing",
+  "source_checkpoint": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0097_graph_adaptation/seed0_positive_frozen/core.pt",
+  "source_sha256": "36f2481dd1fa51fa29bd4dc34275a876b71d8b76fbee13ac47a0a1bfe6766fbf",
+  "gamma_path": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0107_official_full70k_transfer/seed0/gamma_validation.pt",
+  "gamma_sha256": "231b27e7ab21423505df3a105dee3df81051c9d58ae3b2aa5386fb7f25dc9c03",
+  "runner_sha256": "cfe2bad8b8e4459673a27ac4120491739ac3ebbf4fb7c1194f27cf98272f4d62",
+  "shared_evaluator_sha256": "b3d7b2344329940c05adcd0139108feacea4dd2eeb495295bf0e7db5595feab1",
+  "protocol_sha256": "20972a9724c413c327c98a9aa6eebbd2466bcd35b1d32d77f0b4bc03df6a3721",
+  "dataset_path": "/Data0/kevinswk/datasets/object_centric_data/clevr_10-full.hdf5",
+  "upstream_SW0107_state": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0107_official_full70k_transfer/results_archive/completion_state.json",
+  "pending": [
+    {
+      "stage": "evaluate",
+      "arm": "kuramoto_K0"
+    },
+    {
+      "stage": "evaluate",
+      "arm": "constant_gate_half"
+    },
+    {
+      "stage": "evaluate",
+      "arm": "dendrite_no_retention"
+    },
+    {
+      "stage": "evaluate",
+      "arm": "membrane_no_retention"
+    },
+    {
+      "stage": "evaluate",
+      "arm": "events_forced_on"
+    }
+  ],
+  "active": {
+    "pid": 200513,
+    "gpu": 3,
+    "task": {
+      "stage": "evaluate",
+      "arm": "kuramoto_K0"
+    },
+    "log": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0108_gate_contribution_screen/queue/02_evaluate_kuramoto_K0.log"
+  },
+  "attempts": [
+    {
+      "task": {
+        "stage": "preflight",
+        "arm": "all"
+      },
+      "pid": 199229,
+      "gpu": 3,
+      "owners_before": {
+        "3": []
+      },
+      "log": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0108_gate_contribution_screen/queue/00_preflight_all.log",
+      "return_code": 0,
+      "valid": true,
+      "finished": 1791455043.098634
+    },
+    {
+      "task": {
+        "stage": "evaluate",
+        "arm": "baseline"
+      },
+      "pid": 199298,
+      "gpu": 3,
+      "owners_before": {
+        "3": []
+      },
+      "log": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0108_gate_contribution_screen/queue/01_evaluate_baseline.log",
+      "return_code": 0,
+      "valid": true,
+      "finished": 1791455205.7486372
+    }
+  ],
+  "failed": null,
+  "dataset_identity": {
+    "size_bytes": 2188394103,
+    "mtime_ns": 1776053764504468257
+  },
+  "upstream_status": "complete",
+  "current_task": {
+    "stage": "evaluate",
+    "arm": "kuramoto_K0"
+  }
+}

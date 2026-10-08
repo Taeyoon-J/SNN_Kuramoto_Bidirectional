@@ -289,11 +289,26 @@ def run_cpu_preparation(s,t,cmd):
  s['completed'][key(t)]={'task':t,'pid':proc.pid,'resource':'cpu','validated':True,'completed_unix':time.time()};save_state(s)
 
 def main():
+ global UPSTREAM
  p=argparse.ArgumentParser();p.add_argument('--run',action='store_true');p.add_argument('--poll-seconds',type=int,default=POLL_SECONDS)
  p.add_argument('--sw107-first',action='store_true',help='Run independent SW0107 before waiting for SW0106; do not repeat it later')
+ p.add_argument('--upstream-state',type=Path,default=UPSTREAM)
+ p.add_argument('--reuse-completed-sw107',action='store_true',help='Validate and reuse all completed SW0107 workers; never retrain them')
  a=p.parse_args()
  if not a.run:raise SystemExit('readiness only; --run starts the approved conditional follow-up queue')
  if a.poll_seconds<10:raise ValueError('poll interval must be >=10 seconds')
+ if not a.upstream_state.resolve().is_relative_to(ARCHIVE.resolve()):raise ValueError('upstream state must be an archived SW0106 queue')
+ UPSTREAM=a.upstream_state
+ reused=[]
+ if a.reuse_completed_sw107:
+  if a.sw107_first:raise ValueError('completed SW0107 must not be queued again')
+  summary=read_json(SW107_SUMMARIZE.parent/'results_archive/summary.json')
+  if summary.get('status')!='complete':raise ValueError('completed SW0107 summary required')
+  for seed in range(3):
+   for stage in ('sw107-preflight','sw107-train','sw107-eval'):
+    t=task(stage,seed)
+    if not validate_task(t):raise ValueError(f'completed SW0107 worker failed revalidation: {t}')
+    reused.append(t)
  ARCHIVE.mkdir(parents=True,exist_ok=True);(OUT/'followup_queue_logs').mkdir(parents=True,exist_ok=True)
  if QUEUE_STATE.exists():raise FileExistsError(f'preserve prior follow-up state: {QUEUE_STATE}')
  fd=os.open(LOCK,os.O_CREAT|os.O_EXCL|os.O_WRONLY);os.write(fd,str(os.getpid()).encode());os.close(fd)
@@ -301,6 +316,9 @@ def main():
   'phase':'wait_seed0','eligible_gpus':list(GPUS),'max_workers':MAX_WORKERS,'exclusive_no_foreign_sharing':True,
   'upstream_queue_state':str(UPSTREAM),'pending':[],'active':{},'completed':{},'attempts':[],
   'training_restarted':False,'reserve_read_started':False,'sw107_first':a.sw107_first}
+ if reused:
+  s['sw0107_status']='complete'
+  for t in reused:s['completed'][key(t)]={'task':t,'validated_existing':True,'completed_unix':time.time()}
  save_state(s)
  try:
   s['status']='preparing_sw0107_cpu_data';s['phase']='sw107_cpu_prepare';save_state(s)

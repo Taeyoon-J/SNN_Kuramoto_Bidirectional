@@ -1,0 +1,96 @@
+{
+  "status": "complete",
+  "experiment": "SW0107 additional official CLEVR full70000 transfer from SW0097 positive_frozen seeds",
+  "ids": [
+    1320,
+    1639
+  ],
+  "images": 320,
+  "per_seed": [
+    {
+      "seed": 0,
+      "source_sha256": "36f2481dd1fa51fa29bd4dc34275a876b71d8b76fbee13ac47a0a1bfe6766fbf",
+      "metrics": {
+        "fg_ari": 0.8159122237935964,
+        "foreground_iou": 0.6919166025858534,
+        "matched_object_iou": 0.6405146117224053
+      },
+      "sw0097_metrics": {
+        "fg_ari": 0.8248677211561721,
+        "foreground_iou": 0.7198719167110539,
+        "matched_object_iou": 0.6556628993752277
+      },
+      "delta_vs_sw0097": {
+        "fg_ari": -0.008955497362575726,
+        "foreground_iou": -0.02795531412520047,
+        "matched_object_iou": -0.01514828765282239
+      }
+    },
+    {
+      "seed": 1,
+      "source_sha256": "76f379d5a7e4cd9d12fdf0b701f3dd9dbbf28b5eea270a9cee2d30d87b4dad98",
+      "metrics": {
+        "fg_ari": 0.7424805531139308,
+        "foreground_iou": 0.46141597142945107,
+        "matched_object_iou": 0.5770716809806228
+      },
+      "sw0097_metrics": {
+        "fg_ari": 0.742658188014352,
+        "foreground_iou": 0.5902831994239301,
+        "matched_object_iou": 0.5849640428623182
+      },
+      "delta_vs_sw0097": {
+        "fg_ari": -0.00017763490042121965,
+        "foreground_iou": -0.12886722799447908,
+        "matched_object_iou": -0.007892361881695398
+      }
+    },
+    {
+      "seed": 2,
+      "source_sha256": "798ad3e9d4bf837b1bbeb1bd7c13900df511b5c76f5736d2b9f8b973d7fa5661",
+      "metrics": {
+        "fg_ari": 0.7498773032948354,
+        "foreground_iou": 0.4438404034552098,
+        "matched_object_iou": 0.5580586218627372
+      },
+      "sw0097_metrics": {
+        "fg_ari": 0.7615186097026635,
+        "foreground_iou": 0.4210560720157456,
+        "matched_object_iou": 0.5639854300128422
+      },
+      "delta_vs_sw0097": {
+        "fg_ari": -0.011641306407828123,
+        "foreground_iou": 0.022784331439464234,
+        "matched_object_iou": -0.005926808150104934
+      }
+    }
+  ],
+  "mean": {
+    "fg_ari": 0.7694233600674542,
+    "foreground_iou": 0.5323909924901714,
+    "matched_object_iou": 0.5918816381885884
+  },
+  "mean_sw0097": {
+    "fg_ari": 0.7763481729577292,
+    "foreground_iou": 0.5770703960502432,
+    "matched_object_iou": 0.6015374574167961
+  },
+  "mean_slot_epoch10": {
+    "fg_ari": 0.7749334666743514,
+    "foreground_iou": 0.20358913115224261,
+    "matched_object_iou": 0.20693697915214362
+  },
+  "delta_vs_sw0097": {
+    "fg_ari": -0.006924812890275023,
+    "foreground_iou": -0.04467940356007183,
+    "matched_object_iou": -0.009655819228207685
+  },
+  "delta_vs_slot_epoch10": {
+    "fg_ari": -0.005510106606897214,
+    "foreground_iou": 0.32880186133792877,
+    "matched_object_iou": 0.3849446590364448
+  },
+  "goal_complete": false,
+  "ground_truth_used_for_prediction": false,
+  "interpretation": "Additional official-domain continuation from already pretrained SW0097 cores; not a from-scratch or equal-exposure causal comparison."
+}

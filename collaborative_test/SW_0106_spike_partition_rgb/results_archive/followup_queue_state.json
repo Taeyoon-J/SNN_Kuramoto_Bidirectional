@@ -1,0 +1,167 @@
+{
+  "status": "complete",
+  "queue_pid": 199116,
+  "created_unix": 1791455031.3239665,
+  "phase": "complete",
+  "eligible_gpus": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "max_workers": 4,
+  "exclusive_no_foreign_sharing": true,
+  "upstream_queue_state": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0106_spike_partition_rgb/results_archive/reviewed_resume_warmup_manifest_v1_queue_state.json",
+  "pending": [],
+  "completed": {
+    "sw107-preflight::0": {
+      "task": {
+        "stage": "sw107-preflight",
+        "seed": 0
+      },
+      "validated_existing": true,
+      "completed_unix": 1791455031.3239713
+    },
+    "sw107-train::0": {
+      "task": {
+        "stage": "sw107-train",
+        "seed": 0
+      },
+      "validated_existing": true,
+      "completed_unix": 1791455031.3239744
+    },
+    "sw107-eval::0": {
+      "task": {
+        "stage": "sw107-eval",
+        "seed": 0
+      },
+      "validated_existing": true,
+      "completed_unix": 1791455031.3239753
+    },
+    "sw107-preflight::1": {
+      "task": {
+        "stage": "sw107-preflight",
+        "seed": 1
+      },
+      "validated_existing": true,
+      "completed_unix": 1791455031.3239763
+    },
+    "sw107-train::1": {
+      "task": {
+        "stage": "sw107-train",
+        "seed": 1
+      },
+      "validated_existing": true,
+      "completed_unix": 1791455031.323977
+    },
+    "sw107-eval::1": {
+      "task": {
+        "stage": "sw107-eval",
+        "seed": 1
+      },
+      "validated_existing": true,
+      "completed_unix": 1791455031.323978
+    },
+    "sw107-preflight::2": {
+      "task": {
+        "stage": "sw107-preflight",
+        "seed": 2
+      },
+      "validated_existing": true,
+      "completed_unix": 1791455031.323979
+    },
+    "sw107-train::2": {
+      "task": {
+        "stage": "sw107-train",
+        "seed": 2
+      },
+      "validated_existing": true,
+      "completed_unix": 1791455031.3239796
+    },
+    "sw107-eval::2": {
+      "task": {
+        "stage": "sw107-eval",
+        "seed": 2
+      },
+      "validated_existing": true,
+      "completed_unix": 1791455031.3239803
+    },
+    "sw107-export::": {
+      "task": {
+        "stage": "sw107-export"
+      },
+      "resource": "cpu",
+      "validated_existing": true,
+      "completed_unix": 1791455031.3247528
+    },
+    "sw107-encode::": {
+      "task": {
+        "stage": "sw107-encode"
+      },
+      "resource": "cpu",
+      "validated_existing": true,
+      "completed_unix": 1791455033.1191535
+    }
+  },
+  "attempts": [],
+  "training_restarted": false,
+  "reserve_read_started": false,
+  "sw107_first": false,
+  "sw0107_status": "complete",
+  "sw0107_cpu_cache_status": "complete",
+  "seed0_expansion_gate": {
+    "status": "failed",
+    "candidate": {
+      "fg_ari": 0.832809688168696,
+      "foreground_iou": 0.72373455905931,
+      "matched_object_iou": 0.6676368372885767
+    },
+    "joint_control": {
+      "fg_ari": 0.8153223373940289,
+      "foreground_iou": 0.7195651231439312,
+      "matched_object_iou": 0.6480903667783805
+    },
+    "sw0097": {
+      "fg_ari": 0.8248677211561721,
+      "foreground_iou": 0.7198719167110539,
+      "matched_object_iou": 0.6556628993752277
+    },
+    "checks": {
+      "candidate_fg_plus_0.01_vs_joint_control": true,
+      "candidate_fg_plus_0.01_vs_SW0097": false,
+      "foreground_iou_slot_margin": true,
+      "matched_object_iou_slot_margin": true
+    }
+  },
+  "upstream_status": "complete",
+  "failed": {
+    "phase": "seed0_expansion_gate",
+    "gate": {
+      "status": "failed",
+      "candidate": {
+        "fg_ari": 0.832809688168696,
+        "foreground_iou": 0.72373455905931,
+        "matched_object_iou": 0.6676368372885767
+      },
+      "joint_control": {
+        "fg_ari": 0.8153223373940289,
+        "foreground_iou": 0.7195651231439312,
+        "matched_object_iou": 0.6480903667783805
+      },
+      "sw0097": {
+        "fg_ari": 0.8248677211561721,
+        "foreground_iou": 0.7198719167110539,
+        "matched_object_iou": 0.6556628993752277
+      },
+      "checks": {
+        "candidate_fg_plus_0.01_vs_joint_control": true,
+        "candidate_fg_plus_0.01_vs_SW0097": false,
+        "foreground_iou_slot_margin": true,
+        "matched_object_iou_slot_margin": true
+      }
+    }
+  },
+  "sw0106_outcome": "seed0_expansion_gate_failed",
+  "completed_unix": 1791455033.1229463,
+  "active": {}
+}

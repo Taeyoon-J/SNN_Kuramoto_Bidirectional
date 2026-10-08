@@ -1,0 +1,16 @@
+{
+  "experiment": "SW0108_gate_contribution_screen",
+  "status": "registered_seed0_screen_only",
+  "question": "Which frozen source-97 forward mechanism is associated with prediction quality under one-at-a-time inference interventions?",
+  "source": "trained_models/SW0097_graph_adaptation/seed0_positive_frozen/core.pt",
+  "arms": [
+    {"name": "baseline", "intervention": "none"},
+    {"name": "kuramoto_K0", "intervention": "set core.kuramoto.K=0; preserve learned adjacency and all other dynamics"},
+    {"name": "constant_gate_half", "intervention": "replace sinusoidal gate outputs in both dendritic carrier and membrane gate with gamma_wave=0.5*sin(theta[t]), g=0.5"},
+    {"name": "dendrite_no_retention", "intervention": "set tau_n=-inf so sigmoid(tau_n)=0; retain dense projection and previous-spike input"},
+    {"name": "membrane_no_retention", "intervention": "set tau_m=-inf so sigmoid(tau_m)=0; retain reset and event threshold"},
+    {"name": "events_forced_on", "intervention": "replace actual membrane act_fun_adp output with ones during rollout; retain gate and feedback"}
+  ],
+  "evaluation": {"dataset": "registered CLEVR HDF5", "global_ids": [1320, 1639], "count": 320, "batch_size": 8, "steps": 1024, "settle": 512, "threshold": 0.5, "minimum_group_size": 2, "background": "largest_component", "metrics": ["fg_ari", "foreground_iou", "matched_object_iou"]},
+  "constraints": ["frozen SW0097 positive_frozen seed0 checkpoint", "actual-spike classifier unchanged", "no training or parameter updates", "no reserved IDs", "GT excluded from prediction and GT-free diagnostics", "screening result is forward sensitivity evidence, not a trained causal effect or promotion gate", "seed1/2 and scaling are outside this registration"]
+}

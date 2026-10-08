@@ -1,0 +1,33 @@
+{
+  "status": "training_complete",
+  "seed": 0,
+  "source": "SW0097 positive_frozen whole completed checkpoint",
+  "source_core": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0097_graph_adaptation/seed0_positive_frozen/core.pt",
+  "source_core_sha256": "36f2481dd1fa51fa29bd4dc34275a876b71d8b76fbee13ac47a0a1bfe6766fbf",
+  "registered_encoder_sha256": "9b9c9c59725f872084a6c9bfae1ebbd1b89de40d18ef4f8ab6b8ec014c2ab868",
+  "feature_preprocessing_sha256": "a9ec3281b9603021c37f7c346baa6cf62513c5ce7edde867ab7eddf24b18e127",
+  "official_rgb_export_sha256": "600fb6fcb8193e6bcffef56839ad2de72ce34335bceba09320b473ce21b3e94c",
+  "official_gamma_sha256": "9eed2df407c158f25d410f0206d1784703ef8b0a1e13d1e49aef49336d93a064",
+  "tfds_source_indices": [
+    0,
+    69999
+  ],
+  "training_unique_images": 70000,
+  "updates": 4375,
+  "batch_size": 16,
+  "learning_rate": 3e-05,
+  "gradient_clip": 1.0,
+  "train_time_steps": 64,
+  "settle": 32,
+  "shuffle_seed": 117,
+  "training_order_sha256": "6b33c4a97a0224e7a22a15c7ae53cbc90e77bb6963f64108171219a003d44552",
+  "training_ids_sha256": "816c15571a3dc476fdd19474e6c56885cf37a65b6618f815713472a68cb4a584",
+  "objective": "phase primary + 5x positive-product actual-spike affinity",
+  "encoder_frozen": true,
+  "graph_frozen": true,
+  "optimizer_initialization": "fresh Adam; SW0097 weights continued, no optimizer moment artifact claimed",
+  "ground_truth_used_for_training": false,
+  "started": 1791452790.8228307,
+  "completed": 1791454211.9160967,
+  "runner_sha256": "43118d9acc6f4890c18bc363f5543dc6e4cbf125887a89188dc00030a295dca2"
+}

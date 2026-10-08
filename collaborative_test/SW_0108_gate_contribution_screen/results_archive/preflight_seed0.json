@@ -1,0 +1,940 @@
+{
+  "status": "passed",
+  "source_checkpoint_sha256": "36f2481dd1fa51fa29bd4dc34275a876b71d8b76fbee13ac47a0a1bfe6766fbf",
+  "gamma_sha256": "231b27e7ab21423505df3a105dee3df81051c9d58ae3b2aa5386fb7f25dc9c03",
+  "device": "cuda:0",
+  "steps": 32,
+  "arms": [
+    {
+      "arm": "baseline",
+      "status": "passed",
+      "images": 16,
+      "batch_size": 8,
+      "steps": 32,
+      "spike_shape": [
+        8,
+        256,
+        32
+      ],
+      "spike_rate": 0.17229872941970825,
+      "restored_baseline_bitwise_match": true,
+      "trace": {
+        "all_frames": {
+          "carrier": {
+            "count": 524288,
+            "mean": -0.03193918615579605,
+            "std": 0.19061401322024907,
+            "min": -0.9999728798866272,
+            "max": 0.99994295835495
+          },
+          "gate": {
+            "count": 131072,
+            "mean": 0.17340326309204102,
+            "std": 0.19801814987677557,
+            "min": 0.0,
+            "max": 1.0
+          },
+          "actfun_input": {
+            "count": 524288,
+            "mean": 0.9219788908958435,
+            "std": 0.3978434725379957,
+            "min": -0.9464812278747559,
+            "max": 3.5005717277526855
+          },
+          "event_before_override": {
+            "count": 524288,
+            "mean": 0.9982872009277344,
+            "std": 0.04135051863766247,
+            "min": 0.0,
+            "max": 1.0
+          },
+          "dendrite_output": {
+            "count": 524288,
+            "mean": 1.0003879070281982,
+            "std": 0.4126003631323192,
+            "min": -0.9082233905792236,
+            "max": 3.621976375579834
+          },
+          "membrane_output": {
+            "count": 524288,
+            "mean": 0.9819786548614502,
+            "std": 0.39784385605073097,
+            "min": -0.8864812254905701,
+            "max": 3.5605716705322266
+          },
+          "spike_output": {
+            "count": 524288,
+            "mean": 0.17229869961738586,
+            "std": 0.19712644388306688,
+            "min": 0.0,
+            "max": 1.0
+          },
+          "phase_output": {
+            "count": 524288,
+            "mean": -1.170839786529541,
+            "std": 9.672165628329472,
+            "min": -21.14767837524414,
+            "max": 24.301057815551758
+          }
+        },
+        "settled_frames": {
+          "carrier": {
+            "count": 262144,
+            "mean": 0.0037982608191668987,
+            "std": 0.18766072794499766,
+            "min": -0.9999728798866272,
+            "max": 0.99994295835495
+          },
+          "gate": {
+            "count": 65536,
+            "mean": 0.1315673291683197,
+            "std": 0.22697643112054877,
+            "min": 0.0,
+            "max": 1.0
+          },
+          "actfun_input": {
+            "count": 262144,
+            "mean": 0.830385148525238,
+            "std": 0.3944985369483297,
+            "min": -0.9464812278747559,
+            "max": 3.5005717277526855
+          },
+          "event_before_override": {
+            "count": 262144,
+            "mean": 0.999786376953125,
+            "std": 0.014614287942587002,
+            "min": 0.0,
+            "max": 1.0
+          },
+          "dendrite_output": {
+            "count": 262144,
+            "mean": 0.9003974199295044,
+            "std": 0.4102999270360519,
+            "min": -0.9082233905792236,
+            "max": 3.621976375579834
+          },
+          "membrane_output": {
+            "count": 262144,
+            "mean": 0.8903853297233582,
+            "std": 0.3944982716996183,
+            "min": -0.8864812254905701,
+            "max": 3.5605716705322266
+          },
+          "spike_output": {
+            "count": 262144,
+            "mean": 0.13137154281139374,
+            "std": 0.22668790178615367,
+            "min": 0.0,
+            "max": 1.0
+          },
+          "phase_output": {
+            "count": 262144,
+            "mean": -1.6155731678009033,
+            "std": 12.390679194775448,
+            "min": -21.14767837524414,
+            "max": 24.301057815551758
+          }
+        },
+        "settle": 16,
+        "steps": 32,
+        "per_unit_settled_time": {
+          "gate": {
+            "batches": 2,
+            "temporal_std_mean": 0.05890622362494469,
+            "constant_unit_fraction_mean": 0.0,
+            "always_on_fraction_mean": null
+          },
+          "event": {
+            "batches": 2,
+            "temporal_std_mean": 0.00028681772528216243,
+            "constant_unit_fraction_mean": 0.999267578125,
+            "always_on_fraction_mean": 0.99920654296875
+          },
+          "forced_event": {
+            "batches": 0,
+            "temporal_std_mean": null,
+            "constant_unit_fraction_mean": null,
+            "always_on_fraction_mean": null
+          }
+        },
+        "forced_on_spike_equals_gate_checks": 0
+      }
+    },
+    {
+      "arm": "kuramoto_K0",
+      "status": "passed",
+      "images": 16,
+      "batch_size": 8,
+      "steps": 32,
+      "spike_shape": [
+        8,
+        256,
+        32
+      ],
+      "spike_rate": 0.18404723703861237,
+      "restored_baseline_bitwise_match": true,
+      "trace": {
+        "all_frames": {
+          "carrier": {
+            "count": 524288,
+            "mean": -0.034984588623046875,
+            "std": 0.1958042733301394,
+            "min": -0.9999771118164062,
+            "max": 0.9999771118164062
+          },
+          "gate": {
+            "count": 131072,
+            "mean": 0.18515180051326752,
+            "std": 0.20107514487202433,
+            "min": 0.0,
+            "max": 1.0
+          },
+          "actfun_input": {
+            "count": 524288,
+            "mean": 0.9378089904785156,
+            "std": 0.41001863610210654,
+            "min": -0.8323106169700623,
+            "max": 3.5002121925354004
+          },
+          "event_before_override": {
+            "count": 524288,
+            "mean": 0.9982814788818359,
+            "std": 0.04141941336294475,
+            "min": 0.0,
+            "max": 1.0
+          },
+          "dendrite_output": {
+            "count": 524288,
+            "mean": 1.0173463821411133,
+            "std": 0.42557077973329926,
+            "min": -0.7927348017692566,
+            "max": 3.622673511505127
+          },
+          "membrane_output": {
+            "count": 524288,
+            "mean": 0.9978090524673462,
+            "std": 0.4100181321715912,
+            "min": -0.7723106145858765,
+            "max": 3.5602121353149414
+          },
+          "spike_output": {
+            "count": 524288,
+            "mean": 0.18404728174209595,
+            "std": 0.20027862220534745,
+            "min": 0.0,
+            "max": 1.0
+          },
+          "phase_output": {
+            "count": 524288,
+            "mean": -1.1775153875350952,
+            "std": 9.705639638297171,
+            "min": -23.763526916503906,
+            "max": 25.248031616210938
+          }
+        },
+        "settled_frames": {
+          "carrier": {
+            "count": 262144,
+            "mean": -0.0035712423268705606,
+            "std": 0.1983001646329162,
+            "min": -0.9999771118164062,
+            "max": 0.9999771118164062
+          },
+          "gate": {
+            "count": 65536,
+            "mean": 0.1528005450963974,
+            "std": 0.23271267759485376,
+            "min": 0.0,
+            "max": 1.0
+          },
+          "actfun_input": {
+            "count": 262144,
+            "mean": 0.8625856637954712,
+            "std": 0.4238759285040029,
+            "min": -0.8323106169700623,
+            "max": 3.5002121925354004
+          },
+          "event_before_override": {
+            "count": 262144,
+            "mean": 0.9997634887695312,
+            "std": 0.015377102877545307,
+            "min": 0.0,
+            "max": 1.0
+          },
+          "dendrite_output": {
+            "count": 262144,
+            "mean": 0.9346280097961426,
+            "std": 0.44158854921504564,
+            "min": -0.7927348017692566,
+            "max": 3.622673511505127
+          },
+          "membrane_output": {
+            "count": 262144,
+            "mean": 0.9225856065750122,
+            "std": 0.4238759618139374,
+            "min": -0.7723106145858765,
+            "max": 3.5602121353149414
+          },
+          "spike_output": {
+            "count": 262144,
+            "mean": 0.15261317789554596,
+            "std": 0.2325093905601734,
+            "min": 0.0,
+            "max": 1.0
+          },
+          "phase_output": {
+            "count": 262144,
+            "mean": -1.6245124340057373,
+            "std": 12.434220128394468,
+            "min": -23.763526916503906,
+            "max": 25.248031616210938
+          }
+        },
+        "settle": 16,
+        "steps": 32,
+        "per_unit_settled_time": {
+          "gate": {
+            "batches": 2,
+            "temporal_std_mean": 0.0714476928114891,
+            "constant_unit_fraction_mean": 0.0,
+            "always_on_fraction_mean": null
+          },
+          "event": {
+            "batches": 2,
+            "temporal_std_mean": 0.00029922579415142536,
+            "constant_unit_fraction_mean": 0.99920654296875,
+            "always_on_fraction_mean": 0.99920654296875
+          },
+          "forced_event": {
+            "batches": 0,
+            "temporal_std_mean": null,
+            "constant_unit_fraction_mean": null,
+            "always_on_fraction_mean": null
+          }
+        },
+        "forced_on_spike_equals_gate_checks": 0
+      }
+    },
+    {
+      "arm": "constant_gate_half",
+      "status": "passed",
+      "images": 16,
+      "batch_size": 8,
+      "steps": 32,
+      "spike_shape": [
+        8,
+        256,
+        32
+      ],
+      "spike_rate": 0.4992666244506836,
+      "restored_baseline_bitwise_match": true,
+      "trace": {
+        "all_frames": {
+          "carrier": {
+            "count": 524288,
+            "mean": -0.03485520929098129,
+            "std": 0.35701341493718636,
+            "min": -0.5,
+            "max": 0.5
+          },
+          "gate": {
+            "count": 131072,
+            "mean": 0.5,
+            "std": 0.0,
+            "min": 0.5,
+            "max": 0.5
+          },
+          "actfun_input": {
+            "count": 524288,
+            "mean": 1.2459348440170288,
+            "std": 0.5895856961386328,
+            "min": -0.1907133162021637,
+            "max": 2.1055123805999756
+          },
+          "event_before_override": {
+            "count": 524288,
+            "mean": 0.9985332489013672,
+            "std": 0.03827008936294077,
+            "min": 0.0,
+            "max": 1.0
+          },
+          "dendrite_output": {
+            "count": 524288,
+            "mean": 1.3503347635269165,
+            "std": 0.603529732046544,
+            "min": -0.14743492007255554,
+            "max": 2.1964101791381836
+          },
+          "membrane_output": {
+            "count": 524288,
+            "mean": 1.3059346675872803,
+            "std": 0.5895859788799838,
+            "min": -0.1307133138179779,
+            "max": 2.1655123233795166
+          },
+          "spike_output": {
+            "count": 524288,
+            "mean": 0.4992666244506836,
+            "std": 0.019135044681470384,
+            "min": 0.0,
+            "max": 0.5
+          },
+          "phase_output": {
+            "count": 524288,
+            "mean": -1.170839786529541,
+            "std": 9.672165628329472,
+            "min": -21.14767837524414,
+            "max": 24.301057815551758
+          }
+        },
+        "settled_frames": {
+          "carrier": {
+            "count": 262144,
+            "mean": 0.054634109139442444,
+            "std": 0.3610254349729667,
+            "min": -0.5,
+            "max": 0.5
+          },
+          "gate": {
+            "count": 65536,
+            "mean": 0.5,
+            "std": 0.0,
+            "min": 0.5,
+            "max": 0.5
+          },
+          "actfun_input": {
+            "count": 262144,
+            "mean": 1.115468144416809,
+            "std": 0.59837563220898,
+            "min": -0.16001877188682556,
+            "max": 2.1054739952087402
+          },
+          "event_before_override": {
+            "count": 262144,
+            "mean": 0.999755859375,
+            "std": 0.015623092534937653,
+            "min": 0.0,
+            "max": 1.0
+          },
+          "dendrite_output": {
+            "count": 262144,
+            "mean": 1.2160269021987915,
+            "std": 0.6145038066099846,
+            "min": -0.09900883585214615,
+            "max": 2.1964101791381836
+          },
+          "membrane_output": {
+            "count": 262144,
+            "mean": 1.1754683256149292,
+            "std": 0.598374978540633,
+            "min": -0.10001876950263977,
+            "max": 2.1654739379882812
+          },
+          "spike_output": {
+            "count": 262144,
+            "mean": 0.4998779296875,
+            "std": 0.0078115462674688265,
+            "min": 0.0,
+            "max": 0.5
+          },
+          "phase_output": {
+            "count": 262144,
+            "mean": -1.6155731678009033,
+            "std": 12.390679194775448,
+            "min": -21.14767837524414,
+            "max": 24.301057815551758
+          }
+        },
+        "settle": 16,
+        "steps": 32,
+        "per_unit_settled_time": {
+          "gate": {
+            "batches": 2,
+            "temporal_std_mean": 0.0,
+            "constant_unit_fraction_mean": 1.0,
+            "always_on_fraction_mean": null
+          },
+          "event": {
+            "batches": 2,
+            "temporal_std_mean": 0.00022753058510716073,
+            "constant_unit_fraction_mean": 0.9993896484375,
+            "always_on_fraction_mean": 0.9993896484375
+          },
+          "forced_event": {
+            "batches": 0,
+            "temporal_std_mean": null,
+            "constant_unit_fraction_mean": null,
+            "always_on_fraction_mean": null
+          }
+        },
+        "forced_on_spike_equals_gate_checks": 0
+      }
+    },
+    {
+      "arm": "dendrite_no_retention",
+      "status": "passed",
+      "images": 16,
+      "batch_size": 8,
+      "steps": 32,
+      "spike_shape": [
+        8,
+        256,
+        32
+      ],
+      "spike_rate": 0.17184096574783325,
+      "restored_baseline_bitwise_match": true,
+      "trace": {
+        "all_frames": {
+          "carrier": {
+            "count": 524288,
+            "mean": -0.03193918615579605,
+            "std": 0.19061401322024907,
+            "min": -0.9999728798866272,
+            "max": 0.99994295835495
+          },
+          "gate": {
+            "count": 131072,
+            "mean": 0.17340326309204102,
+            "std": 0.19801814987677557,
+            "min": 0.0,
+            "max": 1.0
+          },
+          "actfun_input": {
+            "count": 524288,
+            "mean": 0.9282013177871704,
+            "std": 0.40740498902119976,
+            "min": -1.011120319366455,
+            "max": 3.501338243484497
+          },
+          "event_before_override": {
+            "count": 524288,
+            "mean": 0.9978218078613281,
+            "std": 0.046620249009190234,
+            "min": 0.0,
+            "max": 1.0
+          },
+          "dendrite_output": {
+            "count": 524288,
+            "mean": 1.0066512823104858,
+            "std": 0.4239256985345586,
+            "min": -0.9721579551696777,
+            "max": 3.6231532096862793
+          },
+          "membrane_output": {
+            "count": 524288,
+            "mean": 0.988201379776001,
+            "std": 0.40740498075076836,
+            "min": -0.9511203765869141,
+            "max": 3.561338186264038
+          },
+          "spike_output": {
+            "count": 524288,
+            "mean": 0.17184095084667206,
+            "std": 0.19637296376925814,
+            "min": 0.0,
+            "max": 1.0
+          },
+          "phase_output": {
+            "count": 524288,
+            "mean": -1.170839786529541,
+            "std": 9.672165628329472,
+            "min": -21.14767837524414,
+            "max": 24.301057815551758
+          }
+        },
+        "settled_frames": {
+          "carrier": {
+            "count": 262144,
+            "mean": 0.0037982608191668987,
+            "std": 0.18766072794499766,
+            "min": -0.9999728798866272,
+            "max": 0.99994295835495
+          },
+          "gate": {
+            "count": 65536,
+            "mean": 0.1315673291683197,
+            "std": 0.22697643112054877,
+            "min": 0.0,
+            "max": 1.0
+          },
+          "actfun_input": {
+            "count": 262144,
+            "mean": 0.8303850889205933,
+            "std": 0.40355637516848647,
+            "min": -1.011120319366455,
+            "max": 3.501338243484497
+          },
+          "event_before_override": {
+            "count": 262144,
+            "mean": 0.9988670349121094,
+            "std": 0.033640473807606305,
+            "min": 0.0,
+            "max": 1.0
+          },
+          "dendrite_output": {
+            "count": 262144,
+            "mean": 0.9006668329238892,
+            "std": 0.41979005383906476,
+            "min": -0.9721579551696777,
+            "max": 3.6231532096862793
+          },
+          "membrane_output": {
+            "count": 262144,
+            "mean": 0.8903851509094238,
+            "std": 0.40355653545071807,
+            "min": -0.9511203765869141,
+            "max": 3.561338186264038
+          },
+          "spike_output": {
+            "count": 262144,
+            "mean": 0.13046693801879883,
+            "std": 0.22523971641853446,
+            "min": 0.0,
+            "max": 1.0
+          },
+          "phase_output": {
+            "count": 262144,
+            "mean": -1.6155731678009033,
+            "std": 12.390679194775448,
+            "min": -21.14767837524414,
+            "max": 24.301057815551758
+          }
+        },
+        "settle": 16,
+        "steps": 32,
+        "per_unit_settled_time": {
+          "gate": {
+            "batches": 2,
+            "temporal_std_mean": 0.05890622362494469,
+            "constant_unit_fraction_mean": 0.0,
+            "always_on_fraction_mean": null
+          },
+          "event": {
+            "batches": 2,
+            "temporal_std_mean": 0.0018151251424569637,
+            "constant_unit_fraction_mean": 0.99542236328125,
+            "always_on_fraction_mean": 0.99530029296875
+          },
+          "forced_event": {
+            "batches": 0,
+            "temporal_std_mean": null,
+            "constant_unit_fraction_mean": null,
+            "always_on_fraction_mean": null
+          }
+        },
+        "forced_on_spike_equals_gate_checks": 0
+      }
+    },
+    {
+      "arm": "membrane_no_retention",
+      "status": "passed",
+      "images": 16,
+      "batch_size": 8,
+      "steps": 32,
+      "spike_shape": [
+        8,
+        256,
+        32
+      ],
+      "spike_rate": 0.17230042815208435,
+      "restored_baseline_bitwise_match": true,
+      "trace": {
+        "all_frames": {
+          "carrier": {
+            "count": 524288,
+            "mean": -0.03193918615579605,
+            "std": 0.19061401322024907,
+            "min": -0.9999728798866272,
+            "max": 0.99994295835495
+          },
+          "gate": {
+            "count": 131072,
+            "mean": 0.17340326309204102,
+            "std": 0.19801814987677557,
+            "min": 0.0,
+            "max": 1.0
+          },
+          "actfun_input": {
+            "count": 524288,
+            "mean": 0.9304109811782837,
+            "std": 0.4052318229643074,
+            "min": -0.9682233929634094,
+            "max": 3.502051591873169
+          },
+          "event_before_override": {
+            "count": 524288,
+            "mean": 0.9983406066894531,
+            "std": 0.04070183932438173,
+            "min": 0.0,
+            "max": 1.0
+          },
+          "dendrite_output": {
+            "count": 524288,
+            "mean": 1.0003938674926758,
+            "std": 0.4126254929273811,
+            "min": -0.9082233905792236,
+            "max": 3.621976375579834
+          },
+          "membrane_output": {
+            "count": 524288,
+            "mean": 0.9904111623764038,
+            "std": 0.40523118171265804,
+            "min": -0.9082233905792236,
+            "max": 3.56205153465271
+          },
+          "spike_output": {
+            "count": 524288,
+            "mean": 0.17230039834976196,
+            "std": 0.1970545132252867,
+            "min": 0.0,
+            "max": 1.0
+          },
+          "phase_output": {
+            "count": 524288,
+            "mean": -1.170839786529541,
+            "std": 9.672165628329472,
+            "min": -21.14767837524414,
+            "max": 24.301057815551758
+          }
+        },
+        "settled_frames": {
+          "carrier": {
+            "count": 262144,
+            "mean": 0.0037982608191668987,
+            "std": 0.18766072794499766,
+            "min": -0.9999728798866272,
+            "max": 0.99994295835495
+          },
+          "gate": {
+            "count": 65536,
+            "mean": 0.1315673291683197,
+            "std": 0.22697643112054877,
+            "min": 0.0,
+            "max": 1.0
+          },
+          "actfun_input": {
+            "count": 262144,
+            "mean": 0.8325943350791931,
+            "std": 0.4022496887252175,
+            "min": -0.9682233929634094,
+            "max": 3.502051591873169
+          },
+          "event_before_override": {
+            "count": 262144,
+            "mean": 0.9996299743652344,
+            "std": 0.01923249114897083,
+            "min": 0.0,
+            "max": 1.0
+          },
+          "dendrite_output": {
+            "count": 262144,
+            "mean": 0.9002339243888855,
+            "std": 0.41054253993774276,
+            "min": -0.9082233905792236,
+            "max": 3.621976375579834
+          },
+          "membrane_output": {
+            "count": 262144,
+            "mean": 0.8925942778587341,
+            "std": 0.40224998035327325,
+            "min": -0.9082233905792236,
+            "max": 3.56205153465271
+          },
+          "spike_output": {
+            "count": 262144,
+            "mean": 0.13121649622917175,
+            "std": 0.226438474898056,
+            "min": 0.0,
+            "max": 1.0
+          },
+          "phase_output": {
+            "count": 262144,
+            "mean": -1.6155731678009033,
+            "std": 12.390679194775448,
+            "min": -21.14767837524414,
+            "max": 24.301057815551758
+          }
+        },
+        "settle": 16,
+        "steps": 32,
+        "per_unit_settled_time": {
+          "gate": {
+            "batches": 2,
+            "temporal_std_mean": 0.05890622362494469,
+            "constant_unit_fraction_mean": 0.0,
+            "always_on_fraction_mean": null
+          },
+          "event": {
+            "batches": 2,
+            "temporal_std_mean": 0.0005311120476108044,
+            "constant_unit_fraction_mean": 0.99871826171875,
+            "always_on_fraction_mean": 0.9986572265625
+          },
+          "forced_event": {
+            "batches": 0,
+            "temporal_std_mean": null,
+            "constant_unit_fraction_mean": null,
+            "always_on_fraction_mean": null
+          }
+        },
+        "forced_on_spike_equals_gate_checks": 0
+      }
+    },
+    {
+      "arm": "events_forced_on",
+      "status": "passed",
+      "images": 16,
+      "batch_size": 8,
+      "steps": 32,
+      "spike_shape": [
+        8,
+        256,
+        32
+      ],
+      "spike_rate": 0.1734032928943634,
+      "restored_baseline_bitwise_match": true,
+      "trace": {
+        "all_frames": {
+          "carrier": {
+            "count": 524288,
+            "mean": -0.03193918615579605,
+            "std": 0.19061401322024907,
+            "min": -0.9999728798866272,
+            "max": 0.99994295835495
+          },
+          "gate": {
+            "count": 131072,
+            "mean": 0.17340326309204102,
+            "std": 0.19801814987677557,
+            "min": 0.0,
+            "max": 1.0
+          },
+          "actfun_input": {
+            "count": 524288,
+            "mean": 0.923088014125824,
+            "std": 0.3958859862000379,
+            "min": -0.4597654342651367,
+            "max": 3.5005717277526855
+          },
+          "event_before_override": {
+            "count": 524288,
+            "mean": 0.9996528625488281,
+            "std": 0.018628390879565224,
+            "min": 0.0,
+            "max": 1.0
+          },
+          "dendrite_output": {
+            "count": 524288,
+            "mean": 1.0015767812728882,
+            "std": 0.4105525173614882,
+            "min": -0.4122908115386963,
+            "max": 3.621976375579834
+          },
+          "membrane_output": {
+            "count": 524288,
+            "mean": 0.9830881357192993,
+            "std": 0.3958857130387526,
+            "min": -0.3997654318809509,
+            "max": 3.5605716705322266
+          },
+          "spike_output": {
+            "count": 524288,
+            "mean": 0.17340326309204102,
+            "std": 0.19801814987677557,
+            "min": 0.0,
+            "max": 1.0
+          },
+          "phase_output": {
+            "count": 524288,
+            "mean": -1.170839786529541,
+            "std": 9.672165628329472,
+            "min": -21.14767837524414,
+            "max": 24.301057815551758
+          }
+        },
+        "settled_frames": {
+          "carrier": {
+            "count": 262144,
+            "mean": 0.0037982608191668987,
+            "std": 0.18766072794499766,
+            "min": -0.9999728798866272,
+            "max": 0.99994295835495
+          },
+          "gate": {
+            "count": 65536,
+            "mean": 0.1315673291683197,
+            "std": 0.22697643112054877,
+            "min": 0.0,
+            "max": 1.0
+          },
+          "actfun_input": {
+            "count": 262144,
+            "mean": 0.8305472135543823,
+            "std": 0.3941481498692243,
+            "min": -0.010181419551372528,
+            "max": 3.5005717277526855
+          },
+          "event_before_override": {
+            "count": 262144,
+            "mean": 0.9999542236328125,
+            "std": 0.006765668607884007,
+            "min": 0.0,
+            "max": 1.0
+          },
+          "dendrite_output": {
+            "count": 262144,
+            "mean": 0.9005681276321411,
+            "std": 0.4099400809770388,
+            "min": 0.10447263717651367,
+            "max": 3.621976375579834
+          },
+          "membrane_output": {
+            "count": 262144,
+            "mean": 0.8905472755432129,
+            "std": 0.3941479812591384,
+            "min": 0.049818579107522964,
+            "max": 3.5605716705322266
+          },
+          "spike_output": {
+            "count": 262144,
+            "mean": 0.1315673291683197,
+            "std": 0.22697643112054877,
+            "min": 0.0,
+            "max": 1.0
+          },
+          "phase_output": {
+            "count": 262144,
+            "mean": -1.6155731678009033,
+            "std": 12.390679194775448,
+            "min": -21.14767837524414,
+            "max": 24.301057815551758
+          }
+        },
+        "settle": 16,
+        "steps": 32,
+        "per_unit_settled_time": {
+          "gate": {
+            "batches": 2,
+            "temporal_std_mean": 0.05890622362494469,
+            "constant_unit_fraction_mean": 0.0,
+            "always_on_fraction_mean": null
+          },
+          "event": {
+            "batches": 2,
+            "temporal_std_mean": 0.00017729111641529016,
+            "constant_unit_fraction_mean": 0.999267578125,
+            "always_on_fraction_mean": 0.999267578125
+          },
+          "forced_event": {
+            "batches": 2,
+            "temporal_std_mean": 0.0,
+            "constant_unit_fraction_mean": 1.0,
+            "always_on_fraction_mean": null
+          }
+        },
+        "forced_on_spike_equals_gate_checks": 64
+      }
+    }
+  ],
+  "gt_used": false
+}
