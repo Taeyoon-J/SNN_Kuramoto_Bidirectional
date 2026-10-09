@@ -93,7 +93,7 @@
     "pending":  {
                     "SW0112":  "Seed0 paired evaluation completed: candidate FG-ARI 0.824191 versus control 0.824566; no promotion.",
                     "SW0114":  "Approved code deployed; fresh seed0 16/32 preflights and paired training/evaluation reserved in a live GPU0 supervisor.",
-                    "SW0115":  "Approved update guard fix deployed; server regressions and actual seed0 preflight/training/evaluation reserved in a GPU2 supervisor; no learned scores yet."
+                    "SW0115":  "Seed0 pilot complete: candidate 0.825113 / 0.719141 / 0.654728; matched-object-IoU fell versus control; no best-model promotion."
                 },
     "source_records":  {
                            "SW0072":  {
@@ -165,5 +165,111 @@
                                                                        "foreground_iou":  0.0010685998401325225,
                                                                        "matched_object_iou":  0.0013593034144603333
                                                                    }
-                                   }
+                                   },
+    "latest_analytic_rgb_pilot":  {
+                                      "experiment":  "SW0115",
+                                      "seed":  0,
+                                      "status":  "paired_pilot_complete",
+                                      "metrics_order":  [
+                                                            "fg_ari",
+                                                            "foreground_iou",
+                                                            "matched_object_iou"
+                                                        ],
+                                      "arms":  {
+                                                   "control":  {
+                                                                   "metrics":  {
+                                                                                   "fg_ari":  0.8245657658755523,
+                                                                                   "foreground_iou":  0.7183717430136797,
+                                                                                   "matched_object_iou":  0.655629993204592
+                                                                               },
+                                                                   "provenance":  {
+                                                                                      "experiment":  "SW0115",
+                                                                                      "seed":  0,
+                                                                                      "arm":  "control",
+                                                                                      "evaluation_file":  "evaluation.json",
+                                                                                      "evaluation_sha256":  "2d608868fd5ec6710b9a332608913c8046abba384c659d571dfc65fca635b6ec",
+                                                                                      "training_manifest_sha256":  "65c59949186a2476ac64500fa7347a5480edb7b024852c5080e91cfb710f741b",
+                                                                                      "checkpoint_sha256":  "05bb32de0a303d51734c2860df74593a0b7502daec9bbc52d32f7885f3f28b89",
+                                                                                      "evaluation_runner_sha256":  "eae8b01b6cdf5ddb025ffdd413c72a9f91c5cd4a9d3af4fa64c7deddb51c5d8a",
+                                                                                      "shared_evaluator_sha256":  "b3d7b2344329940c05adcd0139108feacea4dd2eeb495295bf0e7db5595feab1",
+                                                                                      "internal_grouping":  "SW0110 eval core stubs unused terminal groups; external actual-component synchrony CC unchanged",
+                                                                                      "evaluation_contract":  {
+                                                                                                                  "ids":  [
+                                                                                                                              1320,
+                                                                                                                              1639
+                                                                                                                          ],
+                                                                                                                  "images":  320,
+                                                                                                                  "batch_size":  8,
+                                                                                                                  "time_steps":  1024,
+                                                                                                                  "settle":  512,
+                                                                                                                  "membrane_vth":  0.06,
+                                                                                                                  "readout_threshold":  0.5,
+                                                                                                                  "min_group_size":  2,
+                                                                                                                  "background":  "largest_component",
+                                                                                                                  "ground_truth_used_for_prediction":  false
+                                                                                                              }
+                                                                                  },
+                                                                   "lambda_rgb":  0.0
+                                                               },
+                                                   "analytic_candidate":  {
+                                                                              "metrics":  {
+                                                                                              "fg_ari":  0.8251126704096456,
+                                                                                              "foreground_iou":  0.7191406480747868,
+                                                                                              "matched_object_iou":  0.6547281325348184
+                                                                                          },
+                                                                              "provenance":  {
+                                                                                                 "experiment":  "SW0115",
+                                                                                                 "seed":  0,
+                                                                                                 "arm":  "analytic_candidate",
+                                                                                                 "evaluation_file":  "evaluation.json",
+                                                                                                 "evaluation_sha256":  "04a18e2bea7dae6223d56319f0505c5022b0ceda32e94daac84500bde40fe0b6",
+                                                                                                 "training_manifest_sha256":  "bdc04ead415a88bb701940e0af1d75e5d84253d6322277596255ca288ca597e1",
+                                                                                                 "checkpoint_sha256":  "7d013921f553c33b6103ef6dc601b260d1f3ef6844ad12808da0a89641dba221",
+                                                                                                 "evaluation_runner_sha256":  "eae8b01b6cdf5ddb025ffdd413c72a9f91c5cd4a9d3af4fa64c7deddb51c5d8a",
+                                                                                                 "shared_evaluator_sha256":  "b3d7b2344329940c05adcd0139108feacea4dd2eeb495295bf0e7db5595feab1",
+                                                                                                 "internal_grouping":  "SW0110 eval core stubs unused terminal groups; external actual-component synchrony CC unchanged",
+                                                                                                 "evaluation_contract":  {
+                                                                                                                             "ids":  [
+                                                                                                                                         1320,
+                                                                                                                                         1639
+                                                                                                                                     ],
+                                                                                                                             "images":  320,
+                                                                                                                             "batch_size":  8,
+                                                                                                                             "time_steps":  1024,
+                                                                                                                             "settle":  512,
+                                                                                                                             "membrane_vth":  0.06,
+                                                                                                                             "readout_threshold":  0.5,
+                                                                                                                             "min_group_size":  2,
+                                                                                                                             "background":  "largest_component",
+                                                                                                                             "ground_truth_used_for_prediction":  false
+                                                                                                                         }
+                                                                                             },
+                                                                              "lambda_rgb":  11.65234493961766
+                                                                          }
+                                               },
+                                      "paired_delta_and_image_bootstrap_95ci":  {
+                                                                                    "fg_ari":  {
+                                                                                                   "mean":  0.0005469045340933288,
+                                                                                                   "95ci":  [
+                                                                                                                -0.005317605985984802,
+                                                                                                                0.006648307648291354
+                                                                                                            ]
+                                                                                               },
+                                                                                    "foreground_iou":  {
+                                                                                                           "mean":  0.0007689050611070801,
+                                                                                                           "95ci":  [
+                                                                                                                        -0.0049699377492869795,
+                                                                                                                        0.006464360768829212
+                                                                                                                    ]
+                                                                                                       },
+                                                                                    "matched_object_iou":  {
+                                                                                                               "mean":  -0.0009018606697736069,
+                                                                                                               "95ci":  [
+                                                                                                                            -0.007864164841340483,
+                                                                                                                            0.006018184834237194
+                                                                                                                        ]
+                                                                                                           }
+                                                                                },
+                                      "interpretation":  "Small FG-ARI and foreground-IoU gains, matched-object-IoU lower; no three-metric promotion and no three-seed or 70k expansion from this pilot alone."
+                                  }
 }
