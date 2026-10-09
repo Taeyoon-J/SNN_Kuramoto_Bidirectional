@@ -632,7 +632,7 @@
   },
   "latest_adaptive_temporal_assignment": {
     "experiment": "SW0123",
-    "status": "all_nine_preflights_passed_joint_training_running",
+    "status": "complete_failed_pilot",
     "segmentation_scores": null,
     "incumbent_replaced": false,
     "interpretation": "Adaptive initialization restores non-saturated varying events. No segmentation improvement, gating contribution, data-scaling effect or trained candidate is established.",
@@ -731,6 +731,50 @@
     "task_count": 27,
     "trajectory_count": 9,
     "runner_readiness": "collaborative_test/SW_0123_adaptive_temporal_assignment/server_runner_readiness_20261009.json",
-    "preflight_passed_count": 9
+    "preflight_passed_count": 9,
+    "promotion_gate_passed": false,
+    "validated_stages": 27,
+    "summary": "collaborative_test/SW_0123_adaptive_temporal_assignment/pilot_summary_20261009.json",
+    "primary_means": {
+      "legacy_full": {
+        "fg_ari": 0.011633052242930793,
+        "foreground_iou": 0.013687879652518263,
+        "matched_object_iou": 0.00725617314526706
+      },
+      "adaptive_full": {
+        "fg_ari": 0.03860704376655084,
+        "foreground_iou": 0.04826541201349599,
+        "matched_object_iou": 0.006983146293496185
+      },
+      "gate_only_control": {
+        "fg_ari": 0.009951110589996428,
+        "foreground_iou": 0.011866713594376821,
+        "matched_object_iou": 0.007290265924598033
+      },
+      "source": {
+        "fg_ari": 0.7763481729577292,
+        "foreground_iou": 0.5770703960502432,
+        "matched_object_iou": 0.6015374574167961
+      }
+    },
+    "secondary_means": {
+      "legacy_full": {
+        "fg_ari": 0.7709640901598052,
+        "foreground_iou": 0.4962902288545063,
+        "matched_object_iou": 0.5883182785831813
+      },
+      "adaptive_full": {
+        "fg_ari": -0.006425627314174204,
+        "foreground_iou": 0.016306453429456882,
+        "matched_object_iou": 0.010476176455651187
+      },
+      "gate_only_control": {
+        "fg_ari": 0.770834064994037,
+        "foreground_iou": 0.4833536746308596,
+        "matched_object_iou": 0.5896083400117328
+      }
+    },
+    "incumbent_changed": false,
+    "expansion_70000_committed": false
   }
 }

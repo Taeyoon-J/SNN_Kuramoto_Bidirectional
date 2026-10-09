@@ -1,3 +1,6 @@
+<!-- SW0123 completed 2026-10-09 -->
+SW0123 all27 stages/nine trained and evaluated trajectories completed. Adaptive primary mean .038607/.048265/.006983; failed pilot, no70k expansion, source97 incumbent unchanged. Legacy QCC retains .770964FG, adaptive QCC fails; read-only assignment/horizon diagnosis follows. All-gating/scaling goals remain unproved.
+
 <!-- SW0123 queue 2026-10-09 -->
 SW0123: corrected provenance and idle-GPU dispatcher deployed; actual server30CPU tests and three calibration bindings passed. Supervisor1455390 and initialGPU0/1/3 children verified live. All27 stages/nine matched trajectories queued; no segmentation result yet. Previous invalid path-binding preflight preserved; source/calibration/scientific recipe unchanged.
 
