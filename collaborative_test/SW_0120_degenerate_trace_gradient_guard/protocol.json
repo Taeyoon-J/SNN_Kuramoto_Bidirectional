@@ -1,14 +1,23 @@
 {
   "experiment": "SW0120_degenerate_trace_gradient_guard",
-  "status": "implementation_and_synthetic_tests_only",
-  "scope": "Standalone affinity helper; no model, loss, evaluator, or training changes",
-  "forward_contract": "Matches spike_synchrony_affinity in float conversion, settle slicing, temporal centering, norm clamp, matrix multiplication, correlation clamp, component stack order, positive clamp, and component product.",
-  "backward_intervention": "For each centered trace norm <= the existing eps (default 1e-8), detach only the already-computed normalized trace in backward. Forward values remain unchanged.",
-  "training_contract": {
-    "source_recipe": "SW0117 candidate recipe and immutable lambda remain unchanged",
-    "density_or_threshold_change": false,
-    "training_started": false,
-    "actual_update_equivalence_required_before_training": true
+  "status": "actual_update3_proof_passed_pilot_pending",
+  "seed": 0,
+  "source": "Whole registered SW0097 positive_frozen seed0 core with the registered live encoder, same 4096 ordered training IDs, and the completed SW0117 analytic_candidate as the verified matched control.",
+  "objective": "Unchanged phase primary + 5*positive actual four-component Q + immutable SW0117 lambda 7.865416617457706 times partition RGB.",
+  "intervention": "Replace only training Q's backward path using the existing centered-trace epsilon 1e-8 guard. Forward Q, PLV, loss values, production labels/H, classifier, evaluation, and readout remain unchanged.",
+  "training": {
+    "updates": 256,
+    "batch_size": 16,
+    "shuffle_seed": 117,
+    "time_steps": 64,
+    "settle": 32,
+    "core_graph_lr": 0.00003,
+    "encoder_lr": 0.000003,
+    "clip_norm": 1.0,
+    "lambda_recalibration": false,
+    "ground_truth_used": false
   },
-  "tests": "test_affinity.py checks exact forward equality, degenerate/valid trace gradient behavior, settle ordering, and epsilon boundary. These are synthetic tests, not model-level or training evidence."
+  "required_gate": "The bound update-3 proof must validate exact Q/L/H forward identity, zero guarded direct gradient on degenerate rows, exact valid-row direct gradients, finite/nonzero family credit and throwaway updates, and a combined preclip gradient drop before any output directory is created.",
+  "evaluation": "Use the unchanged SW0117 actual-spike evaluator; do not use guarded affinity for prediction.",
+  "promotion": "Candidate FG-ARI must exceed both the registered SW0097 source and verified SW0117 control by at least 0.01, with positive paired image bootstrap evidence and both IoU metrics above the registered Slot margins. Seed fanout remains disabled pending seed0 review."
 }
