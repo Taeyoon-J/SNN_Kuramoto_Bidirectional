@@ -8,8 +8,10 @@ gate. No density/gradient-conditioning sweep follows these results.
 SW0121's training-only competitive assignment prototype passed five synthetic
 checks. Actual spike traces alone feed its head; RGB reconstruction and detached
 assignment-to-Q consistency train the core. Evaluation discards the head and
-retains the original Q classifier. The runner is being implemented locally;
-no SW0121 GPU training or measured score exists yet.
+retains the original Q classifier. Eight local tests and the actual GPU
+preflight passed; SW0121 training is running, with no measured score yet.
+Frozen lambda is 3.9834647; head reconstruction .522008 beats the global
+mean baseline 1.0, with live R-to-spike and C-to-Q credit verified.
 
 SW0118 is a separate any-present-pixel-label diagnostic: three-seed means
 .838763 ours vs .828048 own-data Slot, with difference CI crossing zero.
