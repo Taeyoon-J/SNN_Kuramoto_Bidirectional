@@ -9,3 +9,11 @@ The training tasks include the external dependency `sw0117_source_endpoint_revie
 All other preflight guards, the fixed 320-image evaluation contract, and the preregistered promotion gate are unchanged from the copied SW0116 protocol. A failed guard stops the recipe without tuning or seed expansion.
 
 Local CPU tests passed 15/15, including source-report hash/schema/metric rejection and proof that training cannot create its output without the reviewed evidence. Python compilation, protocol JSON parsing, and whitespace checks pass. No server deployment, real-data preflight, training, commit, or push is included.
+
+## Completed seed-0 pilot (2026-10-08)
+
+The preceding paragraph records the predeployment state. Both deployed arms subsequently passed real-data preflight, completed 256 updates, and were evaluated on all 320 fixed validation images. The control scored `0.8168938447 / 0.7196492583 / 0.6481461872`; the analytic candidate scored `0.8262101307 / 0.7229130104 / 0.6595478231`.
+
+Candidate-minus-control FG-ARI was `+0.0093163` (paired-image bootstrap 95% CI `[0.0021404, 0.0166691]`). Candidate-minus-original-source was only `+0.0013424` (CI `[-0.0058533, 0.0085446]`). The registered promotion gate failed; this recipe will not expand to more seeds or coefficient tuning. Full compact provenance and all three paired metric comparisons are in `seed0_paired_summary_20261008.json`.
+
+Gradient norms were usually modest (candidate median `190.4`) but had extreme outliers (maximum `446,360,736`). This is a separate numerical-conditioning concern requiring diagnosis; neither gradient connectivity nor the small score increase proves semantic binding by the RGB objective.
