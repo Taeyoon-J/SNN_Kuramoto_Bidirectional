@@ -31,8 +31,8 @@ def fixture_activity(seed=7, steps=48):
     # Each component has the same coherent event pattern, as in a clean
     # component-product fixture; the classifier and affinity remain production.
     components = activity[:, None].expand(-1, 4, -1, -1).clone()
-    # The last pair is anticorrelated in one component only, so its positive
-    # four-component product is negative and both nodes stay omitted.
+    # The last pair is anticorrelated in one component only, so its signed
+    # product is clamped to zero and both nodes stay omitted.
     components[:, 0, 255] = -components[:, 0, 254]
     return activity, components
 

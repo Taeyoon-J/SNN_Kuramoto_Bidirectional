@@ -1,0 +1,57 @@
+{
+  "experiment": "SW0115",
+  "status": "seed0_pilot_registered_pending_local_implementation_review_and_real_preflight",
+  "hypothesis": "RGB patch reconstruction credit through the actual hard spike partition can encourage content-consistent assignments without a learned decoder.",
+  "source": "Whole SW0097 positive_frozen seed-matched core; no SW0095 or alternate source.",
+  "initial_pilot": {
+    "seeds": [0],
+    "arms": ["control", "analytic_candidate"],
+    "updates": 256,
+    "batch_size": 16,
+    "time_steps": 64,
+    "settle": 32,
+    "learning_rate": 0.00003,
+    "gradient_clip_norm": 1.0,
+    "optimizer": "fresh Adam",
+    "training_ids": "Exact matched SW0097 4096 IDs/order; torch.randperm over registered 70000 pool with seed 117+seed, then pool-row map.",
+    "native_rgb": "Existing byte-verified SW0106 uint8 RGB cache in the identical 0..999 plus 1640..70639 pool row order; convert uint8 to float [0,1] once, then native 8x8 patch means.",
+    "frozen": ["registered encoder represented by frozen cached gamma", "all legacy graph parameters"],
+    "ground_truth_used_for_training": false
+  },
+  "old_objective": "Unchanged phase-primary + 5 * positive product of actual four-component spike Pearson synchrony.",
+  "analytic_partition_rgb": {
+    "classifier": "Exact production spike_synchrony_components threshold 0.50, min_group_size 2, settle 32, components=actual component spikes, background largest_component; then spatial_components_to_patch_labels.",
+    "hard_labels": "One-hot H with image-specific columns 0..max(label); column 0 includes removed largest component and every omitted patch.",
+    "q": "spike_synchrony_affinity(last_component_spikes.mean(dim=1), components=last_component_spikes, settle=32, affinity_mode='spike'); D=4.",
+    "q0": "q * (1 - identity)",
+    "A": "(q0 @ H) / clamp(H.sum(0)[None,:] - H, min=1)",
+    "P": "softmax(A / 0.1, dim=group)",
+    "W": "H + (P - P.detach()); exact hard-forward assignments.",
+    "prototype": "mu=(W.T @ detached_native_rgb_patch_means)/clamp(W.sum(0)[:,None],min=1e-8), with numerator and denominator live.",
+    "image_loss": "mean((W @ mu - X)^2)/clamp(detached mean spatial RGB variance,1e-6).",
+    "batch_loss": "Ordinary mean over all 16 images, including K=1 and blank images.",
+    "candidate_total": "old_objective + lambda_rgb * batch analytic reconstruction loss.",
+    "control_total": "old_objective only; same source, trainable core parameters, order, optimizer, and update budget."
+  },
+  "lambda_calibration": "Once from seed0 source, first four exact matched TRAIN batches: 0.25 * median(old eligible-core gradient norm / RGB eligible-core gradient norm). Candidate coefficient artifact is shared unchanged by any later conditional seeds.",
+  "real_preflight": [
+    "For each of first four seed0 TRAIN batches, finite nonzero RGB gradient to actual Q and eligible core; old objective also finite/nonzero.",
+    "Exact production hard-label/H equality and exact W.detach()==H.",
+    "One fixed count-preserving H-row permutation, with prototype repooling, has positive mean scrambled-minus-real RGB loss over those batches.",
+    "Encoder/gamma/cache/source/order provenance verified; graph stays bitwise fixed; throwaway B16 Adam update has finite nonzero gradient and changes an eligible core parameter.",
+    "No GT read for preflight, masks, loss, coefficient, or training."
+  ],
+  "evaluation": {
+    "ids": [1320, 1639],
+    "count": 320,
+    "batch_size": 8,
+    "time_steps": 1024,
+    "settle": 512,
+    "membrane_threshold": 0.06,
+    "readout": "Unchanged actual-event, gate, four-component positive-Pearson product classifier; threshold 0.50, min group size 2, largest component background.",
+    "metrics": ["fg_ari", "foreground_iou", "matched_object_iou"],
+    "reserved_ids": "90640..90959 remain unread."
+  },
+  "scope": "Seed0 matched control/candidate pilot only. Seeds1/2 and data-scaling continuation require a later review of this pilot; no automatic fanout.",
+  "prohibitions": ["No decoder", "no RGB relabeling", "no new singleton prototypes", "no GT object counts", "no alternate inference classifier", "no coefficient or threshold tuning after preflight failure"]
+}
