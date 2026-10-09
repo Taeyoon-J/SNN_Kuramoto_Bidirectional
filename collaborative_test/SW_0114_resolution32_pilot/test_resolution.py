@@ -1,3 +1,4 @@
+import numpy as np  # Import NumPy before torch on the Windows development runtime.
 import unittest
 
 import torch
@@ -117,6 +118,52 @@ class ResolutionTests(unittest.TestCase):
         self.assertEqual(tuple(labels.shape), (1, 32, 32))
         self.assertEqual(len(groups), 1)
         self.assertIn("empty_images", diag)
+
+    def test_predict_frozen_hands_detached_cpu_traces_to_production_classifier(self):
+        import sys
+        from pathlib import Path
+        from unittest import mock
+        root = Path(__file__).resolve().parents[2]
+        sys.path[:0] = [str(root), str(root / "collaborative_test"), str(root / "collaborative_test/SW_0114_resolution32_pilot")]
+        import run as resolution_run
+        from snn_kuramoto_bidirectional import spike_classifier
+        from snn_kuramoto_bidirectional.evaluation import spatial_components_to_patch_labels
+
+        pattern = torch.tensor([1., 0., 1., 0.])
+        components = torch.zeros((1, 4, 1024, 4), requires_grad=True)
+        with torch.no_grad():
+            components[:, :, :8, :] = pattern.view(1, 1, 1, 4)
+        spikes = components.detach().mean(dim=1).requires_grad_(True)
+
+        class FakeCore:
+            last_component_spikes = components
+
+            def __call__(self, gamma, *, return_core_out, num_time_steps):
+                self.last_component_spikes = components
+                return None, spikes, torch.zeros_like(spikes)
+
+        original = spike_classifier.spike_synchrony_components
+        calls = []
+
+        def checked_classifier(activity, *args, **kwargs):
+            self.assertEqual(activity.device.type, "cpu")
+            self.assertFalse(activity.requires_grad)
+            self.assertEqual(kwargs["components"].device.type, "cpu")
+            self.assertFalse(kwargs["components"].requires_grad)
+            calls.append(True)
+            return original(activity, *args, **kwargs)
+
+        expected_groups = original(
+            spikes.detach().cpu(), synchrony_threshold=.5, min_group_size=8,
+            settle=1, components=components.detach().cpu(),
+            background="largest_component", spatial_grid_size=32, affinity_mode="spike")
+        expected_labels = spatial_components_to_patch_labels(expected_groups, 32, device="cpu")
+        with mock.patch.object(spike_classifier, "spike_synchrony_components", side_effect=checked_classifier):
+            labels, groups, _ = resolution_run.predict_frozen(
+                FakeCore(), torch.zeros((1, 8, 1024)), 32, time_steps=4, settle=1)
+        self.assertTrue(calls)
+        self.assertEqual(groups, expected_groups)
+        self.assertTrue(torch.equal(labels, expected_labels))
 
     def test_downsample_vote_ties_and_component_renaming(self):
         labels = torch.zeros((1, 32, 32), dtype=torch.int64)

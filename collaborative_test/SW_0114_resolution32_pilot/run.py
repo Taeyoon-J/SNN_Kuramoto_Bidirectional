@@ -539,9 +539,12 @@ def predict_frozen(core, gamma, grid_size, *, time_steps=EVAL_STEPS, settle=EVAL
     components = core.last_component_spikes
     if tuple(components.shape[:3]) != (gamma.shape[0], 4, grid_size * grid_size):
         raise AssertionError(f"component-spike shape invalid: {tuple(components.shape)}")
+    # The production connected-component implementation traverses adjacency
+    # with CPU sets/tensors. Move both inputs together before classification;
+    # prediction labels are copied to CPU below as before.
     groups = spike_synchrony_components(
-        spikes, synchrony_threshold=.5, min_group_size=(2 if grid_size == 16 else 8),
-        settle=settle, components=components, background="largest_component",
+        spikes.detach().cpu(), synchrony_threshold=.5, min_group_size=(2 if grid_size == 16 else 8),
+        settle=settle, components=components.detach().cpu(), background="largest_component",
         spatial_grid_size=grid_size, affinity_mode="spike")
     labels = spatial_components_to_patch_labels(groups, grid_size, device="cpu")
     return labels, groups, {"empty_images": sum(not g for g in groups),
