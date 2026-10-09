@@ -1,0 +1,64 @@
+{
+  "experiment": "SW0124_temporal_prototype_readout",
+  "status": "implementation_complete_pending_review_and_read_only_execution",
+  "implementation_started": true,
+  "training_started": false,
+  "hypothesis": "A small number of deterministic temporal prototypes selected from the frozen source's actual positive-product affinity may provide a structured readout that avoids the fixed-slot global-color collapse observed in SW0123.",
+  "scope": "Stage 1 evaluation only. No training, decoder, GT-selected input, or checkpoint modification.",
+  "seeds": [0, 1, 2],
+  "source": {
+    "checkpoint": "same-seed complete SW0097 positive_frozen whole core",
+    "core_sha256": {
+      "0": "36f2481dd1fa51fa29bd4dc34275a876b71d8b76fbee13ac47a0a1bfe6766fbf",
+      "1": "76f379d5a7e4cd9d12fdf0b701f3dd9dbbf28b5eea270a9cee2d30d87b4dad98",
+      "2": "798ad3e9d4bf837b1bbeb1bd7c13900df511b5c76f5736d2b9f8b973d7fa5661"
+    },
+    "note": "Core state is strictly loaded unchanged; only object-group discovery output is discarded as in the registered evaluator. No learned encoder or changed dynamics."
+  },
+  "inputs": {
+    "gamma": "registered SW0042 validation cache [320,8,256], IDs1320-1639, frozen encoder/preprocessing manifest and SHA validated",
+    "actual_traces": "source core last_component_spikes [B,4,256,1024], production component order",
+    "centering": "subtract each component/patch trace temporal mean over settle frames 512:1024",
+    "scaling": "divide by same-seed SW0123 passed frozen legacy actual-spike TRAIN RMS4; bind the original calibration record and its spike_rms SHA",
+    "ground_truth_used_for_prediction": false
+  },
+  "readout": {
+    "anchor_affinity": "detached registered production positive product of four actual component spike Pearson correlations on frames512:1024",
+    "first_anchor": "lowest patch index attaining maximum Q row sum",
+    "later_anchors": "among unselected patches whose centered/scaled actual trace is not exactly identical to any selected anchor trace, choose the lowest index attaining minimum maximum-Q to selected anchors; stop if that minimum maximum-Q is >=0.50",
+    "duplicate_rule": "exact trace equality only; no novelty epsilon. If no distinct trace remains, stop (including a flat K=1 case).",
+    "maximum_prototypes": 11,
+    "prototype_initialization": "gather live centered/scaled actual traces at selected detached anchor indices",
+    "refinement": "3 updates: scores=-mean_D,T((X-U)^2); P=softmax(scores/0.1); U=P^T X / max(slot_mass,1). Then recompute final P from the updated U.",
+    "probability_shape": ["B", 256, 11],
+    "unused_slots": "zero probability columns after actual K prototypes",
+    "primary_labels": "unchanged SW0123 assignment_to_labels: argmax; largest occupied slot background, tie by first occupied patch; foreground slot below2 patches becomes background",
+    "secondary_baseline": "unchanged actual four-component production QCC: Q>=0.50, min2, largest connected component background; reported separately",
+    "xy_rgb_gamma_theta_bypass": false,
+    "prediction_dependent_allowed_label_oracle": false
+  },
+  "evaluation": {
+    "ids_inclusive": [1320, 1639],
+    "images": 320,
+    "batch_size": 8,
+    "time_steps": 1024,
+    "settle": 512,
+    "metrics": ["fg_ari", "foreground_iou", "matched_object_iou"],
+    "ground_truth_access": "Only after all three-seed prototype and production-QCC predictions are saved and SHA-verified; source production-QCC scores must reproduce immutable SW0097 per-image metrics before any prototype result is scored or gate is reported.",
+    "source_score_tolerance": 1e-10,
+    "prediction_files_create_once": true
+  },
+  "promotion_gates": {
+    "all_three_seeds_reported": true,
+    "mean_fg_ari_strictly_above_source": true,
+    "at_least_two_seed_fg_ari_gains_over_source": true,
+    "paired_bootstrap": "10000 draws, seed124, shared sampled image indices across all three source-seed reports; 95% lower bound strictly positive for prototype-minus-source FG-ARI",
+    "both_iou_means_strictly_above_matched_slot_plus": 0.05,
+    "failure": "Close stage without changing threshold, affinity, initialization, prototype count, iterations, or seed set."
+  },
+  "limitations": [
+    "This tests only a frozen source readout and does not demonstrate a learned-model improvement.",
+    "The detached affinity controls anchor selection; live gradients through final prototype probabilities are not a training result.",
+    "K=1 and all-background outcomes are valid outputs and are not repaired by adding prototypes from GT or coordinates."
+  ]
+}
