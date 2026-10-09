@@ -143,3 +143,5 @@ intermediate ablation to improve all three metrics; see `SELECTION_POLICY.md`.
 | SW0124 | running read-only preflight/evaluation | Frozen97 actual512-settled-spike temporal prototypes,3 shared refinements,3seeds fixed320; compare originalQCC | Local/server14CPUtests pass; source/calbindings verified; supervisor1491982 live,GPU0 seed0preflight passed. No training or positive result yet. |
 
 | SW0124 endpoint | complete; not promoted | All3 frozen-source temporal-prototype readouts,320sameimages | .751922/.397001/.552672; originalQCC exactly reproduced; all3FG lower, pairedCI[-.030902,-.017989]. Incumbent97 unchanged; no recipe expansion. |
+
+| SW0125 foundation | actual3seed PASS; training pending | Match native1024 states/512 loss band; backprop64 tail, original97/QCC/loss preserved | Alltraces/Q/H/loss exact; all6families RGBcredit finite/nonzero.0optimizerupdates; earlierCUDAmean-layout failure preserved/corrected. No score/gating/scaling proof. |
