@@ -7,6 +7,7 @@ from torch import nn
 from snn_kuramoto_bidirectional.membrane_layer import MembraneLayer
 from collaborative_test.SW_0126_history_event_binding.history_event import (
     HistoryBoundMembrane,
+    S2NetCoreMembraneLayer,
     head_trace_for_arm,
     strict_load_source_then_attach,
 )
@@ -43,6 +44,23 @@ class HistoryEventTests(unittest.TestCase):
         with self.assertRaises(RuntimeError):
             strict_load_source_then_attach(rejected, {"membrane_layer.tau_m": source_state["membrane_layer.tau_m"]})
         self.assertIsInstance(rejected.membrane_layer, MembraneLayer)
+
+    def test_actual_factory_membrane_identity_strict_loads_and_attaches(self):
+        # S2NetCore imports `membrane_layer` as a top-level module, which is a
+        # second module identity for the same registered source class file.
+        from collaborative_test.SW_0110_xy_graph_route import run as base
+        core = base.make_core("cpu", steps=64)
+        source_state = {key: value.detach().clone() for key, value in core.state_dict().items()}
+        source_membrane = core.membrane_layer
+        self.assertIs(type(source_membrane), S2NetCoreMembraneLayer)
+        tau_reference = source_membrane.tau_m
+        names_before = set(dict(core.named_parameters()))
+        adapted = strict_load_source_then_attach(core, source_state)
+        self.assertIs(core.membrane_layer, adapted)
+        self.assertIs(adapted.tau_m, tau_reference)
+        self.assertEqual(set(dict(core.named_parameters())) - names_before,
+                         {"membrane_layer.beta_logits"})
+        self.assertEqual(tuple(adapted.beta_logits.shape), (4,))
 
     def test_gate_closed_preserves_membrane_and_adaptation_history(self):
         layer = HistoryBoundMembrane(self._native())

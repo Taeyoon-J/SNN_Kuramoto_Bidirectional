@@ -7,6 +7,8 @@ the default everywhere else.
 from __future__ import annotations
 
 import math
+import sys
+from pathlib import Path
 
 import torch
 from torch import nn
@@ -16,6 +18,26 @@ from snn_kuramoto_bidirectional.membrane_layer import (
     R_m,
     act_fun_adp,
 )
+
+# S2NetCore intentionally imports its membrane as top-level `membrane_layer`,
+# while research adapters often import the same file through the package name.
+# Register only those two source-defined class objects; do not accept duck types.
+_SNN_ROOT = Path(__file__).resolve().parents[2]
+_SNN_DIR = _SNN_ROOT / "snn_kuramoto_bidirectional"
+_SNN_DIR_TEXT = str(_SNN_DIR)
+_added_snn_path = _SNN_DIR_TEXT not in sys.path
+if _added_snn_path:
+    sys.path.insert(0, _SNN_DIR_TEXT)
+try:
+    from snn_kuramoto_bidirectional.s2net_cls import MembraneLayer as S2NetCoreMembraneLayer
+finally:
+    if _added_snn_path:
+        try:
+            sys.path.remove(_SNN_DIR_TEXT)
+        except ValueError:
+            pass
+
+REGISTERED_NATIVE_MEMBRANE_TYPES = tuple(dict.fromkeys((MembraneLayer, S2NetCoreMembraneLayer)))
 
 
 COMPONENTS = 4
@@ -35,7 +57,7 @@ class HistoryBoundMembrane(MembraneLayer):
 
     def __init__(self, native: MembraneLayer, beta_init: float = BETA_INIT,
                  capture_gate_trace: bool = False):
-        if not isinstance(native, MembraneLayer):
+        if not isinstance(native, REGISTERED_NATIVE_MEMBRANE_TYPES):
             raise TypeError("native must be the registered MembraneLayer")
         if abs(float(native.vth) - VTH) > 1e-12:
             raise ValueError("SW0126 requires the registered membrane threshold 0.06")
@@ -140,7 +162,7 @@ def attach_history_event_membrane(core, beta_init: float = BETA_INIT,
     current = core.membrane_layer
     if isinstance(current, HistoryBoundMembrane):
         raise ValueError("history event membrane is already attached")
-    if not isinstance(current, MembraneLayer):
+    if not isinstance(current, REGISTERED_NATIVE_MEMBRANE_TYPES):
         raise TypeError("core membrane layer is not the registered production class")
     adapted = HistoryBoundMembrane(current, beta_init=beta_init,
                                    capture_gate_trace=capture_gate_trace)

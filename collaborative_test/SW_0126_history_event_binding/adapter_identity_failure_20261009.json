@@ -1,0 +1,27 @@
+{
+  "experiment": "SW0126",
+  "status": "operational_adapter_identity_failure_before_model_rollout",
+  "source_cache_contracts_passed": true,
+  "server_cpu_suite_passed": 28,
+  "native_factory_module": "membrane_layer",
+  "adapter_reference_module": "snn_kuramoto_bidirectional.membrane_layer",
+  "same_source_file_verified_on_server": true,
+  "same_class_identity": false,
+  "failed_seed_ids": [
+    0,
+    1,
+    2
+  ],
+  "terminal_owned_pids": [
+    1938264,
+    1939550,
+    1939552,
+    1939551
+  ],
+  "model_rollout_started": false,
+  "training_started": false,
+  "hypothesis_rejected": false,
+  "failure_archive": "/tmp/kevinswk_sw0126_adapter_identity_failure_20261009T203425Z",
+  "fix_scope": "Accept only the two registered native class identities and retain all threshold/dynamics checks; add actual production factory regression.",
+  "required_before_gpu_resume": "Actual server CPU strict-load/adapter attachment for all3 source checkpoints."
+}
