@@ -1,0 +1,23 @@
+{
+  "experiment": "SW0122",
+  "reference_name": "matched own-data 70k Slot three-seed epoch-10 mean",
+  "source_experiment": "SW0095_full70k_aligned_loss",
+  "source_summary_path": "collaborative_test/SW_0095_full70k_aligned_loss/results/summary.json",
+  "source_summary_sha256": "85f5f36c9900e31841909d7d7e50855f5bb24a3f2d567e05846b67266923056e",
+  "source_summary_record": "slot_three_seed_epoch10_mean",
+  "training_pool": {
+    "unique_images": 70000,
+    "segments_inclusive": [[0, 999], [1640, 70639]]
+  },
+  "evaluation": {
+    "ids_inclusive": [1320, 1639],
+    "count": 320,
+    "split": "validation",
+    "independent_test_verified": false
+  },
+  "metrics": {
+    "fg_ari": 0.7749334666743514,
+    "foreground_iou": 0.20358913115224261,
+    "matched_object_iou": 0.20693697915214362
+  }
+}
