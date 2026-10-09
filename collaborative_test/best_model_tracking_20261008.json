@@ -172,7 +172,7 @@
   "latest_training_gradient_guard_pilot": {
     "experiment": "SW0120",
     "seed": 0,
-    "status": "training_running_verified_20261009",
+    "status": "training_complete_evaluation_running_verified_20261009",
     "matched_control": "SW0117 analytic_candidate",
     "source": "SW0097 positive_frozen seed0",
     "intervention": "Training Q backward guard at existing centered-trace epsilon 1e-8; forward Q, loss, masks and evaluation unchanged.",
@@ -187,6 +187,17 @@
     },
     "actual_update3_proof": "SW_0120_degenerate_trace_gradient_guard/update3_guard_proof_20261009.json",
     "preflight": "Actual four-batch GPU preflight passed with return code 0 before training.",
+    "training_result": {
+      "completed_updates": 256,
+      "core_sha256": "447b4b8c273fdb049af026ca841fbe7256d9079b10239e8e14758838575a29e5",
+      "encoder_sha256": "34f6319025c8366cb102eabb8df94abff5a54222122ebcbcd5e291d161fffdc2",
+      "gradient_norm_preclip": {
+        "candidate": {"median": 173.37024688720703, "p99": 1321.7225311279158, "max": 3694.909423828125},
+        "matched_control": {"median": 190.4080581665039, "p99": 180347181.59999985, "max": 446360736.0},
+        "all_256_finite_both_arms": true,
+        "interpretation": "Extreme preclip gradient spikes suppressed across completed training; segmentation improvement remains unproven until fixed evaluation finishes."
+      }
+    },
     "promotion_status": "No measured candidate scores yet; no seed fanout or replacement of the three-seed incumbent.",
     "required_fg_ari_gain": 0.01,
     "comparison_anchors": ["SW0097 seed0", "SW0117 analytic_candidate"],
