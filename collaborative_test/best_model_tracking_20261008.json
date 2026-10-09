@@ -929,7 +929,7 @@
   },
   "latest_frozen_qcc_attribution": {
     "experiment": "SW0127",
-    "status": "preflight_passed_fixed320_evaluation_live",
+    "status": "diagnostic_complete_restore_native_recipe",
     "seed": 1,
     "local_tests_passed": 8,
     "arms": [
@@ -939,14 +939,37 @@
       "sw0126_gate_only"
     ],
     "optimizer_updates": 0,
-    "scores": null,
+    "scores": {
+      "source97_native": {
+        "fg_ari": 0.742658188014352,
+        "foreground_iou": 0.59028319942393,
+        "matched_object_iou": 0.5849640428623182
+      },
+      "source97_untrained_history_adapter": {
+        "fg_ari": 0.5834117614845576,
+        "foreground_iou": 0.35989259954726627,
+        "matched_object_iou": 0.5145013899506492
+      },
+      "sw0126_history_event": {
+        "fg_ari": 0.5889480479733944,
+        "foreground_iou": 0.3454074962376109,
+        "matched_object_iou": 0.51787791024824
+      },
+      "sw0126_gate_only": {
+        "fg_ari": 0.5788418736470582,
+        "foreground_iou": 0.3590098327845762,
+        "matched_object_iou": 0.5109983753271138
+      }
+    },
     "incumbent_changed": false,
     "server_queue_launched": true,
-    "record": "SW_0127_frozen_qcc_attribution/server_launch_verified_20261009.json",
+    "record": "SW_0127_frozen_qcc_attribution/attribution_summary_20261009.json",
     "blocked_audit": "SW_0127_frozen_qcc_attribution/blocked_audit_20261009.json",
     "supervisor_pid": 2211758,
     "evaluation_pid": 2211916,
     "gpu": 0,
-    "server_tests_passed": 8
+    "server_tests_passed": 8,
+    "supervisor_terminal": true,
+    "evaluation_terminal": true
   }
 }

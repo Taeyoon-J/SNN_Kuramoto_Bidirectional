@@ -1,0 +1,68 @@
+{
+  "experiment": "SW0127",
+  "status": "complete",
+  "supervisor_pid": 2211758,
+  "no_automatic_retry": true,
+  "tasks": {
+    "sw0127_seed1_factory_preflight": {
+      "task": {
+        "task_id": "sw0127_seed1_factory_preflight",
+        "stage": "preflight",
+        "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0127_frozen_qcc_attribution/results_archive/preflight_seed1_20261009.json",
+        "depends_on": []
+      },
+      "status": "passed",
+      "child_pid": 2211783,
+      "gpu": 0,
+      "gpu_uuid": "GPU-a0a7d03d-adc1-37ca-4342-328878b3657c",
+      "memory_used_before_mib": 16,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-m",
+        "collaborative_test.SW_0127_frozen_qcc_attribution.run",
+        "--output",
+        "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0127_frozen_qcc_attribution/results_archive/preflight_seed1_20261009.json",
+        "--device",
+        "cuda:0",
+        "--preflight-only"
+      ],
+      "log": "/tmp/kevinswk_sw0127_qcc_attribution/sw0127_seed1_factory_preflight.log",
+      "triton_cache_dir": "/tmp/kevinswk_sw0127_triton_sw0127_seed1_factory_preflight",
+      "inherited_lease_fd": true,
+      "returncode": 0,
+      "artifact_valid": true,
+      "finished": 1791587186.7206683
+    },
+    "sw0127_seed1_frozen_qcc": {
+      "task": {
+        "task_id": "sw0127_seed1_frozen_qcc",
+        "stage": "evaluate",
+        "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0127_frozen_qcc_attribution/results_archive/qcc_attribution_seed1_20261009",
+        "depends_on": [
+          "sw0127_seed1_factory_preflight"
+        ]
+      },
+      "status": "passed",
+      "child_pid": 2211916,
+      "gpu": 0,
+      "gpu_uuid": "GPU-a0a7d03d-adc1-37ca-4342-328878b3657c",
+      "memory_used_before_mib": 16,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-m",
+        "collaborative_test.SW_0127_frozen_qcc_attribution.run",
+        "--output",
+        "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0127_frozen_qcc_attribution/results_archive/qcc_attribution_seed1_20261009",
+        "--device",
+        "cuda:0"
+      ],
+      "log": "/tmp/kevinswk_sw0127_qcc_attribution/sw0127_seed1_frozen_qcc.log",
+      "triton_cache_dir": "/tmp/kevinswk_sw0127_triton_sw0127_seed1_frozen_qcc",
+      "inherited_lease_fd": true,
+      "returncode": 0,
+      "artifact_valid": true,
+      "finished": 1791587474.6798575
+    }
+  },
+  "finished": 1791587474.6860964
+}

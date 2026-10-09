@@ -152,3 +152,5 @@ intermediate ablation to improve all three metrics; see `SELECTION_POLICY.md`.
 | SW0127 | local8tests passed; server deployment unconfirmed, no GPU job launched | Frozen original-QCC attribution: native97 control, untrained history adapter, both completed126 cores; seed1 same320 | Two-stage queue prepared. Fresh SSH read failed banner exchange; pending original transfer preserved for inspection. No new score or model promotion. |
 
 | SW0127 resumed | server8tests and actual four-arm preflight passed; fixed320 evaluation live | GPU0 PID2211916, supervisor2211758; no optimizer updates | Six new files deployed after audited CLI-only SW0118 difference; existing helper unchanged. No new metric result yet. |
+
+| SW0127 endpoint | complete, native coding restored for next branch | Same seed1 four frozen cores, original QCC fixed320; zero updates | Native97 .742658FG; untrained history .583412; trained history .588948; trained gate-core .578842. Source per-image scores exactly replayed. Both encoding/readout changes harmed fixed masks; no proof of all-gate usefulness or scaling. |

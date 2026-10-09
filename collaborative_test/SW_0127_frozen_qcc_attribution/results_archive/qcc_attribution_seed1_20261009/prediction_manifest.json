@@ -1,0 +1,137 @@
+{
+  "status": "predictions_complete",
+  "experiment": "SW0127",
+  "image_ids": [
+    1320,
+    1639
+  ],
+  "count": 320,
+  "arms": [
+    "source97_native",
+    "source97_untrained_history_adapter",
+    "sw0126_history_event",
+    "sw0126_gate_only"
+  ],
+  "prediction_sha256": "a450995d7d7395618b62f2eaef01e48b06db495abae82f87452276e7f220aa1e",
+  "ground_truth_used_for_prediction": false,
+  "prediction_contract": {
+    "steps": 1024,
+    "settle": 512,
+    "batch_size": 8,
+    "readout": "QCC actual emitted component spikes",
+    "threshold": 0.5,
+    "foreground_threshold": 0.15,
+    "min_group_size": 2,
+    "background": "largest_component",
+    "quantile": null,
+    "target_foreground": null,
+    "spatial_sigma": null,
+    "affinity_mode": "spike",
+    "grid_size": 16
+  },
+  "provenance": {
+    "source97_native": {
+      "arm": "source97_native",
+      "source_core_sha256": "76f379d5a7e4cd9d12fdf0b701f3dd9dbbf28b5eea270a9cee2d30d87b4dad98",
+      "adapter_attached": false,
+      "trained_core_sha256": null,
+      "training_manifest_sha256": null,
+      "training_history_sha256": null,
+      "image_ids": [
+        1320,
+        1639
+      ],
+      "count": 320,
+      "ground_truth_used_for_prediction": false,
+      "gamma_validation_sha256": "f20b019bd46adb378b2bfcecbb252d960da2592ef651dcd419753034c8b705f0",
+      "gamma_validation_manifest_sha256": "cc438a2563fee54dd2c711882ac7e47f2873491622b810d1e058b3d3bda37428"
+    },
+    "source97_untrained_history_adapter": {
+      "arm": "source97_untrained_history_adapter",
+      "source_core_sha256": "76f379d5a7e4cd9d12fdf0b701f3dd9dbbf28b5eea270a9cee2d30d87b4dad98",
+      "adapter_attached": true,
+      "trained_core_sha256": null,
+      "training_manifest_sha256": null,
+      "training_history_sha256": null,
+      "beta_initial": 0.95,
+      "image_ids": [
+        1320,
+        1639
+      ],
+      "count": 320,
+      "ground_truth_used_for_prediction": false,
+      "gamma_validation_sha256": "f20b019bd46adb378b2bfcecbb252d960da2592ef651dcd419753034c8b705f0",
+      "gamma_validation_manifest_sha256": "cc438a2563fee54dd2c711882ac7e47f2873491622b810d1e058b3d3bda37428"
+    },
+    "sw0126_history_event": {
+      "arm": "sw0126_history_event",
+      "source_core_sha256": "76f379d5a7e4cd9d12fdf0b701f3dd9dbbf28b5eea270a9cee2d30d87b4dad98",
+      "adapter_attached": true,
+      "trained_core_sha256": "b45445711f2515dca0645e4f1fb7421d9e7ef06f0e5fd179750a43d01520d871",
+      "training_manifest_sha256": "c2d43b78c6b8508e2551ab8a8c72789310b123d6bfa6f9fb7d6932f14bfc0d31",
+      "training_history_sha256": "6c40b6b75e36d6f97f2b8e28a58863333077b72cbed4f1788ed7800bfc5409e0",
+      "beta_initial": 0.95,
+      "training_arm": "history_event",
+      "training_implementation_fingerprint": {
+        "collaborative_test/SW_0126_history_event_binding/pilot_run.py": "532e0bcfa4cfd40814c51efbaa9530b971fa36814bfecd3791b3a9de273b9f4a",
+        "collaborative_test/SW_0126_history_event_binding/pilot_rollout.py": "06cd2fe86833f85ed2541521581c53babb605fac2f6ea32cbafc2e7a7f095f72",
+        "collaborative_test/SW_0126_history_event_binding/binder.py": "f8407195a624515ab58073d2f2c1620871ede1a82def3febbc0942f24c36feb0",
+        "collaborative_test/SW_0126_history_event_binding/history_event.py": "6721cb8a61b1b017c1f544d9cdb64aff906c61bedd3006401aecc6a665bbfcb9",
+        "collaborative_test/SW_0126_history_event_binding/training_protocol.json": "aeeaed77e62d86706ee1dc2ed58b4eedb0c579c9cefb30ddf5f59133664c055a",
+        "collaborative_test/SW_0126_history_event_binding/screen.py": "958c6fcaaf6ac35ead325862e0bfdb221a21f5fd565c4391697da14b9ab1ee53",
+        "collaborative_test/SW_0126_history_event_binding/screen_queue.py": "6a0e682aa923f3006ab980dfe961fe3f0df04c336f2eee11220be037d07c990d",
+        "snn_kuramoto_bidirectional/s2net_cls.py": "18313e5ee7358146703256e7e29d9846bfa60394feedba3237f2f7eac8791288",
+        "snn_kuramoto_bidirectional/membrane_layer.py": "680ad89277b60206f192123165d13eca916e5183dc71eaa443a8eeb5f4b8fac8",
+        "snn_kuramoto_bidirectional/dendric_layer.py": "69d960809ff1ad73a91a7067f87f605ae69ef612be9b936e4b486cc29511dd1a",
+        "snn_kuramoto_bidirectional/kuramoto_layer.py": "76e61785fb19228fe4ecf6bbdfd4dc72519b9d6bd34d5f4fd9165e29c76d263e",
+        "snn_kuramoto_bidirectional/sinusoidal_gating.py": "e323a3b6472f51def23d63628fe25cc83088822ae73b5e0fcd1789884739f6c4",
+        "snn_kuramoto_bidirectional/evaluation.py": "4a15980c9aa0248dbe0e837ad1b0b430ce26a7ab367c004d290a1272bb1025d7",
+        "collaborative_test/SW_0110_xy_graph_route/run.py": "b7d4b90cbf74c8085d2a5cfc8b78a5772f77bc086240939a332f429c1ca344fd",
+        "collaborative_test/SW_0117_joint_analytic_rgb/run.py": "ef65fadde826b2cc042182e15e3e4d64594a0b4c9677987aa02b82d3ee62cc42"
+      },
+      "image_ids": [
+        1320,
+        1639
+      ],
+      "count": 320,
+      "ground_truth_used_for_prediction": false,
+      "gamma_validation_sha256": "f20b019bd46adb378b2bfcecbb252d960da2592ef651dcd419753034c8b705f0",
+      "gamma_validation_manifest_sha256": "cc438a2563fee54dd2c711882ac7e47f2873491622b810d1e058b3d3bda37428"
+    },
+    "sw0126_gate_only": {
+      "arm": "sw0126_gate_only",
+      "source_core_sha256": "76f379d5a7e4cd9d12fdf0b701f3dd9dbbf28b5eea270a9cee2d30d87b4dad98",
+      "adapter_attached": true,
+      "trained_core_sha256": "5dd99b0cb99fda9c17bdbebfb946f0e47031ba525cfcaec94f02400b6a18a4f1",
+      "training_manifest_sha256": "59f9b7642e2605b73975027f788b073f70b7ee265c22faca4636f32726bcc847",
+      "training_history_sha256": "49ea43992798317f3a785e7e1528afd5fa19f4ca9c9816f80444e71c0abd3a86",
+      "beta_initial": 0.95,
+      "training_arm": "gate_only",
+      "training_implementation_fingerprint": {
+        "collaborative_test/SW_0126_history_event_binding/pilot_run.py": "532e0bcfa4cfd40814c51efbaa9530b971fa36814bfecd3791b3a9de273b9f4a",
+        "collaborative_test/SW_0126_history_event_binding/pilot_rollout.py": "06cd2fe86833f85ed2541521581c53babb605fac2f6ea32cbafc2e7a7f095f72",
+        "collaborative_test/SW_0126_history_event_binding/binder.py": "f8407195a624515ab58073d2f2c1620871ede1a82def3febbc0942f24c36feb0",
+        "collaborative_test/SW_0126_history_event_binding/history_event.py": "6721cb8a61b1b017c1f544d9cdb64aff906c61bedd3006401aecc6a665bbfcb9",
+        "collaborative_test/SW_0126_history_event_binding/training_protocol.json": "aeeaed77e62d86706ee1dc2ed58b4eedb0c579c9cefb30ddf5f59133664c055a",
+        "collaborative_test/SW_0126_history_event_binding/screen.py": "958c6fcaaf6ac35ead325862e0bfdb221a21f5fd565c4391697da14b9ab1ee53",
+        "collaborative_test/SW_0126_history_event_binding/screen_queue.py": "6a0e682aa923f3006ab980dfe961fe3f0df04c336f2eee11220be037d07c990d",
+        "snn_kuramoto_bidirectional/s2net_cls.py": "18313e5ee7358146703256e7e29d9846bfa60394feedba3237f2f7eac8791288",
+        "snn_kuramoto_bidirectional/membrane_layer.py": "680ad89277b60206f192123165d13eca916e5183dc71eaa443a8eeb5f4b8fac8",
+        "snn_kuramoto_bidirectional/dendric_layer.py": "69d960809ff1ad73a91a7067f87f605ae69ef612be9b936e4b486cc29511dd1a",
+        "snn_kuramoto_bidirectional/kuramoto_layer.py": "76e61785fb19228fe4ecf6bbdfd4dc72519b9d6bd34d5f4fd9165e29c76d263e",
+        "snn_kuramoto_bidirectional/sinusoidal_gating.py": "e323a3b6472f51def23d63628fe25cc83088822ae73b5e0fcd1789884739f6c4",
+        "snn_kuramoto_bidirectional/evaluation.py": "4a15980c9aa0248dbe0e837ad1b0b430ce26a7ab367c004d290a1272bb1025d7",
+        "collaborative_test/SW_0110_xy_graph_route/run.py": "b7d4b90cbf74c8085d2a5cfc8b78a5772f77bc086240939a332f429c1ca344fd",
+        "collaborative_test/SW_0117_joint_analytic_rgb/run.py": "ef65fadde826b2cc042182e15e3e4d64594a0b4c9677987aa02b82d3ee62cc42"
+      },
+      "image_ids": [
+        1320,
+        1639
+      ],
+      "count": 320,
+      "ground_truth_used_for_prediction": false,
+      "gamma_validation_sha256": "f20b019bd46adb378b2bfcecbb252d960da2592ef651dcd419753034c8b705f0",
+      "gamma_validation_manifest_sha256": "cc438a2563fee54dd2c711882ac7e47f2873491622b810d1e058b3d3bda37428"
+    }
+  }
+}

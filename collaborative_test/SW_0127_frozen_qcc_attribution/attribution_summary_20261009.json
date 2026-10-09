@@ -1,0 +1,183 @@
+{
+  "experiment": "SW0127",
+  "status": "diagnostic_complete_restore_native_recipe",
+  "seed": 1,
+  "count": 320,
+  "ids": [
+    1320,
+    1639
+  ],
+  "evaluation_sha256": "a6f0d32296583fd524b2689aee807678e40edb072d92d2ba516f289c200166da",
+  "binder_reference_sha256": "f84a2caa1adc498f95c6ef6468004bd961641c7b972a6d806ef8a67d6a7faf75",
+  "source97_per_image_reproduction": {
+    "passed": true,
+    "metrics": {
+      "fg_ari": {
+        "max_abs_diff": 0.0,
+        "passed": true
+      },
+      "foreground_iou": {
+        "max_abs_diff": 0.0,
+        "passed": true
+      },
+      "matched_object_iou": {
+        "max_abs_diff": 0.0,
+        "passed": true
+      }
+    }
+  },
+  "qcc_means": {
+    "source97_native": {
+      "fg_ari": 0.742658188014352,
+      "foreground_iou": 0.59028319942393,
+      "matched_object_iou": 0.5849640428623182
+    },
+    "source97_untrained_history_adapter": {
+      "fg_ari": 0.5834117614845576,
+      "foreground_iou": 0.35989259954726627,
+      "matched_object_iou": 0.5145013899506492
+    },
+    "sw0126_history_event": {
+      "fg_ari": 0.5889480479733944,
+      "foreground_iou": 0.3454074962376109,
+      "matched_object_iou": 0.51787791024824
+    },
+    "sw0126_gate_only": {
+      "fg_ari": 0.5788418736470582,
+      "foreground_iou": 0.3590098327845762,
+      "matched_object_iou": 0.5109983753271138
+    }
+  },
+  "comparisons": {
+    "untrained_adapter_minus_native": {
+      "fg_ari": {
+        "mean_delta": -0.15924642652979443,
+        "paired_image_ci95": [
+          -0.1778554624327313,
+          -0.14096985415513896
+        ]
+      },
+      "foreground_iou": {
+        "mean_delta": -0.23039059987666377,
+        "paired_image_ci95": [
+          -0.252413175513839,
+          -0.20840467077827804
+        ]
+      },
+      "matched_object_iou": {
+        "mean_delta": -0.07046265291166899,
+        "paired_image_ci95": [
+          -0.08481952852571327,
+          -0.056563118579759014
+        ]
+      }
+    },
+    "trained_actual_qcc_minus_untrained_adapter": {
+      "fg_ari": {
+        "mean_delta": 0.005536286488836828,
+        "paired_image_ci95": [
+          -0.004098884341487821,
+          0.015364848792156204
+        ]
+      },
+      "foreground_iou": {
+        "mean_delta": -0.01448510330965537,
+        "paired_image_ci95": [
+          -0.02596294538681288,
+          -0.0032265930873915643
+        ]
+      },
+      "matched_object_iou": {
+        "mean_delta": 0.0033765202975908266,
+        "paired_image_ci95": [
+          -0.003797013489433322,
+          0.01092056384118754
+        ]
+      }
+    },
+    "trained_gate_qcc_minus_untrained_adapter": {
+      "fg_ari": {
+        "mean_delta": -0.004569887837499448,
+        "paired_image_ci95": [
+          -0.010470102400674336,
+          0.000992718117299014
+        ]
+      },
+      "foreground_iou": {
+        "mean_delta": -0.0008827667626900383,
+        "paired_image_ci95": [
+          -0.008915984879108104,
+          0.006871771936063788
+        ]
+      },
+      "matched_object_iou": {
+        "mean_delta": -0.0035030146235354395,
+        "paired_image_ci95": [
+          -0.00800801243699147,
+          0.0008921953841404722
+        ]
+      }
+    },
+    "actual_binder_minus_same_core_qcc": {
+      "fg_ari": {
+        "mean_delta": -0.2229859006859884,
+        "paired_image_ci95": [
+          -0.2493416896605817,
+          -0.19652338111130258
+        ]
+      },
+      "foreground_iou": {
+        "mean_delta": -0.0956385483979691,
+        "paired_image_ci95": [
+          -0.1080551499253411,
+          -0.08354640968052553
+        ]
+      },
+      "matched_object_iou": {
+        "mean_delta": -0.3236267033216974,
+        "paired_image_ci95": [
+          -0.34088909986250293,
+          -0.3066974849354905
+        ]
+      }
+    },
+    "gate_binder_minus_same_core_qcc": {
+      "fg_ari": {
+        "mean_delta": -0.14266208494050897,
+        "paired_image_ci95": [
+          -0.17362384979647003,
+          -0.1125439788242708
+        ]
+      },
+      "foreground_iou": {
+        "mean_delta": 0.034618192641831705,
+        "paired_image_ci95": [
+          0.01751011946377622,
+          0.051556777083665434
+        ]
+      },
+      "matched_object_iou": {
+        "mean_delta": -0.2697533145701886,
+        "paired_image_ci95": [
+          -0.2896661195509303,
+          -0.250068240966033
+        ]
+      }
+    }
+  },
+  "bootstrap": {
+    "draws": 10000,
+    "seed": 127,
+    "unit": "paired validation image conditional on one training seed; common resampled indices for all comparisons"
+  },
+  "optimizer_updates": 0,
+  "incumbent_changed": false,
+  "gating_contributions_proven": false,
+  "data_scaling_proven": false,
+  "decision": "Close history-event + fresh RGB binder recipe; restore original source97 coding and QCC. Reject-only all3 source-spike relation QA before considering joint encoder/graph/core relation training.",
+  "interpretation_limits": [
+    "Fixed native readout already worsens with the untrained history adapter. This does not isolate DC removal from other encoding changes or prove that every possible classifier must fail.",
+    "Learned binder worsens scores relative to QCC on the same trained core. It does not alone distinguish head optimization from its objective/architecture.",
+    "Do not infer all-gate contribution, general training-seed causality, or improved scaling from frozen seed1 attribution."
+  ]
+}
