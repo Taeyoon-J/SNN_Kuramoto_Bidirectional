@@ -1,0 +1,40 @@
+{
+  "experiment": "SW0126",
+  "status": "local_deployment_and_conditional_pipeline_ready_remote_blocked",
+  "research_cpu_tests_passed": 27,
+  "private_deployment_pipeline_tests_passed": 16,
+  "compiled_private_python_files": 6,
+  "bundle_files_sha_verified": 16,
+  "private_helpers": {
+    "deploy.py": "5926bf35bcbd88247ecfcf611d9cd11cca965604bbd70a7d24743e4fa6d84a8b",
+    "inspection.py": "f925dbf635231f435d92d898c9a8735ff5067ef30dc61830d5ad8eda42d27bdb",
+    "launch.py": "bbaac706ce09a2a9b72127acc79e8de785536100fde9d3e957b735f20e933458",
+    "pipeline_supervisor.py": "1f788646a2aa16aaff86973d95a7917019c0e361c3334a02b14972c14df6e727",
+    "test_deploy.py": "0a53af192def497e15478b7884a2fb04334ab9e3a87489a03db26904043d4fd2",
+    "test_pipeline.py": "db374d97d80bfbfffe7e51e92fe1a234679ba2d92f9a9cd269242ff90256e9ec"
+  },
+  "execution_order": [
+    "read-only remote file/state/process inspection",
+    "preserving known-version deployment with final SHA checks",
+    "server CPU27 and all3 source/cache contracts",
+    "three-seed TRAIN feasibility screens",
+    "both disposable paired preflights",
+    "both seed1 trainings",
+    "paired fixed320 evaluation"
+  ],
+  "automatic_retry": false,
+  "gpu_execution_started": false,
+  "remote_deployment_confirmed": false,
+  "publication": "Local record only; no GitHub publication claimed.",
+  "external_blocker": {
+    "kind": "SSH banner exchange timeout",
+    "consecutive_failed_checks": [
+      46662,
+      10997,
+      31869,
+      74103
+    ],
+    "next_required_external_change": "Restore persistent WSL ssh frontier connection.",
+    "research_state": "All local preparation complete; real data and checkpoint runtime checks require Frontier access."
+  }
+}
