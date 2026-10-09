@@ -1,0 +1,26 @@
+{
+  "experiment": "SW0112",
+  "status": "evaluation_pending_runtime_correction_review",
+  "scientific_result": null,
+  "observations": {
+    "control_and_candidate_evaluations": "Both existing evaluation processes were independently confirmed runnable after SSH reconnection; no observation timeout was treated as process failure.",
+    "control_native_stack": "Read-only debugger observed set_merge, set_copy and set_or with more than 1100 native/Python frames; debugger exited and detached.",
+    "python_stack_available": false
+  },
+  "source_evidence": {
+    "factory": "SW0112._eval_core calls SW0110.make_core, which uses SW0094.hparams without an explicit spike_classify_method.",
+    "default": "S2NetHyperparameters.spike_classify_method defaults to spike_rhythm.",
+    "internal_readout": "S2NetCore.forward unconditionally calls _detect_object_groups; spike_rhythm can enumerate maximal cliques through recursive Bron-Kerbosch set operations.",
+    "actual_scored_readout": "SW0040.evaluate discards the internal groups and computes the registered spike_synchrony_components masks separately.",
+    "historical_factory": "evaluate_fixed_split._core explicitly uses spatial_components for the internal readout."
+  },
+  "inference": "The unused internal clique enumeration is the leading explanation for the evaluation CPU bottleneck; source and native-stack evidence support this, but a Python traceback was unavailable.",
+  "proposed_correction": "Use the historical spatial_components internal readout in the experiment evaluation factory, retaining the external scored readout and all dynamics, weights and evaluation parameters.",
+  "required_before_replacement": [
+    "Verify equality of spikes, core output, phase histories and final external connected-component masks in controlled control/candidate factory tests.",
+    "Review the exact source delta and provenance handling before remote deployment.",
+    "Preserve original evaluation attempts and trained checkpoints; never restart training to fix evaluation packaging."
+  ],
+  "not_applied_to_server": true,
+  "ground_truth_used_for_prediction": false
+}

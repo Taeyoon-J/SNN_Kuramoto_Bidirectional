@@ -1,0 +1,43 @@
+{
+  "experiment": "SW0115",
+  "status": "design_reviewed_not_implemented_not_launched",
+  "hypothesis": "Content reconstruction through the actual spike-derived partition supplies object-content credit without an independently trained decoder that can ignore assignments.",
+  "source": "SW0097 positive_frozen whole-core source, seed-matched",
+  "pilot": {"seeds": [0], "updates": 256, "batch_size": 16, "training_steps": 64, "settle": 32, "learning_rate": 0.00003, "gradient_clip": 1.0},
+  "frozen": ["encoder", "graph"],
+  "existing_loss": "Unchanged phase-primary plus 5 times actual positive-component spike-product priors.",
+  "hard_partition": {
+    "classifier": "Exact production spike_synchrony_components followed by spatial_components_to_patch_labels",
+    "threshold": 0.5,
+    "min_group_size": 2,
+    "background": "largest_component",
+    "target_foreground": null,
+    "H": "one_hot production labels, with columns 0 through max label; removed largest component and every omitted patch share background column 0",
+    "forbidden": ["new singleton prototypes", "RGB reassignment", "group cap", "GT object counts"]
+  },
+  "surrogate": {
+    "Q": "Live production actual-component positive-Pearson product, training settle32",
+    "Q0": "Q * (1 - identity)",
+    "A": "(Q0 @ H) / clamp(H.sum(0)[None,:] - H, min=1)",
+    "P": "softmax(A / 0.1, dim=group)",
+    "W": "H + (P - P.detach())",
+    "X": "Detached native RGB 8x8 patch means, same literal training image IDs",
+    "mu": "(W.T @ X) / clamp(W.sum(0)[:,None], min=1e-8); numerator and denominator remain live",
+    "R_image": "mean((W @ mu - X)^2) / clamp(detached mean spatial RGB variance, min=1e-6)",
+    "R_batch": "Ordinary mean across all16 images, including one-group and blank images",
+    "interpretation": "Exact hard classifier forward with approximate Q-derived backward credit; not a derivative of thresholding or BFS."
+  },
+  "calibration": "Once, on source seed0 first4 registered TRAIN batches: lambda=0.25*median(old eligible-core gradient norm / RGB eligible-core gradient norm). Same lambda for every seed; no GT calibration.",
+  "preflight_required": [
+    "Exact W.detach()==H and exact production-label equality",
+    "Finite nonzero aggregate RGB gradient to Q and eligible core on each first4 TRAIN batch",
+    "Fixed count-preserving H row permutation, followed by prototype repooling, has positive mean scrambled-minus-real reconstruction loss",
+    "Frozen encoder/graph identity and source/cache/order fingerprints",
+    "Stop on failure; no post-failure guard, coefficient or warmup tuning"
+  ],
+  "diagnostics": ["one-group image count", "active group count", "prototype RGB spread", "P entropy", "RGB gradient to Q", "eligible-core old/RGB gradient norms and cosine"],
+  "risks": ["One-group images cannot create a new object through this loss", "Identical RGB prototypes or homogeneous groups can yield zero credit", "Mixed-content background can encourage nuisance fragmentation", "Same-colored separate objects can merge"],
+  "evaluation": "Unchanged primary320-image fixed-patch contract; paired seed0 pilot first, then seeds1/2 and70k only if justified. Final objective remains three-seed mean strict improvement on all three comparable Slot metrics.",
+  "ground_truth_used_for_training": false,
+  "ground_truth_used_for_prediction": false
+}
