@@ -1,6 +1,11 @@
 import unittest
+import json
+from pathlib import Path
+from unittest import mock
 
+import coordinator
 from coordinator import task_plan
+from collaborative_test.SW_0110_xy_graph_route import run as common
 
 
 class CoordinatorTests(unittest.TestCase):
@@ -32,6 +37,34 @@ class CoordinatorTests(unittest.TestCase):
             self.assertIn("sw0114_cache_val", deps)
         summary = by_id["sw0114_summary"]
         self.assertEqual(set(summary["depends_on"]), {f"sw0114_evaluate_s{s}" for s in (0, 1, 2)})
+
+    def test_train_cache_accepts_physical_hdf5_shape_but_rejects_wrong_geometry(self):
+        task = next(t for t in task_plan() if t["task_id"] == "sw0114_cache_train_s0")
+        source = Path("/frozen/source.pt")
+        source_manifest = Path("/frozen/source_manifest.json")
+        ids = list(range(4096))
+        meta = {
+            "gamma32_sha256": "gamma-sha", "seed": 0, "count": 4096, "ids": ids,
+            "source_core_sha256": "source-sha", "source_manifest_sha256": "manifest-sha",
+            "encoder_sha256": common.EXPECTED_ENCODER_SHA256,
+            "preprocessing_sha256": common.EXPECTED_PREPROCESSING_SHA256,
+            "selected_rgb_sha256": "rgb-sha",
+            "dataset_identity": {"image_shape": [100000, 128, 128, 3]},
+            "registered_gamma16_max_abs_diff": 1e-6,
+        }
+
+        def fake_sha(path):
+            return {Path(task["output"]): "gamma-sha", source: "source-sha",
+                    source_manifest: "manifest-sha"}[Path(path)]
+
+        with mock.patch.object(common, "source_paths",
+                               return_value=(source, source_manifest, {"training_ids": ids})), \
+             mock.patch.object(coordinator.experiment, "sha", side_effect=fake_sha), \
+             mock.patch.object(Path, "is_file", return_value=True), \
+             mock.patch.object(Path, "read_text", side_effect=lambda *args, **kwargs: json.dumps(meta)):
+            self.assertTrue(coordinator.valid_result(task))
+            meta["dataset_identity"]["image_shape"] = [70640, 128, 128, 3]
+            self.assertFalse(coordinator.valid_result(task))
 
 
 if __name__ == "__main__":

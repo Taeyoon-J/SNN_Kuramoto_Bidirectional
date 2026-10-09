@@ -174,7 +174,7 @@ def preflight(seed, grid_size, *, device="cuda"):
         from gamma_cache import dataset_identity
         if cache_info.get("gamma32_sha256") != sha(p) or cache_info.get("ids") != ids.tolist():
             raise AssertionError("candidate gamma32 cache provenance mismatch")
-        if (tuple(cache_info.get("dataset_identity", {}).get("image_shape", [])) != (70640, 128, 128, 3)
+        if (tuple(cache_info.get("dataset_identity", {}).get("image_shape", [])) != (100000, 128, 128, 3)
                 or cache_info.get("registered_gamma16_max_abs_diff", float("inf")) > 2e-5
                 or cache_info.get("dataset_identity") != dataset_identity()):
             raise AssertionError("candidate gamma32 source-data contract failed")

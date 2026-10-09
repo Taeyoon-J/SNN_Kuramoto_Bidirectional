@@ -9,6 +9,9 @@ import torch
 from torch import nn
 
 from gate_residual import SharedGateResidual, actual_gate_binding
+from collaborative_test.SW_0112_learned_gate_residual import run as runner
+from snn_kuramoto_bidirectional.evaluation import spatial_components_to_patch_labels
+from snn_kuramoto_bidirectional.spike_classifier import spike_synchrony_components
 
 
 def sinusoidal_gating(theta_hist, t, phase_delay_steps, gate_mode="sigmoid"):
@@ -27,6 +30,65 @@ class FakeCore(nn.Module):
 
 
 class GateResidualTests(unittest.TestCase):
+    def _reference_core(self, state, gate):
+        core = runner.common.make_core("cpu", steps=4)
+        if gate:
+            runner.attach_gate_residual(core)
+        core.load_state_dict(state, strict=True)
+        # This is the terminal hook used by short/registered training and
+        # isolates the dynamics from unused internal object grouping.
+        core._detect_object_groups = lambda out, spikes: [[] for _ in range(spikes.size(0))]
+        core.eval()
+        if gate:
+            original_forward = core.forward
+            def bound_forward(*args, **kwargs):
+                with actual_gate_binding(core):
+                    return original_forward(*args, **kwargs)
+            core.forward = bound_forward
+        return core
+
+    @staticmethod
+    def _fixed_labels(spikes, components):
+        groups = spike_synchrony_components(
+            spikes, synchrony_threshold=0.5, min_group_size=2,
+            settle=2, components=components, background="largest_component")
+        return spatial_components_to_patch_labels(groups, 16)
+
+    def test_eval_terminal_group_skip_preserves_control_and_candidate_cc(self):
+        old_threads = torch.get_num_threads()
+        torch.set_num_threads(min(old_threads, 4))
+        try:
+            torch.manual_seed(190112)
+            cases = []
+            for gate in (False, True):
+                source = runner.common.make_core("cpu", steps=4)
+                if gate:
+                    runner.attach_gate_residual(source)
+                    with torch.no_grad():
+                        source.gate_residual.w.copy_(torch.linspace(-0.2, 0.2, 8))
+                        source.gate_residual.b.fill_(0.1)
+                state = {key: value.detach().clone() for key, value in source.state_dict().items()}
+                reference = self._reference_core(state, gate)
+                with mock.patch.object(runner.torch, "load", return_value=state):
+                    evaluated = runner._eval_core("cpu", "synthetic-checkpoint.pt", 4, gate)
+                gamma = torch.randn(1, 8, 256)
+                with torch.no_grad():
+                    ref_out = reference(gamma, return_core_out=True, return_theta=True)
+                    eval_out = evaluated(gamma, return_core_out=True, return_theta=True)
+                for a, b in zip(ref_out[1:], eval_out[1:]):
+                    self.assertTrue(torch.equal(a, b))
+                self.assertTrue(torch.equal(reference.last_component_spikes,
+                                            evaluated.last_component_spikes))
+                self.assertTrue(torch.equal(reference.last_component_out,
+                                            evaluated.last_component_out))
+                ref_labels = self._fixed_labels(ref_out[1], reference.last_component_spikes)
+                eval_labels = self._fixed_labels(eval_out[1], evaluated.last_component_spikes)
+                self.assertTrue(torch.equal(ref_labels, eval_labels))
+                cases.append(True)
+            self.assertEqual(cases, [True, True])
+        finally:
+            torch.set_num_threads(old_threads)
+
     def test_cli_success_json_flush_is_a_print_argument(self):
         from collaborative_test.SW_0112_learned_gate_residual import run as runner
         old_argv = runner.sys.argv

@@ -98,7 +98,7 @@ def valid_result(task):
                     and meta.get("encoder_sha256") == common.EXPECTED_ENCODER_SHA256
                     and meta.get("preprocessing_sha256") == common.EXPECTED_PREPROCESSING_SHA256
                     and bool(meta.get("selected_rgb_sha256"))
-                    and meta.get("dataset_identity", {}).get("image_shape") == [70640, 128, 128, 3]
+                    and meta.get("dataset_identity", {}).get("image_shape") == [100000, 128, 128, 3]
                     and meta.get("registered_gamma16_max_abs_diff", 1.) <= 2e-5)
         if stage == "cache_validation":
             p = Path(task["output"])

@@ -1,0 +1,44 @@
+{
+  "experiment": "SW0114",
+  "scientific_evaluation": null,
+  "training_launched": false,
+  "native32_cache": {
+    "count": 4096,
+    "tensor_shape": [4096, 8, 1024],
+    "registered_gamma16_max_abs_diff": 1.0728836059570312e-6,
+    "cache_bytes": 134219389,
+    "artifacts_preserved": true,
+    "observer_exit_code": 1,
+    "observer_traceback_available": false,
+    "underlying_process_exit_independently_proven": false,
+    "adoption": "Pending corrected physical-shape validator; do not regenerate or rewrite cache metadata."
+  },
+  "grid16_preflight": {
+    "numeric_exit_code": 0,
+    "status": "passed",
+    "source_core_sha256": "36f2481dd1fa51fa29bd4dc34275a876b71d8b76fbee13ac47a0a1bfe6766fbf",
+    "runner_sha256": "7488bbfbd263d31d1da271e417c163c6b67147142ff46351642b4d517d76d605",
+    "microbatch_loss_abs_diff": 1.3113021850585938e-6,
+    "gradient_relative_norm_error": 9.078781143807341e-6,
+    "one_adam_update_max_abs_diff": 2.384185791015625e-7,
+    "full_horizon_steps": 1024,
+    "full_horizon_settle": 512,
+    "ground_truth_used": false
+  },
+  "grid32_preflight": {
+    "numeric_exit_code": 1,
+    "status": "technical_guard_failure_before_model_inference",
+    "message": "candidate gamma32 source-data contract failed",
+    "cause": "Physical HDF5 image shape is [100000,128,128,3]; two guards incorrectly required [70640,128,128,3]. The allowed selected-image ID upper bound70640 is separate from physical dataset length."
+  },
+  "reviewed_local_fix": {
+    "production_changes": "Only the two physical-shape literals in run.py and coordinator.py change to100000.",
+    "selected_image_ids_changed": false,
+    "allowed_id_bound": 70640,
+    "evaluation_ids": [1320,1639],
+    "cache_rebuild_required": false,
+    "independent_review": "PASS",
+    "server_deployed": false,
+    "next_required": "Preserve original grid16 preflight with its old runner SHA, then run fresh grid16 and grid32 preflights under the corrected runner before any training."
+  }
+}

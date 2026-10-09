@@ -289,6 +289,11 @@ def _eval_core(device, checkpoint, steps, gate):
     if gate:
         attach_gate_residual(core)
     core.load_state_dict(torch.load(checkpoint, map_location=device, weights_only=True), strict=True)
+    # The fixed evaluator discards S2Net's internal groups and builds its
+    # registered CC prediction directly from returned spikes.  Avoid the
+    # default spike_rhythm maximal-clique grouping, which is unused here and
+    # can dominate runtime without affecting any membrane or spike values.
+    core.spike_classify_method = "spatial_components"
     core.eval()
     if hasattr(core, "gate_residual"):
         original_forward = core.forward
@@ -333,6 +338,8 @@ def evaluate(seed, arm, checkpoint, output, device="cuda"):
     write(Path(output).with_name("evaluation_manifest.json"), {
         "status": "complete", "experiment": "SW0112", "seed": seed, "arm": arm,
         "checkpoint": str(Path(checkpoint).resolve()), "checkpoint_sha256": sha(checkpoint),
+        "evaluation_runner_sha256": sha(RUNNER),
+        "internal_grouping": "spatial_components; unused for external spike_synchrony_components scores",
         "evaluation_sha256": sha(output), "gamma_sha256": sha(common.GAMMA_VAL),
         "gamma_manifest_sha256": sha(common.GAMMA_VAL_MANIFEST), "ids": [1320, 1639],
         "images": 320, "ground_truth_used_for_prediction": False,

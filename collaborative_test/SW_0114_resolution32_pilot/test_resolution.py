@@ -147,6 +147,9 @@ class ResolutionTests(unittest.TestCase):
         self.assertEqual(cache_rows(ids).tolist(), [999, 1000, 69999])
         with self.assertRaisesRegex(ValueError, "reserved validation gap"):
             hdf5_indices([1000])
+        for forbidden in (70640, 90640):
+            with self.assertRaisesRegex(ValueError, "outside the available non-reserved range"):
+                hdf5_indices([forbidden])
         self.assertEqual(hdf5_indices([1320, 1639], allow_validation=True).tolist(), [1320, 1639])
 
     def test_immutable_sw0097_batch8_reference_artifacts(self):
