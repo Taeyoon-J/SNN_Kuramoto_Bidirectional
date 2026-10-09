@@ -1,0 +1,50 @@
+{
+  "experiment": "SW0125",
+  "reason": "Test training/evaluation temporal-window mismatch without replacing spike classifier or loss family",
+  "source": "SW0097 same-seed complete cores",
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "total_rollout_steps": 1024,
+  "observed_band": [
+    512,
+    1024
+  ],
+  "no_grad_prefix_steps": 960,
+  "live_tail_steps": 64,
+  "loss": "existing phase-primary + 5*actual positive-product Q criterion + fixed 7.865416617457706*analytic actual-H RGB reconstruction",
+  "matched_short": "immutable SW0117 seed0 and SW0122 seeds1,2 analytic_candidate where complete source/order/optimizer bindings validate",
+  "new_classifier": false,
+  "full1024_bptt": false,
+  "training_started": false,
+  "major_design_review": "sol61_gate_review",
+  "implementation_operator": "luna_sw0098_operations",
+  "data_scaling_proven": false,
+  "all_gating_usefulness_proven": false,
+  "stage": "prospective_read_only_full_horizon_foundation_probe",
+  "local_real_core_cpu_tests_passed": 3,
+  "deployment_manifest": {
+    "experiment": "SW0125",
+    "destination": "/Data0/kevinswk/patch_v2_sw",
+    "purpose": "frozen source actual-spike readout evaluation",
+    "files": [
+      {
+        "relative_path": "collaborative_test/SW_0125_late_rollout_credit/late_rollout.py",
+        "sha256": "c54eefc7e8dc567dd9a0c738c2d51b0118dba3427928d62582019a02d3f866c5",
+        "bytes": 6316
+      },
+      {
+        "relative_path": "collaborative_test/SW_0125_late_rollout_credit/test_late_rollout.py",
+        "sha256": "b7eaa8c8d2977560045bcaa83a26ba99b59701deb2b2066c884a164500a06387",
+        "bytes": 3639
+      },
+      {
+        "relative_path": "collaborative_test/SW_0125_late_rollout_credit/verify_foundation.py",
+        "sha256": "023081b148e10418ccfa2beee34cb63e02920848a6256c7b6c4389ec7952dd22",
+        "bytes": 12539
+      }
+    ]
+  }
+}
