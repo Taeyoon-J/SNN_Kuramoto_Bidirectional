@@ -1,0 +1,85 @@
+{
+  "experiment": "SW0109",
+  "status": "checkpoint_diagnostic_complete",
+  "seed": 0,
+  "training_completion_certified": false,
+  "updates_per_condition": 4375,
+  "additional_exposures_per_condition": 70000,
+  "graph_encoder": "historical frozen recipe; not SW0097 or SW0123",
+  "ids": [
+    1320,
+    1639
+  ],
+  "images": 320,
+  "metrics_by_unique_count": {
+    "2500": {
+      "fg_ari": 0.8220798456550537,
+      "foreground_iou": 0.7348618817023296,
+      "matched_object_iou": 0.6500852760447756
+    },
+    "10000": {
+      "fg_ari": 0.8198321703003675,
+      "foreground_iou": 0.7302082516930701,
+      "matched_object_iou": 0.648822730254155
+    },
+    "70000": {
+      "fg_ari": 0.8186794180217282,
+      "foreground_iou": 0.730914913727213,
+      "matched_object_iou": 0.6540750598423053
+    }
+  },
+  "paired_comparisons": {
+    "10000_minus_2500": {
+      "fg_ari": {
+        "mean_delta": -0.0022476753546862233,
+        "paired_image_ci95": [
+          -0.009123190437848004,
+          0.004554101996429605
+        ]
+      },
+      "foreground_iou": {
+        "mean_delta": -0.0046536300092594575,
+        "paired_image_ci95": [
+          -0.011392020320516566,
+          0.0017012852729394016
+        ]
+      },
+      "matched_object_iou": {
+        "mean_delta": -0.001262545790620627,
+        "paired_image_ci95": [
+          -0.00988317294159635,
+          0.0074420302739843
+        ]
+      }
+    },
+    "70000_minus_2500": {
+      "fg_ari": {
+        "mean_delta": -0.0034004276333254708,
+        "paired_image_ci95": [
+          -0.010855324715237839,
+          0.004175527957781
+        ]
+      },
+      "foreground_iou": {
+        "mean_delta": -0.003946967975116566,
+        "paired_image_ci95": [
+          -0.01080229308835405,
+          0.0024848277306989356
+        ]
+      },
+      "matched_object_iou": {
+        "mean_delta": 0.003989783797529731,
+        "paired_image_ci95": [
+          -0.005416454815884785,
+          0.013719971277618074
+        ]
+      }
+    }
+  },
+  "bootstrap": {
+    "draws": 10000,
+    "seed": 109,
+    "unit": "paired image within one seed; not model-seed uncertainty"
+  },
+  "interpretation": "FG means decrease slightly with unique count; no scaling improvement demonstrated for this older recipe. Matched object IoU at70k rises slightly. Full3seed and new-model scaling untested. Historical rc1 metadata failures preserved."
+}

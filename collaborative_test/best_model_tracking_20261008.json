@@ -540,7 +540,7 @@
   },
   "latest_scaling_checkpoint_diagnostic": {
     "experiment": "SW0109",
-    "status": "three_seed0_checkpoint_evaluations_running",
+    "status": "three_seed0_checkpoint_evaluations_complete",
     "promotion": false,
     "training_completion_certified": false,
     "sizes": [
@@ -559,9 +559,75 @@
       1,
       3
     ],
-    "scores": null,
+    "scores": {
+      "2500": {
+        "fg_ari": 0.8220798456550537,
+        "foreground_iou": 0.7348618817023296,
+        "matched_object_iou": 0.6500852760447756
+      },
+      "10000": {
+        "fg_ari": 0.8198321703003675,
+        "foreground_iou": 0.7302082516930701,
+        "matched_object_iou": 0.648822730254155
+      },
+      "70000": {
+        "fg_ari": 0.8186794180217282,
+        "foreground_iou": 0.730914913727213,
+        "matched_object_iou": 0.6540750598423053
+      }
+    },
     "scope": "Older frozen encoder/graph recipe; no new training; not SW0097/adaptive scaling evidence",
     "fixed_endpoint": "320IDs1320..1639,B8,T1024/512,.50,min2,largestBG",
-    "validation": "9local+9actualserver focused tests; actualimmutablecore/runner/evaluatorSHA and valcache contract passed"
+    "validation": "9local+9actualserver focused tests; actualimmutablecore/runner/evaluatorSHA and valcache contract passed",
+    "paired_comparisons": {
+      "10000_minus_2500": {
+        "fg_ari": {
+          "mean_delta": -0.0022476753546862233,
+          "paired_image_ci95": [
+            -0.009123190437848004,
+            0.004554101996429605
+          ]
+        },
+        "foreground_iou": {
+          "mean_delta": -0.0046536300092594575,
+          "paired_image_ci95": [
+            -0.011392020320516566,
+            0.0017012852729394016
+          ]
+        },
+        "matched_object_iou": {
+          "mean_delta": -0.001262545790620627,
+          "paired_image_ci95": [
+            -0.00988317294159635,
+            0.0074420302739843
+          ]
+        }
+      },
+      "70000_minus_2500": {
+        "fg_ari": {
+          "mean_delta": -0.0034004276333254708,
+          "paired_image_ci95": [
+            -0.010855324715237839,
+            0.004175527957781
+          ]
+        },
+        "foreground_iou": {
+          "mean_delta": -0.003946967975116566,
+          "paired_image_ci95": [
+            -0.01080229308835405,
+            0.0024848277306989356
+          ]
+        },
+        "matched_object_iou": {
+          "mean_delta": 0.003989783797529731,
+          "paired_image_ci95": [
+            -0.005416454815884785,
+            0.013719971277618074
+          ]
+        }
+      }
+    },
+    "terminal_verified": "All3passed rc0; supervisor absent",
+    "interpretation": "FG means decrease slightly with unique count; no scaling improvement demonstrated for this older recipe. Matched object IoU at70k rises slightly. Full3seed and new-model scaling untested. Historical rc1 metadata failures preserved."
   }
 }

@@ -136,4 +136,4 @@ intermediate ablation to improve all three metrics; see `SELECTION_POLICY.md`.
 | SW0121 | completed seed0, not promoted | Training-only competitive spike assignment and detached-target Q consistency | Fixed320 .824101/.717444/.653268, below SW0117 and SW0097 on all metrics. Paired FG CIs cross zero; no seed fanout. |
 | SW0122 | complete, not promoted | Three-seed joint analytic RGB replication | Candidate .767341/.574580/.594957 vs source .776348/.577070/.601537; paired FG CI against source negative; end recipe. |
 
-| SW0109 recovery diagnostic | three seed0 evaluations running | Existing N2500/N10000/N70000 checkpoints; no retraining or historical completion certification | Supervisor1425494; actual fixed320 evaluations on GPUs0/1/3; scores pending. |
+| SW0109 recovery diagnostic | complete, single seed0 only | Existing N2500/N10000/N70000 checkpoints, equal4375updates; no retraining or historical completion certification | FG .822080/.819832/.818679; no demonstrated FG scaling gain in older frozen recipe. |
