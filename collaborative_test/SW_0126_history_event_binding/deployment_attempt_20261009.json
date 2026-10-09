@@ -1,0 +1,17 @@
+{
+  "experiment": "SW0126",
+  "registered_commit": "4543cb5",
+  "local_cpu_tests_passed": 17,
+  "final_queue_regression_tests_passed": 3,
+  "deployment_manifest": "collaborative_private_runtime_20261008/SW0126_screen_deployment_20261009/manifest.json",
+  "files": 10,
+  "deployment_confirmed": false,
+  "gpu_queue_started": false,
+  "ssh_errors": [
+    "mux_client_request_session: Broken pipe",
+    "Connection timed out during banner exchange"
+  ],
+  "read_only_remote_recheck": "also timed out; remote files must be checked before retrying deployment",
+  "goal_status_change_requested": false,
+  "next_action": "Restore user SSH multiplex connection, inspect all exact remote file hashes, deploy only if absent, then server CPU checks and queue launch. Prepare conditional paired training locally while waiting."
+}
