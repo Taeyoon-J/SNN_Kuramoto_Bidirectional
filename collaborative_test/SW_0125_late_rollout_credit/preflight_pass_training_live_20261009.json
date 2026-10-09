@@ -1,0 +1,105 @@
+{
+  "experiment": "SW0125",
+  "status": "all_preflights_passed_training_live",
+  "supervisor_pid": 1538028,
+  "live_processes": "    PID STAT COMMAND\n1538028 Ssl  /Data0/kevinswk/envs/snn/bin/python /Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0125_late_rollout_credit/dispatcher.py\n1538982 Ssl  /Data0/kevinswk/envs/snn/bin/python /Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0125_late_rollout_credit/run.py train --seed 1 --device cuda:0 --output /Data0/kevinswk/patch_v2_sw/trained_models/SW0125_late_rollout_credit/seed1_late_candidate\n1538985 Rsl  /Data0/kevinswk/envs/snn/bin/python /Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0125_late_rollout_credit/run.py train --seed 0 --device cuda:0 --output /Data0/kevinswk/patch_v2_sw/trained_models/SW0125_late_rollout_credit/seed0_late_candidate\n1538989 Ssl  /Data0/kevinswk/envs/snn/bin/python /Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0125_late_rollout_credit/run.py train --seed 2 --device cuda:0 --output /Data0/kevinswk/patch_v2_sw/trained_models/SW0125_late_rollout_credit/seed2_late_candidate\n",
+  "preflights": {
+    "0": {
+      "status": "passed",
+      "source_core_sha256": "36f2481dd1fa51fa29bd4dc34275a876b71d8b76fbee13ac47a0a1bfe6766fbf",
+      "training_ids_sha256": "a490cc42cc5aa3d2709f3c938264025a362d9698a62d2be343fd8f77428af99c",
+      "ground_truth_used": false,
+      "total_time_steps": 1024,
+      "settle": 512,
+      "tail_steps": 64,
+      "fixed_h_scramble_rgb_excess": 0.586546526523307,
+      "throwaway_parameter_groups_changed": {
+        "graph": true,
+        "core": true,
+        "encoder": true
+      },
+      "throwaway_named_core_groups_changed": {
+        "graph": true,
+        "oscillator_drive": true,
+        "kuramoto": true,
+        "dendritic": true,
+        "membrane": true
+      },
+      "throwaway_encoder_changed": true,
+      "throwaway_gradient_norms_by_named_family": {
+        "encoder": 0.8298344793242206,
+        "graph": 0.19533797498607391,
+        "oscillator_drive": 0.5207995139091032,
+        "kuramoto": 0.032221831249302196,
+        "dendritic": 0.030770792488572327,
+        "membrane": 4.679681318885305e-05
+      },
+      "report_sha256": "26e8cede87c206da4083e0c17de02490cb8c955bc57eaba7470303ff0e7e4e3c"
+    },
+    "1": {
+      "status": "passed",
+      "source_core_sha256": "76f379d5a7e4cd9d12fdf0b701f3dd9dbbf28b5eea270a9cee2d30d87b4dad98",
+      "training_ids_sha256": "879658974960d2854a8e4755b2987e401e7f006356317992171d383cfba36dfa",
+      "ground_truth_used": false,
+      "total_time_steps": 1024,
+      "settle": 512,
+      "tail_steps": 64,
+      "fixed_h_scramble_rgb_excess": 0.6413688955362886,
+      "throwaway_parameter_groups_changed": {
+        "graph": true,
+        "core": true,
+        "encoder": true
+      },
+      "throwaway_named_core_groups_changed": {
+        "graph": true,
+        "oscillator_drive": true,
+        "kuramoto": true,
+        "dendritic": true,
+        "membrane": true
+      },
+      "throwaway_encoder_changed": true,
+      "throwaway_gradient_norms_by_named_family": {
+        "encoder": 0.9535929707785079,
+        "graph": 0.27298727330574435,
+        "oscillator_drive": 0.12580531143142723,
+        "kuramoto": 0.017637116062313433,
+        "dendritic": 0.00013147222389659646,
+        "membrane": 3.2628908156553544e-06
+      },
+      "report_sha256": "de3944af580053e562d09c8f1f60e807bb8c83cfc6930f825710818e4abb4bb7"
+    },
+    "2": {
+      "status": "passed",
+      "source_core_sha256": "798ad3e9d4bf837b1bbeb1bd7c13900df511b5c76f5736d2b9f8b973d7fa5661",
+      "training_ids_sha256": "22d36057ea241a9a290262c5f0ef89a72d740a743ec5a5622b1b604e48cbba6a",
+      "ground_truth_used": false,
+      "total_time_steps": 1024,
+      "settle": 512,
+      "tail_steps": 64,
+      "fixed_h_scramble_rgb_excess": 0.6608842217829078,
+      "throwaway_parameter_groups_changed": {
+        "graph": true,
+        "core": true,
+        "encoder": true
+      },
+      "throwaway_named_core_groups_changed": {
+        "graph": true,
+        "oscillator_drive": true,
+        "kuramoto": true,
+        "dendritic": true,
+        "membrane": true
+      },
+      "throwaway_encoder_changed": true,
+      "throwaway_gradient_norms_by_named_family": {
+        "encoder": 0.7747668786587448,
+        "graph": 0.34378691784335663,
+        "oscillator_drive": 0.5198477727995671,
+        "kuramoto": 0.06622313527384496,
+        "dendritic": 0.0831778108777946,
+        "membrane": 4.2801875255398424e-05
+      },
+      "report_sha256": "ba595d85b6f0a13eca726f081cf5fb2db8800d7bef72426893590a302bb17138"
+    }
+  },
+  "interpretation": "All six named families changed in disposable Adam checks. This proves usable update paths, not layer causal usefulness, FG improvement, or data scaling. Full pilot and native fixed evaluation pending."
+}

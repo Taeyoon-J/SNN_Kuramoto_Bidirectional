@@ -17,5 +17,7 @@ only on exclusively leased idle GPUs without automatic retries.
 The foundation probes passed actual 1024-frame trace/loss parity and RGB
 gradient checks for all three seeds with zero optimizer updates. The full
 pipeline passed nine local CPU/API tests (one additional CUDA test skipped).
-Its four-batch GPU preflights, training, and endpoint evaluations are pending.
+Its four-batch GPU preflights passed for all three seeds; all named parameter
+families changed in the disposable Adam checks. The full pilots started on
+GPU 0, 1, and 3. Endpoint evaluations remain pending.
 No performance improvement or all-gating contribution is claimed.
