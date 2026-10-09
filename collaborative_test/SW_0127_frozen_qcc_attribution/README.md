@@ -11,4 +11,7 @@ Example commands:
 ```text
 python -m collaborative_test.SW_0127_frozen_qcc_attribution.run --preflight-only --output results_archive/preflight.json --device cuda:0
 python -m collaborative_test.SW_0127_frozen_qcc_attribution.run --output results_archive/qcc_attribution --device cuda:0
+python -m collaborative_test.SW_0127_frozen_qcc_attribution.dispatcher
 ```
+
+The dispatcher holds one shared GPU lease at a time, waits for an idle GPU, runs the preflight before evaluation, and preserves failed attempts without automatic retry.
