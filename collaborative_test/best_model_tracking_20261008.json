@@ -1,129 +1,169 @@
-{
-  "status": "latest_research_incumbents_and_candidates_tracked",
-  "metrics_order": [
-    "fg_ari",
-    "foreground_iou",
-    "matched_object_iou"
-  ],
-  "comparison_policy": "Keep training size/continuation, evaluation contract, seed count, checkpoint identity and inference intervention separate; a single-seed inference intervention is not a new trained three-seed winner.",
-  "historical_2500_training_fg_ari_leader": {
-    "experiment": "SW0072",
-    "three_seed_mean": {
-      "fg_ari": 0.7814074870193034,
-      "foreground_iou": 0.47803820820271564,
-      "matched_object_iou": 0.6167461822406115
-    },
-    "separate_training_budget": true
-  },
-  "current_70k_lineage_research_anchor": {
-    "experiment": "SW0097 positive_frozen",
-    "three_seed_mean": {
-      "fg_ari": 0.7763481729577292,
-      "foreground_iou": 0.5770703960502432,
-      "matched_object_iou": 0.601537457416796
-    },
-    "seed0": {
-      "fg_ari": 0.8248677211561721,
-      "foreground_iou": 0.7198719167110539,
-      "matched_object_iou": 0.6556628993752277
-    },
-    "source_checkpoint_root": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0097_graph_adaptation",
-    "description": "Frozen graph continuation from SW0095 large-data cores; source for latest paired pilots.",
-    "final_independent_success_verified": false
-  },
-  "full70k_training_baseline": {
-    "experiment": "SW0095",
-    "three_seed_mean": {
-      "fg_ari": 0.7756448800838592,
-      "foreground_iou": 0.5740288680646448,
-      "matched_object_iou": 0.5997788611499637
-    },
-    "training_unique_images": 70000,
-    "independent_test_verified": false
-  },
-  "single_seed_trained_candidate": {
-    "experiment": "SW0106",
-    "seed": 0,
-    "metrics": {
-      "fg_ari": 0.832809688168696,
-      "foreground_iou": 0.72373455905931,
-      "matched_object_iou": 0.6676368372885767
-    },
-    "promotion_status": "Registered expansion guard failed; retain measured scores, no three-seed promotion."
-  },
-  "latest_inference_diagnostics": {
-    "experiment": "SW0108",
-    "seed": 0,
-    "membrane_no_retention": {
-      "fg_ari": 0.8249929020313654,
-      "foreground_iou": 0.7200047000578884,
-      "matched_object_iou": 0.6563144493944181
-    },
-    "events_forced_on": {
-      "fg_ari": 0.8261586818880167,
-      "foreground_iou": 0.7208813741958358,
-      "matched_object_iou": 0.65811700484539
-    },
-    "promotion_status": "Inference-only interventions; three-seed trained-model anchor unchanged."
-  },
-  "latest_paired_training": {
-    "experiment": "SW0110",
-    "seed": 0,
-    "control": [
-      0.8245657658755523,
-      0.7183717430136797,
-      0.655629993204592
-    ],
-    "candidate": [
-      0.8241682932160493,
-      0.7197940867909944,
-      0.6541307029239365
-    ],
-    "promotion_status": "No FG-ARI improvement against matched control; no expansion."
-  },
-  "additional_official70k_transfer": {
-    "experiment": "SW0107",
-    "three_seed_mean": {
-      "fg_ari": 0.7694233600674542,
-      "foreground_iou": 0.5323909924901714,
-      "matched_object_iou": 0.5918816381885884
-    },
-    "promotion_status": "Worse FG-ARI than current anchor and matched Slot; not promoted."
-  },
-  "pending": {
-    "SW0112": "Training completed; original evaluation attempts terminated for verified unused clique-search defect. Reviewed eval-only correction awaits exact transfer approval.",
-    "SW0114": "Native32 cache preserved; reviewed physical-shape fix awaits exact transfer approval, then fresh preflights and paired training.",
-    "SW0115": "Local implementation and review in progress; no actual-source preflight or training result yet."
-  },
-  "source_records": {
-    "SW0072": {
-      "path": "SW_0072_frozen_trained_graph/results/long/summary.json",
-      "sha256": "f96680ebafbddeb73d40a8ce31fb58b8b9497d29ecd8372f56dac27f2015570b"
-    },
-    "SW0095": {
-      "path": "SW_0095_full70k_aligned_loss/results/summary.json",
-      "sha256": "85f5f36c9900e31841909d7d7e50855f5bb24a3f2d567e05846b67266923056e"
-    },
-    "SW0097": {
-      "path": "SW_0097_graph_adaptation/results/summary.json",
-      "sha256": "829fa3fa33ab8c86717f37f580abba20c5a0a72dcd16888ca09a041da0face0a"
-    },
-    "SW0106": {
-      "path": "SW_0106_spike_partition_rgb/results_archive/seed0_expansion_gate.json",
-      "sha256": "6d831b8d8f98d1bcbebd4f2d39962d526e438c2271ae743efd842e168588e8ce"
-    },
-    "SW0107": {
-      "path": "SW_0107_official_full70k_transfer/results_archive/summary.json",
-      "sha256": "420e1f18198341c2dafa1f371d73bf1c937d7af02b77b2ad6eccd29ad4146a00"
-    },
-    "SW0108": {
-      "path": "SW_0108_gate_contribution_screen/scientific_complete_20261008.json",
-      "sha256": "1874ab8e9eda330a172f762966dc6611df0033b709886942898030fab77a99d9"
-    },
-    "SW0110": {
-      "path": "SW_0110_xy_graph_route/seed0_paired_summary_20261008.json",
-      "sha256": "3f001b01b613e930400c87814db8e570d0551ca8bb0afe16084de72f028eeb61"
-    }
-  },
-  "publication": "Local repository record; GitHub publication approval remains pending."
+﻿{
+    "status":  "latest_research_incumbents_and_candidates_tracked",
+    "metrics_order":  [
+                          "fg_ari",
+                          "foreground_iou",
+                          "matched_object_iou"
+                      ],
+    "comparison_policy":  "Keep training size/continuation, evaluation contract, seed count, checkpoint identity and inference intervention separate; a single-seed inference intervention is not a new trained three-seed winner.",
+    "historical_2500_training_fg_ari_leader":  {
+                                                   "experiment":  "SW0072",
+                                                   "three_seed_mean":  {
+                                                                           "fg_ari":  0.7814074870193034,
+                                                                           "foreground_iou":  0.47803820820271564,
+                                                                           "matched_object_iou":  0.6167461822406115
+                                                                       },
+                                                   "separate_training_budget":  true
+                                               },
+    "current_70k_lineage_research_anchor":  {
+                                                "experiment":  "SW0097 positive_frozen",
+                                                "three_seed_mean":  {
+                                                                        "fg_ari":  0.7763481729577292,
+                                                                        "foreground_iou":  0.5770703960502432,
+                                                                        "matched_object_iou":  0.601537457416796
+                                                                    },
+                                                "seed0":  {
+                                                              "fg_ari":  0.8248677211561721,
+                                                              "foreground_iou":  0.7198719167110539,
+                                                              "matched_object_iou":  0.6556628993752277
+                                                          },
+                                                "source_checkpoint_root":  "/Data0/kevinswk/patch_v2_sw/trained_models/SW0097_graph_adaptation",
+                                                "description":  "Frozen graph continuation from SW0095 large-data cores; source for latest paired pilots.",
+                                                "final_independent_success_verified":  false
+                                            },
+    "full70k_training_baseline":  {
+                                      "experiment":  "SW0095",
+                                      "three_seed_mean":  {
+                                                              "fg_ari":  0.7756448800838592,
+                                                              "foreground_iou":  0.5740288680646448,
+                                                              "matched_object_iou":  0.5997788611499637
+                                                          },
+                                      "training_unique_images":  70000,
+                                      "independent_test_verified":  false
+                                  },
+    "single_seed_trained_candidate":  {
+                                          "experiment":  "SW0106",
+                                          "seed":  0,
+                                          "metrics":  {
+                                                          "fg_ari":  0.832809688168696,
+                                                          "foreground_iou":  0.72373455905931,
+                                                          "matched_object_iou":  0.6676368372885767
+                                                      },
+                                          "promotion_status":  "Registered expansion guard failed; retain measured scores, no three-seed promotion."
+                                      },
+    "latest_inference_diagnostics":  {
+                                         "experiment":  "SW0108",
+                                         "seed":  0,
+                                         "membrane_no_retention":  {
+                                                                       "fg_ari":  0.8249929020313654,
+                                                                       "foreground_iou":  0.7200047000578884,
+                                                                       "matched_object_iou":  0.6563144493944181
+                                                                   },
+                                         "events_forced_on":  {
+                                                                  "fg_ari":  0.8261586818880167,
+                                                                  "foreground_iou":  0.7208813741958358,
+                                                                  "matched_object_iou":  0.65811700484539
+                                                              },
+                                         "promotion_status":  "Inference-only interventions; three-seed trained-model anchor unchanged."
+                                     },
+    "latest_paired_training":  {
+                                   "experiment":  "SW0110",
+                                   "seed":  0,
+                                   "control":  [
+                                                   0.8245657658755523,
+                                                   0.7183717430136797,
+                                                   0.655629993204592
+                                               ],
+                                   "candidate":  [
+                                                     0.8241682932160493,
+                                                     0.7197940867909944,
+                                                     0.6541307029239365
+                                                 ],
+                                   "promotion_status":  "No FG-ARI improvement against matched control; no expansion."
+                               },
+    "additional_official70k_transfer":  {
+                                            "experiment":  "SW0107",
+                                            "three_seed_mean":  {
+                                                                    "fg_ari":  0.7694233600674542,
+                                                                    "foreground_iou":  0.5323909924901714,
+                                                                    "matched_object_iou":  0.5918816381885884
+                                                                },
+                                            "promotion_status":  "Worse FG-ARI than current anchor and matched Slot; not promoted."
+                                        },
+    "pending":  {
+                    "SW0112":  "Seed0 paired evaluation completed: candidate FG-ARI 0.824191 versus control 0.824566; no promotion.",
+                    "SW0114":  "Approved code deployed; fresh seed0 16/32 preflights and paired training/evaluation reserved in a live GPU0 supervisor.",
+                    "SW0115":  "Approved update guard fix deployed; server regressions and actual seed0 preflight/training/evaluation reserved in a GPU2 supervisor; no learned scores yet."
+                },
+    "source_records":  {
+                           "SW0072":  {
+                                          "path":  "SW_0072_frozen_trained_graph/results/long/summary.json",
+                                          "sha256":  "f96680ebafbddeb73d40a8ce31fb58b8b9497d29ecd8372f56dac27f2015570b"
+                                      },
+                           "SW0095":  {
+                                          "path":  "SW_0095_full70k_aligned_loss/results/summary.json",
+                                          "sha256":  "85f5f36c9900e31841909d7d7e50855f5bb24a3f2d567e05846b67266923056e"
+                                      },
+                           "SW0097":  {
+                                          "path":  "SW_0097_graph_adaptation/results/summary.json",
+                                          "sha256":  "829fa3fa33ab8c86717f37f580abba20c5a0a72dcd16888ca09a041da0face0a"
+                                      },
+                           "SW0106":  {
+                                          "path":  "SW_0106_spike_partition_rgb/results_archive/seed0_expansion_gate.json",
+                                          "sha256":  "6d831b8d8f98d1bcbebd4f2d39962d526e438c2271ae743efd842e168588e8ce"
+                                      },
+                           "SW0107":  {
+                                          "path":  "SW_0107_official_full70k_transfer/results_archive/summary.json",
+                                          "sha256":  "420e1f18198341c2dafa1f371d73bf1c937d7af02b77b2ad6eccd29ad4146a00"
+                                      },
+                           "SW0108":  {
+                                          "path":  "SW_0108_gate_contribution_screen/scientific_complete_20261008.json",
+                                          "sha256":  "1874ab8e9eda330a172f762966dc6611df0033b709886942898030fab77a99d9"
+                                      },
+                           "SW0110":  {
+                                          "path":  "SW_0110_xy_graph_route/seed0_paired_summary_20261008.json",
+                                          "sha256":  "3f001b01b613e930400c87814db8e570d0551ca8bb0afe16084de72f028eeb61"
+                                      }
+                       },
+    "publication":  "Local repository record; GitHub publication approval remains pending.",
+    "latest_gate_residual_pilot":  {
+                                       "experiment":  "SW0112",
+                                       "seed":  0,
+                                       "status":  "seed0_paired_evaluation_complete",
+                                       "metrics_order":  [
+                                                             "fg_ari",
+                                                             "foreground_iou",
+                                                             "matched_object_iou"
+                                                         ],
+                                       "arms":  {
+                                                    "control":  {
+                                                                    "metrics":  {
+                                                                                    "fg_ari":  0.8245657658755523,
+                                                                                    "foreground_iou":  0.7183717430136797,
+                                                                                    "matched_object_iou":  0.655629993204592
+                                                                                },
+                                                                    "checkpoint_sha256":  "a21d3b0d24d86e4db39875ab91ae31edd4d557f32c44513313513a8d57ac1aac",
+                                                                    "evaluation_sha256":  "8a71ffc0ab8a78876df361c09a7df54ada99d24846927ccb93d563fac8123429",
+                                                                    "evaluation_runner_sha256":  "505ab09695c124a5ae061cd0e01e70cf992e78c806541881916d76d3e7e4050e",
+                                                                    "evaluation_path":  "/Data0/kevinswk/patch_v2_sw/trained_models/SW0112_learned_gate_residual/seed0_control/evaluation_dispatch_recovery_20261008.json"
+                                                                },
+                                                    "gate_candidate":  {
+                                                                           "metrics":  {
+                                                                                           "fg_ari":  0.8241910967783482,
+                                                                                           "foreground_iou":  0.7194403428538122,
+                                                                                           "matched_object_iou":  0.6569892966190524
+                                                                                       },
+                                                                           "checkpoint_sha256":  "7f4baf1b6c9f8031cfcdafedf86ea424de388ced29df8bf2f5d3d407ace81e3d",
+                                                                           "evaluation_sha256":  "7d704ef87276b47b01cd8b53bc675202af108eec919cb6e8e498961098311455",
+                                                                           "evaluation_runner_sha256":  "505ab09695c124a5ae061cd0e01e70cf992e78c806541881916d76d3e7e4050e",
+                                                                           "evaluation_path":  "/Data0/kevinswk/patch_v2_sw/trained_models/SW0112_learned_gate_residual/seed0_gate_candidate/evaluation_dispatch_recovery_20261008.json"
+                                                                       }
+                                                },
+                                       "promotion":  "No FG-ARI gain against matched control; retain SW0097 anchor.",
+                                       "candidate_minus_control":  {
+                                                                       "fg_ari":  -0.00037466909720407227,
+                                                                       "foreground_iou":  0.0010685998401325225,
+                                                                       "matched_object_iou":  0.0013593034144603333
+                                                                   }
+                                   }
 }

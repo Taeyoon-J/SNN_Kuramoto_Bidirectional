@@ -1,0 +1,40 @@
+﻿{
+    "experiment":  "SW0112",
+    "seed":  0,
+    "status":  "seed0_paired_evaluation_complete",
+    "metrics_order":  [
+                          "fg_ari",
+                          "foreground_iou",
+                          "matched_object_iou"
+                      ],
+    "arms":  {
+                 "control":  {
+                                 "metrics":  {
+                                                 "fg_ari":  0.8245657658755523,
+                                                 "foreground_iou":  0.7183717430136797,
+                                                 "matched_object_iou":  0.655629993204592
+                                             },
+                                 "checkpoint_sha256":  "a21d3b0d24d86e4db39875ab91ae31edd4d557f32c44513313513a8d57ac1aac",
+                                 "evaluation_sha256":  "8a71ffc0ab8a78876df361c09a7df54ada99d24846927ccb93d563fac8123429",
+                                 "evaluation_runner_sha256":  "505ab09695c124a5ae061cd0e01e70cf992e78c806541881916d76d3e7e4050e",
+                                 "evaluation_path":  "/Data0/kevinswk/patch_v2_sw/trained_models/SW0112_learned_gate_residual/seed0_control/evaluation_dispatch_recovery_20261008.json"
+                             },
+                 "gate_candidate":  {
+                                        "metrics":  {
+                                                        "fg_ari":  0.8241910967783482,
+                                                        "foreground_iou":  0.7194403428538122,
+                                                        "matched_object_iou":  0.6569892966190524
+                                                    },
+                                        "checkpoint_sha256":  "7f4baf1b6c9f8031cfcdafedf86ea424de388ced29df8bf2f5d3d407ace81e3d",
+                                        "evaluation_sha256":  "7d704ef87276b47b01cd8b53bc675202af108eec919cb6e8e498961098311455",
+                                        "evaluation_runner_sha256":  "505ab09695c124a5ae061cd0e01e70cf992e78c806541881916d76d3e7e4050e",
+                                        "evaluation_path":  "/Data0/kevinswk/patch_v2_sw/trained_models/SW0112_learned_gate_residual/seed0_gate_candidate/evaluation_dispatch_recovery_20261008.json"
+                                    }
+             },
+    "promotion":  "No FG-ARI gain against matched control; retain SW0097 anchor.",
+    "candidate_minus_control":  {
+                                    "fg_ari":  -0.00037466909720407227,
+                                    "foreground_iou":  0.0010685998401325225,
+                                    "matched_object_iou":  0.0013593034144603333
+                                }
+}

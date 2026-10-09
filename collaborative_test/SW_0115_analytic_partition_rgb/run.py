@@ -376,7 +376,7 @@ def preflight(seed, arm, output, device="cuda"):
         raise FloatingPointError("throwaway B16 Adam update has invalid objective/gradient")
     opt.step()
     after = update_core.state_dict()
-    if not any(not torch.equal(p.detach(), update_core.state_dict()[name])
+    if not any(not torch.equal(before[name], after[name])
                for name, p in update_core.named_parameters()
                if p.requires_grad and not name.startswith("graph_generator.")):
         raise AssertionError("throwaway update changed no eligible core parameter")
