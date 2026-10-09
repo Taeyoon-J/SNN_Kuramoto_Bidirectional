@@ -172,7 +172,7 @@
   "latest_training_gradient_guard_pilot": {
     "experiment": "SW0120",
     "seed": 0,
-    "status": "training_complete_evaluation_running_verified_20261009",
+    "status": "completed_seed0_not_promoted",
     "matched_control": "SW0117 analytic_candidate",
     "source": "SW0097 positive_frozen seed0",
     "intervention": "Training Q backward guard at existing centered-trace epsilon 1e-8; forward Q, loss, masks and evaluation unchanged.",
@@ -198,7 +198,9 @@
         "interpretation": "Extreme preclip gradient spikes suppressed across completed training; segmentation improvement remains unproven until fixed evaluation finishes."
       }
     },
-    "promotion_status": "No measured candidate scores yet; no seed fanout or replacement of the three-seed incumbent.",
+    "metrics": {"fg_ari": 0.8236616854085124, "foreground_iou": 0.7185236417178839, "matched_object_iou": 0.6561076368350416},
+    "paired_summary": "SW_0120_degenerate_trace_gradient_guard/seed0_paired_summary_20261009.json",
+    "promotion_status": "FG-ARI gain gate failed against both anchors; no seed fanout or replacement of the three-seed incumbent.",
     "required_fg_ari_gain": 0.01,
     "comparison_anchors": ["SW0097 seed0", "SW0117 analytic_candidate"],
     "evaluation": "Original fixed 320-image modal-patch contract; allowed-label diagnostic is not used for promotion."

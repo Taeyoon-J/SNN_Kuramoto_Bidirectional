@@ -1,0 +1,94 @@
+﻿{
+  "experiment": "SW0120",
+  "status": "completed_seed0_not_promoted",
+  "metrics_order": [
+    "fg_ari",
+    "foreground_iou",
+    "matched_object_iou"
+  ],
+  "metrics": {
+    "candidate": {
+      "fg_ari": 0.8236616854085124,
+      "foreground_iou": 0.7185236417178839,
+      "matched_object_iou": 0.6561076368350416
+    },
+    "matched_control": {
+      "fg_ari": 0.8262101307492576,
+      "foreground_iou": 0.7229130103979337,
+      "matched_object_iou": 0.6595478231095298
+    },
+    "source": {
+      "fg_ari": 0.8248677211561721,
+      "foreground_iou": 0.7198719167110539,
+      "matched_object_iou": 0.6556628993752277
+    }
+  },
+  "paired_image_bootstrap": {
+    "matched_control": {
+      "fg_ari": {
+        "mean": -0.0025484453407451776,
+        "ci95": [
+          -0.0073430163251317895,
+          0.0022351270195973484
+        ]
+      },
+      "foreground_iou": {
+        "mean": -0.004389368680049944,
+        "ci95": [
+          -0.011029131735788074,
+          0.0014321145100513084
+        ]
+      },
+      "matched_object_iou": {
+        "mean": -0.0034401862744880248,
+        "ci95": [
+          -0.009072324074749968,
+          0.002323454448506248
+        ]
+      }
+    },
+    "source": {
+      "fg_ari": {
+        "mean": -0.001206035747659701,
+        "ci95": [
+          -0.008773446123176674,
+          0.006445260008776378
+        ]
+      },
+      "foreground_iou": {
+        "mean": -0.001348274993170098,
+        "ci95": [
+          -0.00791246538046795,
+          0.004711168621548
+        ]
+      },
+      "matched_object_iou": {
+        "mean": 0.00044473745981407213,
+        "ci95": [
+          -0.00689909839960666,
+          0.007885740557125036
+        ]
+      }
+    }
+  },
+  "bootstrap_draws": 10000,
+  "bootstrap_seed": 120,
+  "gates": {
+    "matched_control": false,
+    "source": false,
+    "slot_iou_margins": true
+  },
+  "promotion_passed": false,
+  "evaluation_sha256": {
+    "candidate": "ef8c3a718141d083f0ee0bb914d15927f0917082d5ea7bc5cd82582f517a2d2f",
+    "matched_control": "5d2e2654cff50f7e9f2709dd96de2a02826d4f925d5b255cce51511166aa2714"
+  },
+  "source_endpoint_report_sha256": "354e8cf2dcb4be1057b34034187cc31eabb44a1f9d3c391cc86edf7a551c76fd",
+  "artifacts": {
+    "manifest.json": "ba21d692965a327132eac27f61ccdf459a6b7b790038f13425fe34f80f69af81",
+    "core.pt": "447b4b8c273fdb049af026ca841fbe7256d9079b10239e8e14758838575a29e5",
+    "encoder.pt": "34f6319025c8366cb102eabb8df94abff5a54222122ebcbcd5e291d161fffdc2",
+    "history.json": "dc0aadd3abc67ef6d1d393f22cee1c339eaab8367e9c22253259440c7f7d9df2"
+  },
+  "interpretation": "Gradient stabilization confirmed; no FG-ARI improvement over either source or matched control. No seed expansion or incumbent replacement."
+}
