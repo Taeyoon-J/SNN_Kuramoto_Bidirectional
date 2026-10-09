@@ -1,0 +1,93 @@
+{
+  "experiment": "SW0129",
+  "title": "Paired seed replication of the SW0106 shared RGB reconstruction assignment-credit recipe",
+  "registration_date": "2026-10-09",
+  "status": "registered; not trained",
+  "historical_context": {
+    "SW0106": "The original seed-0 expansion gate failed and remains unchanged. Posthoc reviewed seed-0 paired-image evidence motivates this separate seed-1/2 replication; it does not retroactively promote SW0106.",
+    "source": "SW0095 source checkpoint for each seed; SW0097 seed-specific frozen controls are used only to verify source/order/budget registration.",
+    "selection_evidence": "SW0106 results_archive/posthoc_replication_evidence_20261009.json; seed0 candidate/source and candidate/control FG-ARI and matched-object-IoU paired-image intervals were positive."
+  },
+  "seeds": [
+    1,
+    2
+  ],
+  "arms": {
+    "candidate": "legacy phase + 5 * positive-product actual-spike QCC + fixed_lambda * hard-H RGB assignment reconstruction",
+    "control": "same legacy phase + 5 * positive-product actual-spike QCC; RGB decoder reconstruction has no assignment credit to core/encoder"
+  },
+  "source_and_data": {
+    "source_experiment": "SW0095_full70k_aligned_loss",
+    "training_unique_images": 4096,
+    "global_id_mapping": "pool indices 0..999 map identically; indices 1000..69999 map to global IDs 1640..70639",
+    "shuffle_seed": "117 + seed",
+    "train_cache": "SW0106 registered RGB train cache, full physical shape [70000,128,128,3]",
+    "validation_ids": [
+      1320,
+      1639
+    ],
+    "validation_images": 320,
+    "ground_truth_used_for_training": false
+  },
+  "fixed_recipe": {
+    "warmup_batches": 32,
+    "warmup_batch_size": 16,
+    "warmup_scope": "seed-specific decoder warmup and Adam moments; source core and encoder frozen",
+    "decoder_initialization_seed": 106,
+    "shared_lambda": 23250.431374718348,
+    "lambda_source": "original passed SW0106 seed-0 preflight, copied byte-for-byte to this experiment; seed-1/2 calibration ratios are diagnostic only and never replace lambda",
+    "updates": 256,
+    "batch_size": 16,
+    "train_steps": 64,
+    "settle": 32,
+    "joint_core_graph_lr": 3e-05,
+    "encoder_lr": 3e-06,
+    "decoder_lr": 0.0003,
+    "joint_clip_norm": 1.0,
+    "decoder_clip_norm": 1.0,
+    "objective": "preserve SW0106 objective and exact hard-QCC straight-through RGB assignment loss; no teacher or ground-truth mask supervision"
+  },
+  "evaluation": {
+    "ids": [
+      1320,
+      1639
+    ],
+    "images": 320,
+    "batch_size": 8,
+    "steps": 1024,
+    "settle": 512,
+    "readout": "unchanged native actual-spike QCC; threshold .50; minimum group size 2; largest-component background",
+    "metrics": [
+      "fg_ari",
+      "foreground_iou",
+      "matched_object_iou"
+    ]
+  },
+  "promotion_gate": {
+    "candidate_mean_fg_ari_strictly_above": [
+      "source97_three_seed_mean",
+      "matched_control_three_seed_mean"
+    ],
+    "minimum_per_seed_fg_ari_gains": {
+      "vs_source97": 2,
+      "vs_matched_control": 2
+    },
+    "paired_image_bootstrap": {
+      "replicates": 10000,
+      "seed": 129,
+      "resampling": "same 320 image indices across all three training seeds",
+      "required_95pct_lower_bound_strictly_positive": [
+        "candidate_minus_source97_fg_ari",
+        "candidate_minus_matched_control_fg_ari"
+      ],
+      "rng": "NumPy RandomState (MT19937), seed 129; common resampled image indices across the three training seeds"
+    },
+    "iou_floors": {
+      "foreground_iou_strictly_above": 0.25358913115224263,
+      "matched_object_iou_strictly_above": 0.25693697915214364
+    },
+    "seed0": "Reuse the original SW0106 seed-0 candidate, control, and source97 per-image results; do not retrain seed0.",
+    "failure": "Report all seeds and metrics; no threshold, lambda, learning-rate, seed, epoch, or data-size tuning."
+  },
+  "interpretation_limit": "Passing supports replication of RGB assignment credit under this recipe only. It does not prove independent gating contributions, 70k scaling, or from-scratch data scaling."
+}
