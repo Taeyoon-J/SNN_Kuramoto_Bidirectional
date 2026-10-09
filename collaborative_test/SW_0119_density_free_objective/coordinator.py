@@ -128,14 +128,14 @@ def valid_result(task):
                 qnorm = float(row.get("rgb_to_Q_gradient_norm", float("nan")))
                 if not math.isfinite(qnorm) or qnorm <= 0:
                     return False
-        update_norm = float(record.get("throwaway_gradient_norm_preclip", float("nan")))
-        if not math.isfinite(update_norm) or update_norm <= 0:
-            return False
-        source_sha = record.get("source_core_sha256", "")
-        if (len(source_sha) != 64 or any(ch not in "0123456789abcdef" for ch in source_sha)
-                or len(record.get("training_ids", [])) != 4096):
-            return False
-        return True
+            update_norm = float(record.get("throwaway_gradient_norm_preclip", float("nan")))
+            if not math.isfinite(update_norm) or update_norm <= 0:
+                return False
+            source_sha = record.get("source_core_sha256", "")
+            if (len(source_sha) != 64 or any(ch not in "0123456789abcdef" for ch in source_sha)
+                    or len(record.get("training_ids", [])) != 4096):
+                return False
+            return True
         if task["stage"] == "train":
             folder = path.parent
             preflight = ARCHIVE / "preflight_seed0_density_free.json"

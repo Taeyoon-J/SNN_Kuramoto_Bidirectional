@@ -105,6 +105,42 @@ class SW0119DensityFreeTests(unittest.TestCase):
               mock.patch.object(run, "sha", return_value="a" * 64)):
             self.assertTrue(coordinator.valid_result(task))
 
+    def test_train_result_reaches_training_validator_and_accepts_complete_fixture(self):
+        task = coordinator.task_plan()[2]
+        artifact = Path("C:/fixture/seed0/manifest.json")
+        history = [{"update": i, "total": 1.0, "density_free_old": 0.5,
+                    "primary": 0.2, "positive_actual_spike_product": 0.3,
+                    "rgb": 0.1, "gradient_norm_preclip": 0.9}
+                   for i in range(1, 257)]
+        preflight = {"source_core_sha256": "b" * 64,
+                     "source_manifest_sha256": "c" * 64,
+                     "training_ids_sha256": "d" * 64}
+        record = {"status": "training_complete", "experiment": "SW0119", "seed": 0,
+                  "arm": "analytic_candidate", "updates": 256, "batch_size": 16,
+                  "matched_shuffle_seed": 117, "ground_truth_used_for_training": False,
+                  "implementation_fingerprint": {"fixture": "sha"},
+                  "preflight_sha256": "a" * 64,
+                  "source_core_sha256": preflight["source_core_sha256"],
+                  "source_manifest_sha256": preflight["source_manifest_sha256"],
+                  "training_ids_sha256": preflight["training_ids_sha256"],
+                  "lambda_joint": run.LAMBDA, "lambda_artifact_sha256": "a" * 64,
+                  "core_sha256": "a" * 64, "encoder_sha256": "a" * 64,
+                  "optimizer_sha256": "a" * 64, "history_sha256": "a" * 64}
+
+        def read_fixture(path, *args, **kwargs):
+            if path.name == "history.json":
+                return json.dumps(history)
+            if path.name == "preflight_seed0_density_free.json":
+                return json.dumps(preflight)
+            return json.dumps(record)
+
+        with (mock.patch.object(coordinator, "artifact_path", return_value=artifact),
+              mock.patch.object(Path, "is_file", return_value=True),
+              mock.patch.object(Path, "read_text", new=read_fixture),
+              mock.patch.object(run, "implementation_fingerprint", return_value={"fixture": "sha"}),
+              mock.patch.object(run, "sha", return_value="a" * 64)):
+            self.assertTrue(coordinator.valid_result(task))
+
 
 def json_roundtrip(value):
     # JSON-like copy that keeps ordinary numeric types and fresh nested lists.
