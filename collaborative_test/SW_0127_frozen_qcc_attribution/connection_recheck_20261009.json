@@ -1,0 +1,23 @@
+{
+  "experiment": "SW0127",
+  "status": "awaiting_ssh_restoration",
+  "consecutive_goal_turns_with_same_ssh_blocker": 2,
+  "previous_goal_turn_classification": "progress: SW126 completion recorded; SW127 implemented and tested; first server connection failure observed",
+  "current_evidence": {
+    "transfer_session_14762": "still running; no new output",
+    "read_session_42538": "still running; no new output",
+    "ssh_master_control_check": "Master running (pid=16216), exit0",
+    "ssh_host": "frontier.acm.unc.edu",
+    "ssh_proxy_jump": "raptor",
+    "ssh_controlmaster": "auto",
+    "ssh_serveraliveinterval": 0,
+    "wsl_baseline_echo": "success under authorized elevated execution"
+  },
+  "server_deployment_status": "unconfirmed",
+  "new_gpu_job_launched": false,
+  "remote_completion_claimed": false,
+  "old_requests_restarted": false,
+  "new_user_reconnect_question_sent_this_turn": false,
+  "goal_paused": false,
+  "next_action": "Await pending WSL SSH reconnection; inspect original request handles and remote exact6file SHA before queue launch. Do not treat a live local SSH master as proof that Frontier responds."
+}
