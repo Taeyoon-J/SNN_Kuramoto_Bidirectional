@@ -1,0 +1,122 @@
+{
+  "experiment": "SW0117",
+  "status": "completed_seed0_not_promoted",
+  "arms": {
+    "control": {
+      "metrics": {
+        "fg_ari": 0.8168938446622158,
+        "foreground_iou": 0.7196492582567888,
+        "matched_object_iou": 0.648146187179418
+      },
+      "valid_count": {
+        "fg_ari": 320,
+        "foreground_iou": 320,
+        "matched_object_iou": 320
+      },
+      "evaluation_sha256": "ce6027b34b40f68397546bdee512c2c2a08088818fda98010881ff6d82854646",
+      "gradient_quantiles": {
+        "min": 22.222259521484375,
+        "median": 160.12005615234375,
+        "p90": 516.6444854736328,
+        "p99": 94514307.59999955,
+        "max": 264275712
+      },
+      "history.json_sha256": "34713157d21a87931d28e26ad88414e0fb1929aed3adc2644f41a989c85623b2",
+      "core.pt_sha256": "16b3fb3bf7aed7c8a96ce6261c54b4d9494a372ad73aec8915a7420e3dd234a5",
+      "encoder.pt_sha256": "bbbace3e866516ec5c5b883315ba5f558ea49966ecbcc432ce8550787b85b071",
+      "manifest.json_sha256": "10770a146e21fbd12e4ea6b788ceb143a1484706a7a721878e2279e1f075f102"
+    },
+    "candidate": {
+      "metrics": {
+        "fg_ari": 0.8262101307492576,
+        "foreground_iou": 0.7229130103979337,
+        "matched_object_iou": 0.6595478231095298
+      },
+      "valid_count": {
+        "fg_ari": 320,
+        "foreground_iou": 320,
+        "matched_object_iou": 320
+      },
+      "evaluation_sha256": "5d2e2654cff50f7e9f2709dd96de2a02826d4f925d5b255cce51511166aa2714",
+      "gradient_quantiles": {
+        "min": 36.38129425048828,
+        "median": 190.4080581665039,
+        "p90": 603.9013366699219,
+        "p99": 180347181.59999985,
+        "max": 446360736
+      },
+      "history.json_sha256": "774b9ed27c20bda70f5b4f78fdf1e2edf5280423c409c50dc637f3efd1e655b5",
+      "core.pt_sha256": "2f185acd78e967bd4d2536fdb4605fd986c7ff47ecc6ef8d2d654039284d8f2e",
+      "encoder.pt_sha256": "a78817c2832d304b3f83feddc3850658eac4fb82aef48bc51dc99db9a2b38a59",
+      "manifest.json_sha256": "371eedd451116ec09bad8843ccc2c30a1dbbe0bb9b9690a0426e46f34a2501ee"
+    },
+    "source": {
+      "metrics": {
+        "fg_ari": 0.8248677211561721,
+        "foreground_iou": 0.7198719167110539,
+        "matched_object_iou": 0.6556628993752277
+      },
+      "valid_count": {
+        "fg_ari": 320,
+        "foreground_iou": 320,
+        "matched_object_iou": 320
+      },
+      "evaluation_sha256": "009da533e0f3e7fa86d9840a85d87640d9424acf660512f64232ad1669fe61e0"
+    }
+  },
+  "paired_bootstrap": {
+    "candidate_minus_control": {
+      "fg_ari": {
+        "mean": 0.009316286087041714,
+        "ci95": [
+          0.0021404245211499944,
+          0.01666908458911896
+        ]
+      },
+      "foreground_iou": {
+        "mean": 0.003263752141144968,
+        "ci95": [
+          -0.0029256332457640753,
+          0.010143092850430184
+        ]
+      },
+      "matched_object_iou": {
+        "mean": 0.011401635930111781,
+        "ci95": [
+          0.0034323064622858073,
+          0.020132805210604923
+        ]
+      }
+    },
+    "candidate_minus_source": {
+      "fg_ari": {
+        "mean": 0.0013424095930854771,
+        "ci95": [
+          -0.005853325780378558,
+          0.008544608153967617
+        ]
+      },
+      "foreground_iou": {
+        "mean": 0.0030410936868798455,
+        "ci95": [
+          -0.0017597618149035584,
+          0.008316968528675105
+        ]
+      },
+      "matched_object_iou": {
+        "mean": 0.003884923734302096,
+        "ci95": [
+          -0.0030180709281576066,
+          0.010943610123489527
+        ]
+      }
+    }
+  },
+  "bootstrap": {
+    "draws": 10000,
+    "seed": 117,
+    "unit": "paired image"
+  },
+  "lambda_joint": 7.865416617457706,
+  "promotion_failure": "FG-ARI improvement below +0.01 against both control and original source; no seed expansion or coefficient sweep."
+}

@@ -1,0 +1,79 @@
+{
+  "experiment": "SW0122",
+  "status": "local_implementation_review_pending_preflight",
+  "purpose": "Replicate the SW0117 joint analytic-RGB treatment on source seeds 1 and 2 to test whether the seed-0 paired signal generalizes across registered source initializations.",
+  "historical_reference": {
+    "experiment": "SW0117",
+    "seed0_status": "completed_seed0_not_promoted",
+    "seed0_candidate_fg_ari": 0.8262101307492576,
+    "seed0_old_only_control_fg_ari": 0.8168938446622158,
+    "seed0_candidate_minus_control": 0.0093162860870418,
+    "summary_sha256": "a672b197c89608e6344bb77b8c8c5940a44f34f1bdc3ddfa38e4bb86da410479",
+    "interpretation": "The seed-0 difference and paired interval motivated replication, but the registered SW0117 +0.01 promotion gate failed. This study does not retroactively promote SW0117 or claim that the recipe already generalizes."
+  },
+  "source_and_arms": {
+    "source": "Whole matched SW0097 positive_frozen checkpoint for the same seed; registered shared encoder and preprocessing remain fixed at their existing artifact SHAs.",
+    "seeds": [1, 2],
+    "source_core_sha256": {
+      "1": "76f379d5a7e4cd9d12fdf0b701f3dd9dbbf28b5eea270a9cee2d30d87b4dad98",
+      "2": "798ad3e9d4bf837b1bbeb1bd7c13900df511b5c76f5736d2b9f8b973d7fa5661"
+    },
+    "source_manifest_sha256": {
+      "1": "241c9ea96fc3d3d2b168cb49d941e39c6751eca4436192e614760673545da38b",
+      "2": "37d88664e7f8d91ed14f1089bcdaaf3b10b952ab37b7a756aace54d7e1a80cef"
+    },
+    "source_evaluation": "Use the evaluation.json colocated with the trained SW0097 seed checkpoint and COMPLETED marker; validate exact IDs, finite 320 per-image metrics, recomputed means, prediction GT=false, then bind its SHA into preflight and training manifests.",
+    "arms": ["control", "analytic_candidate"],
+    "control": "Original phase primary + 5 * positive actual four-component Q, with encoder, legacy graph, and whole core trainable.",
+    "candidate": "Same initialized model, ordering, optimizer, and old objective as the paired control, plus the unchanged SW0115 decoder-free analytic RGB loss.",
+    "historical_seed0": "SW0117's completed seed-0 source/control/candidate and calibration artifact are read-only references. SW0117 files, status, and promotion decision are not changed."
+  },
+  "training": {
+    "ordered_training_ids": "Each seed uses that seed's exact registered SW0097 4096-ID sequence.",
+    "shuffle_seed": "117 + source seed: 118 for seed 1 and 119 for seed 2.",
+    "updates": 256,
+    "batch_size": 16,
+    "time_steps": 64,
+    "settle": 32,
+    "core_graph_learning_rate": 0.00003,
+    "encoder_learning_rate": 0.000003,
+    "gradient_clip_norm": 1.0,
+    "optimizer": "Fresh Adam for each new arm; no optimizer state is claimed or copied from seed 0.",
+    "candidate_lambda": 7.865416617457706,
+    "lambda_source": "Exact immutable SW0117 seed-0 calibration artifact. The value is shared unchanged for both seeds; no per-seed recalibration is allowed.",
+    "loss_and_readout": "Unchanged SW0117/SW0115 forward, actual positive four-component Pearson-product Q, phase primary, 5*positive-Q term, production .50/min2/largest-component-background partition H, exact-forward STE and native RGB patch means.",
+    "ground_truth_used_for_training": false
+  },
+  "required_preflight": [
+    "Validate all completed SW0117 seed-0 reference arms, calibration value and source artifact provenance without modifying them.",
+    "Validate the seed-specific SW0097 source checkpoint, source manifest, ordered 4096 IDs and completed original full-320 source evaluation SHA/metrics.",
+    "Regenerate each seed's gamma from the registered RGB cache and encoder; report cached-versus-live input differences, enforce the existing 2e-5 gamma/old-loss bounds and exact production H, and require exact same-input source-reference traces/loss/H.",
+    "On the same first four registered TRAIN batches, require finite nonzero old gradients for encoder, graph and non-graph core; candidate additionally requires finite nonzero RGB gradients for Q and all three parameter families.",
+    "Require fixed count-preserving H-row scramble to increase RGB loss; run a separate throwaway B16 Adam update and verify encoder, graph and core parameters actually change. No masks/GT are read during preflight or training."
+  ],
+  "evaluation": {
+    "ids_inclusive": [1320, 1639],
+    "count": 320,
+    "batch_size": 8,
+    "time_steps": 1024,
+    "settle": 512,
+    "membrane_threshold": 0.06,
+    "readout_threshold": 0.5,
+    "minimum_component_size": 2,
+    "background": "largest_component",
+    "metrics": ["fg_ari", "foreground_iou", "matched_object_iou"],
+    "prediction_uses_ground_truth": false
+  },
+  "registered_replication_gate": {
+    "three_seed_means": "Mean over SW0117 seed0 plus SW0122 seeds1/2; candidate must exceed both the three-source SW0097 mean and the matched old-only control mean in FG-ARI.",
+    "seed_consistency": "Candidate must exceed its matched SW0097 source FG-ARI in at least two of the three seeds.",
+    "paired_uncertainty": "Use a fixed 10,000-draw paired-image bootstrap for both candidate-minus-control and candidate-minus-matched-SW0097-source FG-ARI. Each bootstrap draw uses the same sampled image indices across all three seeds (historical SW0117 seed0 plus SW0122 seeds1/2); both 95% CI lower bounds must be positive.",
+    "iou_margins": "Candidate three-seed means must exceed matched Slot means by more than 0.05 for foreground IoU and matched-object IoU.",
+    "failure": "Report all seeds and stop the recipe. No coefficient/threshold tuning, seed selection, or automatic expansion."
+  },
+  "limitations": [
+    "This is a matched 256-update replication, not another 70k exposure pass.",
+    "Seed 0 is reused as historical evidence; no new seed-0 training is performed.",
+    "A positive result does not change the failed SW0117 promotion decision; it is a separately registered replication summary."
+  ]
+}

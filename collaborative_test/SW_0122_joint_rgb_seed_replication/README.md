@@ -1,0 +1,11 @@
+# SW0122: joint analytic-RGB replication on source seeds 1 and 2
+
+SW0117 seed 0 showed a paired candidate-minus-control FG-ARI difference of `+0.009316`, but did not pass its preregistered `+0.01` promotion gate. SW0122 tests whether that signal replicates on the two other registered SW0097 source seeds. It preserves the earlier SW0117 result and status.
+
+For each seed, the control and candidate start from the same complete source core and registered encoder. Both train the encoder, legacy graph, and remaining core parameters for 256 updates on that seed's exact matched 4096-image order, with batch 16, 64/32 time/settle, Adam rates `3e-5` for core/graph and `3e-6` for the encoder, and joint clip norm 1. The candidate adds the unchanged SW0115 analytic partition RGB loss with the immutable SW0117 seed-0 coefficient `7.865416617457706`; it is never recalibrated per seed. Each source's already completed 320-image SW0097 evaluation and SHA are validated as its baseline.
+
+Preflight retains the SW0117 cached-versus-live gamma and old-loss checks and exact production labels, plus same-input reference identity. It checks the first four registered training batches for finite gradient credit and uses a disposable update to verify the actual optimizer path. No ground truth is read during preflight or training. Evaluation uses the unchanged actual-spike classifier on IDs 1320–1639 with the registered 1024/512 evaluation horizon, threshold `.50`, minimum component size 2, and largest-component background.
+
+The replication gate averages all three seeds, combining historical SW0117 seed 0 with new seeds 1 and 2. It requires candidate mean FG-ARI to exceed both source and matched control means, candidate gains over source in at least two seeds, positive 95% paired-bootstrap lower bounds for candidate versus both control and source, and both IoU margins over the matched Slot reference. Each of 10,000 bootstrap draws uses the same sampled image indices across all three seeds. All arms and seeds are reported; no seed is selected after observing results. This is a 256-update replication, not a further 70k training pass.
+
+The runner and task adapter are local prototypes pending source/path review and real-data preflight. No SW0122 training or evaluation has started.
