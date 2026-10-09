@@ -1,0 +1,26 @@
+{
+  "experiment": "SW0116",
+  "status": "both_real_gpu_preflights_failed_before_training",
+  "server_cpu_tests": {"passed": 9, "total": 9},
+  "arms": ["control", "analytic_candidate"],
+  "failed_guard": "Initial rollout trace max absolute difference must not exceed registered 2e-5 on regenerated versus cached gamma.",
+  "diagnostic_first_train_batch": {
+    "ground_truth_used": false,
+    "max_gamma_abs_diff": 5.960464477539062e-7,
+    "old_loss_abs_diff": 3.814697265625e-6,
+    "spikes_max_abs_diff": 8.553266525268555e-5,
+    "core_out_max_abs_diff": 0.0003120899200439453,
+    "theta_max_abs_diff": 0.0015764236450195312,
+    "component_spikes_max_abs_diff": 8.553266525268555e-5,
+    "hard_labels_exact": true,
+    "hard_H_exact": true,
+    "same_live_gamma_core_vs_reference_trace_and_loss_diff": 0.0,
+    "same_gamma_grad_vs_nograd_trace_and_loss_diff": 0.0
+  },
+  "interpretation": "First-batch evidence isolates sensitivity to tiny cached versus live encoder input differences rather than a core implementation or autograd-mode mismatch. This does not establish parity for later batches or relax the registered guard.",
+  "training_started": false,
+  "lambda_calibrated": false,
+  "guard_changed": false,
+  "promotion": false,
+  "server_evidence": "collaborative_test/SW_0116_joint_analytic_rgb/results_archive/initial_parity_diagnostic_20261008.json"
+}
