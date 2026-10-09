@@ -139,3 +139,5 @@ intermediate ablation to improve all three metrics; see `SELECTION_POLICY.md`.
 | SW0109 recovery diagnostic | complete, single seed0 only | Existing N2500/N10000/N70000 checkpoints, equal4375updates; no retraining or historical completion certification | FG .822080/.819832/.818679; no demonstrated FG scaling gain in older frozen recipe. |
 
 | SW0123 | all27 stages complete; failed pilot, closed | Adaptive temporal SNN + actual-spike CNN assignments and nativeRGB spatial decoder; matched legacy/gate-only controls registered | Adaptive primary mean .038607/.048265/.006983 vs source .776348/.577070/.601537; legacy QCC retains .770964FG; no70k expansion. |
+
+| SW0124 | running read-only preflight/evaluation | Frozen97 actual512-settled-spike temporal prototypes,3 shared refinements,3seeds fixed320; compare originalQCC | Local/server14CPUtests pass; source/calbindings verified; supervisor1491982 live,GPU0 seed0preflight passed. No training or positive result yet. |

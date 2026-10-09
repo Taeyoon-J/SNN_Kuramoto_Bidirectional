@@ -37,3 +37,7 @@ The suite validates variable temporal lengths, deterministic anchors,
 identical-trace K=1 behavior, live spike gradients, source-QCC baseline
 rejection, and the shared-image bootstrap contract. It does not substitute for
 the registered source/GPU evaluation.
+
+## Actual execution (2026-10-09)
+
+Registered commit3d4b462 was deployed as10 SHA-verified files. Local and Frontier14 CPU tests passed; all3 immutable source/evaluation/calibration bindings passed beforelaunch. Supervisor1491982 is live; GPU0 source seed0 actual B8/T1024 preflight passed and seed1 was observed running. All3 preflights precede full320 three-seed comparison. No optimizer updates or checkpoint edits. Result pending; no gating/scaling/promotion claim. Peer branch697eeb6 unchanged thiscycle. See server_launch_evidence_20261009.json.

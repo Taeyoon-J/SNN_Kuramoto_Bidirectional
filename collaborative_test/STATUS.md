@@ -1,3 +1,5 @@
+SW0124 (2026-10-09): frozen temporal-prototype classifier evaluation started; all3 actual B8/T1024 preflights passed. Supervisor1491982, evaluation1492295 live onGPU0. Original97 checkpoint/core unchanged. Full320 three-seed result pending. See SW_0124_temporal_prototype_readout/README.md.
+
 <!-- SW0123 completed 2026-10-09 -->
 SW0123 all27 stages/nine trained and evaluated trajectories completed. Adaptive primary mean .038607/.048265/.006983; failed pilot, no70k expansion, source97 incumbent unchanged. Legacy QCC retains .770964FG, adaptive QCC fails; read-only assignment/horizon diagnosis follows. All-gating/scaling goals remain unproved.
 

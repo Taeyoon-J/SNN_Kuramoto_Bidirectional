@@ -1,0 +1,223 @@
+{
+  "server_cpu_readiness": {
+    "experiment": "SW0124",
+    "cpu_tests_passed": 14,
+    "bindings": [
+      {
+        "seed": 0,
+        "source_sha256": "36f2481dd1fa51fa29bd4dc34275a876b71d8b76fbee13ac47a0a1bfe6766fbf",
+        "source_evaluation_sha256": "009da533e0f3e7fa86d9840a85d87640d9424acf660512f64232ad1669fe61e0",
+        "calibration_sha256": "eb254650adfc096df45ad8f90a7dee092e3bb3d2f39a7066425c19d7e10e82dc",
+        "spike_rms": [
+          0.6025286912918091,
+          0.6026507616043091,
+          0.6023765802383423,
+          0.6005232930183411
+        ]
+      },
+      {
+        "seed": 1,
+        "source_sha256": "76f379d5a7e4cd9d12fdf0b701f3dd9dbbf28b5eea270a9cee2d30d87b4dad98",
+        "source_evaluation_sha256": "3576ad632d1caba7d396ce65e0d094e86ff2eb9d812f8ef03d5c5e8a30a54278",
+        "calibration_sha256": "241709965fefe5f1185d96dd9aee0ff06bb5c19619e9832da4da0d514369a0b0",
+        "spike_rms": [
+          0.49110424518585205,
+          0.49110424518585205,
+          0.49110424518585205,
+          0.49110424518585205
+        ]
+      },
+      {
+        "seed": 2,
+        "source_sha256": "798ad3e9d4bf837b1bbeb1bd7c13900df511b5c76f5736d2b9f8b973d7fa5661",
+        "source_evaluation_sha256": "2d4eb351a530058f307c5c907aa078b9a197323c69fc4e44754d237531e9538c",
+        "calibration_sha256": "967c50511675aad70b3887c3b1159b25466b0579e7fb6c33458247b457360524",
+        "spike_rms": [
+          0.3907453417778015,
+          0.39097222685813904,
+          0.3898038864135742,
+          0.390931099653244
+        ]
+      }
+    ],
+    "fingerprint": {
+      "collaborative_test/SW_0124_temporal_prototype_readout/evaluate.py": "f6a0ffebc52d98028513d24a65f6351b0337580b342d14f0c14c892f9425a5de",
+      "collaborative_test/SW_0124_temporal_prototype_readout/prototype_readout.py": "e4489f87be3ae1856858d6fb1a271784567807e2b9b7103fae7c9f2eda292fa6",
+      "collaborative_test/SW_0124_temporal_prototype_readout/protocol.json": "3fe66b0d51c05e6820c452a28440d9f4e05005241a789ba6f95083901cbe6a64",
+      "collaborative_test/SW_0110_xy_graph_route/run.py": "b7d4b90cbf74c8085d2a5cfc8b78a5772f77bc086240939a332f429c1ca344fd",
+      "collaborative_test/SW_0115_analytic_partition_rgb/loss.py": "3f74c9ff5272b500cc6bf22ff3b8236a611cd1fcdff8f23477653c8c9698713d",
+      "collaborative_test/SW_0123_adaptive_temporal_assignment/run.py": "7a7cf52d2a1a4b1fc87dc3d721646622f3eb6506ebcc3698f4c5df6b4918ad7c",
+      "collaborative_test/SW_0123_adaptive_temporal_assignment/calibrate.py": "65af8857460771b2eb0b5218b85382c4d5e87d496bb7a8a0010d53292d63fcd7",
+      "snn_kuramoto_bidirectional/s2net_cls.py": "18313e5ee7358146703256e7e29d9846bfa60394feedba3237f2f7eac8791288",
+      "snn_kuramoto_bidirectional/spike_classifier.py": "2d13c15a928f503bc09239aae2153a5f1a82de77aab4b5a76d0dfe876b755181",
+      "snn_kuramoto_bidirectional/evaluation.py": "4a15980c9aa0248dbe0e837ad1b0b430ce26a7ab367c004d290a1272bb1025d7"
+    },
+    "training_started": false
+  },
+  "launch": {
+    "experiment": "SW0124",
+    "supervisor_pid": 1491982,
+    "attempt_root": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0124_temporal_prototype_readout/results_archive/stage1_attempt_20261009",
+    "log": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0124_temporal_prototype_readout/results_archive/dispatcher_20261009.log",
+    "cpu_tests_passed": 14,
+    "tasks": 4,
+    "optimizer_updates": 0
+  },
+  "queue": {
+    "experiment": "SW0124",
+    "status": "running",
+    "supervisor_pid": 1491982,
+    "created": 1791537926.5495837,
+    "tasks": {
+      "sw0124_preflight_s0": {
+        "task": {
+          "task_id": "sw0124_preflight_s0",
+          "stage": "preflight",
+          "seed": 0,
+          "depends_on": [],
+          "priority": 0,
+          "attempt_root": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0124_temporal_prototype_readout/results_archive/stage1_attempt_20261009"
+        },
+        "status": "passed",
+        "gpu": 0,
+        "gpu_uuid": "GPU-a0a7d03d-adc1-37ca-4342-328878b3657c",
+        "memory_before_mib": 16,
+        "gpu_lease_path": "/tmp/kevinswk_sw0113_gpu_leases/gpu0.lock",
+        "reserved": 1791537926.73007,
+        "pid": 1492006,
+        "argv": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0124_temporal_prototype_readout/evaluate.py",
+          "--stage",
+          "preflight",
+          "--seed",
+          "0",
+          "--device",
+          "cuda:0",
+          "--output",
+          "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0124_temporal_prototype_readout/results_archive/stage1_attempt_20261009/preflight/preflight_seed0.json"
+        ],
+        "lease_path": "/tmp/kevinswk_sw0113_gpu_leases/gpu0.lock",
+        "inherited_lease": true,
+        "triton_cache": "/tmp/kevinswk_sw0124_triton_sw0124_preflight_s0_1791537926730",
+        "log": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0124_temporal_prototype_readout/results_archive/stage1_attempt_20261009/logs/sw0124_preflight_s0.log",
+        "started": 1791537926.7314818,
+        "returncode": 0,
+        "artifact_valid": true,
+        "finished": 1791537937.0670307
+      },
+      "sw0124_preflight_s1": {
+        "task": {
+          "task_id": "sw0124_preflight_s1",
+          "stage": "preflight",
+          "seed": 1,
+          "depends_on": [],
+          "priority": 0,
+          "attempt_root": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0124_temporal_prototype_readout/results_archive/stage1_attempt_20261009"
+        },
+        "status": "passed",
+        "gpu": 0,
+        "gpu_uuid": "GPU-a0a7d03d-adc1-37ca-4342-328878b3657c",
+        "memory_before_mib": 16,
+        "gpu_lease_path": "/tmp/kevinswk_sw0113_gpu_leases/gpu0.lock",
+        "reserved": 1791537937.227792,
+        "pid": 1492110,
+        "argv": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0124_temporal_prototype_readout/evaluate.py",
+          "--stage",
+          "preflight",
+          "--seed",
+          "1",
+          "--device",
+          "cuda:0",
+          "--output",
+          "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0124_temporal_prototype_readout/results_archive/stage1_attempt_20261009/preflight/preflight_seed1.json"
+        ],
+        "lease_path": "/tmp/kevinswk_sw0113_gpu_leases/gpu0.lock",
+        "inherited_lease": true,
+        "triton_cache": "/tmp/kevinswk_sw0124_triton_sw0124_preflight_s1_1791537937228",
+        "log": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0124_temporal_prototype_readout/results_archive/stage1_attempt_20261009/logs/sw0124_preflight_s1.log",
+        "started": 1791537937.2291238,
+        "returncode": 0,
+        "artifact_valid": true,
+        "finished": 1791537947.563678
+      },
+      "sw0124_preflight_s2": {
+        "task": {
+          "task_id": "sw0124_preflight_s2",
+          "stage": "preflight",
+          "seed": 2,
+          "depends_on": [],
+          "priority": 0,
+          "attempt_root": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0124_temporal_prototype_readout/results_archive/stage1_attempt_20261009"
+        },
+        "status": "passed",
+        "gpu": 0,
+        "gpu_uuid": "GPU-a0a7d03d-adc1-37ca-4342-328878b3657c",
+        "memory_before_mib": 16,
+        "gpu_lease_path": "/tmp/kevinswk_sw0113_gpu_leases/gpu0.lock",
+        "reserved": 1791537947.7083893,
+        "pid": 1492202,
+        "argv": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0124_temporal_prototype_readout/evaluate.py",
+          "--stage",
+          "preflight",
+          "--seed",
+          "2",
+          "--device",
+          "cuda:0",
+          "--output",
+          "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0124_temporal_prototype_readout/results_archive/stage1_attempt_20261009/preflight/preflight_seed2.json"
+        ],
+        "lease_path": "/tmp/kevinswk_sw0113_gpu_leases/gpu0.lock",
+        "inherited_lease": true,
+        "triton_cache": "/tmp/kevinswk_sw0124_triton_sw0124_preflight_s2_1791537947708",
+        "log": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0124_temporal_prototype_readout/results_archive/stage1_attempt_20261009/logs/sw0124_preflight_s2.log",
+        "started": 1791537947.709852,
+        "returncode": 0,
+        "artifact_valid": true,
+        "finished": 1791537957.9498355
+      },
+      "sw0124_evaluate_three_seed": {
+        "task": {
+          "task_id": "sw0124_evaluate_three_seed",
+          "stage": "evaluate",
+          "seed": null,
+          "depends_on": [
+            "sw0124_preflight_s0",
+            "sw0124_preflight_s1",
+            "sw0124_preflight_s2"
+          ],
+          "priority": 1,
+          "attempt_root": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0124_temporal_prototype_readout/results_archive/stage1_attempt_20261009"
+        },
+        "status": "running",
+        "gpu": 0,
+        "gpu_uuid": "GPU-a0a7d03d-adc1-37ca-4342-328878b3657c",
+        "memory_before_mib": 16,
+        "gpu_lease_path": "/tmp/kevinswk_sw0113_gpu_leases/gpu0.lock",
+        "reserved": 1791537958.1542275,
+        "pid": 1492295,
+        "argv": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0124_temporal_prototype_readout/evaluate.py",
+          "--stage",
+          "evaluate",
+          "--device",
+          "cuda:0",
+          "--output-dir",
+          "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0124_temporal_prototype_readout/results_archive/stage1_attempt_20261009/evaluation",
+          "--preflight-dir",
+          "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0124_temporal_prototype_readout/results_archive/stage1_attempt_20261009/preflight"
+        ],
+        "lease_path": "/tmp/kevinswk_sw0113_gpu_leases/gpu0.lock",
+        "inherited_lease": true,
+        "triton_cache": "/tmp/kevinswk_sw0124_triton_sw0124_evaluate_three_seed_1791537958154",
+        "log": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0124_temporal_prototype_readout/results_archive/stage1_attempt_20261009/logs/sw0124_evaluate_three_seed.log",
+        "started": 1791537958.1557007
+      }
+    }
+  }
+}
