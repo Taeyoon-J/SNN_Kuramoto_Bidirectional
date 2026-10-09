@@ -1,3 +1,5 @@
+SW0124 COMPLETE (2026-10-09): actual3seed frozen temporal-prototype masks .751922/.397001/.552672 versus unchanged97 .776348/.577070/.601537. Exact originalQCC reproduced; all3FG lower; pairedCI negative. ExecutionPASS/scientificFAIL. No new gating/scaling proof or incumbent promotion. Full evidence in SW_0124_temporal_prototype_readout/completed_results_20261009.json. Running paragraphs below are historical.
+
 SW0124 (2026-10-09): frozen temporal-prototype classifier evaluation started; all3 actual B8/T1024 preflights passed. Supervisor1491982, evaluation1492295 live onGPU0. Original97 checkpoint/core unchanged. Full320 three-seed result pending. See SW_0124_temporal_prototype_readout/README.md.
 
 <!-- SW0123 completed 2026-10-09 -->

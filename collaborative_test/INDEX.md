@@ -141,3 +141,5 @@ intermediate ablation to improve all three metrics; see `SELECTION_POLICY.md`.
 | SW0123 | all27 stages complete; failed pilot, closed | Adaptive temporal SNN + actual-spike CNN assignments and nativeRGB spatial decoder; matched legacy/gate-only controls registered | Adaptive primary mean .038607/.048265/.006983 vs source .776348/.577070/.601537; legacy QCC retains .770964FG; no70k expansion. |
 
 | SW0124 | running read-only preflight/evaluation | Frozen97 actual512-settled-spike temporal prototypes,3 shared refinements,3seeds fixed320; compare originalQCC | Local/server14CPUtests pass; source/calbindings verified; supervisor1491982 live,GPU0 seed0preflight passed. No training or positive result yet. |
+
+| SW0124 endpoint | complete; not promoted | All3 frozen-source temporal-prototype readouts,320sameimages | .751922/.397001/.552672; originalQCC exactly reproduced; all3FG lower, pairedCI[-.030902,-.017989]. Incumbent97 unchanged; no recipe expansion. |

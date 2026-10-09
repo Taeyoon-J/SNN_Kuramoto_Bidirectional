@@ -1,0 +1,52 @@
+{
+  "status": "promotion_failed",
+  "experiment": "SW0124",
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "metrics": {
+    "fg_ari": 0.7519220826609683,
+    "foreground_iou": 0.39700136672720787,
+    "matched_object_iou": 0.5526724740225665
+  },
+  "source_metrics": {
+    "fg_ari": 0.7763481729577292,
+    "foreground_iou": 0.5770703960502431,
+    "matched_object_iou": 0.601537457416796
+  },
+  "per_seed_fg_gains_vs_source": [
+    -0.03280354862917623,
+    -0.010168206048979833,
+    -0.030306516212126544
+  ],
+  "fg_paired_bootstrap_vs_source": {
+    "draws": 10000,
+    "seed": 124,
+    "lower95": -0.03090179029412618,
+    "upper95": -0.017989308913218933,
+    "mean_delta": -0.024426090296760895,
+    "common_image_indices_across_seeds": true
+  },
+  "matched_slot_reference_sha256": "de49089f54c05e08574b654815a8fd4656cd0f306892f4ecb0c3da94ab579945",
+  "matched_slot_metrics": {
+    "fg_ari": 0.7749334666743514,
+    "foreground_iou": 0.20358913115224261,
+    "matched_object_iou": 0.20693697915214362
+  },
+  "gates": {
+    "mean_fg_ari_exceeds_source": false,
+    "at_least_two_seed_fg_gains": false,
+    "paired_fg_ci_lower_positive": false,
+    "foreground_iou_exceeds_slot_plus_0_05": true,
+    "matched_object_iou_exceeds_slot_plus_0_05": true,
+    "all_source_qcc_baselines_reproduced": true
+  },
+  "evaluation_sha256": {
+    "0": "b76ecb99d3bd49bce19af8cf47f14d67e88970d1c0e298cb5f98f06891089859",
+    "1": "c2a9e685c91c00cfc4ce115bd4fd80189d6729f773e03c571c8ef0a7820c3dde",
+    "2": "371c552ae74e5fa165fa2d04cce8f20ef7e31df071b409e16fcece08b1cc1990"
+  },
+  "ground_truth_used_for_prediction": false
+}

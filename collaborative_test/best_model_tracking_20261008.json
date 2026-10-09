@@ -126,6 +126,10 @@
     "SW0110": {
       "path": "SW_0110_xy_graph_route/seed0_paired_summary_20261008.json",
       "sha256": "3f001b01b613e930400c87814db8e570d0551ca8bb0afe16084de72f028eeb61"
+    },
+    "SW0124": {
+      "path": "SW_0124_temporal_prototype_readout/three_seed_summary_20261009.json",
+      "sha256": "9a2ba16b9e055c952058d51b81ec5fcb782d09348b8122a0c47bda0deddb64ea"
     }
   },
   "publication": "Local repository record; GitHub publication approval remains pending.",
@@ -779,5 +783,32 @@
     "assignment_diagnostic": "collaborative_test/SW_0123_adaptive_temporal_assignment/assignment_diagnostic_summary_20261009.json",
     "paired_horizon_diagnostic": "collaborative_test/SW_0123_adaptive_temporal_assignment/horizon_diagnostic_summary_20261009.json",
     "next_action": "Coarse actual-spike relative-temporal and image-conditioned instance binding design; no failed-recipe sweeps or70k expansion."
+  },
+  "latest_frozen_temporal_prototype_readout": {
+    "experiment": "SW0124",
+    "status": "completed_three_seed_not_promoted",
+    "metrics": {
+      "fg_ari": 0.7519220826609683,
+      "foreground_iou": 0.39700136672720787,
+      "matched_object_iou": 0.5526724740225665
+    },
+    "source_metrics": {
+      "fg_ari": 0.7763481729577292,
+      "foreground_iou": 0.5770703960502431,
+      "matched_object_iou": 0.601537457416796
+    },
+    "source_qcc_reproduction": "All3 immutable per-image baselines reproduced within1e-10",
+    "paired_fg_bootstrap": {
+      "draws": 10000,
+      "seed": 124,
+      "lower95": -0.03090179029412618,
+      "upper95": -0.017989308913218933,
+      "mean_delta": -0.024426090296760895,
+      "common_image_indices_across_seeds": true
+    },
+    "training_updates": 0,
+    "promotion_status": "All3 FG decreased; allmetrics below incumbent97. No recipe sweep/jointtraining expansion.",
+    "gating_usefulness_proven": false,
+    "data_scaling_proven": false
   }
 }
