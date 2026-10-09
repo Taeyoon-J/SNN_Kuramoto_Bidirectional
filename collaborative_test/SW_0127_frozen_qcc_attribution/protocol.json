@@ -1,0 +1,37 @@
+{
+  "experiment": "SW0127_frozen_qcc_attribution",
+  "status": "read_only_diagnostic",
+  "purpose": "Attribute frozen SW0126 seed-1 endpoint changes using the original QCC actual-component-spike readout.",
+  "arms": [
+    "source97_native",
+    "source97_untrained_history_adapter",
+    "sw0126_history_event",
+    "sw0126_gate_only"
+  ],
+  "fixed_inference": {
+    "seed": 1,
+    "image_ids_inclusive": [1320, 1639],
+    "count": 320,
+    "time_steps": 1024,
+    "settle": 512,
+    "batch_size": 8,
+    "readout": "spike_synchrony_components over actual emitted component spikes",
+    "affinity_mode": "spike",
+    "synchrony_threshold": 0.5,
+    "foreground_threshold": 0.15,
+    "min_group_size": 2,
+    "background": "largest_component",
+    "grid_size": 16,
+    "synchrony_quantile": null,
+    "target_foreground": null,
+    "spatial_sigma": null
+  },
+  "provenance_and_order": {
+    "source": "SW0097 seed-1 positive_frozen checkpoint, strict-loaded into the original core factory before optional history-adapter attachment",
+    "trained_arms": "Must pass the frozen SW0126 pilot_run.valid_training contract before checkpoint load.",
+    "validation_gamma": "Existing registered SW0097 cached validation gamma is validated directly; no encoder is retrained or substituted. Preflight compares native and copied rollout/QCC labels on two TRAIN and two validation examples, then strict-loads all four model arms and runs a finite actual-spike/QCC smoke on two validation examples per arm.",
+    "ground_truth": "Prediction uses no GT. All four 320-grid prediction arrays are written, SHA-verified, and reread before opening the canonical HDF5 mask dataset.",
+    "scoring": "Existing SW0118 standard patch scorer on modal 8x8 CLEVR masks. Source97 per-image values for all three metrics must reproduce within 1e-10; otherwise preserve a failed result and do not report a successful attribution."
+  },
+  "interpretation": "Frozen-checkpoint comparison only. It does not establish that any individual gate, event, membrane, or training mechanism caused a score change, and it does not alter SW0126 training or readout settings."
+}
