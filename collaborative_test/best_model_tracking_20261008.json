@@ -441,7 +441,7 @@
   },
   "latest_joint_rgb_seed_replication": {
     "experiment": "SW0122",
-    "status": "paired_training_running",
+    "status": "complete_not_promoted",
     "registered_seeds": [
       1,
       2
@@ -487,8 +487,55 @@
         "gpu": 3
       }
     ],
-    "pending": "seed2 analytic_candidate preflight/train/evaluation reserved server-side for a genuinely free GPU.",
     "evaluation": "Original fixed320 batch8,T1024/512,threshold.50,min2,largest-background,Q->CC; actual trained-encoder gamma.",
-    "promotion_status": "No new scores yet; no incumbent replacement or 70k expansion."
+    "promotion_status": "Gate failed; SW0097 unchanged; no coefficient sweep or 70k expansion.",
+    "three_seed_means": {
+      "source": {
+        "fg_ari": 0.7763481729577292,
+        "foreground_iou": 0.5770703960502432,
+        "matched_object_iou": 0.6015374574167961
+      },
+      "control": {
+        "fg_ari": 0.7666562702719647,
+        "foreground_iou": 0.5797228136065592,
+        "matched_object_iou": 0.594539023669226
+      },
+      "candidate": {
+        "fg_ari": 0.767340825782494,
+        "foreground_iou": 0.5745803976225792,
+        "matched_object_iou": 0.594957173826388
+      }
+    },
+    "gate_checks": {
+      "candidate_mean_fg_ari_exceeds_source": false,
+      "candidate_mean_fg_ari_exceeds_control": true,
+      "at_least_two_seed_fg_gains_vs_source": false,
+      "candidate_minus_control_ci_lower_positive": false,
+      "candidate_minus_source_ci_lower_positive": false,
+      "foreground_iou_exceeds_slot_plus_0_05": true,
+      "matched_object_iou_exceeds_slot_plus_0_05": true
+    },
+    "paired_candidate_minus_source_fg": {
+      "mean_delta": -0.009007347175235126,
+      "ci95": [
+        -0.014235701869274118,
+        -0.003775610188592285
+      ],
+      "draws": 10000,
+      "seed": 122,
+      "unit": "paired image; each draw index is applied to all three seeds"
+    },
+    "paired_candidate_minus_control_fg": {
+      "mean_delta": 0.0006845555105293203,
+      "ci95": [
+        -0.0035916283990162536,
+        0.0050118777057200845
+      ],
+      "draws": 10000,
+      "seed": 122,
+      "unit": "paired image; each draw index is applied to all three seeds"
+    },
+    "summary_path": "collaborative_test/SW_0122_joint_rgb_seed_replication/three_seed_summary_20261009.json",
+    "execution_terminal_verified": "All13 stages validated; supervisor1407513 and final eval1414256 absent."
   }
 }

@@ -1,3 +1,5 @@
+SW0122 final (2026-10-09): all13 stages complete. Candidate mean .767341/.574580/.594957 vs source .776348/.577070/.601537. Promotion failed; SW0097 unchanged. No RGB sweeps or 70k expansion. SW0109 scaling recovery audit underway; scaling and all-gating proof remain incomplete.
+
 Latest 2026-10-09: SW0122 joint analytic-RGB replication is executing, with seed1/2 control/candidate pipelines registered and historical SW0117 seed0 reused unchanged. Actual source/queue validation passed; seed1 control+candidate and seed2 control passed GPU preflight and started on GPUs0/1/3. Seed2 candidate is queued for a free GPU. No new scores or promotion yet. All prior failed-promotion decisions remain unchanged.
 
 Latest completed result 2026-10-09: SW0121 seed0 passed all execution validators but failed promotion. Original fixed320 scores .824101/.717444/.653268 are below matched SW0117 and frozen SW0097 on all three metrics. Paired FG CIs cross zero. No seed expansion or incumbent replacement. Next: bounded TRAIN-only auxiliary-to-spike transfer diagnosis. Historical running statements below are superseded by this completed record.
