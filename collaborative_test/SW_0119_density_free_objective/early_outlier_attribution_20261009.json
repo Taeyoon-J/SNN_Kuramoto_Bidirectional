@@ -1,0 +1,288 @@
+{
+  "status": "replay_matches_through_update_3_pre_step",
+  "source_core_sha256": "36f2481dd1fa51fa29bd4dc34275a876b71d8b76fbee13ac47a0a1bfe6766fbf",
+  "candidate_history_sha256": "774b9ed27c20bda70f5b4f78fdf1e2edf5280423c409c50dc637f3efd1e655b5",
+  "candidate_manifest_sha256": "371eedd451116ec09bad8843ccc2c30a1dbbe0bb9b9690a0426e46f34a2501ee",
+  "lambda_joint": 7.865416617457706,
+  "optimizer_updates_replayed": 2,
+  "update_3_optimizer_step_applied": false,
+  "comparison_tolerance": {
+    "rtol": 0.00001,
+    "atol": 1e-10
+  },
+  "replay_comparisons": [
+    {
+      "update": 1,
+      "passed": true,
+      "max_abs_delta": 0.00001132824553451428,
+      "max_relative_delta": 5.7443186018659415e-8
+    },
+    {
+      "update": 2,
+      "passed": true,
+      "max_abs_delta": 0.0000152587890625,
+      "max_relative_delta": 7.862506771583957e-8
+    },
+    {
+      "update": 3,
+      "passed": true,
+      "max_abs_delta": 0.6240004617720842,
+      "max_relative_delta": 1.2645703742797947e-7
+    }
+  ],
+  "update_3_diagnostic": {
+    "batch_update": 3,
+    "batch_ids_first_last": [
+      36593,
+      53480
+    ],
+    "losses": {
+      "primary": 4.2504072189331055,
+      "five_times_positive_Q": 13.206893920898438,
+      "lambda_times_RGB": 4.52388334274292,
+      "weighted_balance_10B_PLV_plus_50B_Q": 2.9296441078186035,
+      "old": 17.45730209350586,
+      "RGB_unweighted": 0.575161337852478
+    },
+    "parameter_gradient_norms": {
+      "primary": {
+        "encoder": {
+          "norm": 2837.7998549846343,
+          "max_abs": 932.845458984375,
+          "finite": true
+        },
+        "graph": {
+          "norm": 612.3998622274593,
+          "max_abs": 236.4102325439453,
+          "finite": true
+        },
+        "core": {
+          "norm": 585.6985390780875,
+          "max_abs": 332.5437316894531,
+          "finite": true
+        }
+      },
+      "five_times_positive_Q": {
+        "encoder": {
+          "norm": 4936625.199743934,
+          "max_abs": 1555228.5,
+          "finite": true
+        },
+        "graph": {
+          "norm": 398107.7036312096,
+          "max_abs": 171484.859375,
+          "finite": true
+        },
+        "core": {
+          "norm": 874891.1998984328,
+          "max_abs": 497367.28125,
+          "finite": true
+        }
+      },
+      "lambda_times_RGB": {
+        "encoder": {
+          "norm": 17036410.738575403,
+          "max_abs": 5163481,
+          "finite": true
+        },
+        "graph": {
+          "norm": 1374532.8531134564,
+          "max_abs": 591057.125,
+          "finite": true
+        },
+        "core": {
+          "norm": 2882484.1265108497,
+          "max_abs": 1575847.5,
+          "finite": true
+        }
+      },
+      "weighted_balance_10B_PLV_plus_50B_Q": {
+        "encoder": {
+          "norm": 2173245.000687817,
+          "max_abs": 685458.75,
+          "finite": true
+        },
+        "graph": {
+          "norm": 175100.6697418061,
+          "max_abs": 75432.5703125,
+          "finite": true
+        },
+        "core": {
+          "norm": 386127.1937074644,
+          "max_abs": 219595.875,
+          "finite": true
+        }
+      },
+      "old": {
+        "encoder": {
+          "norm": 4934485.954654031,
+          "max_abs": 1554409.75,
+          "finite": true
+        },
+        "graph": {
+          "norm": 398068.0714979043,
+          "max_abs": 171508.53125,
+          "finite": true
+        },
+        "core": {
+          "norm": 874513.3756612537,
+          "max_abs": 497034.875,
+          "finite": true
+        }
+      },
+      "RGB_unweighted": {
+        "encoder": {
+          "norm": 2165990.889946728,
+          "max_abs": 656479.4375,
+          "finite": true
+        },
+        "graph": {
+          "norm": 174756.67114080812,
+          "max_abs": 75146.375,
+          "finite": true
+        },
+        "core": {
+          "norm": 366476.007213665,
+          "max_abs": 200351.6875,
+          "finite": true
+        }
+      }
+    },
+    "d_primary_d_theta": {
+      "norm": 0.02355700723059874,
+      "max_abs": 0.0009489081567153335,
+      "finite": true
+    },
+    "d_losses_d_Q": {
+      "five_times_positive_Q": {
+        "norm": 0.05643547159160017,
+        "max_abs": 0.00020366322132758796,
+        "finite": true
+      },
+      "lambda_times_RGB": {
+        "norm": 0.050474680138202443,
+        "max_abs": 0.006238562520593405,
+        "finite": true
+      },
+      "weighted_balance": {
+        "norm": 0.023358154756058024,
+        "max_abs": 0.00005895866343053058,
+        "finite": true
+      }
+    },
+    "d_losses_d_component_traces": {
+      "old": {
+        "norm": 85127.28338725166,
+        "max_abs": 24724.90234375,
+        "finite": true
+      },
+      "RGB": {
+        "norm": 46024.89991896723,
+        "max_abs": 18649.923828125,
+        "finite": true
+      },
+      "five_times_positive_Q": {
+        "norm": 85127.28338725166,
+        "max_abs": 24724.90234375,
+        "finite": true
+      },
+      "lambda_times_RGB": {
+        "norm": 362004.96447220945,
+        "max_abs": 146689.46875,
+        "finite": true
+      }
+    },
+    "component_centered_trace_norms": {
+      "definition": "L2 norm of each unit's settled component spike trace after temporal centering",
+      "settle": 32,
+      "exact_zero_count": 1,
+      "below_1e-6_count": 1,
+      "at_or_below_1e-8_count": 1,
+      "overall": {
+        "count": 16384,
+        "quantiles": {
+          "0": 0,
+          "1": 0.089703768491745,
+          "10": 0.8582488954067231,
+          "25": 1.3159922361373901,
+          "50": 1.4303128719329834,
+          "75": 1.4690306186676025,
+          "90": 1.507980227470398,
+          "99": 1.8386552333831787,
+          "100": 2.225069999694824
+        }
+      },
+      "by_component": {
+        "0": {
+          "count": 4096,
+          "quantiles": {
+            "0": 0.04072406142950058,
+            "1": 0.09068389460444451,
+            "10": 0.8563820123672485,
+            "25": 1.3149254620075226,
+            "50": 1.4298272728919983,
+            "75": 1.4684836566448212,
+            "90": 1.5045985579490662,
+            "99": 1.8325408279895792,
+            "100": 2.225069999694824
+          }
+        },
+        "1": {
+          "count": 4096,
+          "quantiles": {
+            "0": 0.04072406142950058,
+            "1": 0.09068389460444451,
+            "10": 0.8562153577804565,
+            "25": 1.3143385648727417,
+            "50": 1.429792046546936,
+            "75": 1.4684773087501526,
+            "90": 1.5045985579490662,
+            "99": 1.8325408279895792,
+            "100": 2.225069999694824
+          }
+        },
+        "2": {
+          "count": 4096,
+          "quantiles": {
+            "0": 0.04072406142950058,
+            "1": 0.09068389460444451,
+            "10": 0.8562340438365936,
+            "25": 1.3156077861785889,
+            "50": 1.43006432056427,
+            "75": 1.468730092048645,
+            "90": 1.5065593123435974,
+            "99": 1.838697922229767,
+            "100": 2.225069999694824
+          }
+        },
+        "3": {
+          "count": 4096,
+          "quantiles": {
+            "0": 0,
+            "1": 0.08969303704798222,
+            "10": 0.8692026138305664,
+            "25": 1.322570025920868,
+            "50": 1.431827187538147,
+            "75": 1.4701235592365265,
+            "90": 1.517784297466278,
+            "99": 1.8496161103248603,
+            "100": 2.225069999694824
+          }
+        }
+      }
+    },
+    "theta_finite": true,
+    "Q_offdiagonal_variance": 0.19156953692436218,
+    "PLV_offdiagonal_variance": 0.049215804785490036,
+    "actual_q_affinity": "positive four-component product from SW0117 objective_parts",
+    "note": "Diagnostic gradients are measured before update 3; no optimizer step 3 is applied."
+  },
+  "preceding_update46_attempt": {
+    "status": "replay_diverged",
+    "stop_before_optimizer_step": 13,
+    "max_relative_gradient_difference": 0.00008803832150225994,
+    "diagnostic_at_update46": false,
+    "interpretation": "No update46 attribution is claimed; tolerance was preserved. An earlier originally recorded large-gradient update3 was independently replayed and analyzed."
+  },
+  "conclusion": "At the verified update3 outlier, small loss gradients with respect to Q become very large gradients with respect to component traces, and one centered trace is exactly zero. This supports attribution to the Pearson-normalization path for this outlier; it does not establish every outlier or prove the benefit of any proposed training guard."
+}

@@ -9,3 +9,11 @@ Before any new training, require identity with SW0117 for the retained loss, tra
 The read-only first-four-training-batch diagnostic completed with no parameter updates or ground-truth access. Actual Q densities were 0.6573–0.7131; balance-vs-R joint gradient cosines had both signs. Centered component trace norms had no near-zero values. These results support testing the density prior but do not establish the cause of SW0117's extreme later gradient outliers.
 
 Training is not yet started. The next prerequisite is an exact 45-update SW0117 candidate prefix replay, followed by forward and diagnostic backward at the recorded update-46 outlier. Compare against the original history before attributing the outlier. Preserve all original training artifacts and perform no update 46 in this replay.
+
+## Outlier attribution completed at an earlier verified step
+
+The update-46 replay stopped before update 13 because gradient parity exceeded the fixed `1e-5` relative tolerance. Loss disagreement was only about `1.9e-6`, but the failed gradient guard was preserved; no attribution is made for update 46. The first three steps had already reproduced the original history within `9.14e-8` relative difference. Original update 3 itself had a preclip norm of `22,349,246`, so a separate bounded replay applied only the first two optimizer updates and diagnosed step 3 without applying that update.
+
+This earlier replay passed. At the outlier, one of 16,384 centered component traces was exactly zero. The weighted spike-prior and RGB derivatives with respect to Q had norms `0.0564` and `0.0505`; their derivatives with respect to component traces had norms `85,127` and `362,005`. The primary phase path was far smaller. This supports a Pearson-normalization derivative amplifier at this verified outlier, not a claim about every outlier. Evidence and provenance are in `early_outlier_attribution_20261009.json`.
+
+Before testing density removal, separately verify a forward-preserving gradient guard for flat component traces. Its effect must be isolated from the density intervention; no guard benefit is yet claimed and no density-free training has started.
