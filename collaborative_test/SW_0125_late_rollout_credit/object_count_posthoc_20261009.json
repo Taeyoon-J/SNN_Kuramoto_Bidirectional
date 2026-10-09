@@ -1,0 +1,239 @@
+{
+  "status": "complete",
+  "diagnostic": "GT-posthoc predicted object count and foreground coverage",
+  "experiment": "SW0125",
+  "input_provenance": {
+    "completed_results_sha256": "d4af72c1fd2cc1fe84f71d56a455c410b57d96c0e80f80ffce580d4b78d627f1",
+    "anchor_endpoint_reports_sha256": "25d7ca796e737bfbfb0c951eebe76860ad0f745c099546390d8b5218955ad203",
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "ids_inclusive": [
+      1320,
+      1639
+    ],
+    "images": 320,
+    "late_evaluation_sha256": {
+      "0": "4dcf30b7a06bf158b565501ece264280fc6220dc1af32e1ef3ba2ecbfecd773d",
+      "1": "19baa8d300d4b139100668452978aa6e1f5ecd88202ddb536ac383ea7ea1b492",
+      "2": "51d7628ab85e86a7bd91e814b8c77c451ad5275c75cf3b7a86cc11b201b5967a"
+    },
+    "anchor_checkpoints": {
+      "0": {
+        "source97": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0097_graph_adaptation/seed0_positive_frozen/core.pt",
+        "short": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0117_joint_analytic_rgb/seed0_analytic_candidate/core.pt"
+      },
+      "1": {
+        "source97": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0097_graph_adaptation/seed1_positive_frozen/core.pt",
+        "short": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0122_joint_analytic_rgb_replication/seed1_analytic_candidate/core.pt"
+      },
+      "2": {
+        "source97": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0097_graph_adaptation/seed2_positive_frozen/core.pt",
+        "short": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0122_joint_analytic_rgb_replication/seed2_analytic_candidate/core.pt"
+      }
+    }
+  },
+  "count_schema_note": "Reports contain per-image predicted counts but only aggregate GT count statistics (MAE, bias, exact/within-one accuracy, means). Per-image GT counts and over/under-counting rates cannot be reconstructed.",
+  "per_seed": {
+    "0": {
+      "late": {
+        "predicted_object_count_mean": 6.54375,
+        "target_object_count_mean": 6.196875095367432,
+        "object_count_bias": 0.34687501192092896,
+        "object_count_mae": 1.334375023841858,
+        "exact_count_accuracy": 0.24375000596046448,
+        "within_one_count_accuracy": 0.671875,
+        "predicted_foreground_fraction": 0.2723022401332855,
+        "target_foreground_fraction": 0.21682128310203552,
+        "predicted_minus_target_foreground_fraction": 0.05548095703125
+      },
+      "source97": {
+        "predicted_object_count_mean": 6.675,
+        "target_object_count_mean": 6.196875095367432,
+        "object_count_bias": 0.4781250059604645,
+        "object_count_mae": 1.459375023841858,
+        "exact_count_accuracy": 0.23749999701976776,
+        "within_one_count_accuracy": 0.6312500238418579,
+        "predicted_foreground_fraction": 0.2877197265625,
+        "target_foreground_fraction": 0.21682128310203552,
+        "predicted_minus_target_foreground_fraction": 0.07089844346046448
+      },
+      "matched_short": {
+        "predicted_object_count_mean": 6.678125,
+        "target_object_count_mean": 6.196875095367432,
+        "object_count_bias": 0.48124998807907104,
+        "object_count_mae": 1.40625,
+        "exact_count_accuracy": 0.24375000596046448,
+        "within_one_count_accuracy": 0.640625,
+        "predicted_foreground_fraction": 0.2876220643520355,
+        "target_foreground_fraction": 0.21682128310203552,
+        "predicted_minus_target_foreground_fraction": 0.07080078125
+      },
+      "late_minus_source97": {
+        "mean_predicted_count_change": -0.13125,
+        "mean_fg_ari_change": -0.007146050930577274,
+        "pearson_paired_fg_change_vs_count_change": 0.1465620802607915
+      },
+      "late_minus_matched_short": {
+        "mean_predicted_count_change": -0.134375,
+        "mean_fg_ari_change": -0.00848846052366275,
+        "pearson_paired_fg_change_vs_count_change": 0.1855845398771594
+      }
+    },
+    "1": {
+      "late": {
+        "predicted_object_count_mean": 6.75625,
+        "target_object_count_mean": 6.196875095367432,
+        "object_count_bias": 0.559374988079071,
+        "object_count_mae": 1.634374976158142,
+        "exact_count_accuracy": 0.1875,
+        "within_one_count_accuracy": 0.546875,
+        "predicted_foreground_fraction": 0.3601440489292145,
+        "target_foreground_fraction": 0.21682128310203552,
+        "predicted_minus_target_foreground_fraction": 0.14332276582717896
+      },
+      "source97": {
+        "predicted_object_count_mean": 6.940625,
+        "target_object_count_mean": 6.196875095367432,
+        "object_count_bias": 0.7437499761581421,
+        "object_count_mae": 1.6687500476837158,
+        "exact_count_accuracy": 0.20624999701976776,
+        "within_one_count_accuracy": 0.5531250238418579,
+        "predicted_foreground_fraction": 0.3486694395542145,
+        "target_foreground_fraction": 0.21682128310203552,
+        "predicted_minus_target_foreground_fraction": 0.13184815645217896
+      },
+      "matched_short": {
+        "predicted_object_count_mean": 6.871875,
+        "target_object_count_mean": 6.196875095367432,
+        "object_count_bias": 0.675000011920929,
+        "object_count_mae": 1.649999976158142,
+        "exact_count_accuracy": 0.21562500298023224,
+        "within_one_count_accuracy": 0.5249999761581421,
+        "predicted_foreground_fraction": 0.35345458984375,
+        "target_foreground_fraction": 0.21682128310203552,
+        "predicted_minus_target_foreground_fraction": 0.13663330674171448
+      },
+      "late_minus_source97": {
+        "mean_predicted_count_change": -0.184375,
+        "mean_fg_ari_change": -0.012347855002538587,
+        "pearson_paired_fg_change_vs_count_change": 0.3449065637882809
+      },
+      "late_minus_matched_short": {
+        "mean_predicted_count_change": -0.115625,
+        "mean_fg_ari_change": 0.00012094500249719351,
+        "pearson_paired_fg_change_vs_count_change": 0.34703004198515675
+      }
+    },
+    "2": {
+      "late": {
+        "predicted_object_count_mean": 6.328125,
+        "target_object_count_mean": 6.196875095367432,
+        "object_count_bias": 0.13124999403953552,
+        "object_count_mae": 1.53125,
+        "exact_count_accuracy": 0.19687500596046448,
+        "within_one_count_accuracy": 0.559374988079071,
+        "predicted_foreground_fraction": 0.4579834043979645,
+        "target_foreground_fraction": 0.21682128310203552,
+        "predicted_minus_target_foreground_fraction": 0.24116212129592896
+      },
+      "source97": {
+        "predicted_object_count_mean": 6.784375,
+        "target_object_count_mean": 6.196875095367432,
+        "object_count_bias": 0.5874999761581421,
+        "object_count_mae": 1.7312500476837158,
+        "exact_count_accuracy": 0.20937499403953552,
+        "within_one_count_accuracy": 0.5375000238418579,
+        "predicted_foreground_fraction": 0.47100830078125,
+        "target_foreground_fraction": 0.21682128310203552,
+        "predicted_minus_target_foreground_fraction": 0.2541870176792145
+      },
+      "matched_short": {
+        "predicted_object_count_mean": 6.484375,
+        "target_object_count_mean": 6.196875095367432,
+        "object_count_bias": 0.2874999940395355,
+        "object_count_mae": 1.59375,
+        "exact_count_accuracy": 0.21250000596046448,
+        "within_one_count_accuracy": 0.546875,
+        "predicted_foreground_fraction": 0.4661865234375,
+        "target_foreground_fraction": 0.21682128310203552,
+        "predicted_minus_target_foreground_fraction": 0.24936524033546448
+      },
+      "late_minus_source97": {
+        "mean_predicted_count_change": -0.45625,
+        "mean_fg_ari_change": -0.008320008967955183,
+        "pearson_paired_fg_change_vs_count_change": 0.07246225396499831
+      },
+      "late_minus_matched_short": {
+        "mean_predicted_count_change": -0.15625,
+        "mean_fg_ari_change": 0.007575642145799885,
+        "pearson_paired_fg_change_vs_count_change": 0.21201202411033293
+      }
+    }
+  },
+  "three_seed_mean": {
+    "late": {
+      "predicted_object_count_mean": 6.542708333333334,
+      "object_count_bias": 0.34583333134651184,
+      "object_count_mae": 1.5,
+      "exact_count_accuracy": 0.20937500397364298,
+      "within_one_count_accuracy": 0.5927083293596903,
+      "predicted_foreground_fraction": 0.3634765644868215,
+      "target_foreground_fraction": 0.21682128310203552,
+      "predicted_minus_target_foreground_fraction": 0.14665528138478598
+    },
+    "source97": {
+      "predicted_object_count_mean": 6.8,
+      "object_count_bias": 0.6031249860922495,
+      "object_count_mae": 1.6197917064030964,
+      "exact_count_accuracy": 0.21770832935969034,
+      "within_one_count_accuracy": 0.5739583571751913,
+      "predicted_foreground_fraction": 0.36913248896598816,
+      "target_foreground_fraction": 0.21682128310203552,
+      "predicted_minus_target_foreground_fraction": 0.15231120586395264
+    },
+    "matched_short": {
+      "predicted_object_count_mean": 6.6781250000000005,
+      "object_count_bias": 0.4812499980131785,
+      "object_count_mae": 1.549999992052714,
+      "exact_count_accuracy": 0.22395833830038706,
+      "within_one_count_accuracy": 0.5708333253860474,
+      "predicted_foreground_fraction": 0.36908772587776184,
+      "target_foreground_fraction": 0.21682128310203552,
+      "predicted_minus_target_foreground_fraction": 0.15226644277572632
+    }
+  },
+  "shared_image_count_change_bootstrap": {
+    "source97": {
+      "mean_count_change": -0.25729166666666664,
+      "ci95": [
+        -0.3447916666666667,
+        -0.17083333333333334
+      ],
+      "draws": 10000,
+      "seed": 125,
+      "unit": "shared validation image indices across all three seeds"
+    },
+    "matched_short": {
+      "mean_count_change": -0.13541666666666666,
+      "ci95": [
+        -0.2052083333333333,
+        -0.06458333333333334
+      ],
+      "draws": 10000,
+      "seed": 125,
+      "unit": "shared validation image indices across all three seeds"
+    }
+  },
+  "paired_FG_change_count_change_correlation": {
+    "source97": {
+      "pooled_960_image_seed_pearson": 0.17881396232795524
+    },
+    "matched_short": {
+      "pooled_960_image_seed_pearson": 0.2540234390736807
+    }
+  },
+  "interpretation": "Descriptive post-hoc associations only; do not infer causal mechanism or claim this explains the late-rollout FG-ARI decrease."
+}

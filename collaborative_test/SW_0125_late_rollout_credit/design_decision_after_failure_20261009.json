@@ -1,0 +1,32 @@
+{
+  "experiment": "SW0125",
+  "decision": "close_failed_recipe_retain_SW0097",
+  "evidence": {
+    "all_three_seed_fg_below_source": true,
+    "paired_fg_delta_vs_source": -0.009271304967023681,
+    "paired_fg_ci95_vs_source": [
+      -0.015291476902680593,
+      -0.003215861213683685
+    ],
+    "paired_fg_ci95_vs_short": [
+      -0.006622264730923825,
+      0.006258113536193656
+    ],
+    "count_diagnostic": "object_count_posthoc_20261009.json"
+  },
+  "inference": "Long forward and usable gradient updates did not improve FG; training-horizon mismatch alone is insufficient in this recipe. Reduced count error does not imply improved instance partition.",
+  "prohibited_followups": [
+    "lambda/tail/threshold micro-sweep",
+    "70k expansion of failed recipe"
+  ],
+  "next_candidate": "SW0126 history-dependent membrane events and imagewise temporal instance binding",
+  "next_candidate_status": "local opt-in implementation delegated; not deployed or queued",
+  "controls": "Same binder/decoder and same internal dynamics, actual spike versus gate-only classifier input. Frozen encoder/graph first to isolate attribution. Legacy source parity required.",
+  "known_risks": [
+    "Decoder can explain RGB without useful object grouping",
+    "Reconstruction-only dynamics previously collapsed in SW0123",
+    "Adaptive event pathway or individual gating usefulness not established",
+    "Single seed screen insufficient for promotion or scaling"
+  ],
+  "publication_status": "Local branch records committed; GitHub publication remains subject to pending exact-scope approval from prior auto-review rejection."
+}
