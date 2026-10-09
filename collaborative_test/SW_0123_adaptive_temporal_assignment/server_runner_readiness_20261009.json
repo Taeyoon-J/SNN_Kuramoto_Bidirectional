@@ -1,6 +1,6 @@
 {
   "experiment": "SW0123",
-  "status": "nine_trajectory_queue_running_preflight",
+  "status": "all_nine_preflights_passed_joint_training_running",
   "server_cpu_tests_passed": 21,
   "calibration_seeds_verified": [
     0,
@@ -71,5 +71,27 @@
     "eb254650adfc096df45ad8f90a7dee092e3bb3d2f39a7066425c19d7e10e82dc",
     "241709965fefe5f1185d96dd9aee0ff06bb5c19619e9832da4da0d514369a0b0",
     "967c50511675aad70b3887c3b1159b25466b0579e7fb6c33458247b457360524"
-  ]
+  ],
+  "preflight_passed_count": 9,
+  "latest_verified_children": [
+    {
+      "pid": 1458054,
+      "gpu": 0,
+      "seed": 0,
+      "arm": "legacy_full"
+    },
+    {
+      "pid": 1458052,
+      "gpu": 1,
+      "seed": 0,
+      "arm": "adaptive_full"
+    },
+    {
+      "pid": 1458053,
+      "gpu": 3,
+      "seed": 1,
+      "arm": "gate_only_control"
+    }
+  ],
+  "observed_failed_tasks": 0
 }
