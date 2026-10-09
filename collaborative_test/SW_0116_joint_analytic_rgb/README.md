@@ -1,0 +1,11 @@
+# SW0116 joint analytic RGB pilot
+
+This is a seed-0 matched pilot from the whole SW0097 positive-frozen source. Both arms train the full core, legacy graph, and registered encoder from the same initialization, with fresh Adam (core/graph `3e-5`, encoder `3e-6`), 256 updates of batch 16, 64 time steps, and 32 settle steps. The exact SW0097 4096-image order and shuffle seed 117 are preserved.
+
+The control retains the existing phase-primary plus five-times actual four-component positive-Pearson objective. The candidate adds the unchanged SW0115 decoder-free analytic RGB loss through production hard assignments and actual spike-product affinity. Its coefficient is calibrated once from the candidate's first four matched training batches as `0.25 * median(old joint gradient norm / RGB joint gradient norm)`. The encoder uses the registered preprocessing statistics without updating them. Training RGB comes from the byte-audited SW0106 cache; validation gamma is regenerated from each trained encoder using the corresponding byte-audited validation RGB cache.
+
+Before training, the real-data preflight checks source/cache/ID fingerprints, regenerated-gamma parity (`<=2e-5`), old rollout/loss and exact hard-partition parity, finite nonzero gradients by parameter family and to Q, row-scramble loss sensitivity, and a throwaway B16 update that independently demonstrates actual changes in encoder, graph, and non-graph core parameters. A failed guard stops the registered seed-0 branch without tuning or fanout.
+
+Each arm's final evaluation retains the fixed 320-image, batch-8, 1024/512, membrane-threshold `.06`, readout `.50`, minimum-size-2, largest-component-background contract. The coordinator registers only the two seed-0 arms and their preflight/train/evaluation dependencies. The preregistered advancement gate requires candidate FG-ARI to exceed both SW0097 seed 0 and matched joint control by at least `.01`, positive paired-image 95% bootstrap lower bounds against both, and both IoUs strictly above the matched Slot means plus `.05`.
+
+Local CPU validation passed 9/9 tests, Python compilation, protocol JSON parsing, and `git diff --check`. No real-data preflight, GPU run, transfer, commit, or push has been performed.

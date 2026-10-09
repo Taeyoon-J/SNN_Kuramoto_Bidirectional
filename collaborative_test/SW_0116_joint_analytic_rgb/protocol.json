@@ -1,0 +1,56 @@
+{
+  "experiment": "SW0116",
+  "status": "seed0_pilot_registered_pending_local_implementation_review_and_real_preflight",
+  "source": "Whole matched SW0097 positive_frozen source core, seed 0; registered encoder and preprocessing assets.",
+  "pilot": {
+    "seeds": [0],
+    "arms": ["control", "analytic_candidate"],
+    "updates": 256,
+    "batch_size": 16,
+    "training_ids": "Exact matched SW0097 4096 IDs and order; shuffle seed 117; rows mapped to the registered 70k pool.",
+    "time_steps": 64,
+    "settle": 32,
+    "core_and_graph_lr": 0.00003,
+    "encoder_lr": 0.000003,
+    "gradient_clip_norm": 1.0,
+    "optimizer": "Fresh Adam, same parameter groups and initialization in both arms.",
+    "frozen": ["none of core, legacy graph, or encoder; all are trainable in both arms"],
+    "ground_truth_used_for_training": false
+  },
+  "objective": {
+    "control": "phase_primary + 5 * positive product of actual four-component spike Pearson synchrony",
+    "candidate": "same control objective + lambda_joint * SW0115 decoder-free analytic partition RGB loss",
+    "rgb_loss": "Reuse SW0115 loss.py unchanged: actual .50/min2/largest-component-background H, variable K with all omitted patches in background, exact-forward STE, native RGB patch means, image mean including K=1.",
+    "q": "Actual positive Pearson product from last_component_spikes, D=4, settle=32, affinity_mode=spike.",
+    "lambda": "Only candidate seed0 preflight: 0.25 * median(old total joint gradient norm / RGB-only total joint gradient norm) over first four registered TRAIN batches; saved once and immutable."
+  },
+  "initial_guards": [
+    "Regenerate gamma from registered encoder/preprocessing and exact RGB cache rows; max absolute difference from registered SW0097 gamma <= 2e-5.",
+    "Before any update, compare full source rollout, old loss, and production hard H against an independent source-core reference on cached gamma; require documented numerical trace tolerance and exact labels/H.",
+    "Both arms require finite nonzero old-objective gradients to encoder, graph, and non-graph core on each of the first four exact TRAIN batches. The candidate arm additionally requires finite nonzero RGB gradients to Q, encoder, graph, and non-graph core on each batch.",
+    "Verify initial source graph/encoder unchanged using cloned pre-update snapshots; on a throwaway real B16 Adam update, independently verify actual parameter changes in encoder, graph, and non-graph core.",
+    "Count-preserving H row scramble with repooling must increase mean per-image RGB loss.",
+    "No masks or other GT are read for gamma regeneration, losses, coefficient, preflight, or training."
+  ],
+  "evaluation": {
+    "ids": [1320, 1639],
+    "count": 320,
+    "batch_size": 8,
+    "time_steps": 1024,
+    "settle": 512,
+    "membrane_threshold": 0.06,
+    "readout": "Unchanged actual-event/gate/four-component spike-product classifier, threshold .50, min group size 2, largest-component background.",
+    "gamma": "Regenerated from each trained encoder and frozen registered preprocessing using byte-verified SW0106 validation RGB cache.",
+    "metrics": ["fg_ari", "foreground_iou", "matched_object_iou"],
+    "ground_truth_used_for_prediction": false,
+    "reserved_ids": "90640..90959 remain unread."
+  },
+  "pilot_promotion_gate": {
+    "candidate_fg_ari": "Must exceed both matched SW0097 seed0 source FG-ARI and joint-control FG-ARI by at least 0.01.",
+    "paired_image_bootstrap": "Using the same paired 320 image indices and a preregistered deterministic 10000-draw bootstrap, candidate-minus-control AND candidate-minus-SW0097 FG-ARI 95% confidence-interval lower bounds must both be strictly positive.",
+    "iou_margins": "Candidate foreground IoU > 0.2535891312 and matched-object IoU > 0.2569369792 (matched Slot means + 0.05; strict greater-than).",
+    "failure": "Stop this recipe; no coefficient/threshold tuning or seed expansion."
+  },
+  "scope": "Seed0 matched paired pilot only; later seeds require reviewed outcome.",
+  "prohibitions": ["No decoder", "no graph/readout/gate changes", "no classifier or threshold change", "no GT training", "no source overwrite", "no automatic seed fanout"]
+}
