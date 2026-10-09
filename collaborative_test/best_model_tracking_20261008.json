@@ -169,6 +169,18 @@
       "matched_object_iou": 0.0013593034144603333
     }
   },
+  "latest_explicit_density_removal_pilot": {
+    "experiment": "SW0119",
+    "seed": 0,
+    "status": "registered_control_validated_actual_gpu_preflight_running",
+    "intervention": "Remove only 10*B(phase_PLV)+50*B(actual_Q), preserving collapse/coherence/bimodality and RGB terms; no SW0120 gradient guard.",
+    "matched_control": "Completed SW0117 analytic_candidate",
+    "source": "SW0097 positive_frozen seed0",
+    "recipe": "Same 4096 ordered IDs, 256 updates, batch16, shuffle117, live encoder and trainable graph/core, fixed lambda 7.865416617457706.",
+    "local_checks": "Five CPU tests, compilation, JSON parsing and final implementation review passed before deployment.",
+    "evaluation": "Original fixed320 modal-patch contract; three metrics and paired bootstrap against source and matched control.",
+    "promotion_status": "No measured candidate scores; no seed expansion or incumbent replacement."
+  },
   "latest_training_gradient_guard_pilot": {
     "experiment": "SW0120",
     "seed": 0,
