@@ -137,3 +137,5 @@ intermediate ablation to improve all three metrics; see `SELECTION_POLICY.md`.
 | SW0122 | complete, not promoted | Three-seed joint analytic RGB replication | Candidate .767341/.574580/.594957 vs source .776348/.577070/.601537; paired FG CI against source negative; end recipe. |
 
 | SW0109 recovery diagnostic | complete, single seed0 only | Existing N2500/N10000/N70000 checkpoints, equal4375updates; no retraining or historical completion certification | FG .822080/.819832/.818679; no demonstrated FG scaling gain in older frozen recipe. |
+
+| SW0123 | all three TRAIN activity guards passed, training pending | Adaptive temporal SNN + actual-spike CNN assignments and nativeRGB spatial decoder; matched legacy/gate-only controls registered | Init event occupancy11-20%, >=99.8% mixed-time units; no mask score or useful-gating claim yet. |

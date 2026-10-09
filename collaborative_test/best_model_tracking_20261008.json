@@ -629,5 +629,103 @@
     },
     "terminal_verified": "All3passed rc0; supervisor absent",
     "interpretation": "FG means decrease slightly with unique count; no scaling improvement demonstrated for this older recipe. Matched object IoU at70k rises slightly. Full3seed and new-model scaling untested. Historical rc1 metadata failures preserved."
+  },
+  "latest_adaptive_temporal_assignment": {
+    "experiment": "SW0123",
+    "status": "three_seed_initial_activity_guards_passed_training_pending",
+    "segmentation_scores": null,
+    "incumbent_replaced": false,
+    "interpretation": "Adaptive initialization restores non-saturated varying events. No segmentation improvement, gating contribution, data-scaling effect or trained candidate is established.",
+    "calibration": {
+      "0": {
+        "report_sha256": "eb254650adfc096df45ad8f90a7dee092e3bb3d2f39a7066425c19d7e10e82dc",
+        "kappa": [
+          9.67673397064209,
+          10.233868598937988,
+          10.982477188110352,
+          7.851654529571533
+        ],
+        "spike_rms": [
+          0.6025286912918091,
+          0.6026507616043091,
+          0.6023765802383423,
+          0.6005232930183411
+        ],
+        "activity": {
+          "occupancy_by_component": [
+            0.114227294921875,
+            0.12361907958984375,
+            0.12310981750488281,
+            0.13743972778320312
+          ],
+          "mixed_image_patch_fraction_by_component": [
+            1.0,
+            1.0,
+            1.0,
+            0.99932861328125
+          ]
+        }
+      },
+      "1": {
+        "report_sha256": "241709965fefe5f1185d96dd9aee0ff06bb5c19619e9832da4da0d514369a0b0",
+        "kappa": [
+          14.673379898071289,
+          13.898089408874512,
+          15.276409149169922,
+          11.869159698486328
+        ],
+        "spike_rms": [
+          0.49110424518585205,
+          0.49110424518585205,
+          0.49110424518585205,
+          0.49110424518585205
+        ],
+        "activity": {
+          "occupancy_by_component": [
+            0.15563011169433594,
+            0.15762710571289062,
+            0.15478897094726562,
+            0.16411209106445312
+          ],
+          "mixed_image_patch_fraction_by_component": [
+            1.0,
+            1.0,
+            0.99835205078125,
+            0.99993896484375
+          ]
+        }
+      },
+      "2": {
+        "report_sha256": "967c50511675aad70b3887c3b1159b25466b0579e7fb6c33458247b457360524",
+        "kappa": [
+          5.516550540924072,
+          5.342409133911133,
+          5.643660068511963,
+          5.295270919799805
+        ],
+        "spike_rms": [
+          0.3907453417778015,
+          0.39097222685813904,
+          0.3898038864135742,
+          0.390931099653244
+        ],
+        "activity": {
+          "occupancy_by_component": [
+            0.19040870666503906,
+            0.19908714294433594,
+            0.1854686737060547,
+            0.19196128845214844
+          ],
+          "mixed_image_patch_fraction_by_component": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      }
+    },
+    "local_and_actual_server_tests": 17,
+    "protocol": "collaborative_test/SW_0123_adaptive_temporal_assignment/protocol.json"
   }
 }

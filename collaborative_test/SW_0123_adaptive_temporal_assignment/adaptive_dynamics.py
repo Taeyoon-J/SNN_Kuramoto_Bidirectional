@@ -36,6 +36,8 @@ class AdaptiveMembraneLayer(MembraneLayer):
         self.tau_m.data.fill_(math.log(RETENTION / (1.0 - RETENTION)))
         self.adaptation = None
         self.previous_event = None
+        self.capture_event_history = False
+        self.event_history = None
 
     def set_neuron_state(self, batch_size):
         if batch_size % COMPONENTS:
@@ -46,6 +48,7 @@ class AdaptiveMembraneLayer(MembraneLayer):
         self.v_th = torch.full((batch_size, self.output_dim), VTH, device=device)
         self.adaptation = torch.zeros(batch_size, self.output_dim, device=device)
         self.previous_event = torch.zeros(batch_size, self.output_dim, device=device)
+        self.event_history = [] if self.capture_event_history else None
 
     def forward(self, h_wave_t, g_wave_t):
         if self.mem is None or self.spike is None or self.adaptation is None:
@@ -68,6 +71,8 @@ class AdaptiveMembraneLayer(MembraneLayer):
         self.adaptation = next_a
         self.previous_event = event
         self.spike = actual_spike
+        if self.event_history is not None:
+            self.event_history.append(event)
         return self.mem, self.spike
 
 

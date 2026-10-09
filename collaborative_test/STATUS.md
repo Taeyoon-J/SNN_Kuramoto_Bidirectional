@@ -1,3 +1,5 @@
+SW0123 actual calibration (2026-10-09): all3seeds fixed TRAIN activity guards passed; actual17CPU tests and strict source contracts passed. Init event occupancy11-20%; >=99.8% mixed-time units. No optimizer/source-checkpoint update, mask score, incumbent promotion or data-scaling claim. Matched train/eval runner pending; goal remains unproven.
+
 SW0122 final (2026-10-09): all13 stages complete. Candidate mean .767341/.574580/.594957 vs source .776348/.577070/.601537. Promotion failed; SW0097 unchanged. No RGB sweeps or 70k expansion. SW0109 scaling recovery audit underway; scaling and all-gating proof remain incomplete.
 
 Latest 2026-10-09: SW0122 joint analytic-RGB replication is executing, with seed1/2 control/candidate pipelines registered and historical SW0117 seed0 reused unchanged. Actual source/queue validation passed; seed1 control+candidate and seed2 control passed GPU preflight and started on GPUs0/1/3. Seed2 candidate is queued for a free GPU. No new scores or promotion yet. All prior failed-promotion decisions remain unchanged.
