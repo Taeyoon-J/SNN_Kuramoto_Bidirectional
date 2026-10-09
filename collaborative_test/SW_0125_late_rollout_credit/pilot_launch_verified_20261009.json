@@ -1,0 +1,47 @@
+{
+  "experiment": "SW0125",
+  "status": "running",
+  "local_commit": "c82af59",
+  "supervisor_pid": 1538028,
+  "cpu_tests": {
+    "passed": 9,
+    "cuda_only_skipped": 1
+  },
+  "tasks": {
+    "sw0125_preflight_s0": {
+      "status": "running",
+      "gpu": 0,
+      "child_pid": 1538107
+    },
+    "sw0125_preflight_s1": {
+      "status": "running",
+      "gpu": 1,
+      "child_pid": 1538108
+    },
+    "sw0125_preflight_s2": {
+      "status": "running",
+      "gpu": 3,
+      "child_pid": 1538115
+    },
+    "sw0125_train_s0": {
+      "status": "queued"
+    },
+    "sw0125_train_s1": {
+      "status": "queued"
+    },
+    "sw0125_train_s2": {
+      "status": "queued"
+    },
+    "sw0125_eval_s0": {
+      "status": "queued"
+    },
+    "sw0125_eval_s1": {
+      "status": "queued"
+    },
+    "sw0125_eval_s2": {
+      "status": "queued"
+    }
+  },
+  "live_processes": "    PID STAT COMMAND\n1538028 Ssl  /Data0/kevinswk/envs/snn/bin/python /Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0125_late_rollout_credit/dispatcher.py\n1538107 Rsl  /Data0/kevinswk/envs/snn/bin/python /Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0125_late_rollout_credit/run.py preflight --seed 0 --device cuda:0 --output /Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0125_late_rollout_credit/results_archive/preflight_seed0_late_candidate.json\n1538108 Rsl  /Data0/kevinswk/envs/snn/bin/python /Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0125_late_rollout_credit/run.py preflight --seed 1 --device cuda:0 --output /Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0125_late_rollout_credit/results_archive/preflight_seed1_late_candidate.json\n1538115 Rsl  /Data0/kevinswk/envs/snn/bin/python /Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0125_late_rollout_credit/run.py preflight --seed 2 --device cuda:0 --output /Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0125_late_rollout_credit/results_archive/preflight_seed2_late_candidate.json\n",
+  "interpretation": "Three actual GPU preflights started. Training queued behind all-three preflight barrier; no performance claim. No dataset or checkpoint transferred."
+}
