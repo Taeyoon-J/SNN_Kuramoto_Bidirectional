@@ -1,3 +1,6 @@
+<!-- SW0123 queue 2026-10-09 -->
+SW0123: corrected provenance and idle-GPU dispatcher deployed; actual server30CPU tests and three calibration bindings passed. Supervisor1455390 and initialGPU0/1/3 children verified live. All27 stages/nine matched trajectories queued; no segmentation result yet. Previous invalid path-binding preflight preserved; source/calibration/scientific recipe unchanged.
+
 SW0123 actual calibration (2026-10-09): all3seeds fixed TRAIN activity guards passed; actual17CPU tests and strict source contracts passed. Init event occupancy11-20%; >=99.8% mixed-time units. No optimizer/source-checkpoint update, mask score, incumbent promotion or data-scaling claim. Matched train/eval runner pending; goal remains unproven.
 
 SW0122 final (2026-10-09): all13 stages complete. Candidate mean .767341/.574580/.594957 vs source .776348/.577070/.601537. Promotion failed; SW0097 unchanged. No RGB sweeps or 70k expansion. SW0109 scaling recovery audit underway; scaling and all-gating proof remain incomplete.

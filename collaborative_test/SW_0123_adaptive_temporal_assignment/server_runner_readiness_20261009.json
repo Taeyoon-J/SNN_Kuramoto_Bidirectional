@@ -1,0 +1,75 @@
+{
+  "experiment": "SW0123",
+  "status": "nine_trajectory_queue_running_preflight",
+  "server_cpu_tests_passed": 21,
+  "calibration_seeds_verified": [
+    0,
+    1,
+    2
+  ],
+  "runner_sha256": "414916aae0b6306976a6be07b3c362029bc3064f8a8a19685f0acc8877f0ec68",
+  "first_attempt": {
+    "pid": 1449390,
+    "terminal": true,
+    "failure": "Triton JIT metadata OSError116 Stale file handle during warmup backward",
+    "log_preserved": true
+  },
+  "successful_attempt": {
+    "pid": 1450058,
+    "terminal": true,
+    "gpu": 1,
+    "seed": 0,
+    "arm": "adaptive_full",
+    "head_warmup_updates": 32,
+    "parameter_families_changed": [
+      "encoder",
+      "graph",
+      "core",
+      "head",
+      "decoder",
+      "dendrite",
+      "membrane",
+      "oscillator_drive"
+    ],
+    "triton_cache_dir": "/tmp/kevinswk_sw0123_preflight_seed0_adaptive_localcache_20261009",
+    "lease_inherited": true,
+    "terminal_log_status": "passed"
+  },
+  "training_complete": false,
+  "segmentation_score_exists": false,
+  "provenance_blocker": "load_calibration loop overwrites return path: calibration_sha binds final dependency, not calibration JSON; no joint training started",
+  "scientific_recipe_changed": false,
+  "incorrect_attempt_calibration_sha256": "69d960809ff1ad73a91a7067f87f605ae69ef612be9b936e4b486cc29511dd1a",
+  "corrected_runner_sha256": "7a7cf52d2a1a4b1fc87dc3d721646622f3eb6506ebcc3698f4c5df6b4918ad7c",
+  "server_cpu_tests_after_fix": 30,
+  "supervisor_pid": 1455390,
+  "supervisor_verified_live": true,
+  "task_count": 27,
+  "trajectory_count": 9,
+  "initial_verified_children": [
+    {
+      "pid": 1455436,
+      "gpu": 0,
+      "seed": 0,
+      "arm": "legacy_full"
+    },
+    {
+      "pid": 1455437,
+      "gpu": 1,
+      "seed": 0,
+      "arm": "adaptive_full"
+    },
+    {
+      "pid": 1455438,
+      "gpu": 3,
+      "seed": 1,
+      "arm": "legacy_full"
+    }
+  ],
+  "prior_preflight_archived": true,
+  "calibration_report_sha256": [
+    "eb254650adfc096df45ad8f90a7dee092e3bb3d2f39a7066425c19d7e10e82dc",
+    "241709965fefe5f1185d96dd9aee0ff06bb5c19619e9832da4da0d514369a0b0",
+    "967c50511675aad70b3887c3b1159b25466b0579e7fb6c33458247b457360524"
+  ]
+}
