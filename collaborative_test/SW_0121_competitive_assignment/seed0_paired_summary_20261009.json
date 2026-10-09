@@ -1,0 +1,102 @@
+﻿{
+  "experiment": "SW0121",
+  "status": "completed_seed0_not_promoted",
+  "metrics_order": [
+    "fg_ari",
+    "foreground_iou",
+    "matched_object_iou"
+  ],
+  "metrics": {
+    "candidate": {
+      "fg_ari": 0.8241012712526363,
+      "foreground_iou": 0.7174443214049779,
+      "matched_object_iou": 0.6532684230546426
+    },
+    "matched_control": {
+      "fg_ari": 0.8262101307492576,
+      "foreground_iou": 0.7229130103979337,
+      "matched_object_iou": 0.6595478231095298
+    },
+    "source": {
+      "fg_ari": 0.8248677211561721,
+      "foreground_iou": 0.7198719167110539,
+      "matched_object_iou": 0.6556628993752277
+    }
+  },
+  "paired_image_bootstrap": {
+    "matched_control": {
+      "fg_ari": {
+        "mean": -0.002108859496621422,
+        "ci95": [
+          -0.008938867220015643,
+          0.00487520231081396
+        ]
+      },
+      "foreground_iou": {
+        "mean": -0.005468688992955802,
+        "ci95": [
+          -0.012680250933614157,
+          0.0013263273536927745
+        ]
+      },
+      "matched_object_iou": {
+        "mean": -0.006279400054887108,
+        "ci95": [
+          -0.014168653725090505,
+          0.0015851882139825237
+        ]
+      }
+    },
+    "source": {
+      "fg_ari": {
+        "mean": -0.0007664499035359464,
+        "ci95": [
+          -0.008285376477199412,
+          0.006990303020971037
+        ]
+      },
+      "foreground_iou": {
+        "mean": -0.0024275953060759565,
+        "ci95": [
+          -0.01009289593937949,
+          0.0047737205254810644
+        ]
+      },
+      "matched_object_iou": {
+        "mean": -0.002394476320585012,
+        "ci95": [
+          -0.010390755348544086,
+          0.0056189074629284935
+        ]
+      }
+    }
+  },
+  "bootstrap_draws": 10000,
+  "bootstrap_seed": 121,
+  "gates": {
+    "matched_control": false,
+    "source": false,
+    "slot_iou_margins": true
+  },
+  "promotion_passed": false,
+  "evaluation_sha256": {
+    "candidate": "2ecfec351b01716d09d1d79149291885cb6dfaec366e30deb778ae38774c69e6",
+    "matched_control": "5d2e2654cff50f7e9f2709dd96de2a02826d4f925d5b255cce51511166aa2714"
+  },
+  "source_endpoint_report_sha256": "354e8cf2dcb4be1057b34034187cc31eabb44a1f9d3c391cc86edf7a551c76fd",
+  "artifacts": {
+    "manifest.json": "722a44d1762f77de42c77abadc84552b055ff98a19b6c9ce4cc88db876d85449",
+    "core.pt": "8fde18e89d750c75b0a193247dd524159b59ca9ca519ed84c5613b1df52f06e9",
+    "encoder.pt": "03bdcfc618c7ac1223f06e0684122040dc56735fa7ff42fa1b538b8e4c3f5642",
+    "head.pt": "85e2dcfcfdcad8229de35b2f07bae5f3f8bd0688b3bbe02f69507cf3a92c1b39",
+    "core_optimizer.pt": "f8dc678de7ad79b0e4a435925bbbeeeff1265ea9d24d968ed0cf7bc28166fb46",
+    "head_optimizer.pt": "98912bc1c279c77217ea3ac611ddc76a91edf45148120ce183c29dab13fced32",
+    "history.json": "664eefdba30ed146d37530f261c1f6b1e11f6c90ff837da798d09c6132e10656"
+  },
+  "gradient_norm_preclip": {
+    "median": 167.2897720336914,
+    "p99": 39931273.19999993,
+    "max": 211862224.0
+  },
+  "interpretation": "Competitive assignment did not meet the FG-ARI improvement gate; no seed expansion or incumbent replacement."
+}

@@ -172,7 +172,7 @@
   "latest_competitive_assignment_pilot": {
     "experiment": "SW0121",
     "seed": 0,
-    "status": "training_complete_fixed320_evaluation_running",
+    "status": "completed_seed0_not_promoted",
     "source": "SW0097 positive_frozen seed0 with registered live encoder",
     "matched_control": "Completed SW0117 analytic_candidate",
     "intervention": "Replace hard-H RGB credit with train-only competitive spike assignment reconstruction R and detached assignment-to-Q consistency C; retain original density prior and legacy affinity.",
@@ -182,10 +182,69 @@
     "local_validation": "Eight CPU tests, compilation, JSON parsing and final review passed before seven-file SHA-verified deployment.",
     "actual_preflight_summary": "SW_0121_competitive_assignment/actual_preflight_summary_20261009.json",
     "lambda": 3.983464726966146,
-    "warmup_reconstruction": {"candidate": 0.5220083566382527, "global_mean_baseline": 0.9999999981373549, "fixed_scramble_loss_increase": 0.4687804812565446},
+    "warmup_reconstruction": {
+      "candidate": 0.5220083566382527,
+      "global_mean_baseline": 0.9999999981373549,
+      "fixed_scramble_loss_increase": 0.4687804812565446
+    },
     "actual_gradient_and_update_checks": "All four TRAIN calibration batches have nonzero R-to-component-spikes and C-to-Q credit; encoder, graph, core and head changed in the disposable split-Adam update.",
     "launch_note": "Initial helper launch terminated before model work on an ARCHIVE attribute error; log preserved, helper reference corrected, new supervisor and actual preflight child verified live.",
-    "promotion_status": "No evaluation score yet; no seed expansion or incumbent replacement."
+    "promotion_status": "Failed registered FG gates against SW0097 and SW0117; no seed expansion or incumbent replacement. All three metrics below both references.",
+    "metrics": {
+      "fg_ari": 0.8241012712526363,
+      "foreground_iou": 0.7174443214049779,
+      "matched_object_iou": 0.6532684230546426
+    },
+    "paired_image_bootstrap": {
+      "matched_control": {
+        "fg_ari": {
+          "mean": -0.002108859496621422,
+          "ci95": [
+            -0.008938867220015643,
+            0.00487520231081396
+          ]
+        },
+        "foreground_iou": {
+          "mean": -0.005468688992955802,
+          "ci95": [
+            -0.012680250933614157,
+            0.0013263273536927745
+          ]
+        },
+        "matched_object_iou": {
+          "mean": -0.006279400054887108,
+          "ci95": [
+            -0.014168653725090505,
+            0.0015851882139825237
+          ]
+        }
+      },
+      "source": {
+        "fg_ari": {
+          "mean": -0.0007664499035359464,
+          "ci95": [
+            -0.008285376477199412,
+            0.006990303020971037
+          ]
+        },
+        "foreground_iou": {
+          "mean": -0.0024275953060759565,
+          "ci95": [
+            -0.01009289593937949,
+            0.0047737205254810644
+          ]
+        },
+        "matched_object_iou": {
+          "mean": -0.002394476320585012,
+          "ci95": [
+            -0.010390755348544086,
+            0.0056189074629284935
+          ]
+        }
+      }
+    },
+    "promotion_passed": false,
+    "result_summary": "SW_0121_competitive_assignment/seed0_paired_summary_20261009.json"
   },
   "latest_explicit_density_removal_pilot": {
     "experiment": "SW0119",
@@ -197,7 +256,11 @@
     "recipe": "Same 4096 ordered IDs, 256 updates, batch16, shuffle117, live encoder and trainable graph/core, fixed lambda 7.865416617457706.",
     "local_checks": "Five CPU tests, compilation, JSON parsing and final implementation review passed before deployment.",
     "evaluation": "Original fixed320 modal-patch contract; three metrics and paired bootstrap against source and matched control.",
-    "metrics": {"fg_ari": 0.8266218659971125, "foreground_iou": 0.7162481292202214, "matched_object_iou": 0.6637755997035757},
+    "metrics": {
+      "fg_ari": 0.8266218659971125,
+      "foreground_iou": 0.7162481292202214,
+      "matched_object_iou": 0.6637755997035757
+    },
     "paired_summary": "SW_0119_density_free_objective/seed0_paired_summary_20261009.json",
     "promotion_status": "FG-ARI improvement gate failed against both anchors; no seed expansion, coefficient sweep or incumbent replacement."
   },
@@ -213,8 +276,8 @@
       "updates": 256,
       "batch_size": 16,
       "shuffle_seed": 117,
-      "core_graph_lr": 0.00003,
-      "encoder_lr": 0.000003,
+      "core_graph_lr": 3e-05,
+      "encoder_lr": 3e-06,
       "lambda_rgb": 7.865416617457706
     },
     "actual_update3_proof": "SW_0120_degenerate_trace_gradient_guard/update3_guard_proof_20261009.json",
@@ -224,17 +287,32 @@
       "core_sha256": "447b4b8c273fdb049af026ca841fbe7256d9079b10239e8e14758838575a29e5",
       "encoder_sha256": "34f6319025c8366cb102eabb8df94abff5a54222122ebcbcd5e291d161fffdc2",
       "gradient_norm_preclip": {
-        "candidate": {"median": 173.37024688720703, "p99": 1321.7225311279158, "max": 3694.909423828125},
-        "matched_control": {"median": 190.4080581665039, "p99": 180347181.59999985, "max": 446360736.0},
+        "candidate": {
+          "median": 173.37024688720703,
+          "p99": 1321.7225311279158,
+          "max": 3694.909423828125
+        },
+        "matched_control": {
+          "median": 190.4080581665039,
+          "p99": 180347181.59999985,
+          "max": 446360736.0
+        },
         "all_256_finite_both_arms": true,
         "interpretation": "Extreme preclip gradient spikes suppressed across completed training; segmentation improvement remains unproven until fixed evaluation finishes."
       }
     },
-    "metrics": {"fg_ari": 0.8236616854085124, "foreground_iou": 0.7185236417178839, "matched_object_iou": 0.6561076368350416},
+    "metrics": {
+      "fg_ari": 0.8236616854085124,
+      "foreground_iou": 0.7185236417178839,
+      "matched_object_iou": 0.6561076368350416
+    },
     "paired_summary": "SW_0120_degenerate_trace_gradient_guard/seed0_paired_summary_20261009.json",
     "promotion_status": "FG-ARI gain gate failed against both anchors; no seed fanout or replacement of the three-seed incumbent.",
     "required_fg_ari_gain": 0.01,
-    "comparison_anchors": ["SW0097 seed0", "SW0117 analytic_candidate"],
+    "comparison_anchors": [
+      "SW0097 seed0",
+      "SW0117 analytic_candidate"
+    ],
     "evaluation": "Original fixed 320-image modal-patch contract; allowed-label diagnostic is not used for promotion."
   },
   "latest_analytic_rgb_pilot": {

@@ -1,3 +1,5 @@
+Latest completed result 2026-10-09: SW0121 seed0 passed all execution validators but failed promotion. Original fixed320 scores .824101/.717444/.653268 are below matched SW0117 and frozen SW0097 on all three metrics. Paired FG CIs cross zero. No seed expansion or incumbent replacement. Next: bounded TRAIN-only auxiliary-to-spike transfer diagnosis. Historical running statements below are superseded by this completed record.
+
 Latest 2026-10-09: SW0119 and SW0120 seed0 pilots completed the original
 fixed320 modal-patch evaluation. SW0119 explicit density-target removal scored
 .826622/.716248/.663776; its FG gain +.000412 vs SW0117 has a paired-image CI
