@@ -1,0 +1,68 @@
+{
+  "experiment": "SW0126",
+  "name": "history-centered membrane events with imagewise temporal binding",
+  "status": "prospective_opt_in_mechanism_review",
+  "source": {
+    "model": "SW0097 positive_frozen",
+    "strict_load_order": "strict-load the untouched original S2NetCore before replacing only membrane_layer with HistoryBoundMembrane",
+    "production_defaults_changed": false,
+    "source_checkpoint_or_training_state_mutated": false
+  },
+  "history_event_membrane": {
+    "components": 4,
+    "threshold": 0.06,
+    "membrane_recurrence": "unchanged registered MembraneLayer update",
+    "u": "u_t = membrane_t - 0.06",
+    "event_forward": "e_t = H(u_t - a_(t-1)); use registered act_fun_adp surrogate derivative",
+    "event_history": "a_t = beta_d*a_(t-1) + (1-beta_d)*u_t",
+    "initial_a": 0.0,
+    "beta_initial": 0.95,
+    "beta_parameters": "one trainable scalar per component, initialized by logit(0.95)",
+    "emitted_spike": "g_t * e_t",
+    "closed_gate": "only exact g_t == 0 preserves membrane and event-history state; no extra threshold",
+    "state_lifecycle": "reset each core forward; detach values, not reset, at any truncated-rollout boundary",
+    "fold_order": "S2NetCore B*4 rows are batch-major then component; beta index is folded_row mod 4"
+  },
+  "arms": {
+    "history_event": "event-driven recurrence; imagewise binder consumes actual emitted event traces",
+    "gate_only": "same event-driven recurrence; only binder input changes to captured continuous gate traces"
+  },
+  "prospective_binder": {
+    "input": "full settled 512-frame [B,4,256,512] actual component-event trace",
+    "classifier_restrictions": [
+      "no temporal mean in place of the event trace",
+      "no theta, raw RGB, or gamma direct classifier input",
+      "no ground-truth object-count input"
+    ],
+    "maximum_slots": 11,
+    "decoder_constraint": "shared slot RGB decoder; reconstruct via the spike-derived assignment maps interpolated from 16x16 to native resolution and used as the slot-mixture weights",
+    "forbidden": "independent decoder mask/alpha output that can segment while ignoring spike assignments",
+    "coordinates": "decoder-only and identical in paired arms, if used",
+    "readout": "existing largest-group-as-background and minimum-two-foreground-group policy"
+  },
+  "screen": {
+    "next_gate": "TRAIN-only 64-image activity/trace-variance/gradient-credit screen before a paired seed-1 256-update B16 pilot",
+    "measurements": [
+      "component event occupancy and saturation",
+      "centered event-trace variance",
+      "finite nonzero actual gradient credit to beta/adaptation, membrane, and dendritic families"
+    ],
+    "thresholds": "exactly four B16 batches per seed: each component aggregate binary-event occupancy in [0.02,0.98], and every image/component has at least 10% of units with both event values over the 512-frame band; any failure closes the recipe without tuning",
+    "gradient_guard": "history_event arm requires finite nonzero reconstruction credit to P, every beta component, tau_m, and dendritic parameters in every batch; gate_only records but does not fail on expected zero beta/membrane/dendritic credit because its binder input is upstream continuous gate",
+    "ground_truth_used_for_prediction_or_training": false
+  },
+  "known_context": {
+    "SW0125": "late-rollout analytic RGB pilot completed but failed its registered FG-ARI gate",
+      "claim_limit": "SW0126 is a distinct prospective mechanism hypothesis; it does not establish that gating, data scale, or truncated credit caused SW0125 failure",
+      "history_centering_risk": "u-a can remove useful absolute membrane-level/object-amplitude information; an activity or gradient pass is not evidence of segmentation value",
+      "fixed_source_invariants": "with the registered frozen source and pulse coupling disabled, theta/carrier/gate should remain unchanged; dendritic, membrane, and event traces may change because dendrites consume previous emitted spikes"
+  },
+  "implementation_status": {
+    "membrane_adapter_and_unit_tests": "implemented locally",
+    "imagewise_binder": "not implemented",
+    "TRAIN_activity_screen": "not implemented",
+    "training_runner_or_queue": "not implemented",
+    "evaluation": "not implemented",
+    "server_execution": "not started"
+  }
+}
