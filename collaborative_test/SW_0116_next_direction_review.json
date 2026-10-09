@@ -1,0 +1,45 @@
+{
+  "experiment": "SW0116",
+  "decision": "Joint encoder, legacy graph and core training with decoder-free analytic actual-spike partition RGB credit",
+  "status": "registered_design_only; implementation and real preflight require separate review",
+  "rationale": "SW0115 verified assignment sensitivity and useful Q/core credit but its frozen-feature pilot produced no significant endpoint gain. SW0106 provides a limited joint-learning signal, without satisfying its expansion guard. SW0116 tests whether content credit can improve the learned features and connectivity together; it does not expand the failed SW0106 recipe.",
+  "alternative_not_selected": "Trainable event-desaturation structure: frozen forced-on events slightly improved seed0 inference, while an occupancy target alone supplies no object-assignment information. Training contribution remains unknown; no new event target or threshold sweep is registered here.",
+  "source": "Whole SW0097 positive_frozen seed-matched core plus identical registered native RGB encoder and frozen preprocessing statistics",
+  "arms": {
+    "joint_control": "Encoder, all legacy graph parameters and core trainable; unchanged phase-primary + 5*actual four-component positive-Pearson spike-product priors",
+    "joint_analytic": "Exactly the same trainability and old objective, plus lambda*the unchanged SW0115 analytic actual-H RGB loss"
+  },
+  "references_only": "Initial SW0097 and completed SW0115 frozen arms; no additional frozen training arm. Frozen-vs-joint alone cannot isolate the new objective.",
+  "pilot": {
+    "seeds": [0],
+    "updates": 256,
+    "logical_batch_size": 16,
+    "steps": 64,
+    "settle": 32,
+    "training_ids": "Exact SW0097 4096-ID order, shuffle117+seed, identical within each pair",
+    "optimizer": "Fresh Adam; core including graph LR3e-5, encoder LR3e-6; joint gradient clip1.0, matching established SW0106 rates",
+    "decoder_or_warmup": false
+  },
+  "rgb_gamma_contract": "Reuse byte-audited native uint8 SW0106 RGB cache. Divide by255 exactly once; live native8-channel encoder -> registered fixed mean/std and clip ->16x16 adaptive pooling. No feature detach on the model path. RGB target patch means stay detached. No RGB/feature assignment bypass, anchors, XY features, GT masks or object counts.",
+  "loss_contract": "Reuse SW0115 production .50/min2/largest-component H, including all omitted patches in BG; actual event*gate component Q; count-minus-self soft credit at temperature.1; exact H STE forward; live RGB prototype numerator/denominator; detached spatial RGB variance floor1e-6; ordinary image mean including K1. Old priors and graph topology/geometry remain unchanged. Top-k indices are discrete; gradients flow through selected weights and live geodesic/feature computations.",
+  "lambda": "Recalibrate once on seed0 first4 TRAIN B16 batches: .25*median(old/RGB gradient norm ratio over ALL eligible joint parameters). Do not reuse SW0115 core-only lambda. Freeze for later seeds/continuations; no family reweighting or coefficient sweep.",
+  "preflight": [
+    "Verify immutable source, encoder/stats, RGB ledger and source/cache/order hashes; regenerated initial gamma must match registered cache within2e-5",
+    "Initial actual rollout, old losses and production H match the unchanged source path; W.detach()==H exactly",
+    "Each first4 TRAIN batch has finite nonzero RGB gradient to Q and separately encoder, graph and non-graph core families; record all family norms and old/RGB gradient cosine without claiming every neuron parameter contributes",
+    "Use SW0115 fixed row permutation11501 and prototype repooling; mean scrambled-minus-real loss must be positive, without GT or retry tuning",
+    "Throwaway real B16 Adam update changes eligible encoder/graph/core parameters and remains finite; preprocessing statistics unchanged; feedback and spike-pulse mechanisms stay disabled",
+    "Record real B16 joint-autograd peak memory; no silent batch, accumulation, time-window or graph approximation change; real CLI rc0 before pilot fanout"
+  ],
+  "evaluation": "Save each trained encoder, core and complete Adam state with hashes. Regenerate each arm's own native320 gamma using its encoder and unchanged stats; fixed IDs1320..1639, B8 T1024/512, vth.06, actual-component .50/min2/largest-BG classifier and all3 original metrics. Bind gamma, checkpoint, final report and evaluator provenance. No alternate mask or RGB readout.",
+  "seed0_advance": "Candidate FG-ARI >= initial SW0097seed0+.01 AND >= matched joint_control+.01; paired-image FG delta95% bootstrap lower bound positive against both; both IoUs > matched Slot means+.05. Otherwise stop this recipe without coefficient/threshold/guard tuning; a degraded joint control alone cannot qualify it.",
+  "three_seed_promotion": "Only after seed0 advance, run unchanged pairs for seeds1/2. Require mean FG gain>=.01 against both joint controls and initial SW0097, >=2 positive seeds for both comparisons, shared-image-ID bootstrap lower bound>0 with seeds held fixed, and both mean IoUs>matched Slot+.05.",
+  "ultimate_goal": "Conditional promoted recipe may receive a matched complete70000-image pass for all3 pairs using saved optimizer continuation and fixed lambda. Final three-seed means must beat comparable Slot on all3 metrics. Reserve90640..90959 remains unread until a separately frozen final-confirmation protocol.",
+  "paper_limits": [
+    "This is continuation of previously trained cores, not fresh-data-only causality or from-scratch training",
+    "Seed0 selection and paired-image confidence intervals do not establish seed-population generalization",
+    "RGB consistency can merge same-colored objects or fragment textured backgrounds; STE is not the true derivative of hard connected components",
+    "Finite gradients and FG improvement do not establish meaningful forward causal contribution of membrane, dendritic retention or binary events; repeat registered frozen causal interventions on any promoted model separately",
+    "A 4096-image pilot cannot establish data scaling; unique-image effects require a later fixed-update/exposure, matched nested-data comparison distinct from extra training updates"
+  ]
+}
