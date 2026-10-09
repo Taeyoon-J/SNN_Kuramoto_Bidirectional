@@ -1,0 +1,36 @@
+{
+  "experiment": "SW0127",
+  "status": "blocked_ssh_restoration_required",
+  "consecutive_goal_turns_with_same_ssh_blocker": 3,
+  "previous_goal_turn_classification": "verified wait on same transfer14762/read42538 handles plus SSH master16216 check; remote operation still unconfirmed",
+  "blocking_condition": "Existing Frontier multiplex requests remain live without replies; independent no-multiplex SSH read repeatedly fails during banner exchange through raptor. Cannot verify code installation, load server checkpoints, or queue/evaluate GPU jobs.",
+  "current_fresh_read": {
+    "session_id": 40628,
+    "exit_code": 1,
+    "error": "Connection timed out during banner exchange; Connection to UNKNOWN port 65535 timed out"
+  },
+  "pending_requests": {
+    "transfer14762": "still running; no new output",
+    "read42538": "still running; no new output",
+    "treated_as_terminal": false,
+    "restarted": false
+  },
+  "peer_recheck": {
+    "fetch_exit_code": 0,
+    "head": "697eeb67dc031325b63153e678cea8cbc602da31",
+    "changed_since_review": false
+  },
+  "readiness": {
+    "local_tests_passed": 8,
+    "local_compile_passed": true,
+    "six_file_deployment_manifest_ready": true,
+    "launch_helper_ready": true,
+    "new_gpu_job_launched": false,
+    "server_deployment_completion": "unconfirmed"
+  },
+  "other_meaningful_work_audit": "SW126 pilot results archived and failed recipe closed; SW127 runner, four-arm preflight, original-QCC replay guard, tests and dispatcher implemented; next scientific direction reviewed. No new peer evidence or unanswered local implementation dependency remains. Further attribution and model/scaling decisions require the registered server data/checkpoints and SW127 evidence.",
+  "requires_external_state_change": "Restore usable WSL SSH Frontier connection, then resume research. Inspect original requests and deployed SHAs before any new transfer/launch.",
+  "goal_complete": false,
+  "user_pause_requested": false,
+  "local_research_and_remote_tasks_deleted_or_stopped": false
+}
