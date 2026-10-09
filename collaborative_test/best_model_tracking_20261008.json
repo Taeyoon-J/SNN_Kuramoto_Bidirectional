@@ -172,7 +172,7 @@
   "latest_competitive_assignment_pilot": {
     "experiment": "SW0121",
     "seed": 0,
-    "status": "registered_control_verified_actual_gpu_preflight_running",
+    "status": "actual_gpu_preflight_passed_training_running",
     "source": "SW0097 positive_frozen seed0 with registered live encoder",
     "matched_control": "Completed SW0117 analytic_candidate",
     "intervention": "Replace hard-H RGB credit with train-only competitive spike assignment reconstruction R and detached assignment-to-Q consistency C; retain original density prior and legacy affinity.",
@@ -180,6 +180,10 @@
     "schedule": "32 B16 frozen-source head warmup; then 256 B16 joint updates with separate core and head Adam/clipping, fixed first-four TRAIN lambda calibration.",
     "evaluation": "Discard head; original trained-encoder gamma and actual-Q classifier on fixed320 modal-patch metrics.",
     "local_validation": "Eight CPU tests, compilation, JSON parsing and final review passed before seven-file SHA-verified deployment.",
+    "actual_preflight_summary": "SW_0121_competitive_assignment/actual_preflight_summary_20261009.json",
+    "lambda": 3.983464726966146,
+    "warmup_reconstruction": {"candidate": 0.5220083566382527, "global_mean_baseline": 0.9999999981373549, "fixed_scramble_loss_increase": 0.4687804812565446},
+    "actual_gradient_and_update_checks": "All four TRAIN calibration batches have nonzero R-to-component-spikes and C-to-Q credit; encoder, graph, core and head changed in the disposable split-Adam update.",
     "launch_note": "Initial helper launch terminated before model work on an ARCHIVE attribute error; log preserved, helper reference corrected, new supervisor and actual preflight child verified live.",
     "promotion_status": "No evaluation score yet; no seed expansion or incumbent replacement."
   },
