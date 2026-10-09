@@ -31,7 +31,7 @@
     "For each seed, reproduce the same-input source no-grad full 1024 rollout exactly in theta, averaged/component membrane, averaged/component actual spikes, Q, production labels/H, phase-primary, positive-Q, and RGB forward values.",
     "Use all 512 actual settled frames for phase, Q, hard production partition, and RGB loss; only the final 64 frames are live for gradients.",
     "Check finite nonzero analytic-RGB gradients into encoder, graph, oscillator drive, dendrite, and membrane parameter families; perform one disposable matched B16 Adam update and verify expected trainable groups change.",
-    "Require current source, cache, order, SW117/SW0122 short references, and fixed lambda hashes before making any attempt artifact. No masks or GT reads in preflight/training."
+    "Require the fresh corrected three-seed foundation proof, current source/cache/order, immutable SW0117 lambda record, and fully validated SW0117/SW0122 short references before preflight or training. Bind the proof SHA into each preflight and training manifest. No masks or GT reads in preflight/training."
   ],
   "evaluation": {
     "ids": [1320, 1639],

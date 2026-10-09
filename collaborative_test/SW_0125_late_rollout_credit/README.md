@@ -14,6 +14,8 @@ same-input preflight and 256-update, full three-seed pilot. `evaluate.py` uses
 the unchanged fixed QCC evaluator, and `dispatcher.py` runs the nine stage tasks
 only on exclusively leased idle GPUs without automatic retries.
 
-The preflight and pipeline have only local CPU/API validation so far. Real
-1024-frame three-seed parity, GPU gradient checks, training, and endpoint
-evaluations remain pending. No performance conclusion is registered here.
+The foundation probes passed actual 1024-frame trace/loss parity and RGB
+gradient checks for all three seeds with zero optimizer updates. The full
+pipeline passed nine local CPU/API tests (one additional CUDA test skipped).
+Its four-batch GPU preflights, training, and endpoint evaluations are pending.
+No performance improvement or all-gating contribution is claimed.
