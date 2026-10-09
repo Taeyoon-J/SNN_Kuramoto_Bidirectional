@@ -1,0 +1,99 @@
+{
+  "experiment": "SW0109",
+  "audit_kind": "read_only_recovery_evidence_inventory",
+  "audit_date": "2026-10-09",
+  "remote_metadata_written": false,
+  "training_restarted": false,
+  "local_recovery_helper_tests": {
+    "command": "python -c \"import numpy; import unittest; s=unittest.defaultTestLoader.discover('collaborative_test/SW_0109_unique_data_scaling', pattern='test_recover_completed_training.py'); r=unittest.TextTestRunner(verbosity=2).run(s); raise SystemExit(not r.wasSuccessful())\"",
+    "passed": 6,
+    "failed": 0
+  },
+  "queue_evidence": {
+    "old_SW0109_state": {
+      "path": "collaborative_test/SW_0109_unique_data_scaling/results_archive/queue_state.json",
+      "sha256": "0fe96d06719d31d393c564f060740f75e14a36dc70c01a2a559ebe33fe343b37",
+      "status": "waiting_for_SW0108_and_SW0106_complete",
+      "recorded_active": 0,
+      "recorded_pending": 24,
+      "recorded_attempts": 0,
+      "recorded_queue_process_present": false
+    },
+    "SW0113_master_state": {
+      "path": "collaborative_test/SW_0113_experiment_queue/results_archive/queue_state.json",
+      "sha256": "7c8c7ce4d50a97a69e0cf71ada5153b94fb05910220e1f0a63cbc81c63e1e4e5",
+      "status": "waiting_for_free_gpu_or_dependency",
+      "active": 0,
+      "seed0_attempts": [
+        {"task_id": "train_seed0_N2500", "return_code": 1, "validated": false, "log_sha256": "ee710cc084a5e2a5d1529948ef5dd57ce3e58081e9aacd1401b8530f183827a2"},
+        {"task_id": "train_seed0_N10000", "return_code": 1, "validated": false, "log_sha256": "ee710cc084a5e2a5d1529948ef5dd57ce3e58081e9aacd1401b8530f183827a2"},
+        {"task_id": "train_seed0_N70000", "return_code": 1, "validated": false, "log_sha256": "ee710cc084a5e2a5d1529948ef5dd57ce3e58081e9aacd1401b8530f183827a2"}
+      ],
+      "failure": "Each worker exited at manifest serialization with KeyError: '4096' in exposure_counts[str(BATCH*256)]."
+    }
+  },
+  "recovery_code": {
+    "remote_runner_sha256": "500c30573cb43e6070d45ee8db919aff8838b1ce3aef0efebc5d42feb5aa83ab",
+    "expected_original_runner_sha256": "08a06572a429fe78888184e66852e5e845c79713b342d70e524be4960cb6ca91",
+    "remote_recovery_helper_present": false,
+    "remote_recovery_test_present": false,
+    "original_runner_backup_found": false,
+    "launch_evidence_found": false
+  },
+  "preflight": {
+    "path": "collaborative_test/SW_0109_unique_data_scaling/results_archive/preflight_seed0.json",
+    "sha256": "450a978c03e0b9baddb5ca5c53180ab344d10314349d7fe56e1d51dee118db54",
+    "status": "passed",
+    "original_runner_sha256": "08a06572a429fe78888184e66852e5e845c79713b342d70e524be4960cb6ca91",
+    "source_core_sha256": "77329674c3e1370e2b44b013b42c2f226281e0a5fd0c57b772eac9182db70327",
+    "source_manifest_sha256": "d154d241fa3a7bae2345c7cfcf388c9130da04b07cb6745bda208f9280fccbef",
+    "training_gamma_sha256": "75e8a872b0dad319e58934b48177858511845c057cc370c330ff7ea968023490",
+    "training_gamma_manifest_sha256": "fab9aa8303a4657f4d9c880001ff3a4b06615780eb33a334f9df953b63176c4a",
+    "encoder_sha256": "9b9c9c59725f872084a6c9bfae1ebbd1b89de40d18ef4f8ab6b8ec014c2ab868",
+    "preprocessing_sha256": "a9ec3281b9603021c37f7c346baa6cf62513c5ce7edde867ab7eddf24b18e127",
+    "batch_size": 16,
+    "time_steps": 64,
+    "settle": 32,
+    "ground_truth_used": false,
+    "pool_checks": [2500, 10000, 70000]
+  },
+  "seed0_artifacts": {
+    "2500": {
+      "output_path": "trained_models/SW0109_unique_data_scaling/seed0_N2500",
+      "history_updates": 4375,
+      "history_sequential_finite_positive_gradients": true,
+      "history_sha256": "278461f518ab61bfffa470210fefa28937112a155c04af971b9d5c5e9b9936f8",
+      "core_sha256": "1ec3929ea32fa6fb435686b7fc45fc2f8f12d3ca1d6d6f85b1033de7bbd67ab3",
+      "prefix_256_core_sha256": "354c4c75b90a1bd4d40b6688169f75814583a10e60d77ee0b0c52506b61d6357",
+      "progress_last_update": 4352,
+      "manifest_marker_optimizer_evaluation_present": false
+    },
+    "10000": {
+      "output_path": "trained_models/SW0109_unique_data_scaling/seed0_N10000",
+      "history_updates": 4375,
+      "history_sequential_finite_positive_gradients": true,
+      "history_sha256": "0728abfc12e883b97450bdef89055eeb2c1249dbb8c4350e60bfaa8b8b7eb929",
+      "core_sha256": "09150ec6cb8c2a644ea36fb2fa6049fd416fc8afd092ce02ea14f38e9a6966b9",
+      "prefix_256_core_sha256": "83350c483370d7664a0acfc02c7dfb16903626c24147e0044a74e4a1d4991cff",
+      "progress_last_update": 4352,
+      "manifest_marker_optimizer_evaluation_present": false
+    },
+    "70000": {
+      "output_path": "trained_models/SW0109_unique_data_scaling/seed0_N70000",
+      "history_updates": 4375,
+      "history_sequential_finite_positive_gradients": true,
+      "history_sha256": "256bcacffcd3233d64b2b3bdaaae05fd1bff695f3ba43b3f18462036c3858f0b",
+      "core_sha256": "8ada8fe58fd87b18576ba3c33df5f2bf50aff5bfa4584c951cac047de2b41c34",
+      "prefix_256_core_sha256": "a4b4daf5b6c84fb66f37a0a294200618164eb22b9885d6406f1d96df6c827f7a",
+      "progress_last_update": 4352,
+      "manifest_marker_optimizer_evaluation_present": false
+    }
+  },
+  "required_evidence_missing_for_helper_dry_run": [
+    "original-runner backup file matching the pinned original SHA",
+    "immutable launch_evidence JSON binding actual argv, task metadata, preflight/gamma SHA, master-state SHA and attempt-log mapping",
+    "the recovery helper and its focused tests are not deployed on Frontier",
+    "an immutable archived-state copy is not present; the SW0113 queue_state.json is available and contains task rows/attempts but is not yet separately archived"
+  ],
+  "dry_run_command_template": "python recover_completed_training.py --size SIZE --output-dir /Data0/kevinswk/patch_v2_sw/trained_models/SW0109_unique_data_scaling/seed0_NSIZE --archived-master-state /Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0113_experiment_queue/results_archive/queue_state.json --archived-preflight /Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0109_unique_data_scaling/results_archive/preflight_seed0.json --original-runner-backup ORIGINAL_RUNNER_BACKUP --launch-evidence LAUNCH_EVIDENCE --error-log /Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0113_experiment_queue/logs/train_seed0_NSIZE.log"
+}

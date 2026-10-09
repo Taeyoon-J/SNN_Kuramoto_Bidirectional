@@ -1,0 +1,39 @@
+{
+  "status": "local_checkpoint_only_queue_prepared_pending_review",
+  "purpose": "Evaluate existing seed-0 SW0109 final cores after the historical manifest-serialization error, without certifying or repairing training completion.",
+  "training_completion_certified": false,
+  "source_runs": {
+    "sizes": [2500, 10000, 70000],
+    "checkpoint_sha256": {
+      "2500": "1ec3929ea32fa6fb435686b7fc45fc2f8f12d3ca1d6d6f85b1033de7bbd67ab3",
+      "10000": "09150ec6cb8c2a644ea36fb2fa6049fd416fc8afd092ce02ea14f38e9a6966b9",
+      "70000": "8ada8fe58fd87b18576ba3c33df5f2bf50aff5bfa4584c951cac047de2b41c34"
+    },
+    "original_runner_sha256": "08a06572a429fe78888184e66852e5e845c79713b342d70e524be4960cb6ca91",
+    "fixed_evaluation_runner_sha256": "500c30573cb43e6070d45ee8db919aff8838b1ce3aef0efebc5d42feb5aa83ab",
+    "shared_evaluator_sha256": "b3d7b2344329940c05adcd0139108feacea4dd2eeb495295bf0e7db5595feab1",
+    "recovery_classification": "checkpoint-only diagnostic; original rc=1 and missing training manifest/marker remain preserved"
+  },
+  "evaluation": {
+    "runner_cli": "existing SW0109 run.py --stage eval",
+    "ids": [1320, 1639],
+    "image_count": 320,
+    "batch_size": 8,
+    "time_steps": 1024,
+    "settle": 512,
+    "membrane_vth": 0.06,
+    "threshold": 0.5,
+    "minimum_group_size": 2,
+    "background": "largest_component",
+    "metrics": ["fg_ari", "foreground_iou", "matched_object_iou"],
+    "prediction_uses_ground_truth": false
+  },
+  "queue": {
+    "outputs": "results_archive/recovered_checkpoint_eval_20261009/N{2500,10000,70000}",
+    "global_gpu_leases": "/tmp/kevinswk_sw0113_gpu_leases/gpu{0,1,2,3}.lock",
+    "exclusive_gpu_memory_ceiling_mib": 512,
+    "automatic_retries": false,
+    "existing_outputs_overwritten": false
+  },
+  "promotion_or_training_claim": false
+}
