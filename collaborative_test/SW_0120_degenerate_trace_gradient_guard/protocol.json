@@ -1,0 +1,14 @@
+{
+  "experiment": "SW0120_degenerate_trace_gradient_guard",
+  "status": "implementation_and_synthetic_tests_only",
+  "scope": "Standalone affinity helper; no model, loss, evaluator, or training changes",
+  "forward_contract": "Matches spike_synchrony_affinity in float conversion, settle slicing, temporal centering, norm clamp, matrix multiplication, correlation clamp, component stack order, positive clamp, and component product.",
+  "backward_intervention": "For each centered trace norm <= the existing eps (default 1e-8), detach only the already-computed normalized trace in backward. Forward values remain unchanged.",
+  "training_contract": {
+    "source_recipe": "SW0117 candidate recipe and immutable lambda remain unchanged",
+    "density_or_threshold_change": false,
+    "training_started": false,
+    "actual_update_equivalence_required_before_training": true
+  },
+  "tests": "test_affinity.py checks exact forward equality, degenerate/valid trace gradient behavior, settle ordering, and epsilon boundary. These are synthetic tests, not model-level or training evidence."
+}
