@@ -1,0 +1,528 @@
+{
+  "experiment": "SW0119",
+  "status": "diagnostic_complete_training_not_started",
+  "purpose": "Investigate fixed synchrony-density pressure and SW0117 gradient outliers before a single-term objective intervention.",
+  "source_core_sha256": "36f2481dd1fa51fa29bd4dc34275a876b71d8b76fbee13ac47a0a1bfe6766fbf",
+  "training_id_order_sha256": "a490cc42cc5aa3d2709f3c938264025a362d9698a62d2be343fd8f77428af99c",
+  "ground_truth_used": false,
+  "optimizer_or_parameter_updates": 0,
+  "batches": [
+    {
+      "batch": 0,
+      "loss_values": {
+        "primary": 4.174297332763672,
+        "positive_actual_spike_product": 2.7307868003845215,
+        "old": 17.828231811523438,
+        "rgb": 0.5464421510696411,
+        "balance_10B_PLV_plus_50B_Q": 3.7027156352996826,
+        "B_PLV": 0.005303375422954559,
+        "B_Q": 0.07299363613128662
+      },
+      "gradient_norms_and_cosines": {
+        "encoder": {
+          "weighted_balance_10B_PLV_plus_50B_Q_norm": 92.1345117139846,
+          "old_phase_plus_5positive_actual_Q_norm": 357.72251766143194,
+          "rgb_partition_norm": 2.145829413312663,
+          "balance_vs_rgb_cosine": 0.12224629720250468,
+          "old_vs_rgb_cosine": 0.548884321765254
+        },
+        "graph": {
+          "weighted_balance_10B_PLV_plus_50B_Q_norm": 21.9295989561749,
+          "old_phase_plus_5positive_actual_Q_norm": 45.39905917252881,
+          "rgb_partition_norm": 0.28847530066461163,
+          "balance_vs_rgb_cosine": -0.6772503272943566,
+          "old_vs_rgb_cosine": -0.6118069522160661
+        },
+        "core": {
+          "weighted_balance_10B_PLV_plus_50B_Q_norm": 12.498073227733773,
+          "old_phase_plus_5positive_actual_Q_norm": 60.18348576841317,
+          "rgb_partition_norm": 0.7128798366829473,
+          "balance_vs_rgb_cosine": 0.6179181268430959,
+          "old_vs_rgb_cosine": 0.6611991383841409
+        },
+        "joint": {
+          "weighted_balance_10B_PLV_plus_50B_Q_norm": 95.52945825010642,
+          "old_phase_plus_5positive_actual_Q_norm": 365.5797124773488,
+          "rgb_partition_norm": 2.2794735207236805,
+          "balance_vs_rgb_cosine": 0.11659669007249361,
+          "old_vs_rgb_cosine": 0.5300248247164994
+        }
+      },
+      "offdiagonal_density": {
+        "PLV": {
+          "mean": 0.8984829187393188,
+          "fraction_gt_0_5": 0.9204829931259155,
+          "fraction_gt_0_8": 0.8372166752815247,
+          "count": 1044480
+        },
+        "Q": {
+          "mean": 0.657343864440918,
+          "fraction_gt_0_5": 0.6567919254302979,
+          "fraction_gt_0_8": 0.636326253414154,
+          "count": 1044480
+        }
+      },
+      "component_centered_trace_norms": {
+        "settle": 32,
+        "definition": "L2 norm over time after subtracting each unit/component settled-trace temporal mean",
+        "exact_zero_count": 0,
+        "below_1e-6_count": 0,
+        "all_components": {
+          "count": 16384,
+          "q": {
+            "0": 0.02007855474948883,
+            "25": 1.3176229000091553,
+            "50": 1.4275072813034058,
+            "75": 1.4713492393493652,
+            "90": 1.5677896738052368,
+            "95": 1.6836388111114502,
+            "99": 1.9393154382705688,
+            "100": 2.2788686752319336
+          }
+        },
+        "by_component": {
+          "0": {
+            "count": 4096,
+            "q": {
+              "0": 0.02007855474948883,
+              "25": 1.3166524767875671,
+              "50": 1.4265614748001099,
+              "75": 1.4702487289905548,
+              "90": 1.5579515099525452,
+              "95": 1.6721471548080444,
+              "99": 1.9261707365512855,
+              "100": 2.2788686752319336
+            }
+          },
+          "1": {
+            "count": 4096,
+            "q": {
+              "0": 0.02007855474948883,
+              "25": 1.315939486026764,
+              "50": 1.4259703159332275,
+              "75": 1.4701752662658691,
+              "90": 1.5569191575050354,
+              "95": 1.670429766178131,
+              "99": 1.9261707365512855,
+              "100": 2.2788686752319336
+            }
+          },
+          "2": {
+            "count": 4096,
+            "q": {
+              "0": 0.02007855474948883,
+              "25": 1.315965086221695,
+              "50": 1.4263033270835876,
+              "75": 1.4702073335647583,
+              "90": 1.557423174381256,
+              "95": 1.6717897355556488,
+              "99": 1.9366975605487824,
+              "100": 2.2788686752319336
+            }
+          },
+          "3": {
+            "count": 4096,
+            "q": {
+              "0": 0.02007855474948883,
+              "25": 1.3213779628276825,
+              "50": 1.4320394396781921,
+              "75": 1.4754315316677094,
+              "90": 1.604295015335083,
+              "95": 1.7750608026981354,
+              "99": 1.978340423107148,
+              "100": 2.2788686752319336
+            }
+          }
+        }
+      }
+    },
+    {
+      "batch": 1,
+      "loss_values": {
+        "primary": 4.464005470275879,
+        "positive_actual_spike_product": 2.599123001098633,
+        "old": 17.45962142944336,
+        "rgb": 0.6258687376976013,
+        "balance_10B_PLV_plus_50B_Q": 2.707503080368042,
+        "B_PLV": 0.005766788497567177,
+        "B_Q": 0.05299670249223709
+      },
+      "gradient_norms_and_cosines": {
+        "encoder": {
+          "weighted_balance_10B_PLV_plus_50B_Q_norm": 146.82552015293922,
+          "old_phase_plus_5positive_actual_Q_norm": 162.59054797704698,
+          "rgb_partition_norm": 4.692886703194695,
+          "balance_vs_rgb_cosine": 0.40479368894247814,
+          "old_vs_rgb_cosine": 0.7465948107175661
+        },
+        "graph": {
+          "weighted_balance_10B_PLV_plus_50B_Q_norm": 4.976399923889389,
+          "old_phase_plus_5positive_actual_Q_norm": 30.875057168304618,
+          "rgb_partition_norm": 1.2331287569665772,
+          "balance_vs_rgb_cosine": -0.6600225443414756,
+          "old_vs_rgb_cosine": 0.8743182155908548
+        },
+        "core": {
+          "weighted_balance_10B_PLV_plus_50B_Q_norm": 25.799760585274665,
+          "old_phase_plus_5positive_actual_Q_norm": 24.163064195370577,
+          "rgb_partition_norm": 1.1495969111597617,
+          "balance_vs_rgb_cosine": 0.15829361191177996,
+          "old_vs_rgb_cosine": 0.11446930726860409
+        },
+        "joint": {
+          "weighted_balance_10B_PLV_plus_50B_Q_norm": 149.15805566794285,
+          "old_phase_plus_5positive_actual_Q_norm": 167.25073727171457,
+          "rgb_partition_norm": 4.986518344338821,
+          "balance_vs_rgb_cosine": 0.37586664465098746,
+          "old_vs_rgb_cosine": 0.7267798739194893
+        }
+      },
+      "offdiagonal_density": {
+        "PLV": {
+          "mean": 0.9127666354179382,
+          "fraction_gt_0_5": 0.9332089424133301,
+          "fraction_gt_0_8": 0.8770661354064941,
+          "count": 1044480
+        },
+        "Q": {
+          "mean": 0.6817867159843445,
+          "fraction_gt_0_5": 0.6952742338180542,
+          "fraction_gt_0_8": 0.6414311528205872,
+          "count": 1044480
+        }
+      },
+      "component_centered_trace_norms": {
+        "settle": 32,
+        "definition": "L2 norm over time after subtracting each unit/component settled-trace temporal mean",
+        "exact_zero_count": 0,
+        "below_1e-6_count": 0,
+        "all_components": {
+          "count": 16384,
+          "q": {
+            "0": 0.04695635288953781,
+            "25": 1.387981504201889,
+            "50": 1.4520808458328247,
+            "75": 1.4800956547260284,
+            "90": 1.5258389711380005,
+            "95": 1.6169685125350952,
+            "99": 2.03547119140625,
+            "100": 2.724195957183838
+          }
+        },
+        "by_component": {
+          "0": {
+            "count": 4096,
+            "q": {
+              "0": 0.04695635288953781,
+              "25": 1.3877069354057312,
+              "50": 1.4520649909973145,
+              "75": 1.4798903167247772,
+              "90": 1.5249603986740112,
+              "95": 1.6153257489204407,
+              "99": 2.028708148002625,
+              "100": 2.3867626190185547
+            }
+          },
+          "1": {
+            "count": 4096,
+            "q": {
+              "0": 0.04695635288953781,
+              "25": 1.3874877989292145,
+              "50": 1.4519963264465332,
+              "75": 1.479838877916336,
+              "90": 1.5246971249580383,
+              "95": 1.6138109266757965,
+              "99": 2.02735869884491,
+              "100": 2.3867626190185547
+            }
+          },
+          "2": {
+            "count": 4096,
+            "q": {
+              "0": 0.04695635288953781,
+              "25": 1.3880209624767303,
+              "50": 1.452090561389923,
+              "75": 1.479959100484848,
+              "90": 1.525076687335968,
+              "95": 1.6165574193000793,
+              "99": 2.028708148002625,
+              "100": 2.3867626190185547
+            }
+          },
+          "3": {
+            "count": 4096,
+            "q": {
+              "0": 0.04695635288953781,
+              "25": 1.3886985778808594,
+              "50": 1.4522895812988281,
+              "75": 1.480857253074646,
+              "90": 1.528448462486267,
+              "95": 1.6223263144493103,
+              "99": 2.048486065864563,
+              "100": 2.724195957183838
+            }
+          }
+        }
+      }
+    },
+    {
+      "batch": 2,
+      "loss_values": {
+        "primary": 4.25770378112793,
+        "positive_actual_spike_product": 2.6485466957092285,
+        "old": 17.500436782836914,
+        "rgb": 0.5755220055580139,
+        "balance_10B_PLV_plus_50B_Q": 2.981860876083374,
+        "B_PLV": 0.007998538203537464,
+        "B_Q": 0.05803750827908516
+      },
+      "gradient_norms_and_cosines": {
+        "encoder": {
+          "weighted_balance_10B_PLV_plus_50B_Q_norm": 135.95293450413234,
+          "old_phase_plus_5positive_actual_Q_norm": 197.59386391206883,
+          "rgb_partition_norm": 18.992796246024344,
+          "balance_vs_rgb_cosine": -0.25868302079258526,
+          "old_vs_rgb_cosine": 0.4839381498882487
+        },
+        "graph": {
+          "weighted_balance_10B_PLV_plus_50B_Q_norm": 21.951759180393516,
+          "old_phase_plus_5positive_actual_Q_norm": 35.856723504668295,
+          "rgb_partition_norm": 5.93377124121999,
+          "balance_vs_rgb_cosine": -0.9883646762769493,
+          "old_vs_rgb_cosine": 0.43041912025551426
+        },
+        "core": {
+          "weighted_balance_10B_PLV_plus_50B_Q_norm": 34.426339687330916,
+          "old_phase_plus_5positive_actual_Q_norm": 64.84001413657569,
+          "rgb_partition_norm": 1.449198359725302,
+          "balance_vs_rgb_cosine": -0.6504885098533614,
+          "old_vs_rgb_cosine": -0.40106763120982103
+        },
+        "joint": {
+          "weighted_balance_10B_PLV_plus_50B_Q_norm": 141.95158680221363,
+          "old_phase_plus_5positive_actual_Q_norm": 211.02906697756768,
+          "rgb_partition_norm": 19.95084274590816,
+          "balance_vs_rgb_cosine": -0.29277221156646904,
+          "old_vs_rgb_cosine": 0.4441690020251434
+        }
+      },
+      "offdiagonal_density": {
+        "PLV": {
+          "mean": 0.8996297121047974,
+          "fraction_gt_0_5": 0.9198300242424011,
+          "fraction_gt_0_8": 0.8481981754302979,
+          "count": 1044480
+        },
+        "Q": {
+          "mean": 0.699326753616333,
+          "fraction_gt_0_5": 0.6997338533401489,
+          "fraction_gt_0_8": 0.6789177656173706,
+          "count": 1044480
+        }
+      },
+      "component_centered_trace_norms": {
+        "settle": 32,
+        "definition": "L2 norm over time after subtracting each unit/component settled-trace temporal mean",
+        "exact_zero_count": 0,
+        "below_1e-6_count": 0,
+        "all_components": {
+          "count": 16384,
+          "q": {
+            "0": 0.043724022805690765,
+            "25": 1.319080650806427,
+            "50": 1.4298033714294434,
+            "75": 1.4700080156326294,
+            "90": 1.5074198246002197,
+            "95": 1.563963186740875,
+            "99": 1.846672534942627,
+            "100": 2.1893110275268555
+          }
+        },
+        "by_component": {
+          "0": {
+            "count": 4096,
+            "q": {
+              "0": 0.043724022805690765,
+              "25": 1.3174037635326385,
+              "50": 1.4292722940444946,
+              "75": 1.4696285128593445,
+              "90": 1.5059860944747925,
+              "95": 1.561495065689087,
+              "99": 1.8364369332790382,
+              "100": 2.1893110275268555
+            }
+          },
+          "1": {
+            "count": 4096,
+            "q": {
+              "0": 0.043724022805690765,
+              "25": 1.3166202008724213,
+              "50": 1.4291875958442688,
+              "75": 1.4696206748485565,
+              "90": 1.5057599544525146,
+              "95": 1.5612083971500397,
+              "99": 1.8364369332790382,
+              "100": 2.1893110275268555
+            }
+          },
+          "2": {
+            "count": 4096,
+            "q": {
+              "0": 0.043724022805690765,
+              "25": 1.3179123997688293,
+              "50": 1.4294167160987854,
+              "75": 1.46986123919487,
+              "90": 1.5067703127861023,
+              "95": 1.5625106692314148,
+              "99": 1.8405669510364544,
+              "100": 2.1893110275268555
+            }
+          },
+          "3": {
+            "count": 4096,
+            "q": {
+              "0": 0.043724022805690765,
+              "25": 1.3270641565322876,
+              "50": 1.4314665794372559,
+              "75": 1.4707878232002258,
+              "90": 1.514650583267212,
+              "95": 1.5735948383808136,
+              "99": 1.8613035619258886,
+              "100": 2.1893110275268555
+            }
+          }
+        }
+      }
+    },
+    {
+      "batch": 3,
+      "loss_values": {
+        "primary": 4.572450160980225,
+        "positive_actual_spike_product": 2.5980687141418457,
+        "old": 17.562793731689453,
+        "rgb": 0.5922727584838867,
+        "balance_10B_PLV_plus_50B_Q": 2.3559157848358154,
+        "B_PLV": 0.005689721554517746,
+        "B_Q": 0.04598037153482437
+      },
+      "gradient_norms_and_cosines": {
+        "encoder": {
+          "weighted_balance_10B_PLV_plus_50B_Q_norm": 113.34927291058632,
+          "old_phase_plus_5positive_actual_Q_norm": 127.86028814964008,
+          "rgb_partition_norm": 4.529795406437619,
+          "balance_vs_rgb_cosine": -0.5107869288759018,
+          "old_vs_rgb_cosine": -0.49954609370200476
+        },
+        "graph": {
+          "weighted_balance_10B_PLV_plus_50B_Q_norm": 5.270953667920919,
+          "old_phase_plus_5positive_actual_Q_norm": 25.2697255707779,
+          "rgb_partition_norm": 0.9175298443738871,
+          "balance_vs_rgb_cosine": -0.9914336169372199,
+          "old_vs_rgb_cosine": 0.28196513805609164
+        },
+        "core": {
+          "weighted_balance_10B_PLV_plus_50B_Q_norm": 25.618023727875787,
+          "old_phase_plus_5positive_actual_Q_norm": 47.942096017168,
+          "rgb_partition_norm": 0.9883859691168436,
+          "balance_vs_rgb_cosine": 0.1982191930950551,
+          "old_vs_rgb_cosine": -0.43654047095128684
+        },
+        "joint": {
+          "weighted_balance_10B_PLV_plus_50B_Q_norm": 116.32765690776186,
+          "old_phase_plus_5positive_actual_Q_norm": 138.87136813127023,
+          "rgb_partition_norm": 4.726289693136379,
+          "balance_vs_rgb_cosine": -0.4766091686555381,
+          "old_vs_rgb_cosine": -0.46237116585716503
+        }
+      },
+      "offdiagonal_density": {
+        "PLV": {
+          "mean": 0.9165717363357544,
+          "fraction_gt_0_5": 0.9445695877075195,
+          "fraction_gt_0_8": 0.8591874241828918,
+          "count": 1044480
+        },
+        "Q": {
+          "mean": 0.7130759358406067,
+          "fraction_gt_0_5": 0.7183191776275635,
+          "fraction_gt_0_8": 0.6950750946998596,
+          "count": 1044480
+        }
+      },
+      "component_centered_trace_norms": {
+        "settle": 32,
+        "definition": "L2 norm over time after subtracting each unit/component settled-trace temporal mean",
+        "exact_zero_count": 0,
+        "below_1e-6_count": 0,
+        "all_components": {
+          "count": 16384,
+          "q": {
+            "0": 0.016388336196541786,
+            "25": 1.3102731704711914,
+            "50": 1.4300569295883179,
+            "75": 1.4677430391311646,
+            "90": 1.501340627670288,
+            "95": 1.5748228192329403,
+            "99": 1.8303345441818237,
+            "100": 2.6621241569519043
+          }
+        },
+        "by_component": {
+          "0": {
+            "count": 4096,
+            "q": {
+              "0": 0.016388336196541786,
+              "25": 1.3087133765220642,
+              "50": 1.4286748766899109,
+              "75": 1.4671239852905273,
+              "90": 1.4979420900344849,
+              "95": 1.5613654553890228,
+              "99": 1.8105262458324434,
+              "100": 2.323394775390625
+            }
+          },
+          "1": {
+            "count": 4096,
+            "q": {
+              "0": 0.016388336196541786,
+              "25": 1.307161808013916,
+              "50": 1.4283649325370789,
+              "75": 1.46706023812294,
+              "90": 1.4971111416816711,
+              "95": 1.5602830350399017,
+              "99": 1.8118462085723877,
+              "100": 2.323394775390625
+            }
+          },
+          "2": {
+            "count": 4096,
+            "q": {
+              "0": 0.016388336196541786,
+              "25": 1.309885710477829,
+              "50": 1.4292616248130798,
+              "75": 1.4673961997032166,
+              "90": 1.4986101984977722,
+              "95": 1.5627324879169464,
+              "99": 1.8208953619003307,
+              "100": 2.323394775390625
+            }
+          },
+          "3": {
+            "count": 4096,
+            "q": {
+              "0": 0.016388336196541786,
+              "25": 1.3126090466976166,
+              "50": 1.432636320590973,
+              "75": 1.469477504491806,
+              "90": 1.5153523683547974,
+              "95": 1.6252851486206055,
+              "99": 1.8742965102195743,
+              "100": 2.6621241569519043
+            }
+          }
+        }
+      }
+    }
+  ],
+  "interpretation": "Q mean below 0.867 creates upward synchrony pressure. Balance-vs-R gradient cosine has both signs; first four source batches have no near-zero centered traces. These facts do not attribute the later gradient outliers or establish a persistent RGB conflict. Exact 45-update prefix replay is required before training the proposed intervention."
+}
