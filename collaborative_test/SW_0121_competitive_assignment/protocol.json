@@ -1,0 +1,59 @@
+{
+  "experiment": "SW0121 competitive assignment auxiliary objective",
+  "status": "offline_loss_head_implementation_only",
+  "training_started": false,
+  "source": {
+    "checkpoint": "SW0097 seed0 positive_frozen core and registered encoder",
+    "training_ids": "the same registered 4096 ordered TRAIN IDs used by SW0097",
+    "ground_truth_used_for_training": false
+  },
+  "features": {
+    "input": "settled actual component spikes [B,4,256,32]",
+    "flattening": "per patch, component-major then settled-time, producing 128 channels",
+    "normalization": "one fixed per-channel RMS fitted from the first 32 ordered B16 TRAIN batches (512 images), using frozen SW0097 seed0 source and original encoder; values <=1e-8 use neutral denominator 1.0; frozen through warmup and joint training; no ground-truth input",
+    "head": "shared Linear(128,64), GELU, Linear(64,11), softmax(logits/0.1)",
+    "slots": 11,
+    "count_constraint": "none; no occupancy uniformity or count loss",
+    "excluded_head_inputs": ["RGB", "XY", "gamma"]
+  },
+  "auxiliary_objective": {
+    "rgb_target": "detached native RGB patch means X [B,256,3]",
+    "slot_rgb_mean": "mu=P^T X / clamp_min(sum_p(P),1e-8)",
+    "reconstruction": "per image: variance=mean_channel(var_over_256_patches(X)); R=mean((P mu-X)^2)/clamp_min(variance,1e-6); batch R is mean over images",
+    "affinity_consistency": "C=offdiag_mean((Q-detach(P P^T))^2)",
+    "candidate_total": "old phase objective + 5*old actual-positive-Q objective + lambda*(R+C)",
+    "readout": "unchanged legacy actual-spike Q threshold/component evaluator; assignment head is discarded"
+  },
+  "schedule": {
+    "head_warmup": "32 ordered TRAIN batches of 16 images (512 images); source core, encoder, and graph frozen; head-only Adam at 3e-4 on unweighted R with clip 1; retain this head optimizer state for joint training",
+    "joint_training": "256 updates, B=16, T=64, settle=32; original 4096-ID order and registered shuffle seed 117",
+    "joint_optimizer": "fresh core/graph/encoder Adam (core/graph LR 3e-5, encoder LR 3e-6) on old+lambda*(R+C), clip core families together at 1; separate retained head Adam LR 3e-4 on unweighted R only, clip head gradients at 1",
+    "loss_weight": "seed0 lambda=0.25*median(first-four TRAIN batch ||grad(old)|| / ||grad(R+C)||); fixed for all later batches/seeds; require finite and 1e-4<=lambda<=1e4, otherwise stop without clamping or retuning"
+  },
+  "preflight": [
+    "all four calibration batches have finite, nonzero old and auxiliary gradients in encoder, graph, and non-graph core families",
+    "head R is below the global-mean RGB baseline",
+    "fixed row scrambling increases reconstruction error",
+    "assignment probabilities are nonconstant",
+    "R gives finite nonzero gradients to head parameters and C gives finite nonzero gradients to Q-producing parameters",
+    "one throwaway full optimizer update is finite and changes expected trainable parameters"
+  ],
+  "evaluation": {
+    "prediction_ids": [1320, 1639],
+    "image_count": 320,
+    "batch_size": 8,
+    "time_steps": 1024,
+    "settle_frames": 512,
+    "threshold": 0.5,
+    "minimum_component_size": 2,
+    "background_rule": "largest component",
+    "assignment_head_used": false,
+    "ground_truth_used_for_prediction": false
+  },
+  "promotion": {
+    "candidate_mean_fg_ari": "at least +0.01 over both frozen SW0097 seed0 and matched control",
+    "paired_image_bootstrap": "95% lower bound greater than zero against both references",
+    "foreground_iou": "retain preregistered SW0116 Slot margin",
+    "failure_policy": "no tuning or seed expansion after a failed registered guard"
+  }
+}
