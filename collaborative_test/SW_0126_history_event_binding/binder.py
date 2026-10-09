@@ -96,4 +96,3 @@ class TemporalSlotRGBBinder(nn.Module):
             "pixel_assignment": pixel_assignment,
             "reconstruction": reconstruction,
         }
-
