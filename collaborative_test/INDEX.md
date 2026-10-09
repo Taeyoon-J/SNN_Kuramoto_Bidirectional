@@ -2,6 +2,7 @@
 
 | ID | Status | Change | Validation result |
 |---|---|---|---|
+| SW0126 | locally implemented; remote connection blocked | History-centered membrane events and imagewise full-trace binder; conditional actual emitted spike versus continuous-gate pilot | All27 local CPU checks pass, including fractional-gate readout regression. No GPU screen, training or score confirmed. All3 TRAIN-only screens must pass before paired seed1 training. |
 | SW0109 | queued; upstream dependency waiting | Matched2500/10000/70000 nested unique-image pools from audited pre-large-data cores; equal70k additional exposures, three seeds, dependency-aware exclusive GPU concurrency | Frontier13 CPU tests pass. Coordinator verified live, all24 tasks queued, no GPU worker yet. See [README](SW_0109_unique_data_scaling/README.md). |
 | SW0108 | queued; GPU waiting | Frozen SW0097 seed0 baseline followed by five one-at-a-time physical rollout interventions; exact full320 baseline reproduction required | First attempt invalid due missing explicit .06 membrane threshold and safely archived. Corrected Frontier6 CPU tests pass; coordinator verified live, no GPU worker yet. See [README](SW_0108_gate_contribution_screen/README.md). |
 | SW0107 | complete; official-data transfer loses FG-ARI | Additional official-CLEVR70k continuation of each frozen best SW0097 core, then our native320 evaluation | Three-seed mean .769423/.532391/.591882; lower FG-ARI than matched native-trained Slot .774933. Additional continuation, not a data-only from-scratch comparison. See [README](SW_0107_official_full70k_transfer/README.md). |
@@ -144,4 +145,4 @@ intermediate ablation to improve all three metrics; see `SELECTION_POLICY.md`.
 
 | SW0124 endpoint | complete; not promoted | All3 frozen-source temporal-prototype readouts,320sameimages | .751922/.397001/.552672; originalQCC exactly reproduced; all3FG lower, pairedCI[-.030902,-.017989]. Incumbent97 unchanged; no recipe expansion. |
 
-| SW0125 foundation | actual3seed PASS; training pending | Match native1024 states/512 loss band; backprop64 tail, original97/QCC/loss preserved | Alltraces/Q/H/loss exact; all6families RGBcredit finite/nonzero.0optimizerupdates; earlierCUDAmean-layout failure preserved/corrected. No score/gating/scaling proof. |
+| SW0125 | complete; no improvement | Full1024 forward with live64 late-gradient tail, same three source97 cores and loss | Three-seed mean .767077/.585208/.592722; FG-ARI below source97 on all seeds. Paired source FG delta CI [-.015291,-.003216]. Closed; incumbent97 retained. |
