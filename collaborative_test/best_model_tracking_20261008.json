@@ -1054,16 +1054,36 @@
   },
   "latest_shared_rgb_seed_replication": {
     "experiment": "SW0129",
-    "status": "preflight_partial_scientific_rejection",
+    "status": "seed1_partial_pair_training_live",
     "server_cpu_tests": 12,
     "seed1": "passed; source/parity/finite update/assignment-use checks passed",
     "seed2": "rejected: mean shuffled hard-partition minus original RGB reconstruction loss did not exceed zero",
     "initial_supervisor_pid": 2228233,
     "initial_processes_terminal": true,
-    "training_updates": 0,
+    "training_updates": "in progress; fixed256 per arm",
     "decision": "Preserve initial global-block record; separately run the passed seed1 candidate/control pair as partial replication, without seed2 guard changes or retry. Sol6.1 review approved. No three-seed promotion or70k expansion is available from this partial result.",
     "incumbent_changed": false,
     "gating_contribution_proven": false,
-    "data_scaling_proven": false
+    "data_scaling_proven": false,
+    "resume_supervisor_pid": 2230532,
+    "resume_tasks": {
+      "sw0129_train_s1_control": {
+        "status": "running",
+        "gpu": 0,
+        "child_pid": 2230556
+      },
+      "sw0129_eval_s1_control": {
+        "status": "queued"
+      },
+      "sw0129_train_s1_candidate": {
+        "status": "running",
+        "gpu": 1,
+        "child_pid": 2230557
+      },
+      "sw0129_eval_s1_candidate": {
+        "status": "queued"
+      }
+    },
+    "partial_scope": "seed1 only; seed0 historical result selected posthoc, seed2 scientific preflight rejection preserved; no3seedmean or70k promotion"
   }
 }

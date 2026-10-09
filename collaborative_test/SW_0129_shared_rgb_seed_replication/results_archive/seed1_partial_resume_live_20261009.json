@@ -1,0 +1,152 @@
+{
+  "state": {
+    "experiment": "SW0129_seed1_partial_resume",
+    "status": "running",
+    "parent_state_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0129_shared_rgb_seed_replication/results_archive/dispatcher_state.json",
+    "parent_state_sha256": "c116ab9657a48b2c41e901763e6b1e204aafa4ed56844675a88e7d38b80645f5",
+    "seed2_failure_log_sha256": "ecb8d1169260ea28be0f67c11cc778c26bc521c5d1e062ecb1652c51698c34c2",
+    "parent_status": "preflight_failed",
+    "parent_seed1_preflight_reused": true,
+    "parent_seed2_scientific_failure_preserved": true,
+    "supervisor_pid": 2230532,
+    "started": 1791590189.2984571,
+    "runner_fingerprint": {
+      "collaborative_test/SW_0129_shared_rgb_seed_replication/run.py": "1b6150c9d50503bf1ba96a9dc0da2fb1f8c0b9a53cc56d7a8a9b2a0ed7cd0a3f",
+      "collaborative_test/SW_0129_shared_rgb_seed_replication/protocol.json": "02143937d69d38af8ed2d8a2d81aee2742fc2eb60be9501c664e1466fcddec5b",
+      "collaborative_test/SW_0106_spike_partition_rgb/run.py": "3099c8f2b87de5e862d640a62d7631029df64a1ef8f2eadd406734522002bc19",
+      "collaborative_test/SW_0106_spike_partition_rgb/partition_rgb.py": "2b023a788007afd2c03c45928cb4864e7bc57204dc8c13166f2fbe6b435c7261",
+      "collaborative_test/SW_0094_aligned_joint_pilot/run.py": "9f4e9046a2960e7aa53bf16d7e0663bee162b3f56a11f11d45554d79889536a3",
+      "snn_kuramoto_bidirectional/s2net_cls.py": "18313e5ee7358146703256e7e29d9846bfa60394feedba3237f2f7eac8791288",
+      "collaborative_test/SW_0040_peer_transfer/evaluate.py": "b3d7b2344329940c05adcd0139108feacea4dd2eeb495295bf0e7db5595feab1",
+      "snn_kuramoto_bidirectional/evaluation.py": "4a15980c9aa0248dbe0e837ad1b0b430ce26a7ab367c004d290a1272bb1025d7",
+      "snn_kuramoto_bidirectional/membrane_layer.py": "680ad89277b60206f192123165d13eca916e5183dc71eaa443a8eeb5f4b8fac8",
+      "snn_kuramoto_bidirectional/dendric_layer.py": "69d960809ff1ad73a91a7067f87f605ae69ef612be9b936e4b486cc29511dd1a",
+      "snn_kuramoto_bidirectional/kuramoto_layer.py": "76e61785fb19228fe4ecf6bbdfd4dc72519b9d6bd34d5f4fd9165e29c76d263e",
+      "snn_kuramoto_bidirectional/sinusoidal_gating.py": "e323a3b6472f51def23d63628fe25cc83088822ae73b5e0fcd1789884739f6c4",
+      "snn_kuramoto_bidirectional/loss_function.py": "6542d084f66c07101b75869709df9302db45e0dde87b6b5945d1790daa316543",
+      "snn_kuramoto_bidirectional/spike_classifier.py": "2d13c15a928f503bc09239aae2153a5f1a82de77aab4b5a76d0dfe876b755181",
+      "snn_kuramoto_bidirectional/gamma_initializer.py": "9b5f3e077c755738b1636b97ac9640321a5b7abf5ec85b9a12557209cf5ad50b",
+      "snn_kuramoto_bidirectional/training/train_gamma_initializer.py": "845f91d3255d1d72d2a69c432c7b559a9d29d90a4186a4821e75864af9e47d20",
+      "snn_kuramoto_bidirectional/training/train_s2net_core.py": "6056ae4d98d36678ae680e868c6c40716c8b2380f6ab81437e60ce962e15efde",
+      "collaborative_test/SW_0123_adaptive_temporal_assignment/dispatcher.py": "e37dcc0777871a91593041c99f3b1bfe55cc45f88d5d5be49a2e12d0116d8574"
+    },
+    "coordinator_sha256": "9658cd893ab0be9e07d636373bd558ba4c2661672444ec36183aa55e117e7a22",
+    "tasks": {
+      "sw0129_train_s1_control": {
+        "task": {
+          "experiment": "SW0129",
+          "task_id": "sw0129_train_s1_control",
+          "stage": "train",
+          "seed": 1,
+          "arm": "control",
+          "depends_on": [
+            "sw0129_preflight_s1"
+          ]
+        },
+        "status": "running",
+        "gpu": 0,
+        "gpu_uuid": "GPU-a0a7d03d-adc1-37ca-4342-328878b3657c",
+        "lease_path": "/tmp/kevinswk_sw0113_gpu_leases/gpu0.lock",
+        "used_before_mib": 16,
+        "argv": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0129_shared_rgb_seed_replication/run.py",
+          "--stage",
+          "train",
+          "--seed",
+          "1",
+          "--arm",
+          "control",
+          "--device",
+          "cuda:0",
+          "--output-dir",
+          "/Data0/kevinswk/patch_v2_sw/trained_models/SW0129_shared_rgb_seed_replication/control_seed1"
+        ],
+        "log_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0129_shared_rgb_seed_replication/results_archive/resume_seed1_sw0129_train_s1_control.log",
+        "triton_cache": "/tmp/kevinswk_sw0129_resume_sw0129_train_s1_control_1791590189479",
+        "launched": 1791590189.4794538,
+        "child_pid": 2230556,
+        "started": 1791590189.4862924
+      },
+      "sw0129_eval_s1_control": {
+        "task": {
+          "experiment": "SW0129",
+          "task_id": "sw0129_eval_s1_control",
+          "stage": "evaluate",
+          "seed": 1,
+          "arm": "control",
+          "depends_on": [
+            "sw0129_train_s1_control"
+          ]
+        },
+        "status": "queued"
+      },
+      "sw0129_train_s1_candidate": {
+        "task": {
+          "experiment": "SW0129",
+          "task_id": "sw0129_train_s1_candidate",
+          "stage": "train",
+          "seed": 1,
+          "arm": "candidate",
+          "depends_on": [
+            "sw0129_preflight_s1"
+          ]
+        },
+        "status": "running",
+        "gpu": 1,
+        "gpu_uuid": "GPU-45604115-c231-56a5-32ea-d3001e8ff243",
+        "lease_path": "/tmp/kevinswk_sw0113_gpu_leases/gpu1.lock",
+        "used_before_mib": 2,
+        "argv": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0129_shared_rgb_seed_replication/run.py",
+          "--stage",
+          "train",
+          "--seed",
+          "1",
+          "--arm",
+          "candidate",
+          "--device",
+          "cuda:0",
+          "--output-dir",
+          "/Data0/kevinswk/patch_v2_sw/trained_models/SW0129_shared_rgb_seed_replication/candidate_seed1"
+        ],
+        "log_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0129_shared_rgb_seed_replication/results_archive/resume_seed1_sw0129_train_s1_candidate.log",
+        "triton_cache": "/tmp/kevinswk_sw0129_resume_sw0129_train_s1_candidate_1791590189507",
+        "launched": 1791590189.5081666,
+        "child_pid": 2230557,
+        "started": 1791590189.5151458
+      },
+      "sw0129_eval_s1_candidate": {
+        "task": {
+          "experiment": "SW0129",
+          "task_id": "sw0129_eval_s1_candidate",
+          "stage": "evaluate",
+          "seed": 1,
+          "arm": "candidate",
+          "depends_on": [
+            "sw0129_train_s1_candidate"
+          ]
+        },
+        "status": "queued"
+      }
+    }
+  },
+  "processes": {
+    "2230532": {
+      "exists": true,
+      "cmdline": "/Data0/kevinswk/envs/snn/bin/python -m collaborative_test.SW_0129_shared_rgb_seed_replication.resume_passed_seed1 "
+    },
+    "2230556": {
+      "exists": true,
+      "cmdline": "/Data0/kevinswk/envs/snn/bin/python /Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0129_shared_rgb_seed_replication/run.py --stage train --seed 1 --arm control --device cuda:0 --output-dir /Data0/kevinswk/patch_v2_sw/trained_models/SW0129_shared_rgb_seed_replication/control_seed1 "
+    },
+    "2230557": {
+      "exists": true,
+      "cmdline": "/Data0/kevinswk/envs/snn/bin/python /Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0129_shared_rgb_seed_replication/run.py --stage train --seed 1 --arm candidate --device cuda:0 --output-dir /Data0/kevinswk/patch_v2_sw/trained_models/SW0129_shared_rgb_seed_replication/candidate_seed1 "
+    }
+  },
+  "server_resume_tests_passed": 3,
+  "base_server_tests_passed": 12,
+  "deployment": "Original files and failed queue preserved; only two resume files added. Training runner/protocol/optimizer/objective unchanged."
+}
