@@ -1,0 +1,82 @@
+{
+  "experiment": "SW0126",
+  "status": "all_three_current_feasibility_screens_passed",
+  "seed_reports": [
+    {
+      "seed": 0,
+      "report_sha256": "c101ff3f04bab73b87d4852fc22710bcf9fca98d3a0b3c19114a869ce0530519",
+      "activity_occupancy_by_component": [
+        0.3933563232421875,
+        0.38712751865386963,
+        0.409893274307251,
+        0.41713201999664307
+      ],
+      "minimum_mixed_unit_fraction_by_component": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "minimum_reconstruction_gradient_norm_by_family": {
+        "assignment_norm": 0.006085485219955444,
+        "beta_norm": 4.918070408166386e-05,
+        "membrane_tau_m_norm": 3.2221041692537256e-06,
+        "dendritic_norm": 0.00019209894526284188
+      },
+      "source_phase_carrier_gate_exact_all4": true,
+      "matched_train_images": 64
+    },
+    {
+      "seed": 1,
+      "report_sha256": "e5b7d964f1e4743e1758808cbbb55f1b907bbb87af72e5fe52c6450aecdbaa4e",
+      "activity_occupancy_by_component": [
+        0.38766276836395264,
+        0.3931311368942261,
+        0.411440372467041,
+        0.527773380279541
+      ],
+      "minimum_mixed_unit_fraction_by_component": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "minimum_reconstruction_gradient_norm_by_family": {
+        "assignment_norm": 0.010640529915690422,
+        "beta_norm": 0.00013381878670770675,
+        "membrane_tau_m_norm": 4.38210008724127e-06,
+        "dendritic_norm": 0.000373992370441556
+      },
+      "source_phase_carrier_gate_exact_all4": true,
+      "matched_train_images": 64
+    },
+    {
+      "seed": 2,
+      "report_sha256": "3c01b7b428a435f0790d88284f8fc8529a64caebf14474483f011c62047f2957",
+      "activity_occupancy_by_component": [
+        0.4423050880432129,
+        0.4352452754974365,
+        0.44126713275909424,
+        0.44529592990875244
+      ],
+      "minimum_mixed_unit_fraction_by_component": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "minimum_reconstruction_gradient_norm_by_family": {
+        "assignment_norm": 0.008829841390252113,
+        "beta_norm": 1.7224923794856295e-05,
+        "membrane_tau_m_norm": 2.945024107248173e-06,
+        "dendritic_norm": 0.0003433519450481981
+      },
+      "source_phase_carrier_gate_exact_all4": true,
+      "matched_train_images": 64
+    }
+  ],
+  "optimizer_updates": 0,
+  "ground_truth_used": false,
+  "interpretation": "Actual emitted spike trace is non-saturated and reconstruction credit reaches all registered downstream families on these bounded TRAIN batches. No semantic mask quality, useful gating contribution or scaling improvement is yet established.",
+  "next_stage": "Same-initialization seed1 emitted-spike versus continuous-gate paired training and fixed320 evaluation."
+}

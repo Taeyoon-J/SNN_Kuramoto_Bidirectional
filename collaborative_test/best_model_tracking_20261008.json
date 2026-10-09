@@ -873,14 +873,27 @@
   },
   "latest_prospective_mechanism": {
     "experiment": "SW0126",
-    "status": "local_conditional_pilot_validated_not_deployed",
-    "cpu_tests_passed": 27,
+    "status": "all3_feasibility_pass_seed1_paired_training_live",
+    "cpu_tests_passed": 29,
     "mask_readout": "actual emitted gate-times-event trace through temporal binder assignment",
     "pilot_scope": "seed1 matched actual-spike versus continuous-gate heads after all3 TRAIN-only screen proofs",
     "scores": null,
     "incumbent_changed": false,
     "gating_contribution_proven": false,
     "data_scaling_proven": false,
-    "record": "SW_0126_history_event_binding/local_pilot_validation_20261009.json"
+    "record": "SW_0126_history_event_binding/paired_training_live_20261009.json",
+    "feasibility_seeds_passed": [
+      0,
+      1,
+      2
+    ],
+    "training_pids": [
+      1983365,
+      1983366
+    ],
+    "training_gpus": [
+      0,
+      1
+    ]
   }
 }

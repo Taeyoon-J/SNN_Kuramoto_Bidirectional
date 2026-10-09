@@ -1,0 +1,33 @@
+{
+  "experiment": "SW0126",
+  "status": "seed1_paired_training_confirmed_live",
+  "all_three_screens_passed": true,
+  "both_disposable_optimizer_preflights_passed": true,
+  "supervisor_pid": 1980688,
+  "pilot_queue_pid": 1982768,
+  "arms": [
+    {
+      "arm": "history_event",
+      "gpu": 0,
+      "pid": 1983365,
+      "pid_live": true
+    },
+    {
+      "arm": "gate_only",
+      "gpu": 1,
+      "pid": 1983366,
+      "pid_live": true
+    }
+  ],
+  "training_unique_images": 4096,
+  "batch_size": 16,
+  "updates_per_arm": 256,
+  "train_order_and_initialization_matched": true,
+  "source_lineage": "Immutable source97 seed1 from70k-trained lineage; this experiment is additional matched4096 continuation, not new70k training.",
+  "evaluation": "Identical fixed320 IDs1320..1639; three registered patch metrics; both prediction artifacts saved and SHA-verified before GT masks.",
+  "queue_state_path": "/tmp/kevinswk_sw0126_pilot_queue/state.json",
+  "pipeline_state_path": "/tmp/kevinswk_sw0126_pipeline_runs/20261009T204811Z_20e07d014a9e482fb933928718e14f72/state.json",
+  "scores_available": false,
+  "gating_contribution_proven": false,
+  "data_scaling_proven": false
+}
