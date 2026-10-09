@@ -169,6 +169,29 @@
       "matched_object_iou": 0.0013593034144603333
     }
   },
+  "latest_training_gradient_guard_pilot": {
+    "experiment": "SW0120",
+    "seed": 0,
+    "status": "training_running_verified_20261009",
+    "matched_control": "SW0117 analytic_candidate",
+    "source": "SW0097 positive_frozen seed0",
+    "intervention": "Training Q backward guard at existing centered-trace epsilon 1e-8; forward Q, loss, masks and evaluation unchanged.",
+    "training": {
+      "unique_images": 4096,
+      "updates": 256,
+      "batch_size": 16,
+      "shuffle_seed": 117,
+      "core_graph_lr": 0.00003,
+      "encoder_lr": 0.000003,
+      "lambda_rgb": 7.865416617457706
+    },
+    "actual_update3_proof": "SW_0120_degenerate_trace_gradient_guard/update3_guard_proof_20261009.json",
+    "preflight": "Actual four-batch GPU preflight passed with return code 0 before training.",
+    "promotion_status": "No measured candidate scores yet; no seed fanout or replacement of the three-seed incumbent.",
+    "required_fg_ari_gain": 0.01,
+    "comparison_anchors": ["SW0097 seed0", "SW0117 analytic_candidate"],
+    "evaluation": "Original fixed 320-image modal-patch contract; allowed-label diagnostic is not used for promotion."
+  },
   "latest_analytic_rgb_pilot": {
     "experiment": "SW0115",
     "seed": 0,
