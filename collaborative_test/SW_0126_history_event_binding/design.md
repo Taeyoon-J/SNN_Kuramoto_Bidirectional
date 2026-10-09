@@ -34,16 +34,21 @@ the gate envelope without changing recurrent dynamics.
 The planned binder reads the full settled 512-frame trace of the four actual
 component events. It must not replace the trace with a time mean and must not
 feed theta, RGB, or gamma directly to its classifier. It predicts at most 11
-patch groups without ground-truth object counts. Any shared RGB decoder must
-reconstruct through the spike-derived assignment: interpolate the 16x16
+patch groups without ground-truth object counts. It flattens each patch's
+four-by-512 trace, projects it to 64 features, then applies 11 learned
+imagewise slot queries with three soft-assignment/update iterations. The
+registered RGB decoder uses a shared 32-feature coordinate basis and shared
+per-slot RGB coefficients. It predicts each slot's RGB field, then
+reconstructs through the spike-derived assignment: interpolate the 16x16
 assignment maps to native resolution and mix the shared slot RGB predictions
 with those maps. An independent decoder mask/alpha head is out of scope because
 it could segment the image while ignoring the event representation. Coordinates
 may enter the decoder only, identically in both arms. Final labels use the
 registered largest-group-as-background and minimum-two-foreground-group rule.
 
-The first data-dependent screen is limited to 64 training images and checks
-activity saturation, centered trace variance, and actual gradient credit into
+The first data-dependent screen is limited to the first four ordered B16
+training batches (64 images) and checks aggregate activity saturation,
+per-image/component centered trace variance, and actual gradient credit into
 the adaptation, membrane, and dendritic parameter families before a paired
 seed-1 pilot. It is a prerequisite, not evidence of improvement. No validation
 ground truth may enter prediction or training. The prior SW0125 late-rollout
@@ -52,6 +57,7 @@ repair claim or proof that gating, data scale, or long-horizon credit caused
 that failure. If the registered pilot fails, close the branch without tuning
 thresholds or expanding seeds.
 
-The current code contains only the membrane adapter and focused unit tests.
-The imagewise binder, TRAIN-only activity screen, full runner, and evaluation
-remain unimplemented pending review of this mechanism surface.
+The opt-in membrane adapter, imagewise binder, bounded TRAIN-only activity
+screen, and an owner-aware three-seed screen dispatcher are implemented
+locally. The binder and dispatcher have CPU contract tests; the screen has not
+been run on registered data. No training runner or evaluation is implemented.

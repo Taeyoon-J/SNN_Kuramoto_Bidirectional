@@ -35,7 +35,8 @@
       "no ground-truth object-count input"
     ],
     "maximum_slots": 11,
-    "decoder_constraint": "shared slot RGB decoder; reconstruct via the spike-derived assignment maps interpolated from 16x16 to native resolution and used as the slot-mixture weights",
+    "classifier": "flatten the four component traces over the full 512-frame window per patch; shared linear projection to 64 features; 11 learned imagewise slot queries with three soft-assignment/update iterations",
+    "decoder_constraint": "shared coordinate basis (2->32 GELU->32) and shared per-slot 32x3 RGB coefficients; decode each slot RGB field with sigmoid, then interpolate the spike-derived 16x16 assignments to native 128x128 and use them as the only RGB mixture weights",
     "forbidden": "independent decoder mask/alpha output that can segment while ignoring spike assignments",
     "coordinates": "decoder-only and identical in paired arms, if used",
     "readout": "existing largest-group-as-background and minimum-two-foreground-group policy"
@@ -47,7 +48,7 @@
       "centered event-trace variance",
       "finite nonzero actual gradient credit to beta/adaptation, membrane, and dendritic families"
     ],
-    "thresholds": "exactly four B16 batches per seed: each component aggregate binary-event occupancy in [0.02,0.98], and every image/component has at least 10% of units with both event values over the 512-frame band; any failure closes the recipe without tuning",
+    "thresholds": "exactly four B16 batches per seed: aggregate each component's binary-event occupancy across all 64 images and units in [0.02,0.98], and every image/component has at least 10% of units with both event values over the 512-frame band; any failure closes the recipe without tuning",
     "gradient_guard": "history_event arm requires finite nonzero reconstruction credit to P, every beta component, tau_m, and dendritic parameters in every batch; gate_only records but does not fail on expected zero beta/membrane/dendritic credit because its binder input is upstream continuous gate",
     "ground_truth_used_for_prediction_or_training": false
   },
@@ -59,9 +60,9 @@
   },
   "implementation_status": {
     "membrane_adapter_and_unit_tests": "implemented locally",
-    "imagewise_binder": "not implemented",
-    "TRAIN_activity_screen": "not implemented",
-    "training_runner_or_queue": "not implemented",
+    "imagewise_binder": "implemented locally; synthetic CPU tests only",
+    "TRAIN_activity_screen": "implemented locally; not run on registered data",
+    "training_runner_or_queue": "not implemented; owner-aware three-seed TRAIN-screen dispatcher implemented locally",
     "evaluation": "not implemented",
     "server_execution": "not started"
   }
