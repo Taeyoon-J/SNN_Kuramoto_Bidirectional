@@ -244,7 +244,25 @@
       }
     },
     "promotion_passed": false,
-    "result_summary": "SW_0121_competitive_assignment/seed0_paired_summary_20261009.json"
+    "result_summary": "SW_0121_competitive_assignment/seed0_paired_summary_20261009.json",
+    "training_credit_diagnostic": {
+      "status": "completed_readonly_TRAIN_diagnostic",
+      "images": 64,
+      "batches": 4,
+      "ground_truth_read": false,
+      "optimizer_or_checkpoint_modified": false,
+      "raw_result": "SW_0121_competitive_assignment/training_credit_diagnostic_20261009.json",
+      "script_sha256": "e8536d475449a1b0bad1dd83a00c35279f0e055822fc37f5a1830d7031d60808",
+      "mean_all_blocked_pair_fraction": 0.20622128620743752,
+      "mean_abs_dC_dQ_signal_mass_blocked": 0.020753829972818494,
+      "mean_source_final_Q_threshold_edge_agreement": 0.985933244228363,
+      "source_trace_warm_head_R": 0.5362134724855423,
+      "source_trace_final_head_R": 0.45101431757211685,
+      "candidate_trace_final_head_R": 0.4395323619246483,
+      "fixed_candidateP_C_sourceQ": 0.05866608489304781,
+      "fixed_candidateP_C_candidateQ": 0.05769876949489117,
+      "interpretation": "Final head improves reconstruction on identical source traces, but original spike endpoint did not improve. Strict negative product paths exist, yet blocked gradient signal is only about 2%; this census does not establish the dominant bottleneck or gate causality."
+    }
   },
   "latest_explicit_density_removal_pilot": {
     "experiment": "SW0119",
