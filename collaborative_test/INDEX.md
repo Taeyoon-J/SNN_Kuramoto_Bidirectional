@@ -150,3 +150,5 @@ intermediate ablation to improve all three metrics; see `SELECTION_POLICY.md`.
 | SW0126 | complete; paired seed1 pilot failed, recipe closed | History-centered binary membrane events and full-temporal RGB assignment; matched gate-only head | Actual .365962/.249769/.194251 vs gate-only .436180/.393628/.241245 and source97 .742658/.590283/.584964. RGB losses decreased; all promotion gates failed. No seed or70k expansion; frozen-QCC attribution next. |
 
 | SW0127 | local8tests passed; server deployment unconfirmed, no GPU job launched | Frozen original-QCC attribution: native97 control, untrained history adapter, both completed126 cores; seed1 same320 | Two-stage queue prepared. Fresh SSH read failed banner exchange; pending original transfer preserved for inspection. No new score or model promotion. |
+
+| SW0127 resumed | server8tests and actual four-arm preflight passed; fixed320 evaluation live | GPU0 PID2211916, supervisor2211758; no optimizer updates | Six new files deployed after audited CLI-only SW0118 difference; existing helper unchanged. No new metric result yet. |

@@ -1,0 +1,47 @@
+{
+  "experiment": "SW0127",
+  "status": "preflight_passed_fixed320_evaluation_live",
+  "previous_blocker": "SSH restored through new authenticated master PID16398; old sessions14762/42538 exited1 Broken pipe/banner timeout; no deployed SW0127 file found before retry",
+  "deployment": {
+    "files": 6,
+    "dependencies_verified": 18,
+    "manifest_sha256": "96d75c10df024d1c6335593332365462ee11b91f8f5a46455fef729d663ad4d7",
+    "compatibility_record": "dependency_compatibility_20261009.json",
+    "existing_server_helper_changed": false
+  },
+  "local_tests_passed": 8,
+  "server_tests_passed": 8,
+  "server_test_seconds": 3.84,
+  "supervisor_pid": 2211758,
+  "preflight": {
+    "child_pid": 2211783,
+    "gpu": 0,
+    "returncode": 0,
+    "artifact_valid": true,
+    "status": "passed"
+  },
+  "evaluation": {
+    "child_pid": 2211916,
+    "gpu": 0,
+    "status": "running",
+    "optimizer_updates": 0,
+    "count": 320,
+    "ids": [
+      1320,
+      1639
+    ],
+    "arms": [
+      "source97_native",
+      "source97_untrained_history_adapter",
+      "sw0126_history_event",
+      "sw0126_gate_only"
+    ]
+  },
+  "server_state_path": "/tmp/kevinswk_sw0127_qcc_attribution/state.json",
+  "same_observer_tool_session": 51006,
+  "supervisor_proc_exists_confirmed": true,
+  "no_remote_job_restarted": true,
+  "new_scores_available": false,
+  "incumbent_changed": false,
+  "goal_status_on_resume": "active"
+}
