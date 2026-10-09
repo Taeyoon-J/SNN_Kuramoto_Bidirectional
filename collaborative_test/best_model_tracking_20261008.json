@@ -816,9 +816,59 @@
     "status": "all_three_actual_foundation_proofs_passed",
     "optimizer_updates": 0,
     "source": "SW0097 unchanged",
-    "result": "Exact1024 forward/512bandloss parity and finite nonzero late64RGBgradient credit; fulltraining/evaluation pending",
+    "result": "Exact foundation parity and usable disposable gradient updates passed; full pilot completed and failed promotion.",
     "new_metric_result": false,
     "gating_usefulness_proven": false,
     "scaling_proven": false
+  },
+  "latest_late_rollout_pilot": {
+    "experiment": "SW0125",
+    "status": "all_nine_tasks_complete_not_promoted",
+    "means": {
+      "fg_ari": 0.7670768679907054,
+      "foreground_iou": 0.5852080230156403,
+      "matched_object_iou": 0.5927222655419757
+    },
+    "source97_means": {
+      "fg_ari": 0.7763481729577292,
+      "foreground_iou": 0.5770703960502432,
+      "matched_object_iou": 0.6015374574167961
+    },
+    "matched_short_means": {
+      "fg_ari": 0.767340825782494,
+      "foreground_iou": 0.5745803976225792,
+      "matched_object_iou": 0.594957173826388
+    },
+    "matched_slot_means": {
+      "fg_ari": 0.7749334666743514,
+      "foreground_iou": 0.20358913115224261,
+      "matched_object_iou": 0.20693697915214362
+    },
+    "paired_fg_vs_source97": {
+      "mean_delta": -0.009271304967023681,
+      "ci95": [
+        -0.015291476902680593,
+        -0.003215861213683685
+      ],
+      "draws": 10000,
+      "seed": 125,
+      "unit": "paired image; identical sampled indices applied to all three seeds"
+    },
+    "paired_fg_vs_short": {
+      "mean_delta": -0.0002639577917885567,
+      "ci95": [
+        -0.006622264730923825,
+        0.006258113536193656
+      ],
+      "draws": 10000,
+      "seed": 125,
+      "unit": "paired image; identical sampled indices applied to all three seeds"
+    },
+    "incumbent_changed": false,
+    "all_seed_fg_below_source97": true,
+    "gating_usefulness_proven": false,
+    "data_scaling_proven": false,
+    "expanded_to_70000": false,
+    "summary": "collaborative_test/SW_0125_late_rollout_credit/three_seed_summary_20261009.json"
   }
 }

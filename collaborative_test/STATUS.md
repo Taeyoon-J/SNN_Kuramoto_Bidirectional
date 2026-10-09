@@ -1,3 +1,5 @@
+SW0125 completed 2026-10-09: all9 stages valid; mean FG/FGIoU/ObjectIoU .767077/.585208/.592722. FG below incumbent97 and matchedSlot; no promotion/70k expansion. See SW_0125_late_rollout_credit/three_seed_summary_20261009.json.
+
 SW0125 FOUNDATION PASS (2026-10-09): all3 actualB16 native1024 vs960detached+64live parity exact for alltraces/Q/H/loss; RGB credit finite/nonzero into all6families. Original layout-related failure archived, tolerance unchanged. Zero optimizerupdates; full256training/evaluation notstarted. Incumbent97 unchanged. See SW_0125_late_rollout_credit/foundation_outcome_20261009.md.
 
 SW0124 COMPLETE (2026-10-09): actual3seed frozen temporal-prototype masks .751922/.397001/.552672 versus unchanged97 .776348/.577070/.601537. Exact originalQCC reproduced; all3FG lower; pairedCI negative. ExecutionPASS/scientificFAIL. No new gating/scaling proof or incumbent promotion. Full evidence in SW_0124_temporal_prototype_readout/completed_results_20261009.json. Running paragraphs below are historical.
