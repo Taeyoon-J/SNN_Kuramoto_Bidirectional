@@ -4,8 +4,12 @@
   "training_launched": false,
   "native32_cache": {
     "count": 4096,
-    "tensor_shape": [4096, 8, 1024],
-    "registered_gamma16_max_abs_diff": 1.0728836059570312e-6,
+    "tensor_shape": [
+      4096,
+      8,
+      1024
+    ],
+    "registered_gamma16_max_abs_diff": 1.0728836059570312e-06,
     "cache_bytes": 134219389,
     "artifacts_preserved": true,
     "observer_exit_code": 1,
@@ -18,9 +22,9 @@
     "status": "passed",
     "source_core_sha256": "36f2481dd1fa51fa29bd4dc34275a876b71d8b76fbee13ac47a0a1bfe6766fbf",
     "runner_sha256": "7488bbfbd263d31d1da271e417c163c6b67147142ff46351642b4d517d76d605",
-    "microbatch_loss_abs_diff": 1.3113021850585938e-6,
-    "gradient_relative_norm_error": 9.078781143807341e-6,
-    "one_adam_update_max_abs_diff": 2.384185791015625e-7,
+    "microbatch_loss_abs_diff": 1.3113021850585938e-06,
+    "gradient_relative_norm_error": 9.078781143807341e-06,
+    "one_adam_update_max_abs_diff": 2.384185791015625e-07,
     "full_horizon_steps": 1024,
     "full_horizon_settle": 512,
     "ground_truth_used": false
@@ -35,10 +39,34 @@
     "production_changes": "Only the two physical-shape literals in run.py and coordinator.py change to100000.",
     "selected_image_ids_changed": false,
     "allowed_id_bound": 70640,
-    "evaluation_ids": [1320,1639],
+    "evaluation_ids": [
+      1320,
+      1639
+    ],
     "cache_rebuild_required": false,
     "independent_review": "PASS",
     "server_deployed": false,
     "next_required": "Preserve original grid16 preflight with its old runner SHA, then run fresh grid16 and grid32 preflights under the corrected runner before any training."
+  },
+  "latest_runtime": {
+    "seed": 0,
+    "training_grid16_exit_code": 0,
+    "training_grid32_exit_code": 0,
+    "updates_per_arm": 256,
+    "batch_size": 16,
+    "microbatch_size": 1,
+    "training_ids_sha256": "a490cc42cc5aa3d2709f3c938264025a362d9698a62d2be343fd8f77428af99c",
+    "training_runner_sha256": "79e8d11745de6040b95a42d76adb02048993bff54fb06201c216770f85c8ae9a",
+    "core16_sha256": "d9359e9c5c2253a709a2e9a21a3d9250b4bf5bd2797f7ae1a8279c61671d81d2",
+    "core32_sha256": "2a6e7bcfa35c174db195bc3071691e275d570af1761787c00f04621c23344920",
+    "evaluation_exit_code": 1,
+    "evaluation_failure": "predict_frozen passed CUDA spikes/component traces to CPU connected-component traversal; adjacency cuda versus seen cpu",
+    "evaluation_scores_available": false,
+    "recovery": "Preserve both completed training artifacts; correct evaluation CPU handoff then smoke and retry evaluation only",
+    "coherence_weights_registered": {
+      "grid16": 0.5,
+      "grid32": 1.0
+    },
+    "resolution_only_causal_comparison": false
   }
 }
