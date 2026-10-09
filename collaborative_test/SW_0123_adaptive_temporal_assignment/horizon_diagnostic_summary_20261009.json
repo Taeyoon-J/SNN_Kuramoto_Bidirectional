@@ -1,0 +1,69 @@
+{
+  "status": "complete",
+  "all_three_seeds": true,
+  "ground_truth_used": false,
+  "optimizer_updates": 0,
+  "rows": [
+    {
+      "seed": 0,
+      "same_images_same_encoder_same_checkpoints": true,
+      "horizons": {
+        "64": {
+          "mean_foreground_fraction": 0.17291259765625,
+          "mean_foreground_group_count": 0.984375,
+          "all_background_images_first64": 1,
+          "median_patch_embedding_spatial_variance_mean_of4batches": 0.060494025936350226,
+          "positive_actual_affinity_fraction_mean_of4batches": 0.7717448323965073
+        },
+        "1024": {
+          "mean_foreground_fraction": 0.0020751953125,
+          "mean_foreground_group_count": 0.109375,
+          "all_background_images_first64": 57,
+          "median_patch_embedding_spatial_variance_mean_of4batches": 0.0021218780893832445,
+          "positive_actual_affinity_fraction_mean_of4batches": 0.7918735146522522
+        }
+      }
+    },
+    {
+      "seed": 1,
+      "same_images_same_encoder_same_checkpoints": true,
+      "horizons": {
+        "64": {
+          "mean_foreground_fraction": 0.14495849609375,
+          "mean_foreground_group_count": 0.96875,
+          "all_background_images_first64": 2,
+          "median_patch_embedding_spatial_variance_mean_of4batches": 0.06989967171102762,
+          "positive_actual_affinity_fraction_mean_of4batches": 0.7593176066875458
+        },
+        "1024": {
+          "mean_foreground_fraction": 0.00909423828125,
+          "mean_foreground_group_count": 0.1875,
+          "all_background_images_first64": 52,
+          "median_patch_embedding_spatial_variance_mean_of4batches": 0.0016578082868363708,
+          "positive_actual_affinity_fraction_mean_of4batches": 0.718258410692215
+        }
+      }
+    },
+    {
+      "seed": 2,
+      "same_images_same_encoder_same_checkpoints": true,
+      "horizons": {
+        "64": {
+          "mean_foreground_fraction": 0.19671630859375,
+          "mean_foreground_group_count": 1.0,
+          "all_background_images_first64": 0,
+          "median_patch_embedding_spatial_variance_mean_of4batches": 0.07474957220256329,
+          "positive_actual_affinity_fraction_mean_of4batches": 0.5942038595676422
+        },
+        "1024": {
+          "mean_foreground_fraction": 0.0068359375,
+          "mean_foreground_group_count": 0.03125,
+          "all_background_images_first64": 62,
+          "median_patch_embedding_spatial_variance_mean_of4batches": 0.0009968494050554,
+          "positive_actual_affinity_fraction_mean_of4batches": 0.6968104243278503
+        }
+      }
+    }
+  ],
+  "interpretation": "Same-image longer dynamics/settled-window transition collapses assignments across all legacy seeds; dataset growth is not needed to produce this failure. TRAIN already lacks multi-instance grouping. This intervention jointly changes rollout/settle length and does not alone isolate CNN averaging from changing spike dynamics."
+}
