@@ -1,0 +1,64 @@
+{
+  "status": "posthoc_seed0_evidence_review",
+  "original_seed0_expansion_gate": "failed and unchanged",
+  "experiment": "SW0106",
+  "bootstrap": {
+    "replicates": 10000,
+    "seed": 129,
+    "unit": "paired image, one training seed; does not establish seed generalization"
+  },
+  "file_sha256": {
+    "candidate": "124fed288ff7c31d817b3eae346438e2b23f088a5adcf89a4cfd8723a80bcdc3",
+    "control": "39f5f0e61516743687c36179a6d75def898bc5264c2f8cce2c16ccb4e0141e58",
+    "source97": "009da533e0f3e7fa86d9840a85d87640d9424acf660512f64232ad1669fe61e0"
+  },
+  "comparisons": {
+    "control": {
+      "fg_ari": {
+        "mean_delta": 0.017487350774667072,
+        "paired_image_ci95": [
+          0.009848394998599777,
+          0.025717691977229777
+        ]
+      },
+      "foreground_iou": {
+        "mean_delta": 0.004169435915378854,
+        "paired_image_ci95": [
+          -0.0044528192073650125,
+          0.012316533123347703
+        ]
+      },
+      "matched_object_iou": {
+        "mean_delta": 0.019546470510196298,
+        "paired_image_ci95": [
+          0.010485664385599343,
+          0.028778843211304323
+        ]
+      }
+    },
+    "source97": {
+      "fg_ari": {
+        "mean_delta": 0.007941967012523731,
+        "paired_image_ci95": [
+          0.0011770816919508484,
+          0.015060488082247522
+        ]
+      },
+      "foreground_iou": {
+        "mean_delta": 0.003862642348255999,
+        "paired_image_ci95": [
+          -0.004359040466504804,
+          0.011306478774661994
+        ]
+      },
+      "matched_object_iou": {
+        "mean_delta": 0.011973937913349114,
+        "paired_image_ci95": [
+          0.003588759879972942,
+          0.02048278247749429
+        ]
+      }
+    }
+  },
+  "interpretation": "Candidate improves FG and object IoU against source97 with positive paired-image intervals. This justifies considering a separately preregistered seed1/2 replication under SELECTION_POLICY, not retroactive promotion or automatic70k expansion."
+}

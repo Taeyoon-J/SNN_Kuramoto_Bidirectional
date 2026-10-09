@@ -1,0 +1,15 @@
+# SW0129 design decision: exact shared-decoder replication
+
+SW0128 completed successfully as a rejection-only diagnostic. All six source-seed/distance-bin checks failed. Confident positive spike relations are not reliable object identity targets, so that self-teacher recipe is closed without threshold tuning or training.
+
+The next hypothesis is explicitly selected retrospectively from SW0106, not a reversal of its original failed expansion decision. Seed0 showed FG-ARI and matched-object-IoU improvement over source97 with positive paired-image intervals. Its original +.01 FG margin failed and remains recorded. SELECTION_POLICY allows retaining informative improvements; replication on both previously untested seeds is needed before interpreting this selected result as generalizable.
+
+Replicate the original SW0106 shared RGB decoder with actual-spike hard-QCC straight-through assignment credit and its detached-assignment control. This is different from SW0122's analytic color-mean objective and SW0126's newly learned binder. The decoder supplies training loss only; inference masks remain native actual spike QCC. Do not use the rejected SW0128 relations, target instance counts, or GT masks in training.
+
+Freeze each seed's SW0095 source, original 4096 training IDs and shuffle117+seed,32xB16 decoder-only warmup, seed106 decoder initialization, shared seed0 lambda23250.431374718348,256xB16 updates,T64/settle32, core/graphLR3e-5, encoderLR3e-6, decoderLR3e-4, and both Adam states after warmup. Both arms share all quantities except assignment-loss credit. Preserve original106 files/artifacts. Regenerate native validation gamma from each trained encoder and evaluate fixed320,B8,T1024/512,.50,min2,largest-component background. Reuse hash-bound original seed0 paired results instead of retraining selected seed0.
+
+Preregister the new three-seed continuation gate before seed1/2 results: meanFG strictly above both source97 and matched controls; at least two seedFG improvements against each; shared-image paired bootstrap10000 replicates with frozen RNG129 has positive95% lower bounds for both; foregroundIoU>=Slot+.05 and objectIoU>=Slot+.05. Report all three metrics and all seeds, even on rejection. Bootstrap covers image uncertainty, not training-seed certainty. No temperature,lambda,learning-rate,seed or epoch search after scoring. No70k expansion before this gate passes.
+
+A positive replication would establish evidence for reconstruction assignment credit under this recipe. It would not establish independent event credit, usefulness of every gating, increased performance with unique-data count, or untouched-split superiority. Those remain separate requirements after a useful candidate. Pretraining and upstream70k exposures must be disclosed in any scaling comparison; varying only continuation data does not establish from-scratch data scaling.
+
+Sol6.1 design review approved the exact replication scope on2026-10-09. The peer patch_v2 head was rechecked and remains697eeb67dc031325b63153e678cea8cbc602da31. No new peer experiment changes were available for incorporation.
