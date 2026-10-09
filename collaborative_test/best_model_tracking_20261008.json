@@ -169,6 +169,20 @@
       "matched_object_iou": 0.0013593034144603333
     }
   },
+  "latest_competitive_assignment_pilot": {
+    "experiment": "SW0121",
+    "seed": 0,
+    "status": "registered_control_verified_actual_gpu_preflight_running",
+    "source": "SW0097 positive_frozen seed0 with registered live encoder",
+    "matched_control": "Completed SW0117 analytic_candidate",
+    "intervention": "Replace hard-H RGB credit with train-only competitive spike assignment reconstruction R and detached assignment-to-Q consistency C; retain original density prior and legacy affinity.",
+    "head": "Actual settled four-component spikes only, fixed TRAIN512 channel RMS, 128->64->11 shared MLP; no RGB/XY/gamma inputs or object-count constraint.",
+    "schedule": "32 B16 frozen-source head warmup; then 256 B16 joint updates with separate core and head Adam/clipping, fixed first-four TRAIN lambda calibration.",
+    "evaluation": "Discard head; original trained-encoder gamma and actual-Q classifier on fixed320 modal-patch metrics.",
+    "local_validation": "Eight CPU tests, compilation, JSON parsing and final review passed before seven-file SHA-verified deployment.",
+    "launch_note": "Initial helper launch terminated before model work on an ARCHIVE attribute error; log preserved, helper reference corrected, new supervisor and actual preflight child verified live.",
+    "promotion_status": "No evaluation score yet; no seed expansion or incumbent replacement."
+  },
   "latest_explicit_density_removal_pilot": {
     "experiment": "SW0119",
     "seed": 0,
