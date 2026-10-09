@@ -321,9 +321,12 @@ def _compare_source_score(actual: dict, source_values: dict) -> dict:
             deltas[metric] = {"max_abs_diff": None, "passed": False}
             passed = False
             continue
+        if not np.isfinite(got).all() or not np.isfinite(expected).all():
+            deltas[metric] = {"max_abs_diff": None, "passed": False}
+            passed = False
+            continue
         max_abs = float(np.max(np.abs(got - expected)))
-        ok = bool(np.isfinite(got).all() and np.isfinite(expected).all()
-                  and max_abs <= 1e-10)
+        ok = max_abs <= 1e-10
         deltas[metric] = {"max_abs_diff": max_abs, "passed": ok}
         passed = passed and ok
     return {"passed": passed, "metrics": deltas}

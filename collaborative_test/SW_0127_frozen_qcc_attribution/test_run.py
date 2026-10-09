@@ -130,6 +130,10 @@ class FrozenQCCAttributionTests(unittest.TestCase):
         result = run._compare_source_score(scores, expected)
         self.assertFalse(result["passed"])
         self.assertFalse(result["metrics"]["fg_ari"]["passed"])
+        scores["fg_ari"]["per_image"] = [None] * 320
+        invalid = run._compare_source_score(scores, {metric: [0.5] * 320 for metric in run.METRICS})
+        self.assertFalse(invalid["passed"])
+        self.assertIsNone(invalid["metrics"]["fg_ari"]["max_abs_diff"])
 
 
 if __name__ == "__main__":
