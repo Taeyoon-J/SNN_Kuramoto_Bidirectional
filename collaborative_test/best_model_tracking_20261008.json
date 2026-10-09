@@ -438,5 +438,57 @@
       }
     },
     "interpretation": "Small FG-ARI and foreground-IoU gains, matched-object-IoU lower; no three-metric promotion and no three-seed or 70k expansion from this pilot alone."
+  },
+  "latest_joint_rgb_seed_replication": {
+    "experiment": "SW0122",
+    "status": "paired_training_running",
+    "registered_seeds": [
+      1,
+      2
+    ],
+    "historical_seed0": "Completed SW0117 control/candidate reused unchanged; original failed promotion preserved.",
+    "intervention": "Prospective three-seed replication of joint analytic RGB learning; unchanged model/loss/readout, fixed seed0-calibrated lambda.",
+    "lambda": 7.865416617457706,
+    "schedule": "Each new arm starts whole SW0097 matching source and registered encoder; own4096-ID order, shuffle118/119,256 B16 updates,T64/32,Adam3e-5 core/graph and3e-6 encoder,clip1.",
+    "local_validation": "Four focused CPU tests, compilation, JSON/CLI checks and final design/code review passed.",
+    "actual_source_validation": "Historical seed0 artifacts, actual seed1/2 source manifests/checkpoints/full320 evaluations and 13 queue command bindings passed on server.",
+    "queue_supervisor_pid": 1407513,
+    "actual_preflight_passed": [
+      {
+        "seed": 1,
+        "arm": "control"
+      },
+      {
+        "seed": 1,
+        "arm": "analytic_candidate"
+      },
+      {
+        "seed": 2,
+        "arm": "control"
+      }
+    ],
+    "verified_training_children": [
+      {
+        "seed": 1,
+        "arm": "control",
+        "pid": 1407943,
+        "gpu": 0
+      },
+      {
+        "seed": 1,
+        "arm": "analytic_candidate",
+        "pid": 1407979,
+        "gpu": 1
+      },
+      {
+        "seed": 2,
+        "arm": "control",
+        "pid": 1407958,
+        "gpu": 3
+      }
+    ],
+    "pending": "seed2 analytic_candidate preflight/train/evaluation reserved server-side for a genuinely free GPU.",
+    "evaluation": "Original fixed320 batch8,T1024/512,threshold.50,min2,largest-background,Q->CC; actual trained-encoder gamma.",
+    "promotion_status": "No new scores yet; no incumbent replacement or 70k expansion."
   }
 }
