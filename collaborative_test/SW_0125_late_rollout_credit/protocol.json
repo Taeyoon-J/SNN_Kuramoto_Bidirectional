@@ -1,0 +1,59 @@
+{
+  "experiment": "SW0125",
+  "status": "runner_locally_implemented_pending_review_and_real_preflights",
+  "hypothesis": "A 64-step differentiable tail can pass value-equivalence and measured-credit checks while computing the complete 1024-step source dynamics and all 512 settled frames for registered phase, Q, H, and RGB terms.",
+  "source": {
+    "checkpoint": "Whole immutable SW0097 positive_frozen core for each matched source seed 0, 1, and 2.",
+    "encoder": "Registered SW0097 input encoder and frozen feature preprocessing; encoder remains trainable in the prospective pilot.",
+    "data": "Per-seed exact SW0097 ordered 4096 TRAIN IDs and existing SW0106 byte-verified native RGB/gamma caches.",
+    "short_reference": "Reuse already completed matched SW0117 seed0 and SW0122 seeds1/2 control and analytic-candidate artifacts after full validators pass. No short pilot is rerun."
+  },
+  "late_rollout_foundation": {
+    "total_steps": 1024,
+    "settled_loss_window": "frames 512..1023 (512 actual frames)",
+    "differentiable_tail": "frames 960..1023 (64 actual frames)",
+    "prefix": "Frames 0..959 run under no-grad; phase history, dendrite, membrane, and previous-spike values are preserved then detached at the boundary.",
+    "static_graph_and_drive": "Prepared once with gradients enabled before burn-in and reused through prefix and tail; this preserves graph and oscillator-drive parameter paths without boundary recomputation.",
+    "scope": "Truncated BPTT. This is not full 1024-step BPTT and does not claim gradients through the detached prefix."
+  },
+  "training": {
+    "arms": ["late_candidate"],
+    "seeds": [0, 1, 2],
+    "updates": 256,
+    "batch_size": 16,
+    "shuffle_seeds": [117, 118, 119],
+    "optimizer": "Fresh Adam over the full source core/graph and encoder; core/graph LR 3e-5, encoder LR 3e-6, combined gradient clip 1.",
+    "objective": "phase_primary_on_last512_theta + 5 * positive_product_of_actual_four_component_spike_Q_on_last512 + 7.865416617457706 * unchanged_SW0115_analytic_actual_H_RGB_loss_on_last512",
+    "lambda": "Immutable SW0117 seed0 first-four-TRAIN calibration; no recalibration or tuning.",
+    "ground_truth_used_for_training": false
+  },
+  "preflight": [
+    "For each seed, reproduce the same-input source no-grad full 1024 rollout exactly in theta, averaged/component membrane, averaged/component actual spikes, Q, production labels/H, phase-primary, positive-Q, and RGB forward values.",
+    "Use all 512 actual settled frames for phase, Q, hard production partition, and RGB loss; only the final 64 frames are live for gradients.",
+    "Check finite nonzero analytic-RGB gradients into encoder, graph, oscillator drive, dendrite, and membrane parameter families; perform one disposable matched B16 Adam update and verify expected trainable groups change.",
+    "Require current source, cache, order, SW117/SW0122 short references, and fixed lambda hashes before making any attempt artifact. No masks or GT reads in preflight/training."
+  ],
+  "evaluation": {
+    "ids": [1320, 1639],
+    "images": 320,
+    "batch_size": 8,
+    "time_steps": 1024,
+    "settle": 512,
+    "readout": "Unchanged production actual-event/gate/four-component spike-product QCC, threshold 0.50, minimum size 2, largest-component background.",
+    "ground_truth_used_for_prediction": false,
+    "original_qcc_source_reproduction": "Verify the registered per-image SW0097 source endpoint before interpreting new results."
+  },
+  "promotion": {
+    "mean": "All-three-seed late-candidate mean FG-ARI exceeds both the matched short analytic-candidate mean and the fixed SW0097 source mean.",
+    "individual": "At least two of three seeds exceed the fixed SW0097 source FG-ARI.",
+    "paired_uncertainty": "Resample identical 320-image indices across all three seeds; 10,000-draw 95% lower bounds must be strictly positive for late-minus-short and late-minus-source FG-ARI.",
+    "iou": "All-three-seed means exceed matched Slot foreground IoU 0.20358913115224261 + 0.05 and matched-object IoU 0.20693697915214362 + 0.05.",
+    "failure": "Close this recipe without changing tail length, objective, coefficient, or threshold and without expanding to the 70k scaling sweep."
+  },
+  "prohibitions": [
+    "No changes to production S2Net core/layers, phase dynamics, readout, gates, or classifier.",
+    "No GT/mask input to prediction, gamma, losses, or training.",
+    "No source checkpoint or historical SW0117/SW0122 artifact overwrite.",
+    "Do not describe 64-step tail credit as full-rollout BPTT or as evidence of stage performance before paired evaluations."
+  ]
+}

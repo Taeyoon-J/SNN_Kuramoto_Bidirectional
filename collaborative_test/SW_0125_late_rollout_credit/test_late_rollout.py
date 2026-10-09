@@ -31,6 +31,30 @@ class LateRolloutTests(unittest.TestCase):
         self.assertTrue(torch.equal(replay["spikes"], spikes))
         self.assertTrue(torch.equal(replay["membrane"], membrane))
         self.assertTrue(torch.equal(replay["theta"], theta))
+        self.assertEqual(replay["component_spikes"].stride(), production_components.stride())
+        self.assertEqual(replay["component_membrane"].stride(), production_component_membrane.stride())
+
+    def test_production_reduction_layout_on_cuda_when_available(self):
+        if not torch.cuda.is_available():
+            self.skipTest("CUDA layout parity is exercised on the research server")
+        torch.manual_seed(1251)
+        device = torch.device("cuda:0")
+        core = base.make_core(device, steps=8).eval()
+        core._detect_object_groups = lambda _out, spikes: [[] for _ in range(spikes.shape[0])]
+        gamma = torch.randn(1, 8, 256, device=device)
+        with torch.no_grad():
+            _, spikes, membrane, theta = core(
+                gamma, return_core_out=True, return_theta=True, num_time_steps=8
+            )
+            prod_spikes = core.last_component_spikes.clone()
+            prod_membrane = core.last_component_out.clone()
+        replay = late_rollout(core, gamma, total_steps=8, live_tail_steps=0)
+        self.assertTrue(torch.equal(replay["component_spikes"], prod_spikes))
+        self.assertTrue(torch.equal(replay["component_membrane"], prod_membrane))
+        self.assertTrue(torch.equal(replay["spikes"], spikes))
+        self.assertTrue(torch.equal(replay["membrane"], membrane))
+        self.assertTrue(torch.equal(replay["theta"], theta))
+        self.assertEqual(replay["component_spikes"].stride(), prod_spikes.stride())
 
     def test_boundary_preserves_delayed_values_and_live_tail_parameter_credit(self):
         torch.manual_seed(126)
@@ -67,6 +91,10 @@ class LateRolloutTests(unittest.TestCase):
         core.gamma_drive_mode = "static"
         core.kuramoto.spike_pulse_gain = 0.0
         with self.assertRaisesRegex(ValueError, "spike-pulse"):
+            late_rollout(core, gamma, total_steps=8, live_tail_steps=4)
+        core.kuramoto.spike_pulse_gain = None
+        core.osc_dim = 3
+        with self.assertRaisesRegex(ValueError, "exactly four"):
             late_rollout(core, gamma, total_steps=8, live_tail_steps=4)
 
 

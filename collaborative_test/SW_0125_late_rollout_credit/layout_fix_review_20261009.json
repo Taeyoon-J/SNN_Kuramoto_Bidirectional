@@ -1,0 +1,33 @@
+{
+  "experiment": "SW0125",
+  "status": "corrected_execution_pending_actual_gpu_proof",
+  "reason": "Native component stack/permutation strides restored before component mean; allcomponent traces were exact in failed probe, averaged membrane guard failed",
+  "dynamics_changed": false,
+  "loss_changed": false,
+  "tolerance_changed": false,
+  "local_cpu_tests_passed": 3,
+  "cuda_only_test_skipped_on_local_cpu": 1,
+  "original_failed_code_archived_on_server": true,
+  "manifest": {
+    "experiment": "SW0125",
+    "destination": "/Data0/kevinswk/patch_v2_sw",
+    "purpose": "frozen source actual-spike readout evaluation",
+    "files": [
+      {
+        "relative_path": "collaborative_test/SW_0125_late_rollout_credit/late_rollout.py",
+        "sha256": "8c754ba24e770a50fde66a3ef784cb43ff1de02c603930beaf8d11c597be277b",
+        "bytes": 6821
+      },
+      {
+        "relative_path": "collaborative_test/SW_0125_late_rollout_credit/test_late_rollout.py",
+        "sha256": "a1ec63475ac6a1f7522aec913059251baac97342d55ea374d9079a589731a78b",
+        "bytes": 5323
+      },
+      {
+        "relative_path": "collaborative_test/SW_0125_late_rollout_credit/verify_foundation.py",
+        "sha256": "e1d9e2baa2e50a154e64cc0eecfc0c42863daedb0299e7647719fd5a20a758d9",
+        "bytes": 12561
+      }
+    ]
+  }
+}

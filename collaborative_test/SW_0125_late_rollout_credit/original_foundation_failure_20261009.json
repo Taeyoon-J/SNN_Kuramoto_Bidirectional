@@ -1,0 +1,103 @@
+{
+  "experiment": "SW0125",
+  "status": "failed_before_optimizer_updates",
+  "optimizer_updates": 0,
+  "ground_truth_used": false,
+  "states": {
+    "0": {
+      "seed": 0,
+      "supervisor_pid": 1505006,
+      "status": "failed",
+      "tasks": [
+        {
+          "arm": "source",
+          "pid": 1505045,
+          "argv": [
+            "/Data0/kevinswk/envs/snn/bin/python",
+            "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0125_late_rollout_credit/verify_foundation.py",
+            "--seed",
+            "0",
+            "--device",
+            "cuda:0",
+            "--output",
+            "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0125_late_rollout_credit/results_archive/foundation_seed0_source_20261009.json"
+          ],
+          "log": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0125_late_rollout_credit/results_archive/foundation_seed0_source_20261009.log",
+          "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0125_late_rollout_credit/results_archive/foundation_seed0_source_20261009.json",
+          "status": "failed",
+          "inherited_lease": true,
+          "returncode": 1
+        }
+      ],
+      "gpu": 0,
+      "error": "AssertionError()"
+    },
+    "1": {
+      "seed": 1,
+      "supervisor_pid": 1505007,
+      "status": "failed",
+      "tasks": [
+        {
+          "arm": "source",
+          "pid": 1505044,
+          "argv": [
+            "/Data0/kevinswk/envs/snn/bin/python",
+            "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0125_late_rollout_credit/verify_foundation.py",
+            "--seed",
+            "1",
+            "--device",
+            "cuda:0",
+            "--output",
+            "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0125_late_rollout_credit/results_archive/foundation_seed1_source_20261009.json"
+          ],
+          "log": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0125_late_rollout_credit/results_archive/foundation_seed1_source_20261009.log",
+          "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0125_late_rollout_credit/results_archive/foundation_seed1_source_20261009.json",
+          "status": "failed",
+          "inherited_lease": true,
+          "returncode": 1
+        }
+      ],
+      "gpu": 1,
+      "error": "AssertionError()"
+    },
+    "2": {
+      "seed": 2,
+      "supervisor_pid": 1505008,
+      "status": "failed",
+      "tasks": [
+        {
+          "arm": "source",
+          "pid": 1505051,
+          "argv": [
+            "/Data0/kevinswk/envs/snn/bin/python",
+            "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0125_late_rollout_credit/verify_foundation.py",
+            "--seed",
+            "2",
+            "--device",
+            "cuda:0",
+            "--output",
+            "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0125_late_rollout_credit/results_archive/foundation_seed2_source_20261009.json"
+          ],
+          "log": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0125_late_rollout_credit/results_archive/foundation_seed2_source_20261009.log",
+          "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0125_late_rollout_credit/results_archive/foundation_seed2_source_20261009.json",
+          "status": "failed",
+          "inherited_lease": true,
+          "returncode": 1
+        }
+      ],
+      "gpu": 3,
+      "error": "AssertionError()"
+    }
+  },
+  "logs": {
+    "0": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0125_late_rollout_credit/verify_foundation.py:99: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.\nConsider using tensor.detach() first. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:822.)\n  max_gamma_diff = float((gamma - cached).abs().max())\nTraceback (most recent call last):\n  File \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0125_late_rollout_credit/verify_foundation.py\", line 238, in <module>\n    main()\n  File \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0125_late_rollout_credit/verify_foundation.py\", line 231, in main\n    record = verify(args.seed, args.output, args.device)\n  File \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0125_late_rollout_credit/verify_foundation.py\", line 121, in verify\n    raise AssertionError(f\"late-tail rollout changed no-grad forward traces: {exact}\")\nAssertionError: late-tail rollout changed no-grad forward traces: {'theta': True, 'spikes': True, 'membrane': False, 'component_spikes': True, 'component_membrane': True}\n",
+    "1": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0125_late_rollout_credit/verify_foundation.py:99: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.\nConsider using tensor.detach() first. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:822.)\n  max_gamma_diff = float((gamma - cached).abs().max())\nTraceback (most recent call last):\n  File \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0125_late_rollout_credit/verify_foundation.py\", line 238, in <module>\n    main()\n  File \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0125_late_rollout_credit/verify_foundation.py\", line 231, in main\n    record = verify(args.seed, args.output, args.device)\n  File \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0125_late_rollout_credit/verify_foundation.py\", line 121, in verify\n    raise AssertionError(f\"late-tail rollout changed no-grad forward traces: {exact}\")\nAssertionError: late-tail rollout changed no-grad forward traces: {'theta': True, 'spikes': True, 'membrane': False, 'component_spikes': True, 'component_membrane': True}\n",
+    "2": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0125_late_rollout_credit/verify_foundation.py:99: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.\nConsider using tensor.detach() first. (Triggered internally at /__w/pytorch/pytorch/torch/csrc/autograd/generated/python_variable_methods.cpp:822.)\n  max_gamma_diff = float((gamma - cached).abs().max())\nTraceback (most recent call last):\n  File \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0125_late_rollout_credit/verify_foundation.py\", line 238, in <module>\n    main()\n  File \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0125_late_rollout_credit/verify_foundation.py\", line 231, in main\n    record = verify(args.seed, args.output, args.device)\n  File \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0125_late_rollout_credit/verify_foundation.py\", line 121, in verify\n    raise AssertionError(f\"late-tail rollout changed no-grad forward traces: {exact}\")\nAssertionError: late-tail rollout changed no-grad forward traces: {'theta': True, 'spikes': True, 'membrane': False, 'component_spikes': True, 'component_membrane': True}\n"
+  },
+  "source_sha256": {
+    "late_rollout.py": "c54eefc7e8dc567dd9a0c738c2d51b0118dba3427928d62582019a02d3f866c5",
+    "test_late_rollout.py": "b7eaa8c8d2977560045bcaa83a26ba99b59701deb2b2066c884a164500a06387",
+    "verify_foundation.py": "023081b148e10418ccfa2beee34cb63e02920848a6256c7b6c4389ec7952dd22"
+  },
+  "hypothesis": "CUDA reduction layout differs only for averaged membrane; component traces exact. Not confirmed until corrected layout parity passes."
+}

@@ -46,8 +46,8 @@ def late_rollout(core, gamma, total_steps=None, live_tail_steps=64):
     ``live_tail_steps=0`` is a fully no-grad reference rollout. Otherwise the
     preceding frames are no-grad and only the final requested steps retain the
     recurrent graph. At the boundary, theta history values remain exact while
-    hidden states detach; static gamma-to-drive and graph are recomputed with
-    gradients enabled.
+    hidden states detach; the graph, gamma-to-drive and factorized coupling
+    prepared before burn-in are reused with gradients enabled for the tail.
     """
     gamma = gamma.to(core.device)
     steps = int(total_steps if total_steps is not None else core.num_time_steps)
@@ -118,8 +118,16 @@ def late_rollout(core, gamma, total_steps=None, live_tail_steps=64):
             spike_frames.append(spike.reshape(batch, folded, core.in_dim))
 
     with torch.set_grad_enabled(tail > 0):
-        component_membrane = torch.stack(membrane_frames, dim=-1)
-        component_spikes = torch.stack(spike_frames, dim=-1)
+        # Match S2NetCore's production reduction layout exactly: stack as
+        # [T,B*D,N], then fold and reshape to [B,D,N,T]. In particular, do not
+        # stack directly into [B,D,N,T]; its non-contiguous reduction order
+        # changes mean-over-components rounding on CUDA.
+        component_membrane = torch.stack(membrane_frames, dim=0).permute(1, 2, 3, 0).reshape(
+            batch, folded, core.in_dim, steps
+        )
+        component_spikes = torch.stack(spike_frames, dim=0).permute(1, 2, 3, 0).reshape(
+            batch, folded, core.in_dim, steps
+        )
         theta_trace = torch.stack(theta_hist, dim=1)
     return {
         "component_membrane": component_membrane,

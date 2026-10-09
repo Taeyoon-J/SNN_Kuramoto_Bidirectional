@@ -96,7 +96,7 @@ def verify(seed, output, device="cuda:0"):
     # while the late-tail probe must measure credit into the encoder.
     gamma = sw117.encode_rgb(encoder, patcher, mean, std, clip, images)
     cached = gamma_cache[row_tensor].to(device)
-    max_gamma_diff = float((gamma - cached).abs().max())
+    max_gamma_diff = float((gamma - cached).abs().max().detach().cpu().item())
     if not math.isfinite(max_gamma_diff) or max_gamma_diff > 2e-5:
         raise AssertionError(f"live encoder gamma differs from registered cache by {max_gamma_diff}")
 
