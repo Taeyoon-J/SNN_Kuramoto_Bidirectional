@@ -172,14 +172,16 @@
   "latest_explicit_density_removal_pilot": {
     "experiment": "SW0119",
     "seed": 0,
-    "status": "training_complete_fixed320_evaluation_running",
+    "status": "completed_seed0_not_promoted",
     "intervention": "Remove only 10*B(phase_PLV)+50*B(actual_Q), preserving collapse/coherence/bimodality and RGB terms; no SW0120 gradient guard.",
     "matched_control": "Completed SW0117 analytic_candidate",
     "source": "SW0097 positive_frozen seed0",
     "recipe": "Same 4096 ordered IDs, 256 updates, batch16, shuffle117, live encoder and trainable graph/core, fixed lambda 7.865416617457706.",
     "local_checks": "Five CPU tests, compilation, JSON parsing and final implementation review passed before deployment.",
     "evaluation": "Original fixed320 modal-patch contract; three metrics and paired bootstrap against source and matched control.",
-    "promotion_status": "No measured candidate scores; no seed expansion or incumbent replacement."
+    "metrics": {"fg_ari": 0.8266218659971125, "foreground_iou": 0.7162481292202214, "matched_object_iou": 0.6637755997035757},
+    "paired_summary": "SW_0119_density_free_objective/seed0_paired_summary_20261009.json",
+    "promotion_status": "FG-ARI improvement gate failed against both anchors; no seed expansion, coefficient sweep or incumbent replacement."
   },
   "latest_training_gradient_guard_pilot": {
     "experiment": "SW0120",

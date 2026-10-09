@@ -1,0 +1,99 @@
+﻿{
+  "experiment": "SW0119",
+  "status": "completed_seed0_not_promoted",
+  "metrics_order": [
+    "fg_ari",
+    "foreground_iou",
+    "matched_object_iou"
+  ],
+  "metrics": {
+    "candidate": {
+      "fg_ari": 0.8266218659971125,
+      "foreground_iou": 0.7162481292202214,
+      "matched_object_iou": 0.6637755997035757
+    },
+    "matched_control": {
+      "fg_ari": 0.8262101307492576,
+      "foreground_iou": 0.7229130103979337,
+      "matched_object_iou": 0.6595478231095298
+    },
+    "source": {
+      "fg_ari": 0.8248677211561721,
+      "foreground_iou": 0.7198719167110539,
+      "matched_object_iou": 0.6556628993752277
+    }
+  },
+  "paired_image_bootstrap": {
+    "matched_control": {
+      "fg_ari": {
+        "mean": 0.00041173524785485387,
+        "ci95": [
+          -0.0063686984372380035,
+          0.007041804642652128
+        ]
+      },
+      "foreground_iou": {
+        "mean": -0.006664881177712451,
+        "ci95": [
+          -0.015467444174391054,
+          0.0016034791090331812
+        ]
+      },
+      "matched_object_iou": {
+        "mean": 0.004227776594045905,
+        "ci95": [
+          -0.003134585784137565,
+          0.011668188293359577
+        ]
+      }
+    },
+    "source": {
+      "fg_ari": {
+        "mean": 0.0017541448409403304,
+        "ci95": [
+          -0.005605520628830252,
+          0.009432110095405398
+        ]
+      },
+      "foreground_iou": {
+        "mean": -0.0036237874908326057,
+        "ci95": [
+          -0.01250372493747914,
+          0.00475571750179257
+        ]
+      },
+      "matched_object_iou": {
+        "mean": 0.008112700328347999,
+        "ci95": [
+          2.6341336783710597e-05,
+          0.016464388391075946
+        ]
+      }
+    }
+  },
+  "bootstrap_draws": 10000,
+  "bootstrap_seed": 119,
+  "gates": {
+    "matched_control": false,
+    "source": false,
+    "slot_iou_margins": true
+  },
+  "promotion_passed": false,
+  "evaluation_sha256": {
+    "candidate": "25d0b6e978fe46869d637104bb103899272a5940c6643ec59a34c375adb9a499",
+    "matched_control": "5d2e2654cff50f7e9f2709dd96de2a02826d4f925d5b255cce51511166aa2714"
+  },
+  "source_endpoint_report_sha256": "354e8cf2dcb4be1057b34034187cc31eabb44a1f9d3c391cc86edf7a551c76fd",
+  "artifacts": {
+    "manifest.json": "e6e6db464a6afe46abcb25fe4687a50b6e5c93e2deb94525a179edc3a0db24f2",
+    "core.pt": "8f9e4b15a6d6f149d05679ac97e7a70cfa615b3cdb20bbc27af59e359fac79a3",
+    "encoder.pt": "7078394cc8d319e6663172a70bc0e32f993e435b6322d21558b4237a089c3937",
+    "history.json": "5a0f74866429b6422e9cf469ea6034e83bbecc10261f605766c0ffda7d76ec89"
+  },
+  "gradient_norm_preclip": {
+    "median": 162.3697280883789,
+    "p99": 445544975.99999905,
+    "max": 739498112.0
+  },
+  "interpretation": "Explicit density penalty removal did not meet the FG-ARI improvement gate; do not expand seeds or replace incumbent."
+}
