@@ -1,0 +1,42 @@
+{
+  "experiment": "SW0126",
+  "status": "operational_failure_before_model_rollout_fix_in_progress",
+  "server_cpu_tests_passed": 27,
+  "all_three_source_cache_contracts_passed": true,
+  "screen_attempts": [
+    {
+      "seed": 0,
+      "gpu": 1,
+      "pid": 1933054,
+      "returncode": 1
+    },
+    {
+      "seed": 1,
+      "gpu": 0,
+      "pid": 1933055,
+      "returncode": 1
+    },
+    {
+      "seed": 2,
+      "gpu": 2,
+      "pid": 1933053,
+      "returncode": 1
+    }
+  ],
+  "all_owned_pids_terminal_confirmed": [
+    1932471,
+    1933054,
+    1933055,
+    1933053
+  ],
+  "failure": "torch.cuda.reset_peak_memory_stats before CUDA context initialization raised RuntimeError Invalid device argument for every seed.",
+  "model_rollout_started": false,
+  "training_started": false,
+  "scientific_hypothesis_rejected": false,
+  "registered_activity_or_gradient_thresholds_changed": false,
+  "server_failure_archive": "/tmp/kevinswk_sw0126_cuda_init_failure_20261009T202219Z",
+  "local_complete_receipt": "collaborative_private_runtime_20261008/SW0126_revised_bundle_20261009/first_gpu_terminal_receipt.json",
+  "actual_gpu3_exclusive_smoke": "set_device; init; reset_peak_memory_stats passed under common exclusive GPU lease.",
+  "next_action": "Patch only CUDA initialization ordering, test locally and on server, then explicitly resume from new fingerprint preserving the terminal attempt.",
+  "automatic_retry": false
+}

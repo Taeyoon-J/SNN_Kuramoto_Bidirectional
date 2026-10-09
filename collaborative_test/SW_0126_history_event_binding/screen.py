@@ -276,6 +276,15 @@ def _run_batch(seed, batch_index, rows, ids, rgb_cache, gamma_cache, encoder,
     }, events.detach().cpu()
 
 
+def _reset_cuda_peak_stats(device):
+    """Initialize the selected CUDA context before querying allocator peaks."""
+    target = torch.device(device)
+    torch.cuda.set_device(target)
+    # reset_peak_memory_stats queries the allocator and requires this context.
+    torch.cuda.init()
+    torch.cuda.reset_peak_memory_stats(target)
+
+
 def screen_seed(seed, output, device="cuda:0"):
     if seed not in (0, 1, 2):
         raise ValueError("SW0126 screen supports source seeds 0,1,2")
@@ -283,7 +292,7 @@ def screen_seed(seed, output, device="cuda:0"):
     if output.exists():
         raise FileExistsError(f"preserving existing screen result: {output}")
     if str(device).startswith("cuda"):
-        torch.cuda.reset_peak_memory_stats(torch.device(device))
+        _reset_cuda_peak_stats(device)
     (source, source_manifest, source_meta, ids, rows, gamma_cache, gamma_meta,
      rgb_cache, rgb_meta, rgb_sha) = source_and_cache_contract(seed)
     if len(ids) != 4096 or len(rows) != 4096:

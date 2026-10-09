@@ -19,6 +19,17 @@ from snn_kuramoto_bidirectional.membrane_layer import MembraneLayer
 
 
 class ScreenGuardTests(unittest.TestCase):
+    def test_cuda_peak_stats_initialize_selected_context_first(self):
+        from collaborative_test.SW_0126_history_event_binding import screen
+        calls = []
+
+        with patch.object(screen.torch.cuda, "set_device", side_effect=lambda d: calls.append(("set", str(d)))), \
+             patch.object(screen.torch.cuda, "init", side_effect=lambda: calls.append(("init", "cuda:2"))), \
+             patch.object(screen.torch.cuda, "reset_peak_memory_stats", side_effect=lambda d: calls.append(("reset", str(d)))):
+            screen._reset_cuda_peak_stats("cuda:2")
+        self.assertEqual([call[0] for call in calls], ["set", "init", "reset"])
+        self.assertTrue(all(call[1] == "cuda:2" for call in calls))
+
     def test_real_batch_path_records_finite_binder_and_recurrent_gradient_credit(self):
         class Dendrite(nn.Module):
             def __init__(self):
