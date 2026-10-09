@@ -1,0 +1,86 @@
+{
+  "experiment": "SW0126",
+  "status": "complete_failed_promotion_recipe_closed",
+  "seed": 1,
+  "evaluation_sha256": "f84a2caa1adc498f95c6ef6468004bd961641c7b972a6d806ef8a67d6a7faf75",
+  "metrics_order": [
+    "fg_ari",
+    "foreground_iou",
+    "matched_object_iou"
+  ],
+  "promotion": {
+    "means": {
+      "history_event": {
+        "fg_ari": 0.36596214728740606,
+        "foreground_iou": 0.2497689478396418,
+        "matched_object_iou": 0.19425120692654263
+      },
+      "gate_only": {
+        "fg_ari": 0.43617978870654917,
+        "foreground_iou": 0.3936280254264079,
+        "matched_object_iou": 0.24124506075692514
+      },
+      "source97": {
+        "fg_ari": 0.742658188014352,
+        "foreground_iou": 0.59028319942393,
+        "matched_object_iou": 0.5849640428623182
+      }
+    },
+    "paired_fg_ari_differences": {
+      "gate_only": {
+        "mean_delta": -0.07021764141914315,
+        "ci95": [
+          -0.10033047023811954,
+          -0.04062731935680753
+        ],
+        "draws": 10000,
+        "seed": 126,
+        "unit": "paired validation image"
+      },
+      "source97": {
+        "mean_delta": -0.376696040726946,
+        "ci95": [
+          -0.40150112988005243,
+          -0.3512647396611263
+        ],
+        "draws": 10000,
+        "seed": 126,
+        "unit": "paired validation image"
+      }
+    },
+    "registered_slot_three_seed_iou_reference": {
+      "foreground_iou": 0.20358913115224261,
+      "matched_object_iou": 0.20693697915214362
+    },
+    "gates": {
+      "candidate_fg_exceeds_gate": false,
+      "candidate_fg_exceeds_source97": false,
+      "paired_ci_lower_gt_zero_vs_gate": false,
+      "paired_ci_lower_gt_zero_vs_source97": false,
+      "foreground_iou_gt_slot_plus_005": false,
+      "matched_object_iou_gt_slot_plus_005": false,
+      "pilot_pass": false
+    },
+    "interpretation": "conditional seed-1 pilot only; no multi-seed, gate-causality, or data-scaling claim"
+  },
+  "training": {
+    "history_event": {
+      "updates": 256,
+      "first16_rgb_mse_mean": 0.03169539227383211,
+      "last16_rgb_mse_mean": 0.00976876524509862,
+      "history_sha256": "6c40b6b75e36d6f97f2b8e28a58863333077b72cbed4f1788ed7800bfc5409e0"
+    },
+    "gate_only": {
+      "updates": 256,
+      "first16_rgb_mse_mean": 0.0316634580376558,
+      "last16_rgb_mse_mean": 0.00997091579483822,
+      "history_sha256": "49ea43992798317f3a785e7e1528afd5fa19f4ca9c9816f80444e71c0abd3a86"
+    }
+  },
+  "incumbent_changed": false,
+  "expanded_to_three_seeds": false,
+  "expanded_to_70000": false,
+  "gating_usefulness_proven": false,
+  "data_scaling_proven": false,
+  "interpretation": "Both RGB objectives decreased, but learned masks failed. Activity and gradient connectivity do not establish object binding. Do not infer coding information loss versus core drift versus head failure without frozen-QCC attribution."
+}

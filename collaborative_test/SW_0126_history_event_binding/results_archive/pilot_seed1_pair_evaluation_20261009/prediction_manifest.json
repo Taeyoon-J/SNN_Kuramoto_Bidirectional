@@ -1,0 +1,93 @@
+{
+  "status": "predictions_complete",
+  "experiment": "SW0126",
+  "seed": 1,
+  "ids": [
+    1320,
+    1639
+  ],
+  "count": 320,
+  "prediction_sha256": "1d573ceaad7f2bd9a794ae34535a132873969dd6b0793289762d650b73dfe55d",
+  "arm_provenance": {
+    "history_event": {
+      "arm": "history_event",
+      "training_dir": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0126_history_event_binding/seed1_history_event",
+      "training_manifest_sha256": "c2d43b78c6b8508e2551ab8a8c72789310b123d6bfa6f9fb7d6932f14bfc0d31",
+      "core_sha256": "b45445711f2515dca0645e4f1fb7421d9e7ef06f0e5fd179750a43d01520d871",
+      "binder_sha256": "79c6108415bdd512c3637992a88850fbd8f2d9f07340a3dc562e0f55d147cec0",
+      "history_sha256": "6c40b6b75e36d6f97f2b8e28a58863333077b72cbed4f1788ed7800bfc5409e0",
+      "implementation_fingerprint": {
+        "collaborative_test/SW_0126_history_event_binding/pilot_run.py": "532e0bcfa4cfd40814c51efbaa9530b971fa36814bfecd3791b3a9de273b9f4a",
+        "collaborative_test/SW_0126_history_event_binding/pilot_rollout.py": "06cd2fe86833f85ed2541521581c53babb605fac2f6ea32cbafc2e7a7f095f72",
+        "collaborative_test/SW_0126_history_event_binding/binder.py": "f8407195a624515ab58073d2f2c1620871ede1a82def3febbc0942f24c36feb0",
+        "collaborative_test/SW_0126_history_event_binding/history_event.py": "6721cb8a61b1b017c1f544d9cdb64aff906c61bedd3006401aecc6a665bbfcb9",
+        "collaborative_test/SW_0126_history_event_binding/training_protocol.json": "aeeaed77e62d86706ee1dc2ed58b4eedb0c579c9cefb30ddf5f59133664c055a",
+        "collaborative_test/SW_0126_history_event_binding/screen.py": "958c6fcaaf6ac35ead325862e0bfdb221a21f5fd565c4391697da14b9ab1ee53",
+        "collaborative_test/SW_0126_history_event_binding/screen_queue.py": "6a0e682aa923f3006ab980dfe961fe3f0df04c336f2eee11220be037d07c990d",
+        "snn_kuramoto_bidirectional/s2net_cls.py": "18313e5ee7358146703256e7e29d9846bfa60394feedba3237f2f7eac8791288",
+        "snn_kuramoto_bidirectional/membrane_layer.py": "680ad89277b60206f192123165d13eca916e5183dc71eaa443a8eeb5f4b8fac8",
+        "snn_kuramoto_bidirectional/dendric_layer.py": "69d960809ff1ad73a91a7067f87f605ae69ef612be9b936e4b486cc29511dd1a",
+        "snn_kuramoto_bidirectional/kuramoto_layer.py": "76e61785fb19228fe4ecf6bbdfd4dc72519b9d6bd34d5f4fd9165e29c76d263e",
+        "snn_kuramoto_bidirectional/sinusoidal_gating.py": "e323a3b6472f51def23d63628fe25cc83088822ae73b5e0fcd1789884739f6c4",
+        "snn_kuramoto_bidirectional/evaluation.py": "4a15980c9aa0248dbe0e837ad1b0b430ce26a7ab367c004d290a1272bb1025d7",
+        "collaborative_test/SW_0110_xy_graph_route/run.py": "b7d4b90cbf74c8085d2a5cfc8b78a5772f77bc086240939a332f429c1ca344fd",
+        "collaborative_test/SW_0117_joint_analytic_rgb/run.py": "ef65fadde826b2cc042182e15e3e4d64594a0b4c9677987aa02b82d3ee62cc42"
+      },
+      "source_core_sha256": "76f379d5a7e4cd9d12fdf0b701f3dd9dbbf28b5eea270a9cee2d30d87b4dad98",
+      "source_manifest_sha256": "241c9ea96fc3d3d2b168cb49d941e39c6751eca4436192e614760673545da38b",
+      "rgb_validation_cache_sha256": "9bed98a5bb040b69e1821c687161b1b928495cc80d90d7a5e1fffcd631926d1e",
+      "rgb_validation_manifest_sha256": "971b24a1a945a9b9c77177dc012d9ae5e3f12966817236f3ad3f887dfa759908",
+      "gamma_validation_cache_sha256": "f20b019bd46adb378b2bfcecbb252d960da2592ef651dcd419753034c8b705f0",
+      "gamma_validation_manifest_sha256": "cc438a2563fee54dd2c711882ac7e47f2873491622b810d1e058b3d3bda37428",
+      "max_live_gamma_cache_abs_diff": 7.152557373046875e-07,
+      "ids": [
+        1320,
+        1639
+      ],
+      "count": 320,
+      "ground_truth_used_for_prediction": false,
+      "prediction_rule": "argmax binder assignment; largest slot background; nonbackground groups <2 patches omitted"
+    },
+    "gate_only": {
+      "arm": "gate_only",
+      "training_dir": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0126_history_event_binding/seed1_gate_only",
+      "training_manifest_sha256": "59f9b7642e2605b73975027f788b073f70b7ee265c22faca4636f32726bcc847",
+      "core_sha256": "5dd99b0cb99fda9c17bdbebfb946f0e47031ba525cfcaec94f02400b6a18a4f1",
+      "binder_sha256": "cb2ae50e3bc2bef8862516926cdfab6ff37df984043a332a225e23a432aeb53a",
+      "history_sha256": "49ea43992798317f3a785e7e1528afd5fa19f4ca9c9816f80444e71c0abd3a86",
+      "implementation_fingerprint": {
+        "collaborative_test/SW_0126_history_event_binding/pilot_run.py": "532e0bcfa4cfd40814c51efbaa9530b971fa36814bfecd3791b3a9de273b9f4a",
+        "collaborative_test/SW_0126_history_event_binding/pilot_rollout.py": "06cd2fe86833f85ed2541521581c53babb605fac2f6ea32cbafc2e7a7f095f72",
+        "collaborative_test/SW_0126_history_event_binding/binder.py": "f8407195a624515ab58073d2f2c1620871ede1a82def3febbc0942f24c36feb0",
+        "collaborative_test/SW_0126_history_event_binding/history_event.py": "6721cb8a61b1b017c1f544d9cdb64aff906c61bedd3006401aecc6a665bbfcb9",
+        "collaborative_test/SW_0126_history_event_binding/training_protocol.json": "aeeaed77e62d86706ee1dc2ed58b4eedb0c579c9cefb30ddf5f59133664c055a",
+        "collaborative_test/SW_0126_history_event_binding/screen.py": "958c6fcaaf6ac35ead325862e0bfdb221a21f5fd565c4391697da14b9ab1ee53",
+        "collaborative_test/SW_0126_history_event_binding/screen_queue.py": "6a0e682aa923f3006ab980dfe961fe3f0df04c336f2eee11220be037d07c990d",
+        "snn_kuramoto_bidirectional/s2net_cls.py": "18313e5ee7358146703256e7e29d9846bfa60394feedba3237f2f7eac8791288",
+        "snn_kuramoto_bidirectional/membrane_layer.py": "680ad89277b60206f192123165d13eca916e5183dc71eaa443a8eeb5f4b8fac8",
+        "snn_kuramoto_bidirectional/dendric_layer.py": "69d960809ff1ad73a91a7067f87f605ae69ef612be9b936e4b486cc29511dd1a",
+        "snn_kuramoto_bidirectional/kuramoto_layer.py": "76e61785fb19228fe4ecf6bbdfd4dc72519b9d6bd34d5f4fd9165e29c76d263e",
+        "snn_kuramoto_bidirectional/sinusoidal_gating.py": "e323a3b6472f51def23d63628fe25cc83088822ae73b5e0fcd1789884739f6c4",
+        "snn_kuramoto_bidirectional/evaluation.py": "4a15980c9aa0248dbe0e837ad1b0b430ce26a7ab367c004d290a1272bb1025d7",
+        "collaborative_test/SW_0110_xy_graph_route/run.py": "b7d4b90cbf74c8085d2a5cfc8b78a5772f77bc086240939a332f429c1ca344fd",
+        "collaborative_test/SW_0117_joint_analytic_rgb/run.py": "ef65fadde826b2cc042182e15e3e4d64594a0b4c9677987aa02b82d3ee62cc42"
+      },
+      "source_core_sha256": "76f379d5a7e4cd9d12fdf0b701f3dd9dbbf28b5eea270a9cee2d30d87b4dad98",
+      "source_manifest_sha256": "241c9ea96fc3d3d2b168cb49d941e39c6751eca4436192e614760673545da38b",
+      "rgb_validation_cache_sha256": "9bed98a5bb040b69e1821c687161b1b928495cc80d90d7a5e1fffcd631926d1e",
+      "rgb_validation_manifest_sha256": "971b24a1a945a9b9c77177dc012d9ae5e3f12966817236f3ad3f887dfa759908",
+      "gamma_validation_cache_sha256": "f20b019bd46adb378b2bfcecbb252d960da2592ef651dcd419753034c8b705f0",
+      "gamma_validation_manifest_sha256": "cc438a2563fee54dd2c711882ac7e47f2873491622b810d1e058b3d3bda37428",
+      "max_live_gamma_cache_abs_diff": 7.152557373046875e-07,
+      "ids": [
+        1320,
+        1639
+      ],
+      "count": 320,
+      "ground_truth_used_for_prediction": false,
+      "prediction_rule": "argmax binder assignment; largest slot background; nonbackground groups <2 patches omitted"
+    }
+  },
+  "ground_truth_used_for_prediction": false,
+  "evaluation_code_sha256": "52545617eb679d497459a2a47cbed1de1d10bf1a7e905eec5c26a086cb3325d3"
+}

@@ -873,27 +873,58 @@
   },
   "latest_prospective_mechanism": {
     "experiment": "SW0126",
-    "status": "all3_feasibility_pass_seed1_paired_training_live",
-    "cpu_tests_passed": 29,
-    "mask_readout": "actual emitted gate-times-event trace through temporal binder assignment",
-    "pilot_scope": "seed1 matched actual-spike versus continuous-gate heads after all3 TRAIN-only screen proofs",
-    "scores": null,
-    "incumbent_changed": false,
-    "gating_contribution_proven": false,
-    "data_scaling_proven": false,
-    "record": "SW_0126_history_event_binding/paired_training_live_20261009.json",
+    "status": "complete_failed_promotion_recipe_closed",
     "feasibility_seeds_passed": [
       0,
       1,
       2
     ],
-    "training_pids": [
-      1983365,
-      1983366
-    ],
-    "training_gpus": [
-      0,
-      1
-    ]
+    "pilot_seed": 1,
+    "scores": {
+      "history_event": {
+        "fg_ari": 0.36596214728740606,
+        "foreground_iou": 0.2497689478396418,
+        "matched_object_iou": 0.19425120692654263
+      },
+      "gate_only": {
+        "fg_ari": 0.43617978870654917,
+        "foreground_iou": 0.3936280254264079,
+        "matched_object_iou": 0.24124506075692514
+      },
+      "source97": {
+        "fg_ari": 0.742658188014352,
+        "foreground_iou": 0.59028319942393,
+        "matched_object_iou": 0.5849640428623182
+      }
+    },
+    "paired_fg_ari_differences": {
+      "gate_only": {
+        "mean_delta": -0.07021764141914315,
+        "ci95": [
+          -0.10033047023811954,
+          -0.04062731935680753
+        ],
+        "draws": 10000,
+        "seed": 126,
+        "unit": "paired validation image"
+      },
+      "source97": {
+        "mean_delta": -0.376696040726946,
+        "ci95": [
+          -0.40150112988005243,
+          -0.3512647396611263
+        ],
+        "draws": 10000,
+        "seed": 126,
+        "unit": "paired validation image"
+      }
+    },
+    "all_promotion_gates_passed": false,
+    "incumbent_changed": false,
+    "gating_contribution_proven": false,
+    "data_scaling_proven": false,
+    "expanded_to_70000": false,
+    "record": "SW_0126_history_event_binding/paired_pilot_summary_20261009.json",
+    "next_action": "Frozen original-QCC attribution on untouched source97, untrained history adapter, and both completed cores; no recipe retuning."
   }
 }

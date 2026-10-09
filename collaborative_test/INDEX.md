@@ -146,3 +146,5 @@ intermediate ablation to improve all three metrics; see `SELECTION_POLICY.md`.
 | SW0124 endpoint | complete; not promoted | All3 frozen-source temporal-prototype readouts,320sameimages | .751922/.397001/.552672; originalQCC exactly reproduced; all3FG lower, pairedCI[-.030902,-.017989]. Incumbent97 unchanged; no recipe expansion. |
 
 | SW0125 | complete; no improvement | Full1024 forward with live64 late-gradient tail, same three source97 cores and loss | Three-seed mean .767077/.585208/.592722; FG-ARI below source97 on all seeds. Paired source FG delta CI [-.015291,-.003216]. Closed; incumbent97 retained. |
+
+| SW0126 | complete; paired seed1 pilot failed, recipe closed | History-centered binary membrane events and full-temporal RGB assignment; matched gate-only head | Actual .365962/.249769/.194251 vs gate-only .436180/.393628/.241245 and source97 .742658/.590283/.584964. RGB losses decreased; all promotion gates failed. No seed or70k expansion; frozen-QCC attribution next. |

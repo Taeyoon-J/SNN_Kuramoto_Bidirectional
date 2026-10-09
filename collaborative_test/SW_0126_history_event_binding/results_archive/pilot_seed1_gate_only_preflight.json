@@ -1,0 +1,155 @@
+{
+  "status": "passed",
+  "experiment": "SW0126",
+  "stage": "preflight",
+  "seed": 1,
+  "arm": "gate_only",
+  "optimizer_updates_training": 0,
+  "disposable_optimizer_steps": 1,
+  "ground_truth_used": false,
+  "implementation_fingerprint": {
+    "collaborative_test/SW_0126_history_event_binding/pilot_run.py": "532e0bcfa4cfd40814c51efbaa9530b971fa36814bfecd3791b3a9de273b9f4a",
+    "collaborative_test/SW_0126_history_event_binding/pilot_rollout.py": "06cd2fe86833f85ed2541521581c53babb605fac2f6ea32cbafc2e7a7f095f72",
+    "collaborative_test/SW_0126_history_event_binding/binder.py": "f8407195a624515ab58073d2f2c1620871ede1a82def3febbc0942f24c36feb0",
+    "collaborative_test/SW_0126_history_event_binding/history_event.py": "6721cb8a61b1b017c1f544d9cdb64aff906c61bedd3006401aecc6a665bbfcb9",
+    "collaborative_test/SW_0126_history_event_binding/training_protocol.json": "aeeaed77e62d86706ee1dc2ed58b4eedb0c579c9cefb30ddf5f59133664c055a",
+    "collaborative_test/SW_0126_history_event_binding/screen.py": "958c6fcaaf6ac35ead325862e0bfdb221a21f5fd565c4391697da14b9ab1ee53",
+    "collaborative_test/SW_0126_history_event_binding/screen_queue.py": "6a0e682aa923f3006ab980dfe961fe3f0df04c336f2eee11220be037d07c990d",
+    "snn_kuramoto_bidirectional/s2net_cls.py": "18313e5ee7358146703256e7e29d9846bfa60394feedba3237f2f7eac8791288",
+    "snn_kuramoto_bidirectional/membrane_layer.py": "680ad89277b60206f192123165d13eca916e5183dc71eaa443a8eeb5f4b8fac8",
+    "snn_kuramoto_bidirectional/dendric_layer.py": "69d960809ff1ad73a91a7067f87f605ae69ef612be9b936e4b486cc29511dd1a",
+    "snn_kuramoto_bidirectional/kuramoto_layer.py": "76e61785fb19228fe4ecf6bbdfd4dc72519b9d6bd34d5f4fd9165e29c76d263e",
+    "snn_kuramoto_bidirectional/sinusoidal_gating.py": "e323a3b6472f51def23d63628fe25cc83088822ae73b5e0fcd1789884739f6c4",
+    "snn_kuramoto_bidirectional/evaluation.py": "4a15980c9aa0248dbe0e837ad1b0b430ce26a7ab367c004d290a1272bb1025d7",
+    "collaborative_test/SW_0110_xy_graph_route/run.py": "b7d4b90cbf74c8085d2a5cfc8b78a5772f77bc086240939a332f429c1ca344fd",
+    "collaborative_test/SW_0117_joint_analytic_rgb/run.py": "ef65fadde826b2cc042182e15e3e4d64594a0b4c9677987aa02b82d3ee62cc42"
+  },
+  "screen_prerequisite_reports": {
+    "0": {
+      "path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0126_history_event_binding/results_archive/screen_seed0_20261009.json",
+      "sha256": "c101ff3f04bab73b87d4852fc22710bcf9fca98d3a0b3c19114a869ce0530519"
+    },
+    "1": {
+      "path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0126_history_event_binding/results_archive/screen_seed1_20261009.json",
+      "sha256": "e5b7d964f1e4743e1758808cbbb55f1b907bbb87af72e5fe52c6450aecdbaa4e"
+    },
+    "2": {
+      "path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0126_history_event_binding/results_archive/screen_seed2_20261009.json",
+      "sha256": "3c01b7b428a435f0790d88284f8fc8529a64caebf14474483f011c62047f2957"
+    }
+  },
+  "source_sha256": "76f379d5a7e4cd9d12fdf0b701f3dd9dbbf28b5eea270a9cee2d30d87b4dad98",
+  "source_manifest_sha256": "241c9ea96fc3d3d2b168cb49d941e39c6751eca4436192e614760673545da38b",
+  "training_ids_sha256": "879658974960d2854a8e4755b2987e401e7f006356317992171d383cfba36dfa",
+  "matched_global_ids": [
+    68304,
+    49032,
+    70041,
+    7829,
+    16499,
+    31675,
+    67612,
+    54671,
+    17331,
+    2330,
+    23312,
+    50490,
+    56080,
+    20867,
+    3891,
+    34682
+  ],
+  "gamma_cache_max_abs_diff": 7.152557373046875e-07,
+  "source_theta_carrier_gate_parity": {
+    "theta": true,
+    "carrier": true,
+    "gate": true
+  },
+  "rgb_mse": 0.04694119095802307,
+  "gradient_summary": {
+    "core": {
+      "norm": 0.0021322385873645544,
+      "finite": true,
+      "nonzero_tensors": 6
+    },
+    "head": {
+      "norm": 0.9999992847442627,
+      "finite": true,
+      "nonzero_tensors": 13
+    },
+    "core_preclip_norm": 0.0021322385873645544,
+    "head_preclip_norm": 1.4018232822418213
+  },
+  "core_family_gradient_summary": {
+    "oscillator_drive": {
+      "norm": 0.0021024723537266254,
+      "finite": true,
+      "gradient_parameter_names": [
+        "gamma_phase_gain",
+        "gamma_channel_proj.weight"
+      ],
+      "nonzero_parameter_names": [
+        "gamma_phase_gain",
+        "gamma_channel_proj.weight"
+      ]
+    },
+    "beta": {
+      "norm": 0.0,
+      "finite": true,
+      "gradient_parameter_names": [],
+      "nonzero_parameter_names": []
+    },
+    "membrane": {
+      "norm": 0.0,
+      "finite": true,
+      "gradient_parameter_names": [],
+      "nonzero_parameter_names": []
+    },
+    "dendrite": {
+      "norm": 0.0,
+      "finite": true,
+      "gradient_parameter_names": [],
+      "nonzero_parameter_names": []
+    },
+    "all": {
+      "norm": 0.0021322385873645544,
+      "finite": true,
+      "gradient_parameter_names": [
+        "gamma_phase_gain",
+        "gamma_channel_proj.weight",
+        "kuramoto.freq_gain",
+        "kuramoto.omega",
+        "kuramoto.kappa",
+        "kuramoto.direction_learner"
+      ],
+      "nonzero_parameter_names": [
+        "gamma_phase_gain",
+        "gamma_channel_proj.weight",
+        "kuramoto.freq_gain",
+        "kuramoto.omega",
+        "kuramoto.kappa",
+        "kuramoto.direction_learner"
+      ]
+    }
+  },
+  "core_family_parameter_changed": {
+    "oscillator_drive": true,
+    "beta": false,
+    "membrane": false,
+    "dendrite": false
+  },
+  "parameter_groups_changed": {
+    "core": true,
+    "head": true
+  },
+  "contract": {
+    "batch": 16,
+    "updates": 256,
+    "steps": 1024,
+    "settle": 512,
+    "tail": 64,
+    "core_lr": 3e-05,
+    "head_lr": 0.001,
+    "clip_norm_each": 1.0
+  }
+}
