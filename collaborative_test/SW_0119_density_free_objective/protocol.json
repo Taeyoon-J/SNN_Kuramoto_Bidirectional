@@ -1,0 +1,62 @@
+{
+  "experiment": "SW0119",
+  "status": "implemented_local_review_pending_actual_preflight",
+  "supersedes": {
+    "experiment": "SW0119_density_free_objective_proposal",
+    "note": "This executable protocol supersedes stale proposal text about pending update-46 attribution. The bounded update-3 outlier attribution is complete and preserved; it did not establish density balance as the cause."
+  },
+  "pilot": {
+    "seed": 0,
+    "arm": "analytic_candidate",
+    "source": "Whole SW0097 positive_frozen seed0 core, registered live encoder/preprocessing, and the completed SW0117 analytic_candidate as the matched retained-density control.",
+    "training_ids": "Exact SW0097 ordered 4096-ID sequence; shuffle seed 117.",
+    "updates": 256,
+    "batch_size": 16,
+    "time_steps": 64,
+    "settle": 32,
+    "core_graph_lr": 0.00003,
+    "encoder_lr": 0.000003,
+    "clip_norm": 1.0,
+    "optimizer": "Fresh Adam with the same encoder/core parameter groups as SW0117.",
+    "lambda_rgb": 7.865416617457706,
+    "lambda_source": "Immutable SW0117 seed0 calibration artifact; no recalibration.",
+    "ground_truth_used_for_training": false
+  },
+  "objective": {
+    "sw0117": "phase_primary + 5 * positive_actual_four_component_spike_product + lambda_rgb * analytic_partition_rgb",
+    "sw0119": "SW0117 objective minus 10 * plv_balance(phase_PLV) minus 50 * plv_balance(actual_Q)",
+    "removed_only": "The configured plv_balance term with target density 0.867 is disabled for both phase PLV and actual Q.",
+    "retained": ["phase primary", "positive actual-Q loss", "plv_bimodality", "plv_coherence", "plv_collapse", "analytic partition RGB", "all existing model/readout settings"],
+    "terminology": "Density-free means removal of the explicit target-density balance term only. The retained collapse prior may still exert density-related pressure.",
+    "q": "Unchanged positive Pearson product across the actual four-component spike traces after settle=32.",
+    "rgb": "Unchanged SW0115 decoder-free analytic RGB loss, production .50/min2/largest-component-background partition, exact-forward STE, and native RGB patch means."
+  },
+  "required_preflight": [
+    "Validate the completed SW0117 control manifest, history, optimizer, encoder, full-320 evaluation, source/cache/order/optimizer/coefficient bindings, and reviewed live-encoder source endpoint.",
+    "On the first four registered B16 TRAIN batches, preserve SW0117 cache/live gamma and old-loss parity, exact production labels/H, and exact same-input source trace/readout identity.",
+    "For phase PLV and actual Q, show that full criterion minus balance-disabled criterion equals the recorded 10*B(PLV)+50*B(Q) contribution; compare gradients of the retained-plus-removed decomposition against the original gradient for encoder, graph, and core.",
+    "Require finite nonzero retained-old and RGB gradients for encoder, graph, core, and Q; prove the fixed count-preserving H scramble increases RGB loss.",
+    "Prove source core and encoder are unchanged before a separate throwaway B16 Adam update, then verify encoder, graph, and core actually update. No masks or ground truth are read."
+  ],
+  "evaluation": {
+    "ids": [1320, 1639],
+    "count": 320,
+    "batch_size": 8,
+    "time_steps": 1024,
+    "settle": 512,
+    "membrane_threshold": 0.06,
+    "readout_threshold": 0.5,
+    "min_group_size": 2,
+    "background": "largest_component",
+    "ground_truth_used_for_prediction": false,
+    "metrics": ["fg_ari", "foreground_iou", "matched_object_iou"]
+  },
+  "promotion": {
+    "fg_ari": "Candidate mean must exceed both the SW0097 seed0 source and matched SW0117 control by at least 0.01.",
+    "paired_bootstrap": "Same 320 image indices; deterministic preregistered 10000-draw paired bootstrap. Candidate-minus-control and candidate-minus-source FG-ARI 95% CI lower bounds must both be strictly positive.",
+    "iou": "Foreground IoU > 0.2535891312 and matched-object IoU > 0.2569369792.",
+    "failure": "Stop this recipe; no tuning and no seed expansion."
+  },
+  "scope": "One seed0 pilot. No SW0120 gradient guard, decoder, parameter/readout changes, GT training, reserved-ID access, or automatic fanout.",
+  "training_started": false
+}
