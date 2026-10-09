@@ -1,3 +1,24 @@
+Latest 2026-10-09: SW0119 and SW0120 seed0 pilots completed the original
+fixed320 modal-patch evaluation. SW0119 explicit density-target removal scored
+.826622/.716248/.663776; its FG gain +.000412 vs SW0117 has a paired-image CI
+crossing zero. SW0120 flat-trace backward guard scored .823662/.718524/.656108;
+extreme gradients fell but FG did not improve. Neither passed the expansion
+gate. No density/gradient-conditioning sweep follows these results.
+
+SW0121's training-only competitive assignment prototype passed five synthetic
+checks. Actual spike traces alone feed its head; RGB reconstruction and detached
+assignment-to-Q consistency train the core. Evaluation discards the head and
+retains the original Q classifier. The runner is being implemented locally;
+no SW0121 GPU training or measured score exists yet.
+
+SW0118 is a separate any-present-pixel-label diagnostic: three-seed means
+.838763 ours vs .828048 own-data Slot, with difference CI crossing zero.
+Prediction-dependent resolved GT/foreground sets exclude this score from
+original FG-ARI promotion. SW0097 remains the three-seed 70k-lineage anchor.
+See numbered experiment summaries and best_model_tracking_20261008.json.
+Local commits after the last approved GitHub publication remain unpublished.
+Goal stays active. Older runtime paragraphs below require fresh live-PID checks.
+
 2026-10-08 deployment update: explicit user approval received; approved
 SW0108/SW0109 sources deployed with SHA verification. Frontier compile and
 SW0108 six/SW0109 thirteen CPU tests passed. Live research coordinators:
