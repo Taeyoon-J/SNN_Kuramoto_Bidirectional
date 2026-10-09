@@ -1,0 +1,21 @@
+{
+  "experiment": "SW0125",
+  "status": "existing_three_seed_anchors_verified_on_server",
+  "local_summary_tests": 3,
+  "server_summary_tests": 3,
+  "source_seeds": [
+    0,
+    1,
+    2
+  ],
+  "short_candidate_seeds": [
+    0,
+    1,
+    2
+  ],
+  "initial_actual_anchor_audit": "failed: seed0 native evaluation was incorrectly matched to distinct SW0116 endpoint hash",
+  "correction": "Pin native seed0 evaluation and verify per-image reproduction against SW0116; preserve separate endpoint hash for training provenance. Read late shuffle_seed from actual producer.",
+  "original_server_summary_preserved": "results_archive/summary_schema_attempt_original_20261009",
+  "frozen_training_files_changed": false,
+  "new_performance_result_available": false
+}
