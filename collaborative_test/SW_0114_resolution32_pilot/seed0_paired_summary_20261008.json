@@ -1,0 +1,30 @@
+{
+  "experiment": "SW0114",
+  "status": "seed0_training_and_fixed320_evaluation_complete",
+  "evaluation_returncode": 0,
+  "images": 320,
+  "ids": [1320, 1639],
+  "source_baseline_full_per_image_reproduced": true,
+  "evaluation_contract": {"source_and_control_batch_size": 8, "candidate_batch_size": 1, "time_steps": 1024, "settle": 512},
+  "training": {"updates": 256, "logical_batch_size": 16, "matched_unique_images": 4096, "graph_frozen": true, "encoder_frozen": true},
+  "source16_primary": {"fg_ari": 0.8248677211561721, "foreground_iou": 0.7198719167110539, "matched_object_iou": 0.6556628993752277},
+  "control16_primary": {"fg_ari": 0.8247538867910865, "foreground_iou": 0.7182159023969428, "matched_object_iou": 0.6539813236852587},
+  "candidate32_pooled16_primary": {"fg_ari": 0.6443037938591774, "foreground_iou": 0.685346626336715, "matched_object_iou": 0.5697853951436798},
+  "control16_repeated32_secondary": {"fg_ari": 0.7197743086930606, "foreground_iou": 0.6458111122057487, "matched_object_iou": 0.533520722869463},
+  "candidate32_native_secondary": {"fg_ari": 0.817187061225428, "foreground_iou": 0.7605346537585314, "matched_object_iou": 0.641405008612233},
+  "checkpoint_sha256": {
+    "source": "36f2481dd1fa51fa29bd4dc34275a876b71d8b76fbee13ac47a0a1bfe6766fbf",
+    "control": "d9359e9c5c2253a709a2e9a21a3d9250b4bf5bd2797f7ae1a8279c61671d81d2",
+    "candidate": "2a6e7bcfa35c174db195bc3071691e275d570af1761787c00f04621c23344920"
+  },
+  "limitations": [
+    "Only seed0 completed; these are not three-seed results.",
+    "Registered coherence weight differs: control0.5 and candidate1.0. This compares registered resolution recipes, not patch count alone.",
+    "Native32 secondary metrics use a different GT grid and cannot be compared to historical16 metrics or Slot without matched native32 Slot scoring.",
+    "The original registration requested all three pilots. Remaining seeds are deferred after this large seed0 primary loss, following the user's preference against repeatedly pursuing ineffective directions. This early stop is not represented as a preregistered success or a three-seed conclusion.",
+    "Full evaluation report SHA and paired bootstrap are pending retrieval after a transient SSH observation timeout. Report completion, scores, and source reproduction were read successfully before that timeout."
+  ],
+  "promotion": false,
+  "large_data_extension": false,
+  "server_evidence": "collaborative_test/SW_0114_resolution32_pilot/results_archive/evaluation_seed0/evaluation.json"
+}
