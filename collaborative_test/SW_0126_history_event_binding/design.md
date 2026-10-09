@@ -23,11 +23,14 @@ information that may carry object or amplitude cues. A useful event rate and
 nonzero gradients establish only that timing can be learned; they do not show
 that event timing helps segmentation. The paired binder screen must measure
 that directly. With pulse coupling disabled as in the registered frozen source,
-the oscillator phase and dendritic traces should remain unchanged; membrane
-and emitted-event traces are allowed to change under this mechanism.
+the oscillator phase, carrier, and gate traces should remain unchanged.
+Dendritic and membrane traces may change because dendritic updates consume the
+previous emitted spike; the history-event binder receives the emitted trace
+`S=g*e`, while binary `e` remains available for the recurrence diagnostics.
 
 The paired gate-only diagnostic uses the same event-driven recurrent core and
-differs only in the binder's input trace: history-event uses emitted events;
+differs only in the binder's input trace: history-event uses emitted spikes
+`S=g*e`;
 gate-only uses the continuous gate trace. This separates event timing from
 the gate envelope without changing recurrent dynamics.
 
@@ -57,7 +60,8 @@ repair claim or proof that gating, data scale, or long-horizon credit caused
 that failure. If the registered pilot fails, close the branch without tuning
 thresholds or expanding seeds.
 
-The opt-in membrane adapter, imagewise binder, bounded TRAIN-only activity
-screen, and an owner-aware three-seed screen dispatcher are implemented
-locally. The binder and dispatcher have CPU contract tests; the screen has not
-been run on registered data. No training runner or evaluation is implemented.
+The opt-in membrane adapter, imagewise binder, and bounded TRAIN-only
+activity screen are implemented locally. A conditional seed-1 paired training
+runner, evaluator, and owner-aware queue are also implemented locally and have
+focused CPU contract tests. The screen and pilot have not been confirmed on
+registered server assets; no pilot training or evaluation result is claimed.

@@ -1,0 +1,91 @@
+{
+  "experiment": "SW0126",
+  "status": "local_conditional_pilot_validated_not_deployed",
+  "cpu_suite": {
+    "command": "python -m pytest collaborative_test/SW_0126_history_event_binding -q -p no:cacheprovider",
+    "passed": 27,
+    "failed": 0
+  },
+  "compile": {
+    "python_files": 13,
+    "passed": true
+  },
+  "code_review_fix": "Evaluation head had consumed binary e. Training and evaluation now share binder_trace_for_arm and consume emitted S=g*e for history_event; fractional-gate regression added. Frozen screen/adapter unchanged.",
+  "scientific_scope": "Feasibility plus conditional seed1 actual-spike versus continuous-gate paired pilot; not a three-seed success or data-scaling result.",
+  "prerequisites": "All three current-fingerprint TRAIN screens and both disposable optimizer preflights before either arm trains.",
+  "remote_state": {
+    "connection_check": "banner exchange timeout",
+    "session_id": 46662,
+    "exit_code": 1,
+    "deployment_confirmed": false,
+    "gpu_training_started": false,
+    "inspection_required_before_retry": true
+  },
+  "files": [
+    {
+      "path": "collaborative_test/SW_0126_history_event_binding/history_event.py",
+      "sha256": "89978f61ba5b9f0169c3019e1904c188e3bea976002666a3606d4e0a24315a1e"
+    },
+    {
+      "path": "collaborative_test/SW_0126_history_event_binding/binder.py",
+      "sha256": "f8407195a624515ab58073d2f2c1620871ede1a82def3febbc0942f24c36feb0"
+    },
+    {
+      "path": "collaborative_test/SW_0126_history_event_binding/screen.py",
+      "sha256": "668fc17f9ba4af1eb46ae092917fec0ea9f16f2904a245319b73c18b811df9a0"
+    },
+    {
+      "path": "collaborative_test/SW_0126_history_event_binding/screen_queue.py",
+      "sha256": "6a0e682aa923f3006ab980dfe961fe3f0df04c336f2eee11220be037d07c990d"
+    },
+    {
+      "path": "collaborative_test/SW_0126_history_event_binding/test_history_event.py",
+      "sha256": "969871d094870c839fac943045bcf09fc0fb249e2f1882c51e6fa657c08b442d"
+    },
+    {
+      "path": "collaborative_test/SW_0126_history_event_binding/test_binder.py",
+      "sha256": "7f7f3a45ed671bb009a6d5db015fa59aeb432eda5ad6d78d85c416e931c28451"
+    },
+    {
+      "path": "collaborative_test/SW_0126_history_event_binding/test_screen.py",
+      "sha256": "7537241fe782d3b6c9185df1eaae6ad19b7f9f999dfd46cfeff741c8181be6a7"
+    },
+    {
+      "path": "collaborative_test/SW_0126_history_event_binding/test_screen_queue.py",
+      "sha256": "a847e8626d70fb3965ec8cbfa1d9fc568a504f769515d6bb5503c3f1a6247b7b"
+    },
+    {
+      "path": "collaborative_test/SW_0126_history_event_binding/protocol.json",
+      "sha256": "44da2328af7a44bfa783e3a1ed0ad87adb909d97868de9009612195a5cd8d169"
+    },
+    {
+      "path": "collaborative_test/SW_0126_history_event_binding/design.md",
+      "sha256": "d2725f90d8a515a7a11efbe07d3affff1a59dfb9491fec2f64c6455cb6089c75"
+    },
+    {
+      "path": "collaborative_test/SW_0126_history_event_binding/pilot_rollout.py",
+      "sha256": "06cd2fe86833f85ed2541521581c53babb605fac2f6ea32cbafc2e7a7f095f72"
+    },
+    {
+      "path": "collaborative_test/SW_0126_history_event_binding/pilot_run.py",
+      "sha256": "532e0bcfa4cfd40814c51efbaa9530b971fa36814bfecd3791b3a9de273b9f4a"
+    },
+    {
+      "path": "collaborative_test/SW_0126_history_event_binding/pilot_evaluate.py",
+      "sha256": "52545617eb679d497459a2a47cbed1de1d10bf1a7e905eec5c26a086cb3325d3"
+    },
+    {
+      "path": "collaborative_test/SW_0126_history_event_binding/pilot_queue.py",
+      "sha256": "c59cdc39af20c824930d1926c8cec1418ee818577b8cc4240ad6eaae836764f6"
+    },
+    {
+      "path": "collaborative_test/SW_0126_history_event_binding/test_pilot.py",
+      "sha256": "fef7f0e2b87dc228f929eafe08b7ea27f4ec9566c7e21c993677d7cba805992c"
+    },
+    {
+      "path": "collaborative_test/SW_0126_history_event_binding/training_protocol.json",
+      "sha256": "aeeaed77e62d86706ee1dc2ed58b4eedb0c579c9cefb30ddf5f59133664c055a"
+    }
+  ],
+  "publication": "Local commit only; no GitHub publication claimed."
+}

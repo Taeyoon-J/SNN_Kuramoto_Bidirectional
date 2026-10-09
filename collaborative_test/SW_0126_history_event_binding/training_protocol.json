@@ -1,0 +1,52 @@
+{
+  "experiment": "SW0126",
+  "status": "prospective_seed1_pilot_not_run",
+  "scope": "conditional two-arm seed-1 pilot after all three TRAIN-only feasibility screens pass",
+  "prerequisites": {
+    "all_seed_screens": "screen outputs for seeds 0, 1, and 2 must pass with the current screen implementation fingerprint, registered SW0097 source SHA and exact first-64 ordered IDs; any failed or stale screen closes this pilot",
+    "source": "strict-load immutable SW0097 seed1 positive_frozen before attaching the opt-in history event membrane",
+    "training_order": "the exact registered SW0097 seed1 4096-image order, source shuffle seed 118, B16, 256 updates; no warmup or additional images"
+  },
+  "arms": {
+    "history_event": "same event-driven recurrent core and imagewise RGB binder; binder sees actual emitted gate-times-event traces",
+    "gate_only": "same event-driven recurrent core and same-initialized binder; binder sees captured continuous gate traces instead of event timing"
+  },
+  "trainable_and_frozen": {
+    "frozen": ["registered input encoder", "learned graph generator"],
+    "trainable_core": "all nongraph source-core parameters, including membrane/adaptation parameters",
+    "head": "the registered 11-slot temporal binder and shared assignment-mixed RGB decoder",
+    "initialization": "both arms start from the same immutable source state and deterministic binder initialization seed 1261; no pretrained head or warmup"
+  },
+  "optimization": {
+    "objective": "native 128x128 RGB reconstruction MSE only, matching the registered screen; no Q, PLV, density, count, or ground-truth term",
+    "core_optimizer": "fresh Adam at 3e-5",
+    "head_optimizer": "separate fresh Adam at 1e-3",
+    "gradient_clipping": "clip core and head gradients separately at norm 1.0",
+    "exposures": "exactly 256 B16 updates over the 4096 registered IDs once"
+  },
+  "rollout": {
+    "full_steps": 1024,
+    "settled_trace_frames": 512,
+    "gradient_tail": "last 64 steps; 960-step no-gradient prefix with recurrent values preserved and detached at the boundary",
+    "static_drive": "prepare static graph, drive, and factorized coupling once with gradients enabled before the prefix and reuse for the live tail"
+  },
+  "prediction_and_evaluation": {
+    "readout": "argmax over binder assignment slots on the 16x16 patch grid; largest assigned group is background; groups smaller than two patches are omitted to background",
+    "prediction_inputs": "actual event traces for history_event; continuous gate traces for gate_only; no validation ground truth during prediction",
+    "validation": "fixed IDs 1320..1639, B8, full T1024 and settled512; save and hash both arms' complete prediction arrays before opening masks; score with the registered three patch metrics",
+    "anchors": "immutable SW0097 seed1 source per-image scores and the preregistered three-seed SW0092 70k Slot means for both IoU thresholds (.20358913115224261 and .20693697915214362)"
+  },
+  "conditional_seed1_gate": {
+    "fg_ari": "history_event mean must exceed both the matched source97 and gate_only means; paired image bootstrap 95% lower bound must be >0 against each anchor",
+    "iou": "history_event foreground_iou and matched_object_iou must exceed the preregistered three-seed SW0092 70k Slot means (.20358913115224261 and .20693697915214362) by >0.05; do not substitute a seed-1-specific reference",
+    "bootstrap": "10,000 paired image resamples, fixed RNG seed 126; compare identical sampled image indices for each pair",
+    "failure": "if any registered guard fails, report both arms and close the branch without retuning, expanding seeds, or claiming gate/data-scale causality"
+  },
+  "provenance": {
+    "screen_outputs_and_hashes": "required in preflight, train manifest, and final pair report",
+    "no_overwrite": true,
+    "no_auto_retry": true,
+    "ground_truth_used_for_training": false,
+    "ground_truth_used_for_prediction": false
+  }
+}
