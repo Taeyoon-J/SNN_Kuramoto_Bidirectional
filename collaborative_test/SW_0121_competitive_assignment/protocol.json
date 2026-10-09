@@ -1,6 +1,6 @@
 {
   "experiment": "SW0121 competitive assignment auxiliary objective",
-  "status": "offline_loss_head_implementation_only",
+  "status": "local_runner_implemented_pending_review_and_real_preflight",
   "training_started": false,
   "source": {
     "checkpoint": "SW0097 seed0 positive_frozen core and registered encoder",
@@ -36,6 +36,7 @@
     "fixed row scrambling increases reconstruction error",
     "assignment probabilities are nonconstant",
     "R gives finite nonzero gradients to head parameters and C gives finite nonzero gradients to Q-producing parameters",
+    "R also has finite nonzero direct gradient to actual component spike traces; assignment probabilities vary across patches",
     "one throwaway full optimizer update is finite and changes expected trainable parameters"
   ],
   "evaluation": {
@@ -53,7 +54,7 @@
   "promotion": {
     "candidate_mean_fg_ari": "at least +0.01 over both frozen SW0097 seed0 and matched control",
     "paired_image_bootstrap": "95% lower bound greater than zero against both references",
-    "foreground_iou": "retain preregistered SW0116 Slot margin",
+    "both_iou_metrics": "foreground IoU and matched-object IoU each exceed their registered Slot mean by more than 0.05",
     "failure_policy": "no tuning or seed expansion after a failed registered guard"
   }
 }
