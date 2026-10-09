@@ -378,7 +378,13 @@ def _score_frozen(output: Path, target_loader) -> dict:
                 if objects.numel() > 1:
                     merges.append({"image_id": IDS[i], "predicted_label": int(label),
                                    "ground_truth_object_ids": [int(v) for v in objects.tolist()]})
+        component_rows = [{"image_id": IDS[i], **_positive_component_audit(pred["relation_masks"][i], target[i])}
+                          for i in range(16)]
+        component_totals = {key: sum(row[key] for row in component_rows) for key in
+            ("positive_components_with_edges", "components_merging_foreground_instances",
+             "components_connecting_foreground_background")}
         per_seed[str(seed)] = {"bins": bins,
+            "frozen_positive_union_components": {**component_totals, "per_image": component_rows},
             "predicted_groups_merging_multiple_gt_objects": merges,
             "merge_count": len(merges)}
     passed = all(per_seed[str(seed)]["bins"][name]["pass"] for seed in SEEDS for name, _, _ in BINS)
@@ -392,6 +398,36 @@ def _score_frozen(output: Path, target_loader) -> dict:
                 "minimum_fg_relevant_pairs_per_class_aggregate": MIN_PAIRS_PER_CLASS,
             "all_seed_bins_pass": passed},
         "per_seed": per_seed, "interpretation": "Source QCC pair-relation diagnostic only; not a training or causal-gate claim."}
+
+
+def _positive_component_audit(relation_masks, target):
+    positive = torch.zeros(256, 256, dtype=torch.bool)
+    for name, _, _ in BINS:
+        positive |= relation_masks[name]["positive"].cpu()
+    graph = positive | positive.T
+    labels = target.reshape(-1).long().cpu()
+    seen, components = set(), []
+    for node in torch.where(graph.any(dim=1))[0].tolist():
+        if node in seen:
+            continue
+        stack, group = [node], []
+        seen.add(node)
+        while stack:
+            current = stack.pop()
+            group.append(current)
+            for neighbor in torch.where(graph[current])[0].tolist():
+                if neighbor not in seen:
+                    seen.add(neighbor)
+                    stack.append(neighbor)
+        values = labels[group]
+        objects = [int(v) for v in torch.unique(values[values > 0]).tolist()]
+        components.append({"patches": len(group), "foreground_objects": objects,
+            "merges_multiple_foreground_instances": len(objects) > 1,
+            "connects_foreground_to_background": bool((values > 0).any() and (values == 0).any())})
+    return {"positive_components_with_edges": len(components),
+        "components_merging_foreground_instances": sum(c["merges_multiple_foreground_instances"] for c in components),
+        "components_connecting_foreground_background": sum(c["connects_foreground_to_background"] for c in components),
+        "components": components}
 
 
 def _load_targets(dataset=DATASET):

@@ -11,6 +11,19 @@ from collaborative_test.SW_0128_source_spike_relation_qa import run
 
 
 class PairSemanticsTests(unittest.TestCase):
+    def test_positive_union_detects_transitive_merge_and_background_bridge(self):
+        masks = {name: {"positive": torch.zeros(256, 256, dtype=torch.bool)}
+                 for name, _, _ in run.BINS}
+        masks[run.BINS[0][0]]["positive"][0, 1] = True
+        masks[run.BINS[1][0]]["positive"][2, 1] = True
+        gt = torch.zeros(16, 16, dtype=torch.long)
+        gt.view(-1)[:2] = torch.tensor([3, 7])
+        got = run._positive_component_audit(masks, gt)
+        self.assertEqual(got["positive_components_with_edges"], 1)
+        self.assertEqual(got["components_merging_foreground_instances"], 1)
+        self.assertEqual(got["components_connecting_foreground_background"], 1)
+        self.assertEqual(got["components"][0]["patches"], 3)
+
     def test_bg_foreground_negative_and_object_merge_are_counted_correctly(self):
         labels = torch.zeros(16, 16, dtype=torch.long)
         gt = torch.zeros_like(labels)
