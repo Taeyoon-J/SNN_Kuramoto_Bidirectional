@@ -1,0 +1,129 @@
+{
+  "experiment": "SW0123",
+  "status": "prospective_design_only_pending_implementation_review",
+  "implementation_or_training_started": false,
+  "hypothesis": "Task-driven spatial reconstruction and an adaptive recurrent activation regime make actual spike history useful beyond gate amplitude for object grouping.",
+  "arms": {
+    "legacy_full": "Inherited whole SW0097 source; classifier consumes actual component spikes.",
+    "adaptive_full": "Only eligible new candidate: inherited source with retention initialized .9 and calibrated adaptive event threshold; classifier consumes actual component spikes.",
+    "gate_only_control": "Counterfactual control: recorded actual scalar gate repeated over four channels; same classifier/decoder; never eligible as final model."
+  },
+  "seeds": [0, 1, 2],
+  "source": {
+    "checkpoint": "SW0097 same-seed positive_frozen whole core plus registered shared encoder/preprocessing",
+    "core_sha256": {
+      "0": "36f2481dd1fa51fa29bd4dc34275a876b71d8b76fbee13ac47a0a1bfe6766fbf",
+      "1": "76f379d5a7e4cd9d12fdf0b701f3dd9dbbf28b5eea270a9cee2d30d87b4dad98",
+      "2": "798ad3e9d4bf837b1bbeb1bd7c13900df511b5c76f5736d2b9f8b973d7fa5661"
+    },
+    "spike_pulse_and_graph_feedback": "must remain disabled",
+    "initial_upstream_identity": "graph, theta and raw gate identical across arms before learning; candidate downstream traces intentionally differ",
+    "legacy_defaults": "unchanged; strict-load original source before attaching opt-in modules"
+  },
+  "calibration": {
+    "data": "first four original ordered TRAIN B16 batches per seed; 64 images; no GT",
+    "source": "unchanged legacy source and original registered encoder",
+    "rollout": {"time_steps": 64, "settle": 32},
+    "membrane_tensor": "actual last_component_out [64,4,256,64]; use time32:64",
+    "kappa": "kappa[d]=4*quantile(clamp_min(mem[:,d,:,32:64]-.06,0).flatten(),.90)",
+    "kappa_shape": [4],
+    "kappa_guard": "all finite and strictly positive; fail without tuning otherwise",
+    "kappa_target": "coarse submaximal duty-cycle regime; not an exact firing-rate constraint or object-count target",
+    "rms": "legacy actual spike RMS per component pooled over same64images,256patches,32frames; values<=1e-8 replaced by1; identical frozen4-value buffer for all arms",
+    "provenance": "bind ordered image IDs/cache rows, source/encoder/preprocessing/cache/code SHAs, and calibration buffer hashes",
+    "ground_truth_used": false
+  },
+  "adaptive_neuron": {
+    "retention_initialization": "all existing tau_n and tau_m set to logit(.9); remain trainable",
+    "threshold_base": "four trainable raw_b; softplus(raw_b[d]) initially .06",
+    "adaptation_state": "a and previous binary event reset to zero each rollout; not checkpoint state",
+    "adaptation": "a_candidate=.9*a_prev+.1*e_prev; a=where(g==0,a_prev,a_candidate)",
+    "membrane": "mem_candidate=alpha*mem_prev+(1-alpha)*h-.06*actual_spike_prev; mem=where(g==0,mem_prev,mem_candidate)",
+    "event": "e=ActFun_adp(mem-softplus(raw_b[d])-kappa[d]*a)*1[g>0]",
+    "actual_spike": "e*g; previous actual weighted spike still feeds dendrite",
+    "fold": "row b*4+d; expand component buffers through [B,4,N] then flatten to[B*4,N]",
+    "surrogate": "existing ActFun_adp; do not detach activation ancestors, reset or adaptation recurrence",
+    "activity_guards": {
+      "scope": "each component on first4 TRAIN batches, settled32 frames, both before training and after final training",
+      "binary_occupancy_strictly_greater_than": 0.01,
+      "binary_occupancy_strictly_less_than": 0.80,
+      "fraction_image_patch_units_containing_both_events_and_nonevents_at_least": 0.10,
+      "failure": "any failing adaptive component/seed ends recipe; no recalibration or seed exclusion"
+    }
+  },
+  "classifier": {
+    "input": "actual [B,4,256,Tsettled] spikes for full arms; recorded gate repeated4channels for counterfactual control; shared legacy RMS",
+    "temporal_encoder": "per patch Conv1d4->32,k5,pad2,GELU; Conv1d32->64,k5,pad2,GELU; temporal mean pooling",
+    "assignment": "Linear64->11; softmax(logits/.1)",
+    "slots": 11,
+    "count_or_uniform_occupancy_loss": false,
+    "direct_RGB_gamma_theta_XY_inputs": false,
+    "slot_latent": "sum_i(P_ik*z_i)/clamp_min(sum_i(P_ik),1e-8)",
+    "failure_mode": "fixed11 logits can learn global color categories and merge same-appearance objects"
+  },
+  "decoder": {
+    "input": "only live64D spike-derived slot latent plus normalized2D patch-center coordinate",
+    "network": "Linear66->128,GELU,Linear128->128,GELU,Linear128->192,sigmoid",
+    "output": "each slot's RGB8x8 patch for each of256patches; reconstruct by P-weighted mixing",
+    "raw_RGB_or_gamma_latent_pooling": false,
+    "independent_mask_output": false,
+    "loss": "per-image full128x128 RGB MSE / detached max(mean_channel(var_over_pixels(RGB)),1e-6), then batch mean",
+    "old_PLV_Q_density_color_means_or_consistency_losses": false,
+    "lambda": null,
+    "posttraining_assignment_credit_check": "fixed row permutation seed12301 of P while holding slot latents/decoded patches fixed must increase mean reconstruction error on first4TRAIN batches"
+  },
+  "schedule": {
+    "training_ids": "same seed's exact original ordered4096TRAIN IDs; shuffle117/118/119",
+    "head_decoder_initialization_seed": "12300+source_seed, identical across arms",
+    "warmup": "32B16 batches on first512orderedTRAIN images; source/core/encoder/newthreshold frozen; head+decoder Adam3e-4 clip1; preserve optimizer state",
+    "joint_updates": 256,
+    "batch_size": 16,
+    "time_steps": 64,
+    "settle": 32,
+    "core_graph_threshold_lr": 0.00003,
+    "encoder_lr": 0.000003,
+    "head_decoder_lr": 0.0003,
+    "optimizers": "fresh core/graph/encoder Adam; continued warm head/decoder Adam; both optimize same reconstruction objective",
+    "clip_norm": "separate1 over core/graph/encoder/newthreshold and1 over head/decoder",
+    "ground_truth_used": false,
+    "preflight": "first4TRAIN finite loss and active expected gradient families; real disposable B16twoAdam update; independent deep-copied warm optimizer; exact foldedlayout and actual B16memory check before fanout",
+    "gate_only_gradient_exception": "unused dendrite/membrane branches need not receive gradient and must remain unchanged",
+    "artifacts": "create-once; all model/buffer/optimizer/history SHAs;256updates; completion marker last",
+    "gpu_policy": "only genuinely free GPU0-3, one owner-aware global lease per GPU"
+  },
+  "evaluation": {
+    "fixed_metric_contract": "same dataset/preprocessing, IDs1320-1639, modal16x16GT, ordinary FG-ARI/foreground-IoU/matched-object-IoU; no prediction-dependent allowed-label diagnostic",
+    "ids_inclusive": [1320, 1639],
+    "images": 320,
+    "batch_size": 8,
+    "time_steps": 1024,
+    "settle": 512,
+    "gamma": "regenerated from actual trained encoder and registered frozen preprocessing on native RGB",
+    "new_primary_readout": "argmax(P); largest predicted slot BG, equal-area tie by first occupied patch index; foreground slots with<2patches becomeBG; no spatial splitting or object count",
+    "secondary_readout": "unchanged actualQ>=.50/min2/largest-component QCC, explicitly separate from primary",
+    "all_arms_same_primary_readout": true,
+    "ground_truth_used_for_prediction": false
+  },
+  "pilot_gates": {
+    "all_seeds_and_arms_reported": true,
+    "adaptive_mean_FG_exceeds": ["legacy_full", "gate_only_control", "original_SW0097_source"],
+    "paired_bootstrap": "10000draws,seed123,common sampled image indices across fixed3seeds;95%lower bound positive against each reference",
+    "at_least_two_seed_FG_gains_vs_source": true,
+    "both_IoU_means_exceed_matched_Slot_plus": 0.05,
+    "final_activity_and_assignment_credit_checks_required": true,
+    "failure": "end recipe without coefficient/threshold tuning or seed selection; no70k launch from this artifact"
+  },
+  "conditional_scientific_followup": {
+    "stage_tests": "after positive pilot preregister full320frozen coupling/gate/dendrite-retention/membrane-retention/event interventions and temporal-shuffle readout; retain fitted calibration; paired endpoint evidence; matched retrained ablations before learning-contribution claims",
+    "all_stage_claim": "unmet if downstream stages remain dispensable even when masks improve",
+    "scale": "only after positive model/stage evidence: common registered initialization, nested2500/10000/70000TRAIN subsets with70000draws/4375B16updates each; disclose inherited pretraining/warmup data; distinguish unique-data from extra-update effects",
+    "existing_SW0109": "independent legacy scaling evidence; recover/evaluate without conflating with new branch",
+    "reserve": "90640-90959 unread until final frozen confirmation"
+  },
+  "limits": [
+    "Adaptive arm bundles retention restoration and adaptive event selection; pilot cannot isolate those changes.",
+    "New classifier is allowed; fixed dataset/GT/metrics are unchanged. Do not describe this as the old QCC recipe improving.",
+    "Gradient existence, activation variation or shuffled reconstruction sensitivity alone do not prove useful gates or object semantics.",
+    "This registration does not authorize implementation/deployment/training by itself."
+  ]
+}
