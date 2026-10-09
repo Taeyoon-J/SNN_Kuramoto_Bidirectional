@@ -1,0 +1,52 @@
+{
+  "experiment": "SW0128_source_spike_relation_qa",
+  "purpose": "Test whether native SW0097 source QCC foreground assignments have local pairwise agreement with frozen CLEVR object masks.",
+  "status": "prospective_read_only_qa",
+  "training": false,
+  "optimizer_updates": 0,
+  "seeds": [0, 1, 2],
+  "validation_image_ids_inclusive": [1320, 1335],
+  "batch_size": 8,
+  "steps": 1024,
+  "settle": 512,
+  "dataset": "/Data0/kevinswk/datasets/object_centric_data/clevr_10-full.hdf5",
+  "prediction_contract": {
+    "model": "immutable SW0097 native source checkpoint for the corresponding seed",
+    "gamma": "registered cached validation gamma, rows for global image IDs 1320..1335",
+    "q": "spike_synchrony_affinity(actual_component_spikes.mean(dim=1), components=actual_component_spikes, settle=512, affinity_mode='spike'); each component Pearson is clamped positive by the registered function before product",
+    "qcc": {
+      "synchrony_threshold": 0.5,
+      "foreground_threshold": 0.15,
+      "min_group_size": 2,
+      "background": "largest_component",
+      "synchrony_quantile": null,
+      "target_foreground": null,
+      "spatial_sigma": null,
+      "affinity_mode": "spike",
+      "grid_size": 16
+    },
+    "native_rollout_parity": "manual source rollout must exactly match production theta/component membrane/component spikes and QCC labels for two fixed samples per seed"
+  },
+  "pair_qa": {
+    "pairing": "unique unordered patch pairs; Euclidean distance on the 16x16 patch grid; exclude self-pairs",
+    "distance_bins": {"distance_0_2": "(0,2]", "distance_2_5": "(2,5]"},
+    "positive": "both predicted labels are the same non-background label and Q >= 0.9",
+    "negative": "predicted labels differ (including background-vs-foreground) and Q <= 0.1",
+    "foreground_relevant_denominator": "candidate pair has at least one non-background modal-8x8 ground-truth patch label; background-background pairs are reported separately and excluded",
+    "positive_correct": "both patches share the same non-background ground-truth object label",
+    "negative_correct": "the pair does not share the same non-background ground-truth object label",
+    "eligible_anchor": "predicted foreground anchor has at least one positive and one negative candidate in that same distance bin; this decision is frozen before GT access",
+    "eligible_image_bin": "at least one eligible foreground anchor exists for that image and distance bin",
+    "connected_component_merges": "count each predicted foreground QCC label whose patches overlap more than one non-background ground-truth object ID"
+  },
+  "acceptance": {
+    "positive_precision_min_each_seed_bin": 0.95,
+    "negative_precision_min_each_seed_bin": 0.95,
+    "eligible_images_min_each_seed_bin": 12,
+    "foreground_relevant_pairs_min_per_class_aggregate": 50,
+    "missing_class": "failure",
+    "failure_action": "close this QA result; no threshold tuning, training, or 70k expansion"
+  },
+  "ground_truth_ordering": "Generate and persist all three seed predictions and Q matrices first. Rehash the single complete prediction bundle and validate all seed shapes/provenance before opening the HDF5 masks. GT is used only for post-freeze scoring.",
+  "output_policy": "Create-only paths. Preserve any existing output/result and never overwrite or automatically rerun it. A completed failed QA gate is a scientific result, not a process error."
+}

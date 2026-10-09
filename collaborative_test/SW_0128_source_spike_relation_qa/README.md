@@ -1,0 +1,11 @@
+# SW0128 source spike-relation QA
+
+This is a frozen, read-only diagnostic of the original SW0097 source models. It asks whether the native actual-spike QCC foreground partition agrees with CLEVR object identity for nearby patches. It does not train or alter the event dynamics.
+
+The generator evaluates seeds 0, 1, and 2 on validation IDs 1320–1335, with 1024 steps and a 512-step settle interval. It first verifies the manual rollout against the production core on two examples per seed. It then writes all three seeds' labels and actual-spike Q matrices to one immutable prediction artifact. The scoring stage rechecks the artifact SHA, implementation fingerprint, source checkpoint and manifest hashes, cache hashes, all three tensor shapes, and finiteness before opening the dataset masks.
+
+The classifier's mapped label 0 combines the largest background component with patches omitted because their synchrony group is smaller than two; this QA does not distinguish those two reasons. Pairs are directed foreground-anchor decisions, binned by Euclidean distance on the 16×16 patch grid: `(0,2]` and `(2,5]`. A positive requires the same predicted foreground label and Q ≥ 0.9. A negative requires different predicted labels and Q ≤ 0.1, so foreground-anchor-to-background negatives are included. Scoring excludes ground-truth background-background pairs and reports foreground-foreground, foreground-background, and excluded background-background cases separately. Predicted foreground labels spanning multiple ground-truth objects are counted as mask merges.
+
+An image contributes to a seed/bin precision only when it has at least 50 ground-truth-foreground-relevant candidates of each class. Every seed and distance bin must reach 0.95 precision for both classes across at least 12 eligible images. A missing class fails. Failure closes this diagnostic; it does not authorize threshold adjustment, training, or a larger-data run.
+
+Run `python -m collaborative_test.SW_0128_source_spike_relation_qa.run --stage generate --output <new-output-dir> --device cuda:0`, then `--stage score` with the same output directory. The prediction artifact is preserved if scoring or the scientific gate fails. Existing output paths are never overwritten.
