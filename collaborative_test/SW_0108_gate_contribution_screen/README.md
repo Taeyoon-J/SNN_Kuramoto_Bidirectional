@@ -46,3 +46,7 @@ the request was pending.
 After authorization, deploy the frozen files, run server unit tests and
 actual-model preflight, then start the baseline-first exclusive GPU queue.
 Foreign GPU jobs must not be shared or stopped.
+
+## Trained retention audit (2026-10-09)
+
+Read-only CPU state inspection of all three SW0097 cores found mean dendritic sigmoid(tau_n) .1719/.1751/.1560 and membrane sigmoid(tau_m) .1517/.1676/.1389. Coefficient e-folding durations average about .55-.60 and .51-.58 active updates, respectively. These are recurrence coefficients, not measured whole-model memory: gate holds and nonlinear spike resets matter. Combined with the earlier neutral retention-removal intervention, this motivates a prospective temporal integration hypothesis; it does not prove that changing retention will improve segmentation. See `trained_retention_audit_20261009.json`.

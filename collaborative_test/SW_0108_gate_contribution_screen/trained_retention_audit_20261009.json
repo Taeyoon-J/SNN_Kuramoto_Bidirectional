@@ -1,0 +1,79 @@
+{
+  "experiment": "SW0097",
+  "diagnostic": "trained_temporal_retention",
+  "ground_truth_used": false,
+  "seeds": {
+    "0": {
+      "dendric_layer.tau_n": {
+        "shape": [
+          256,
+          4
+        ],
+        "retention_min": 0.01296024490147829,
+        "retention_mean": 0.17188164591789246,
+        "retention_max": 0.6620469093322754,
+        "effective_efold_steps_mean": 0.5882796049118042,
+        "checkpoint_path": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0097_graph_adaptation/seed0_positive_frozen/core.pt"
+      },
+      "membrane_layer.tau_m": {
+        "shape": [
+          256
+        ],
+        "retention_min": 0.015371655113995075,
+        "retention_mean": 0.151697039604187,
+        "retention_max": 0.4670224189758301,
+        "effective_efold_steps_mean": 0.5393681526184082,
+        "checkpoint_path": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0097_graph_adaptation/seed0_positive_frozen/core.pt"
+      }
+    },
+    "1": {
+      "dendric_layer.tau_n": {
+        "shape": [
+          256,
+          4
+        ],
+        "retention_min": 0.013380260206758976,
+        "retention_mean": 0.17505845427513123,
+        "retention_max": 0.5807878971099854,
+        "effective_efold_steps_mean": 0.6015365719795227,
+        "checkpoint_path": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0097_graph_adaptation/seed1_positive_frozen/core.pt"
+      },
+      "membrane_layer.tau_m": {
+        "shape": [
+          256
+        ],
+        "retention_min": 0.01596572808921337,
+        "retention_mean": 0.1675705909729004,
+        "retention_max": 0.5138607621192932,
+        "effective_efold_steps_mean": 0.5790799260139465,
+        "checkpoint_path": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0097_graph_adaptation/seed1_positive_frozen/core.pt"
+      }
+    },
+    "2": {
+      "dendric_layer.tau_n": {
+        "shape": [
+          256,
+          4
+        ],
+        "retention_min": 0.012712248601019382,
+        "retention_mean": 0.15602055191993713,
+        "retention_max": 0.5920472145080566,
+        "effective_efold_steps_mean": 0.5539916753768921,
+        "checkpoint_path": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0097_graph_adaptation/seed2_positive_frozen/core.pt"
+      },
+      "membrane_layer.tau_m": {
+        "shape": [
+          256
+        ],
+        "retention_min": 0.011532170698046684,
+        "retention_mean": 0.13885390758514404,
+        "retention_max": 0.4058707058429718,
+        "effective_efold_steps_mean": 0.5068681240081787,
+        "checkpoint_path": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0097_graph_adaptation/seed2_positive_frozen/core.pt"
+      }
+    }
+  },
+  "measurement_scope": "CPU read-only of SW0097 trained core.pt state_dict; no simulation, optimizer, labels or data reads.",
+  "interpretation_limit": "-1/log(sigmoid(tau)) is the homogeneous recurrence coefficient e-folding duration per active update, not a measured whole-model memory duration. Membrane gate-dependent holds, dendritic input, resets and nonlinear thresholding affect actual temporal behavior.",
+  "hypothesis": "Short learned retention coefficients and the earlier neutral no-retention ablations motivate testing downstream temporal integration. These coefficients alone do not prove causality or predict improved FG-ARI."
+}
