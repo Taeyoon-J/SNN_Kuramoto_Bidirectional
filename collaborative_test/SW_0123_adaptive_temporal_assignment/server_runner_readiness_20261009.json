@@ -1,6 +1,6 @@
 {
   "experiment": "SW0123",
-  "status": "all_nine_preflights_passed_joint_training_running",
+  "status": "all27_training_evaluation_stages_complete_failed_pilot",
   "server_cpu_tests_passed": 21,
   "calibration_seeds_verified": [
     0,
@@ -35,15 +35,15 @@
     "lease_inherited": true,
     "terminal_log_status": "passed"
   },
-  "training_complete": false,
-  "segmentation_score_exists": false,
+  "training_complete": true,
+  "segmentation_score_exists": true,
   "provenance_blocker": "load_calibration loop overwrites return path: calibration_sha binds final dependency, not calibration JSON; no joint training started",
   "scientific_recipe_changed": false,
   "incorrect_attempt_calibration_sha256": "69d960809ff1ad73a91a7067f87f605ae69ef612be9b936e4b486cc29511dd1a",
   "corrected_runner_sha256": "7a7cf52d2a1a4b1fc87dc3d721646622f3eb6506ebcc3698f4c5df6b4918ad7c",
   "server_cpu_tests_after_fix": 30,
   "supervisor_pid": 1455390,
-  "supervisor_verified_live": true,
+  "supervisor_verified_live": false,
   "task_count": 27,
   "trajectory_count": 9,
   "initial_verified_children": [
@@ -93,5 +93,6 @@
       "arm": "gate_only_control"
     }
   ],
-  "observed_failed_tasks": 0
+  "observed_failed_tasks": 0,
+  "supervisor_terminal_verified": true
 }

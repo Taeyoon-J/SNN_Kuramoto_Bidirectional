@@ -1,0 +1,99 @@
+{
+  "status": "complete",
+  "ground_truth_used": false,
+  "optimizer_updates": 0,
+  "all_nine_arms_recorded": true,
+  "rows": [
+    {
+      "seed": 0,
+      "arm": "adaptive_full",
+      "train_foreground_fraction_mean": 0.0,
+      "train_all_background_images": 64,
+      "train_used_hard_slots_mean": 1.0,
+      "train_fg_groups_min2_mean": 0.0,
+      "endpoint_all_background_images": 320,
+      "mean_assignment_minus_real_loss": 0.00023280084133148193
+    },
+    {
+      "seed": 0,
+      "arm": "gate_only_control",
+      "train_foreground_fraction_mean": 0.1788330078125,
+      "train_all_background_images": 1,
+      "train_used_hard_slots_mean": 2.0,
+      "train_fg_groups_min2_mean": 0.984375,
+      "endpoint_all_background_images": 305,
+      "mean_assignment_minus_real_loss": 0.2091263085603714
+    },
+    {
+      "seed": 0,
+      "arm": "legacy_full",
+      "train_foreground_fraction_mean": 0.17291259765625,
+      "train_all_background_images": 1,
+      "train_used_hard_slots_mean": 1.984375,
+      "train_fg_groups_min2_mean": 0.984375,
+      "endpoint_all_background_images": 304,
+      "mean_assignment_minus_real_loss": 0.18950629234313965
+    },
+    {
+      "seed": 1,
+      "arm": "adaptive_full",
+      "train_foreground_fraction_mean": 0.14666748046875,
+      "train_all_background_images": 3,
+      "train_used_hard_slots_mean": 1.953125,
+      "train_fg_groups_min2_mean": 0.953125,
+      "endpoint_all_background_images": 0,
+      "mean_assignment_minus_real_loss": 0.18165816366672516
+    },
+    {
+      "seed": 1,
+      "arm": "gate_only_control",
+      "train_foreground_fraction_mean": 0.14501953125,
+      "train_all_background_images": 2,
+      "train_used_hard_slots_mean": 1.984375,
+      "train_fg_groups_min2_mean": 0.96875,
+      "endpoint_all_background_images": 263,
+      "mean_assignment_minus_real_loss": 0.18936173617839813
+    },
+    {
+      "seed": 1,
+      "arm": "legacy_full",
+      "train_foreground_fraction_mean": 0.14495849609375,
+      "train_all_background_images": 2,
+      "train_used_hard_slots_mean": 1.984375,
+      "train_fg_groups_min2_mean": 0.96875,
+      "endpoint_all_background_images": 259,
+      "mean_assignment_minus_real_loss": 0.18832862377166748
+    },
+    {
+      "seed": 2,
+      "arm": "adaptive_full",
+      "train_foreground_fraction_mean": 0.2105712890625,
+      "train_all_background_images": 0,
+      "train_used_hard_slots_mean": 2.0,
+      "train_fg_groups_min2_mean": 1.0,
+      "endpoint_all_background_images": 306,
+      "mean_assignment_minus_real_loss": 0.26491232216358185
+    },
+    {
+      "seed": 2,
+      "arm": "gate_only_control",
+      "train_foreground_fraction_mean": 0.197265625,
+      "train_all_background_images": 0,
+      "train_used_hard_slots_mean": 2.0,
+      "train_fg_groups_min2_mean": 1.0,
+      "endpoint_all_background_images": 304,
+      "mean_assignment_minus_real_loss": 0.29299625754356384
+    },
+    {
+      "seed": 2,
+      "arm": "legacy_full",
+      "train_foreground_fraction_mean": 0.19671630859375,
+      "train_all_background_images": 0,
+      "train_used_hard_slots_mean": 2.0,
+      "train_fg_groups_min2_mean": 1.0,
+      "endpoint_all_background_images": 302,
+      "mean_assignment_minus_real_loss": 0.2933342456817627
+    }
+  ],
+  "interpretation": "TRAIN-to-VAL collapse differs by arm/seed. Same-image short/long legacy diagnostic is required before assigning cause to horizon; learned fixed slot assignment does not yet establish instance separation."
+}
