@@ -2,8 +2,8 @@
 
 The forward normalization, matrix products, clamps, component stacking and
 positive product match ``spike_synchrony_affinity(..., affinity_mode='spike')``.
-Only gradients through centered trace norms at or below the existing epsilon
-are detached.
+Only direct gradients through normalized traces whose centered norm is at or
+below the existing epsilon are detached.
 """
 from __future__ import annotations
 
