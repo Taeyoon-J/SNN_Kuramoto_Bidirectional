@@ -1,0 +1,76 @@
+{
+  "state": {
+    "experiment": "SW0128",
+    "status": "complete",
+    "supervisor_pid": 2217736,
+    "no_automatic_retry": true,
+    "tasks": {
+      "sw0128_source_qcc_generate_all3": {
+        "task": {
+          "task_id": "sw0128_source_qcc_generate_all3",
+          "stage": "generate",
+          "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0128_source_spike_relation_qa/results_archive/source_relation_qa_20261009",
+          "depends_on": []
+        },
+        "status": "passed",
+        "child_pid": 2217752,
+        "argv": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "-m",
+          "collaborative_test.SW_0128_source_spike_relation_qa.run",
+          "--stage",
+          "generate",
+          "--output",
+          "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0128_source_spike_relation_qa/results_archive/source_relation_qa_20261009",
+          "--device",
+          "cuda:0"
+        ],
+        "log": "/tmp/kevinswk_sw0128_source_spike_relation_qa/sw0128_source_qcc_generate_all3.log",
+        "gpu": 0,
+        "gpu_uuid": "GPU-a0a7d03d-adc1-37ca-4342-328878b3657c",
+        "memory_used_before_mib": 16,
+        "inherited_lease_fd": true,
+        "triton_cache_dir": "/tmp/kevinswk_sw0128_triton_sw0128_source_qcc_generate_all3",
+        "returncode": 0,
+        "artifact_valid": true,
+        "finished": 1791588422.1276836
+      },
+      "sw0128_source_qcc_score_frozen": {
+        "task": {
+          "task_id": "sw0128_source_qcc_score_frozen",
+          "stage": "score",
+          "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0128_source_spike_relation_qa/results_archive/source_relation_qa_20261009",
+          "depends_on": [
+            "sw0128_source_qcc_generate_all3"
+          ]
+        },
+        "status": "passed",
+        "child_pid": 2217878,
+        "argv": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "-m",
+          "collaborative_test.SW_0128_source_spike_relation_qa.run",
+          "--stage",
+          "score",
+          "--output",
+          "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0128_source_spike_relation_qa/results_archive/source_relation_qa_20261009"
+        ],
+        "log": "/tmp/kevinswk_sw0128_source_spike_relation_qa/sw0128_source_qcc_score_frozen.log",
+        "gpu": null,
+        "gpu_uuid": null,
+        "memory_used_before_mib": null,
+        "inherited_lease_fd": false,
+        "triton_cache_dir": null,
+        "returncode": 0,
+        "artifact_valid": true,
+        "finished": 1791588427.2467391
+      }
+    },
+    "finished": 1791588427.2547169
+  },
+  "processes": {
+    "2217736": false,
+    "2217752": false,
+    "2217878": false
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "experiment": "SW0128",
+  "status": "scientific_rejection_completed",
+  "server_tests_passed": 9,
+  "processes_terminal": true,
+  "acceptance": {
+    "precision_each_class_each_bin": 0.95,
+    "eligible_images_each_seed_bin": 12,
+    "minimum_fg_relevant_pairs_per_class_aggregate": 50,
+    "all_seed_bins_pass": false
+  },
+  "rows": [
+    {
+      "seed": 0,
+      "bin": "distance_0_2",
+      "coverage": 16,
+      "positive_precision": 0.9488895649528445,
+      "negative_precision": 0.9224346889307837,
+      "positive_n": 3287,
+      "negative_n": 3713,
+      "pass": false
+    },
+    {
+      "seed": 0,
+      "bin": "distance_2_5",
+      "coverage": 16,
+      "positive_precision": 0.863451481696688,
+      "negative_precision": 0.9902897833288907,
+      "positive_n": 3442,
+      "negative_n": 26261,
+      "pass": false
+    },
+    {
+      "seed": 1,
+      "bin": "distance_0_2",
+      "coverage": 16,
+      "positive_precision": 0.9166914608747396,
+      "negative_precision": 0.8797874695594421,
+      "positive_n": 3361,
+      "negative_n": 4517,
+      "pass": false
+    },
+    {
+      "seed": 1,
+      "bin": "distance_2_5",
+      "coverage": 15,
+      "positive_precision": 0.7809579439252337,
+      "negative_precision": 0.9818759524041112,
+      "positive_n": 3424,
+      "negative_n": 30843,
+      "pass": false
+    },
+    {
+      "seed": 2,
+      "bin": "distance_0_2",
+      "coverage": 16,
+      "positive_precision": 0.9289031797070382,
+      "negative_precision": 0.9199625555815586,
+      "positive_n": 2799,
+      "negative_n": 4273,
+      "pass": false
+    },
+    {
+      "seed": 2,
+      "bin": "distance_2_5",
+      "coverage": 15,
+      "positive_precision": 0.7709090909090909,
+      "negative_precision": 0.9872629764412948,
+      "positive_n": 2475,
+      "negative_n": 31326,
+      "pass": false
+    }
+  ],
+  "decision": "Close original source97 high-confidence signed-Q relation teacher recipe. Do not train or tune thresholds after GT audit. Positive relations, especially medium-distance, are contaminated; source pair confidence is not object correctness.",
+  "incumbent_changed": false,
+  "gating_contribution_proven": false,
+  "data_scaling_proven": false,
+  "next_requirement": "Review an independent object-learning objective rather than self-reinforcing source positive relations; preserve native event dynamics and compare matched trainable encoder/graph controls.",
+  "limitations": "16 fixed VAL images per seed; rejection-only QA, not full segmentation evaluation or retrained causal ablation."
+}

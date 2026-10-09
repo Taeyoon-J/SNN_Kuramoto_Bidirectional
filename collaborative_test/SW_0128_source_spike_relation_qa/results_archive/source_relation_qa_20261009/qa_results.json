@@ -1,0 +1,5068 @@
+{
+  "status": "complete",
+  "experiment": "SW0128",
+  "image_ids": [
+    1320,
+    1335
+  ],
+  "count": 16,
+  "ground_truth_used_for_prediction": false,
+  "ground_truth_used_for_scoring": true,
+  "optimizer_updates": 0,
+  "all_three_prediction_bundles_sha_verified_before_ground_truth": true,
+  "prediction_sha256": "8a9c1976852763f833517eaa69a8ed27676def87b3039f44bba0ce5a740cb32e",
+  "prediction_manifest_sha256": "62b70fb60646fbf2fa494aff133ccf7098107010675694a1ab99620d9b7e3ec3",
+  "acceptance": {
+    "precision_each_class_each_bin": 0.95,
+    "eligible_images_each_seed_bin": 12,
+    "minimum_fg_relevant_pairs_per_class_aggregate": 50,
+    "all_seed_bins_pass": false
+  },
+  "per_seed": {
+    "0": {
+      "bins": {
+        "distance_0_2": {
+          "eligible_images": 16,
+          "eligible_image_ids": [
+            1320,
+            1321,
+            1322,
+            1323,
+            1324,
+            1325,
+            1326,
+            1327,
+            1328,
+            1329,
+            1330,
+            1331,
+            1332,
+            1333,
+            1334,
+            1335
+          ],
+          "total_images": 16,
+          "positive_fg_relevant_pairs": 3287,
+          "positive_correct_same_fg_object": 3119,
+          "positive_precision": 0.9488895649528445,
+          "negative_fg_relevant_pairs": 3713,
+          "negative_correct_not_same_fg_object": 3425,
+          "negative_precision": 0.9224346889307837,
+          "positive_fg_fg_same": 3119,
+          "positive_fg_fg_different": 31,
+          "positive_fg_bg_bridge": 137,
+          "negative_fg_fg_different": 419,
+          "negative_fg_bg_separated": 3006,
+          "bg_bg_excluded": 957,
+          "pass": false,
+          "per_image": [
+            {
+              "image_id": 1320,
+              "eligible_anchors": 73,
+              "positive_candidates": 407,
+              "negative_candidates": 362,
+              "positive_fg_relevant": 308,
+              "negative_fg_relevant": 328,
+              "positive_correct": 298,
+              "negative_correct": 317,
+              "positive_fg_fg_same": 298,
+              "positive_fg_fg_different": 2,
+              "positive_fg_bg_bridge": 8,
+              "negative_fg_fg_different": 59,
+              "negative_fg_bg_separated": 258,
+              "bg_bg_excluded": 133
+            },
+            {
+              "image_id": 1321,
+              "eligible_anchors": 22,
+              "positive_candidates": 120,
+              "negative_candidates": 140,
+              "positive_fg_relevant": 120,
+              "negative_fg_relevant": 131,
+              "positive_correct": 114,
+              "negative_correct": 128,
+              "positive_fg_fg_same": 114,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 6,
+              "negative_fg_fg_different": 0,
+              "negative_fg_bg_separated": 128,
+              "bg_bg_excluded": 9
+            },
+            {
+              "image_id": 1322,
+              "eligible_anchors": 36,
+              "positive_candidates": 198,
+              "negative_candidates": 191,
+              "positive_fg_relevant": 198,
+              "negative_fg_relevant": 185,
+              "positive_correct": 185,
+              "negative_correct": 163,
+              "positive_fg_fg_same": 185,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 13,
+              "negative_fg_fg_different": 27,
+              "negative_fg_bg_separated": 136,
+              "bg_bg_excluded": 6
+            },
+            {
+              "image_id": 1323,
+              "eligible_anchors": 46,
+              "positive_candidates": 240,
+              "negative_candidates": 279,
+              "positive_fg_relevant": 234,
+              "negative_fg_relevant": 262,
+              "positive_correct": 234,
+              "negative_correct": 255,
+              "positive_fg_fg_same": 234,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 0,
+              "negative_fg_fg_different": 55,
+              "negative_fg_bg_separated": 200,
+              "bg_bg_excluded": 23
+            },
+            {
+              "image_id": 1324,
+              "eligible_anchors": 75,
+              "positive_candidates": 339,
+              "negative_candidates": 419,
+              "positive_fg_relevant": 331,
+              "negative_fg_relevant": 403,
+              "positive_correct": 311,
+              "negative_correct": 339,
+              "positive_fg_fg_same": 311,
+              "positive_fg_fg_different": 7,
+              "positive_fg_bg_bridge": 13,
+              "negative_fg_fg_different": 60,
+              "negative_fg_bg_separated": 279,
+              "bg_bg_excluded": 24
+            },
+            {
+              "image_id": 1325,
+              "eligible_anchors": 49,
+              "positive_candidates": 312,
+              "negative_candidates": 190,
+              "positive_fg_relevant": 308,
+              "negative_fg_relevant": 174,
+              "positive_correct": 294,
+              "negative_correct": 167,
+              "positive_fg_fg_same": 294,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 14,
+              "negative_fg_fg_different": 28,
+              "negative_fg_bg_separated": 139,
+              "bg_bg_excluded": 20
+            },
+            {
+              "image_id": 1326,
+              "eligible_anchors": 37,
+              "positive_candidates": 170,
+              "negative_candidates": 237,
+              "positive_fg_relevant": 168,
+              "negative_fg_relevant": 223,
+              "positive_correct": 150,
+              "negative_correct": 217,
+              "positive_fg_fg_same": 150,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 18,
+              "negative_fg_fg_different": 16,
+              "negative_fg_bg_separated": 201,
+              "bg_bg_excluded": 16
+            },
+            {
+              "image_id": 1327,
+              "eligible_anchors": 35,
+              "positive_candidates": 191,
+              "negative_candidates": 162,
+              "positive_fg_relevant": 185,
+              "negative_fg_relevant": 144,
+              "positive_correct": 183,
+              "negative_correct": 140,
+              "positive_fg_fg_same": 183,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 2,
+              "negative_fg_fg_different": 3,
+              "negative_fg_bg_separated": 137,
+              "bg_bg_excluded": 24
+            },
+            {
+              "image_id": 1328,
+              "eligible_anchors": 35,
+              "positive_candidates": 80,
+              "negative_candidates": 225,
+              "positive_fg_relevant": 72,
+              "negative_fg_relevant": 182,
+              "positive_correct": 65,
+              "negative_correct": 154,
+              "positive_fg_fg_same": 65,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 7,
+              "negative_fg_fg_different": 8,
+              "negative_fg_bg_separated": 146,
+              "bg_bg_excluded": 51
+            },
+            {
+              "image_id": 1329,
+              "eligible_anchors": 19,
+              "positive_candidates": 72,
+              "negative_candidates": 153,
+              "positive_fg_relevant": 72,
+              "negative_fg_relevant": 137,
+              "positive_correct": 68,
+              "negative_correct": 125,
+              "positive_fg_fg_same": 68,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 4,
+              "negative_fg_fg_different": 0,
+              "negative_fg_bg_separated": 125,
+              "bg_bg_excluded": 16
+            },
+            {
+              "image_id": 1330,
+              "eligible_anchors": 55,
+              "positive_candidates": 334,
+              "negative_candidates": 272,
+              "positive_fg_relevant": 332,
+              "negative_fg_relevant": 258,
+              "positive_correct": 332,
+              "negative_correct": 251,
+              "positive_fg_fg_same": 332,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 0,
+              "negative_fg_fg_different": 5,
+              "negative_fg_bg_separated": 246,
+              "bg_bg_excluded": 16
+            },
+            {
+              "image_id": 1331,
+              "eligible_anchors": 36,
+              "positive_candidates": 168,
+              "negative_candidates": 217,
+              "positive_fg_relevant": 168,
+              "negative_fg_relevant": 217,
+              "positive_correct": 168,
+              "negative_correct": 210,
+              "positive_fg_fg_same": 168,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 0,
+              "negative_fg_fg_different": 32,
+              "negative_fg_bg_separated": 178,
+              "bg_bg_excluded": 0
+            },
+            {
+              "image_id": 1332,
+              "eligible_anchors": 90,
+              "positive_candidates": 624,
+              "negative_candidates": 412,
+              "positive_fg_relevant": 293,
+              "negative_fg_relevant": 333,
+              "positive_correct": 269,
+              "negative_correct": 320,
+              "positive_fg_fg_same": 269,
+              "positive_fg_fg_different": 6,
+              "positive_fg_bg_bridge": 18,
+              "negative_fg_fg_different": 48,
+              "negative_fg_bg_separated": 272,
+              "bg_bg_excluded": 410
+            },
+            {
+              "image_id": 1333,
+              "eligible_anchors": 79,
+              "positive_candidates": 372,
+              "negative_candidates": 442,
+              "positive_fg_relevant": 256,
+              "negative_fg_relevant": 386,
+              "positive_correct": 242,
+              "negative_correct": 327,
+              "positive_fg_fg_same": 242,
+              "positive_fg_fg_different": 6,
+              "positive_fg_bg_bridge": 8,
+              "negative_fg_fg_different": 22,
+              "negative_fg_bg_separated": 305,
+              "bg_bg_excluded": 172
+            },
+            {
+              "image_id": 1334,
+              "eligible_anchors": 20,
+              "positive_candidates": 94,
+              "negative_candidates": 103,
+              "positive_fg_relevant": 94,
+              "negative_fg_relevant": 99,
+              "positive_correct": 86,
+              "negative_correct": 99,
+              "positive_fg_fg_same": 86,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 8,
+              "negative_fg_fg_different": 13,
+              "negative_fg_bg_separated": 86,
+              "bg_bg_excluded": 4
+            },
+            {
+              "image_id": 1335,
+              "eligible_anchors": 38,
+              "positive_candidates": 150,
+              "negative_candidates": 282,
+              "positive_fg_relevant": 148,
+              "negative_fg_relevant": 251,
+              "positive_correct": 120,
+              "negative_correct": 213,
+              "positive_fg_fg_same": 120,
+              "positive_fg_fg_different": 10,
+              "positive_fg_bg_bridge": 18,
+              "negative_fg_fg_different": 43,
+              "negative_fg_bg_separated": 170,
+              "bg_bg_excluded": 33
+            }
+          ]
+        },
+        "distance_2_5": {
+          "eligible_images": 16,
+          "eligible_image_ids": [
+            1320,
+            1321,
+            1322,
+            1323,
+            1324,
+            1325,
+            1326,
+            1327,
+            1328,
+            1329,
+            1330,
+            1331,
+            1332,
+            1333,
+            1334,
+            1335
+          ],
+          "total_images": 16,
+          "positive_fg_relevant_pairs": 3442,
+          "positive_correct_same_fg_object": 2972,
+          "positive_precision": 0.863451481696688,
+          "negative_fg_relevant_pairs": 26261,
+          "negative_correct_not_same_fg_object": 26006,
+          "negative_precision": 0.9902897833288907,
+          "positive_fg_fg_same": 2972,
+          "positive_fg_fg_different": 164,
+          "positive_fg_bg_bridge": 306,
+          "negative_fg_fg_different": 4641,
+          "negative_fg_bg_separated": 21365,
+          "bg_bg_excluded": 4267,
+          "pass": false,
+          "per_image": [
+            {
+              "image_id": 1320,
+              "eligible_anchors": 76,
+              "positive_candidates": 604,
+              "negative_candidates": 3267,
+              "positive_fg_relevant": 346,
+              "negative_fg_relevant": 3045,
+              "positive_correct": 286,
+              "negative_correct": 3031,
+              "positive_fg_fg_same": 286,
+              "positive_fg_fg_different": 38,
+              "positive_fg_bg_bridge": 22,
+              "negative_fg_fg_different": 710,
+              "negative_fg_bg_separated": 2321,
+              "bg_bg_excluded": 480
+            },
+            {
+              "image_id": 1321,
+              "eligible_anchors": 15,
+              "positive_candidates": 96,
+              "negative_candidates": 808,
+              "positive_fg_relevant": 96,
+              "negative_fg_relevant": 808,
+              "positive_correct": 96,
+              "negative_correct": 808,
+              "positive_fg_fg_same": 96,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 0,
+              "negative_fg_fg_different": 28,
+              "negative_fg_bg_separated": 780,
+              "bg_bg_excluded": 0
+            },
+            {
+              "image_id": 1322,
+              "eligible_anchors": 28,
+              "positive_candidates": 336,
+              "negative_candidates": 1036,
+              "positive_fg_relevant": 336,
+              "negative_fg_relevant": 1016,
+              "positive_correct": 306,
+              "negative_correct": 996,
+              "positive_fg_fg_same": 306,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 30,
+              "negative_fg_fg_different": 175,
+              "negative_fg_bg_separated": 821,
+              "bg_bg_excluded": 20
+            },
+            {
+              "image_id": 1323,
+              "eligible_anchors": 37,
+              "positive_candidates": 152,
+              "negative_candidates": 1805,
+              "positive_fg_relevant": 152,
+              "negative_fg_relevant": 1805,
+              "positive_correct": 152,
+              "negative_correct": 1798,
+              "positive_fg_fg_same": 152,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 0,
+              "negative_fg_fg_different": 429,
+              "negative_fg_bg_separated": 1369,
+              "bg_bg_excluded": 0
+            },
+            {
+              "image_id": 1324,
+              "eligible_anchors": 67,
+              "positive_candidates": 534,
+              "negative_candidates": 2471,
+              "positive_fg_relevant": 534,
+              "negative_fg_relevant": 2446,
+              "positive_correct": 476,
+              "negative_correct": 2404,
+              "positive_fg_fg_same": 476,
+              "positive_fg_fg_different": 22,
+              "positive_fg_bg_bridge": 36,
+              "negative_fg_fg_different": 792,
+              "negative_fg_bg_separated": 1612,
+              "bg_bg_excluded": 25
+            },
+            {
+              "image_id": 1325,
+              "eligible_anchors": 53,
+              "positive_candidates": 446,
+              "negative_candidates": 2162,
+              "positive_fg_relevant": 444,
+              "negative_fg_relevant": 2075,
+              "positive_correct": 398,
+              "negative_correct": 2056,
+              "positive_fg_fg_same": 398,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 46,
+              "negative_fg_fg_different": 302,
+              "negative_fg_bg_separated": 1754,
+              "bg_bg_excluded": 89
+            },
+            {
+              "image_id": 1326,
+              "eligible_anchors": 21,
+              "positive_candidates": 70,
+              "negative_candidates": 958,
+              "positive_fg_relevant": 68,
+              "negative_fg_relevant": 881,
+              "positive_correct": 62,
+              "negative_correct": 873,
+              "positive_fg_fg_same": 62,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 6,
+              "negative_fg_fg_different": 133,
+              "negative_fg_bg_separated": 740,
+              "bg_bg_excluded": 79
+            },
+            {
+              "image_id": 1327,
+              "eligible_anchors": 32,
+              "positive_candidates": 240,
+              "negative_candidates": 1606,
+              "positive_fg_relevant": 240,
+              "negative_fg_relevant": 1450,
+              "positive_correct": 214,
+              "negative_correct": 1450,
+              "positive_fg_fg_same": 214,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 26,
+              "negative_fg_fg_different": 115,
+              "negative_fg_bg_separated": 1335,
+              "bg_bg_excluded": 156
+            },
+            {
+              "image_id": 1328,
+              "eligible_anchors": 14,
+              "positive_candidates": 40,
+              "negative_candidates": 706,
+              "positive_fg_relevant": 40,
+              "negative_fg_relevant": 616,
+              "positive_correct": 20,
+              "negative_correct": 594,
+              "positive_fg_fg_same": 20,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 20,
+              "negative_fg_fg_different": 56,
+              "negative_fg_bg_separated": 538,
+              "bg_bg_excluded": 90
+            },
+            {
+              "image_id": 1329,
+              "eligible_anchors": 12,
+              "positive_candidates": 26,
+              "negative_candidates": 638,
+              "positive_fg_relevant": 24,
+              "negative_fg_relevant": 525,
+              "positive_correct": 20,
+              "negative_correct": 523,
+              "positive_fg_fg_same": 20,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 4,
+              "negative_fg_fg_different": 8,
+              "negative_fg_bg_separated": 515,
+              "bg_bg_excluded": 115
+            },
+            {
+              "image_id": 1330,
+              "eligible_anchors": 48,
+              "positive_candidates": 322,
+              "negative_candidates": 2449,
+              "positive_fg_relevant": 322,
+              "negative_fg_relevant": 2344,
+              "positive_correct": 316,
+              "negative_correct": 2335,
+              "positive_fg_fg_same": 316,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 6,
+              "negative_fg_fg_different": 324,
+              "negative_fg_bg_separated": 2011,
+              "bg_bg_excluded": 105
+            },
+            {
+              "image_id": 1331,
+              "eligible_anchors": 28,
+              "positive_candidates": 66,
+              "negative_candidates": 1478,
+              "positive_fg_relevant": 66,
+              "negative_fg_relevant": 1428,
+              "positive_correct": 64,
+              "negative_correct": 1419,
+              "positive_fg_fg_same": 64,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 2,
+              "negative_fg_fg_different": 199,
+              "negative_fg_bg_separated": 1220,
+              "bg_bg_excluded": 50
+            },
+            {
+              "image_id": 1332,
+              "eligible_anchors": 127,
+              "positive_candidates": 2337,
+              "negative_candidates": 3700,
+              "positive_fg_relevant": 412,
+              "negative_fg_relevant": 3004,
+              "positive_correct": 350,
+              "negative_correct": 2990,
+              "positive_fg_fg_same": 350,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 62,
+              "negative_fg_fg_different": 360,
+              "negative_fg_bg_separated": 2630,
+              "bg_bg_excluded": 2621
+            },
+            {
+              "image_id": 1333,
+              "eligible_anchors": 72,
+              "positive_candidates": 388,
+              "negative_candidates": 2728,
+              "positive_fg_relevant": 184,
+              "negative_fg_relevant": 2574,
+              "positive_correct": 112,
+              "negative_correct": 2508,
+              "positive_fg_fg_same": 112,
+              "positive_fg_fg_different": 50,
+              "positive_fg_bg_bridge": 22,
+              "negative_fg_fg_different": 483,
+              "negative_fg_bg_separated": 2025,
+              "bg_bg_excluded": 358
+            },
+            {
+              "image_id": 1334,
+              "eligible_anchors": 19,
+              "positive_candidates": 74,
+              "negative_candidates": 901,
+              "positive_fg_relevant": 74,
+              "negative_fg_relevant": 863,
+              "positive_correct": 62,
+              "negative_correct": 863,
+              "positive_fg_fg_same": 62,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 12,
+              "negative_fg_fg_different": 146,
+              "negative_fg_bg_separated": 717,
+              "bg_bg_excluded": 38
+            },
+            {
+              "image_id": 1335,
+              "eligible_anchors": 25,
+              "positive_candidates": 104,
+              "negative_candidates": 1422,
+              "positive_fg_relevant": 104,
+              "negative_fg_relevant": 1381,
+              "positive_correct": 38,
+              "negative_correct": 1358,
+              "positive_fg_fg_same": 38,
+              "positive_fg_fg_different": 54,
+              "positive_fg_bg_bridge": 12,
+              "negative_fg_fg_different": 381,
+              "negative_fg_bg_separated": 977,
+              "bg_bg_excluded": 41
+            }
+          ]
+        }
+      },
+      "frozen_positive_union_components": {
+        "positive_components_with_edges": 93,
+        "components_merging_foreground_instances": 8,
+        "components_connecting_foreground_background": 25,
+        "per_image": [
+          {
+            "image_id": 1320,
+            "positive_components_with_edges": 6,
+            "components_merging_foreground_instances": 1,
+            "components_connecting_foreground_background": 2,
+            "components": [
+              {
+                "patches": 22,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 9,
+                "foreground_objects": [
+                  1
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 16,
+                "foreground_objects": [
+                  4,
+                  5
+                ],
+                "merges_multiple_foreground_instances": true,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 20,
+                "foreground_objects": [
+                  2
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 13,
+                "foreground_objects": [
+                  3
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              }
+            ]
+          },
+          {
+            "image_id": 1321,
+            "positive_components_with_edges": 3,
+            "components_merging_foreground_instances": 0,
+            "components_connecting_foreground_background": 1,
+            "components": [
+              {
+                "patches": 15,
+                "foreground_objects": [
+                  2
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 3,
+                "foreground_objects": [
+                  1
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 4,
+                "foreground_objects": [
+                  3
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              }
+            ]
+          },
+          {
+            "image_id": 1322,
+            "positive_components_with_edges": 5,
+            "components_merging_foreground_instances": 0,
+            "components_connecting_foreground_background": 2,
+            "components": [
+              {
+                "patches": 6,
+                "foreground_objects": [
+                  3
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 5,
+                "foreground_objects": [
+                  4
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 3,
+                "foreground_objects": [
+                  4
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 24,
+                "foreground_objects": [
+                  2
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [
+                  1
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              }
+            ]
+          },
+          {
+            "image_id": 1323,
+            "positive_components_with_edges": 6,
+            "components_merging_foreground_instances": 0,
+            "components_connecting_foreground_background": 0,
+            "components": [
+              {
+                "patches": 3,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 9,
+                "foreground_objects": [
+                  2
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 15,
+                "foreground_objects": [
+                  7
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 8,
+                "foreground_objects": [
+                  4
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 6,
+                "foreground_objects": [
+                  3
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 5,
+                "foreground_objects": [
+                  5
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              }
+            ]
+          },
+          {
+            "image_id": 1324,
+            "positive_components_with_edges": 12,
+            "components_merging_foreground_instances": 2,
+            "components_connecting_foreground_background": 4,
+            "components": [
+              {
+                "patches": 15,
+                "foreground_objects": [
+                  6
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 10,
+                "foreground_objects": [
+                  4
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 3,
+                "foreground_objects": [
+                  4
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [
+                  4
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 5,
+                "foreground_objects": [
+                  2,
+                  8
+                ],
+                "merges_multiple_foreground_instances": true,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 3,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 36,
+                "foreground_objects": [
+                  1,
+                  9
+                ],
+                "merges_multiple_foreground_instances": true,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [
+                  9
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [
+                  3
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 4,
+                "foreground_objects": [
+                  3
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 3,
+                "foreground_objects": [
+                  8
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [
+                  9
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              }
+            ]
+          },
+          {
+            "image_id": 1325,
+            "positive_components_with_edges": 3,
+            "components_merging_foreground_instances": 0,
+            "components_connecting_foreground_background": 1,
+            "components": [
+              {
+                "patches": 15,
+                "foreground_objects": [
+                  3
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 20,
+                "foreground_objects": [
+                  2
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 19,
+                "foreground_objects": [
+                  1
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              }
+            ]
+          },
+          {
+            "image_id": 1326,
+            "positive_components_with_edges": 6,
+            "components_merging_foreground_instances": 0,
+            "components_connecting_foreground_background": 2,
+            "components": [
+              {
+                "patches": 12,
+                "foreground_objects": [
+                  1
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 4,
+                "foreground_objects": [
+                  6
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 4,
+                "foreground_objects": [
+                  7
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 4,
+                "foreground_objects": [
+                  4
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 9,
+                "foreground_objects": [
+                  2
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 4,
+                "foreground_objects": [
+                  5
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              }
+            ]
+          },
+          {
+            "image_id": 1327,
+            "positive_components_with_edges": 3,
+            "components_merging_foreground_instances": 0,
+            "components_connecting_foreground_background": 1,
+            "components": [
+              {
+                "patches": 10,
+                "foreground_objects": [
+                  1
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 22,
+                "foreground_objects": [
+                  2
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 5,
+                "foreground_objects": [
+                  3
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              }
+            ]
+          },
+          {
+            "image_id": 1328,
+            "positive_components_with_edges": 10,
+            "components_merging_foreground_instances": 0,
+            "components_connecting_foreground_background": 1,
+            "components": [
+              {
+                "patches": 2,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [
+                  3
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 6,
+                "foreground_objects": [
+                  6
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [
+                  2
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 3,
+                "foreground_objects": [
+                  1
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 3,
+                "foreground_objects": [
+                  1
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 11,
+                "foreground_objects": [
+                  4
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [
+                  4
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [
+                  4
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 3,
+                "foreground_objects": [
+                  4
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              }
+            ]
+          },
+          {
+            "image_id": 1329,
+            "positive_components_with_edges": 4,
+            "components_merging_foreground_instances": 0,
+            "components_connecting_foreground_background": 1,
+            "components": [
+              {
+                "patches": 9,
+                "foreground_objects": [
+                  1
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [
+                  4
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 4,
+                "foreground_objects": [
+                  3
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 4,
+                "foreground_objects": [
+                  3
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              }
+            ]
+          },
+          {
+            "image_id": 1330,
+            "positive_components_with_edges": 5,
+            "components_merging_foreground_instances": 0,
+            "components_connecting_foreground_background": 1,
+            "components": [
+              {
+                "patches": 14,
+                "foreground_objects": [
+                  4
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 18,
+                "foreground_objects": [
+                  3
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [
+                  6
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 17,
+                "foreground_objects": [
+                  1
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 4,
+                "foreground_objects": [
+                  5
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              }
+            ]
+          },
+          {
+            "image_id": 1331,
+            "positive_components_with_edges": 5,
+            "components_merging_foreground_instances": 0,
+            "components_connecting_foreground_background": 1,
+            "components": [
+              {
+                "patches": 10,
+                "foreground_objects": [
+                  6
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 8,
+                "foreground_objects": [
+                  5
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 4,
+                "foreground_objects": [
+                  3
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 10,
+                "foreground_objects": [
+                  1
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 5,
+                "foreground_objects": [
+                  2
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              }
+            ]
+          },
+          {
+            "image_id": 1332,
+            "positive_components_with_edges": 7,
+            "components_merging_foreground_instances": 1,
+            "components_connecting_foreground_background": 1,
+            "components": [
+              {
+                "patches": 18,
+                "foreground_objects": [
+                  3,
+                  5
+                ],
+                "merges_multiple_foreground_instances": true,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [
+                  6
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 5,
+                "foreground_objects": [
+                  1
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [
+                  5
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 91,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 22,
+                "foreground_objects": [
+                  4
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [
+                  2
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              }
+            ]
+          },
+          {
+            "image_id": 1333,
+            "positive_components_with_edges": 9,
+            "components_merging_foreground_instances": 2,
+            "components_connecting_foreground_background": 3,
+            "components": [
+              {
+                "patches": 28,
+                "foreground_objects": [
+                  2,
+                  3
+                ],
+                "merges_multiple_foreground_instances": true,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 15,
+                "foreground_objects": [
+                  4,
+                  6
+                ],
+                "merges_multiple_foreground_instances": true,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 8,
+                "foreground_objects": [
+                  2
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 9,
+                "foreground_objects": [
+                  3
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 3,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 12,
+                "foreground_objects": [
+                  1
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [
+                  5
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 6,
+                "foreground_objects": [
+                  5
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              }
+            ]
+          },
+          {
+            "image_id": 1334,
+            "positive_components_with_edges": 2,
+            "components_merging_foreground_instances": 0,
+            "components_connecting_foreground_background": 1,
+            "components": [
+              {
+                "patches": 11,
+                "foreground_objects": [
+                  1
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 9,
+                "foreground_objects": [
+                  4
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              }
+            ]
+          },
+          {
+            "image_id": 1335,
+            "positive_components_with_edges": 7,
+            "components_merging_foreground_instances": 2,
+            "components_connecting_foreground_background": 3,
+            "components": [
+              {
+                "patches": 3,
+                "foreground_objects": [
+                  1
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 13,
+                "foreground_objects": [
+                  7,
+                  8
+                ],
+                "merges_multiple_foreground_instances": true,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 3,
+                "foreground_objects": [
+                  8
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 9,
+                "foreground_objects": [
+                  5
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 7,
+                "foreground_objects": [
+                  2,
+                  9
+                ],
+                "merges_multiple_foreground_instances": true,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [
+                  3
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              }
+            ]
+          }
+        ]
+      },
+      "predicted_groups_merging_multiple_gt_objects": [
+        {
+          "image_id": 1320,
+          "predicted_label": 3,
+          "ground_truth_object_ids": [
+            4,
+            5
+          ]
+        },
+        {
+          "image_id": 1324,
+          "predicted_label": 1,
+          "ground_truth_object_ids": [
+            1,
+            9
+          ]
+        },
+        {
+          "image_id": 1324,
+          "predicted_label": 4,
+          "ground_truth_object_ids": [
+            2,
+            8
+          ]
+        },
+        {
+          "image_id": 1332,
+          "predicted_label": 3,
+          "ground_truth_object_ids": [
+            3,
+            5
+          ]
+        },
+        {
+          "image_id": 1333,
+          "predicted_label": 1,
+          "ground_truth_object_ids": [
+            2,
+            3
+          ]
+        },
+        {
+          "image_id": 1333,
+          "predicted_label": 2,
+          "ground_truth_object_ids": [
+            4,
+            6
+          ]
+        },
+        {
+          "image_id": 1335,
+          "predicted_label": 1,
+          "ground_truth_object_ids": [
+            7,
+            8
+          ]
+        },
+        {
+          "image_id": 1335,
+          "predicted_label": 3,
+          "ground_truth_object_ids": [
+            2,
+            9
+          ]
+        },
+        {
+          "image_id": 1335,
+          "predicted_label": 9,
+          "ground_truth_object_ids": [
+            1,
+            5
+          ]
+        }
+      ],
+      "merge_count": 9
+    },
+    "1": {
+      "bins": {
+        "distance_0_2": {
+          "eligible_images": 16,
+          "eligible_image_ids": [
+            1320,
+            1321,
+            1322,
+            1323,
+            1324,
+            1325,
+            1326,
+            1327,
+            1328,
+            1329,
+            1330,
+            1331,
+            1332,
+            1333,
+            1334,
+            1335
+          ],
+          "total_images": 16,
+          "positive_fg_relevant_pairs": 3361,
+          "positive_correct_same_fg_object": 3081,
+          "positive_precision": 0.9166914608747396,
+          "negative_fg_relevant_pairs": 4517,
+          "negative_correct_not_same_fg_object": 3974,
+          "negative_precision": 0.8797874695594421,
+          "positive_fg_fg_same": 3081,
+          "positive_fg_fg_different": 45,
+          "positive_fg_bg_bridge": 235,
+          "negative_fg_fg_different": 451,
+          "negative_fg_bg_separated": 3523,
+          "bg_bg_excluded": 3626,
+          "pass": false,
+          "per_image": [
+            {
+              "image_id": 1320,
+              "eligible_anchors": 84,
+              "positive_candidates": 465,
+              "negative_candidates": 422,
+              "positive_fg_relevant": 322,
+              "negative_fg_relevant": 397,
+              "positive_correct": 310,
+              "negative_correct": 355,
+              "positive_fg_fg_same": 310,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 12,
+              "negative_fg_fg_different": 64,
+              "negative_fg_bg_separated": 291,
+              "bg_bg_excluded": 168
+            },
+            {
+              "image_id": 1321,
+              "eligible_anchors": 5,
+              "positive_candidates": 8,
+              "negative_candidates": 52,
+              "positive_fg_relevant": 8,
+              "negative_fg_relevant": 52,
+              "positive_correct": 8,
+              "negative_correct": 47,
+              "positive_fg_fg_same": 8,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 0,
+              "negative_fg_fg_different": 0,
+              "negative_fg_bg_separated": 47,
+              "bg_bg_excluded": 0
+            },
+            {
+              "image_id": 1322,
+              "eligible_anchors": 62,
+              "positive_candidates": 452,
+              "negative_candidates": 234,
+              "positive_fg_relevant": 175,
+              "negative_fg_relevant": 168,
+              "positive_correct": 165,
+              "negative_correct": 150,
+              "positive_fg_fg_same": 165,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 10,
+              "negative_fg_fg_different": 27,
+              "negative_fg_bg_separated": 123,
+              "bg_bg_excluded": 343
+            },
+            {
+              "image_id": 1323,
+              "eligible_anchors": 107,
+              "positive_candidates": 651,
+              "negative_candidates": 536,
+              "positive_fg_relevant": 262,
+              "negative_fg_relevant": 424,
+              "positive_correct": 242,
+              "negative_correct": 409,
+              "positive_fg_fg_same": 242,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 20,
+              "negative_fg_fg_different": 56,
+              "negative_fg_bg_separated": 353,
+              "bg_bg_excluded": 501
+            },
+            {
+              "image_id": 1324,
+              "eligible_anchors": 107,
+              "positive_candidates": 637,
+              "negative_candidates": 504,
+              "positive_fg_relevant": 372,
+              "negative_fg_relevant": 456,
+              "positive_correct": 347,
+              "negative_correct": 383,
+              "positive_fg_fg_same": 347,
+              "positive_fg_fg_different": 11,
+              "positive_fg_bg_bridge": 14,
+              "negative_fg_fg_different": 66,
+              "negative_fg_bg_separated": 317,
+              "bg_bg_excluded": 313
+            },
+            {
+              "image_id": 1325,
+              "eligible_anchors": 83,
+              "positive_candidates": 451,
+              "negative_candidates": 441,
+              "positive_fg_relevant": 298,
+              "negative_fg_relevant": 308,
+              "positive_correct": 284,
+              "negative_correct": 230,
+              "positive_fg_fg_same": 284,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 14,
+              "negative_fg_fg_different": 28,
+              "negative_fg_bg_separated": 202,
+              "bg_bg_excluded": 286
+            },
+            {
+              "image_id": 1326,
+              "eligible_anchors": 98,
+              "positive_candidates": 473,
+              "negative_candidates": 545,
+              "positive_fg_relevant": 209,
+              "negative_fg_relevant": 426,
+              "positive_correct": 168,
+              "negative_correct": 388,
+              "positive_fg_fg_same": 168,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 41,
+              "negative_fg_fg_different": 21,
+              "negative_fg_bg_separated": 367,
+              "bg_bg_excluded": 383
+            },
+            {
+              "image_id": 1327,
+              "eligible_anchors": 36,
+              "positive_candidates": 233,
+              "negative_candidates": 171,
+              "positive_fg_relevant": 227,
+              "negative_fg_relevant": 149,
+              "positive_correct": 200,
+              "negative_correct": 145,
+              "positive_fg_fg_same": 200,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 27,
+              "negative_fg_fg_different": 4,
+              "negative_fg_bg_separated": 141,
+              "bg_bg_excluded": 28
+            },
+            {
+              "image_id": 1328,
+              "eligible_anchors": 41,
+              "positive_candidates": 152,
+              "negative_candidates": 290,
+              "positive_fg_relevant": 146,
+              "negative_fg_relevant": 235,
+              "positive_correct": 116,
+              "negative_correct": 182,
+              "positive_fg_fg_same": 116,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 30,
+              "negative_fg_fg_different": 9,
+              "negative_fg_bg_separated": 173,
+              "bg_bg_excluded": 61
+            },
+            {
+              "image_id": 1329,
+              "eligible_anchors": 22,
+              "positive_candidates": 80,
+              "negative_candidates": 168,
+              "positive_fg_relevant": 70,
+              "negative_fg_relevant": 132,
+              "positive_correct": 66,
+              "negative_correct": 120,
+              "positive_fg_fg_same": 66,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 4,
+              "negative_fg_fg_different": 0,
+              "negative_fg_bg_separated": 120,
+              "bg_bg_excluded": 46
+            },
+            {
+              "image_id": 1330,
+              "eligible_anchors": 53,
+              "positive_candidates": 236,
+              "negative_candidates": 335,
+              "positive_fg_relevant": 232,
+              "negative_fg_relevant": 307,
+              "positive_correct": 232,
+              "negative_correct": 258,
+              "positive_fg_fg_same": 232,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 0,
+              "negative_fg_fg_different": 11,
+              "negative_fg_bg_separated": 247,
+              "bg_bg_excluded": 32
+            },
+            {
+              "image_id": 1331,
+              "eligible_anchors": 83,
+              "positive_candidates": 462,
+              "negative_candidates": 375,
+              "positive_fg_relevant": 156,
+              "negative_fg_relevant": 311,
+              "positive_correct": 156,
+              "negative_correct": 289,
+              "positive_fg_fg_same": 156,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 0,
+              "negative_fg_fg_different": 34,
+              "negative_fg_bg_separated": 255,
+              "bg_bg_excluded": 370
+            },
+            {
+              "image_id": 1332,
+              "eligible_anchors": 49,
+              "positive_candidates": 336,
+              "negative_candidates": 252,
+              "positive_fg_relevant": 334,
+              "negative_fg_relevant": 233,
+              "positive_correct": 290,
+              "negative_correct": 231,
+              "positive_fg_fg_same": 290,
+              "positive_fg_fg_different": 14,
+              "positive_fg_bg_bridge": 30,
+              "negative_fg_fg_different": 40,
+              "negative_fg_bg_separated": 191,
+              "bg_bg_excluded": 21
+            },
+            {
+              "image_id": 1333,
+              "eligible_anchors": 75,
+              "positive_candidates": 397,
+              "negative_candidates": 383,
+              "positive_fg_relevant": 272,
+              "negative_fg_relevant": 353,
+              "positive_correct": 259,
+              "negative_correct": 299,
+              "positive_fg_fg_same": 259,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 13,
+              "negative_fg_fg_different": 20,
+              "negative_fg_bg_separated": 279,
+              "bg_bg_excluded": 155
+            },
+            {
+              "image_id": 1334,
+              "eligible_anchors": 89,
+              "positive_candidates": 651,
+              "negative_candidates": 331,
+              "positive_fg_relevant": 118,
+              "negative_fg_relevant": 156,
+              "positive_correct": 110,
+              "negative_correct": 156,
+              "positive_fg_fg_same": 110,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 8,
+              "negative_fg_fg_different": 14,
+              "negative_fg_bg_separated": 142,
+              "bg_bg_excluded": 708
+            },
+            {
+              "image_id": 1335,
+              "eligible_anchors": 72,
+              "positive_candidates": 320,
+              "negative_candidates": 461,
+              "positive_fg_relevant": 160,
+              "negative_fg_relevant": 410,
+              "positive_correct": 128,
+              "negative_correct": 332,
+              "positive_fg_fg_same": 128,
+              "positive_fg_fg_different": 20,
+              "positive_fg_bg_bridge": 12,
+              "negative_fg_fg_different": 57,
+              "negative_fg_bg_separated": 275,
+              "bg_bg_excluded": 211
+            }
+          ]
+        },
+        "distance_2_5": {
+          "eligible_images": 15,
+          "eligible_image_ids": [
+            1320,
+            1322,
+            1323,
+            1324,
+            1325,
+            1326,
+            1327,
+            1328,
+            1329,
+            1330,
+            1331,
+            1332,
+            1333,
+            1334,
+            1335
+          ],
+          "total_images": 16,
+          "positive_fg_relevant_pairs": 3424,
+          "positive_correct_same_fg_object": 2674,
+          "positive_precision": 0.7809579439252337,
+          "negative_fg_relevant_pairs": 30843,
+          "negative_correct_not_same_fg_object": 30284,
+          "negative_precision": 0.9818759524041112,
+          "positive_fg_fg_same": 2674,
+          "positive_fg_fg_different": 198,
+          "positive_fg_bg_bridge": 552,
+          "negative_fg_fg_different": 4571,
+          "negative_fg_bg_separated": 25713,
+          "bg_bg_excluded": 18938,
+          "pass": false,
+          "per_image": [
+            {
+              "image_id": 1320,
+              "eligible_anchors": 86,
+              "positive_candidates": 660,
+              "negative_candidates": 3589,
+              "positive_fg_relevant": 346,
+              "negative_fg_relevant": 3338,
+              "positive_correct": 284,
+              "negative_correct": 3283,
+              "positive_fg_fg_same": 284,
+              "positive_fg_fg_different": 34,
+              "positive_fg_bg_bridge": 28,
+              "negative_fg_fg_different": 729,
+              "negative_fg_bg_separated": 2554,
+              "bg_bg_excluded": 565
+            },
+            {
+              "image_id": 1321,
+              "eligible_anchors": 0,
+              "positive_candidates": 0,
+              "negative_candidates": 0,
+              "positive_fg_relevant": 0,
+              "negative_fg_relevant": 0,
+              "positive_correct": 0,
+              "negative_correct": 0,
+              "positive_fg_fg_same": 0,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 0,
+              "negative_fg_fg_different": 0,
+              "negative_fg_bg_separated": 0,
+              "bg_bg_excluded": 0
+            },
+            {
+              "image_id": 1322,
+              "eligible_anchors": 106,
+              "positive_candidates": 2959,
+              "negative_candidates": 2154,
+              "positive_fg_relevant": 332,
+              "negative_fg_relevant": 1324,
+              "positive_correct": 302,
+              "negative_correct": 1302,
+              "positive_fg_fg_same": 302,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 30,
+              "negative_fg_fg_different": 196,
+              "negative_fg_bg_separated": 1106,
+              "bg_bg_excluded": 3457
+            },
+            {
+              "image_id": 1323,
+              "eligible_anchors": 113,
+              "positive_candidates": 1130,
+              "negative_candidates": 4337,
+              "positive_fg_relevant": 180,
+              "negative_fg_relevant": 3084,
+              "positive_correct": 148,
+              "negative_correct": 3070,
+              "positive_fg_fg_same": 148,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 32,
+              "negative_fg_fg_different": 472,
+              "negative_fg_bg_separated": 2598,
+              "bg_bg_excluded": 2203
+            },
+            {
+              "image_id": 1324,
+              "eligible_anchors": 138,
+              "positive_candidates": 2577,
+              "negative_candidates": 3779,
+              "positive_fg_relevant": 512,
+              "negative_fg_relevant": 3342,
+              "positive_correct": 472,
+              "negative_correct": 3249,
+              "positive_fg_fg_same": 472,
+              "positive_fg_fg_different": 30,
+              "positive_fg_bg_bridge": 10,
+              "negative_fg_fg_different": 796,
+              "negative_fg_bg_separated": 2453,
+              "bg_bg_excluded": 2502
+            },
+            {
+              "image_id": 1325,
+              "eligible_anchors": 80,
+              "positive_candidates": 560,
+              "negative_candidates": 3229,
+              "positive_fg_relevant": 348,
+              "negative_fg_relevant": 2385,
+              "positive_correct": 270,
+              "negative_correct": 2270,
+              "positive_fg_fg_same": 270,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 78,
+              "negative_fg_fg_different": 245,
+              "negative_fg_bg_separated": 2025,
+              "bg_bg_excluded": 1056
+            },
+            {
+              "image_id": 1326,
+              "eligible_anchors": 81,
+              "positive_candidates": 902,
+              "negative_candidates": 2083,
+              "positive_fg_relevant": 154,
+              "negative_fg_relevant": 1630,
+              "positive_correct": 68,
+              "negative_correct": 1618,
+              "positive_fg_fg_same": 68,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 86,
+              "negative_fg_fg_different": 159,
+              "negative_fg_bg_separated": 1459,
+              "bg_bg_excluded": 1201
+            },
+            {
+              "image_id": 1327,
+              "eligible_anchors": 35,
+              "positive_candidates": 322,
+              "negative_candidates": 1669,
+              "positive_fg_relevant": 322,
+              "negative_fg_relevant": 1472,
+              "positive_correct": 224,
+              "negative_correct": 1472,
+              "positive_fg_fg_same": 224,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 98,
+              "negative_fg_fg_different": 131,
+              "negative_fg_bg_separated": 1341,
+              "bg_bg_excluded": 197
+            },
+            {
+              "image_id": 1328,
+              "eligible_anchors": 32,
+              "positive_candidates": 112,
+              "negative_candidates": 1691,
+              "positive_fg_relevant": 108,
+              "negative_fg_relevant": 1410,
+              "positive_correct": 62,
+              "negative_correct": 1320,
+              "positive_fg_fg_same": 62,
+              "positive_fg_fg_different": 2,
+              "positive_fg_bg_bridge": 44,
+              "negative_fg_fg_different": 134,
+              "negative_fg_bg_separated": 1186,
+              "bg_bg_excluded": 285
+            },
+            {
+              "image_id": 1329,
+              "eligible_anchors": 14,
+              "positive_candidates": 28,
+              "negative_candidates": 722,
+              "positive_fg_relevant": 24,
+              "negative_fg_relevant": 538,
+              "positive_correct": 20,
+              "negative_correct": 536,
+              "positive_fg_fg_same": 20,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 4,
+              "negative_fg_fg_different": 8,
+              "negative_fg_bg_separated": 528,
+              "bg_bg_excluded": 188
+            },
+            {
+              "image_id": 1330,
+              "eligible_anchors": 39,
+              "positive_candidates": 164,
+              "negative_candidates": 1992,
+              "positive_fg_relevant": 164,
+              "negative_fg_relevant": 1992,
+              "positive_correct": 164,
+              "negative_correct": 1932,
+              "positive_fg_fg_same": 164,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 0,
+              "negative_fg_fg_different": 244,
+              "negative_fg_bg_separated": 1688,
+              "bg_bg_excluded": 0
+            },
+            {
+              "image_id": 1331,
+              "eligible_anchors": 102,
+              "positive_candidates": 1022,
+              "negative_candidates": 2807,
+              "positive_fg_relevant": 72,
+              "negative_fg_relevant": 2207,
+              "positive_correct": 70,
+              "negative_correct": 2197,
+              "positive_fg_fg_same": 70,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 2,
+              "negative_fg_fg_different": 183,
+              "negative_fg_bg_separated": 2014,
+              "bg_bg_excluded": 1550
+            },
+            {
+              "image_id": 1332,
+              "eligible_anchors": 45,
+              "positive_candidates": 546,
+              "negative_candidates": 2328,
+              "positive_fg_relevant": 542,
+              "negative_fg_relevant": 2202,
+              "positive_correct": 378,
+              "negative_correct": 2202,
+              "positive_fg_fg_same": 378,
+              "positive_fg_fg_different": 74,
+              "positive_fg_bg_bridge": 90,
+              "negative_fg_fg_different": 301,
+              "negative_fg_bg_separated": 1901,
+              "bg_bg_excluded": 130
+            },
+            {
+              "image_id": 1333,
+              "eligible_anchors": 72,
+              "positive_candidates": 424,
+              "negative_candidates": 2750,
+              "positive_fg_relevant": 194,
+              "negative_fg_relevant": 2484,
+              "positive_correct": 114,
+              "negative_correct": 2434,
+              "positive_fg_fg_same": 114,
+              "positive_fg_fg_different": 44,
+              "positive_fg_bg_bridge": 36,
+              "negative_fg_fg_different": 398,
+              "negative_fg_bg_separated": 2036,
+              "bg_bg_excluded": 496
+            },
+            {
+              "image_id": 1334,
+              "eligible_anchors": 130,
+              "positive_candidates": 2203,
+              "negative_candidates": 3656,
+              "positive_fg_relevant": 82,
+              "negative_fg_relevant": 1464,
+              "positive_correct": 70,
+              "negative_correct": 1464,
+              "positive_fg_fg_same": 70,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 12,
+              "negative_fg_fg_different": 163,
+              "negative_fg_bg_separated": 1301,
+              "bg_bg_excluded": 4313
+            },
+            {
+              "image_id": 1335,
+              "eligible_anchors": 58,
+              "positive_candidates": 560,
+              "negative_candidates": 2250,
+              "positive_fg_relevant": 44,
+              "negative_fg_relevant": 1971,
+              "positive_correct": 28,
+              "negative_correct": 1935,
+              "positive_fg_fg_same": 28,
+              "positive_fg_fg_different": 14,
+              "positive_fg_bg_bridge": 2,
+              "negative_fg_fg_different": 412,
+              "negative_fg_bg_separated": 1523,
+              "bg_bg_excluded": 795
+            }
+          ]
+        }
+      },
+      "frozen_positive_union_components": {
+        "positive_components_with_edges": 119,
+        "components_merging_foreground_instances": 11,
+        "components_connecting_foreground_background": 35,
+        "per_image": [
+          {
+            "image_id": 1320,
+            "positive_components_with_edges": 6,
+            "components_merging_foreground_instances": 1,
+            "components_connecting_foreground_background": 3,
+            "components": [
+              {
+                "patches": 33,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 9,
+                "foreground_objects": [
+                  1
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 17,
+                "foreground_objects": [
+                  4,
+                  5
+                ],
+                "merges_multiple_foreground_instances": true,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 20,
+                "foreground_objects": [
+                  2
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 7,
+                "foreground_objects": [
+                  3
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 8,
+                "foreground_objects": [
+                  3
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              }
+            ]
+          },
+          {
+            "image_id": 1321,
+            "positive_components_with_edges": 2,
+            "components_merging_foreground_instances": 0,
+            "components_connecting_foreground_background": 0,
+            "components": [
+              {
+                "patches": 3,
+                "foreground_objects": [
+                  1
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [
+                  3
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              }
+            ]
+          },
+          {
+            "image_id": 1322,
+            "positive_components_with_edges": 5,
+            "components_merging_foreground_instances": 0,
+            "components_connecting_foreground_background": 2,
+            "components": [
+              {
+                "patches": 5,
+                "foreground_objects": [
+                  4
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 3,
+                "foreground_objects": [
+                  4
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 24,
+                "foreground_objects": [
+                  2
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [
+                  1
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 94,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              }
+            ]
+          },
+          {
+            "image_id": 1323,
+            "positive_components_with_edges": 12,
+            "components_merging_foreground_instances": 1,
+            "components_connecting_foreground_background": 2,
+            "components": [
+              {
+                "patches": 18,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 33,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 3,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 9,
+                "foreground_objects": [
+                  2
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 15,
+                "foreground_objects": [
+                  7
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 23,
+                "foreground_objects": [
+                  1,
+                  3
+                ],
+                "merges_multiple_foreground_instances": true,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [
+                  1
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 8,
+                "foreground_objects": [
+                  4
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 6,
+                "foreground_objects": [
+                  3
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [
+                  4
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 6,
+                "foreground_objects": [
+                  5
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              }
+            ]
+          },
+          {
+            "image_id": 1324,
+            "positive_components_with_edges": 10,
+            "components_merging_foreground_instances": 2,
+            "components_connecting_foreground_background": 3,
+            "components": [
+              {
+                "patches": 16,
+                "foreground_objects": [
+                  6
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 9,
+                "foreground_objects": [
+                  4
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 4,
+                "foreground_objects": [
+                  4
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 4,
+                "foreground_objects": [
+                  4
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 6,
+                "foreground_objects": [
+                  2,
+                  8
+                ],
+                "merges_multiple_foreground_instances": true,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 35,
+                "foreground_objects": [
+                  1,
+                  9
+                ],
+                "merges_multiple_foreground_instances": true,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [
+                  3
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 4,
+                "foreground_objects": [
+                  3
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 80,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 3,
+                "foreground_objects": [
+                  8
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              }
+            ]
+          },
+          {
+            "image_id": 1325,
+            "positive_components_with_edges": 10,
+            "components_merging_foreground_instances": 0,
+            "components_connecting_foreground_background": 3,
+            "components": [
+              {
+                "patches": 23,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 13,
+                "foreground_objects": [
+                  3
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 18,
+                "foreground_objects": [
+                  2
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [
+                  2
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 3,
+                "foreground_objects": [
+                  3
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 15,
+                "foreground_objects": [
+                  1
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 4,
+                "foreground_objects": [
+                  1
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 11,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              }
+            ]
+          },
+          {
+            "image_id": 1326,
+            "positive_components_with_edges": 13,
+            "components_merging_foreground_instances": 0,
+            "components_connecting_foreground_background": 7,
+            "components": [
+              {
+                "patches": 63,
+                "foreground_objects": [
+                  9
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 12,
+                "foreground_objects": [
+                  1
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [
+                  1
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 3,
+                "foreground_objects": [
+                  9
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 4,
+                "foreground_objects": [
+                  6
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [
+                  7
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 4,
+                "foreground_objects": [
+                  4
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [
+                  7
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 3,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 3,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 9,
+                "foreground_objects": [
+                  2
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 6,
+                "foreground_objects": [
+                  5
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 4,
+                "foreground_objects": [
+                  8
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              }
+            ]
+          },
+          {
+            "image_id": 1327,
+            "positive_components_with_edges": 3,
+            "components_merging_foreground_instances": 0,
+            "components_connecting_foreground_background": 2,
+            "components": [
+              {
+                "patches": 11,
+                "foreground_objects": [
+                  1
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 22,
+                "foreground_objects": [
+                  2
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 5,
+                "foreground_objects": [
+                  3
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              }
+            ]
+          },
+          {
+            "image_id": 1328,
+            "positive_components_with_edges": 9,
+            "components_merging_foreground_instances": 1,
+            "components_connecting_foreground_background": 3,
+            "components": [
+              {
+                "patches": 2,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [
+                  3
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 6,
+                "foreground_objects": [
+                  6
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 3,
+                "foreground_objects": [
+                  4,
+                  5
+                ],
+                "merges_multiple_foreground_instances": true,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [
+                  2
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 3,
+                "foreground_objects": [
+                  2
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 6,
+                "foreground_objects": [
+                  1
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 4,
+                "foreground_objects": [
+                  4
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 16,
+                "foreground_objects": [
+                  4
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              }
+            ]
+          },
+          {
+            "image_id": 1329,
+            "positive_components_with_edges": 4,
+            "components_merging_foreground_instances": 0,
+            "components_connecting_foreground_background": 1,
+            "components": [
+              {
+                "patches": 5,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 9,
+                "foreground_objects": [
+                  1
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 4,
+                "foreground_objects": [
+                  3
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 4,
+                "foreground_objects": [
+                  3
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              }
+            ]
+          },
+          {
+            "image_id": 1330,
+            "positive_components_with_edges": 7,
+            "components_merging_foreground_instances": 0,
+            "components_connecting_foreground_background": 0,
+            "components": [
+              {
+                "patches": 14,
+                "foreground_objects": [
+                  4
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 15,
+                "foreground_objects": [
+                  3
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 3,
+                "foreground_objects": [
+                  3
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 13,
+                "foreground_objects": [
+                  1
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 4,
+                "foreground_objects": [
+                  5
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              }
+            ]
+          },
+          {
+            "image_id": 1331,
+            "positive_components_with_edges": 9,
+            "components_merging_foreground_instances": 0,
+            "components_connecting_foreground_background": 1,
+            "components": [
+              {
+                "patches": 74,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 10,
+                "foreground_objects": [
+                  6
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 11,
+                "foreground_objects": [
+                  5
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 4,
+                "foreground_objects": [
+                  3
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 7,
+                "foreground_objects": [
+                  1
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 3,
+                "foreground_objects": [
+                  1
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 3,
+                "foreground_objects": [
+                  2
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 3,
+                "foreground_objects": [
+                  2
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              }
+            ]
+          },
+          {
+            "image_id": 1332,
+            "positive_components_with_edges": 4,
+            "components_merging_foreground_instances": 1,
+            "components_connecting_foreground_background": 1,
+            "components": [
+              {
+                "patches": 20,
+                "foreground_objects": [
+                  3,
+                  5
+                ],
+                "merges_multiple_foreground_instances": true,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 5,
+                "foreground_objects": [
+                  1
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 23,
+                "foreground_objects": [
+                  4
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [
+                  2
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              }
+            ]
+          },
+          {
+            "image_id": 1333,
+            "positive_components_with_edges": 8,
+            "components_merging_foreground_instances": 1,
+            "components_connecting_foreground_background": 2,
+            "components": [
+              {
+                "patches": 23,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 16,
+                "foreground_objects": [
+                  4,
+                  6
+                ],
+                "merges_multiple_foreground_instances": true,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 9,
+                "foreground_objects": [
+                  2
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [
+                  2
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 9,
+                "foreground_objects": [
+                  3
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [
+                  2
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 13,
+                "foreground_objects": [
+                  1
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 6,
+                "foreground_objects": [
+                  5
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              }
+            ]
+          },
+          {
+            "image_id": 1334,
+            "positive_components_with_edges": 4,
+            "components_merging_foreground_instances": 0,
+            "components_connecting_foreground_background": 1,
+            "components": [
+              {
+                "patches": 73,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 12,
+                "foreground_objects": [
+                  1
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 9,
+                "foreground_objects": [
+                  4
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 37,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              }
+            ]
+          },
+          {
+            "image_id": 1335,
+            "positive_components_with_edges": 13,
+            "components_merging_foreground_instances": 4,
+            "components_connecting_foreground_background": 4,
+            "components": [
+              {
+                "patches": 32,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 3,
+                "foreground_objects": [
+                  1
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 6,
+                "foreground_objects": [
+                  8
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 5,
+                "foreground_objects": [
+                  1,
+                  8
+                ],
+                "merges_multiple_foreground_instances": true,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [
+                  1,
+                  5
+                ],
+                "merges_multiple_foreground_instances": true,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 9,
+                "foreground_objects": [
+                  5
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 5,
+                "foreground_objects": [
+                  7,
+                  8
+                ],
+                "merges_multiple_foreground_instances": true,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [
+                  7
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 3,
+                "foreground_objects": [
+                  5
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 7,
+                "foreground_objects": [
+                  2,
+                  9
+                ],
+                "merges_multiple_foreground_instances": true,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 4,
+                "foreground_objects": [
+                  4
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 3,
+                "foreground_objects": [
+                  3
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              }
+            ]
+          }
+        ]
+      },
+      "predicted_groups_merging_multiple_gt_objects": [
+        {
+          "image_id": 1320,
+          "predicted_label": 3,
+          "ground_truth_object_ids": [
+            4,
+            5
+          ]
+        },
+        {
+          "image_id": 1323,
+          "predicted_label": 2,
+          "ground_truth_object_ids": [
+            1,
+            3
+          ]
+        },
+        {
+          "image_id": 1324,
+          "predicted_label": 2,
+          "ground_truth_object_ids": [
+            1,
+            9
+          ]
+        },
+        {
+          "image_id": 1324,
+          "predicted_label": 5,
+          "ground_truth_object_ids": [
+            2,
+            8
+          ]
+        },
+        {
+          "image_id": 1326,
+          "predicted_label": 1,
+          "ground_truth_object_ids": [
+            2,
+            9
+          ]
+        },
+        {
+          "image_id": 1328,
+          "predicted_label": 5,
+          "ground_truth_object_ids": [
+            4,
+            5
+          ]
+        },
+        {
+          "image_id": 1332,
+          "predicted_label": 1,
+          "ground_truth_object_ids": [
+            1,
+            4
+          ]
+        },
+        {
+          "image_id": 1332,
+          "predicted_label": 2,
+          "ground_truth_object_ids": [
+            3,
+            5
+          ]
+        },
+        {
+          "image_id": 1333,
+          "predicted_label": 2,
+          "ground_truth_object_ids": [
+            4,
+            6
+          ]
+        },
+        {
+          "image_id": 1335,
+          "predicted_label": 3,
+          "ground_truth_object_ids": [
+            2,
+            9
+          ]
+        },
+        {
+          "image_id": 1335,
+          "predicted_label": 5,
+          "ground_truth_object_ids": [
+            3,
+            4,
+            6
+          ]
+        },
+        {
+          "image_id": 1335,
+          "predicted_label": 6,
+          "ground_truth_object_ids": [
+            1,
+            8
+          ]
+        },
+        {
+          "image_id": 1335,
+          "predicted_label": 7,
+          "ground_truth_object_ids": [
+            7,
+            8
+          ]
+        },
+        {
+          "image_id": 1335,
+          "predicted_label": 12,
+          "ground_truth_object_ids": [
+            1,
+            5
+          ]
+        }
+      ],
+      "merge_count": 14
+    },
+    "2": {
+      "bins": {
+        "distance_0_2": {
+          "eligible_images": 16,
+          "eligible_image_ids": [
+            1320,
+            1321,
+            1322,
+            1323,
+            1324,
+            1325,
+            1326,
+            1327,
+            1328,
+            1329,
+            1330,
+            1331,
+            1332,
+            1333,
+            1334,
+            1335
+          ],
+          "total_images": 16,
+          "positive_fg_relevant_pairs": 2799,
+          "positive_correct_same_fg_object": 2600,
+          "positive_precision": 0.9289031797070382,
+          "negative_fg_relevant_pairs": 4273,
+          "negative_correct_not_same_fg_object": 3931,
+          "negative_precision": 0.9199625555815586,
+          "positive_fg_fg_same": 2600,
+          "positive_fg_fg_different": 44,
+          "positive_fg_bg_bridge": 155,
+          "negative_fg_fg_different": 313,
+          "negative_fg_bg_separated": 3618,
+          "bg_bg_excluded": 3761,
+          "pass": false,
+          "per_image": [
+            {
+              "image_id": 1320,
+              "eligible_anchors": 97,
+              "positive_candidates": 509,
+              "negative_candidates": 418,
+              "positive_fg_relevant": 314,
+              "negative_fg_relevant": 379,
+              "positive_correct": 294,
+              "negative_correct": 334,
+              "positive_fg_fg_same": 294,
+              "positive_fg_fg_different": 2,
+              "positive_fg_bg_bridge": 18,
+              "negative_fg_fg_different": 35,
+              "negative_fg_bg_separated": 299,
+              "bg_bg_excluded": 234
+            },
+            {
+              "image_id": 1321,
+              "eligible_anchors": 4,
+              "positive_candidates": 4,
+              "negative_candidates": 38,
+              "positive_fg_relevant": 4,
+              "negative_fg_relevant": 38,
+              "positive_correct": 4,
+              "negative_correct": 36,
+              "positive_fg_fg_same": 4,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 0,
+              "negative_fg_fg_different": 0,
+              "negative_fg_bg_separated": 36,
+              "bg_bg_excluded": 0
+            },
+            {
+              "image_id": 1322,
+              "eligible_anchors": 44,
+              "positive_candidates": 222,
+              "negative_candidates": 164,
+              "positive_fg_relevant": 181,
+              "negative_fg_relevant": 142,
+              "positive_correct": 171,
+              "negative_correct": 132,
+              "positive_fg_fg_same": 171,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 10,
+              "negative_fg_fg_different": 23,
+              "negative_fg_bg_separated": 109,
+              "bg_bg_excluded": 63
+            },
+            {
+              "image_id": 1323,
+              "eligible_anchors": 78,
+              "positive_candidates": 462,
+              "negative_candidates": 334,
+              "positive_fg_relevant": 242,
+              "negative_fg_relevant": 314,
+              "positive_correct": 242,
+              "negative_correct": 305,
+              "positive_fg_fg_same": 242,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 0,
+              "negative_fg_fg_different": 22,
+              "negative_fg_bg_separated": 283,
+              "bg_bg_excluded": 240
+            },
+            {
+              "image_id": 1324,
+              "eligible_anchors": 86,
+              "positive_candidates": 450,
+              "negative_candidates": 358,
+              "positive_fg_relevant": 186,
+              "negative_fg_relevant": 307,
+              "positive_correct": 174,
+              "negative_correct": 277,
+              "positive_fg_fg_same": 174,
+              "positive_fg_fg_different": 12,
+              "positive_fg_bg_bridge": 0,
+              "negative_fg_fg_different": 42,
+              "negative_fg_bg_separated": 235,
+              "bg_bg_excluded": 315
+            },
+            {
+              "image_id": 1325,
+              "eligible_anchors": 85,
+              "positive_candidates": 422,
+              "negative_candidates": 323,
+              "positive_fg_relevant": 253,
+              "negative_fg_relevant": 258,
+              "positive_correct": 239,
+              "negative_correct": 231,
+              "positive_fg_fg_same": 239,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 14,
+              "negative_fg_fg_different": 25,
+              "negative_fg_bg_separated": 206,
+              "bg_bg_excluded": 234
+            },
+            {
+              "image_id": 1326,
+              "eligible_anchors": 84,
+              "positive_candidates": 393,
+              "negative_candidates": 393,
+              "positive_fg_relevant": 161,
+              "negative_fg_relevant": 321,
+              "positive_correct": 142,
+              "negative_correct": 317,
+              "positive_fg_fg_same": 142,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 19,
+              "negative_fg_fg_different": 17,
+              "negative_fg_bg_separated": 300,
+              "bg_bg_excluded": 304
+            },
+            {
+              "image_id": 1327,
+              "eligible_anchors": 79,
+              "positive_candidates": 437,
+              "negative_candidates": 295,
+              "positive_fg_relevant": 226,
+              "negative_fg_relevant": 222,
+              "positive_correct": 203,
+              "negative_correct": 222,
+              "positive_fg_fg_same": 203,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 23,
+              "negative_fg_fg_different": 4,
+              "negative_fg_bg_separated": 218,
+              "bg_bg_excluded": 284
+            },
+            {
+              "image_id": 1328,
+              "eligible_anchors": 80,
+              "positive_candidates": 343,
+              "negative_candidates": 411,
+              "positive_fg_relevant": 124,
+              "negative_fg_relevant": 286,
+              "positive_correct": 102,
+              "negative_correct": 237,
+              "positive_fg_fg_same": 102,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 22,
+              "negative_fg_fg_different": 9,
+              "negative_fg_bg_separated": 228,
+              "bg_bg_excluded": 344
+            },
+            {
+              "image_id": 1329,
+              "eligible_anchors": 13,
+              "positive_candidates": 64,
+              "negative_candidates": 89,
+              "positive_fg_relevant": 64,
+              "negative_fg_relevant": 89,
+              "positive_correct": 64,
+              "negative_correct": 83,
+              "positive_fg_fg_same": 64,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 0,
+              "negative_fg_fg_different": 0,
+              "negative_fg_bg_separated": 83,
+              "bg_bg_excluded": 0
+            },
+            {
+              "image_id": 1330,
+              "eligible_anchors": 96,
+              "positive_candidates": 450,
+              "negative_candidates": 439,
+              "positive_fg_relevant": 202,
+              "negative_fg_relevant": 404,
+              "positive_correct": 198,
+              "negative_correct": 356,
+              "positive_fg_fg_same": 198,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 4,
+              "negative_fg_fg_different": 9,
+              "negative_fg_bg_separated": 347,
+              "bg_bg_excluded": 283
+            },
+            {
+              "image_id": 1331,
+              "eligible_anchors": 84,
+              "positive_candidates": 366,
+              "negative_candidates": 398,
+              "positive_fg_relevant": 142,
+              "negative_fg_relevant": 338,
+              "positive_correct": 136,
+              "negative_correct": 316,
+              "positive_fg_fg_same": 136,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 6,
+              "negative_fg_fg_different": 33,
+              "negative_fg_bg_separated": 283,
+              "bg_bg_excluded": 284
+            },
+            {
+              "image_id": 1332,
+              "eligible_anchors": 76,
+              "positive_candidates": 425,
+              "negative_candidates": 297,
+              "positive_fg_relevant": 168,
+              "negative_fg_relevant": 261,
+              "positive_correct": 150,
+              "negative_correct": 257,
+              "positive_fg_fg_same": 150,
+              "positive_fg_fg_different": 14,
+              "positive_fg_bg_bridge": 4,
+              "negative_fg_fg_different": 26,
+              "negative_fg_bg_separated": 231,
+              "bg_bg_excluded": 293
+            },
+            {
+              "image_id": 1333,
+              "eligible_anchors": 96,
+              "positive_candidates": 410,
+              "negative_candidates": 452,
+              "positive_fg_relevant": 252,
+              "negative_fg_relevant": 391,
+              "positive_correct": 239,
+              "negative_correct": 344,
+              "positive_fg_fg_same": 239,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 13,
+              "negative_fg_fg_different": 20,
+              "negative_fg_bg_separated": 324,
+              "bg_bg_excluded": 219
+            },
+            {
+              "image_id": 1334,
+              "eligible_anchors": 55,
+              "positive_candidates": 329,
+              "negative_candidates": 215,
+              "positive_fg_relevant": 122,
+              "negative_fg_relevant": 146,
+              "positive_correct": 112,
+              "negative_correct": 146,
+              "positive_fg_fg_same": 112,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 10,
+              "negative_fg_fg_different": 14,
+              "negative_fg_bg_separated": 132,
+              "bg_bg_excluded": 276
+            },
+            {
+              "image_id": 1335,
+              "eligible_anchors": 92,
+              "positive_candidates": 433,
+              "negative_candidates": 490,
+              "positive_fg_relevant": 158,
+              "negative_fg_relevant": 377,
+              "positive_correct": 130,
+              "negative_correct": 338,
+              "positive_fg_fg_same": 130,
+              "positive_fg_fg_different": 16,
+              "positive_fg_bg_bridge": 12,
+              "negative_fg_fg_different": 34,
+              "negative_fg_bg_separated": 304,
+              "bg_bg_excluded": 388
+            }
+          ]
+        },
+        "distance_2_5": {
+          "eligible_images": 15,
+          "eligible_image_ids": [
+            1320,
+            1322,
+            1323,
+            1324,
+            1325,
+            1326,
+            1327,
+            1328,
+            1329,
+            1330,
+            1331,
+            1332,
+            1333,
+            1334,
+            1335
+          ],
+          "total_images": 16,
+          "positive_fg_relevant_pairs": 2475,
+          "positive_correct_same_fg_object": 1908,
+          "positive_precision": 0.7709090909090909,
+          "negative_fg_relevant_pairs": 31326,
+          "negative_correct_not_same_fg_object": 30927,
+          "negative_precision": 0.9872629764412948,
+          "positive_fg_fg_same": 1908,
+          "positive_fg_fg_different": 180,
+          "positive_fg_bg_bridge": 387,
+          "negative_fg_fg_different": 3792,
+          "negative_fg_bg_separated": 27135,
+          "bg_bg_excluded": 16703,
+          "pass": false,
+          "per_image": [
+            {
+              "image_id": 1320,
+              "eligible_anchors": 105,
+              "positive_candidates": 744,
+              "negative_candidates": 3716,
+              "positive_fg_relevant": 370,
+              "negative_fg_relevant": 3422,
+              "positive_correct": 302,
+              "negative_correct": 3365,
+              "positive_fg_fg_same": 302,
+              "positive_fg_fg_different": 30,
+              "positive_fg_bg_bridge": 38,
+              "negative_fg_fg_different": 540,
+              "negative_fg_bg_separated": 2825,
+              "bg_bg_excluded": 668
+            },
+            {
+              "image_id": 1321,
+              "eligible_anchors": 0,
+              "positive_candidates": 0,
+              "negative_candidates": 0,
+              "positive_fg_relevant": 0,
+              "negative_fg_relevant": 0,
+              "positive_correct": 0,
+              "negative_correct": 0,
+              "positive_fg_fg_same": 0,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 0,
+              "negative_fg_fg_different": 0,
+              "negative_fg_bg_separated": 0,
+              "bg_bg_excluded": 0
+            },
+            {
+              "image_id": 1322,
+              "eligible_anchors": 45,
+              "positive_candidates": 304,
+              "negative_candidates": 1244,
+              "positive_fg_relevant": 220,
+              "negative_fg_relevant": 1070,
+              "positive_correct": 198,
+              "negative_correct": 1052,
+              "positive_fg_fg_same": 198,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 22,
+              "negative_fg_fg_different": 190,
+              "negative_fg_bg_separated": 862,
+              "bg_bg_excluded": 258
+            },
+            {
+              "image_id": 1323,
+              "eligible_anchors": 90,
+              "positive_candidates": 912,
+              "negative_candidates": 2824,
+              "positive_fg_relevant": 148,
+              "negative_fg_relevant": 2439,
+              "positive_correct": 148,
+              "negative_correct": 2432,
+              "positive_fg_fg_same": 148,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 0,
+              "negative_fg_fg_different": 339,
+              "negative_fg_bg_separated": 2093,
+              "bg_bg_excluded": 1149
+            },
+            {
+              "image_id": 1324,
+              "eligible_anchors": 117,
+              "positive_candidates": 1756,
+              "negative_candidates": 2857,
+              "positive_fg_relevant": 178,
+              "negative_fg_relevant": 2469,
+              "positive_correct": 170,
+              "negative_correct": 2403,
+              "positive_fg_fg_same": 170,
+              "positive_fg_fg_different": 4,
+              "positive_fg_bg_bridge": 4,
+              "negative_fg_fg_different": 563,
+              "negative_fg_bg_separated": 1840,
+              "bg_bg_excluded": 1966
+            },
+            {
+              "image_id": 1325,
+              "eligible_anchors": 124,
+              "positive_candidates": 1068,
+              "negative_candidates": 3043,
+              "positive_fg_relevant": 272,
+              "negative_fg_relevant": 2441,
+              "positive_correct": 216,
+              "negative_correct": 2402,
+              "positive_fg_fg_same": 216,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 56,
+              "negative_fg_fg_different": 188,
+              "negative_fg_bg_separated": 2214,
+              "bg_bg_excluded": 1398
+            },
+            {
+              "image_id": 1326,
+              "eligible_anchors": 84,
+              "positive_candidates": 824,
+              "negative_candidates": 2120,
+              "positive_fg_relevant": 120,
+              "negative_fg_relevant": 1639,
+              "positive_correct": 60,
+              "negative_correct": 1631,
+              "positive_fg_fg_same": 60,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 60,
+              "negative_fg_fg_different": 166,
+              "negative_fg_bg_separated": 1465,
+              "bg_bg_excluded": 1185
+            },
+            {
+              "image_id": 1327,
+              "eligible_anchors": 120,
+              "positive_candidates": 1426,
+              "negative_candidates": 2810,
+              "positive_fg_relevant": 310,
+              "negative_fg_relevant": 2219,
+              "positive_correct": 216,
+              "negative_correct": 2219,
+              "positive_fg_fg_same": 216,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 94,
+              "negative_fg_fg_different": 131,
+              "negative_fg_bg_separated": 2088,
+              "bg_bg_excluded": 1707
+            },
+            {
+              "image_id": 1328,
+              "eligible_anchors": 103,
+              "positive_candidates": 1161,
+              "negative_candidates": 2614,
+              "positive_fg_relevant": 74,
+              "negative_fg_relevant": 1697,
+              "positive_correct": 50,
+              "negative_correct": 1647,
+              "positive_fg_fg_same": 50,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 24,
+              "negative_fg_fg_different": 84,
+              "negative_fg_bg_separated": 1563,
+              "bg_bg_excluded": 2004
+            },
+            {
+              "image_id": 1329,
+              "eligible_anchors": 8,
+              "positive_candidates": 20,
+              "negative_candidates": 383,
+              "positive_fg_relevant": 20,
+              "negative_fg_relevant": 383,
+              "positive_correct": 20,
+              "negative_correct": 383,
+              "positive_fg_fg_same": 20,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 0,
+              "negative_fg_fg_different": 0,
+              "negative_fg_bg_separated": 383,
+              "bg_bg_excluded": 0
+            },
+            {
+              "image_id": 1330,
+              "eligible_anchors": 100,
+              "positive_candidates": 734,
+              "negative_candidates": 3151,
+              "positive_fg_relevant": 134,
+              "negative_fg_relevant": 2846,
+              "positive_correct": 128,
+              "negative_correct": 2788,
+              "positive_fg_fg_same": 128,
+              "positive_fg_fg_different": 2,
+              "positive_fg_bg_bridge": 4,
+              "negative_fg_fg_different": 245,
+              "negative_fg_bg_separated": 2543,
+              "bg_bg_excluded": 905
+            },
+            {
+              "image_id": 1331,
+              "eligible_anchors": 88,
+              "positive_candidates": 324,
+              "negative_candidates": 2693,
+              "positive_fg_relevant": 56,
+              "negative_fg_relevant": 2015,
+              "positive_correct": 52,
+              "negative_correct": 2009,
+              "positive_fg_fg_same": 52,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 4,
+              "negative_fg_fg_different": 165,
+              "negative_fg_bg_separated": 1844,
+              "bg_bg_excluded": 946
+            },
+            {
+              "image_id": 1332,
+              "eligible_anchors": 108,
+              "positive_candidates": 1447,
+              "negative_candidates": 2555,
+              "positive_fg_relevant": 255,
+              "negative_fg_relevant": 2208,
+              "positive_correct": 150,
+              "negative_correct": 2208,
+              "positive_fg_fg_same": 150,
+              "positive_fg_fg_different": 76,
+              "positive_fg_bg_bridge": 29,
+              "negative_fg_fg_different": 156,
+              "negative_fg_bg_separated": 2052,
+              "bg_bg_excluded": 1539
+            },
+            {
+              "image_id": 1333,
+              "eligible_anchors": 95,
+              "positive_candidates": 429,
+              "negative_candidates": 3198,
+              "positive_fg_relevant": 168,
+              "negative_fg_relevant": 2821,
+              "positive_correct": 96,
+              "negative_correct": 2765,
+              "positive_fg_fg_same": 96,
+              "positive_fg_fg_different": 34,
+              "positive_fg_bg_bridge": 38,
+              "negative_fg_fg_different": 439,
+              "negative_fg_bg_separated": 2326,
+              "bg_bg_excluded": 638
+            },
+            {
+              "image_id": 1334,
+              "eligible_anchors": 90,
+              "positive_candidates": 644,
+              "negative_candidates": 2104,
+              "positive_fg_relevant": 82,
+              "negative_fg_relevant": 1342,
+              "positive_correct": 70,
+              "negative_correct": 1342,
+              "positive_fg_fg_same": 70,
+              "positive_fg_fg_different": 0,
+              "positive_fg_bg_bridge": 12,
+              "negative_fg_fg_different": 163,
+              "negative_fg_bg_separated": 1179,
+              "bg_bg_excluded": 1324
+            },
+            {
+              "image_id": 1335,
+              "eligible_anchors": 84,
+              "positive_candidates": 686,
+              "negative_candidates": 2713,
+              "positive_fg_relevant": 68,
+              "negative_fg_relevant": 2315,
+              "positive_correct": 32,
+              "negative_correct": 2281,
+              "positive_fg_fg_same": 32,
+              "positive_fg_fg_different": 34,
+              "positive_fg_bg_bridge": 2,
+              "negative_fg_fg_different": 423,
+              "negative_fg_bg_separated": 1858,
+              "bg_bg_excluded": 1016
+            }
+          ]
+        }
+      },
+      "frozen_positive_union_components": {
+        "positive_components_with_edges": 119,
+        "components_merging_foreground_instances": 10,
+        "components_connecting_foreground_background": 25,
+        "per_image": [
+          {
+            "image_id": 1320,
+            "positive_components_with_edges": 7,
+            "components_merging_foreground_instances": 1,
+            "components_connecting_foreground_background": 3,
+            "components": [
+              {
+                "patches": 51,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 8,
+                "foreground_objects": [
+                  1
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 17,
+                "foreground_objects": [
+                  4,
+                  5
+                ],
+                "merges_multiple_foreground_instances": true,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 20,
+                "foreground_objects": [
+                  2
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 7,
+                "foreground_objects": [
+                  3
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 10,
+                "foreground_objects": [
+                  3
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              }
+            ]
+          },
+          {
+            "image_id": 1321,
+            "positive_components_with_edges": 2,
+            "components_merging_foreground_instances": 0,
+            "components_connecting_foreground_background": 0,
+            "components": [
+              {
+                "patches": 2,
+                "foreground_objects": [
+                  1
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [
+                  3
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              }
+            ]
+          },
+          {
+            "image_id": 1322,
+            "positive_components_with_edges": 5,
+            "components_merging_foreground_instances": 0,
+            "components_connecting_foreground_background": 2,
+            "components": [
+              {
+                "patches": 26,
+                "foreground_objects": [
+                  3
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 5,
+                "foreground_objects": [
+                  4
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 23,
+                "foreground_objects": [
+                  2
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [
+                  1
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              }
+            ]
+          },
+          {
+            "image_id": 1323,
+            "positive_components_with_edges": 8,
+            "components_merging_foreground_instances": 0,
+            "components_connecting_foreground_background": 0,
+            "components": [
+              {
+                "patches": 51,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 9,
+                "foreground_objects": [
+                  2
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 15,
+                "foreground_objects": [
+                  7
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [
+                  1
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 8,
+                "foreground_objects": [
+                  4
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 6,
+                "foreground_objects": [
+                  3
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 6,
+                "foreground_objects": [
+                  5
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              }
+            ]
+          },
+          {
+            "image_id": 1324,
+            "positive_components_with_edges": 9,
+            "components_merging_foreground_instances": 2,
+            "components_connecting_foreground_background": 1,
+            "components": [
+              {
+                "patches": 12,
+                "foreground_objects": [
+                  4
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 3,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 5,
+                "foreground_objects": [
+                  2,
+                  8
+                ],
+                "merges_multiple_foreground_instances": true,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 10,
+                "foreground_objects": [
+                  9
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 25,
+                "foreground_objects": [
+                  1,
+                  9
+                ],
+                "merges_multiple_foreground_instances": true,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 4,
+                "foreground_objects": [
+                  3
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 3,
+                "foreground_objects": [
+                  8
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 79,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              }
+            ]
+          },
+          {
+            "image_id": 1325,
+            "positive_components_with_edges": 7,
+            "components_merging_foreground_instances": 0,
+            "components_connecting_foreground_background": 2,
+            "components": [
+              {
+                "patches": 76,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 13,
+                "foreground_objects": [
+                  3
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 21,
+                "foreground_objects": [
+                  2
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 15,
+                "foreground_objects": [
+                  1
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 6,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [
+                  3
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 3,
+                "foreground_objects": [
+                  1
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              }
+            ]
+          },
+          {
+            "image_id": 1326,
+            "positive_components_with_edges": 8,
+            "components_merging_foreground_instances": 0,
+            "components_connecting_foreground_background": 3,
+            "components": [
+              {
+                "patches": 69,
+                "foreground_objects": [
+                  9
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 12,
+                "foreground_objects": [
+                  1
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 4,
+                "foreground_objects": [
+                  9
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 4,
+                "foreground_objects": [
+                  6
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [
+                  7
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 4,
+                "foreground_objects": [
+                  4
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 9,
+                "foreground_objects": [
+                  2
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 5,
+                "foreground_objects": [
+                  5
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              }
+            ]
+          },
+          {
+            "image_id": 1327,
+            "positive_components_with_edges": 7,
+            "components_merging_foreground_instances": 0,
+            "components_connecting_foreground_background": 2,
+            "components": [
+              {
+                "patches": 94,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 11,
+                "foreground_objects": [
+                  1
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 22,
+                "foreground_objects": [
+                  2
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 5,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 3,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 5,
+                "foreground_objects": [
+                  3
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              }
+            ]
+          },
+          {
+            "image_id": 1328,
+            "positive_components_with_edges": 10,
+            "components_merging_foreground_instances": 0,
+            "components_connecting_foreground_background": 2,
+            "components": [
+              {
+                "patches": 2,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [
+                  3
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 6,
+                "foreground_objects": [
+                  6
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [
+                  2
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 3,
+                "foreground_objects": [
+                  2
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 6,
+                "foreground_objects": [
+                  1
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 92,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 15,
+                "foreground_objects": [
+                  4
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 3,
+                "foreground_objects": [
+                  4
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 3,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              }
+            ]
+          },
+          {
+            "image_id": 1329,
+            "positive_components_with_edges": 2,
+            "components_merging_foreground_instances": 0,
+            "components_connecting_foreground_background": 0,
+            "components": [
+              {
+                "patches": 9,
+                "foreground_objects": [
+                  1
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 4,
+                "foreground_objects": [
+                  3
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              }
+            ]
+          },
+          {
+            "image_id": 1330,
+            "positive_components_with_edges": 9,
+            "components_merging_foreground_instances": 1,
+            "components_connecting_foreground_background": 1,
+            "components": [
+              {
+                "patches": 54,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 14,
+                "foreground_objects": [
+                  4
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 16,
+                "foreground_objects": [
+                  4
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 14,
+                "foreground_objects": [
+                  3
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 3,
+                "foreground_objects": [
+                  3
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 13,
+                "foreground_objects": [
+                  1
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [
+                  2,
+                  3
+                ],
+                "merges_multiple_foreground_instances": true,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 4,
+                "foreground_objects": [
+                  5
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              }
+            ]
+          },
+          {
+            "image_id": 1331,
+            "positive_components_with_edges": 10,
+            "components_merging_foreground_instances": 0,
+            "components_connecting_foreground_background": 1,
+            "components": [
+              {
+                "patches": 36,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 32,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 10,
+                "foreground_objects": [
+                  6
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 10,
+                "foreground_objects": [
+                  5
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 4,
+                "foreground_objects": [
+                  3
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 7,
+                "foreground_objects": [
+                  1
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 3,
+                "foreground_objects": [
+                  1
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 6,
+                "foreground_objects": [
+                  2
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              }
+            ]
+          },
+          {
+            "image_id": 1332,
+            "positive_components_with_edges": 6,
+            "components_merging_foreground_instances": 1,
+            "components_connecting_foreground_background": 1,
+            "components": [
+              {
+                "patches": 80,
+                "foreground_objects": [
+                  6
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 20,
+                "foreground_objects": [
+                  3,
+                  5
+                ],
+                "merges_multiple_foreground_instances": true,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 18,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 5,
+                "foreground_objects": [
+                  1
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [
+                  2
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              }
+            ]
+          },
+          {
+            "image_id": 1333,
+            "positive_components_with_edges": 13,
+            "components_merging_foreground_instances": 2,
+            "components_connecting_foreground_background": 2,
+            "components": [
+              {
+                "patches": 22,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 25,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 16,
+                "foreground_objects": [
+                  4,
+                  6
+                ],
+                "merges_multiple_foreground_instances": true,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 9,
+                "foreground_objects": [
+                  2
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 4,
+                "foreground_objects": [
+                  2,
+                  3
+                ],
+                "merges_multiple_foreground_instances": true,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 9,
+                "foreground_objects": [
+                  3
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 3,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 4,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [
+                  2
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 13,
+                "foreground_objects": [
+                  1
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 6,
+                "foreground_objects": [
+                  5
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              }
+            ]
+          },
+          {
+            "image_id": 1334,
+            "positive_components_with_edges": 4,
+            "components_merging_foreground_instances": 0,
+            "components_connecting_foreground_background": 1,
+            "components": [
+              {
+                "patches": 70,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 12,
+                "foreground_objects": [
+                  1
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 9,
+                "foreground_objects": [
+                  4
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              }
+            ]
+          },
+          {
+            "image_id": 1335,
+            "positive_components_with_edges": 12,
+            "components_merging_foreground_instances": 3,
+            "components_connecting_foreground_background": 4,
+            "components": [
+              {
+                "patches": 61,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 3,
+                "foreground_objects": [
+                  1
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 11,
+                "foreground_objects": [
+                  1,
+                  8
+                ],
+                "merges_multiple_foreground_instances": true,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 9,
+                "foreground_objects": [
+                  5
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 3,
+                "foreground_objects": [],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 5,
+                "foreground_objects": [
+                  7,
+                  8
+                ],
+                "merges_multiple_foreground_instances": true,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [
+                  7
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 3,
+                "foreground_objects": [
+                  5
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              },
+              {
+                "patches": 2,
+                "foreground_objects": [
+                  2
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 9,
+                "foreground_objects": [
+                  4,
+                  9
+                ],
+                "merges_multiple_foreground_instances": true,
+                "connects_foreground_to_background": false
+              },
+              {
+                "patches": 3,
+                "foreground_objects": [
+                  3
+                ],
+                "merges_multiple_foreground_instances": false,
+                "connects_foreground_to_background": true
+              }
+            ]
+          }
+        ]
+      },
+      "predicted_groups_merging_multiple_gt_objects": [
+        {
+          "image_id": 1320,
+          "predicted_label": 2,
+          "ground_truth_object_ids": [
+            2,
+            3,
+            4,
+            5
+          ]
+        },
+        {
+          "image_id": 1323,
+          "predicted_label": 2,
+          "ground_truth_object_ids": [
+            3,
+            7
+          ]
+        },
+        {
+          "image_id": 1324,
+          "predicted_label": 2,
+          "ground_truth_object_ids": [
+            1,
+            9
+          ]
+        },
+        {
+          "image_id": 1324,
+          "predicted_label": 4,
+          "ground_truth_object_ids": [
+            2,
+            8
+          ]
+        },
+        {
+          "image_id": 1325,
+          "predicted_label": 2,
+          "ground_truth_object_ids": [
+            1,
+            2
+          ]
+        },
+        {
+          "image_id": 1326,
+          "predicted_label": 4,
+          "ground_truth_object_ids": [
+            4,
+            6
+          ]
+        },
+        {
+          "image_id": 1329,
+          "predicted_label": 1,
+          "ground_truth_object_ids": [
+            1,
+            2
+          ]
+        },
+        {
+          "image_id": 1330,
+          "predicted_label": 2,
+          "ground_truth_object_ids": [
+            2,
+            3
+          ]
+        },
+        {
+          "image_id": 1332,
+          "predicted_label": 2,
+          "ground_truth_object_ids": [
+            3,
+            5
+          ]
+        },
+        {
+          "image_id": 1333,
+          "predicted_label": 3,
+          "ground_truth_object_ids": [
+            4,
+            6
+          ]
+        },
+        {
+          "image_id": 1333,
+          "predicted_label": 7,
+          "ground_truth_object_ids": [
+            2,
+            3
+          ]
+        },
+        {
+          "image_id": 1335,
+          "predicted_label": 2,
+          "ground_truth_object_ids": [
+            1,
+            8
+          ]
+        },
+        {
+          "image_id": 1335,
+          "predicted_label": 3,
+          "ground_truth_object_ids": [
+            2,
+            4,
+            9
+          ]
+        },
+        {
+          "image_id": 1335,
+          "predicted_label": 5,
+          "ground_truth_object_ids": [
+            7,
+            8
+          ]
+        },
+        {
+          "image_id": 1335,
+          "predicted_label": 11,
+          "ground_truth_object_ids": [
+            1,
+            5
+          ]
+        }
+      ],
+      "merge_count": 15
+    }
+  },
+  "interpretation": "Source QCC pair-relation diagnostic only; not a training or causal-gate claim.",
+  "implementation_fingerprint": {
+    "collaborative_test/SW_0128_source_spike_relation_qa/run.py": "2d779b161c66c05fb24fa19486f87d0c996637c3c3449b683c6d424323f1a817",
+    "collaborative_test/SW_0128_source_spike_relation_qa/protocol.json": "da65d5203a071878ee7261176f02808751f74281d0ab25c159fd9233a9b34745",
+    "collaborative_test/SW_0110_xy_graph_route/run.py": "b7d4b90cbf74c8085d2a5cfc8b78a5772f77bc086240939a332f429c1ca344fd",
+    "collaborative_test/SW_0126_history_event_binding/screen.py": "958c6fcaaf6ac35ead325862e0bfdb221a21f5fd565c4391697da14b9ab1ee53",
+    "collaborative_test/SW_0118_allowed_patch_labels/run.py": "5b407d1406613ca5614bb1eaa793f7090d9caa9bb3894650265b6ecdd47854b2",
+    "snn_kuramoto_bidirectional/s2net_cls.py": "18313e5ee7358146703256e7e29d9846bfa60394feedba3237f2f7eac8791288",
+    "snn_kuramoto_bidirectional/membrane_layer.py": "680ad89277b60206f192123165d13eca916e5183dc71eaa443a8eeb5f4b8fac8",
+    "snn_kuramoto_bidirectional/dendric_layer.py": "69d960809ff1ad73a91a7067f87f605ae69ef612be9b936e4b486cc29511dd1a",
+    "snn_kuramoto_bidirectional/kuramoto_layer.py": "76e61785fb19228fe4ecf6bbdfd4dc72519b9d6bd34d5f4fd9165e29c76d263e",
+    "snn_kuramoto_bidirectional/sinusoidal_gating.py": "e323a3b6472f51def23d63628fe25cc83088822ae73b5e0fcd1789884739f6c4",
+    "snn_kuramoto_bidirectional/spike_classifier.py": "2d13c15a928f503bc09239aae2153a5f1a82de77aab4b5a76d0dfe876b755181",
+    "snn_kuramoto_bidirectional/evaluation.py": "4a15980c9aa0248dbe0e837ad1b0b430ce26a7ab367c004d290a1272bb1025d7"
+  },
+  "completed_unix": 1791588425.2170165
+}
