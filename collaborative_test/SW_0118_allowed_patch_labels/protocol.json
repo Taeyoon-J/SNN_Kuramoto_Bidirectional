@@ -1,0 +1,39 @@
+{
+  "experiment": "SW0118",
+  "status": "frozen_prediction_evaluation_implemented_pending_root_asset_review",
+  "purpose": "Loss-free GT-conditioned diagnostic measuring whether each predicted patch could accept any pixel-level GT label present in its 8x8 footprint.",
+  "inputs": {
+    "prediction_labels": "One integer [16,16] predicted instance-ID map from the frozen prediction provider.",
+    "pixel_ground_truth_labels": "Integer [128,128] CLEVR mask; patch allowed sets include every ID present in the 8x8 pixels, including background ID 0.",
+    "majority_target": "Existing clevr_mask_patch(mask,8).patch_labels; modal pixel ID with ties resolved to the smallest ID."
+  },
+  "algorithm": {
+    "candidate_compatibility": "Use candidate GT ID 0 for predicted background, otherwise the one-to-one mapped GT ID. Count acceptance only when that candidate belongs to the patch's pixel-GT allowed set. A rejected candidate resolves to the original modal 8x8 GT label; therefore a predicted background patch on a pure-object footprint remains foreground in the resolved target.",
+    "matching": "Sort non-background predicted groups by first row-major occurrence, sort non-background GT IDs numerically, and use deterministic rectangular Hungarian matching. Integer objective weight is the number of patches in that predicted group whose allowed-label set contains that GT ID. No epsilon is added to break ties; stable row/column ordering is the tie rule.",
+    "unmatched": "Every unmatched or zero-overlap predicted group receives its own unique negative sentinel, which cannot belong to an allowed GT set.",
+    "resolve": "For every patch including predicted background, use the candidate ID when it is allowed; otherwise use the existing modal 8x8 GT label. Assert every resolved label belongs to its patch's allowed set.",
+    "score": "Compute the existing patch_fg_ari(predicted_labels, resolved_target_labels). Report under the explicit name allowed-label oracle FG-ARI (one-to-one membership matching); it is GT-conditioned and is not exact permutation-invariant ARI optimization or a standard model metric."
+  },
+  "diagnostics": [
+    "Per-image oracle score with valid flag; undefined (<2 resolved foreground patches) is serialized as null, not NaN.",
+    "All-patch acceptance rate and accepted/total patch counts.",
+    "Original majority-GT and resolved-GT foreground patch counts.",
+    "Number of target patches changed by resolution.",
+    "Per-predicted-group assigned GT ID or unique sentinel, first patch index, and membership-overlap count."
+  ],
+  "constraints": [
+    "Loss-free post-prediction analysis only; scorer does not alter predictions, source metrics, model, classifier, training, or selection gates.",
+    "Original fg_ari, foreground_iou, and matched_object_iou remain unchanged and are reported separately by the frozen prediction provider.",
+    "No input mutation; predictions remain 16x16 patch labels and are not expanded to pixels."
+  ],
+  "evaluation_contract": {
+    "images": [1320, 1639],
+    "count": 320,
+    "ours": "SW0097 positive_frozen seeds0/1/2; compare recomputed original metrics per image against each registered evaluation.json to 1e-10 before interpreting oracle scores.",
+    "matched_slot": "SW0092 Slot-on-our-70k epoch-10 seeds0/1/2; preserve its original metrics and verify recomputed means/counts against immutable evaluation_summary.json.",
+    "released_slot": "Also report the single released Slot checkpoint separately. Its training data differs and it is not a matched three-seed 70k baseline.",
+    "prediction_checks": "Validate all six matched ours/Slot prediction tensors, IDs, source/checkpoint/gamma hashes and evaluation summaries before opening masks. Released Slot prediction and protocol are separately hash-checked before masks are opened.",
+    "ground_truth": "Only after prediction checks, read masks[1320:1640] from the canonical CLEVR HDF5. GT is never used to produce or select predictions.",
+    "output": "Write new summary.json atomically only when output path is absent; include original metrics and per-image oracle diagnostic records."
+  }
+}

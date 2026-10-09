@@ -22,8 +22,17 @@
     "Registered coherence weight differs: control0.5 and candidate1.0. This compares registered resolution recipes, not patch count alone.",
     "Native32 secondary metrics use a different GT grid and cannot be compared to historical16 metrics or Slot without matched native32 Slot scoring.",
     "The original registration requested all three pilots. Remaining seeds are deferred after this large seed0 primary loss, following the user's preference against repeatedly pursuing ineffective directions. This early stop is not represented as a preregistered success or a three-seed conclusion.",
-    "Full evaluation report SHA and paired bootstrap are pending retrieval after a transient SSH observation timeout. Report completion, scores, and source reproduction were read successfully before that timeout."
+    "Paired-image bootstrap describes the fixed seed0 models, not variability across training seeds."
   ],
+  "evaluation_sha256": "f7798077a44267d11813e7d93de3efc64e9bd82b1428628a607f0dfe8e661687",
+  "candidate_minus_control_primary_bootstrap": {
+    "draws": 10000,
+    "rng_seed": 114,
+    "fg_ari": {"mean_delta": -0.18045009293190922, "paired_image_95pct_ci": [-0.2011992547412137, -0.16123710316038053]},
+    "foreground_iou": {"mean_delta": -0.032869276060227916, "paired_image_95pct_ci": [-0.050002433510634534, -0.01601657254729858]},
+    "matched_object_iou": {"mean_delta": -0.08419592854157884, "paired_image_95pct_ci": [-0.10042083460133953, -0.06850130760739137]}
+  },
+  "mean_predicted_components": {"source": 6.675, "control": 6.640625, "candidate": 5.253125},
   "promotion": false,
   "large_data_extension": false,
   "server_evidence": "collaborative_test/SW_0114_resolution32_pilot/results_archive/evaluation_seed0/evaluation.json"

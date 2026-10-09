@@ -1,0 +1,136 @@
+{
+  "status": "complete_diagnostic_only",
+  "report_sha256": "1a2c354ed96f56d594745578d81498fee85a6109b65fddbb15149489425e014b",
+  "original_means": {
+    "ours": {
+      "fg_ari": 0.7763481729577292,
+      "foreground_iou": 0.5770703960502431,
+      "matched_object_iou": 0.6015374574167961
+    },
+    "slot": {
+      "fg_ari": 0.7749334666743514,
+      "foreground_iou": 0.20358913115224261,
+      "matched_object_iou": 0.2069369791521436
+    }
+  },
+  "allowed_means": {
+    "ours": 0.838763481111452,
+    "slot": 0.8280478255463422
+  },
+  "released": {
+    "description": "One released checkpoint trained on different data; shown separately and not treated as a matched three-seed 70k baseline.",
+    "original_metrics": {
+      "fg_ari": 0.8946414574875314,
+      "foreground_iou": 0.22351117892035982,
+      "matched_object_iou": 0.24596825542415796
+    },
+    "allowed_label_oracle_fg_ari": 0.9312186559491005
+  },
+  "rows": {
+    "seed0_ours": {
+      "original_fg_ari": 0.824867721156172,
+      "allowed_fg_ari": 0.8836595177550659,
+      "valid_count": 320,
+      "mean_original_fg_patches": 55.50625,
+      "mean_resolved_fg_patches": 55.815625,
+      "mean_changed_gt_patches": 7.75,
+      "mean_acceptance_rate": 0.8996826171875
+    },
+    "seed0_slot": {
+      "original_fg_ari": 0.6169534586553709,
+      "allowed_fg_ari": 0.684425196690556,
+      "valid_count": 320,
+      "mean_original_fg_patches": 55.50625,
+      "mean_resolved_fg_patches": 66.184375,
+      "mean_changed_gt_patches": 17.228125,
+      "mean_acceptance_rate": 0.2906494140625
+    },
+    "released_slot_seed0": {
+      "original_fg_ari": 0.8946414574875314,
+      "allowed_fg_ari": 0.9312186559491005,
+      "valid_count": 320,
+      "mean_original_fg_patches": 55.50625,
+      "mean_resolved_fg_patches": 71.325,
+      "mean_changed_gt_patches": 22.84375,
+      "mean_acceptance_rate": 0.44200439453125
+    },
+    "seed1_ours": {
+      "original_fg_ari": 0.742658188014352,
+      "allowed_fg_ari": 0.8114332068086089,
+      "valid_count": 320,
+      "mean_original_fg_patches": 55.50625,
+      "mean_resolved_fg_patches": 56.1875,
+      "mean_changed_gt_patches": 9.225,
+      "mean_acceptance_rate": 0.8273193359375
+    },
+    "seed1_slot": {
+      "original_fg_ari": 0.8367941109288608,
+      "allowed_fg_ari": 0.8911139780779239,
+      "valid_count": 320,
+      "mean_original_fg_patches": 55.50625,
+      "mean_resolved_fg_patches": 69.41875,
+      "mean_changed_gt_patches": 24.93125,
+      "mean_acceptance_rate": 0.438232421875
+    },
+    "seed2_ours": {
+      "original_fg_ari": 0.7615186097026634,
+      "allowed_fg_ari": 0.8211977187706815,
+      "valid_count": 320,
+      "mean_original_fg_patches": 55.50625,
+      "mean_resolved_fg_patches": 57.58125,
+      "mean_changed_gt_patches": 10.265625,
+      "mean_acceptance_rate": 0.70823974609375
+    },
+    "seed2_slot": {
+      "original_fg_ari": 0.8710528304388223,
+      "allowed_fg_ari": 0.9086043018705465,
+      "valid_count": 320,
+      "mean_original_fg_patches": 55.50625,
+      "mean_resolved_fg_patches": 71.36875,
+      "mean_changed_gt_patches": 27.09375,
+      "mean_acceptance_rate": 0.44862060546875
+    }
+  },
+  "paired_image_bootstrap_ours_minus_own_slot": {
+    "mean_delta": 0.010715655565109975,
+    "ci95": [
+      -0.006974252058954461,
+      0.02823253114853574
+    ],
+    "draws": 10000,
+    "seed": 118
+  },
+  "prediction_gt_used": false,
+  "oracle_gt_used": true,
+  "experiment": "SW0118",
+  "executed_server_code_sha256": {"scorer.py":"9a34ad2dc33f05a4ee8c0ae3199c84f9dd7cd9de98618892c94db4691c26feb0","run.py":"5b407d1406613ca5614bb1eaa793f7090d9caa9bb3894650265b6ecdd47854b2","protocol.json":"0b87001cd187a1e83eb4eafff49abc72f20d99ab7622eb5bf6af88e5ea9762d7"},
+  "local_runner_difference": "CLI stdout condensed after completed run; metric computation unchanged. Executed server runner SHA is preserved above.",
+  "evaluation_scope": {
+    "image_ids": [
+      1320,
+      1639
+    ],
+    "images": 320,
+    "patch_grid": [
+      16,
+      16
+    ],
+    "patch_pixels": [
+      8,
+      8
+    ],
+    "our_model": "SW0097 positive_frozen, seeds0/1/2, own70k training lineage",
+    "slot_model": "SW0092 own70k scratch,10epochs,seeds0/1/2",
+    "released_slot": "SW0046 released checkpoint, separate training data, single model",
+    "training_budget_matched": false
+  },
+  "metric_definition": "BG maps to0; nonBG groups mapped one-to-one by maximum any-present-pixel patch membership. Perpatch choose mapped predicted ID if present, otherwise original modal GT. Apply standard ARI to model-dependent resolvedGT, excluding resolvedbackground. This is an oracle diagnostic, not standard FG-ARI or exact ARI maximization.",
+  "selection_or_promotion_use": false,
+  "original_three_metric_reproduction_passed": true,
+  "report_path": "collaborative_test/SW_0118_allowed_patch_labels/results_archive/allowed_labels_evaluation_20261008/summary.json",
+  "limitations": [
+    "Both models retain320 valid images, but their resolved foreground patch sets differ.",
+    "Paired-image confidence interval does not establish training-seed population superiority.",
+    "Changed labels diagnose evaluation sensitivity; they do not improve the model or establish gating usefulness."
+  ]
+}
