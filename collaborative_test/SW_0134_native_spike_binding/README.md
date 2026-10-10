@@ -4,12 +4,13 @@ The scientific code bundle has been deployed with exact file/dependency hashes.
 Independent local and server CPU suites both passed 13 tests, including real
 throwaway optimizer updates with source-shaped synthetic assets for all three
 arms. Actual source checkpoint provenance was validated for seeds 0/1/2.
-Actual-source GPU preflights for seeds0/2 passed canonical validation.
-Seed1 was interrupted by a foreign GPU owner before producing report or warm
-artifacts; a separate technical recovery is running on GPU0, child PID2512457
-and supervisor PID2512384 both verified live. Main training has
-not started. See [exact first-pass evidence](results_archive/first_pass_preflights_20261009/summary.json).
-The recovery preserves the original state/log hashes and scientific recipe;
+All three actual-source GPU preflights passed canonical validation, including
+native full1024 parity, warm32 provenance and all three real disposable arms.
+Seed1 passed after a technical recovery preserving the original GPU-owner
+interruption evidence and scientific recipe. Its supervisor/child are terminal.
+Main training has not started. See [passed preflight evidence](results_archive/passed_preflights_20261009/summary.json)
+and [exact first-pass evidence](results_archive/first_pass_preflights_20261009/summary.json).
+The recovery preserved the original state/log hashes and scientific recipe;
 see [recovery process evidence](seed1_recovery_launch_20261009.json).
 The unchanged SW0133 pilot is complete; its registered expansion gate failed.
 
