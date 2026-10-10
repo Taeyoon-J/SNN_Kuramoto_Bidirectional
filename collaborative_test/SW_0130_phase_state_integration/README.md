@@ -9,3 +9,7 @@ These results establish code behavior, not improved segmentation. The server pas
 `model.py` wraps a strictly loaded native core and leaves production modules untouched. Both arms have the same twelve added parameters. The phase arm gates the dendritic and membrane state-update amount with the native continuous gate; the control uses a constant integration signal while retaining the native rhythmic carrier and emitted-spike multiplier. Zero added parameters preserve native dynamics. The classifier remains actual-spike QCC.
 
 See `scientific_design_20261009.md` and `protocol.json` for the objective, calibration, budget and decision rules; `source_contract_20261009.json` and `local_cpu_review_20261009.json` for verification scope. An improvement in this pilot would not by itself establish every gating contribution or data scaling.
+
+## Completed preflight outcome
+
+The three-seed queue is terminal: seeds0/1 passed, seed2 failed the preregistered hard-H row-scramble RGB sensitivity test. Supervisor and all three child PIDs were absent on the final server observation. No paired training or evaluation was launched. The failure is scientific supervision validation, not a code exception requiring a retry. Preserve the frozen runner, threshold and failed attempt. Full server JSON/log artifacts and hashes are archived in results_archive/terminal_preflight_20261009/. The next step is a separate TRAIN-only diagnosis of the warmed decoder partition dependence before another model-training hypothesis.

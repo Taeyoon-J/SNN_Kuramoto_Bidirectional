@@ -1,0 +1,144 @@
+{
+  "experiment": "SW0130_phase_state_integration",
+  "stage": "preflight_only",
+  "status": "scientific_preflight_failed",
+  "supervisor_pid": 2245879,
+  "started": 1791593105.558426,
+  "runner_fingerprint": {
+    "collaborative_test/SW_0130_phase_state_integration/run.py": "92ac0032467c6bff2e31a76c66021c5e211f9402d15ff868382d71ecc807e988",
+    "collaborative_test/SW_0130_phase_state_integration/model.py": "2ba6bbe44dbbf2a5a444e724db71caafc1b9915570bfd7ab31343b86915cbd0b",
+    "collaborative_test/SW_0130_phase_state_integration/protocol.json": "8b2961387ae090f937a587274a3989892b744bce27825994aa2c514dc981d64d",
+    "collaborative_test/SW_0106_spike_partition_rgb/partition_rgb.py": "2b023a788007afd2c03c45928cb4864e7bc57204dc8c13166f2fbe6b435c7261",
+    "collaborative_test/SW_0110_xy_graph_route/run.py": "b7d4b90cbf74c8085d2a5cfc8b78a5772f77bc086240939a332f429c1ca344fd",
+    "collaborative_test/SW_0094_aligned_joint_pilot/run.py": "9f4e9046a2960e7aa53bf16d7e0663bee162b3f56a11f11d45554d79889536a3",
+    "snn_kuramoto_bidirectional/s2net_cls.py": "18313e5ee7358146703256e7e29d9846bfa60394feedba3237f2f7eac8791288",
+    "snn_kuramoto_bidirectional/graph_generator.py": "4f4c4d680a60822a5e4645eec3bbceb960846d4fac89e799076f6b4cf1bc6dde",
+    "snn_kuramoto_bidirectional/dendric_layer.py": "69d960809ff1ad73a91a7067f87f605ae69ef612be9b936e4b486cc29511dd1a",
+    "snn_kuramoto_bidirectional/membrane_layer.py": "680ad89277b60206f192123165d13eca916e5183dc71eaa443a8eeb5f4b8fac8",
+    "snn_kuramoto_bidirectional/kuramoto_layer.py": "76e61785fb19228fe4ecf6bbdfd4dc72519b9d6bd34d5f4fd9165e29c76d263e",
+    "snn_kuramoto_bidirectional/sinusoidal_gating.py": "e323a3b6472f51def23d63628fe25cc83088822ae73b5e0fcd1789884739f6c4",
+    "snn_kuramoto_bidirectional/spike_classifier.py": "2d13c15a928f503bc09239aae2153a5f1a82de77aab4b5a76d0dfe876b755181",
+    "snn_kuramoto_bidirectional/loss_function.py": "6542d084f66c07101b75869709df9302db45e0dde87b6b5945d1790daa316543",
+    "snn_kuramoto_bidirectional/gamma_initializer.py": "9b5f3e077c755738b1636b97ac9640321a5b7abf5ec85b9a12557209cf5ad50b",
+    "snn_kuramoto_bidirectional/hyperparameter.py": "bceea67a10a4533eae48ce682b23ce81330c981d687fa928cca7b9f3b97fc73e",
+    "snn_kuramoto_bidirectional/training/train_s2net_core.py": "6056ae4d98d36678ae680e868c6c40716c8b2380f6ab81437e60ce962e15efde",
+    "snn_kuramoto_bidirectional/training/train_gamma_initializer.py": "845f91d3255d1d72d2a69c432c7b559a9d29d90a4186a4821e75864af9e47d20"
+  },
+  "task_count": 3,
+  "no_training_stage": true,
+  "tasks": {
+    "sw0130_preflight_s0": {
+      "task": {
+        "task_id": "sw0130_preflight_s0",
+        "stage": "preflight",
+        "seed": 0,
+        "depends_on": [],
+        "arm": "phase"
+      },
+      "status": "passed",
+      "gpu": 0,
+      "gpu_uuid": "GPU-a0a7d03d-adc1-37ca-4342-328878b3657c",
+      "memory_before_mib": 16,
+      "lease_path": "/tmp/kevinswk_sw0113_gpu_leases/gpu0.lock",
+      "reservation_pid": 2245879,
+      "reserved": 1791593105.7554917,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0130_phase_state_integration/run.py",
+        "--stage",
+        "preflight",
+        "--seed",
+        "0",
+        "--device",
+        "cuda:0",
+        "--output",
+        "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0130_phase_state_integration/results_archive/preflight_seed0.json"
+      ],
+      "log_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0130_phase_state_integration/results_archive/sw0130_preflight_s0.log",
+      "triton_cache": "/tmp/kevinswk_sw0130_triton_sw0130_preflight_s0_1791593105762",
+      "launched": 1791593105.7622266,
+      "child_pid": 2245982,
+      "started": 1791593105.7689412,
+      "returncode": 0,
+      "artifact_valid": true,
+      "finished": 1791593152.7123919
+    },
+    "sw0130_preflight_s1": {
+      "task": {
+        "task_id": "sw0130_preflight_s1",
+        "stage": "preflight",
+        "seed": 1,
+        "depends_on": [
+          "sw0130_preflight_s0"
+        ],
+        "arm": "phase"
+      },
+      "status": "passed",
+      "gpu": 0,
+      "gpu_uuid": "GPU-a0a7d03d-adc1-37ca-4342-328878b3657c",
+      "memory_before_mib": 16,
+      "lease_path": "/tmp/kevinswk_sw0113_gpu_leases/gpu0.lock",
+      "reservation_pid": 2245879,
+      "reserved": 1791593152.9075289,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0130_phase_state_integration/run.py",
+        "--stage",
+        "preflight",
+        "--seed",
+        "1",
+        "--device",
+        "cuda:0",
+        "--output",
+        "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0130_phase_state_integration/results_archive/preflight_seed1.json"
+      ],
+      "log_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0130_phase_state_integration/results_archive/sw0130_preflight_s1.log",
+      "triton_cache": "/tmp/kevinswk_sw0130_triton_sw0130_preflight_s1_1791593152916",
+      "launched": 1791593152.9166977,
+      "child_pid": 2246263,
+      "started": 1791593152.930066,
+      "returncode": 0,
+      "artifact_valid": true,
+      "finished": 1791593205.2422938
+    },
+    "sw0130_preflight_s2": {
+      "task": {
+        "task_id": "sw0130_preflight_s2",
+        "stage": "preflight",
+        "seed": 2,
+        "depends_on": [
+          "sw0130_preflight_s0"
+        ],
+        "arm": "phase"
+      },
+      "status": "failed",
+      "gpu": 1,
+      "gpu_uuid": "GPU-45604115-c231-56a5-32ea-d3001e8ff243",
+      "memory_before_mib": 2,
+      "lease_path": "/tmp/kevinswk_sw0113_gpu_leases/gpu1.lock",
+      "reservation_pid": 2245879,
+      "reserved": 1791593152.8960118,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0130_phase_state_integration/run.py",
+        "--stage",
+        "preflight",
+        "--seed",
+        "2",
+        "--device",
+        "cuda:0",
+        "--output",
+        "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0130_phase_state_integration/results_archive/preflight_seed2.json"
+      ],
+      "log_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0130_phase_state_integration/results_archive/sw0130_preflight_s2.log",
+      "triton_cache": "/tmp/kevinswk_sw0130_triton_sw0130_preflight_s2_1791593152902",
+      "launched": 1791593152.9029994,
+      "child_pid": 2246262,
+      "started": 1791593152.9101677,
+      "returncode": 1,
+      "artifact_valid": false,
+      "finished": 1791593205.2064364
+    }
+  },
+  "finished": 1791593205.2488625
+}
