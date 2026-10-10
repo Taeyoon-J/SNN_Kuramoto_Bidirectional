@@ -1196,7 +1196,7 @@
   },
   "latest_decoder_partition_diagnosis": {
     "experiment": "SW0131",
-    "status": "code_verified_deployment_unconfirmed",
+    "status": "actual_three_seed_GPU_diagnostic_running",
     "training_updates": 0,
     "source": "SW0097 all3 + preserved SW0130 warmed32 decoder",
     "source_artifacts_verified": true,
@@ -1207,6 +1207,22 @@
     "focused_cpu_tests_passed": 6,
     "whole_loop_cpu_smoke_passed": true,
     "queue_dry_run_passed": true,
-    "gpu_diagnostic_started": false
+    "gpu_diagnostic_started": true,
+    "server_cpu_tests_passed": 6,
+    "supervisor_pid": 2264104,
+    "live_children": {
+      "0": {
+        "pid": 2264248,
+        "physical_gpu": 0
+      },
+      "1": {
+        "pid": 2264249,
+        "physical_gpu": 2
+      },
+      "2": {
+        "pid": 2264247,
+        "physical_gpu": 1
+      }
+    }
   }
 }
