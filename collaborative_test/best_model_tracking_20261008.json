@@ -1610,9 +1610,25 @@
     },
     "next_candidate": {
       "experiment": "SW0136",
+      "status": "GPU_prediction_workers_verified_live",
+      "supervisor_pid": 2675399,
+      "child_pids": [
+        2675421,
+        2675422
+      ],
+      "physical_GPUs": [
+        0,
+        1
+      ],
+      "evidence": "SW_0136_native32_transfer/execution_start_20261010.json",
+      "scope": "Two completed seed1 models transferred to genuine1024 patches; no new training or three-seed victory established",
+      "performance_result_available": false
+    },
+    "followup_candidate": {
+      "experiment": "SW0137",
       "status": "implementation_in_progress",
-      "scope": "Native32 inference transfer of both completed SW134 seed1 arms; no new training or three-seed victory established",
-      "design": "SW_0135_native32_spike_binding/transfer_design_review.md"
+      "scope": "Native32 source97 QCC seeds0/1/2 versus comparable Slot32; reuse exactly bound source1 prediction when available",
+      "design": "SW_0135_native32_spike_binding/next_hypotheses_review.md"
     }
   }
 }

@@ -1,0 +1,43 @@
+{
+  "experiment": "SW0136_native32_transfer",
+  "status": "prospective_evaluation_only",
+  "purpose": "Evaluate transfer of two completed SW0134 seed1 16-grid models to registered native32 inference without training.",
+  "seed": 1,
+  "arms": ["actual_joint", "actual_frozen"],
+  "input": {
+    "source": "same-seed SW0097 checkpoint spatially mapped by frozen SW0135 native32 mapping",
+    "resolution": [32, 32],
+    "nodes": 1024,
+    "rgb": "registered native128 RGB cache encoded by transferred SW0134 encoder; no cached16 gamma",
+    "rollout": {"steps": 1024, "settle": 512, "batch_size": 1}
+  },
+  "transfer": {
+    "wrapped_state": "strictly split core.* and exactly a_d,a_m,b; map and strict-load all core tensors, preserve all integration tensors",
+    "encoder": "strict-load trained SW0134 encoder",
+    "binder": "strict-load complete SW0134 binder including persistent initial_noise buffer",
+    "decoder": "strict-load complete SW0134 decoder",
+    "training": false
+  },
+  "readouts": {
+    "primary": "native32 learned P argmax with SW0135 canonical largest-slot background/tie readout",
+    "secondary": "native32 actual-spike QCC, threshold .50, min group 8, largest-component background",
+    "source_reference": "same-seed mapped SW0097 native32 QCC, generated alongside actual_joint without GT"
+  },
+  "evaluation": {
+    "image_ids": [1320, 1639],
+    "count": 320,
+    "native_image_size": [128, 128],
+    "patch_grid": [32, 32],
+    "metrics": ["fg_ari", "foreground_iou", "matched_object_iou"],
+    "gt": "modal/minimum-ID-tie 4x4 native pixel pooling using production evaluator",
+    "ordering": "All prediction NPZs/protocols, image IDs, and hashes are frozen and rechecked before reading any GT mask."
+  },
+  "slot32_reference": {
+    "source": "existing three-seed SW0092 70k native128 predictions pooled directly by 4x4",
+    "three_seed_means": {"fg_ari": 0.7816519719609136, "foreground_iou": 0.20436012776655543, "matched_object_iou": 0.2031649861884501},
+    "seed1_means": {"fg_ari": 0.8418192917733233, "foreground_iou": 0.20341670897019232, "matched_object_iou": 0.2221151564255643}
+  },
+  "interpretation": "Two-arm, one-seed transfer screen only. Does not establish native32 training benefit, three-seed success, gate necessity, scaling, or promotion. No checkpoint selection or automatic training extension.",
+  "ground_truth_used_for_prediction": false,
+  "optimizer_updates": 0
+}
