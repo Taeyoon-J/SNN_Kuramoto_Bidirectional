@@ -1,0 +1,106 @@
+{
+  "experiment": "SW0139",
+  "status": "all_three_native32_training_PIDs_verified_live",
+  "observation": {
+    "status": "running",
+    "supervisor_pid": 2711934,
+    "tasks": {
+      "lambda_seed0": {
+        "status": "passed",
+        "physical_gpu": 0,
+        "child_pid": 2711967,
+        "returncode": 0,
+        "error": null,
+        "live_argv": null,
+        "log_tail": "54be8c4c62bde9ebd80ddd6\",\n    \"validation_cache_sha256\": \"9bed98a5bb040b69e1821c687161b1b928495cc80d90d7a5e1fffcd631926d1e\",\n    \"validation_manifest_sha256\": \"971b24a1a945a9b9c77177dc012d9ae5e3f12966817236f3ad3f887dfa759908\",\n    \"encoder_source_sha256\": \"9b9c9c59725f872084a6c9bfae1ebbd1b89de40d18ef4f8ab6b8ec014c2ab868\",\n    \"feature_preprocessing_sha256\": \"a9ec3281b9603021c37f7c346baa6cf62513c5ce7edde867ab7eddf24b18e127\"\n  },\n  \"optimizer_updates\": 0,\n  \"ground_truth_used\": false,\n  \"path\": \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0139_native32_representation/results_archive/lambda_seed0.json\",\n  \"self_sha256\": \"4b310c60a391d0db8720fd9fc429dde6708fa85ed8338ce6ff3d3436e41e6fa2\"\n}\n"
+      },
+      "preflight_control_seed1": {
+        "status": "passed",
+        "physical_gpu": 1,
+        "child_pid": 2711966,
+        "returncode": 0,
+        "error": null,
+        "live_argv": null,
+        "log_tail": "er.py\": \"845f91d3255d1d72d2a69c432c7b559a9d29d90a4186a4821e75864af9e47d20\",\n    \"snn_kuramoto_bidirectional/dendric_layer.py\": \"69d960809ff1ad73a91a7067f87f605ae69ef612be9b936e4b486cc29511dd1a\",\n    \"snn_kuramoto_bidirectional/membrane_layer.py\": \"680ad89277b60206f192123165d13eca916e5183dc71eaa443a8eeb5f4b8fac8\",\n    \"snn_kuramoto_bidirectional/kuramoto_layer.py\": \"76e61785fb19228fe4ecf6bbdfd4dc72519b9d6bd34d5f4fd9165e29c76d263e\",\n    \"snn_kuramoto_bidirectional/sinusoidal_gating.py\": \"e323a3b6472f51def23d63628fe25cc83088822ae73b5e0fcd1789884739f6c4\"\n  },\n  \"path\": \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0139_native32_representation/results_archive/preflight_control_seed1.json\"\n}\n"
+      },
+      "preflight_context_residual_seed1": {
+        "status": "passed",
+        "physical_gpu": 2,
+        "child_pid": 2711965,
+        "returncode": 0,
+        "error": null,
+        "live_argv": null,
+        "log_tail": "845f91d3255d1d72d2a69c432c7b559a9d29d90a4186a4821e75864af9e47d20\",\n    \"snn_kuramoto_bidirectional/dendric_layer.py\": \"69d960809ff1ad73a91a7067f87f605ae69ef612be9b936e4b486cc29511dd1a\",\n    \"snn_kuramoto_bidirectional/membrane_layer.py\": \"680ad89277b60206f192123165d13eca916e5183dc71eaa443a8eeb5f4b8fac8\",\n    \"snn_kuramoto_bidirectional/kuramoto_layer.py\": \"76e61785fb19228fe4ecf6bbdfd4dc72519b9d6bd34d5f4fd9165e29c76d263e\",\n    \"snn_kuramoto_bidirectional/sinusoidal_gating.py\": \"e323a3b6472f51def23d63628fe25cc83088822ae73b5e0fcd1789884739f6c4\"\n  },\n  \"path\": \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0139_native32_representation/results_archive/preflight_context_residual_seed1.json\"\n}\n"
+      },
+      "preflight_cross_view_seed1": {
+        "status": "passed",
+        "physical_gpu": 0,
+        "child_pid": 2713932,
+        "returncode": 0,
+        "error": null,
+        "live_argv": null,
+        "log_tail": "py\": \"845f91d3255d1d72d2a69c432c7b559a9d29d90a4186a4821e75864af9e47d20\",\n    \"snn_kuramoto_bidirectional/dendric_layer.py\": \"69d960809ff1ad73a91a7067f87f605ae69ef612be9b936e4b486cc29511dd1a\",\n    \"snn_kuramoto_bidirectional/membrane_layer.py\": \"680ad89277b60206f192123165d13eca916e5183dc71eaa443a8eeb5f4b8fac8\",\n    \"snn_kuramoto_bidirectional/kuramoto_layer.py\": \"76e61785fb19228fe4ecf6bbdfd4dc72519b9d6bd34d5f4fd9165e29c76d263e\",\n    \"snn_kuramoto_bidirectional/sinusoidal_gating.py\": \"e323a3b6472f51def23d63628fe25cc83088822ae73b5e0fcd1789884739f6c4\"\n  },\n  \"path\": \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0139_native32_representation/results_archive/preflight_cross_view_seed1.json\"\n}\n"
+      },
+      "train_control_seed1": {
+        "status": "running",
+        "physical_gpu": 1,
+        "child_pid": 2712399,
+        "returncode": null,
+        "error": null,
+        "live_argv": "/Data0/kevinswk/envs/snn/bin/python -m collaborative_test.SW_0139_native32_representation.run --stage train --seed 1 --arm control --device cuda:0 --preflight-path /Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0139_native32_representation/results_archive/preflight_control_seed1.json --lambda-path /Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0139_native32_representation/results_archive/lambda_seed0.json --output-root /Data0/kevinswk/patch_v2_sw/trained_models/SW0139_native32_representation ",
+        "log_tail": ""
+      },
+      "train_context_residual_seed1": {
+        "status": "running",
+        "physical_gpu": 2,
+        "child_pid": 2712528,
+        "returncode": null,
+        "error": null,
+        "live_argv": "/Data0/kevinswk/envs/snn/bin/python -m collaborative_test.SW_0139_native32_representation.run --stage train --seed 1 --arm context_residual --device cuda:0 --preflight-path /Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0139_native32_representation/results_archive/preflight_context_residual_seed1.json --lambda-path /Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0139_native32_representation/results_archive/lambda_seed0.json --output-root /Data0/kevinswk/patch_v2_sw/trained_models/SW0139_native32_representation ",
+        "log_tail": ""
+      },
+      "train_cross_view_seed1": {
+        "status": "running",
+        "physical_gpu": 0,
+        "child_pid": 2714621,
+        "returncode": null,
+        "error": null,
+        "live_argv": "/Data0/kevinswk/envs/snn/bin/python -m collaborative_test.SW_0139_native32_representation.run --stage train --seed 1 --arm cross_view --device cuda:0 --preflight-path /Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0139_native32_representation/results_archive/preflight_cross_view_seed1.json --lambda-path /Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0139_native32_representation/results_archive/lambda_seed0.json --output-root /Data0/kevinswk/patch_v2_sw/trained_models/SW0139_native32_representation ",
+        "log_tail": ""
+      },
+      "predict_control_seed1": {
+        "status": "queued",
+        "physical_gpu": null,
+        "child_pid": null,
+        "returncode": null,
+        "error": null,
+        "live_argv": null
+      },
+      "predict_context_residual_seed1": {
+        "status": "queued",
+        "physical_gpu": null,
+        "child_pid": null,
+        "returncode": null,
+        "error": null,
+        "live_argv": null
+      },
+      "predict_cross_view_seed1": {
+        "status": "queued",
+        "physical_gpu": null,
+        "child_pid": null,
+        "returncode": null,
+        "error": null,
+        "live_argv": null
+      },
+      "score_seed1": {
+        "status": "queued",
+        "physical_gpu": null,
+        "child_pid": null,
+        "returncode": null,
+        "error": null,
+        "live_argv": null
+      }
+    }
+  },
+  "results_available": false
+}
