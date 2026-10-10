@@ -1,0 +1,22 @@
+{
+  "experiment": "SW0131",
+  "stage": "initial_local_code_review",
+  "reviewed_runner_sha256": "c4d55f023f81fb1b2cf95aa211e4684a0215e1dd84ff2118c83891e6134ceebb",
+  "server_deployed": false,
+  "gpu_diagnostic_started": false,
+  "blocking_findings": [
+    "Seed2 successful preflight JSON is absent by design; bind preserved warm decoder using committed all3 source audit instead",
+    "Row shuffle must use CPU torch.Generator seed130+ordinalfirst64index and torch.randperm256, exactly SW0130",
+    "Group counts vary across images; ordinal group-size averages are undefined and indexing ragged rows fails",
+    "Restore initial in-memory decoder state before read-only comparison; saved decoder file must remain unchanged",
+    "Merge full frozen SW0130 fingerprint into SW0131 runtime dependency provenance"
+  ],
+  "implementation_owner_notified": true,
+  "required_checks": [
+    "failed seed2 source report absence supported",
+    "exact registered row permutation",
+    "variable group counts supported",
+    "restored decoder state",
+    "assignment-independent identical-content prediction"
+  ]
+}
