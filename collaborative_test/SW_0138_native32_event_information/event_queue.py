@@ -227,7 +227,7 @@ class EventInformationQueue:
         with concurrent.futures.ThreadPoolExecutor(max_workers=MAX_PARALLEL) as pool:
             futures = {pool.submit(self._execute, task): task for task in self.tasks}
             outcomes = {int(futures[f]["seed"]): f.result() for f in futures}
-        if set(outcomes) == set(SEEDS) and all(v == "passed" for v in outcomes.values()):
+        if set(outcomes) == set(run.SEEDS) and all(v == "passed" for v in outcomes.values()):
             self.state["score"].update(status="running", started=time.time()); self._save()
             try:
                 report = run.score(sw137_root=self.sw137_root)

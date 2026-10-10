@@ -5,3 +5,5 @@ Compare actual emitted spike QCC and retained gate QCC on the same frozen trajec
 Three native32 source seeds, fixed320 images, full1024/settle512, B1. Actual labels must exactly reproduce SW0137; six prediction arrays are frozen before GT.
 
 Local and server CPU tests:14/14. Supervisor2699428, seed0 PID2699504 GPU0 and seed2 PID2699498 GPU1 verified live; seed1 queued. No score yet. Publication remains pending scope approval.
+
+Completed all three seeds. Actual spike means .7819186737/.6054271336/.5970138067; gate-readout means .7818825951/.6057708257/.5965825859. FG-ARI and object-IoU paired intervals include zero; foreground-IoU has a small positive interval, without FG improvement. Actual scores exactly reproduce SW0137. No gating-necessity claim. A terminal NameError prevented automatic scoring; completed predictions were preserved and CPU score-only recovery succeeded. Local regression15/15; changed queue was not redeployed while139 fingerprints the original.

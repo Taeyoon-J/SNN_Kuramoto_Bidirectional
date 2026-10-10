@@ -1657,11 +1657,17 @@
     },
     "event_information_screen": {
       "experiment": "SW0138",
-      "status": "GPU_prediction_workers_verified_live",
+      "status": "completed_no_readout_advantage",
       "supervisor_pid": 2699428,
-      "evidence": "SW_0138_native32_event_information/execution_start_20261010.json",
-      "performance_result_available": false,
-      "promotion_allowed": false
+      "evidence": "SW_0138_native32_event_information/results_archive/event32_analysis.json",
+      "performance_result_available": true,
+      "promotion_allowed": false,
+      "means": {
+        "fg_ari": 0.7818825951459168,
+        "foreground_iou": 0.6057708257111978,
+        "matched_object_iou": 0.5965825858647859
+      },
+      "causal_gating_proof": false
     },
     "representation_pilot": {
       "experiment": "SW0139",

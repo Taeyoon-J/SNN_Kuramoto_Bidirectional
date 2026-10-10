@@ -1,0 +1,160 @@
+{
+  "experiment": "SW0138_native32_event_information",
+  "stage": "frozen_event_readout",
+  "status": "running",
+  "supervisor_pid": 2699428,
+  "started": 1791617059.8107517,
+  "max_parallel": 2,
+  "implementation_fingerprint": {
+    "collaborative_test/SW_0138_native32_event_information/protocol.json": "d37210f2dc50cb85e08d2571ecd2233ffdf065c99550038dc8dc95f1525830dd",
+    "collaborative_test/SW_0138_native32_event_information/run.py": "6a24c19d8d44c9ab94bf3175d64db20efdeb51ccba2c6643dec4db8f36d1a799",
+    "collaborative_test/SW_0130_phase_state_integration/run.py": "92ac0032467c6bff2e31a76c66021c5e211f9402d15ff868382d71ecc807e988",
+    "collaborative_test/SW_0130_phase_state_integration/model.py": "2ba6bbe44dbbf2a5a444e724db71caafc1b9915570bfd7ab31343b86915cbd0b",
+    "collaborative_test/SW_0134_native_spike_binding/rollout.py": "66c08404af91b50fb4cbfa63fe44650dd6a698ea669cd3d6a672dfc5c78503f3",
+    "collaborative_test/SW_0135_native32_spike_binding/foundation.py": "9c241cacf1479c339fa56376b881672535c8d7ac4966a7ddff3b4b47f24cb867",
+    "collaborative_test/SW_0135_native32_spike_binding/resolution.py": "dd98e62c48e6260e4bd1ba36f0f9a8ff2c6ecf7ade53e0f5780849d3bae49264",
+    "collaborative_test/SW_0135_native32_spike_binding/evaluation_contract32.py": "e601280ade9a2b9545f6bbf94df22deca6ebfe123750229f6a7244105c57b1bd",
+    "collaborative_test/SW_0137_native32_source_qcc/run.py": "2498629d119d73d7e1ae06d359e99dda87355c8a577951fbf5b1af28570de7d2",
+    "collaborative_test/SW_0136_native32_transfer/evaluate.py": "1c2846b69fb4bc936bf06723fc9f1b4c12f6632a02aff7e40c1e21a28b7a30ea",
+    "snn_kuramoto_bidirectional/membrane_layer.py": "680ad89277b60206f192123165d13eca916e5183dc71eaa443a8eeb5f4b8fac8",
+    "snn_kuramoto_bidirectional/spike_classifier.py": "2d13c15a928f503bc09239aae2153a5f1a82de77aab4b5a76d0dfe876b755181",
+    "snn_kuramoto_bidirectional/evaluation.py": "4a15980c9aa0248dbe0e837ad1b0b430ce26a7ab367c004d290a1272bb1025d7"
+  },
+  "queue_sha256": "2d1628a7812c68b868d436ea9b6e93a9ac3579a0d6e3b9014a177ed03dc9c147",
+  "owner_dispatcher_sha256": "e37dcc0777871a91593041c99f3b1bfe55cc45f88d5d5be49a2e12d0116d8574",
+  "sw0137_dependencies": {
+    "0": {
+      "prediction_sha256": "0d637ba61e90b3832891a3c5b0abfd45418a508ddc7232f54e5d863044f7b7ab",
+      "protocol_sha256": "7ca22e592fdbe7651a490f78dcb7dca46f9e9d0150897fced84cc2e84a954201"
+    },
+    "1": {
+      "prediction_sha256": "df1401efb85e57c324a1b35a6658c16596b1208fb23ef1a3a6899a614f260756",
+      "protocol_sha256": "adfdd7b3a30a6f1878fee053c77c64362c465208de9df8f08e579170ad1e95b8"
+    },
+    "2": {
+      "prediction_sha256": "91b3565a05d457f762e91fe97c49236153eb44b1fcd371101a4bdd77f90b4465",
+      "protocol_sha256": "adebea278bebf77ec7d24f203cd543c2283c706ad1ff97b63713e2ecc8c1e901"
+    }
+  },
+  "ground_truth_used_for_prediction": false,
+  "optimizer_updates": 0,
+  "tasks": {
+    "0": {
+      "task": {
+        "task_id": "sw0138_event_information_seed0",
+        "seed": 0
+      },
+      "status": "passed",
+      "physical_gpu": 0,
+      "gpu_uuid": "GPU-a0a7d03d-adc1-37ca-4342-328878b3657c",
+      "memory_before_mib": 16,
+      "lease_path": "/tmp/kevinswk_sw0113_gpu_leases/gpu0.lock",
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-m",
+        "collaborative_test.SW_0138_native32_event_information.run",
+        "--stage",
+        "predict",
+        "--seed",
+        "0",
+        "--device",
+        "cuda:0",
+        "--output-root",
+        "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0138_native32_event_information/results_archive/event_predictions"
+      ],
+      "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0138_native32_event_information/results_archive/event_predictions/seed0",
+      "log_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0138_native32_event_information/results_archive/sw0138_event_information_seed0.log",
+      "triton_cache": "/tmp/kevinswk_sw0138_event_s0_1791617060052",
+      "environment": {
+        "CUDA_VISIBLE_DEVICES": "0",
+        "TRITON_CACHE_DIR": "/tmp/kevinswk_sw0138_event_s0_1791617060052"
+      },
+      "launched": 1791617060.053063,
+      "child_pid": 2699504,
+      "started": 1791617060.0645509,
+      "returncode": 0,
+      "artifact_valid": true,
+      "result_sha256": "b434263f99a0d0c0be767f4097c2301fbcbb697d9631b7c91a5f6c2120b44295",
+      "finished": 1791617707.6770592
+    },
+    "2": {
+      "task": {
+        "task_id": "sw0138_event_information_seed2",
+        "seed": 2
+      },
+      "status": "passed",
+      "physical_gpu": 1,
+      "gpu_uuid": "GPU-45604115-c231-56a5-32ea-d3001e8ff243",
+      "memory_before_mib": 2,
+      "lease_path": "/tmp/kevinswk_sw0113_gpu_leases/gpu1.lock",
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-m",
+        "collaborative_test.SW_0138_native32_event_information.run",
+        "--stage",
+        "predict",
+        "--seed",
+        "2",
+        "--device",
+        "cuda:0",
+        "--output-root",
+        "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0138_native32_event_information/results_archive/event_predictions"
+      ],
+      "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0138_native32_event_information/results_archive/event_predictions/seed2",
+      "log_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0138_native32_event_information/results_archive/sw0138_event_information_seed2.log",
+      "triton_cache": "/tmp/kevinswk_sw0138_event_s2_1791617060022",
+      "environment": {
+        "CUDA_VISIBLE_DEVICES": "1",
+        "TRITON_CACHE_DIR": "/tmp/kevinswk_sw0138_event_s2_1791617060022"
+      },
+      "launched": 1791617060.0223424,
+      "child_pid": 2699498,
+      "started": 1791617060.029278,
+      "returncode": 0,
+      "artifact_valid": true,
+      "result_sha256": "c517ae48bea1b70f12a6d068462ef83a2dc8014325bc0cb698cc38705bb47e9b",
+      "finished": 1791617748.7017272
+    },
+    "1": {
+      "task": {
+        "task_id": "sw0138_event_information_seed1",
+        "seed": 1
+      },
+      "status": "passed",
+      "physical_gpu": 0,
+      "gpu_uuid": "GPU-a0a7d03d-adc1-37ca-4342-328878b3657c",
+      "memory_before_mib": 16,
+      "lease_path": "/tmp/kevinswk_sw0113_gpu_leases/gpu0.lock",
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-m",
+        "collaborative_test.SW_0138_native32_event_information.run",
+        "--stage",
+        "predict",
+        "--seed",
+        "1",
+        "--device",
+        "cuda:0",
+        "--output-root",
+        "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0138_native32_event_information/results_archive/event_predictions"
+      ],
+      "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0138_native32_event_information/results_archive/event_predictions/seed1",
+      "log_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0138_native32_event_information/results_archive/sw0138_event_information_seed1.log",
+      "triton_cache": "/tmp/kevinswk_sw0138_event_s1_1791617707807",
+      "environment": {
+        "CUDA_VISIBLE_DEVICES": "0",
+        "TRITON_CACHE_DIR": "/tmp/kevinswk_sw0138_event_s1_1791617707807"
+      },
+      "launched": 1791617707.8080592,
+      "child_pid": 2707377,
+      "started": 1791617707.8108606,
+      "returncode": 0,
+      "artifact_valid": true,
+      "result_sha256": "f57dff36e29121b3b0240031ca06422d020d43d61c82637aa389e0c7ba96b625",
+      "finished": 1791618398.471193
+    }
+  },
+  "score": {
+    "status": "blocked_until_all_six_predictions_validate"
+  }
+}

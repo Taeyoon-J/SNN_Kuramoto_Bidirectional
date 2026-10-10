@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 import sys
+import threading
 import unittest
 from unittest import mock
 
@@ -60,6 +61,24 @@ class EventQueueContracts(unittest.TestCase):
         paths = [event_queue.output_path(task) for task in tasks]
         self.assertEqual(len(set(paths)), 3)
         self.assertNotEqual(paths[0], event_queue.sw137._prediction_dir(0))
+
+    def test_completed_prediction_tasks_reach_cpu_score_terminal_path(self):
+        # Exercise the queue's terminal branch without GPU reservations or child processes.
+        queue = event_queue.EventInformationQueue.__new__(event_queue.EventInformationQueue)
+        queue.tasks = event_queue.task_plan()
+        queue.state = {"status": "running", "score": {"status": "blocked_until_all_six_predictions_validate"},
+                       "tasks": {str(seed): {"status": "passed"} for seed in run.SEEDS}}
+        queue.lock = threading.RLock()
+        queue.sw137_root = Path("read-only-fixture")
+        report = {"paired_bootstrap_gate_minus_actual": {"fg_ari": {"gate_minus_actual_mean": 0.0}}}
+        with mock.patch.object(queue, "_execute", side_effect=lambda _task: "passed"), \
+             mock.patch.object(event_queue, "_atomic_json"), \
+             mock.patch.object(event_queue.run, "score", return_value=report) as score:
+            queue.run()
+        score.assert_called_once_with(sw137_root=queue.sw137_root)
+        self.assertEqual(queue.state["score"]["status"], "passed")
+        self.assertEqual(queue.state["status"], "event_information_evaluation_complete")
+        self.assertEqual(queue.state["task_outcomes"], {seed: "passed" for seed in run.SEEDS})
 
 
 if __name__ == "__main__":

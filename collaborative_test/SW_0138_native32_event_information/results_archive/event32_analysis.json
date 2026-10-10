@@ -1,0 +1,43 @@
+{
+  "experiment": "SW0138",
+  "status": "complete_score_only_recovery",
+  "result_sha256": "93b175841a7b5251ed41b3538eb11227e2ec4940183fb8e4e3544db984c71970",
+  "actual_exactly_reproduces_SW0137_all_per_image_metrics": true,
+  "actual_means": {
+    "fg_ari": 0.7819186736813425,
+    "foreground_iou": 0.605427133598362,
+    "matched_object_iou": 0.597013806658626
+  },
+  "retained_gate_means": {
+    "fg_ari": 0.7818825951459168,
+    "foreground_iou": 0.6057708257111978,
+    "matched_object_iou": 0.5965825858647859
+  },
+  "comparisons": {
+    "fg_ari": {
+      "gate_minus_actual_mean": -3.607853542564525e-05,
+      "paired_ci95": [
+        -0.0005725465118931032,
+        0.00045114371192657546
+      ]
+    },
+    "foreground_iou": {
+      "gate_minus_actual_mean": 0.00034369211283585897,
+      "paired_ci95": [
+        1.3921505700817264e-05,
+        0.0007438875163154182
+      ]
+    },
+    "matched_object_iou": {
+      "gate_minus_actual_mean": -0.00043122079384021433,
+      "paired_ci95": [
+        -0.0013406867285728687,
+        0.00034735628058538213
+      ]
+    }
+  },
+  "decision": "Retain actual-spike SW0137 incumbent; no useful readout advantage established. Proceed with SW0139 representation pilots, do not extend gate-only readout search.",
+  "limitations": "Same frozen dynamics and nearly saturated native events. Readout comparison does not remove gates or establish causal gating necessity. No new training or data-scaling evidence.",
+  "recovery": "Completed validated predictions preserved byte-for-byte; score-only CPU recovery. Original dead supervisor state retained. Local queue terminal regression15/15; server queue left unchanged for live SW0139 dependency hashes.",
+  "publication": "pending_scope_approval"
+}
