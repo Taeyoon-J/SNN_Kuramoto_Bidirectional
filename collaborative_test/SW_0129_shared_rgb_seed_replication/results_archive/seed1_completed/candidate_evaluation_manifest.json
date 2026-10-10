@@ -1,0 +1,53 @@
+{
+  "status": "complete",
+  "experiment": "SW0129",
+  "seed": 1,
+  "arm": "candidate",
+  "training_manifest_sha256": "a994903664639971a4224cd0339f578a4a762d1a8fe59ce44b7024151c85cb87",
+  "checkpoint_sha256": "2bf8fdc259eddf0a05c30ae6edfcb0cb167833d13bf06d1fbd9983854d5d95da",
+  "encoder_checkpoint_sha256": "97ccb4b67993dbd9ea4e3b8a9b12a211440a98c60b742974405bd47f76a510a6",
+  "gamma_sha256": "cbd2f1fcce005e47db867947e30d13e8132f1a3f622fb33859a398cedd373165",
+  "gamma_manifest_sha256": "816a519fdd34801d4c7c2bbda6496409dd6d9e9037a5e59e2c6d521c31af111c",
+  "evaluation_sha256": "f8601c18cf8a3e2bf7cb66513c753f652c8fa9efaa8f857d51dcbdcc98231efd",
+  "evaluation_runner_sha256": "b3d7b2344329940c05adcd0139108feacea4dd2eeb495295bf0e7db5595feab1",
+  "training_runner_sha256": "1b6150c9d50503bf1ba96a9dc0da2fb1f8c0b9a53cc56d7a8a9b2a0ed7cd0a3f",
+  "implementation_fingerprint": {
+    "collaborative_test/SW_0129_shared_rgb_seed_replication/run.py": "1b6150c9d50503bf1ba96a9dc0da2fb1f8c0b9a53cc56d7a8a9b2a0ed7cd0a3f",
+    "collaborative_test/SW_0129_shared_rgb_seed_replication/protocol.json": "02143937d69d38af8ed2d8a2d81aee2742fc2eb60be9501c664e1466fcddec5b",
+    "collaborative_test/SW_0106_spike_partition_rgb/run.py": "3099c8f2b87de5e862d640a62d7631029df64a1ef8f2eadd406734522002bc19",
+    "collaborative_test/SW_0106_spike_partition_rgb/partition_rgb.py": "2b023a788007afd2c03c45928cb4864e7bc57204dc8c13166f2fbe6b435c7261",
+    "collaborative_test/SW_0094_aligned_joint_pilot/run.py": "9f4e9046a2960e7aa53bf16d7e0663bee162b3f56a11f11d45554d79889536a3",
+    "snn_kuramoto_bidirectional/s2net_cls.py": "18313e5ee7358146703256e7e29d9846bfa60394feedba3237f2f7eac8791288",
+    "collaborative_test/SW_0040_peer_transfer/evaluate.py": "b3d7b2344329940c05adcd0139108feacea4dd2eeb495295bf0e7db5595feab1",
+    "snn_kuramoto_bidirectional/evaluation.py": "4a15980c9aa0248dbe0e837ad1b0b430ce26a7ab367c004d290a1272bb1025d7",
+    "snn_kuramoto_bidirectional/membrane_layer.py": "680ad89277b60206f192123165d13eca916e5183dc71eaa443a8eeb5f4b8fac8",
+    "snn_kuramoto_bidirectional/dendric_layer.py": "69d960809ff1ad73a91a7067f87f605ae69ef612be9b936e4b486cc29511dd1a",
+    "snn_kuramoto_bidirectional/kuramoto_layer.py": "76e61785fb19228fe4ecf6bbdfd4dc72519b9d6bd34d5f4fd9165e29c76d263e",
+    "snn_kuramoto_bidirectional/sinusoidal_gating.py": "e323a3b6472f51def23d63628fe25cc83088822ae73b5e0fcd1789884739f6c4",
+    "snn_kuramoto_bidirectional/loss_function.py": "6542d084f66c07101b75869709df9302db45e0dde87b6b5945d1790daa316543",
+    "snn_kuramoto_bidirectional/spike_classifier.py": "2d13c15a928f503bc09239aae2153a5f1a82de77aab4b5a76d0dfe876b755181",
+    "snn_kuramoto_bidirectional/gamma_initializer.py": "9b5f3e077c755738b1636b97ac9640321a5b7abf5ec85b9a12557209cf5ad50b",
+    "snn_kuramoto_bidirectional/training/train_gamma_initializer.py": "845f91d3255d1d72d2a69c432c7b559a9d29d90a4186a4821e75864af9e47d20",
+    "snn_kuramoto_bidirectional/training/train_s2net_core.py": "6056ae4d98d36678ae680e868c6c40716c8b2380f6ab81437e60ce962e15efde",
+    "collaborative_test/SW_0123_adaptive_temporal_assignment/dispatcher.py": "e37dcc0777871a91593041c99f3b1bfe55cc45f88d5d5be49a2e12d0116d8574"
+  },
+  "metrics": {
+    "fg_ari": 0.7459310630729249,
+    "foreground_iou": 0.5773001029919931,
+    "matched_object_iou": 0.5863125702071276
+  },
+  "ids": [
+    1320,
+    1639
+  ],
+  "images": 320,
+  "batch_size": 8,
+  "steps": 1024,
+  "settle": 512,
+  "readout": {
+    "threshold": 0.5,
+    "min_group_size": 2,
+    "background": "largest_component"
+  },
+  "ground_truth_used_for_prediction": false
+}

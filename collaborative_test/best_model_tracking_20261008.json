@@ -1054,36 +1054,113 @@
   },
   "latest_shared_rgb_seed_replication": {
     "experiment": "SW0129",
-    "status": "seed1_partial_pair_training_live",
+    "status": "seed1_partial_pair_complete",
     "server_cpu_tests": 12,
     "seed1": "passed; source/parity/finite update/assignment-use checks passed",
     "seed2": "rejected: mean shuffled hard-partition minus original RGB reconstruction loss did not exceed zero",
     "initial_supervisor_pid": 2228233,
     "initial_processes_terminal": true,
-    "training_updates": "in progress; fixed256 per arm",
-    "decision": "Preserve initial global-block record; separately run the passed seed1 candidate/control pair as partial replication, without seed2 guard changes or retry. Sol6.1 review approved. No three-seed promotion or70k expansion is available from this partial result.",
+    "training_updates": "both seed1 arms completed 256 updates; both evaluations rc0/valid",
+    "decision": "Seed1 candidate exceeds its matched control FG-ARI with a positive one-seed paired interval, but the candidate-source97 FG-ARI interval crosses zero and foreground IoU trails the control. Seed2 scientific preflight rejection is preserved. This is a partial seed1 result only; do not infer a three-seed promotion, gating contribution, or data-scaling effect.",
     "incumbent_changed": false,
     "gating_contribution_proven": false,
     "data_scaling_proven": false,
     "resume_supervisor_pid": 2230532,
     "resume_tasks": {
       "sw0129_train_s1_control": {
-        "status": "running",
+        "status": "passed",
         "gpu": 0,
-        "child_pid": 2230556
+        "child_pid": 2230556,
+        "returncode": 0,
+        "artifact_valid": true
       },
       "sw0129_eval_s1_control": {
-        "status": "queued"
+        "status": "passed",
+        "gpu": 0,
+        "child_pid": 2231963,
+        "returncode": 0,
+        "artifact_valid": true
       },
       "sw0129_train_s1_candidate": {
-        "status": "running",
+        "status": "passed",
         "gpu": 1,
-        "child_pid": 2230557
+        "child_pid": 2230557,
+        "returncode": 0,
+        "artifact_valid": true
       },
       "sw0129_eval_s1_candidate": {
-        "status": "queued"
+        "status": "passed",
+        "gpu": 1,
+        "child_pid": 2231964,
+        "returncode": 0,
+        "artifact_valid": true
       }
     },
-    "partial_scope": "seed1 only; seed0 historical result selected posthoc, seed2 scientific preflight rejection preserved; no3seedmean or70k promotion"
+    "partial_scope": "seed1 only; historical seed0 posthoc reference retained; seed2 row-scramble preflight failure unchanged; no three-seed aggregate or70k expansion",
+    "candidate_seed1_metrics": {
+      "fg_ari": 0.7459310630729249,
+      "foreground_iou": 0.5773001029919931,
+      "matched_object_iou": 0.5863125702071276
+    },
+    "control_seed1_metrics": {
+      "fg_ari": 0.7350547339015099,
+      "foreground_iou": 0.5917825526699019,
+      "matched_object_iou": 0.578880189515594
+    },
+    "source97_seed1_metrics": {
+      "fg_ari": 0.742658188014352,
+      "foreground_iou": 0.59028319942393,
+      "matched_object_iou": 0.5849640428623182
+    },
+    "candidate_minus_control_seed1_paired_bootstrap": {
+      "fg_ari": {
+        "mean_difference": 0.010876329171415053,
+        "ci95": [
+          5.6282379500913836e-05,
+          0.02148909485872898
+        ]
+      },
+      "foreground_iou": {
+        "mean_difference": -0.01448244967790872,
+        "ci95": [
+          -0.025724955375081862,
+          -0.0037764696340818592
+        ]
+      },
+      "matched_object_iou": {
+        "mean_difference": 0.007432380691533597,
+        "ci95": [
+          -0.0033630295575483465,
+          0.018011600608321035
+        ]
+      }
+    },
+    "candidate_minus_source97_seed1_paired_bootstrap": {
+      "fg_ari": {
+        "mean_difference": 0.0032728750585728655,
+        "ci95": [
+          -0.006695221609169487,
+          0.012840244956593808
+        ]
+      },
+      "foreground_iou": {
+        "mean_difference": -0.012983096431936977,
+        "ci95": [
+          -0.024073206075091756,
+          -0.0018859240101557525
+        ]
+      },
+      "matched_object_iou": {
+        "mean_difference": 0.001348527344809419,
+        "ci95": [
+          -0.008501614176950901,
+          0.010868835598803429
+        ]
+      }
+    },
+    "resume_processes_terminal": true,
+    "partial_summary_path": "collaborative_test/SW_0129_shared_rgb_seed_replication/results_archive/seed1_completed/partial_seed1_summary_20261009.json",
+    "partial_summary_sha256": "dadabc931875b21b17d04dde3430ca47c3390366353927c5c922343f943140a7",
+    "archive_manifest_sha256": "eb0c13ffaf5e08c2f1b052ef3a57d4eb202e3c3c36c78f1840c96f56325a9461"
   }
 }
