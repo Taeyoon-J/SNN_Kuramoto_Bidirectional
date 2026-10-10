@@ -1,0 +1,49 @@
+{
+  "experiment": "SW0139",
+  "status": "two_completed_training_histories_verified",
+  "arms": {
+    "control": {
+      "manifest_sha256": "51e318e24242fc5f5c3f83780644c567be940bf28112956fd5dc7118a2748b85",
+      "history_sha256": "13e3480ca6ce9ea65f1acfd133d237dec915762964d8c9b88e3f57e074dd18b2",
+      "updates": 256,
+      "unique_images": 4096,
+      "passes": 1,
+      "training_ids_sha256": "879658974960d2854a8e4755b2987e401e7f006356317992171d383cfba36dfa",
+      "observed_elapsed_seconds": 5127.188732385635,
+      "amortized_seconds_per_logical_update": 20.028080985881388,
+      "naive_70000_unique_one_pass_hours": 24.339681753675297,
+      "gradient_norm_median": 5.4863320316073105,
+      "gradient_norm_p90": 16.11594715152639,
+      "global_clip_threshold": 1.0,
+      "fraction_updates_above_clip": 1.0,
+      "median_global_clip_multiplier": 0.18228585650970286,
+      "learning_rates": {
+        "graph": 3e-05,
+        "encoder": 3e-06
+      }
+    },
+    "context_residual": {
+      "manifest_sha256": "1d5a6f8065847d08ba27c5aee5c4e54e27f34cbbb2c3b0c7e4870a3ba8241354",
+      "history_sha256": "22e0ae9b657d10dcf89fe41b688891207ef2db39ecd18bd9f88b362200f759e8",
+      "updates": 256,
+      "unique_images": 4096,
+      "passes": 1,
+      "training_ids_sha256": "879658974960d2854a8e4755b2987e401e7f006356317992171d383cfba36dfa",
+      "observed_elapsed_seconds": 5152.430169343948,
+      "amortized_seconds_per_logical_update": 20.1266803489998,
+      "naive_70000_unique_one_pass_hours": 24.459507368576144,
+      "gradient_norm_median": 7.601716332651902,
+      "gradient_norm_p90": 22.434808461117708,
+      "global_clip_threshold": 1.0,
+      "fraction_updates_above_clip": 1.0,
+      "median_global_clip_multiplier": 0.13154991632898572,
+      "learning_rates": {
+        "graph": 3e-05,
+        "encoder": 3e-06,
+        "context_adapter": 0.0003
+      }
+    }
+  },
+  "same_training_order": true,
+  "limits": "Elapsed includes registered run overhead and concurrent GPU workload. 70k projection is an extrapolation, not a scheduled duration or scaling result. Clipping statistics do not identify parameter-family credit or explain mask quality. No task scores, seed-population or gating contribution claim."
+}
