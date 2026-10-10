@@ -52,3 +52,12 @@ checks passed. It regenerates gamma from registered uint8 RGB, maps the
 complete source before the integration wrapper, and uses native32 losses.
 See foundation_review.json. Actual server assets,1024 GPU rollout/parity
 and logical-batch resource admission remain pending.
+
+## Exclusive GPU resource execution
+
+All21 model/foundation/resource CPU checks passed on Frontier. Registered
+seed0 native1024 resource probe is actually running on exclusive GPU0,
+supervisor2658960 / child2658986 (observed2026-10-10 05:59 UTC). See
+resource_execution_start_20261010.json. This disposable logicalB16 Adam
+measurement uses lambda1 before warmup; it is not candidate training,
+scientific calibration, temporal-parity certification or performance.
