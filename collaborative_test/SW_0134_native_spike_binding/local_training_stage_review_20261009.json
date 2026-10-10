@@ -1,0 +1,45 @@
+{
+  "experiment": "SW0134_native_spike_binding",
+  "status": "preliminary_training_stage_cpu_smoke_passed_not_deployed",
+  "root_independent_validation": {
+    "test_module": "collaborative_test.SW_0134_native_spike_binding.test_train_evaluate",
+    "tests_run": 1,
+    "failures": 0,
+    "errors": 0,
+    "runtime_seconds": 29.794,
+    "scope": "Actual production training, loss, autograd, Adam warm restore, save and completion-reader path in all three arms with synthetic source-shaped CPU assets; reduced budget two updates and batch1",
+    "not_evidence_of": [
+      "Completion of the registered 4096-update pilot",
+      "Actual-source GPU preflight success",
+      "Any model-performance improvement"
+    ]
+  },
+  "reviewed_endpoint_checks": [
+    "Reconstruct each registered pass permutation and actual batch image IDs",
+    "Require the complete registered update history and finite losses/gradient norms",
+    "Bind saved checkpoint, optimizer and history bytes to completion metadata",
+    "Require head Adam warm32 plus the full main-update count and finite optimizer states",
+    "Require zero joint optimizer for actual_frozen"
+  ],
+  "remaining_before_training_pipeline_release": [
+    "Bind completion metadata to the validated preflight, exact warm artifact and seed0 calibration",
+    "Check frozen arm full source parameters and buffers against initial state in the production-loop test",
+    "Complete and validate the paired-training/evaluation queue and registered expansion decision",
+    "Record TRAIN-only P occupancy, event activity and RGB slot-scramble diagnostics"
+  ],
+  "peer_refresh": {
+    "method": "git ls-remote origin refs/heads/patch_v2",
+    "observed_commit": "697eeb67dc031325b63153e678cea8cbc602da31",
+    "changed_since_previous_review": false,
+    "new_peer_experiment_available": false
+  },
+  "gpu_preflight_queue_supervisor": {
+    "pid": 2427541,
+    "proc_alive_verified": true,
+    "status_at_observation": "waiting_for_exclusive_gpu",
+    "restarted": false
+  },
+  "main_training_started": false,
+  "ground_truth_used": false,
+  "incumbent_changed": false
+}
