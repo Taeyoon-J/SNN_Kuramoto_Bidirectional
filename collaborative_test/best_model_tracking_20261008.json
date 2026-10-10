@@ -1621,12 +1621,39 @@
     },
     "followup_candidate": {
       "experiment": "SW0137",
-      "status": "GPU_prediction_workers_verified_live",
+      "status": "completed_three_seed_native32_numerical_incumbent",
       "scope": "Native32 source97 QCC seeds0/1/2 versus comparable Slot32; reuse exactly bound source1 prediction when available",
       "design": "SW_0135_native32_spike_binding/next_hypotheses_review.md",
       "supervisor_pid": 2681756,
-      "evidence": "SW_0137_native32_source_qcc/execution_start_20261010.json",
-      "performance_result_available": false
+      "evidence": "SW_0137_native32_source_qcc/results_archive/source32_analysis.json",
+      "performance_result_available": true
+    },
+    "current_native32_incumbent": {
+      "experiment": "SW0137",
+      "readout": "actual-spike QCC .50/min8/largestcomponent",
+      "grid": [
+        32,
+        32
+      ],
+      "seeds": [
+        0,
+        1,
+        2
+      ],
+      "means": {
+        "fg_ari": 0.7819186736813425,
+        "foreground_iou": 0.605427133598362,
+        "matched_object_iou": 0.597013806658626
+      },
+      "comparable_slot_means": {
+        "fg_ari": 0.7816519719609136,
+        "foreground_iou": 0.20436012776655543,
+        "matched_object_iou": 0.2031649861884501
+      },
+      "strict_all3_mean_win": true,
+      "result": "SW_0137_native32_source_qcc/results_archive/source_qcc_evaluation/evaluation.json",
+      "scientific_limits": "FG mean advantage is small; image bootstrap conditions on these seeds and does not establish seed-population superiority. Source checkpoint trained at16-grid and inherited70k lineage, evaluation recomputed at1024 nodes. No native32 training, gating necessity, scaling benefit, or reserve confirmation established.",
+      "publication": "pending_scope_approval"
     }
   }
 }

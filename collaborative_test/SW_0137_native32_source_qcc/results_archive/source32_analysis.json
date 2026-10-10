@@ -1,0 +1,67 @@
+{
+  "experiment": "SW0137",
+  "status": "complete_three_seed_native32_baseline",
+  "result_sha256": "4f36f6ce27c1928bd92fb6cb4c763ecb692eaa560b18e4d9857ca3d84612de61",
+  "metrics": {
+    "fg_ari": {
+      "three_seed_mean_difference": 0.0002667017204289614,
+      "image_paired95_percentile_ci_fixed_seeds": [
+        -0.019232549377071754,
+        0.019678088440142714
+      ],
+      "per_seed_difference": [
+        0.19333924498580152,
+        -0.08768419677884168,
+        -0.10485494304567293
+      ]
+    },
+    "foreground_iou": {
+      "three_seed_mean_difference": 0.40106700583180643,
+      "image_paired95_percentile_ci_fixed_seeds": [
+        0.38338304626673714,
+        0.41924328418412227
+      ],
+      "per_seed_difference": [
+        0.5529500915225848,
+        0.40348284069842666,
+        0.24676808527440794
+      ]
+    },
+    "matched_object_iou": {
+      "three_seed_mean_difference": 0.3938488204701759,
+      "image_paired95_percentile_ci_fixed_seeds": [
+        0.37936316165665296,
+        0.4083185410721653
+      ],
+      "per_seed_difference": [
+        0.4499104805672055,
+        0.36008542990434467,
+        0.3715505509389774
+      ]
+    }
+  },
+  "strict_all3_mean_win": true,
+  "source_means": {
+    "fg_ari": 0.7819186736813425,
+    "foreground_iou": 0.605427133598362,
+    "matched_object_iou": 0.597013806658626
+  },
+  "slot_means": {
+    "fg_ari": 0.7816519719609136,
+    "foreground_iou": 0.20436012776655543,
+    "matched_object_iou": 0.2031649861884501
+  },
+  "bootstrap": {
+    "random_state": 135,
+    "resamples": 10000,
+    "paired_images": 320,
+    "fixed_seeds": [
+      0,
+      1,
+      2
+    ]
+  },
+  "limits": "FG mean advantage is small; image bootstrap conditions on these seeds and does not establish seed-population superiority. Source checkpoint trained at16-grid and inherited70k lineage, evaluation recomputed at1024 nodes. No native32 training, gating necessity, scaling benefit, or reserve confirmation established.",
+  "decision": "Retain SW0137 as current verified native32 numerical incumbent, prioritize FG margin improvement and actual event-information screen; do not expand the weak transferred head from136.",
+  "github_publication": "pending_scope_approval"
+}
