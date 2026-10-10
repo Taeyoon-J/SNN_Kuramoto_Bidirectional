@@ -1705,7 +1705,49 @@
         }
       },
       "context_expansion_allowed": false,
-      "cross_view_result_available": false
+      "cross_view_result_available": false,
+      "partition_error_diagnostic": {
+        "status": "completed_read_only_diagnostic",
+        "evidence": "SW_0139_native32_representation/results_archive/partition_diagnostic_seed1.json",
+        "analysis": "SW_0139_native32_representation/partition_failure_analysis.md",
+        "result_sha256": "27d15a4d2a225cdf37a6bf81f1923e76f46919e3c82672b835957ddebdde4ab0",
+        "metrics": {
+          "source97": {
+            "false_merge_fraction_of_all_true_fg_pairs": 0.047292148031207445,
+            "false_split_fraction_of_all_true_fg_pairs": 0.04683223724345091,
+            "foreground_missed_fraction": 0.13070252004063967,
+            "all_predicted_nonzero_object_labels": 5.815625,
+            "true_object_count": 6.3125,
+            "predicted_background_column_merge_fraction_of_all_true_fg_pairs": 0.01733458724997109
+          },
+          "control": {
+            "false_merge_fraction_of_all_true_fg_pairs": 0.054390089291100584,
+            "false_split_fraction_of_all_true_fg_pairs": 0.05109443383676622,
+            "foreground_missed_fraction": 0.1553087035896188,
+            "all_predicted_nonzero_object_labels": 5.6875,
+            "true_object_count": 6.3125,
+            "predicted_background_column_merge_fraction_of_all_true_fg_pairs": 0.022439123094542292
+          },
+          "context_residual": {
+            "false_merge_fraction_of_all_true_fg_pairs": 0.08656048706503791,
+            "false_split_fraction_of_all_true_fg_pairs": 0.047700003185531664,
+            "foreground_missed_fraction": 0.25612896600808244,
+            "all_predicted_nonzero_object_labels": 4.503125,
+            "true_object_count": 6.3125,
+            "predicted_background_column_merge_fraction_of_all_true_fg_pairs": 0.05527372471111543
+          }
+        },
+        "context_minus_source97": {
+          "false_merge_fraction_of_all_true_fg_pairs": 0.039268339033830466,
+          "predicted_background_column_merge_fraction_of_all_true_fg_pairs": 0.037939137461144336,
+          "background_column_share_of_merge_increase": 0.9661508073580348,
+          "false_split_fraction_of_all_true_fg_pairs": 0.0008677659420807532,
+          "foreground_missed_fraction": 0.12542644596744276,
+          "all_predicted_nonzero_object_labels": -1.3125
+        },
+        "interpretation": "Context error pattern is dominated by foreground loss and predicted-label-0 merging; descriptive only, not a causal-layer proof.",
+        "incumbent_changed": false
+      }
     },
     "causal_dynamics_screen": {
       "experiment": "SW0140",

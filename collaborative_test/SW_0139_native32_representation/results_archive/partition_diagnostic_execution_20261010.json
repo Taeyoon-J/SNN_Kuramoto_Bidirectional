@@ -1,0 +1,51 @@
+{
+    "experiment":  "SW0139 seed1 partition diagnostic",
+    "status":  "completed_read_only_ancillary_diagnostic",
+    "seed":  1,
+    "image_ids":  [
+                      1320,
+                      1639
+                  ],
+    "count":  320,
+    "grid_size":  [
+                      32,
+                      32
+                  ],
+    "result_path":  "SW_0139_native32_representation/results_archive/partition_diagnostic_seed1.json",
+    "result_sha256":  "27d15a4d2a225cdf37a6bf81f1923e76f46919e3c82672b835957ddebdde4ab0",
+    "input_evaluation_summary_sha256":  "ad5fb7e0ae405b84fb1388a17036357def548dee5ed82507e5a15a557180194c",
+    "validated_prediction_sha256":  {
+                                        "summary_sha256":  "ad5fb7e0ae405b84fb1388a17036357def548dee5ed82507e5a15a557180194c",
+                                        "source_prediction_sha256":  "df1401efb85e57c324a1b35a6658c16596b1208fb23ef1a3a6899a614f260756",
+                                        "source_protocol_sha256":  "adfdd7b3a30a6f1878fee053c77c64362c465208de9df8f08e579170ad1e95b8",
+                                        "arm_prediction_sha256":  {
+                                                                      "control":  "13df3479c20fdd5c0a9e0e188427735bc5415819efee4f425e19dd5871be146c",
+                                                                      "context_residual":  "8d66e1ee7a5cff461070b92ae06da9ccc52bab4dde52f030f34e0e16c1452ccb"
+                                                                  },
+                                        "arm_protocol_sha256":  {
+                                                                    "control":  "2b039f8a97b9dc2a6099e3eb9b8d43d96bfa1e592cbbda9847b2433eb53e2de6",
+                                                                    "context_residual":  "e5714d381625117c823e90a71dd9bf57d1a7d17197d428e166f75b86580b3102"
+                                                                }
+                                    },
+    "code_sha256":  "80db4eaaad9547a93331ec549d516cff98fb597d2026d87325dce74bde208b64",
+    "test_sha256":  "a0f1391d16dd608a8fd09b9180536eca4decb55674165b12e44cb2bad63ebe9a",
+    "local_tests":  {
+                        "passed":  6,
+                        "total":  6,
+                        "cuda_visible_devices":  "",
+                        "scope":  "CPU-only synthetic and archived-schema/hash-boundary tests"
+                    },
+    "server_execution":  {
+                             "status":  "complete",
+                             "scope":  "CPU-only read-only diagnostic over saved predictions; no model inference or optimizer updates",
+                             "ground_truth_opened_only_after_frozen_prediction_validation":  true,
+                             "gpu_used":  false,
+                             "inference_or_training_changed":  false
+                         },
+    "corrected_preanalysis_issues":  [
+                                         "Initial stdin execution prefixed source before its from __future__ import, causing SyntaxError; corrected by executing compile(base64 source) so the source future import remains first.",
+                                         "Initial SW0139 training validation root pointed at local results_archive metadata; corrected to the registered SW0139 run.OUT checkpoint root."
+                                     ],
+    "incumbent_changed":  false,
+    "interpretation":  "Partition-error decomposition only; no causal-layer proof or model promotion."
+}
