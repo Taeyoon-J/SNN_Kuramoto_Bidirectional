@@ -1,0 +1,22 @@
+{
+  "experiment": "SW0132",
+  "status": "relative_decoder_implemented_root_review_and_cpu_checks_passed",
+  "cpu_tests_passed": 5,
+  "checked": [
+    "axis centroid and variance match independently expanded128x128 pixel moments",
+    "8x8 patch repetition preserves row-major pixel locations",
+    "slot-column permutation preserves reconstruction",
+    "live Q assignment and decoder gradients finite; gamma content detached",
+    "checkpointed1024pixel chunks match unchunked forward and gradients"
+  ],
+  "files": {
+    "relative_rgb.py": "0ac78dbf30f7b239f6a88bab6976fcde4956be10675c0645900eca455b51e4a5",
+    "test_relative_rgb.py": "741a4975359a0eae3d530df951b7a77efbfbe2c28ef86c3a620af083c0f59050",
+    "protocol.json": "0b701a78b282d9671b31de00cf4eaced1169ae03b6640d4ca5e50bf893a69fa8"
+  },
+  "scope": "synthetic CPU tensors and decoder; not actual source checkpoint/GPU preflight or learned segmentation",
+  "server_deployed": false,
+  "GPU_preflight_started": false,
+  "training_started": false,
+  "next_stage": "implement separate all3 actual source TRAIN preflight and exclusive queue"
+}
