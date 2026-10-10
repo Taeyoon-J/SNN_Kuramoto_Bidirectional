@@ -1,0 +1,39 @@
+{
+  "experiment": "SW0138_native32_event_information",
+  "status": "prospective_evaluation_only",
+  "purpose": "Measure whether the native fractional spike readout carries more useful QCC information than the retained native gate when the frozen source trajectories are identical.",
+  "source": {
+    "models": "same-seed frozen SW0097 sources 0, 1, 2, strictly mapped with the SW0135 native32 foundation",
+    "image_ids": [1320, 1639],
+    "count": 320,
+    "rgb": "registered SW0135 full-resolution RGB preprocessing and encoder",
+    "timesteps": 1024,
+    "settle": 512,
+    "microbatch_size": 1,
+    "ground_truth_used_for_prediction": false,
+    "optimizer_updates": 0
+  },
+  "trajectory": {
+    "rollout": "frozen SW0134 late_rollout with live_tail_steps=0",
+    "fields": ["component_membrane", "component_spikes", "component_gates", "membrane", "spikes", "theta"],
+    "event_capture": "E=act_fun_adp(component_membrane - 0.06*exp(wrapped.b[component_id])), directly reevaluating the frozen SW0134 native forward threshold equation on its saved membrane trace; never recover E by dividing S by g",
+    "identity_guard": "require torch.equal(S, E*g) for the full component trace, including positions where g is zero",
+    "trajectory_parity": "repeat the registered first TRAIN example after state reset and require exact equality of all six trace fields from frozen late_rollout",
+    "counterfactual": "replace only the QCC readout activity with retained native gate g; do not change recurrence, reset, feedback, gates, weights, geometry, or background rule"
+  },
+  "readout": {
+    "implementation": "frozen SW0136 QCC helper as invoked by SW0137",
+    "affinity": "positive-clamped product of per-component signed Pearson correlations on actual S or retained g",
+    "threshold": 0.5,
+    "minimum_component_size": 8,
+    "background": "largest connected component",
+    "grid": [32, 32]
+  },
+  "evaluation": {
+    "target": "native128 ground truth converted directly to32 by production modal/minimum-ID-tie 4x4 pooling",
+    "metrics": ["fg_ari", "foreground_iou", "matched_object_iou"],
+    "prediction_freeze": "all six prediction arrays, protocols, SW0137 dependency hashes and fixed IDs are verified before the first target mask is opened",
+    "paired_bootstrap": {"replicates": 10000, "rng": "numpy RandomState(138)", "unit": "resample common image indices across all three seeds", "interval": "percentile 95% for gate-readout minus actual-spike-readout"}
+  },
+  "interpretation": "A frozen readout attribution screen only. It does not remove membrane feedback or reset dynamics, establish gate necessity, train a gate-only candidate, or promote a model."
+}
