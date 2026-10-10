@@ -1,0 +1,5 @@
+# SW0140 native32 causal screen
+
+Frozen source97, native1024 patches, full1024-step dynamics. Three seed jobs with first four ordered TRAIN RGB images each; no GT or optimizer. Compare unchanged dynamics and six isolated interventions: Kuramoto interaction, delayed sinusoidal gate, dendritic history, membrane voltage history, spike reset and event selection. Changed emitted spikes feed later dendrite/reset recurrence. Exact zero-gate holds remain as specified.
+
+Local/server9 CPU tests, actual three-source order and CPU native1024 T64 baseline parity passed. Final two-file return-contract correction was verified before GPU launch. Supervisor2726916, seed0 PID2726941 on GPU3 verified live; seed1/2 queued. Global exclusive GPU leases, CUDA-hidden supervisor, no retries. This is a trace/resource screen, not segmentation performance or proof of stage necessity. Fixed endpoint evaluation follows technically valid screens. Current introduced integration scalars are zero; their usefulness cannot be credited by this source screen. Publication remains pending scope approval.

@@ -1,0 +1,42 @@
+{
+  "experiment": "SW0140_native32_causal_screen",
+  "status": "prospective_gt_free_trace_screen",
+  "source": {
+    "experiment": "SW0097_phase_stability",
+    "seeds": [0, 1, 2],
+    "updates": 256,
+    "train_order": "SW0130 source_contract(seed), first four registered TRAIN IDs and corresponding pool rows",
+    "resolution": 32,
+    "nodes": 1024,
+    "components": 4,
+    "steps": 1024,
+    "parameters_frozen": true
+  },
+  "screen": {
+    "images_per_seed": 4,
+    "split": "TRAIN",
+    "ground_truth_used": false,
+    "optimizer_updates": 0,
+    "gamma": "native128 RGB -> frozen registered encoder/statistics/clip -> native32 patch gamma; same per-image gamma reused across conditions",
+    "state": "reset theta, dendrite, membrane, and emitted-spike history for each image-condition pair",
+    "none_parity": "torch.equal on theta, mean membrane, mean spikes, component membrane, component spikes, and component gates against SW0134 late_rollout T=1024 live_tail_steps=0"
+  },
+  "conditions": {
+    "none": "unchanged source dynamics",
+    "kuramoto_interaction_off": "set only Kuramoto K=0; preserve drive, initialization, graph, and all downstream equations",
+    "delayed_gate_constant_half": "set the same gate g=0.5 in carrier=sin(theta)*g, integration input, emitted S=E*g, and exact-zero hold predicate",
+    "dendrite_history_off": "h=(1+a_D*(u-1))*(1-beta_D)*dense; remove only explicit previous_h contribution, retaining dense previous-emitted-spike input",
+    "membrane_voltage_history_off": "candidate=(1+a_M*(u-1))*((1-alpha_M)*R_m*sum(h)-v_d*S_prev); remove only explicit previous_mem contribution, retain reset and exact g==0 hold",
+    "spike_reset_off": "remove only -v_d*S_prev from membrane candidate",
+    "binary_events_forced_on": "set E=1 before emitted S=E*g and feed that emitted S into subsequent dendrite/reset recurrence; also record natural threshold events separately"
+  },
+  "invariants": [
+    "All interventions rerun from t=0 through t=1023; no shortened horizon or settled-state initialization",
+    "Use the exact source batch-major component fold and production stack/permute/reshape layout",
+    "Exact zero-gate hold semantics; near-zero gate is not treated as zero",
+    "No checkpoint, source parameter, encoder, dataset, or production implementation mutation",
+    "Restore transient Kuramoto K after each condition",
+    "Record finite traces, literal gate/event/emitted-spike values, exact S=E*g, occupancy/transition/hold counts, per-field changes, runtime, and peak allocated/reserved memory"
+  ],
+  "interpretation": "A GT-free causal trace/resource screen only. It establishes neither segmentation quality nor learned-parameter usefulness, gate necessity, or a promotion decision. No full320 prediction/scoring stage is included in this screen."
+}
