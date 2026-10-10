@@ -1,0 +1,101 @@
+{
+  "experiment": "SW0132_partition_relative_rgb",
+  "status": "registered_before_implementation_and_GPU_execution",
+  "motivation": "SW131 seed2 warmed decoder reconstructs better after native partition-specific content is removed; new auxiliary objective should depend on partition geometry",
+  "source": "SW0097 positive_frozen same-seed; immutable core and frozen source encoder preprocessing",
+  "model": "Frozen SW0130 PhaseStateIntegration equations/12zero-init scalars; phase u=g vs constant u=.5; exact native spike QCC retained",
+  "assignment": "Original SW0106 hard-H STE W=H+(softmax affinity/.10-stopgrad softmax); no alpha head",
+  "decoder": {
+    "architecture": [
+      10,
+      64,
+      64,
+      3
+    ],
+    "activations": [
+      "ReLU",
+      "ReLU",
+      "sigmoid"
+    ],
+    "initial_rng_seed": 106,
+    "absolute_coordinates_as_input": false,
+    "center_or_scale_as_separate_input": false,
+    "content": "z_k=sum_n W_nk*stopgrad(gamma_n)/max(sum_nW_nk,1); z remains live wrt W",
+    "geometry": "m=max(sumW,1); mu=sumW*c/m; sigma^2=sumW*(c-mu)^2/m + ((8^2-1)/12)*(2/128)^2; geometry live wrt W",
+    "relative_pixel_coordinates": "r_pk=(pixel_center_p-mu_k)/sigma_k; no clipping/extra epsilon/scale tuning",
+    "mixture": "repeat each patch W over its8x8 pixels; predictedRGB_p=sum_k W_pk*MLP(z_k,r_pk)",
+    "objective": "plain full128x128x3 RGB MSE perimage then batchmean",
+    "pixel_chunk_size": 1024,
+    "memory": "nonreentrant activation checkpoint of complete chunk render and mixture; no graph-detach shortcut"
+  },
+  "data": {
+    "ids": "same source_contract 4096 unique TRAIN indices and same117+seed order",
+    "batch": 16,
+    "updates": 256,
+    "time_steps": 64,
+    "settle": 32,
+    "ground_truth_masks_or_counts_used_for_training": false
+  },
+  "warmup": {
+    "updates": 32,
+    "batch": 16,
+    "source_core_encoder_frozen": true,
+    "target": "fullRGB",
+    "paired_same_decoder_and_adam32": true
+  },
+  "learning_rates": {
+    "core_graph": 3e-05,
+    "encoder": 3e-06,
+    "integration": 0.01,
+    "decoder": 0.0003
+  },
+  "gradient_clipping": {
+    "unique_joint_union": 1,
+    "decoder": 1
+  },
+  "objective": "old primary+5*positiveQ+lambda*fullRGB; joint gradients weighted, decoder gradients unweighted fullRGB",
+  "lambda": {
+    "source_seed": 0,
+    "calibration": ".25*median(old_joint_gradient_norm/fullRGB_joint_gradient_norm), first4TRAIN batches after newwarm32, including12newscalars",
+    "fixed_allseeds_allarms": true,
+    "reuse_old_lambda": false
+  },
+  "prerequisites_all3_before_any_pilot": [
+    "actual source nativezero-init parity T64/32 andT1024/512 botharms including theta/membrane/components/spikes/Q/H/oldloss",
+    "64TRAIN exacttorch row-shuffle130+ordinal, recompute geometry/content, mean fullRGB excess>0",
+    "finite nonzero reconstruction gradient by registered core/encoder/newparameter families; component zeros recorded",
+    "same frozen paired initialization and sharedwarmstate; each disposable finite step sourceunchanged"
+  ],
+  "scientific_failure_action": "Preserve failed attempt and close recipe; no warmup/lambda/seed/threshold retries",
+  "pilot": {
+    "first_seed": 1,
+    "arms": [
+      "phase",
+      "constant"
+    ],
+    "expand_seeds": [
+      0,
+      2
+    ],
+    "expansion_rule": "originalSW130 rule: phase FGARI exceeds source97 and samecapacity constant, both paired-image95CI lowerbounds positive; reportall3metrics, no newIoUcutoff"
+  },
+  "evaluation": {
+    "ids": [
+      1320,
+      1639
+    ],
+    "images": 320,
+    "time_steps": 1024,
+    "settle": 512,
+    "mask": "actualspikeQCC; affinityspike threshold.50 minFGgroup2 largestcomponentbackground",
+    "ground_truth": "existingmodal8x8 patchtarget; masks opened onlyafterpredictionfreeze",
+    "bootstrap": "NumPyRandomState132,10000 paired320image resamples commonindices forcomparisons/metrics"
+  },
+  "later_requirements": [
+    "stage-specific interventions includingreadoutforcedevents preserving recurrenttrajectory; neutral stage doesnot supportstagecontribution",
+    "complete3seed samecontract all3metrics above comparableSlot beforeclaim",
+    "matchedcompute plus adequatelytrained increasinguniquedata curve and70k comparableSlotcomparison",
+    "reserved90640..90959 remainsunread duringselection"
+  ],
+  "scope_limit": "FullRGB objective and nonzero gradients do not prove object separation, allgating necessity, scaling or finalSlot victory"
+}
