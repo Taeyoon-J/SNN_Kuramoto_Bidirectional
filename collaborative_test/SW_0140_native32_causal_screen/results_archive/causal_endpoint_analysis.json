@@ -1,0 +1,343 @@
+{
+  "experiment": "SW0140",
+  "status": "independently_audited",
+  "evaluation_sha256": "0dd22e69d8f6866fcf39d7b5ba1523ef2b6cb4f9f4ad284a089c4d737dc768cc",
+  "registered_source_Slot_evaluation_sha256": "4f36f6ce27c1928bd92fb6cb4c763ecb692eaa560b18e4d9857ca3d84612de61",
+  "grid": [
+    32,
+    32
+  ],
+  "means": {
+    "source97": {
+      "fg_ari": 0.7819186736813425,
+      "foreground_iou": 0.6054271335983619,
+      "matched_object_iou": 0.597013806658626
+    },
+    "slot32": {
+      "fg_ari": 0.7816519719609135,
+      "foreground_iou": 0.20436012776655546,
+      "matched_object_iou": 0.2031649861884501
+    },
+    "kuramoto_interaction_off": {
+      "fg_ari": 0.05607437147205376,
+      "foreground_iou": 0.23506410994927268,
+      "matched_object_iou": 0.08518799467500232
+    },
+    "delayed_gate_constant_half": {
+      "fg_ari": 0.0,
+      "foreground_iou": 0.0,
+      "matched_object_iou": 0.0
+    },
+    "dendrite_history_off": {
+      "fg_ari": 0.77164958648102,
+      "foreground_iou": 0.597423697769001,
+      "matched_object_iou": 0.58065517366447
+    },
+    "membrane_voltage_history_off": {
+      "fg_ari": 0.7822249778700083,
+      "foreground_iou": 0.6049208016723265,
+      "matched_object_iou": 0.5984672122051876
+    },
+    "spike_reset_off": {
+      "fg_ari": 0.7818825951459167,
+      "foreground_iou": 0.6057708257111979,
+      "matched_object_iou": 0.5965825858647857
+    },
+    "binary_events_forced_on": {
+      "fg_ari": 0.7818825951459167,
+      "foreground_iou": 0.6057708257111979,
+      "matched_object_iou": 0.5965825858647857
+    }
+  },
+  "paired_comparisons": {
+    "kuramoto_interaction_off": {
+      "source97": {
+        "fg_ari": {
+          "mean_difference": -0.7258443022092887,
+          "ci95": [
+            -0.7413712234211717,
+            -0.7094116768763643
+          ]
+        },
+        "foreground_iou": {
+          "mean_difference": -0.37036302364908924,
+          "ci95": [
+            -0.38780021750142213,
+            -0.3525757677339815
+          ]
+        },
+        "matched_object_iou": {
+          "mean_difference": -0.5118258119836236,
+          "ci95": [
+            -0.5255835844633968,
+            -0.4979065231935758
+          ]
+        }
+      },
+      "slot32": {
+        "fg_ari": {
+          "mean_difference": -0.7255776004888599,
+          "ci95": [
+            -0.7389659822852523,
+            -0.7116266009517307
+          ]
+        },
+        "foreground_iou": {
+          "mean_difference": 0.030703982182717214,
+          "ci95": [
+            0.02267020048106872,
+            0.03877407528069691
+          ]
+        },
+        "matched_object_iou": {
+          "mean_difference": -0.11797699151344773,
+          "ci95": [
+            -0.12313666233470785,
+            -0.11279234687408092
+          ]
+        }
+      }
+    },
+    "delayed_gate_constant_half": {
+      "source97": {
+        "fg_ari": {
+          "mean_difference": -0.7819186736813425,
+          "ci95": [
+            -0.7971987047746987,
+            -0.7657701784424209
+          ]
+        },
+        "foreground_iou": {
+          "mean_difference": -0.6054271335983619,
+          "ci95": [
+            -0.620082115047889,
+            -0.5905199728690228
+          ]
+        },
+        "matched_object_iou": {
+          "mean_difference": -0.5970138066586259,
+          "ci95": [
+            -0.6115261686234523,
+            -0.5827149312065801
+          ]
+        }
+      },
+      "slot32": {
+        "fg_ari": {
+          "mean_difference": -0.7816519719609136,
+          "ci95": [
+            -0.7936798432714393,
+            -0.7694324069375278
+          ]
+        },
+        "foreground_iou": {
+          "mean_difference": -0.20436012776655543,
+          "ci95": [
+            -0.21361128427871204,
+            -0.1951558540842357
+          ]
+        },
+        "matched_object_iou": {
+          "mean_difference": -0.20316498618845008,
+          "ci95": [
+            -0.2087719812268373,
+            -0.19756282576278703
+          ]
+        }
+      }
+    },
+    "dendrite_history_off": {
+      "source97": {
+        "fg_ari": {
+          "mean_difference": -0.01026908720032251,
+          "ci95": [
+            -0.012928341955571018,
+            -0.007721874712744284
+          ]
+        },
+        "foreground_iou": {
+          "mean_difference": -0.008003435829360975,
+          "ci95": [
+            -0.010100242752224648,
+            -0.006088643561128841
+          ]
+        },
+        "matched_object_iou": {
+          "mean_difference": -0.01635863299415601,
+          "ci95": [
+            -0.020024920574791123,
+            -0.012706205221375484
+          ]
+        }
+      },
+      "slot32": {
+        "fg_ari": {
+          "mean_difference": -0.010002385479893548,
+          "ci95": [
+            -0.03026953992655966,
+            0.009822024550090404
+          ]
+        },
+        "foreground_iou": {
+          "mean_difference": 0.3930635700024455,
+          "ci95": [
+            0.37468915703628075,
+            0.4109279491836094
+          ]
+        },
+        "matched_object_iou": {
+          "mean_difference": 0.3774901874760198,
+          "ci95": [
+            0.3626490978456482,
+            0.39228331925755067
+          ]
+        }
+      }
+    },
+    "membrane_voltage_history_off": {
+      "source97": {
+        "fg_ari": {
+          "mean_difference": 0.0003063041886657624,
+          "ci95": [
+            -0.000701583437632132,
+            0.0014541897586131292
+          ]
+        },
+        "foreground_iou": {
+          "mean_difference": -0.0005063319260354922,
+          "ci95": [
+            -0.0013145263275510244,
+            0.00018320119384217094
+          ]
+        },
+        "matched_object_iou": {
+          "mean_difference": 0.0014534055465615957,
+          "ci95": [
+            0.0004650928516455353,
+            0.00258671138292552
+          ]
+        }
+      },
+      "slot32": {
+        "fg_ari": {
+          "mean_difference": 0.0005730059090947252,
+          "ci95": [
+            -0.019076714955354707,
+            0.019930668600634725
+          ]
+        },
+        "foreground_iou": {
+          "mean_difference": 0.40056067390577094,
+          "ci95": [
+            0.3821061196410686,
+            0.4187141958115015
+          ]
+        },
+        "matched_object_iou": {
+          "mean_difference": 0.3953022260167375,
+          "ci95": [
+            0.38023316810296776,
+            0.4101702948615534
+          ]
+        }
+      }
+    },
+    "spike_reset_off": {
+      "source97": {
+        "fg_ari": {
+          "mean_difference": -3.607853542564525e-05,
+          "ci95": [
+            -0.000583935472726049,
+            0.00045244701040437113
+          ]
+        },
+        "foreground_iou": {
+          "mean_difference": 0.00034369211283585897,
+          "ci95": [
+            1.5134195577600272e-05,
+            0.000740965325455998
+          ]
+        },
+        "matched_object_iou": {
+          "mean_difference": -0.00043122079384021433,
+          "ci95": [
+            -0.0013267735541466477,
+            0.0003515164384594843
+          ]
+        }
+      },
+      "slot32": {
+        "fg_ari": {
+          "mean_difference": 0.00023062318500331538,
+          "ci95": [
+            -0.019446297265317335,
+            0.01961123356511094
+          ]
+        },
+        "foreground_iou": {
+          "mean_difference": 0.40141069794464235,
+          "ci95": [
+            0.38300195353309535,
+            0.4194732152888805
+          ]
+        },
+        "matched_object_iou": {
+          "mean_difference": 0.3934175996763357,
+          "ci95": [
+            0.3783543493676399,
+            0.408193785914587
+          ]
+        }
+      }
+    },
+    "binary_events_forced_on": {
+      "source97": {
+        "fg_ari": {
+          "mean_difference": -3.607853542564525e-05,
+          "ci95": [
+            -0.000583935472726049,
+            0.00045244701040437113
+          ]
+        },
+        "foreground_iou": {
+          "mean_difference": 0.00034369211283585897,
+          "ci95": [
+            1.5134195577600272e-05,
+            0.000740965325455998
+          ]
+        },
+        "matched_object_iou": {
+          "mean_difference": -0.00043122079384021433,
+          "ci95": [
+            -0.0013267735541466477,
+            0.0003515164384594843
+          ]
+        }
+      },
+      "slot32": {
+        "fg_ari": {
+          "mean_difference": 0.00023062318500331538,
+          "ci95": [
+            -0.019446297265317335,
+            0.01961123356511094
+          ]
+        },
+        "foreground_iou": {
+          "mean_difference": 0.40141069794464235,
+          "ci95": [
+            0.38300195353309535,
+            0.4194732152888805
+          ]
+        },
+        "matched_object_iou": {
+          "mean_difference": 0.3934175996763357,
+          "ci95": [
+            0.3783543493676399,
+            0.408193785914587
+          ]
+        }
+      }
+    }
+  },
+  "interpretation": "Frozen dynamics interventions, not retraining or promotion. Image intervals condition on these three seeds; no population-seed, layer necessity after retraining or data-scaling claim."
+}
