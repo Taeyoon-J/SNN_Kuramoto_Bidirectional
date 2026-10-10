@@ -1,0 +1,46 @@
+{
+  "experiment": "SW0131_decoder_partition_diagnosis",
+  "status": "prospectively_registered_before_execution",
+  "parent_outcome": "SW0130 scientific_preflight_failed: seed2 hard-H scramble sensitivity nonpositive; no training",
+  "purpose": "Determine whether RGB auxiliary decoder bypasses assignment via image-level content and absolute patch coordinates; distinguish from evidence of useful H dependence",
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "source": "SW0097 positive_frozen same-seed source checkpoint",
+  "decoder_states": [
+    "initial random construction with fixed117+seed RNG",
+    "preserved SW0130 decoder after exactly32 warmup updates"
+  ],
+  "data": "same registered first64 TRAIN IDs and order from SW0130 source_contract; no validation/reserved IDs or GT",
+  "time_steps": 64,
+  "settle": 32,
+  "conditions": {
+    "native": "native hard-H and pooled gamma slot content",
+    "row_shuffled": "within-image H row permutation seed130+imageindex and recomputed pooled gamma content; identical to SW0130 guard",
+    "image_mean_content": "native H with identical image-wide gamma mean repeated across slots, same absolute XY decoder inputs; decoded result mathematically assignment-independent"
+  },
+  "outputs": [
+    "per-image MSE in each decoder state/condition",
+    "paired64image mean deltas, positive counts and raw values",
+    "K and group sizes",
+    "native RGB gradient norms per trainable family and Q",
+    "source/warmup/frozen-helper/code SHA provenance"
+  ],
+  "training_optimizer_steps": 0,
+  "source_checkpoint_modified": false,
+  "decoder_artifact_modified": false,
+  "interpretation": {
+    "mean_content_matches_native": "consistent with slot-content/XY bypass; does not establish causality of shortcut alone",
+    "mean_content_worse_but_shuffle_not_worse": "H pooling/decoder relation ambiguous; native partition not validated by reconstruction",
+    "random_to_warm": "reveals whether32 decoder updates strengthen partition sensitivity; cannot alone prove undertraining"
+  },
+  "decision_limits": [
+    "Do not relax SW0130 guard or restart failed attempt",
+    "No segmentation/gating/scaling claim from this diagnostic",
+    "No additional warmup or lambda selection in this experiment",
+    "Subsequent model hypothesis must be registered separately"
+  ],
+  "gpu_policy": "exclusive lease, no existing compute PID and memory<=512MiB; stop own task if foreign owner appears"
+}
