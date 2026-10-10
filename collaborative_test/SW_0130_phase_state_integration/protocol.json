@@ -1,0 +1,48 @@
+{
+  "experiment": "SW0130_phase_state_integration",
+  "status": "prospective_adapter_and_protocol_only",
+  "implementation_scope": "Opt-in wrapper around a strictly loaded SW0097 source core; shared production modules remain unchanged.",
+  "hypothesis": "Using the native continuous phase gate as a dendritic and membrane state-integration signal may improve binding beyond a same-capacity constant-integration control.",
+  "source": {
+    "experiment": "SW0097_graph_adaptation",
+    "model_seed_by_run_seed": {"0": 0, "1": 1, "2": 2},
+    "core_sha256": {
+      "0": "36f2481dd1fa51fa29bd4dc34275a876b71d8b76fbee13ac47a0a1bfe6766fbf",
+      "1": "76f379d5a7e4cd9d12fdf0b701f3dd9dbbf28b5eea270a9cee2d30d87b4dad98",
+      "2": "798ad3e9d4bf837b1bbeb1bd7c13900df511b5c76f5736d2b9f8b973d7fa5661"
+    },
+    "encoder": "The registered shared SW0097 input encoder and preprocessing statistics; validate their registered SHA256 values before use.",
+    "shuffle_seed": "117 + model seed",
+    "training_ids": 4096,
+    "source_updates": 256
+  },
+  "arms": {
+    "phase": {"integration_signal": "native continuous gate g_t"},
+    "constant": {"integration_signal": 0.5},
+    "shared": "Both arms use the same native carrier, graph, Kuramoto update, gate hold predicate, emitted spike S=g*E, readout, objective, paired initialization, and data order."
+  },
+  "adapter": {
+    "components": 4,
+    "fold_order": "batch-major rows with component index row % 4",
+    "new_parameters": {"a_d": "four zeros", "a_m": "four zeros", "b": "four zeros"},
+    "threshold": "nu_d = 0.06 * exp(b_d)",
+    "dendrite": "h_c = sigmoid(tau_n)*h_prev + (1-sigmoid(tau_n))*native_dense(carrier, prev_spike); h = h_c + a_d*(u-1)*(h_c-h_prev)",
+    "membrane": "m_c = sigmoid(tau_m)*m_prev + (1-sigmoid(tau_m))*R_m*sum_d(h_d) - nu_d*prev_spike; m = m_c + a_m*(u-1)*(m_c-m_prev)",
+    "hold_and_spikes": "m=where(g==0,m_prev,m); E=native_surrogate_step(m-nu_d); S=g*E",
+    "projection": "After each optimizer step, project a_d and a_m to [0,1]; never clamp them during forward."
+  },
+  "pilot": {
+    "required_screens": "All three seeds must pass TRAIN-only zero-init parity, decoder-usage row-scramble guard, finite nonzero RGB gradient credit, and a disposable finite update before any paired training.",
+    "decoder_warmup": {"batches": 32, "batch_size": 16, "core_and_encoder": "frozen", "paired_arms": "share warmed decoder initialization and Adam moments"},
+    "training": {"updates": 256, "batch_size": 16, "unique_training_ids": 4096, "time_steps": 64, "settle_steps": 32, "shuffle_seed": "117 + model seed", "core_graph_lr": 0.00003, "encoder_lr": 0.000003, "decoder_lr": 0.0003, "integration_parameter_lr": 0.01, "joint_unique_parameter_clip": 1.0, "decoder_clip": 1.0},
+    "objective": "Native phase primary + 5*actual positive-product Q criterion + lambda*SW0106 SharedRGBDecoder hard-H assignment STE RGB reconstruction with detached 8D content; both arms receive RGB assignment credit.",
+    "lambda": {"calibration": "Once, on source97 seed0 phase initialization after decoder warmup, using first four ordered TRAIN batches and the unique joint parameter set including integration parameters.", "formula": "0.25 * median(old joint gradient norm / RGB joint gradient norm)", "reuse": "Freeze the resulting value and provenance for every seed and both arms; do not substitute SW0095/SW0106/SW0129 coefficients."},
+    "evaluation": {"ids": [1320, 1639], "count": 320, "time_steps": 1024, "settle_steps": 512, "readout": "Original actual-spike QCC, affinity threshold 0.50, minimum group size 2, largest component as background."},
+    "promotion": "For the seed1 phase/constant pilot, require phase FG-ARI above both same-seed control and source97 with positive paired-image 95% interval lower bounds before continuing to seeds0/2. Report all three metrics and preserve all outputs."
+  },
+  "claim_limits": [
+    "Passing a gradient or activity screen does not establish useful segmentation.",
+    "Interventions on a completed phase model test reliance in that model; they do not establish retrained causal necessity.",
+    "This pilot does not prove data scaling or contributions from every gating stage."
+  ]
+}
