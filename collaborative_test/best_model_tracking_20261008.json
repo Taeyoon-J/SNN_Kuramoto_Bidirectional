@@ -1265,15 +1265,49 @@
   },
   "latest_soft_partition_rgb": {
     "experiment": "SW0133",
-    "status": "seed1_three_arm_joint_training_started",
+    "status": "seed1_phase_live_evaluated_controls_running",
     "supervisor_pid": 2351983,
     "first_child_pid": 2352578,
     "first_gpu": 0,
     "source_preflights": "all3 canonical validation passed",
     "training_evaluation_tasks": 6,
-    "result": null,
+    "result": "partial single-seed one-arm only",
     "promotion": false,
     "scope": "pilot tests assignment credit and phase-conditioned integration; no all-gating or scaling proof",
-    "evidence": "SW_0133_soft_partition_rgb/pilot_launch_review_20261009.json"
+    "evidence": "SW_0133_soft_partition_rgb/results_archive/phase_live_evaluation_completed_20261009/summary.json",
+    "phase_live_seed1_metrics": {
+      "fg_ari": 0.7452447046524056,
+      "foreground_iou": 0.599191152353397,
+      "matched_object_iou": 0.5853154885318113
+    },
+    "phase_live_vs_source97_seed1": {
+      "fg_ari": {
+        "candidate_mean": 0.7452447046524056,
+        "reference_mean": 0.742658188014352,
+        "mean_delta": 0.002586516638053608,
+        "paired_image_ci95": [
+          -0.004810502205714696,
+          0.009568967780436933
+        ]
+      },
+      "foreground_iou": {
+        "candidate_mean": 0.599191152353397,
+        "reference_mean": 0.59028319942393,
+        "mean_delta": 0.008907952929466917,
+        "paired_image_ci95": [
+          -0.0002789644556809135,
+          0.019023147354022916
+        ]
+      },
+      "matched_object_iou": {
+        "candidate_mean": 0.5853154885318113,
+        "reference_mean": 0.5849640428623182,
+        "mean_delta": 0.00035144566949302654,
+        "paired_image_ci95": [
+          -0.00847975183853252,
+          0.008983451746954167
+        ]
+      }
+    }
   }
 }
