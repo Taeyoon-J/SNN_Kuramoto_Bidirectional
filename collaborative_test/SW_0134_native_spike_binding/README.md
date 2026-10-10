@@ -1,7 +1,13 @@
 # SW0134 native-spike competitive binding
 
-Prospective model preparation; no server training or evaluation has started.
-The unchanged SW0133 pilot must finish before this experiment is launched.
+The scientific code bundle has been deployed with exact file/dependency hashes.
+Independent local and server CPU suites both passed 13 tests, including real
+throwaway optimizer updates with source-shaped synthetic assets for all three
+arms. Actual source checkpoint provenance was validated for seeds 0/1/2.
+Actual-source GPU preflight and main training have not started.
+The unchanged SW0133 pilot is complete; its registered expansion gate failed.
+
+See [deployment evidence](scientific_bundle_deployment_review_20261009.json).
 
 This candidate replaces QCC-seeded assignment with an explicitly adopted
 Slot Attention-style binder over complete, raw actual spike histories. The

@@ -1,18 +1,21 @@
 {
   "experiment": "SW0134_native_spike_binding",
-  "status": "review_in_progress_not_deployed",
+  "status": "scientific_bundle_deployed_preflight_queue_under_review",
   "review_date": "2026-10-09",
   "independent_local_test_result": {
-    "tests_run": 12,
+    "tests_run": 13,
     "failures": 0,
     "errors": 0,
     "command": "python -c \"import numpy; import unittest; suite=unittest.defaultTestLoader.discover('collaborative_test/SW_0134_native_spike_binding',pattern='test_*.py'); r=unittest.TextTestRunner().run(suite); raise SystemExit(not r.wasSuccessful())\"",
-    "scope": "Binder and reduced CPU rollout tests plus mocked production routing; not actual checkpoint/GPU optimizer proof"
+    "scope": "Binder, reduced CPU rollout, mocked routing, and real production disposable optimizer updates in three arms with source-shaped synthetic B1 assets; not actual checkpoint/GPU gradient proof"
   },
   "required_before_preflight_deployment": [
-    "Execute a real production disposable optimizer update with synthetic CPU assets, restoring actual Adam step-32 state for all three arms",
-    "Keep actual_frozen encoder and core in eval mode as well as disabling their gradients; verify parameters and buffers unchanged",
     "Canonical preflight validation must bind native/adapter/late parity, source assets and IDs, calibration, warm states, and disposable family-credit checks"
+  ],
+  "verified_fixes": [
+    "Real production disposable optimizer update passed for all three arms with restored actual Adam step-32 states",
+    "actual_frozen encoder and core stay in eval mode and their full state_dict parameters and buffers remain unchanged",
+    "The Windows temporary-fixture cleanup failure was corrected before deployment; local and server suites both passed all 13 tests"
   ],
   "required_before_main_training_or_endpoint_evaluation": [
     "Validate completed history and actual image order for 4096 updates over sixteen passes",
