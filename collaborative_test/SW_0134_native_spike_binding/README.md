@@ -9,6 +9,14 @@ The unchanged SW0133 pilot is complete; its registered expansion gate failed.
 
 See [deployment evidence](scientific_bundle_deployment_review_20261009.json).
 
+The separate preflight queue was subsequently deployed and launched after the
+expanded local and server suites both passed 15 tests. Supervisor PID 2427541
+was confirmed live in `/proc`. At launch observation all four GPUs had a foreign
+compute owner, so seed0 was waiting for an exclusive GPU and seeds1/2 were queued.
+The queue reserves an available GPU automatically; seeds1/2 depend on a valid
+seed0 preflight. This is a queued GPU diagnostic, not completed main training.
+See [launch and process evidence](preflight_queue_launch_20261009.json).
+
 This candidate replaces QCC-seeded assignment with an explicitly adopted
 Slot Attention-style binder over complete, raw actual spike histories. The
 native dynamics remain intact. Three matched arms will distinguish downstream

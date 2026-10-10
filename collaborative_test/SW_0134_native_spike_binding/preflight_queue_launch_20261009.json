@@ -1,0 +1,121 @@
+{
+  "experiment": "SW0134_native_spike_binding",
+  "status": "preflight_queue_live_waiting_for_exclusive_gpu",
+  "recorded_utc": "2026-10-10T03:10:34.867628+00:00",
+  "local_tests_passed": 15,
+  "server_tests_passed": 15,
+  "queue_deployment_manifest": {
+    "experiment": "SW0134",
+    "destination": "/Data0/kevinswk/patch_v2_sw",
+    "files": [
+      {
+        "path": "collaborative_test/SW_0134_native_spike_binding/preflight_queue.py",
+        "sha256": "8da17dd4a8b70a1c8e0215698a31a7f88827dcc93ada5a5ccc7cc4eac4c10364"
+      },
+      {
+        "path": "collaborative_test/SW_0134_native_spike_binding/test_preflight_queue.py",
+        "sha256": "d7b4c79369ee69a74732842b0002af5bac1e96eccb1c23f125f01f560fabf507"
+      }
+    ],
+    "dependencies": {
+      "collaborative_test/SW_0130_phase_state_integration/run.py": "92ac0032467c6bff2e31a76c66021c5e211f9402d15ff868382d71ecc807e988",
+      "collaborative_test/SW_0130_phase_state_integration/model.py": "2ba6bbe44dbbf2a5a444e724db71caafc1b9915570bfd7ab31343b86915cbd0b",
+      "collaborative_test/SW_0130_phase_state_integration/protocol.json": "8b2961387ae090f937a587274a3989892b744bce27825994aa2c514dc981d64d",
+      "collaborative_test/SW_0106_spike_partition_rgb/partition_rgb.py": "2b023a788007afd2c03c45928cb4864e7bc57204dc8c13166f2fbe6b435c7261",
+      "collaborative_test/SW_0110_xy_graph_route/run.py": "b7d4b90cbf74c8085d2a5cfc8b78a5772f77bc086240939a332f429c1ca344fd",
+      "collaborative_test/SW_0094_aligned_joint_pilot/run.py": "9f4e9046a2960e7aa53bf16d7e0663bee162b3f56a11f11d45554d79889536a3",
+      "snn_kuramoto_bidirectional/s2net_cls.py": "18313e5ee7358146703256e7e29d9846bfa60394feedba3237f2f7eac8791288",
+      "snn_kuramoto_bidirectional/graph_generator.py": "4f4c4d680a60822a5e4645eec3bbceb960846d4fac89e799076f6b4cf1bc6dde",
+      "snn_kuramoto_bidirectional/dendric_layer.py": "69d960809ff1ad73a91a7067f87f605ae69ef612be9b936e4b486cc29511dd1a",
+      "snn_kuramoto_bidirectional/membrane_layer.py": "680ad89277b60206f192123165d13eca916e5183dc71eaa443a8eeb5f4b8fac8",
+      "snn_kuramoto_bidirectional/kuramoto_layer.py": "76e61785fb19228fe4ecf6bbdfd4dc72519b9d6bd34d5f4fd9165e29c76d263e",
+      "snn_kuramoto_bidirectional/sinusoidal_gating.py": "e323a3b6472f51def23d63628fe25cc83088822ae73b5e0fcd1789884739f6c4",
+      "snn_kuramoto_bidirectional/spike_classifier.py": "2d13c15a928f503bc09239aae2153a5f1a82de77aab4b5a76d0dfe876b755181",
+      "snn_kuramoto_bidirectional/loss_function.py": "6542d084f66c07101b75869709df9302db45e0dde87b6b5945d1790daa316543",
+      "snn_kuramoto_bidirectional/gamma_initializer.py": "9b5f3e077c755738b1636b97ac9640321a5b7abf5ec85b9a12557209cf5ad50b",
+      "snn_kuramoto_bidirectional/hyperparameter.py": "bceea67a10a4533eae48ce682b23ce81330c981d687fa928cca7b9f3b97fc73e",
+      "snn_kuramoto_bidirectional/training/train_s2net_core.py": "6056ae4d98d36678ae680e868c6c40716c8b2380f6ab81437e60ce962e15efde",
+      "snn_kuramoto_bidirectional/training/train_gamma_initializer.py": "845f91d3255d1d72d2a69c432c7b559a9d29d90a4186a4821e75864af9e47d20",
+      "collaborative_test/SW_0123_adaptive_temporal_assignment/dispatcher.py": "e37dcc0777871a91593041c99f3b1bfe55cc45f88d5d5be49a2e12d0116d8574",
+      "collaborative_test/SW_0134_native_spike_binding/binder.py": "f0b63f613682e44d8ecad8a1b610bd8ea1530faa08d66e487056a4cdc17756a1",
+      "collaborative_test/SW_0134_native_spike_binding/rollout.py": "66c08404af91b50fb4cbfa63fe44650dd6a698ea669cd3d6a672dfc5c78503f3",
+      "collaborative_test/SW_0134_native_spike_binding/run.py": "90b17f9bf1e9e0865849621a2be291bd19ee90ca8d483bebb531ded0dbed4bf8",
+      "collaborative_test/SW_0134_native_spike_binding/test_binder.py": "abca7339db8acef6c079c0f58fe4810a129d625820de94e3632344bffd7ce3c1",
+      "collaborative_test/SW_0134_native_spike_binding/test_rollout.py": "cc2a15456c110762cfbb20c5f74a0944a986be2ce0e7718e246e38a0f991bb05",
+      "collaborative_test/SW_0134_native_spike_binding/test_run.py": "2e12e2206eb8238ab9551e6e55005fb87461f953bdce120c1a864059448532ae",
+      "collaborative_test/SW_0134_native_spike_binding/protocol.json": "83cb2100ff49399bc5b7420c33dc864a84cff9fcb7fe6db765aa5746c5d87b90",
+      "collaborative_test/SW_0134_native_spike_binding/README.md": "8c7c645c9ddb3075ec713820e9bb08d5a12d5a0c93a15f54657d4bb0f7ae85e6",
+      "collaborative_test/SW_0134_native_spike_binding/local_rollout_review_20261009.json": "d6488931671073467194ad7505a498ca28e7e19235fd084d92a205091707b0ef"
+    },
+    "scope": "Two new queue research files only; preserve frozen scientific payload and all data/checkpoints"
+  },
+  "launch": {
+    "status": "launched",
+    "supervisor_pid": 2427541,
+    "server_cpu_tests_passed": 15,
+    "source_contracts": [
+      {
+        "seed": 0,
+        "source_sha256": "36f2481dd1fa51fa29bd4dc34275a876b71d8b76fbee13ac47a0a1bfe6766fbf",
+        "manifest_sha256": "b57c0e5a83440dc81582d2ea9433505008041e5182c9e680c5524feff8b10ff9"
+      },
+      {
+        "seed": 1,
+        "source_sha256": "76f379d5a7e4cd9d12fdf0b701f3dd9dbbf28b5eea270a9cee2d30d87b4dad98",
+        "manifest_sha256": "241c9ea96fc3d3d2b168cb49d941e39c6751eca4436192e614760673545da38b"
+      },
+      {
+        "seed": 2,
+        "source_sha256": "798ad3e9d4bf837b1bbeb1bd7c13900df511b5c76f5736d2b9f8b973d7fa5661",
+        "manifest_sha256": "37d88664e7f8d91ed14f1089bcdaaf3b10b952ab37b7a756aace54d7e1a80cef"
+      }
+    ],
+    "log": "/tmp/kevinswk_sw0134_preflight_queue.log",
+    "main_training_started": false
+  },
+  "process_observation": {
+    "status": "running",
+    "supervisor": {
+      "pid": 2427541,
+      "alive": true,
+      "state": "State:\tS (sleeping)",
+      "argv": "/Data0/kevinswk/envs/snn/bin/python -m collaborative_test.SW_0134_native_spike_binding.preflight_queue ",
+      "cuda_visible_devices": null
+    },
+    "tasks": [
+      {
+        "task": "sw0134_preflight_s0",
+        "status": "waiting_for_exclusive_gpu",
+        "gpu": null
+      },
+      {
+        "task": "sw0134_preflight_s1",
+        "status": "queued",
+        "gpu": null
+      },
+      {
+        "task": "sw0134_preflight_s2",
+        "status": "queued",
+        "gpu": null
+      }
+    ]
+  },
+  "launch_output_sha256": "05dc907d99346354bad799930427da0f2b1236a72c3331c44e1d70139b530f35",
+  "observation_output_sha256": "7fa4c1cf0ae875768c3d61b00607954d87d200333b91c87e37d29db2375b6006",
+  "contemporaneous_gpu_evidence": {
+    "foreign_compute_pid_on_all_four_gpus": 2379699,
+    "memory_mib_gpu_0_1_2_3": [
+      3279,
+      8204,
+      8416,
+      8714
+    ],
+    "eligible_exclusive_gpus": []
+  },
+  "gpu_preflight_started": false,
+  "main_training_started": false,
+  "automatic_start_when_exclusive_gpu_available": true,
+  "source0_precedes_source1_and_source2": true,
+  "performance_result_available": false,
+  "ground_truth_used": false
+}
