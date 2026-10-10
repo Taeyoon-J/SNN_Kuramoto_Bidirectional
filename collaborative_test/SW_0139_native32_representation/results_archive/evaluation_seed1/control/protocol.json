@@ -1,0 +1,45 @@
+{
+  "experiment": "SW0139_native32_representation",
+  "status": "predictions_complete",
+  "seed": 1,
+  "arm": "control",
+  "image_ids": [
+    1320,
+    1639
+  ],
+  "count": 320,
+  "prediction_shape": [
+    320,
+    32,
+    32
+  ],
+  "steps": 1024,
+  "settle": 512,
+  "readout": {
+    "type": "original_native_actual_spike_product_QCC",
+    "threshold": 0.5,
+    "min_group_size": 8,
+    "background": "largest connected component"
+  },
+  "checkpoint_sha256": "8a1c006fcc3410eab0eb4d2d26c0260228f9eff47132bd21d7fcc2e59403ac83",
+  "training_manifest_sha256": "51e318e24242fc5f5c3f83780644c567be940bf28112956fd5dc7118a2748b85",
+  "source_core_sha256": "76f379d5a7e4cd9d12fdf0b701f3dd9dbbf28b5eea270a9cee2d30d87b4dad98",
+  "prediction_sha256": "13df3479c20fdd5c0a9e0e188427735bc5415819efee4f425e19dd5871be146c",
+  "implementation_fingerprint": {
+    "collaborative_test/SW_0139_native32_representation/protocol.json": "fd90652b593817176e816ccfdb29630ed5d0a6f6fa880716c70a5007f0d064d1",
+    "collaborative_test/SW_0139_native32_representation/model.py": "e1733469c8944687575bd0a48bb55ae67df8b83714f81642f308b98f150f00ae",
+    "collaborative_test/SW_0139_native32_representation/run.py": "6d323bdb38e130ebe071cc7d178667258bfe5f4c9d16c88215281263f95bdaa4",
+    "collaborative_test/SW_0139_native32_representation/evaluate.py": "564a9ca999f0bc6197b66f9f4501cf11d98563f3cbbbf40ae760a1e2c4ad22be",
+    "collaborative_test/SW_0135_native32_spike_binding/foundation.py": "9c241cacf1479c339fa56376b881672535c8d7ac4966a7ddff3b4b47f24cb867",
+    "collaborative_test/SW_0135_native32_spike_binding/resolution.py": "dd98e62c48e6260e4bd1ba36f0f9a8ff2c6ecf7ade53e0f5780849d3bae49264",
+    "collaborative_test/SW_0136_native32_transfer/evaluate.py": "1c2846b69fb4bc936bf06723fc9f1b4c12f6632a02aff7e40c1e21a28b7a30ea",
+    "collaborative_test/SW_0137_native32_source_qcc/run.py": "2498629d119d73d7e1ae06d359e99dda87355c8a577951fbf5b1af28570de7d2",
+    "collaborative_test/SW_0130_phase_state_integration/run.py": "92ac0032467c6bff2e31a76c66021c5e211f9402d15ff868382d71ecc807e988",
+    "collaborative_test/SW_0134_native_spike_binding/rollout.py": "66c08404af91b50fb4cbfa63fe44650dd6a698ea669cd3d6a672dfc5c78503f3",
+    "snn_kuramoto_bidirectional/loss_function.py": "6542d084f66c07101b75869709df9302db45e0dde87b6b5945d1790daa316543",
+    "snn_kuramoto_bidirectional/spike_classifier.py": "2d13c15a928f503bc09239aae2153a5f1a82de77aab4b5a76d0dfe876b755181",
+    "snn_kuramoto_bidirectional/evaluation.py": "4a15980c9aa0248dbe0e837ad1b0b430ce26a7ab367c004d290a1272bb1025d7"
+  },
+  "ground_truth_used_for_prediction": false,
+  "optimizer_updates": 0
+}

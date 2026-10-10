@@ -1,0 +1,164 @@
+{
+  "experiment": "SW0139",
+  "status": "independently_audited",
+  "evaluation_sha256": "ad5fb7e0ae405b84fb1388a17036357def548dee5ed82507e5a15a557180194c",
+  "registered_source_Slot_evaluation_sha256": "4f36f6ce27c1928bd92fb6cb4c763ecb692eaa560b18e4d9857ca3d84612de61",
+  "seed": 1,
+  "grid": [
+    32,
+    32
+  ],
+  "means": {
+    "control": {
+      "fg_ari": 0.7261866968846841,
+      "foreground_iou": 0.5923706538915952,
+      "matched_object_iou": 0.5570058005500066
+    },
+    "context_residual": {
+      "fg_ari": 0.6666075204207582,
+      "foreground_iou": 0.6508066169176646,
+      "matched_object_iou": 0.47758104821479697
+    },
+    "source97": {
+      "fg_ari": 0.7541350949944816,
+      "foreground_iou": 0.606899549668619,
+      "matched_object_iou": 0.582200586329909
+    }
+  },
+  "paired_comparisons": {
+    "control": {
+      "source97": {
+        "fg_ari": {
+          "mean_difference": -0.027948398109797584,
+          "ci95": [
+            -0.03900533464220865,
+            -0.017387427139741223
+          ]
+        },
+        "foreground_iou": {
+          "mean_difference": -0.01452889577702397,
+          "ci95": [
+            -0.02901712094969411,
+            -0.00047226365660319917
+          ]
+        },
+        "matched_object_iou": {
+          "mean_difference": -0.02519478577990239,
+          "ci95": [
+            -0.036068968935305534,
+            -0.01460791905746376
+          ]
+        }
+      }
+    },
+    "context_residual": {
+      "source97": {
+        "fg_ari": {
+          "mean_difference": -0.08752757457372347,
+          "ci95": [
+            -0.10498736226897215,
+            -0.07064509903624068
+          ]
+        },
+        "foreground_iou": {
+          "mean_difference": 0.04390706724904566,
+          "ci95": [
+            0.01784772938995428,
+            0.06882128902081615
+          ]
+        },
+        "matched_object_iou": {
+          "mean_difference": -0.10461953811511202,
+          "ci95": [
+            -0.12128579885740193,
+            -0.08847239513424861
+          ]
+        }
+      },
+      "control": {
+        "fg_ari": {
+          "mean_difference": -0.05957917646392589,
+          "ci95": [
+            -0.07703783674409301,
+            -0.0428262261967118
+          ]
+        },
+        "foreground_iou": {
+          "mean_difference": 0.058435963026069626,
+          "ci95": [
+            0.03142943664728466,
+            0.0857297234519653
+          ]
+        },
+        "matched_object_iou": {
+          "mean_difference": -0.07942475233520963,
+          "ci95": [
+            -0.09538358274439139,
+            -0.0637514328766305
+          ]
+        }
+      }
+    }
+  },
+  "expansion_eligible": {
+    "context_residual": false,
+    "cross_view": false
+  },
+  "comparable_Slot_seed1_comparisons": {
+    "control": {
+      "fg_ari": {
+        "slot_seed1_mean": 0.8418192917733233,
+        "mean_difference": -0.11563259488863926,
+        "ci95": [
+          -0.1399374784042969,
+          -0.09132184718772579
+        ]
+      },
+      "foreground_iou": {
+        "slot_seed1_mean": 0.20341670897019232,
+        "mean_difference": 0.3889539449214027,
+        "ci95": [
+          0.36139072628584706,
+          0.4171091549436298
+        ]
+      },
+      "matched_object_iou": {
+        "slot_seed1_mean": 0.2221151564255643,
+        "mean_difference": 0.33489064412444225,
+        "ci95": [
+          0.3163674081552503,
+          0.35354110249337406
+        ]
+      }
+    },
+    "context_residual": {
+      "fg_ari": {
+        "slot_seed1_mean": 0.8418192917733233,
+        "mean_difference": -0.17521177135256516,
+        "ci95": [
+          -0.2007581167107939,
+          -0.14930157020707016
+        ]
+      },
+      "foreground_iou": {
+        "slot_seed1_mean": 0.20341670897019232,
+        "mean_difference": 0.4473899079474723,
+        "ci95": [
+          0.4226970689732582,
+          0.47113757434859777
+        ]
+      },
+      "matched_object_iou": {
+        "slot_seed1_mean": 0.2221151564255643,
+        "mean_difference": 0.2554658917892326,
+        "ci95": [
+          0.23605767170651493,
+          0.27490566834507635
+        ]
+      }
+    }
+  },
+  "three_seed_result": false,
+  "data_scaling_proven": false,
+  "interpretation": "Fixed-budget continuation pilot; source inherited70k lineage. Paired intervals condition on seed1. No native32 scaling claim."
+}

@@ -1675,17 +1675,37 @@
         32,
         32
       ],
-      "status": "control_context_training_complete_mask_evaluation_pending_cross_view_training",
+      "status": "control_context_partial_scored_cross_view_pending",
       "supervisor_pid": 2711934,
       "evidence": "SW_0139_native32_representation/execution_start_20261010.json",
-      "performance_result_available": false,
+      "performance_result_available": true,
       "promotion_allowed": false,
       "training_evidence": "SW_0139_native32_representation/all_arms_training_start_20261010.json",
       "completed_training_arms": [
         "control",
         "context_residual"
       ],
-      "completed_training_analysis": "SW_0139_native32_representation/results_archive/completed_control_context_training_analysis.json"
+      "completed_training_analysis": "SW_0139_native32_representation/results_archive/completed_control_context_training_analysis.json",
+      "partial_result": "SW_0139_native32_representation/results_archive/control_context_analysis.json",
+      "seed1_partial_means": {
+        "control": {
+          "fg_ari": 0.7261866968846841,
+          "foreground_iou": 0.5923706538915952,
+          "matched_object_iou": 0.5570058005500066
+        },
+        "context_residual": {
+          "fg_ari": 0.6666075204207582,
+          "foreground_iou": 0.6508066169176646,
+          "matched_object_iou": 0.47758104821479697
+        },
+        "source97": {
+          "fg_ari": 0.7541350949944816,
+          "foreground_iou": 0.606899549668619,
+          "matched_object_iou": 0.582200586329909
+        }
+      },
+      "context_expansion_allowed": false,
+      "cross_view_result_available": false
     },
     "causal_dynamics_screen": {
       "experiment": "SW0140",
