@@ -1,3 +1,5 @@
+SW0134 technical GPU-owner interruption archived; unchanged-code queue2566458 verified alive waiting for exclusive GPUs. No saved checkpoint or new score. Evidence: SW_0134_native_spike_binding/owner_interruption_recovery_20261009.json.
+
 SW0134 paired seed1 pilot launched: actual_joint, gate_joint and actual_frozen children verified live on GPUs3/2/1. Initial import failure occurred before updates and was preserved; module-entrypoint repair passed seven server CPU checks. No scores, promotion, all-gating proof or scaling proof. Evidence: SW_0134_native_spike_binding/pilot_launch_review_20261009.json.
 
 SW0133 TERMINAL: all6 train/eval stages canonically passed; scientific expansion FAILED source97 FG CI crossing0. Phase_live .745245/.599191/.585315; constant_live .737601/.589869/.582508; phase_detached .735541/.591601/.576688. Phase FG exceeds both controls with positive paired-image95CI in this seed. No all-gating/scaling proof,0/2 or70k expansion; incumbent97 unchanged. Supervisor2351983/allchildren absent. Exact26text artifacts and independently recomputed gate: SW_0133_soft_partition_rgb/results_archive/terminal_pilot_20261009/summary.json.

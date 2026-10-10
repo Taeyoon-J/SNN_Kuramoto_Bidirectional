@@ -1,5 +1,13 @@
 # SW0134 native-spike competitive binding
 
+Latest: all three pilot training children were stopped when foreign PID2517185
+entered their reserved GPUs. No checkpoint was saved; partial-update count is
+unknown. Original state, empty logs and empty output folders were preserved.
+An unchanged-code recovery queue (supervisor2566458) is verified alive and
+waiting for exclusive GPUs; it restarts from the same registered warm32
+state, not an interrupted checkpoint. No new score or scientific rejection.
+See [recovery evidence](owner_interruption_recovery_20261009.json).
+
 Pilot queue status: `running`. 3 child processes were verified live in /proc at the recorded observation.
 The initial launch failed before its first update because direct script execution
 could not import the repository package. Failure logs/state were preserved;

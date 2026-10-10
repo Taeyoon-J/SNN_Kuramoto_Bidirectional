@@ -2,15 +2,15 @@
   "status": "latest_research_incumbents_and_candidates_tracked",
   "latest_native_spike_binding_preparation": {
     "experiment": "SW0134",
-    "status": "running",
+    "status": "requeued_waiting_for_exclusive_gpus",
     "local_tests_passed": 15,
     "server_cpu_tests_passed": 15,
-    "queue_supervisor_pid": 2560569,
+    "queue_supervisor_pid": 2566458,
     "original_queue_supervisor_pid": 2427541,
     "queue_process_verified_alive": true,
     "queue_tasks": 5,
     "automatic_start_when_exclusive_gpu_available": true,
-    "queue_evidence": "SW_0134_native_spike_binding/preflight_queue_launch_20261009.json",
+    "queue_evidence": "SW_0134_native_spike_binding/owner_interruption_recovery_20261009.json",
     "actual_source_provenance_seeds": [
       0,
       1,
@@ -32,12 +32,14 @@
     "seed1_interruption": "Foreign compute PID2505974 entered GPU1; original child2505778 was terminated without report/warm artifacts",
     "first_pass_evidence": "SW_0134_native_spike_binding/results_archive/first_pass_preflights_20261009/summary.json",
     "gpu_start_evidence": "SW_0134_native_spike_binding/gpu_preflight_start_20261009.json",
-    "main_training_started": true,
+    "main_training_started": false,
     "performance_result_available": false,
     "scientific_evidence": "SW_0134_native_spike_binding/scientific_bundle_deployment_review_20261009.json",
     "incumbent_unchanged": true,
     "pilot_server_cpu_tests_passed": 7,
-    "pilot_evidence": "SW_0134_native_spike_binding/pilot_launch_review_20261009.json"
+    "pilot_evidence": "SW_0134_native_spike_binding/pilot_launch_review_20261009.json",
+    "earlier_main_training_interrupted": true,
+    "checkpoint_resume_available": false
   },
   "metrics_order": [
     "fg_ari",
@@ -1500,14 +1502,14 @@
   },
   "latest_native_spike_binding": {
     "experiment": "SW0134",
-    "status": "running",
-    "training_started": true,
+    "status": "requeued_waiting_for_exclusive_gpus",
+    "training_started": false,
     "score": null,
     "promotion": false,
     "pilot_budget_updates": 4096,
     "training_unique_ids": 4096,
     "passes": 16,
     "scope": "fresh learned binder independent ofQCC H/K; no allgating or scaling proof",
-    "evidence": "SW_0134_native_spike_binding/pilot_launch_review_20261009.json"
+    "evidence": "SW_0134_native_spike_binding/owner_interruption_recovery_20261009.json"
   }
 }

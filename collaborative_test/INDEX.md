@@ -1,3 +1,5 @@
+SW0134 technical GPU-owner interruption archived; unchanged-code queue2566458 verified alive waiting for exclusive GPUs. No saved checkpoint or new score. Evidence: SW_0134_native_spike_binding/owner_interruption_recovery_20261009.json.
+
 SW0134 paired seed1 pilot launched: actual_joint, gate_joint and actual_frozen children verified live on GPUs3/2/1. Initial import failure occurred before updates and was preserved; module-entrypoint repair passed seven server CPU checks. No scores, promotion, all-gating proof or scaling proof. Evidence: SW_0134_native_spike_binding/pilot_launch_review_20261009.json.
 
 SW0133 completed: three-arm seed1 attribution positive versus controls, source superiority unproved; registered expansion failed,97 unchanged. [Terminal evidence](SW_0133_soft_partition_rgb/results_archive/terminal_pilot_20261009/summary.json). SW0134 prospective: [native-spike learned binding](SW_0134_native_spike_binding/README.md),10CPU helper tests passed; no server134 training or scores.
