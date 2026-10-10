@@ -1,3 +1,5 @@
+SW0134 paired seed1 pilot launched: actual_joint, gate_joint and actual_frozen children verified live on GPUs3/2/1. Initial import failure occurred before updates and was preserved; module-entrypoint repair passed seven server CPU checks. No scores, promotion, all-gating proof or scaling proof. Evidence: SW_0134_native_spike_binding/pilot_launch_review_20261009.json.
+
 SW0133 completed: three-arm seed1 attribution positive versus controls, source superiority unproved; registered expansion failed,97 unchanged. [Terminal evidence](SW_0133_soft_partition_rgb/results_archive/terminal_pilot_20261009/summary.json). SW0134 prospective: [native-spike learned binding](SW_0134_native_spike_binding/README.md),10CPU helper tests passed; no server134 training or scores.
 
 SW0133: [soft-partition joint-learning pilot](SW_0133_soft_partition_rgb/README.md) - three source preflights passed; actual seed1 phase_live GPU training started; all3 arms train/eval queued, no scores yet. [Launch evidence](SW_0133_soft_partition_rgb/pilot_launch_review_20261009.json).

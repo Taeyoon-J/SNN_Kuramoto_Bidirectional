@@ -1,5 +1,12 @@
 # SW0134 native-spike competitive binding
 
+Pilot queue status: `running`. 3 child processes were verified live in /proc at the recorded observation.
+The initial launch failed before its first update because direct script execution
+could not import the repository package. Failure logs/state were preserved;
+all child stages now use Python module execution. Seven server CPU checks,
+including the actual child entrypoints with PYTHONPATH removed, passed before recovery.
+No performance result or model promotion is available. See [pilot evidence](pilot_launch_review_20261009.json).
+
 The scientific code bundle has been deployed with exact file/dependency hashes.
 Independent local and server CPU suites both passed 13 tests, including real
 throwaway optimizer updates with source-shaped synthetic assets for all three
@@ -8,7 +15,7 @@ All three actual-source GPU preflights passed canonical validation, including
 native full1024 parity, warm32 provenance and all three real disposable arms.
 Seed1 passed after a technical recovery preserving the original GPU-owner
 interruption evidence and scientific recipe. Its supervisor/child are terminal.
-Main training has not started. See [passed preflight evidence](results_archive/passed_preflights_20261009/summary.json)
+The earlier preflight-only observation preceded pilot launch. See [passed preflight evidence](results_archive/passed_preflights_20261009/summary.json)
 and [exact first-pass evidence](results_archive/first_pass_preflights_20261009/summary.json).
 The recovery preserved the original state/log hashes and scientific recipe;
 see [recovery process evidence](seed1_recovery_launch_20261009.json).

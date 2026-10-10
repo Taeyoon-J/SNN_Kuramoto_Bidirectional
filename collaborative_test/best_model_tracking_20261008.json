@@ -2,19 +2,27 @@
   "status": "latest_research_incumbents_and_candidates_tracked",
   "latest_native_spike_binding_preparation": {
     "experiment": "SW0134",
-    "status": "all_three_actual_source_gpu_preflights_canonically_passed",
+    "status": "running",
     "local_tests_passed": 15,
     "server_cpu_tests_passed": 15,
-    "queue_supervisor_pid": 2512384,
+    "queue_supervisor_pid": 2560569,
     "original_queue_supervisor_pid": 2427541,
-    "queue_process_verified_alive": false,
-    "queue_tasks": 3,
+    "queue_process_verified_alive": true,
+    "queue_tasks": 5,
     "automatic_start_when_exclusive_gpu_available": true,
     "queue_evidence": "SW_0134_native_spike_binding/preflight_queue_launch_20261009.json",
-    "actual_source_provenance_seeds": [0, 1, 2],
+    "actual_source_provenance_seeds": [
+      0,
+      1,
+      2
+    ],
     "real_disposable_optimizer_test_scope": "Synthetic source-shaped CPU assets, three arms, restored Adam32",
     "gpu_preflight_started": true,
-    "canonically_passed_preflight_seeds": [0, 1, 2],
+    "canonically_passed_preflight_seeds": [
+      0,
+      1,
+      2
+    ],
     "active_preflight_seed": null,
     "active_preflight_gpu": null,
     "active_preflight_child_pid": null,
@@ -24,10 +32,12 @@
     "seed1_interruption": "Foreign compute PID2505974 entered GPU1; original child2505778 was terminated without report/warm artifacts",
     "first_pass_evidence": "SW_0134_native_spike_binding/results_archive/first_pass_preflights_20261009/summary.json",
     "gpu_start_evidence": "SW_0134_native_spike_binding/gpu_preflight_start_20261009.json",
-    "main_training_started": false,
+    "main_training_started": true,
     "performance_result_available": false,
     "scientific_evidence": "SW_0134_native_spike_binding/scientific_bundle_deployment_review_20261009.json",
-    "incumbent_unchanged": true
+    "incumbent_unchanged": true,
+    "pilot_server_cpu_tests_passed": 7,
+    "pilot_evidence": "SW_0134_native_spike_binding/pilot_launch_review_20261009.json"
   },
   "metrics_order": [
     "fg_ari",
@@ -1490,14 +1500,14 @@
   },
   "latest_native_spike_binding": {
     "experiment": "SW0134",
-    "status": "prospectively_registered_model_and_rollout_implemented_local10tests_passed",
-    "training_started": false,
+    "status": "running",
+    "training_started": true,
     "score": null,
     "promotion": false,
     "pilot_budget_updates": 4096,
     "training_unique_ids": 4096,
     "passes": 16,
     "scope": "fresh learned binder independent ofQCC H/K; no allgating or scaling proof",
-    "evidence": "SW_0134_native_spike_binding/local_rollout_review_20261009.json"
+    "evidence": "SW_0134_native_spike_binding/pilot_launch_review_20261009.json"
   }
 }
