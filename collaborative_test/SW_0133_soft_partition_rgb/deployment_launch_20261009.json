@@ -1,0 +1,31 @@
+{
+  "experiment": "SW0133_soft_partition_rgb",
+  "status": "actual_preflight_running",
+  "local_cpu_tests_passed": 11,
+  "server_cpu_tests_passed": 11,
+  "deployed_research_files": 9,
+  "verified_runtime_dependencies": 20,
+  "all_three_source_checkpoint_contracts_verified": true,
+  "implementation_commit": "4d6afb0",
+  "supervisor": {
+    "pid": 2324977,
+    "alive_at_observation": true,
+    "verified_command": "/Data0/kevinswk/envs/snn/bin/python -m collaborative_test.SW_0133_soft_partition_rgb.preflight_queue"
+  },
+  "seed0": {
+    "child_pid": 2325089,
+    "alive_at_observation": true,
+    "stage": "preflight",
+    "physical_gpu": 0,
+    "cuda_visible_devices": "0",
+    "actual_run_command_verified": true
+  },
+  "seed1_status_at_observation": "queued",
+  "seed2_status_at_observation": "queued",
+  "training_started": false,
+  "new_evaluation_scores": false,
+  "incumbent_changed": false,
+  "gating_contribution_proven": false,
+  "data_scaling_proven": false,
+  "observation_scope": "Read-only /proc command and CUDA environment inspection after verified deployment and one-shot preflight launch. Historical startup receipt, not terminal results."
+}
