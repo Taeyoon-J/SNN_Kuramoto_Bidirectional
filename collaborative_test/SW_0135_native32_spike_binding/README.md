@@ -24,3 +24,14 @@ The previous SW0114 candidate's native32 seed0 scores were
 `.817187/.760535/.641405`, with frozen encoder and graph. They are historical
 single-seed observations, not a native32 Slot victory or this experiment's
 result. Its pooled16 result is not the primary contract for the new work.
+
+## Comparable native32 Slot baseline
+
+CPU scoring completed on2026-10-10; original16 scores reproduced for all
+three seeds from the same frozen native128 predictions. Native32 seed means
+are FG-ARI .781651972, foreground IoU .204360128 and matched-object IoU
+.203164986. All320 images are valid for each metric and seed.
+
+See results_archive/slot70k_native32_baseline.json and
+results_archive/slot32_execution_record.json. This is baseline scoring,
+not new candidate training or evidence of a native32 victory.

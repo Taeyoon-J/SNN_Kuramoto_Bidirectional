@@ -1,0 +1,57 @@
+{
+  "status": "complete",
+  "experiment": "SW0135 comparable Slot32 baseline",
+  "pid": 2648784,
+  "server_tests_passed": 7,
+  "local_tests_passed": 7,
+  "deployment_manifest": {
+    "experiment": "SW0135",
+    "scope": "Three CPU native32 Slot evaluation research files only; no model or data changes",
+    "files": [
+      {
+        "path": "collaborative_test/SW_0135_native32_spike_binding/evaluation_contract32.py",
+        "sha256": "e601280ade9a2b9545f6bbf94df22deca6ebfe123750229f6a7244105c57b1bd"
+      },
+      {
+        "path": "collaborative_test/SW_0135_native32_spike_binding/score_slot32.py",
+        "sha256": "4c8f8e5622ea16f65059bc1146277ded06411debcca503dbd573af132a916bb5"
+      },
+      {
+        "path": "collaborative_test/SW_0135_native32_spike_binding/test_evaluation_contract32.py",
+        "sha256": "dfb0de92be32d7e3c202848f8455819a585a2b445bb24d5e2c562ff55bc578eb"
+      }
+    ],
+    "production_evaluation_sha256": "4a15980c9aa0248dbe0e837ad1b0b430ce26a7ab367c004d290a1272bb1025d7"
+  },
+  "result_sha256": "4dc12cb54c3114375b8428cd250c013ff94015c4826915751f2fcb0a2204d753",
+  "scores": {
+    "slot32": {
+      "fg_ari": {
+        "per_seed": {
+          "0": 0.626661115666405,
+          "1": 0.8418192917733233,
+          "2": 0.8764755084430126
+        },
+        "three_seed_mean": 0.7816519719609136
+      },
+      "foreground_iou": {
+        "per_seed": {
+          "0": 0.2119002726173212,
+          "1": 0.20341670897019232,
+          "2": 0.19776340171215284
+        },
+        "three_seed_mean": 0.20436012776655543
+      },
+      "matched_object_iou": {
+        "per_seed": {
+          "0": 0.19100922463690687,
+          "1": 0.2221151564255643,
+          "2": 0.1963705775028791
+        },
+        "three_seed_mean": 0.2031649861884501
+      }
+    }
+  },
+  "native32_candidate_training_started": false,
+  "original16_scores_reproduced": true
+}
