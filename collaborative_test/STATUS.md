@@ -1,4 +1,6 @@
-New experiments now use native32x32=1024 patches under evaluation_contract32.md. SW0135 preparation started; native128 Slot70k predictions for all3 seeds located for matched32 scoring. Existing SW0134 remains immutable16 work; no new32 score yet.
+Current native32 status (2026-10-10): SW0137's fixed native-source baseline averages FG-ARI/foreground-IoU/object-IoU .781919/.605427/.597014 versus Slot32 .781652/.204360/.203165; its FG-ARI paired interval includes zero, so this is a close numerical comparison, not robust seed-population superiority or fresh native32 training. SW0139's completed seed1 arms average .754135 (source97), .726187 (control), .666608 (context residual), and .738505 (cross-view); neither registered expansion gate passed. SW0140 completed all19 causal-screen tasks: Kuramoto interaction, delayed gate, and dendritic history affected the fixed endpoint, while membrane-history, reset, and forced-event readouts showed no material FG gain; this does not establish that every gate is necessary. SW0141 is registered and its GPU queue is live: source0 teacher-cache generation passed, source1 cache generation is running, and eight later tasks remain queued. No SW0141 training or score is available yet; no incumbent or data-scaling claim has changed.
+
+## Earlier observations (historical; superseded by the current status above)
 
 Latest recovery observation: three actual training children verified in /proc and nvidia-smi on GPUs0/1/2. No scores yet. Evidence: SW_0134_native_spike_binding/recovery_gpu_start_20261010.json.
 
