@@ -1,0 +1,119 @@
+{
+  "experiment": "SW0133_soft_partition_rgb",
+  "status": "prospective_before_training",
+  "hypothesis": "Soft-P RGB forward may provide more useful joint assignment credit than hard-H forward with soft-P backward STE.",
+  "closed_reference": {
+    "experiment": "SW0132",
+    "decision": "registered scientific preflight failed; no joint training; preserve outcome",
+    "row_scramble_mean_excess": -0.00009807680180529133,
+    "positive_images": 20,
+    "images": 64,
+    "new_question": "Initial decoder partition usage does not alone determine whether subsequent joint learning helps. Test actual joint learning with forward-consistent assignment gradients."
+  },
+  "source": {
+    "core": "Same-seed immutable SW0097 positive_frozen",
+    "encoder": "Registered source encoder with unchanged statistics and clipping",
+    "dynamics": "Frozen SW0130 PhaseStateIntegration equations and twelve zero-initialized scalars",
+    "trainable": "Native core, graph, encoder, twelve integration scalars, RGB decoder",
+    "training_masks_or_object_counts": false
+  },
+  "assignment": {
+    "H": "Detached one-hot partition from current original actual-spike QCC; includes background and all returned foreground groups",
+    "K": "Variable original group count plus background; no GT count or invented groups",
+    "Q": "Exact production positive-clamped per-component spike synchrony product",
+    "Q0": "Q*(1-eye(N))",
+    "count": "H.sum(dim=0)",
+    "other_count": "(count.unsqueeze(0)-H).clamp_min(1)",
+    "P": "softmax(((Q0@H)/other_count)/0.10, dim=-1)",
+    "implementation": "Original SW0106 assignment_weights(q,H,credit=True)[1]",
+    "live_W": "P, without H+(P-P.detach())",
+    "limitation": "H and K selection remain non-differentiable and are recomputed each forward; K=1 has zero assignment credit"
+  },
+  "renderer": {
+    "reuse": "Frozen SW0132 render_partition geometry/content/mixture; bypass hard-H STE reconstruct_one",
+    "architecture": [10,64,64,3],
+    "activations": ["ReLU","ReLU","sigmoid"],
+    "initialization_seed": 106,
+    "content": "z=sum(W*stopgrad(gamma))/max(sumW,1); z is live through W",
+    "geometry": "W-derived centroid/axis variance with exact SW0132 intra-cell variance ((8^2-1)/12)*(2/128)^2",
+    "coordinates": "Relative pixel coordinates only; no separate absolute XY/centroid/scale/count inputs",
+    "mixture": "Repeat patch W across its8x8pixels; RGB_p=sum_k W_pk*decoder(z_k,relative_coordinate_pk)",
+    "independent_alpha_head": false,
+    "loss": "Full128x128x3 RGB MSE per image then batchmean",
+    "pixel_chunk_size": 1024,
+    "checkpoint": "Nonreentrant checkpoint of complete render-and-mixture chunk"
+  },
+  "arms": {
+    "phase_live": {"u": "native gate g", "W": "P", "joint_objective": "old+lambda*R"},
+    "constant_live": {"u": 0.5, "W": "P", "joint_objective": "old+lambda*R"},
+    "phase_detached": {"u": "native gate g", "W": "P.detach()", "joint_objective": "old only; RGB-to-core/encoder credit exactly zero"},
+    "shared": "Native carrier, hold predicate and emitted spikes remain unchanged. Same source initialization, ordered images, warmed decoder weights and Adam32 state. All decoders optimize unweighted R."
+  },
+  "old_objective": "Native phase primary+5*positive-product actual-Q criterion; unchanged priors",
+  "warmup": {
+    "updates": 32,
+    "batch": 16,
+    "frozen": "Core, encoder and integration scalars",
+    "renderer": "Soft P",
+    "shared_three_arm_decoder_and_adam32": true,
+    "row_scramble": "Record64 TRAIN deltas with exact torch seed130+ordinal; diagnostic only, no positivity eligibility cutoff in this new experiment"
+  },
+  "lambda": {
+    "source": "Fresh source0 phase_live after new soft-P warm32",
+    "batches": "First4 fixed TRAIN batches",
+    "formula": "0.25*median(old_joint_norm/R_joint_norm)",
+    "parameters": "Unique native core/graph/encoder/twelve integration scalars",
+    "reuse": "Freeze one coefficient and provenance across all seeds/arms",
+    "reuse_SW0132_lambda": false
+  },
+  "release_checks": [
+    "All3 actual source native zero-init trace/Q/H/oldloss parity at64/32 and1024/512",
+    "All three arms have identical initial P/RGB/native traces",
+    "Live arms have finite nonzero R-to-Q and registered core/encoder/integration family credit, plus finite disposable updates",
+    "Detached arm has exactly zero R-to-core/encoder credit and finite old-objective/decoder update",
+    "All source/IDs/assets/warmup/Adam32/lambda/implementation hashes bound before training"
+  ],
+  "pilot": {
+    "seed": 1,
+    "arms": ["phase_live","constant_live","phase_detached"],
+    "unique_train_images": 4096,
+    "shuffle_seed": 118,
+    "updates": 256,
+    "batch": 16,
+    "time_steps": 64,
+    "settle": 32,
+    "learning_rates": {"native_core_graph": 0.00003, "encoder": 0.000003, "integration": 0.01, "decoder": 0.0003},
+    "optimizers": "Fresh joint Adam; decoder Adam restored from shared warmup",
+    "clipping": "Unique joint union clip1 and decoder separately clip1",
+    "projection": "Project a_d/a_m to[0,1] after each step"
+  },
+  "evaluation": {
+    "ids": [1320,1639],
+    "images": 320,
+    "batch": 8,
+    "time_steps": 1024,
+    "settle": 512,
+    "classifier": "Original actual-spike hard QCC; never score training P as final mask",
+    "threshold": 0.5,
+    "minimum_group_size": 2,
+    "background": "Largest component",
+    "targets": "Unchanged modal8x8 GT",
+    "metrics": ["patch_fg_ari","patch_foreground_iou","patch_matched_object_iou"],
+    "prediction_freeze_before_GT": true,
+    "bootstrap": "NumPy RandomState133,10000 common paired320image resamples, percentile95CI for all three comparisons/metrics"
+  },
+  "expansion": {
+    "requirement": "phase_live FG-ARI exceeds same-seed source97, constant_live and phase_detached with positive paired-image95CI lower bounds against all three",
+    "report": "Every arm and all3 metrics regardless of outcome",
+    "next_seeds": [0,2],
+    "failure_action": "Close recipe; no lambda/temperature/warmup/threshold/seed retries",
+    "automatic_70k": false
+  },
+  "later_requirements": [
+    "Three-seed native-mask results strictly exceed comparable Slot in every metric",
+    "Stage interventions and retrained ablations before claiming all gating stages matter",
+    "Matched-compute and adequately-trained increasing-unique-data curves, including70k",
+    "Reserved90640..90959 remains unread until final candidates and comparison frozen"
+  ],
+  "claim_limit": "Actual soft forward gradients with H fixed do not prove differentiable group selection, useful objects, all gating contributions or data scaling"
+}
