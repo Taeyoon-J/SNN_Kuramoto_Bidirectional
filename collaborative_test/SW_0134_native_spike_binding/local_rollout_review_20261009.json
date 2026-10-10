@@ -1,0 +1,21 @@
+{
+  "status": "helper_cpu_tests_passed_no_server134_run",
+  "tests": 10,
+  "scope": "binder synthetic full256patch512 trace inputs; rollout reduced64unit/64step native CPU parity, live-tail gradient isolation; no actualsource1024B16 GPU or mask score",
+  "files": {
+    "binder.py": "f0b63f613682e44d8ecad8a1b610bd8ea1530faa08d66e487056a4cdc17756a1",
+    "test_binder.py": "abca7339db8acef6c079c0f58fe4810a129d625820de94e3632344bffd7ce3c1",
+    "rollout.py": "66c08404af91b50fb4cbfa63fe44650dd6a698ea669cd3d6a672dfc5c78503f3",
+    "test_rollout.py": "cc2a15456c110762cfbb20c5f74a0944a986be2ce0e7718e246e38a0f991bb05",
+    "protocol.json": "83cb2100ff49399bc5b7420c33dc864a84cff9fcb7fe6db765aa5746c5d87b90"
+  },
+  "root_review": [
+    "sharedmu/logscale1x1x64",
+    "source native sharedgate folding retained",
+    "native order/layout and integration equations retained",
+    "prefix boundary detaches states and delayedhistory; staticdrive/coupling live",
+    "tail0 uses no-grad for evaluation",
+    "zero-init gate test captures original reference before overwriting core history"
+  ],
+  "remaining": "Complete real source GPU preflight, main train/eval and exclusive parallel queue; these checks do not prove everygate or scaling"
+}

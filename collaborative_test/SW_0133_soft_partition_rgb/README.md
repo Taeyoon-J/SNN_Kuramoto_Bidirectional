@@ -1,3 +1,5 @@
+Completed 2026-10-09: candidate exceeded both controls on FG with positive paired-image intervals, but source97 interval crossed zero; expansion gate failed. No all-gating/scaling claim or incumbent promotion. See [terminal evidence](results_archive/terminal_pilot_20261009/summary.json). Registration text below is historical.
+
 # SW0133 genuine soft-partition RGB learning
 
 SW0132 failed its registered initial decoder-usage screen and remains closed. This new experiment tests actual joint learning with soft competitive assignments in both the RGB forward and gradient paths. Hard group seeds still come from actual spike QCC; the final evaluation classifier remains the original hard QCC.

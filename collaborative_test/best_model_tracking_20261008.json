@@ -1265,16 +1265,16 @@
   },
   "latest_soft_partition_rgb": {
     "experiment": "SW0133",
-    "status": "seed1_phase_and_constant_evaluated_detached_training",
+    "status": "completed_registered_pilot_gate_failed",
     "supervisor_pid": 2351983,
     "first_child_pid": 2352578,
     "first_gpu": 0,
     "source_preflights": "all3 canonical validation passed",
     "training_evaluation_tasks": 6,
-    "result": "partial single-seed one-arm only",
+    "result": "single-seed three-arm attribution only; no source superiority",
     "promotion": false,
     "scope": "pilot tests assignment credit and phase-conditioned integration; no all-gating or scaling proof",
-    "evidence": "SW_0133_soft_partition_rgb/results_archive/phase_live_evaluation_completed_20261009/summary.json",
+    "evidence": "SW_0133_soft_partition_rgb/results_archive/terminal_pilot_20261009/summary.json",
     "phase_live_seed1_metrics": {
       "fg_ari": 0.7452447046524056,
       "foreground_iou": 0.599191152353397,
@@ -1336,6 +1336,139 @@
           0.00971282539034013
         ]
       }
+    },
+    "all_seed1_arm_metrics": {
+      "phase_live": {
+        "fg_ari": 0.7452447046524056,
+        "foreground_iou": 0.599191152353397,
+        "matched_object_iou": 0.5853154885318113
+      },
+      "constant_live": {
+        "fg_ari": 0.7376008101416672,
+        "foreground_iou": 0.5898689026118765,
+        "matched_object_iou": 0.5825075538772606
+      },
+      "phase_detached": {
+        "fg_ari": 0.7355406714853417,
+        "foreground_iou": 0.5916013982164227,
+        "matched_object_iou": 0.5766880037282054
+      }
+    },
+    "comparisons": {
+      "source97": {
+        "fg_ari": {
+          "candidate_mean": 0.7452447046524056,
+          "reference_mean": 0.742658188014352,
+          "mean_delta": 0.002586516638053608,
+          "paired_bootstrap_95ci": [
+            -0.004810502205714696,
+            0.009568967780436933
+          ],
+          "lower_bound_positive": false
+        },
+        "foreground_iou": {
+          "candidate_mean": 0.599191152353397,
+          "reference_mean": 0.59028319942393,
+          "mean_delta": 0.008907952929466917,
+          "paired_bootstrap_95ci": [
+            -0.0002789644556809135,
+            0.019023147354022916
+          ],
+          "lower_bound_positive": false
+        },
+        "matched_object_iou": {
+          "candidate_mean": 0.5853154885318113,
+          "reference_mean": 0.5849640428623182,
+          "mean_delta": 0.00035144566949302654,
+          "paired_bootstrap_95ci": [
+            -0.00847975183853252,
+            0.008983451746954167
+          ],
+          "lower_bound_positive": false
+        }
+      },
+      "constant_live": {
+        "fg_ari": {
+          "candidate_mean": 0.7452447046524056,
+          "reference_mean": 0.7376008101416672,
+          "mean_delta": 0.007643894510738432,
+          "paired_bootstrap_95ci": [
+            0.0006497542666056757,
+            0.015005914305261063
+          ],
+          "lower_bound_positive": true
+        },
+        "foreground_iou": {
+          "candidate_mean": 0.599191152353397,
+          "reference_mean": 0.5898689026118765,
+          "mean_delta": 0.00932224974152055,
+          "paired_bootstrap_95ci": [
+            -0.0008095284271032838,
+            0.020127776527944747
+          ],
+          "lower_bound_positive": false
+        },
+        "matched_object_iou": {
+          "candidate_mean": 0.5853154885318113,
+          "reference_mean": 0.5825075538772606,
+          "mean_delta": 0.0028079346545505784,
+          "paired_bootstrap_95ci": [
+            -0.003999182186392037,
+            0.00971282539034013
+          ],
+          "lower_bound_positive": false
+        }
+      },
+      "phase_detached": {
+        "fg_ari": {
+          "candidate_mean": 0.7452447046524056,
+          "reference_mean": 0.7355406714853417,
+          "mean_delta": 0.00970403316706393,
+          "paired_bootstrap_95ci": [
+            0.0023176229272171907,
+            0.017596414856263586
+          ],
+          "lower_bound_positive": true
+        },
+        "foreground_iou": {
+          "candidate_mean": 0.599191152353397,
+          "reference_mean": 0.5916013982164227,
+          "mean_delta": 0.007589754136974325,
+          "paired_bootstrap_95ci": [
+            -0.0005743167168992847,
+            0.016843140910361064
+          ],
+          "lower_bound_positive": false
+        },
+        "matched_object_iou": {
+          "candidate_mean": 0.5853154885318113,
+          "reference_mean": 0.5766880037282054,
+          "mean_delta": 0.008627484803605808,
+          "paired_bootstrap_95ci": [
+            -0.00042051916913517196,
+            0.017879865532886847
+          ],
+          "lower_bound_positive": false
+        }
+      }
+    },
+    "checks": {
+      "phase_fg_exceeds_source97": true,
+      "phase_fg_exceeds_constant_live": true,
+      "phase_fg_exceeds_phase_detached": true,
+      "paired_ci_lower_positive_all_three": false
     }
+  },
+  "latest_native_spike_binding": {
+    "experiment": "SW0134",
+    "status": "prospectively_registered_model_and_rollout_implemented_local10tests_passed",
+    "training_started": false,
+    "score": null,
+    "promotion": false,
+    "pilot_budget_updates": 4096,
+    "training_unique_ids": 4096,
+    "passes": 16,
+    "scope": "fresh learned binder independent ofQCC H/K; no allgating or scaling proof",
+    "evidence": "SW_0134_native_spike_binding/local_rollout_review_20261009.json"
   }
 }

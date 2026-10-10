@@ -7,8 +7,16 @@
   "training_masks_or_object_counts": false,
   "input": {
     "actual": "Raw emitted component spikes [B,4,256,512] from settled half of native1024 rollout",
-    "gate_control": "Native component gates [B,4,256,512]; retain each component, no replication of one component",
-    "excluded": ["RGB", "gamma", "theta", "absolute XY", "QCC H or K", "time averaging", "history centering"]
+    "gate_control": "Native scalar gate [B,N,T] folded exactly as source via repeat_interleave(4), stored[B,4,256,512]; shared identical component rows are intentional",
+    "excluded": [
+      "RGB",
+      "gamma",
+      "theta",
+      "absolute XY",
+      "QCC H or K",
+      "time averaging",
+      "history centering"
+    ]
   },
   "binder": {
     "mechanism": "Explicit Slot Attention-style competitive binding; no novelty claim for slot algorithm",
@@ -23,8 +31,17 @@
   },
   "decoder": {
     "initialization_seed": 106,
-    "shared_mlp": [66,64,64,3],
-    "activations": ["ReLU","ReLU","sigmoid"],
+    "shared_mlp": [
+      66,
+      64,
+      64,
+      3
+    ],
+    "activations": [
+      "ReLU",
+      "ReLU",
+      "sigmoid"
+    ],
     "inputs": "Slot64 latent and live P-derived relative pixel XY; SW0132 centroid/variance with exact intra-cell variance",
     "mixture": "Patch P expanded to8x8 pixels is the sole RGB mask mixture; no independent alpha head",
     "loss": "Full128x128x3 RGB MSE per image, batch mean",
@@ -64,14 +81,26 @@
     "training_images": 4096,
     "shuffle_seed": 118,
     "batch": 16,
-    "updates": 256,
-    "learning_rates": {"core_graph":0.00003,"encoder":0.000003,"integration":0.01,"head_decoder":0.0003},
+    "updates": 4096,
+    "learning_rates": {
+      "core_graph": 3e-05,
+      "encoder": 3e-06,
+      "integration": 0.01,
+      "head_decoder": 0.0003
+    },
     "gradient_clipping": "Unique joint union1; head/decoder union1 separately",
     "projection": "a_D/a_M into[0,1] after update",
-    "optimizer": "Fresh joint Adam; exact appropriate warm head/decoder Adam32"
+    "optimizer": "Fresh joint Adam; exact appropriate warm head/decoder Adam32",
+    "passes": 16,
+    "training_exposures": 65536,
+    "pass_order": "Pass0 exact source order; pass_index1..15 permutation from NumPy RandomState(134000+seed*100+pass_index); record each actualID order SHA",
+    "endpoint": "Final4096 only; no intermediate validation masks, checkpoint selection or scientific early stop"
   },
   "evaluation": {
-    "ids": [1320,1639],
+    "ids": [
+      1320,
+      1639
+    ],
     "images": 320,
     "batch": 8,
     "time_steps": 1024,
@@ -79,12 +108,19 @@
     "primary": "Argmax learned P masks; largest hard slot background, ties first occupied patch then slot index; canonical foreground IDs by first occupied patch",
     "secondary": "Original actual-spike QCC .50/minFG2/largest-component background on same backbone; cannot replace failed primary",
     "ground_truth": "Unchanged modal8x8 pixel vote on native128 instance masks, min-ID tie",
-    "metrics": ["patch_fg_ari","patch_foreground_iou","patch_matched_object_iou"],
+    "metrics": [
+      "patch_fg_ari",
+      "patch_foreground_iou",
+      "patch_matched_object_iou"
+    ],
     "prediction_freeze_before_GT": true,
     "bootstrap": "RandomState134,10000 common paired image resamples",
     "expansion": "Primary actual_joint FG strictly above source97,gate_joint,actual_frozen AND positive paired95% lower bounds for all three comparisons",
-    "failed_recipe": "Close without slot/temperature/decoder/LR sweeps",
-    "reserved_ids_unread": [90640,90959]
+    "failed_recipe": "Close this fixed16-pass budget recipe without slot/temperature/decoder/LR sweeps; failure does not disprove binder architecture at all training budgets",
+    "reserved_ids_unread": [
+      90640,
+      90959
+    ]
   },
   "release_checks": [
     "Strict checkpoint/data/implementation fingerprints",
