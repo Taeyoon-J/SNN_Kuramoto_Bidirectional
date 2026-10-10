@@ -4,7 +4,7 @@ The scientific code bundle has been deployed with exact file/dependency hashes.
 Independent local and server CPU suites both passed 13 tests, including real
 throwaway optimizer updates with source-shaped synthetic assets for all three
 arms. Actual source checkpoint provenance was validated for seeds 0/1/2.
-Actual-source GPU preflight and main training have not started.
+Actual-source seed0 GPU preflight has started; main training has not started.
 The unchanged SW0133 pilot is complete; its registered expansion gate failed.
 
 See [deployment evidence](scientific_bundle_deployment_review_20261009.json).
@@ -16,6 +16,12 @@ compute owner, so seed0 was waiting for an exclusive GPU and seeds1/2 were queue
 The queue reserves an available GPU automatically; seeds1/2 depend on a valid
 seed0 preflight. This is a queued GPU diagnostic, not completed main training.
 See [launch and process evidence](preflight_queue_launch_20261009.json).
+
+The queue subsequently reserved GPU0 and started seed0 child PID2483147.
+Both that child and supervisor PID2427541 were confirmed live in `/proc`.
+See [actual GPU start evidence](gpu_preflight_start_20261009.json). Seeds1/2
+remain dependent on a canonically valid seed0 result; no performance result
+or model promotion is implied by this technical diagnostic.
 
 This candidate replaces QCC-seeded assignment with an explicitly adopted
 Slot Attention-style binder over complete, raw actual spike histories. The

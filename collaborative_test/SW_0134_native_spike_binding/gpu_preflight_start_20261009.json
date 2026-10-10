@@ -1,0 +1,28 @@
+{
+  "experiment": "SW0134_native_spike_binding",
+  "status": "actual_source_seed0_gpu_preflight_started",
+  "seed": 0,
+  "physical_gpu": 0,
+  "supervisor_pid": 2427541,
+  "child_pid": 2483147,
+  "process_evidence": {
+    "supervisor_proc_alive": true,
+    "child_proc_alive": true,
+    "child_proc_state": "R (running)",
+    "child_cuda_visible_devices": "0",
+    "child_command": "/Data0/kevinswk/envs/snn/bin/python /Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0134_native_spike_binding/run.py --stage preflight --seed 0 --device cuda:0 --output /Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0134_native_spike_binding/results_archive/preflight_seed0.json"
+  },
+  "run_sha256": "90b17f9bf1e9e0865849621a2be291bd19ee90ca8d483bebb531ded0dbed4bf8",
+  "source_core_sha256": "36f2481dd1fa51fa29bd4dc34275a876b71d8b76fbee13ac47a0a1bfe6766fbf",
+  "other_seeds": {"seed1": "queued_depends_on_valid_seed0", "seed2": "queued_depends_on_valid_seed0"},
+  "preflight_scope": [
+    "Exact native/adapter/late dynamics parity on actual cached source B16 at T64 and T1024",
+    "Native actual/gate readout warm32 and fresh source0 lambda calibration",
+    "Actual joint, gate joint, and frozen-source disposable updates using real TRAIN assets"
+  ],
+  "main_training_started": false,
+  "preflight_completed": false,
+  "performance_result_available": false,
+  "ground_truth_used": false,
+  "incumbent_changed": false
+}
