@@ -1,0 +1,52 @@
+{
+  "experiment": "SW0139_native32_representation",
+  "status": "prospective_local_implementation",
+  "hypotheses": [
+    "context_residual_encoder",
+    "cross_view_temporal_correspondence"
+  ],
+  "pilot": {
+    "seed": 1,
+    "source": "Same-seed strict-mapped SW0097 native32 checkpoint and encoder.",
+    "ids": "Same registered 4096 source-ordered training IDs, source shuffle seed 118.",
+    "logical_batch": 16,
+    "microbatch": 4,
+    "updates": 256,
+    "rollout": {"steps": 1024, "settle": 512, "live_tail": 64},
+    "ground_truth_used_for_training": false,
+    "optimizer": "Fresh Adam; one unique-union clip at 1.0 and one step per logical batch.",
+    "learning_rates": {"encoder": 0.000003, "graph": 0.00003, "context_adapter": 0.0003}
+  },
+  "common_objective": {
+    "description": "Unchanged SW0135 native32 source phase-primary + 5*actual-spike positive-product Q objective, coherence coefficient 1.0 and registered density prior.",
+    "control": "Train source encoder and native learned graph only.",
+    "context_candidate": "Add the registered zero-output multiscale context residual encoder; no added RGB loss, labels, or object counts.",
+    "cross_view_candidate": "Original source encoder and graph with canonical old objective plus lambda times symmetric cross-view temporal InfoNCE."
+  },
+  "context_residual": {
+    "input": "Registered clipped standardized [B,8,126,126] feature map.",
+    "branches": [
+      {"channels": 16, "kernel": 3, "dilation": 1, "padding": 1},
+      {"channels": 16, "kernel": 3, "dilation": 4, "padding": 4},
+      {"channels": 16, "kernel": 3, "dilation": 16, "padding": 16},
+      {"channels": 16, "kernel": 3, "dilation": 32, "padding": 32}
+    ],
+    "fusion": "Concatenate 64 channels, GELU branches, Conv1x1 64->8 initialized exactly zero; clamp(F+residual,-3,3), then registered adaptive pooling32.",
+    "first_step": "Output projection can learn; hidden branch gradients are expected zero at exact zero-output initialization.",
+    "second_step": "Verify finite hidden-branch credit after a disposable first update."
+  },
+  "cross_view": {
+    "augmentation": "Per-image scalar x'=clamp(c*(x-.5)+.5+b,0,1); c uniform[.9,1.1], b uniform[-.03,.03]; no crop/resize/hue change.",
+    "embedding": "Raw emitted 4x512 spikes flattened to 2048 and L2-normalized with eps 1e-8; no mean-time, centering, phase, or learned projection.",
+    "negatives": "32 deterministically sampled patches from other images in the same B4 microbatch; no same-image negatives.",
+    "objective": "Symmetric two-direction InfoNCE, temperature .10, mean over patches/images.",
+    "lambda": "Source0 first four logical TRAIN batches; .25*median(accumulated old encoder+graph grad norm / accumulated contrastive encoder+graph grad norm); one frozen coefficient for the seed1 pilot."
+  },
+  "evaluation": {
+    "endpoint": "Original native32 actual-spike QCC, fixed SW0137 320-image IDs, unchanged production readout.",
+    "prediction_freeze_before_ground_truth": true,
+    "pilot_expansion": "Each candidate must exceed both mapped source1 and paired control foreground ARI with positive common-image paired 95% lower bounds before considering seeds0/2.",
+    "limits": "Seed1 is a bounded representation pilot, not a three-seed win, gate-necessity result, or fresh-initialization scaling proof."
+  },
+  "exposure_note": "Cross-view arm uses two transformed views of the same 4096 unique images (8192 image-view exposures); this is an objective-plus-augmentation intervention, not FLOP-matched training."
+}

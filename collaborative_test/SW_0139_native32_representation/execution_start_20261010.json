@@ -1,0 +1,238 @@
+{
+  "experiment": "SW0139",
+  "grid": [
+    32,
+    32
+  ],
+  "status": "GPU_preflight_and_lambda_workers_verified_live",
+  "deployment": {
+    "status": "repr32_bundle_CPU_verified_actual_source_RGB_gamma_and_optimizer_groups",
+    "tests_passed": 18,
+    "source_seed": 1,
+    "first_TRAIN_ids": [
+      68304,
+      49032,
+      70041,
+      7829
+    ],
+    "source_core_sha256": "76f379d5a7e4cd9d12fdf0b701f3dd9dbbf28b5eea270a9cee2d30d87b4dad98",
+    "actual_gamma_shape": [
+      4,
+      8,
+      1024
+    ],
+    "zero_context_gamma_exact": true,
+    "GPU_started": false,
+    "training_started": false,
+    "manifest": {
+      "experiment": "SW0139",
+      "scope": "Native32 seed1 representation research pilot: old-only control, context encoder, cross-view spike consistency; independent exclusive GPU queue",
+      "files": [
+        {
+          "path": "collaborative_test/SW_0139_native32_representation/protocol.json",
+          "sha256": "fd90652b593817176e816ccfdb29630ed5d0a6f6fa880716c70a5007f0d064d1"
+        },
+        {
+          "path": "collaborative_test/SW_0139_native32_representation/model.py",
+          "sha256": "e1733469c8944687575bd0a48bb55ae67df8b83714f81642f308b98f150f00ae"
+        },
+        {
+          "path": "collaborative_test/SW_0139_native32_representation/run.py",
+          "sha256": "6d323bdb38e130ebe071cc7d178667258bfe5f4c9d16c88215281263f95bdaa4"
+        },
+        {
+          "path": "collaborative_test/SW_0139_native32_representation/evaluate.py",
+          "sha256": "564a9ca999f0bc6197b66f9f4501cf11d98563f3cbbbf40ae760a1e2c4ad22be"
+        },
+        {
+          "path": "collaborative_test/SW_0139_native32_representation/pilot_queue.py",
+          "sha256": "60f9606a4e231184978a6fa7888734d9eccc13d150038cf825b67922655c81ad"
+        },
+        {
+          "path": "collaborative_test/SW_0139_native32_representation/test_run.py",
+          "sha256": "73014dafbae12fb714ed392cee8ca19b6b0fb33b07b1c30a08d51d6108b1269e"
+        },
+        {
+          "path": "collaborative_test/SW_0139_native32_representation/test_queue.py",
+          "sha256": "fefd53ec3185f6344b562243e8136f8808303a95001cc4e6e20b56ba7445a397"
+        }
+      ],
+      "unchanged_dependencies": {
+        "collaborative_test/SW_0130_phase_state_integration/run.py": "92ac0032467c6bff2e31a76c66021c5e211f9402d15ff868382d71ecc807e988",
+        "collaborative_test/SW_0130_phase_state_integration/model.py": "2ba6bbe44dbbf2a5a444e724db71caafc1b9915570bfd7ab31343b86915cbd0b",
+        "collaborative_test/SW_0134_native_spike_binding/rollout.py": "66c08404af91b50fb4cbfa63fe44650dd6a698ea669cd3d6a672dfc5c78503f3",
+        "collaborative_test/SW_0110_xy_graph_route/run.py": "b7d4b90cbf74c8085d2a5cfc8b78a5772f77bc086240939a332f429c1ca344fd",
+        "collaborative_test/SW_0094_aligned_joint_pilot/run.py": "9f4e9046a2960e7aa53bf16d7e0663bee162b3f56a11f11d45554d79889536a3",
+        "snn_kuramoto_bidirectional/s2net_cls.py": "18313e5ee7358146703256e7e29d9846bfa60394feedba3237f2f7eac8791288",
+        "snn_kuramoto_bidirectional/graph_generator.py": "4f4c4d680a60822a5e4645eec3bbceb960846d4fac89e799076f6b4cf1bc6dde",
+        "snn_kuramoto_bidirectional/loss_function.py": "6542d084f66c07101b75869709df9302db45e0dde87b6b5945d1790daa316543",
+        "snn_kuramoto_bidirectional/spike_classifier.py": "2d13c15a928f503bc09239aae2153a5f1a82de77aab4b5a76d0dfe876b755181",
+        "snn_kuramoto_bidirectional/evaluation.py": "4a15980c9aa0248dbe0e837ad1b0b430ce26a7ab367c004d290a1272bb1025d7",
+        "snn_kuramoto_bidirectional/hyperparameter.py": "bceea67a10a4533eae48ce682b23ce81330c981d687fa928cca7b9f3b97fc73e",
+        "snn_kuramoto_bidirectional/gamma_initializer.py": "9b5f3e077c755738b1636b97ac9640321a5b7abf5ec85b9a12557209cf5ad50b",
+        "snn_kuramoto_bidirectional/training/train_gamma_initializer.py": "845f91d3255d1d72d2a69c432c7b559a9d29d90a4186a4821e75864af9e47d20",
+        "snn_kuramoto_bidirectional/training/train_input_layer_generator.py": "df45612ad4e069bc645c8cf335da1ebf1dd73d73ae0b9a40de96cefa9025f38d",
+        "snn_kuramoto_bidirectional/dendric_layer.py": "69d960809ff1ad73a91a7067f87f605ae69ef612be9b936e4b486cc29511dd1a",
+        "snn_kuramoto_bidirectional/membrane_layer.py": "680ad89277b60206f192123165d13eca916e5183dc71eaa443a8eeb5f4b8fac8",
+        "snn_kuramoto_bidirectional/kuramoto_layer.py": "76e61785fb19228fe4ecf6bbdfd4dc72519b9d6bd34d5f4fd9165e29c76d263e",
+        "snn_kuramoto_bidirectional/sinusoidal_gating.py": "e323a3b6472f51def23d63628fe25cc83088822ae73b5e0fcd1789884739f6c4",
+        "collaborative_test/SW_0123_adaptive_temporal_assignment/dispatcher.py": "e37dcc0777871a91593041c99f3b1bfe55cc45f88d5d5be49a2e12d0116d8574",
+        "collaborative_test/SW_0123_adaptive_temporal_assignment/coordinator.py": "3c61428f1386c8252219b4cec306e53a9cfce41cee4f1298115e8dc1ba30ce30",
+        "collaborative_test/SW_0135_native32_spike_binding/binder.py": "38450abd18eb0db390959727b95f88f96633117be20d053870ff28ccf5dae8ac",
+        "collaborative_test/SW_0135_native32_spike_binding/resolution.py": "dd98e62c48e6260e4bd1ba36f0f9a8ff2c6ecf7ade53e0f5780849d3bae49264",
+        "collaborative_test/SW_0135_native32_spike_binding/foundation.py": "9c241cacf1479c339fa56376b881672535c8d7ac4966a7ddff3b4b47f24cb867",
+        "collaborative_test/SW_0135_native32_spike_binding/resource_probe.py": "79631fc4c38b61d26bbd9b5380796a84ff335edbb803abe7199787250effc70f",
+        "collaborative_test/SW_0135_native32_spike_binding/resource_queue.py": "216cfbf65552198caecbe64c45af3eebaae3997b2f2ddb1c4affab4c20f6a0b4",
+        "collaborative_test/SW_0135_native32_spike_binding/test_binder.py": "12e657e2ef4d195581ba320ba7ff282a1ba70cf3cd3fe411baf1dbe83700b327",
+        "collaborative_test/SW_0135_native32_spike_binding/test_resolution.py": "aacdacfe38174c198ae43f2135ff3b6b0673a123e7eb8e3e28c0bf38c6df015f",
+        "collaborative_test/SW_0135_native32_spike_binding/test_foundation.py": "c42a71064e34bc79ccf3e65ec65e779fcbde2ed8c806b500ee72cffaa1baebd6",
+        "collaborative_test/SW_0135_native32_spike_binding/test_resource_probe.py": "11262e50f7d5ed62761bcb5c5560dec59e7b660b7c4dfa068bbc61b31ba56ee2",
+        "collaborative_test/SW_0135_native32_spike_binding/test_resource_queue.py": "8673f5c922c60a2aa1ffd0710cee464413959c53e557938b81b794ef2fd85ef2",
+        "collaborative_test/SW_0135_native32_spike_binding/protocol.json": "bcea5cb37b7279c7db7e505127b7ca01a70d3a5b39b725ae6e37b6565cf29ea9",
+        "collaborative_test/SW_0135_native32_spike_binding/results_archive/resource_probe_seed0.json": "dcccd773cc303eb0bbb843b686e1bd61d9d9f998bc8f752a85f0b0b57a15445c",
+        "collaborative_test/SW_0135_native32_spike_binding/batched_resource_probe.py": "e320e19ba27bd5cd1ff808162be11852ca802aa0270126dc8039dab6296f858b",
+        "collaborative_test/SW_0135_native32_spike_binding/batched_resource_queue.py": "834f19d458594aab3e615326fc156741f9fea96f9e2b214317bbf465d4e46838",
+        "collaborative_test/SW_0135_native32_spike_binding/test_batched_resource.py": "91113588dab1e5c30369197fbedfc4631e30d82e72f3cce62d94040cd787ae1d",
+        "collaborative_test/SW_0135_native32_spike_binding/parity.py": "9aa08a7dbc7d4d48166809c6c023aada85fe6aa6c961b7df4eecf3c3da9fe83a",
+        "collaborative_test/SW_0135_native32_spike_binding/test_parity.py": "0071e6aa8949540a217edf04c4ee856761a69c1039c2d08329513d45f25ec596",
+        "collaborative_test/SW_0135_native32_spike_binding/diagnostic.py": "96ef7e4ca5f4669c5526338b38cca8c602627f2eb7cb331e54aa5dbb661e26f3",
+        "collaborative_test/SW_0135_native32_spike_binding/test_diagnostic.py": "262ac6e2d239af2e4f6d0766a9b06aaa809883529e209848096e3ff4df2372b6",
+        "collaborative_test/SW_0135_native32_spike_binding/validation_queue.py": "1f7db9a0b3f6a6ce0b99207a4448bbe2223444272f1de4e13982e74208491296",
+        "collaborative_test/SW_0135_native32_spike_binding/test_validation_queue.py": "116529e87c70b93afa9193cbf83a1a9f84dcf97a8b1349c411672cca53045036",
+        "collaborative_test/SW_0134_native_spike_binding/run.py": "90b17f9bf1e9e0865849621a2be291bd19ee90ca8d483bebb531ded0dbed4bf8",
+        "collaborative_test/SW_0134_native_spike_binding/train.py": "34fe6796b85d7a1ffb247fd74162ec3b1928b2cbab50bacb305db9a726fd21a2",
+        "collaborative_test/SW_0134_native_spike_binding/protocol.json": "83cb2100ff49399bc5b7420c33dc864a84cff9fcb7fe6db765aa5746c5d87b90",
+        "collaborative_test/SW_0134_native_spike_binding/binder.py": "f0b63f613682e44d8ecad8a1b610bd8ea1530faa08d66e487056a4cdc17756a1",
+        "collaborative_test/SW_0135_native32_spike_binding/score_slot32.py": "4c8f8e5622ea16f65059bc1146277ded06411debcca503dbd573af132a916bb5",
+        "collaborative_test/SW_0135_native32_spike_binding/evaluation_contract32.py": "e601280ade9a2b9545f6bbf94df22deca6ebfe123750229f6a7244105c57b1bd",
+        "collaborative_test/SW_0135_native32_spike_binding/results_archive/slot70k_native32_baseline.json": "4dc12cb54c3114375b8428cd250c013ff94015c4826915751f2fcb0a2204d753",
+        "trained_models/SW0134_native_spike_binding/actual_joint_seed1/manifest.json": "55ea4a98b739ecaf8d87aaab9d43dbf680ab63fd51a812822729edb37d497a34",
+        "trained_models/SW0134_native_spike_binding/actual_joint_seed1/TRAINING_COMPLETED.json": "3138b59fec9ffc4547c773d7a2761c45fab87d3f5c389d6e6e128efeb121e602",
+        "trained_models/SW0134_native_spike_binding/actual_joint_seed1/checkpoint.pt": "7bb7efcaf3640c6de3ca4ac5b8f8f265f16f6e75a2ffb24b0515862930e49beb",
+        "trained_models/SW0134_native_spike_binding/actual_joint_seed1/history.json": "cb49704e1b447dd940326cbce7276ed1bbbbb17743575da78fb7585678a27e99",
+        "trained_models/SW0134_native_spike_binding/actual_joint_seed1/optimizers.pt": "0127d0e1309bcd5322f09969d8fb80c89e16cb83ff49d29beb28cd517616b09a",
+        "trained_models/SW0134_native_spike_binding/actual_frozen_seed1/manifest.json": "41d4e3f5ee949e8fc9a298ab5fcef3bc3689363e4f384bc47201edf5899ff335",
+        "trained_models/SW0134_native_spike_binding/actual_frozen_seed1/TRAINING_COMPLETED.json": "16283de6710527894bf0d4df1e15d0bd90f13fe12872131c8eb213b06a593b3d",
+        "trained_models/SW0134_native_spike_binding/actual_frozen_seed1/checkpoint.pt": "361b426179a4eb3f2d39169398557e0b898c995afab62c68cdcb025677b783ed",
+        "trained_models/SW0134_native_spike_binding/actual_frozen_seed1/history.json": "e28d38c6422d72d50e4f81a014724c6f423ea56890346ba2146f0b028c65bb01",
+        "trained_models/SW0134_native_spike_binding/actual_frozen_seed1/optimizers.pt": "7335fc5e78bb0d56c912f808ebf87e6d82000a310a7198ae4890bc14ec57cb3e",
+        "collaborative_test/SW_0136_native32_transfer/protocol.json": "ea1f8e79255956e9f845bf09ed72ea3efabb83ef2454822815f2c1f8f21320dc",
+        "collaborative_test/SW_0136_native32_transfer/transfer.py": "a1b1101e5e0f3e06c870e66da6f0c850556417bb7fb56405063cec78e9aea2f5",
+        "collaborative_test/SW_0136_native32_transfer/evaluate.py": "1c2846b69fb4bc936bf06723fc9f1b4c12f6632a02aff7e40c1e21a28b7a30ea",
+        "collaborative_test/SW_0136_native32_transfer/transfer_queue.py": "77ddf27d94ec9b76e2e4c118526e01636fe3363032f0c5665d154f7c96e98519",
+        "collaborative_test/SW_0136_native32_transfer/test_transfer.py": "b3e217d50a536789a0914b380853ee15b5e7fe14c01f481a324cc882d3fc6ae0",
+        "collaborative_test/SW_0136_native32_transfer/test_queue.py": "8a17c9be1ddfa692d963879e42a3b494906ce71fdd2d1346b1794c3438f535ec",
+        "collaborative_test/SW_0137_native32_source_qcc/protocol.json": "498cc0f80ca4cf96eebd4dd272377ed0d1caf3581e63fd05c0be02dc170a238c",
+        "collaborative_test/SW_0137_native32_source_qcc/run.py": "2498629d119d73d7e1ae06d359e99dda87355c8a577951fbf5b1af28570de7d2",
+        "collaborative_test/SW_0137_native32_source_qcc/source_queue.py": "35e9fd5d9796cf8f7b9e258c93fb9e03b5ec96a55719789c4f7eeb1bdeca012e",
+        "collaborative_test/SW_0137_native32_source_qcc/test_run.py": "a544c2143a95b63c5c63f2b2636ecca993fbe27dc4156db5c21dc5b31bc16ff0",
+        "collaborative_test/SW_0137_native32_source_qcc/test_queue.py": "fee35db2058b43ef2a42c5a2cf9ad14501f7eef9d39819fa7e9138dc546efc1b",
+        "collaborative_test/SW_0138_native32_event_information/protocol.json": "d37210f2dc50cb85e08d2571ecd2233ffdf065c99550038dc8dc95f1525830dd",
+        "collaborative_test/SW_0138_native32_event_information/run.py": "6a24c19d8d44c9ab94bf3175d64db20efdeb51ccba2c6643dec4db8f36d1a799",
+        "collaborative_test/SW_0138_native32_event_information/event_queue.py": "2d1628a7812c68b868d436ea9b6e93a9ac3579a0d6e3b9014a177ed03dc9c147",
+        "collaborative_test/SW_0138_native32_event_information/test_run.py": "4675e32eb607e46e8b225d8529230f59882c2f1fa028c679d54d649b738c79e5",
+        "collaborative_test/SW_0138_native32_event_information/test_queue.py": "eba51a2e207081b2402aace562f1354427b987b7212b4e6043af4f778ade6689"
+      }
+    }
+  },
+  "observation": {
+    "status": "running",
+    "supervisor_pid": 2711934,
+    "tasks": {
+      "lambda_seed0": {
+        "status": "running",
+        "physical_gpu": 0,
+        "child_pid": 2711967,
+        "returncode": null,
+        "error": null,
+        "live_argv": "/Data0/kevinswk/envs/snn/bin/python -m collaborative_test.SW_0139_native32_representation.run --stage lambda --seed 0 --device cuda:0 --output /Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0139_native32_representation/results_archive/lambda_seed0.json ",
+        "log_tail": ""
+      },
+      "preflight_control_seed1": {
+        "status": "running",
+        "physical_gpu": 1,
+        "child_pid": 2711966,
+        "returncode": null,
+        "error": null,
+        "live_argv": "/Data0/kevinswk/envs/snn/bin/python -m collaborative_test.SW_0139_native32_representation.run --stage preflight --seed 1 --arm control --device cuda:0 --output /Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0139_native32_representation/results_archive/preflight_control_seed1.json ",
+        "log_tail": ""
+      },
+      "preflight_context_residual_seed1": {
+        "status": "running",
+        "physical_gpu": 2,
+        "child_pid": 2711965,
+        "returncode": null,
+        "error": null,
+        "live_argv": "/Data0/kevinswk/envs/snn/bin/python -m collaborative_test.SW_0139_native32_representation.run --stage preflight --seed 1 --arm context_residual --device cuda:0 --output /Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0139_native32_representation/results_archive/preflight_context_residual_seed1.json ",
+        "log_tail": ""
+      },
+      "preflight_cross_view_seed1": {
+        "status": "queued",
+        "physical_gpu": null,
+        "child_pid": null,
+        "returncode": null,
+        "error": null,
+        "live_argv": null
+      },
+      "train_control_seed1": {
+        "status": "queued",
+        "physical_gpu": null,
+        "child_pid": null,
+        "returncode": null,
+        "error": null,
+        "live_argv": null
+      },
+      "train_context_residual_seed1": {
+        "status": "queued",
+        "physical_gpu": null,
+        "child_pid": null,
+        "returncode": null,
+        "error": null,
+        "live_argv": null
+      },
+      "train_cross_view_seed1": {
+        "status": "queued",
+        "physical_gpu": null,
+        "child_pid": null,
+        "returncode": null,
+        "error": null,
+        "live_argv": null
+      },
+      "predict_control_seed1": {
+        "status": "queued",
+        "physical_gpu": null,
+        "child_pid": null,
+        "returncode": null,
+        "error": null,
+        "live_argv": null
+      },
+      "predict_context_residual_seed1": {
+        "status": "queued",
+        "physical_gpu": null,
+        "child_pid": null,
+        "returncode": null,
+        "error": null,
+        "live_argv": null
+      },
+      "predict_cross_view_seed1": {
+        "status": "queued",
+        "physical_gpu": null,
+        "child_pid": null,
+        "returncode": null,
+        "error": null,
+        "live_argv": null
+      },
+      "score_seed1": {
+        "status": "queued",
+        "physical_gpu": null,
+        "child_pid": null,
+        "returncode": null,
+        "error": null,
+        "live_argv": null
+      }
+    }
+  },
+  "performance_result_available": false,
+  "training_started": false,
+  "github_publication": "pending_scope_approval"
+}
