@@ -1,3 +1,5 @@
+New experiments now use native32x32=1024 patches under evaluation_contract32.md. SW0135 preparation started; native128 Slot70k predictions for all3 seeds located for matched32 scoring. Existing SW0134 remains immutable16 work; no new32 score yet.
+
 Latest recovery observation: three actual training children verified in /proc and nvidia-smi on GPUs0/1/2. No scores yet. Evidence: SW_0134_native_spike_binding/recovery_gpu_start_20261010.json.
 
 SW0134 technical GPU-owner interruption archived; unchanged-code queue2566458 verified alive waiting for exclusive GPUs. No saved checkpoint or new score. Evidence: SW_0134_native_spike_binding/owner_interruption_recovery_20261009.json.
