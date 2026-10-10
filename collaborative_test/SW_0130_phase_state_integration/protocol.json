@@ -38,6 +38,13 @@
     "objective": "Native phase primary + 5*actual positive-product Q criterion + lambda*SW0106 SharedRGBDecoder hard-H assignment STE RGB reconstruction with detached 8D content; both arms receive RGB assignment credit.",
     "lambda": {"calibration": "Once, on source97 seed0 phase initialization after decoder warmup, using first four ordered TRAIN batches and the unique joint parameter set including integration parameters.", "formula": "0.25 * median(old joint gradient norm / RGB joint gradient norm)", "reuse": "Freeze the resulting value and provenance for every seed and both arms; do not substitute SW0095/SW0106/SW0129 coefficients."},
     "evaluation": {"ids": [1320, 1639], "count": 320, "time_steps": 1024, "settle_steps": 512, "readout": "Original actual-spike QCC, affinity threshold 0.50, minimum group size 2, largest component as background."},
+    "paired_bootstrap": {
+      "draws": 10000,
+      "rng": "NumPy RandomState MT19937",
+      "seed": 130,
+      "unit": "paired validation image; same 320 sampled indices for both references and all three metrics",
+      "confidence_interval": "2.5 and 97.5 percentiles of resampled mean differences"
+    },
     "promotion": "For the seed1 phase/constant pilot, require phase FG-ARI above both same-seed control and source97 with positive paired-image 95% interval lower bounds before continuing to seeds0/2. Report all three metrics and preserve all outputs."
   },
   "claim_limits": [
