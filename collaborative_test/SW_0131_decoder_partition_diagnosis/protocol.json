@@ -10,7 +10,7 @@
   ],
   "source": "SW0097 positive_frozen same-seed source checkpoint",
   "decoder_states": [
-    "initial random construction with fixed117+seed RNG",
+    "initial random decoder reproduced by frozen SW0130 load_models: torch.manual_seed(106) inside fork_rng; identical initial decoder across seeds",
     "preserved SW0130 decoder after exactly32 warmup updates"
   ],
   "data": "same registered first64 TRAIN IDs and order from SW0130 source_contract; no validation/reserved IDs or GT",
@@ -42,5 +42,6 @@
     "No additional warmup or lambda selection in this experiment",
     "Subsequent model hypothesis must be registered separately"
   ],
-  "gpu_policy": "exclusive lease, no existing compute PID and memory<=512MiB; stop own task if foreign owner appears"
+  "gpu_policy": "exclusive lease, no existing compute PID and memory<=512MiB; stop own task if foreign owner appears",
+  "decoder_initialization_seed": 106
 }
