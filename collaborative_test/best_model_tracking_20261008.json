@@ -1196,13 +1196,17 @@
   },
   "latest_decoder_partition_diagnosis": {
     "experiment": "SW0131",
-    "status": "implementation_pending",
+    "status": "code_verified_deployment_unconfirmed",
     "training_updates": 0,
     "source": "SW0097 all3 + preserved SW0130 warmed32 decoder",
     "source_artifacts_verified": true,
     "seed0_seed1_seed2_warmup_adam_steps": 32,
     "initial_decoder_seed": 106,
     "scientific_protocol": "collaborative_test/SW_0131_decoder_partition_diagnosis/protocol.json",
-    "goal_completion_proven": false
+    "goal_completion_proven": false,
+    "focused_cpu_tests_passed": 6,
+    "whole_loop_cpu_smoke_passed": true,
+    "queue_dry_run_passed": true,
+    "gpu_diagnostic_started": false
   }
 }
