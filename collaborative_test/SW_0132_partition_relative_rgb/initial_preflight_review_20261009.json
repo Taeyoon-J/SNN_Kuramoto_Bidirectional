@@ -1,0 +1,19 @@
+{
+  "experiment": "SW0132",
+  "stage": "initial_preflight_runner_API_review",
+  "runner_snapshot_sha256": "8f1e5a675c9f3a36b1b690eeda747da32b80fd23c4ab20f79ecb470c2487eb6e",
+  "blocking_findings": [
+    "Both state-integration arms must call production _forward_with_plv with plv_source=phase; constant is not a valid PLV source",
+    "Disposable optimizer verification must bind unique joint/named union, native family/encoder/decoder/b updates, finite updated parameters and exact warm Adam32",
+    "Four-batch lambda calibration records all family norms, but must not add per-family strict positivity guards beyond registered first-batch/disposable checks"
+  ],
+  "already_verified": [
+    "Source helpers expose GAMMA_TRAIN/MANIFEST and EXPECTED_SOURCE_SHAS",
+    "FullRGB target NHWC/255 shape matches renderer",
+    "Shared model optimizer uses same core3e-5/encoder3e-6/integration.01 groups",
+    "Default source gamma dropout0 makes eval/train warmup mode nonstochastic"
+  ],
+  "implementation_owner_notified": true,
+  "server_deployed": false,
+  "GPU_screen_started": false
+}
