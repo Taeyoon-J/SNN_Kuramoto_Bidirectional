@@ -4,7 +4,10 @@ The scientific code bundle has been deployed with exact file/dependency hashes.
 Independent local and server CPU suites both passed 13 tests, including real
 throwaway optimizer updates with source-shaped synthetic assets for all three
 arms. Actual source checkpoint provenance was validated for seeds 0/1/2.
-Actual-source seed0 GPU preflight has started; main training has not started.
+Actual-source GPU preflights for seeds0/2 passed canonical validation.
+Seed1 was interrupted by a foreign GPU owner before producing report or warm
+artifacts; a separate technical recovery is being prepared. Main training has
+not started. See [exact first-pass evidence](results_archive/first_pass_preflights_20261009/summary.json).
 The unchanged SW0133 pilot is complete; its registered expansion gate failed.
 
 See [deployment evidence](scientific_bundle_deployment_review_20261009.json).

@@ -1,0 +1,87 @@
+{
+  "status": "first_pass_evidence_preserved_seed1_technical_interruption",
+  "canonical_validity": {
+    "0": true,
+    "2": true
+  },
+  "files": [
+    {
+      "path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0134_native_spike_binding/results_archive/preflight_queue_state.json",
+      "name": "preflight_queue_state.json",
+      "bytes": 7375,
+      "sha256": "9e7765016f22289d8307b51d1c3f6b97cbe79b9c352b0712cd91c62d80503ee2"
+    },
+    {
+      "path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0134_native_spike_binding/results_archive/preflight_seed0.json",
+      "name": "preflight_seed0.json",
+      "bytes": 53520,
+      "sha256": "4e3144e818e424ed3ffd2d3595d6e2b4a2806e3400338003ba2d82f137b54319"
+    },
+    {
+      "path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0134_native_spike_binding/results_archive/sw0134_preflight_s0.log",
+      "name": "sw0134_preflight_s0.log",
+      "bytes": 210,
+      "sha256": "df53f6e01811b7be1ae717b3a37b88d1e8f269eed3a496ca6b4522566e5ea998"
+    },
+    {
+      "path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0134_native_spike_binding/results_archive/preflight_seed2.json",
+      "name": "preflight_seed2.json",
+      "bytes": 53012,
+      "sha256": "fa87262fb6707f302be2b38417966e01a09a801337965b4d53c6dcc4cafb8191"
+    },
+    {
+      "path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0134_native_spike_binding/results_archive/sw0134_preflight_s2.log",
+      "name": "sw0134_preflight_s2.log",
+      "bytes": 210,
+      "sha256": "c32acfe4dd5bb69fc76fc26f571b3dc41b79e13af23ed101f04608bbfb2261de"
+    },
+    {
+      "path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0134_native_spike_binding/results_archive/sw0134_preflight_s1.log",
+      "name": "sw0134_preflight_s1.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "source1_technical_interruption": {
+    "task": {
+      "task_id": "sw0134_preflight_s1",
+      "stage": "preflight",
+      "seed": 1,
+      "depends_on": [
+        "sw0134_preflight_s0"
+      ],
+      "arm": "all_three"
+    },
+    "status": "interrupted_foreign_gpu_owner",
+    "gpu": 1,
+    "gpu_uuid": "GPU-45604115-c231-56a5-32ea-d3001e8ff243",
+    "memory_before_mib": 2,
+    "lease_path": "/tmp/kevinswk_sw0113_gpu_leases/gpu1.lock",
+    "reservation_pid": 2427541,
+    "reserved": 1791602207.7621608,
+    "argv": [
+      "/Data0/kevinswk/envs/snn/bin/python",
+      "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0134_native_spike_binding/run.py",
+      "--stage",
+      "preflight",
+      "--seed",
+      "1",
+      "--device",
+      "cuda:0",
+      "--output",
+      "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0134_native_spike_binding/results_archive/preflight_seed1.json"
+    ],
+    "log_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0134_native_spike_binding/results_archive/sw0134_preflight_s1.log",
+    "triton_cache": "/tmp/kevinswk_sw0134_triton_sw0134_preflight_s1_1791602207770",
+    "launched": 1791602207.7707143,
+    "child_pid": 2505778,
+    "started": 1791602207.7839162,
+    "foreign_owner_pids": [
+      2505974
+    ],
+    "finished": 1791602234.2743614
+  },
+  "scientific_recipe_failed": false,
+  "main_training_started": false,
+  "ground_truth_used": false
+}
