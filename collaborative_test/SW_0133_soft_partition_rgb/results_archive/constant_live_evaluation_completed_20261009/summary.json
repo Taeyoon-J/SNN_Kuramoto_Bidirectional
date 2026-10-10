@@ -1,0 +1,84 @@
+{
+  "status": "evaluation_complete",
+  "seed": 1,
+  "arm": "constant_live",
+  "canonical_validation": true,
+  "source97_evaluation_sha256": "3576ad632d1caba7d396ce65e0d094e86ff2eb9d812f8ef03d5c5e8a30a54278",
+  "comparisons": {
+    "fg_ari": {
+      "candidate_mean": 0.7376008101416672,
+      "reference_mean": 0.742658188014352,
+      "mean_delta": -0.005057377872684824,
+      "paired_image_ci95": [
+        -0.014470290964595324,
+        0.004194747479961561
+      ]
+    },
+    "foreground_iou": {
+      "candidate_mean": 0.5898689026118765,
+      "reference_mean": 0.59028319942393,
+      "mean_delta": -0.0004142968120536362,
+      "paired_image_ci95": [
+        -0.012943315434124598,
+        0.011872427016981327
+      ]
+    },
+    "matched_object_iou": {
+      "candidate_mean": 0.5825075538772606,
+      "reference_mean": 0.5849640428623182,
+      "mean_delta": -0.0024564889850575517,
+      "paired_image_ci95": [
+        -0.011823623646293942,
+        0.006707280570912074
+      ]
+    }
+  },
+  "phase_live_vs_constant_live": {
+    "fg_ari": {
+      "mean_delta": 0.007643894510738432,
+      "paired_image_ci95": [
+        0.0006497542666056757,
+        0.015005914305261063
+      ]
+    },
+    "foreground_iou": {
+      "mean_delta": 0.00932224974152055,
+      "paired_image_ci95": [
+        -0.0008095284271032838,
+        0.020127776527944747
+      ]
+    },
+    "matched_object_iou": {
+      "mean_delta": 0.0028079346545505784,
+      "paired_image_ci95": [
+        -0.003999182186392037,
+        0.00971282539034013
+      ]
+    }
+  },
+  "bootstrap_seed": 133,
+  "bootstrap_replicates": 10000,
+  "files": [
+    {
+      "name": "evaluation.json",
+      "sha256": "c8c12b9a8ac7f236f2c63e98d961bd0a242411832278b1b8c4863eedf3b9a160",
+      "bytes": 28573
+    },
+    {
+      "name": "evaluation_manifest.json",
+      "sha256": "49a6e53e0004930a291bb7367970e28add30f076080267a4a3fce2a31604253a",
+      "bytes": 2275
+    },
+    {
+      "name": "COMPLETED",
+      "sha256": "63c53d6614d3cbb37001852b5457f48d541c7ae134b7b85b4c9fab2b9da34aaf",
+      "bytes": 54
+    },
+    {
+      "name": "sw0133_eval_s1_constant_live.log",
+      "sha256": "e334c4f0f142fee54425667b08696afa2e0ddea413edd9db369884b9bb5df5a1",
+      "bytes": 315
+    }
+  ],
+  "scope": "two seed1 arms completed; detached control pending; no all-gating/scaling proof"
+}

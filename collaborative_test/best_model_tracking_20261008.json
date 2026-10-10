@@ -1265,7 +1265,7 @@
   },
   "latest_soft_partition_rgb": {
     "experiment": "SW0133",
-    "status": "seed1_phase_live_evaluated_controls_running",
+    "status": "seed1_phase_and_constant_evaluated_detached_training",
     "supervisor_pid": 2351983,
     "first_child_pid": 2352578,
     "first_gpu": 0,
@@ -1306,6 +1306,34 @@
         "paired_image_ci95": [
           -0.00847975183853252,
           0.008983451746954167
+        ]
+      }
+    },
+    "constant_live_seed1_metrics": {
+      "fg_ari": 0.7376008101416672,
+      "foreground_iou": 0.5898689026118765,
+      "matched_object_iou": 0.5825075538772606
+    },
+    "phase_live_vs_constant_live_seed1": {
+      "fg_ari": {
+        "mean_delta": 0.007643894510738432,
+        "paired_image_ci95": [
+          0.0006497542666056757,
+          0.015005914305261063
+        ]
+      },
+      "foreground_iou": {
+        "mean_delta": 0.00932224974152055,
+        "paired_image_ci95": [
+          -0.0008095284271032838,
+          0.020127776527944747
+        ]
+      },
+      "matched_object_iou": {
+        "mean_delta": 0.0028079346545505784,
+        "paired_image_ci95": [
+          -0.003999182186392037,
+          0.00971282539034013
         ]
       }
     }
