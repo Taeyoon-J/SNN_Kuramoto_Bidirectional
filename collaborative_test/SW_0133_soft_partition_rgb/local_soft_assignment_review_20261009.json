@@ -1,0 +1,17 @@
+{
+  "experiment": "SW0133_soft_partition_rgb",
+  "reviewer": "root independent source review and CPU execution",
+  "tests_passed": 4,
+  "checks": [
+    "Original SW0106 row-dependent other_count formula and soft assignment P reproduced exactly",
+    "Live RGB yields finite nonzero Q credit while gamma content remains detached",
+    "Live and detached assignment controls have identical RGB forward but only live has Q credit",
+    "Fixed-H float64 RGB directional autograd agrees with central finite difference, absolute tolerance1e-9 or relative0.002"
+  ],
+  "scope": "Synthetic256patch helper; H/K fixed within each gradient check",
+  "actual_source_preflights_passed": false,
+  "gpu_training_started": false,
+  "new_evaluation_scores": false,
+  "incumbent_changed": false,
+  "limitation": "Does not prove useful object assignments, gating contributions or data scaling"
+}
