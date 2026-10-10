@@ -1,0 +1,33 @@
+{
+    "experiment":  "SW0141_native32_source_preservation",
+    "status":  "both_training_arms_started",
+    "observed_at_utc":  "2026-10-10T12:10:36.7698042Z",
+    "supervisor_pid":  2908798,
+    "implementation_fingerprint_sha256":  "062e47d41ec96ab3f690575a3dcb1ba6db35014e97ca600fbfebcbe5ae070aff",
+    "passed_tasks":  [
+                         "source_q_cache_s0",
+                         "source_q_cache_s1",
+                         "anchor_lambda_s0",
+                         "preflight_c_only_s1",
+                         "preflight_c_plus_anchor_s1"
+                     ],
+    "training_processes":  [
+                               {
+                                   "task_id":  "train_c_only_s1",
+                                   "physical_gpu":  0,
+                                   "pid":  2926522,
+                                   "started_unix":  1791633939.483262,
+                                   "verified_live_argv":  "/Data0/kevinswk/envs/snn/bin/python /Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0141_native32_source_preservation/source_preservation_pilot/pilot.py train --arm c_only --device cuda:0 --lambda-a /Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0141_native32_source_preservation/source_preservation_pilot/lambda_anchor_source0.json --output-root /Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0141_native32_source_preservation/source_preservation_pilot/training "
+                               },
+                               {
+                                   "task_id":  "train_c_plus_anchor_s1",
+                                   "physical_gpu":  1,
+                                   "pid":  2926523,
+                                   "started_unix":  1791633939.485829,
+                                   "verified_live_argv":  "/Data0/kevinswk/envs/snn/bin/python /Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0141_native32_source_preservation/source_preservation_pilot/pilot.py train --arm c_plus_anchor --device cuda:0 --lambda-a /Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0141_native32_source_preservation/source_preservation_pilot/lambda_anchor_source0.json --output-root /Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0141_native32_source_preservation/source_preservation_pilot/training --teacher-cache /Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0141_native32_source_preservation/source_preservation_pilot/teacher_cache/source1_n4096 "
+                               }
+                           ],
+    "evaluation_complete":  false,
+    "incumbent_changed":  false,
+    "note":  "Both source caches, source0 loss calibration and both disposable GPU preflights passed before training. No new model score or three-seed/70000 native32 claim."
+}
