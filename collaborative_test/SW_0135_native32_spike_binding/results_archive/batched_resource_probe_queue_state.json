@@ -1,0 +1,53 @@
+{
+  "experiment": "SW0135_native32_spike_binding",
+  "stage": "batched_resource_probe_only",
+  "status": "batched_resource_probe_complete",
+  "supervisor_pid": 2664349,
+  "started": 1791612796.8824732,
+  "max_parallel": 1,
+  "task_count": 1,
+  "owner_dispatcher_sha256": "e37dcc0777871a91593041c99f3b1bfe55cc45f88d5d5be49a2e12d0116d8574",
+  "queue_sha256": "834f19d458594aab3e615326fc156741f9fea96f9e2b214317bbf465d4e46838",
+  "tasks": {
+    "sw0135_batched_resource_probe_seed0": {
+      "task": {
+        "task_id": "sw0135_batched_resource_probe_seed0",
+        "seed": 0,
+        "stage": "batched_resource_probe",
+        "device": "cuda:0"
+      },
+      "status": "passed",
+      "gpu": 0,
+      "gpu_uuid": "GPU-a0a7d03d-adc1-37ca-4342-328878b3657c",
+      "memory_before_mib": 16,
+      "lease_path": "/tmp/kevinswk_sw0113_gpu_leases/gpu0.lock",
+      "reservation_pid": 2664349,
+      "reserved": 1791612797.0655398,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-m",
+        "collaborative_test.SW_0135_native32_spike_binding.batched_resource_probe",
+        "--seed",
+        "0",
+        "--device",
+        "cuda:0",
+        "--output",
+        "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0135_native32_spike_binding/results_archive/batched_resource_probe_seed0.json"
+      ],
+      "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0135_native32_spike_binding/results_archive/batched_resource_probe_seed0.json",
+      "log_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0135_native32_spike_binding/results_archive/batched_resource_probe_seed0.log",
+      "triton_cache": "/tmp/kevinswk_sw0135_batched_sw0135_batched_resource_probe_seed0_1791612797072",
+      "environment": {
+        "CUDA_VISIBLE_DEVICES": "0",
+        "TRITON_CACHE_DIR": "/tmp/kevinswk_sw0135_batched_sw0135_batched_resource_probe_seed0_1791612797072"
+      },
+      "launched": 1791612797.0723407,
+      "child_pid": 2664365,
+      "started": 1791612797.079104,
+      "returncode": 0,
+      "artifact_valid": true,
+      "finished": 1791612848.9149323
+    }
+  },
+  "finished": 1791612848.921594
+}

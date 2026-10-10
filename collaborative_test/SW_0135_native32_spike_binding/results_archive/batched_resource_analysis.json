@@ -1,0 +1,81 @@
+{
+  "status": "resource_only_completed",
+  "patch_grid": [
+    32,
+    32
+  ],
+  "patch_count": 1024,
+  "artifacts_sha256": {
+    "batched_resource_probe_seed0.json": "f604293605c880fb07a2d400914d744f6201ea06c4494bd605bbe5b4d1273214",
+    "batched_resource_probe_queue_state.json": "f46c46f16507cbc08cde19b62226e2d214ec5f1e8890ba6fb58eb5115c84ba11",
+    "batched_resource_probe_seed0.log": "e864febb1b24e4e30a7f2120c1bb64089aeac2b1ff2d2adfe1420a7a26c3dc9e"
+  },
+  "ground_truth_used": false,
+  "scientific_training_admission": false,
+  "logical_batch": 16,
+  "microbatch": 4,
+  "speedup": 1.6799413168407182,
+  "logical_update_seconds": 33.85822719009593,
+  "peak_allocated_GiB": 3.2947092056274414,
+  "main4096_forecast_hours": 38.52313849184248,
+  "finite_parameter_updates": {
+    "joint": {
+      "changed_tensors": 20,
+      "tensor_count": 20,
+      "delta_l2": 0.03466181471009954,
+      "parameters_finite": true,
+      "by_family": {
+        "changed_tensors": {
+          "integration_a_d": 1,
+          "integration_a_m": 1,
+          "integration_b": 1,
+          "core_other": 1,
+          "oscillator_drive": 1,
+          "graph": 5,
+          "kuramoto": 4,
+          "dendrite": 3,
+          "membrane": 1,
+          "encoder": 2
+        },
+        "delta_l2": {
+          "integration_a_d": 0.019716471251597822,
+          "integration_a_m": 0.01994297184609514,
+          "integration_b": 0.019980939911556462,
+          "core_other": 2.9981136322021484e-05,
+          "oscillator_drive": 0.00016971417637004445,
+          "graph": 0.0003447074041787572,
+          "kuramoto": 0.003498534958020091,
+          "dendrite": 0.0016094085945820762,
+          "membrane": 0.0008726920346194658,
+          "encoder": 4.4892650103192704e-05
+        }
+      }
+    },
+    "head_decoder": {
+      "changed_tensors": 23,
+      "tensor_count": 23,
+      "delta_l2": 0.1308247047721142,
+      "parameters_finite": true,
+      "by_family": {
+        "binder": {
+          "changed_tensors": 17,
+          "tensor_count": 17,
+          "delta_l2": 0.12799855700128582,
+          "parameters_finite": true
+        },
+        "decoder": {
+          "changed_tensors": 6,
+          "tensor_count": 6,
+          "delta_l2": 0.02704575353543375,
+          "parameters_finite": true
+        }
+      }
+    }
+  },
+  "limitations": [
+    "No segmentation scores or gate usefulness established.",
+    "B4 differs numerically from B1; old-gradient norm differs about 13 percent. Review before scientific admission.",
+    "One-step timing includes initialization and cannot establish steady-state training cost.",
+    "Requires native32 parity, head warmup, fresh loss calibration and real preflight before pilot."
+  ]
+}

@@ -1,0 +1,315 @@
+{
+  "experiment": "SW0135_native32_spike_binding",
+  "status": "batched_resource_probe_complete",
+  "microbatch_images": 4,
+  "microbatch_count": 4,
+  "b1_comparison": {
+    "path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0135_native32_spike_binding/results_archive/resource_probe_seed0.json",
+    "sha256": "dcccd773cc303eb0bbb843b686e1bd61d9d9f998bc8f752a85f0b0b57a15445c",
+    "norm_comparison": {
+      "old_joint_accumulated": {
+        "b1": 3.1827530840489917,
+        "b4": 2.768134713448573,
+        "absolute_difference": 0.41461837060041873
+      },
+      "rgb_joint_accumulated": {
+        "b1": 0.0026716089022223487,
+        "b4": 0.0026374696514154146,
+        "absolute_difference": 3.413925080693412e-05
+      },
+      "rgb_joint_mean_by_family": {
+        "integration_a_d": {
+          "b1": 1.1068660046511127e-07,
+          "b4": 1.0410614043879239e-07,
+          "absolute_difference": 6.580460026318873e-09
+        },
+        "integration_a_m": {
+          "b1": 9.60934300485889e-08,
+          "b4": 8.948877970190536e-08,
+          "absolute_difference": 6.604650346683544e-09
+        },
+        "integration_b": {
+          "b1": 4.918110018261989e-07,
+          "b4": 4.834569471076851e-07,
+          "absolute_difference": 8.354054718513784e-09
+        },
+        "core_other": {
+          "b1": 0.00017783220391720533,
+          "b4": 0.00017798706539906561,
+          "absolute_difference": 1.5486148186028004e-07
+        },
+        "oscillator_drive": {
+          "b1": 0.0004815397952056192,
+          "b4": 0.0004768696271361046,
+          "absolute_difference": 4.670168069514599e-06
+        },
+        "graph": {
+          "b1": 1.7915871196290324e-05,
+          "b4": 2.530718862617062e-05,
+          "absolute_difference": 7.3913174298802945e-06
+        },
+        "kuramoto": {
+          "b1": 5.650134893085387e-05,
+          "b4": 5.662467496086345e-05,
+          "absolute_difference": 1.2332603000958156e-07
+        },
+        "dendrite": {
+          "b1": 1.1137246995013692e-05,
+          "b4": 1.1019457319169739e-05,
+          "absolute_difference": 1.1778967584395386e-07
+        },
+        "membrane": {
+          "b1": 6.997033332668294e-09,
+          "b4": 7.142079355442391e-09,
+          "absolute_difference": 1.4504602277409668e-10
+        },
+        "encoder": {
+          "b1": 0.0026211355510087865,
+          "b4": 0.0025871207232606866,
+          "absolute_difference": 3.4014827748099843e-05
+        }
+      },
+      "old_joint_mean_by_family": {
+        "integration_a_d": {
+          "b1": 0.00027732511870225395,
+          "b4": 0.0002795754307786828,
+          "absolute_difference": 2.250312076428854e-06
+        },
+        "integration_a_m": {
+          "b1": 0.00027825364599888395,
+          "b4": 0.0002808258676745469,
+          "absolute_difference": 2.572221675662962e-06
+        },
+        "integration_b": {
+          "b1": 0.0010406990906604969,
+          "b4": 0.0010092229109361413,
+          "absolute_difference": 3.1476179724355523e-05
+        },
+        "core_other": {
+          "b1": 0.17754924297332764,
+          "b4": 0.1632499396800995,
+          "absolute_difference": 0.01429930329322815
+        },
+        "oscillator_drive": {
+          "b1": 1.2329617472913228,
+          "b4": 0.8544760246264362,
+          "absolute_difference": 0.37848572266488656
+        },
+        "graph": {
+          "b1": 0.36140280959734217,
+          "b4": 0.31242842465454806,
+          "absolute_difference": 0.0489743849427941
+        },
+        "kuramoto": {
+          "b1": 0.04194795753940795,
+          "b4": 0.058795697355340085,
+          "absolute_difference": 0.016847739815932135
+        },
+        "dendrite": {
+          "b1": 0.04418184367052893,
+          "b4": 0.043916763109688825,
+          "absolute_difference": 0.0002650805608401044
+        },
+        "membrane": {
+          "b1": 8.43937622476958e-05,
+          "b4": 8.345723724820856e-05,
+          "absolute_difference": 9.365249994872489e-07
+        },
+        "encoder": {
+          "b1": 2.9058344564533214,
+          "b4": 2.6082161822151204,
+          "absolute_difference": 0.297618274238201
+        }
+      },
+      "rgb_head_decoder_by_family": {
+        "binder": {
+          "b1": 0.017504358742835797,
+          "b4": 0.01749729515676783,
+          "absolute_difference": 7.063586067966587e-06
+        },
+        "decoder": {
+          "b1": 0.014620167001181414,
+          "b4": 0.01461931698834982,
+          "absolute_difference": 8.500128315935829e-07
+        }
+      }
+    },
+    "comparison_note": "Numerical norm comparison only; reduction order differs and bitwise equality is not claimed."
+  },
+  "resource_only": true,
+  "training_admission": false,
+  "scientific_lambda": null,
+  "resource_probe_lambda": 1.0,
+  "seed": 0,
+  "source_core_sha256": "36f2481dd1fa51fa29bd4dc34275a876b71d8b76fbee13ac47a0a1bfe6766fbf",
+  "source_manifest_sha256": "b57c0e5a83440dc81582d2ea9433505008041e5182c9e680c5524feff8b10ff9",
+  "implementation_fingerprint": {
+    "collaborative_test/SW_0135_native32_spike_binding/foundation.py": "9c241cacf1479c339fa56376b881672535c8d7ac4966a7ddff3b4b47f24cb867",
+    "collaborative_test/SW_0135_native32_spike_binding/protocol.json": "bcea5cb37b7279c7db7e505127b7ca01a70d3a5b39b725ae6e37b6565cf29ea9",
+    "collaborative_test/SW_0135_native32_spike_binding/resolution.py": "dd98e62c48e6260e4bd1ba36f0f9a8ff2c6ecf7ade53e0f5780849d3bae49264",
+    "collaborative_test/SW_0135_native32_spike_binding/binder.py": "38450abd18eb0db390959727b95f88f96633117be20d053870ff28ccf5dae8ac",
+    "collaborative_test/SW_0130_phase_state_integration/run.py": "92ac0032467c6bff2e31a76c66021c5e211f9402d15ff868382d71ecc807e988",
+    "collaborative_test/SW_0130_phase_state_integration/model.py": "2ba6bbe44dbbf2a5a444e724db71caafc1b9915570bfd7ab31343b86915cbd0b",
+    "collaborative_test/SW_0134_native_spike_binding/rollout.py": "66c08404af91b50fb4cbfa63fe44650dd6a698ea669cd3d6a672dfc5c78503f3",
+    "collaborative_test/SW_0110_xy_graph_route/run.py": "b7d4b90cbf74c8085d2a5cfc8b78a5772f77bc086240939a332f429c1ca344fd",
+    "collaborative_test/SW_0094_aligned_joint_pilot/run.py": "9f4e9046a2960e7aa53bf16d7e0663bee162b3f56a11f11d45554d79889536a3",
+    "snn_kuramoto_bidirectional/s2net_cls.py": "18313e5ee7358146703256e7e29d9846bfa60394feedba3237f2f7eac8791288",
+    "snn_kuramoto_bidirectional/graph_generator.py": "4f4c4d680a60822a5e4645eec3bbceb960846d4fac89e799076f6b4cf1bc6dde",
+    "snn_kuramoto_bidirectional/loss_function.py": "6542d084f66c07101b75869709df9302db45e0dde87b6b5945d1790daa316543",
+    "snn_kuramoto_bidirectional/spike_classifier.py": "2d13c15a928f503bc09239aae2153a5f1a82de77aab4b5a76d0dfe876b755181",
+    "snn_kuramoto_bidirectional/evaluation.py": "4a15980c9aa0248dbe0e837ad1b0b430ce26a7ab367c004d290a1272bb1025d7",
+    "snn_kuramoto_bidirectional/hyperparameter.py": "bceea67a10a4533eae48ce682b23ce81330c981d687fa928cca7b9f3b97fc73e",
+    "snn_kuramoto_bidirectional/gamma_initializer.py": "9b5f3e077c755738b1636b97ac9640321a5b7abf5ec85b9a12557209cf5ad50b",
+    "snn_kuramoto_bidirectional/training/train_gamma_initializer.py": "845f91d3255d1d72d2a69c432c7b559a9d29d90a4186a4821e75864af9e47d20",
+    "snn_kuramoto_bidirectional/training/train_input_layer_generator.py": "df45612ad4e069bc645c8cf335da1ebf1dd73d73ae0b9a40de96cefa9025f38d",
+    "snn_kuramoto_bidirectional/dendric_layer.py": "69d960809ff1ad73a91a7067f87f605ae69ef612be9b936e4b486cc29511dd1a",
+    "snn_kuramoto_bidirectional/membrane_layer.py": "680ad89277b60206f192123165d13eca916e5183dc71eaa443a8eeb5f4b8fac8",
+    "snn_kuramoto_bidirectional/kuramoto_layer.py": "76e61785fb19228fe4ecf6bbdfd4dc72519b9d6bd34d5f4fd9165e29c76d263e",
+    "snn_kuramoto_bidirectional/sinusoidal_gating.py": "e323a3b6472f51def23d63628fe25cc83088822ae73b5e0fcd1789884739f6c4"
+  },
+  "rgb_assets": {
+    "train_cache_sha256": "22e220f937a4d92b8504df592ae7e956ad792b6874a2bbaa64c2d3030fbcc492",
+    "train_manifest_sha256": "2578e616478798cd0c3ceab696688a937d18c8f0c54be8c4c62bde9ebd80ddd6",
+    "validation_cache_sha256": "9bed98a5bb040b69e1821c687161b1b928495cc80d90d7a5e1fffcd631926d1e",
+    "validation_manifest_sha256": "971b24a1a945a9b9c77177dc012d9ae5e3f12966817236f3ad3f887dfa759908",
+    "encoder_source_sha256": "9b9c9c59725f872084a6c9bfae1ebbd1b89de40d18ef4f8ab6b8ec014c2ab868",
+    "feature_preprocessing_sha256": "a9ec3281b9603021c37f7c346baa6cf62513c5ce7edde867ab7eddf24b18e127"
+  },
+  "image_ids": [
+    6654,
+    40665,
+    43310,
+    46803,
+    60279,
+    63392,
+    65737,
+    30426,
+    61273,
+    35977,
+    230,
+    28080,
+    15085,
+    19171,
+    23380,
+    66871
+  ],
+  "image_id_count": 16,
+  "ground_truth_used": false,
+  "optimizer_updates": 0,
+  "resource_optimizer_steps": {
+    "joint": 1,
+    "head_decoder": 1
+  },
+  "microbatch_size": 4,
+  "logical_batch_size": 16,
+  "microbatch_seconds": [
+    10.715867332182825,
+    7.6317043993622065,
+    7.621661522891372,
+    7.6378071191720665
+  ],
+  "logical_update_seconds": 33.85822719009593,
+  "resource_forecast_seconds": {
+    "warm32": 1083.4632700830698,
+    "main4096": 138683.29857063293,
+    "combined": 139766.761840716
+  },
+  "cuda_peak_memory_bytes": {
+    "allocated": 3537667072,
+    "reserved": 4500488192
+  },
+  "gradient_norms": {
+    "old_joint_accumulated": 2.768134713448573,
+    "rgb_joint_accumulated": 0.0026374696514154146,
+    "rgb_joint_mean_by_family": {
+      "integration_a_d": 1.0410614043879239e-07,
+      "integration_a_m": 8.948877970190536e-08,
+      "integration_b": 4.834569471076851e-07,
+      "core_other": 0.00017798706539906561,
+      "oscillator_drive": 0.0004768696271361046,
+      "graph": 2.530718862617062e-05,
+      "kuramoto": 5.662467496086345e-05,
+      "dendrite": 1.1019457319169739e-05,
+      "membrane": 7.142079355442391e-09,
+      "encoder": 0.0025871207232606866
+    },
+    "old_joint_mean_by_family": {
+      "integration_a_d": 0.0002795754307786828,
+      "integration_a_m": 0.0002808258676745469,
+      "integration_b": 0.0010092229109361413,
+      "core_other": 0.1632499396800995,
+      "oscillator_drive": 0.8544760246264362,
+      "graph": 0.31242842465454806,
+      "kuramoto": 0.058795697355340085,
+      "dendrite": 0.043916763109688825,
+      "membrane": 8.345723724820856e-05,
+      "encoder": 2.6082161822151204
+    },
+    "rgb_head_decoder_by_family": {
+      "binder": 0.01749729515676783,
+      "decoder": 0.01461931698834982
+    },
+    "combined_joint_clip_preclip_norm": 2.7661783695220947,
+    "rgb_head_decoder_clip_preclip_norm": 0.0228008721023798
+  },
+  "disposable_parameter_changes": {
+    "joint": {
+      "changed_tensors": 20,
+      "tensor_count": 20,
+      "delta_l2": 0.03466181471009954,
+      "parameters_finite": true,
+      "by_family": {
+        "changed_tensors": {
+          "integration_a_d": 1,
+          "integration_a_m": 1,
+          "integration_b": 1,
+          "core_other": 1,
+          "oscillator_drive": 1,
+          "graph": 5,
+          "kuramoto": 4,
+          "dendrite": 3,
+          "membrane": 1,
+          "encoder": 2
+        },
+        "delta_l2": {
+          "integration_a_d": 0.019716471251597822,
+          "integration_a_m": 0.01994297184609514,
+          "integration_b": 0.019980939911556462,
+          "core_other": 2.9981136322021484e-05,
+          "oscillator_drive": 0.00016971417637004445,
+          "graph": 0.0003447074041787572,
+          "kuramoto": 0.003498534958020091,
+          "dendrite": 0.0016094085945820762,
+          "membrane": 0.0008726920346194658,
+          "encoder": 4.4892650103192704e-05
+        }
+      }
+    },
+    "head_decoder": {
+      "changed_tensors": 23,
+      "tensor_count": 23,
+      "delta_l2": 0.1308247047721142,
+      "parameters_finite": true,
+      "by_family": {
+        "binder": {
+          "changed_tensors": 17,
+          "tensor_count": 17,
+          "delta_l2": 0.12799855700128582,
+          "parameters_finite": true
+        },
+        "decoder": {
+          "changed_tensors": 6,
+          "tensor_count": 6,
+          "delta_l2": 0.02704575353543375,
+          "parameters_finite": true
+        }
+      }
+    }
+  },
+  "limitations": [
+    "One resource-only logical update with lambda1; not the calibrated objective.",
+    "No warmup, scientific calibration, optimizer checkpoint, or candidate training was run.",
+    "Timing forecast is linear extrapolation from this one logical batch.",
+    "Zero RGB family credit is reported diagnostically and does not constitute admission."
+  ]
+}
