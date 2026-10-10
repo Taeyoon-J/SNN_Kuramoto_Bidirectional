@@ -1,5 +1,7 @@
 # SW0134 native-spike competitive binding
 
+Latest recovery observation: three actual training children verified in /proc and nvidia-smi on GPUs0/1/2. No scores yet. Evidence: SW_0134_native_spike_binding/recovery_gpu_start_20261010.json.
+
 Latest: all three pilot training children were stopped when foreign PID2517185
 entered their reserved GPUs. No checkpoint was saved; partial-update count is
 unknown. Original state, empty logs and empty output folders were preserved.

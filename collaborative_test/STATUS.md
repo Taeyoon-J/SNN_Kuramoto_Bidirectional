@@ -1,3 +1,5 @@
+Latest recovery observation: three actual training children verified in /proc and nvidia-smi on GPUs0/1/2. No scores yet. Evidence: SW_0134_native_spike_binding/recovery_gpu_start_20261010.json.
+
 SW0134 technical GPU-owner interruption archived; unchanged-code queue2566458 verified alive waiting for exclusive GPUs. No saved checkpoint or new score. Evidence: SW_0134_native_spike_binding/owner_interruption_recovery_20261009.json.
 
 SW0134 paired seed1 pilot launched: actual_joint, gate_joint and actual_frozen children verified live on GPUs3/2/1. Initial import failure occurred before updates and was preserved; module-entrypoint repair passed seven server CPU checks. No scores, promotion, all-gating proof or scaling proof. Evidence: SW_0134_native_spike_binding/pilot_launch_review_20261009.json.
