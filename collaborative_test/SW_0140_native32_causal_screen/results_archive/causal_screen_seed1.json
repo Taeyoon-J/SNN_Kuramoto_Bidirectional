@@ -1,0 +1,1139 @@
+{
+  "experiment": "SW0140_native32_causal_screen",
+  "status": "screen_complete",
+  "seed": 1,
+  "device": "cuda:0",
+  "steps": 1024,
+  "images": 4,
+  "image_ids": [
+    68304,
+    49032,
+    70041,
+    7829
+  ],
+  "pool_rows": [
+    67664,
+    48392,
+    69401,
+    7189
+  ],
+  "ground_truth_used": false,
+  "optimizer_updates": 0,
+  "conditions": [
+    "none",
+    "kuramoto_interaction_off",
+    "delayed_gate_constant_half",
+    "dendrite_history_off",
+    "membrane_voltage_history_off",
+    "spike_reset_off",
+    "binary_events_forced_on"
+  ],
+  "condition_counts": {
+    "none": 1,
+    "interventions": 6
+  },
+  "source_core_sha256": "76f379d5a7e4cd9d12fdf0b701f3dd9dbbf28b5eea270a9cee2d30d87b4dad98",
+  "source_manifest_sha256": "241c9ea96fc3d3d2b168cb49d941e39c6751eca4436192e614760673545da38b",
+  "encoder_sha256": "9b9c9c59725f872084a6c9bfae1ebbd1b89de40d18ef4f8ab6b8ec014c2ab868",
+  "feature_preprocessing_sha256": "a9ec3281b9603021c37f7c346baa6cf62513c5ce7edde867ab7eddf24b18e127",
+  "train_rgb_sha256": "22e220f937a4d92b8504df592ae7e956ad792b6874a2bbaa64c2d3030fbcc492",
+  "implementation_fingerprint": {
+    "collaborative_test/SW_0135_native32_spike_binding/foundation.py": "9c241cacf1479c339fa56376b881672535c8d7ac4966a7ddff3b4b47f24cb867",
+    "collaborative_test/SW_0135_native32_spike_binding/protocol.json": "bcea5cb37b7279c7db7e505127b7ca01a70d3a5b39b725ae6e37b6565cf29ea9",
+    "collaborative_test/SW_0135_native32_spike_binding/resolution.py": "dd98e62c48e6260e4bd1ba36f0f9a8ff2c6ecf7ade53e0f5780849d3bae49264",
+    "collaborative_test/SW_0135_native32_spike_binding/binder.py": "38450abd18eb0db390959727b95f88f96633117be20d053870ff28ccf5dae8ac",
+    "collaborative_test/SW_0130_phase_state_integration/run.py": "92ac0032467c6bff2e31a76c66021c5e211f9402d15ff868382d71ecc807e988",
+    "collaborative_test/SW_0130_phase_state_integration/model.py": "2ba6bbe44dbbf2a5a444e724db71caafc1b9915570bfd7ab31343b86915cbd0b",
+    "collaborative_test/SW_0134_native_spike_binding/rollout.py": "66c08404af91b50fb4cbfa63fe44650dd6a698ea669cd3d6a672dfc5c78503f3",
+    "collaborative_test/SW_0110_xy_graph_route/run.py": "b7d4b90cbf74c8085d2a5cfc8b78a5772f77bc086240939a332f429c1ca344fd",
+    "collaborative_test/SW_0094_aligned_joint_pilot/run.py": "9f4e9046a2960e7aa53bf16d7e0663bee162b3f56a11f11d45554d79889536a3",
+    "snn_kuramoto_bidirectional/s2net_cls.py": "18313e5ee7358146703256e7e29d9846bfa60394feedba3237f2f7eac8791288",
+    "snn_kuramoto_bidirectional/graph_generator.py": "4f4c4d680a60822a5e4645eec3bbceb960846d4fac89e799076f6b4cf1bc6dde",
+    "snn_kuramoto_bidirectional/loss_function.py": "6542d084f66c07101b75869709df9302db45e0dde87b6b5945d1790daa316543",
+    "snn_kuramoto_bidirectional/spike_classifier.py": "2d13c15a928f503bc09239aae2153a5f1a82de77aab4b5a76d0dfe876b755181",
+    "snn_kuramoto_bidirectional/evaluation.py": "4a15980c9aa0248dbe0e837ad1b0b430ce26a7ab367c004d290a1272bb1025d7",
+    "snn_kuramoto_bidirectional/hyperparameter.py": "bceea67a10a4533eae48ce682b23ce81330c981d687fa928cca7b9f3b97fc73e",
+    "snn_kuramoto_bidirectional/gamma_initializer.py": "9b5f3e077c755738b1636b97ac9640321a5b7abf5ec85b9a12557209cf5ad50b",
+    "snn_kuramoto_bidirectional/training/train_gamma_initializer.py": "845f91d3255d1d72d2a69c432c7b559a9d29d90a4186a4821e75864af9e47d20",
+    "snn_kuramoto_bidirectional/training/train_input_layer_generator.py": "df45612ad4e069bc645c8cf335da1ebf1dd73d73ae0b9a40de96cefa9025f38d",
+    "snn_kuramoto_bidirectional/dendric_layer.py": "69d960809ff1ad73a91a7067f87f605ae69ef612be9b936e4b486cc29511dd1a",
+    "snn_kuramoto_bidirectional/membrane_layer.py": "680ad89277b60206f192123165d13eca916e5183dc71eaa443a8eeb5f4b8fac8",
+    "snn_kuramoto_bidirectional/kuramoto_layer.py": "76e61785fb19228fe4ecf6bbdfd4dc72519b9d6bd34d5f4fd9165e29c76d263e",
+    "snn_kuramoto_bidirectional/sinusoidal_gating.py": "e323a3b6472f51def23d63628fe25cc83088822ae73b5e0fcd1789884739f6c4",
+    "collaborative_test/SW_0140_native32_causal_screen/causal_rollout.py": "9854b83a3e6aa3af01c133ce1391632b22a9ebe8c9210f71f50c80b6763df97c",
+    "collaborative_test/SW_0140_native32_causal_screen/screen.py": "f99c6ecbc83df44dca77371842295cb6faa91ce71a97af6d0e9a2959544b104a",
+    "collaborative_test/SW_0140_native32_causal_screen/protocol.json": "7b6baf055617d5cc6da385db0f0ee0c3d86bf8027b261181bb0b7560c6c4ea3a"
+  },
+  "source_state_before_sha256": "04c3da2663215ce3e6b94da14b8fe747f139ce4368c249d52c153eb2152aac6b",
+  "source_state_after_sha256": "04c3da2663215ce3e6b94da14b8fe747f139ce4368c249d52c153eb2152aac6b",
+  "kuramoto_K_before": 1024.0,
+  "kuramoto_K_after": 1024.0,
+  "encoder_state_before_sha256": "a6f3d19dbb1b3b185b82371b80bf9b70c29d8a0f31020a43e7fefc35a13f29c1",
+  "encoder_state_after_sha256": "a6f3d19dbb1b3b185b82371b80bf9b70c29d8a0f31020a43e7fefc35a13f29c1",
+  "elapsed_seconds": 60.21611019317061,
+  "peak_memory_allocated_bytes": 839449600,
+  "peak_memory_reserved_bytes": 1172307968,
+  "batches": [
+    {
+      "ordinal": 0,
+      "pool_row": 67664,
+      "image_id": 68304,
+      "gamma_shape": [
+        1,
+        8,
+        1024
+      ],
+      "conditions": {
+        "none": {
+          "parity": true,
+          "diagnostics": {
+            "zero_gate_positions": 332,
+            "zero_gate_hold_positions": 332,
+            "event_transitions": 41,
+            "event_occupancy": 0.9998886585235596,
+            "natural_threshold_event_occupancy": 0.9998886585235596,
+            "emitted_spike_occupancy": 0.9998095035552979
+          }
+        },
+        "kuramoto_interaction_off": {
+          "diagnostics": {
+            "zero_gate_positions": 368,
+            "zero_gate_hold_positions": 368,
+            "event_transitions": 44,
+            "event_occupancy": 0.9999046325683594,
+            "natural_threshold_event_occupancy": 0.9999046325683594,
+            "emitted_spike_occupancy": 0.99981689453125
+          },
+          "theta": {
+            "max_abs_difference": 213.673583984375,
+            "mean_abs_difference": 14.266013145446777,
+            "changed_elements": 4194302
+          },
+          "membrane": {
+            "max_abs_difference": 3.6741936206817627,
+            "mean_abs_difference": 0.629173755645752,
+            "changed_elements": 1048575
+          },
+          "spikes": {
+            "max_abs_difference": 0.9999987483024597,
+            "mean_abs_difference": 0.3776705861091614,
+            "changed_elements": 1048576
+          },
+          "component_membrane": {
+            "max_abs_difference": 4.4101433753967285,
+            "mean_abs_difference": 0.9051814079284668,
+            "changed_elements": 4194302
+          },
+          "component_spikes": {
+            "max_abs_difference": 0.9999987483024597,
+            "mean_abs_difference": 0.3776742219924927,
+            "changed_elements": 4193940
+          },
+          "component_gates": {
+            "max_abs_difference": 0.9999987483024597,
+            "mean_abs_difference": 0.3776443302631378,
+            "changed_elements": 4194304
+          }
+        },
+        "delayed_gate_constant_half": {
+          "diagnostics": {
+            "zero_gate_positions": 0,
+            "zero_gate_hold_positions": 0,
+            "event_transitions": 0,
+            "event_occupancy": 1.0,
+            "natural_threshold_event_occupancy": 1.0,
+            "emitted_spike_occupancy": 1.0
+          },
+          "theta": {
+            "max_abs_difference": 0.0,
+            "mean_abs_difference": 0.0,
+            "changed_elements": 0
+          },
+          "membrane": {
+            "max_abs_difference": 1.8304085731506348,
+            "mean_abs_difference": 0.4010552167892456,
+            "changed_elements": 1048576
+          },
+          "spikes": {
+            "max_abs_difference": 0.5,
+            "mean_abs_difference": 0.3185330629348755,
+            "changed_elements": 1048576
+          },
+          "component_membrane": {
+            "max_abs_difference": 1.9067491292953491,
+            "mean_abs_difference": 0.46707528829574585,
+            "changed_elements": 4194303
+          },
+          "component_spikes": {
+            "max_abs_difference": 0.5,
+            "mean_abs_difference": 0.3186444044113159,
+            "changed_elements": 4194304
+          },
+          "component_gates": {
+            "max_abs_difference": 0.5,
+            "mean_abs_difference": 0.31863686442375183,
+            "changed_elements": 4194304
+          }
+        },
+        "dendrite_history_off": {
+          "diagnostics": {
+            "zero_gate_positions": 332,
+            "zero_gate_hold_positions": 332,
+            "event_transitions": 41,
+            "event_occupancy": 0.9998791217803955,
+            "natural_threshold_event_occupancy": 0.9998791217803955,
+            "emitted_spike_occupancy": 0.9997999668121338
+          },
+          "theta": {
+            "max_abs_difference": 0.0,
+            "mean_abs_difference": 0.0,
+            "changed_elements": 0
+          },
+          "membrane": {
+            "max_abs_difference": 2.0756587982177734,
+            "mean_abs_difference": 0.3935509920120239,
+            "changed_elements": 1047552
+          },
+          "spikes": {
+            "max_abs_difference": 0.2499592900276184,
+            "mean_abs_difference": 1.193052958115004e-05,
+            "changed_elements": 52
+          },
+          "component_membrane": {
+            "max_abs_difference": 2.156139373779297,
+            "mean_abs_difference": 0.39362871646881104,
+            "changed_elements": 4190208
+          },
+          "component_spikes": {
+            "max_abs_difference": 0.9998372197151184,
+            "mean_abs_difference": 1.1930531400139444e-05,
+            "changed_elements": 52
+          },
+          "component_gates": {
+            "max_abs_difference": 0.0,
+            "mean_abs_difference": 0.0,
+            "changed_elements": 0
+          }
+        },
+        "membrane_voltage_history_off": {
+          "diagnostics": {
+            "zero_gate_positions": 332,
+            "zero_gate_hold_positions": 332,
+            "event_transitions": 41,
+            "event_occupancy": 0.999889612197876,
+            "natural_threshold_event_occupancy": 0.999889612197876,
+            "emitted_spike_occupancy": 0.9998104572296143
+          },
+          "theta": {
+            "max_abs_difference": 0.0,
+            "mean_abs_difference": 0.0,
+            "changed_elements": 0
+          },
+          "membrane": {
+            "max_abs_difference": 2.4615566730499268,
+            "mean_abs_difference": 0.3869743347167969,
+            "changed_elements": 1047552
+          },
+          "spikes": {
+            "max_abs_difference": 0.24882733821868896,
+            "mean_abs_difference": 9.412686381438107e-07,
+            "changed_elements": 4
+          },
+          "component_membrane": {
+            "max_abs_difference": 2.668452739715576,
+            "mean_abs_difference": 0.3869827687740326,
+            "changed_elements": 4190208
+          },
+          "component_spikes": {
+            "max_abs_difference": 0.9953092336654663,
+            "mean_abs_difference": 9.412686381438107e-07,
+            "changed_elements": 4
+          },
+          "component_gates": {
+            "max_abs_difference": 0.0,
+            "mean_abs_difference": 0.0,
+            "changed_elements": 0
+          }
+        },
+        "spike_reset_off": {
+          "diagnostics": {
+            "zero_gate_positions": 332,
+            "zero_gate_hold_positions": 332,
+            "event_transitions": 41,
+            "event_occupancy": 0.9998886585235596,
+            "natural_threshold_event_occupancy": 0.9998886585235596,
+            "emitted_spike_occupancy": 0.9998095035552979
+          },
+          "theta": {
+            "max_abs_difference": 0.0,
+            "mean_abs_difference": 0.0,
+            "changed_elements": 0
+          },
+          "membrane": {
+            "max_abs_difference": 0.1233055591583252,
+            "mean_abs_difference": 0.03649251163005829,
+            "changed_elements": 1047539
+          },
+          "spikes": {
+            "max_abs_difference": 0.0,
+            "mean_abs_difference": 0.0,
+            "changed_elements": 0
+          },
+          "component_membrane": {
+            "max_abs_difference": 0.1233057975769043,
+            "mean_abs_difference": 0.03649251163005829,
+            "changed_elements": 4189707
+          },
+          "component_spikes": {
+            "max_abs_difference": 0.0,
+            "mean_abs_difference": 0.0,
+            "changed_elements": 0
+          },
+          "component_gates": {
+            "max_abs_difference": 0.0,
+            "mean_abs_difference": 0.0,
+            "changed_elements": 0
+          }
+        },
+        "binary_events_forced_on": {
+          "diagnostics": {
+            "zero_gate_positions": 332,
+            "zero_gate_hold_positions": 332,
+            "event_transitions": 0,
+            "event_occupancy": 1.0,
+            "natural_threshold_event_occupancy": 0.9999902248382568,
+            "emitted_spike_occupancy": 0.9999208450317383
+          },
+          "theta": {
+            "max_abs_difference": 0.0,
+            "mean_abs_difference": 0.0,
+            "changed_elements": 0
+          },
+          "membrane": {
+            "max_abs_difference": 0.40113162994384766,
+            "mean_abs_difference": 0.0001649707992328331,
+            "changed_elements": 1168
+          },
+          "spikes": {
+            "max_abs_difference": 0.25,
+            "mean_abs_difference": 0.00010381666652392596,
+            "changed_elements": 467
+          },
+          "component_membrane": {
+            "max_abs_difference": 1.604526162147522,
+            "mean_abs_difference": 0.00016497078468091786,
+            "changed_elements": 1238
+          },
+          "component_spikes": {
+            "max_abs_difference": 0.9999999403953552,
+            "mean_abs_difference": 0.00010381667379988357,
+            "changed_elements": 467
+          },
+          "component_gates": {
+            "max_abs_difference": 0.0,
+            "mean_abs_difference": 0.0,
+            "changed_elements": 0
+          },
+          "natural_threshold_event_occupancy": 0.9999902248382568,
+          "imposed_event_occupancy": 1.0
+        }
+      }
+    },
+    {
+      "ordinal": 1,
+      "pool_row": 48392,
+      "image_id": 49032,
+      "gamma_shape": [
+        1,
+        8,
+        1024
+      ],
+      "conditions": {
+        "none": {
+          "parity": true,
+          "diagnostics": {
+            "zero_gate_positions": 272,
+            "zero_gate_hold_positions": 272,
+            "event_transitions": 27,
+            "event_occupancy": 0.9999139308929443,
+            "natural_threshold_event_occupancy": 0.9999139308929443,
+            "emitted_spike_occupancy": 0.9998490810394287
+          }
+        },
+        "kuramoto_interaction_off": {
+          "diagnostics": {
+            "zero_gate_positions": 300,
+            "zero_gate_hold_positions": 300,
+            "event_transitions": 35,
+            "event_occupancy": 0.9999394416809082,
+            "natural_threshold_event_occupancy": 0.9999394416809082,
+            "emitted_spike_occupancy": 0.9998679161071777
+          },
+          "theta": {
+            "max_abs_difference": 315.2997741699219,
+            "mean_abs_difference": 11.865633964538574,
+            "changed_elements": 4194301
+          },
+          "membrane": {
+            "max_abs_difference": 3.619715452194214,
+            "mean_abs_difference": 0.672369122505188,
+            "changed_elements": 1048574
+          },
+          "spikes": {
+            "max_abs_difference": 0.9999973773956299,
+            "mean_abs_difference": 0.3826548159122467,
+            "changed_elements": 1048576
+          },
+          "component_membrane": {
+            "max_abs_difference": 5.041072845458984,
+            "mean_abs_difference": 0.9259739518165588,
+            "changed_elements": 4194303
+          },
+          "component_spikes": {
+            "max_abs_difference": 0.9999973773956299,
+            "mean_abs_difference": 0.38267189264297485,
+            "changed_elements": 4194137
+          },
+          "component_gates": {
+            "max_abs_difference": 0.9999973773956299,
+            "mean_abs_difference": 0.3826223611831665,
+            "changed_elements": 4194304
+          }
+        },
+        "delayed_gate_constant_half": {
+          "diagnostics": {
+            "zero_gate_positions": 0,
+            "zero_gate_hold_positions": 0,
+            "event_transitions": 0,
+            "event_occupancy": 1.0,
+            "natural_threshold_event_occupancy": 1.0,
+            "emitted_spike_occupancy": 1.0
+          },
+          "theta": {
+            "max_abs_difference": 0.0,
+            "mean_abs_difference": 0.0,
+            "changed_elements": 0
+          },
+          "membrane": {
+            "max_abs_difference": 1.8435357809066772,
+            "mean_abs_difference": 0.45134827494621277,
+            "changed_elements": 1048576
+          },
+          "spikes": {
+            "max_abs_difference": 0.5,
+            "mean_abs_difference": 0.318606972694397,
+            "changed_elements": 1048576
+          },
+          "component_membrane": {
+            "max_abs_difference": 1.9061684608459473,
+            "mean_abs_difference": 0.5023818016052246,
+            "changed_elements": 4194304
+          },
+          "component_spikes": {
+            "max_abs_difference": 0.5,
+            "mean_abs_difference": 0.31868553161621094,
+            "changed_elements": 4194304
+          },
+          "component_gates": {
+            "max_abs_difference": 0.5,
+            "mean_abs_difference": 0.31868094205856323,
+            "changed_elements": 4194304
+          }
+        },
+        "dendrite_history_off": {
+          "diagnostics": {
+            "zero_gate_positions": 272,
+            "zero_gate_hold_positions": 272,
+            "event_transitions": 27,
+            "event_occupancy": 0.9999070167541504,
+            "natural_threshold_event_occupancy": 0.9999070167541504,
+            "emitted_spike_occupancy": 0.9998421669006348
+          },
+          "theta": {
+            "max_abs_difference": 0.0,
+            "mean_abs_difference": 0.0,
+            "changed_elements": 0
+          },
+          "membrane": {
+            "max_abs_difference": 1.7929916381835938,
+            "mean_abs_difference": 0.40834730863571167,
+            "changed_elements": 1047552
+          },
+          "spikes": {
+            "max_abs_difference": 0.380759596824646,
+            "mean_abs_difference": 7.3740493462537415e-06,
+            "changed_elements": 38
+          },
+          "component_membrane": {
+            "max_abs_difference": 2.0749685764312744,
+            "mean_abs_difference": 0.408429354429245,
+            "changed_elements": 4190208
+          },
+          "component_spikes": {
+            "max_abs_difference": 0.9194777011871338,
+            "mean_abs_difference": 7.3740493462537415e-06,
+            "changed_elements": 43
+          },
+          "component_gates": {
+            "max_abs_difference": 0.0,
+            "mean_abs_difference": 0.0,
+            "changed_elements": 0
+          }
+        },
+        "membrane_voltage_history_off": {
+          "diagnostics": {
+            "zero_gate_positions": 272,
+            "zero_gate_hold_positions": 272,
+            "event_transitions": 27,
+            "event_occupancy": 0.9999151229858398,
+            "natural_threshold_event_occupancy": 0.9999151229858398,
+            "emitted_spike_occupancy": 0.9998502731323242
+          },
+          "theta": {
+            "max_abs_difference": 0.0,
+            "mean_abs_difference": 0.0,
+            "changed_elements": 0
+          },
+          "membrane": {
+            "max_abs_difference": 2.4355616569519043,
+            "mean_abs_difference": 0.40553274750709534,
+            "changed_elements": 1047552
+          },
+          "spikes": {
+            "max_abs_difference": 0.215623140335083,
+            "mean_abs_difference": 9.422973334949347e-07,
+            "changed_elements": 5
+          },
+          "component_membrane": {
+            "max_abs_difference": 2.6298255920410156,
+            "mean_abs_difference": 0.4055408835411072,
+            "changed_elements": 4190208
+          },
+          "component_spikes": {
+            "max_abs_difference": 0.862492561340332,
+            "mean_abs_difference": 9.422973334949347e-07,
+            "changed_elements": 5
+          },
+          "component_gates": {
+            "max_abs_difference": 0.0,
+            "mean_abs_difference": 0.0,
+            "changed_elements": 0
+          }
+        },
+        "spike_reset_off": {
+          "diagnostics": {
+            "zero_gate_positions": 272,
+            "zero_gate_hold_positions": 272,
+            "event_transitions": 27,
+            "event_occupancy": 0.9999139308929443,
+            "natural_threshold_event_occupancy": 0.9999139308929443,
+            "emitted_spike_occupancy": 0.9998490810394287
+          },
+          "theta": {
+            "max_abs_difference": 0.0,
+            "mean_abs_difference": 0.0,
+            "changed_elements": 0
+          },
+          "membrane": {
+            "max_abs_difference": 0.12331700325012207,
+            "mean_abs_difference": 0.037050601094961166,
+            "changed_elements": 1047540
+          },
+          "spikes": {
+            "max_abs_difference": 0.0,
+            "mean_abs_difference": 0.0,
+            "changed_elements": 0
+          },
+          "component_membrane": {
+            "max_abs_difference": 0.12331724166870117,
+            "mean_abs_difference": 0.037050601094961166,
+            "changed_elements": 4189806
+          },
+          "component_spikes": {
+            "max_abs_difference": 0.0,
+            "mean_abs_difference": 0.0,
+            "changed_elements": 0
+          },
+          "component_gates": {
+            "max_abs_difference": 0.0,
+            "mean_abs_difference": 0.0,
+            "changed_elements": 0
+          }
+        },
+        "binary_events_forced_on": {
+          "diagnostics": {
+            "zero_gate_positions": 272,
+            "zero_gate_hold_positions": 272,
+            "event_transitions": 0,
+            "event_occupancy": 1.0,
+            "natural_threshold_event_occupancy": 0.9999935626983643,
+            "emitted_spike_occupancy": 0.9999351501464844
+          },
+          "theta": {
+            "max_abs_difference": 0.0,
+            "mean_abs_difference": 0.0,
+            "changed_elements": 0
+          },
+          "membrane": {
+            "max_abs_difference": 0.8038942813873291,
+            "mean_abs_difference": 0.00013018290337640792,
+            "changed_elements": 453
+          },
+          "spikes": {
+            "max_abs_difference": 0.4999794363975525,
+            "mean_abs_difference": 8.151215297402814e-05,
+            "changed_elements": 193
+          },
+          "component_membrane": {
+            "max_abs_difference": 1.607788324356079,
+            "mean_abs_difference": 0.00013024151849094778,
+            "changed_elements": 895
+          },
+          "component_spikes": {
+            "max_abs_difference": 0.999958872795105,
+            "mean_abs_difference": 8.151215297402814e-05,
+            "changed_elements": 361
+          },
+          "component_gates": {
+            "max_abs_difference": 0.0,
+            "mean_abs_difference": 0.0,
+            "changed_elements": 0
+          },
+          "natural_threshold_event_occupancy": 0.9999935626983643,
+          "imposed_event_occupancy": 1.0
+        }
+      }
+    },
+    {
+      "ordinal": 2,
+      "pool_row": 69401,
+      "image_id": 70041,
+      "gamma_shape": [
+        1,
+        8,
+        1024
+      ],
+      "conditions": {
+        "none": {
+          "parity": true,
+          "diagnostics": {
+            "zero_gate_positions": 388,
+            "zero_gate_hold_positions": 388,
+            "event_transitions": 5,
+            "event_occupancy": 0.9999759197235107,
+            "natural_threshold_event_occupancy": 0.9999759197235107,
+            "emitted_spike_occupancy": 0.9998834133148193
+          }
+        },
+        "kuramoto_interaction_off": {
+          "diagnostics": {
+            "zero_gate_positions": 320,
+            "zero_gate_hold_positions": 320,
+            "event_transitions": 7,
+            "event_occupancy": 0.9999864101409912,
+            "natural_threshold_event_occupancy": 0.9999864101409912,
+            "emitted_spike_occupancy": 0.9999101161956787
+          },
+          "theta": {
+            "max_abs_difference": 255.45388793945312,
+            "mean_abs_difference": 9.286642074584961,
+            "changed_elements": 4194301
+          },
+          "membrane": {
+            "max_abs_difference": 3.6579842567443848,
+            "mean_abs_difference": 0.6104203462600708,
+            "changed_elements": 1048575
+          },
+          "spikes": {
+            "max_abs_difference": 0.9999998807907104,
+            "mean_abs_difference": 0.3815966546535492,
+            "changed_elements": 1048576
+          },
+          "component_membrane": {
+            "max_abs_difference": 4.3395795822143555,
+            "mean_abs_difference": 0.8731197118759155,
+            "changed_elements": 4194303
+          },
+          "component_spikes": {
+            "max_abs_difference": 0.9999998807907104,
+            "mean_abs_difference": 0.3816068172454834,
+            "changed_elements": 4194265
+          },
+          "component_gates": {
+            "max_abs_difference": 0.9999998807907104,
+            "mean_abs_difference": 0.38159385323524475,
+            "changed_elements": 4194304
+          }
+        },
+        "delayed_gate_constant_half": {
+          "diagnostics": {
+            "zero_gate_positions": 0,
+            "zero_gate_hold_positions": 0,
+            "event_transitions": 0,
+            "event_occupancy": 1.0,
+            "natural_threshold_event_occupancy": 1.0,
+            "emitted_spike_occupancy": 1.0
+          },
+          "theta": {
+            "max_abs_difference": 0.0,
+            "mean_abs_difference": 0.0,
+            "changed_elements": 0
+          },
+          "membrane": {
+            "max_abs_difference": 1.8543198108673096,
+            "mean_abs_difference": 0.39140963554382324,
+            "changed_elements": 1048576
+          },
+          "spikes": {
+            "max_abs_difference": 0.5,
+            "mean_abs_difference": 0.3180488348007202,
+            "changed_elements": 1048576
+          },
+          "component_membrane": {
+            "max_abs_difference": 1.9092659950256348,
+            "mean_abs_difference": 0.4640820026397705,
+            "changed_elements": 4194304
+          },
+          "component_spikes": {
+            "max_abs_difference": 0.5,
+            "mean_abs_difference": 0.3180728852748871,
+            "changed_elements": 4194304
+          },
+          "component_gates": {
+            "max_abs_difference": 0.5,
+            "mean_abs_difference": 0.31807106733322144,
+            "changed_elements": 4194304
+          }
+        },
+        "dendrite_history_off": {
+          "diagnostics": {
+            "zero_gate_positions": 388,
+            "zero_gate_hold_positions": 388,
+            "event_transitions": 5,
+            "event_occupancy": 0.9999744892120361,
+            "natural_threshold_event_occupancy": 0.9999744892120361,
+            "emitted_spike_occupancy": 0.9998819828033447
+          },
+          "theta": {
+            "max_abs_difference": 0.0,
+            "mean_abs_difference": 0.0,
+            "changed_elements": 0
+          },
+          "membrane": {
+            "max_abs_difference": 2.1070542335510254,
+            "mean_abs_difference": 0.39410245418548584,
+            "changed_elements": 1047552
+          },
+          "spikes": {
+            "max_abs_difference": 0.19788450002670288,
+            "mean_abs_difference": 1.0933548537650495e-06,
+            "changed_elements": 6
+          },
+          "component_membrane": {
+            "max_abs_difference": 2.1607346534729004,
+            "mean_abs_difference": 0.3941701054573059,
+            "changed_elements": 4190208
+          },
+          "component_spikes": {
+            "max_abs_difference": 0.7915380001068115,
+            "mean_abs_difference": 1.0933548537650495e-06,
+            "changed_elements": 6
+          },
+          "component_gates": {
+            "max_abs_difference": 0.0,
+            "mean_abs_difference": 0.0,
+            "changed_elements": 0
+          }
+        },
+        "membrane_voltage_history_off": {
+          "diagnostics": {
+            "zero_gate_positions": 388,
+            "zero_gate_hold_positions": 388,
+            "event_transitions": 5,
+            "event_occupancy": 0.9999761581420898,
+            "natural_threshold_event_occupancy": 0.9999761581420898,
+            "emitted_spike_occupancy": 0.9998836517333984
+          },
+          "theta": {
+            "max_abs_difference": 0.0,
+            "mean_abs_difference": 0.0,
+            "changed_elements": 0
+          },
+          "membrane": {
+            "max_abs_difference": 2.303976535797119,
+            "mean_abs_difference": 0.3834269642829895,
+            "changed_elements": 1047552
+          },
+          "spikes": {
+            "max_abs_difference": 0.2001538872718811,
+            "mean_abs_difference": 1.9088162162006483e-07,
+            "changed_elements": 1
+          },
+          "component_membrane": {
+            "max_abs_difference": 2.632960319519043,
+            "mean_abs_difference": 0.38343000411987305,
+            "changed_elements": 4190208
+          },
+          "component_spikes": {
+            "max_abs_difference": 0.8006154894828796,
+            "mean_abs_difference": 1.9088160740921012e-07,
+            "changed_elements": 1
+          },
+          "component_gates": {
+            "max_abs_difference": 0.0,
+            "mean_abs_difference": 0.0,
+            "changed_elements": 0
+          }
+        },
+        "spike_reset_off": {
+          "diagnostics": {
+            "zero_gate_positions": 388,
+            "zero_gate_hold_positions": 388,
+            "event_transitions": 5,
+            "event_occupancy": 0.9999759197235107,
+            "natural_threshold_event_occupancy": 0.9999759197235107,
+            "emitted_spike_occupancy": 0.9998834133148193
+          },
+          "theta": {
+            "max_abs_difference": 0.0,
+            "mean_abs_difference": 0.0,
+            "changed_elements": 0
+          },
+          "membrane": {
+            "max_abs_difference": 0.1233663558959961,
+            "mean_abs_difference": 0.036979805678129196,
+            "changed_elements": 1047544
+          },
+          "spikes": {
+            "max_abs_difference": 0.0,
+            "mean_abs_difference": 0.0,
+            "changed_elements": 0
+          },
+          "component_membrane": {
+            "max_abs_difference": 0.1233668327331543,
+            "mean_abs_difference": 0.0369798019528389,
+            "changed_elements": 4190086
+          },
+          "component_spikes": {
+            "max_abs_difference": 0.0,
+            "mean_abs_difference": 0.0,
+            "changed_elements": 0
+          },
+          "component_gates": {
+            "max_abs_difference": 0.0,
+            "mean_abs_difference": 0.0,
+            "changed_elements": 0
+          }
+        },
+        "binary_events_forced_on": {
+          "diagnostics": {
+            "zero_gate_positions": 388,
+            "zero_gate_hold_positions": 388,
+            "event_transitions": 0,
+            "event_occupancy": 1.0,
+            "natural_threshold_event_occupancy": 0.9999988079071045,
+            "emitted_spike_occupancy": 0.9999074935913086
+          },
+          "theta": {
+            "max_abs_difference": 0.0,
+            "mean_abs_difference": 0.0,
+            "changed_elements": 0
+          },
+          "membrane": {
+            "max_abs_difference": 0.3997359275817871,
+            "mean_abs_difference": 3.535293944878504e-05,
+            "changed_elements": 198
+          },
+          "spikes": {
+            "max_abs_difference": 0.2499990463256836,
+            "mean_abs_difference": 2.2263586288318038e-05,
+            "changed_elements": 101
+          },
+          "component_membrane": {
+            "max_abs_difference": 1.5989437103271484,
+            "mean_abs_difference": 3.535293944878504e-05,
+            "changed_elements": 203
+          },
+          "component_spikes": {
+            "max_abs_difference": 0.9999963045120239,
+            "mean_abs_difference": 2.226358265033923e-05,
+            "changed_elements": 101
+          },
+          "component_gates": {
+            "max_abs_difference": 0.0,
+            "mean_abs_difference": 0.0,
+            "changed_elements": 0
+          },
+          "natural_threshold_event_occupancy": 0.9999988079071045,
+          "imposed_event_occupancy": 1.0
+        }
+      }
+    },
+    {
+      "ordinal": 3,
+      "pool_row": 7189,
+      "image_id": 7829,
+      "gamma_shape": [
+        1,
+        8,
+        1024
+      ],
+      "conditions": {
+        "none": {
+          "parity": true,
+          "diagnostics": {
+            "zero_gate_positions": 404,
+            "zero_gate_hold_positions": 404,
+            "event_transitions": 39,
+            "event_occupancy": 0.9999215602874756,
+            "natural_threshold_event_occupancy": 0.9999215602874756,
+            "emitted_spike_occupancy": 0.9998252391815186
+          }
+        },
+        "kuramoto_interaction_off": {
+          "diagnostics": {
+            "zero_gate_positions": 328,
+            "zero_gate_hold_positions": 328,
+            "event_transitions": 40,
+            "event_occupancy": 0.9999392032623291,
+            "natural_threshold_event_occupancy": 0.9999392032623291,
+            "emitted_spike_occupancy": 0.9998610019683838
+          },
+          "theta": {
+            "max_abs_difference": 313.6711730957031,
+            "mean_abs_difference": 10.145025253295898,
+            "changed_elements": 4194303
+          },
+          "membrane": {
+            "max_abs_difference": 3.6157145500183105,
+            "mean_abs_difference": 0.5841978788375854,
+            "changed_elements": 1048576
+          },
+          "spikes": {
+            "max_abs_difference": 1.0,
+            "mean_abs_difference": 0.3652484714984894,
+            "changed_elements": 1048576
+          },
+          "component_membrane": {
+            "max_abs_difference": 4.355320453643799,
+            "mean_abs_difference": 0.8567672967910767,
+            "changed_elements": 4194302
+          },
+          "component_spikes": {
+            "max_abs_difference": 1.0,
+            "mean_abs_difference": 0.3652641773223877,
+            "changed_elements": 4194103
+          },
+          "component_gates": {
+            "max_abs_difference": 1.0,
+            "mean_abs_difference": 0.36522793769836426,
+            "changed_elements": 4194304
+          }
+        },
+        "delayed_gate_constant_half": {
+          "diagnostics": {
+            "zero_gate_positions": 0,
+            "zero_gate_hold_positions": 0,
+            "event_transitions": 0,
+            "event_occupancy": 1.0,
+            "natural_threshold_event_occupancy": 1.0,
+            "emitted_spike_occupancy": 1.0
+          },
+          "theta": {
+            "max_abs_difference": 0.0,
+            "mean_abs_difference": 0.0,
+            "changed_elements": 0
+          },
+          "membrane": {
+            "max_abs_difference": 1.8013286590576172,
+            "mean_abs_difference": 0.3776160776615143,
+            "changed_elements": 1048576
+          },
+          "spikes": {
+            "max_abs_difference": 0.5,
+            "mean_abs_difference": 0.31966519355773926,
+            "changed_elements": 1048576
+          },
+          "component_membrane": {
+            "max_abs_difference": 1.9069595336914062,
+            "mean_abs_difference": 0.46128222346305847,
+            "changed_elements": 4194303
+          },
+          "component_spikes": {
+            "max_abs_difference": 0.5,
+            "mean_abs_difference": 0.31974315643310547,
+            "changed_elements": 4194304
+          },
+          "component_gates": {
+            "max_abs_difference": 0.5,
+            "mean_abs_difference": 0.31973889470100403,
+            "changed_elements": 4194304
+          }
+        },
+        "dendrite_history_off": {
+          "diagnostics": {
+            "zero_gate_positions": 404,
+            "zero_gate_hold_positions": 404,
+            "event_transitions": 39,
+            "event_occupancy": 0.9999091625213623,
+            "natural_threshold_event_occupancy": 0.9999091625213623,
+            "emitted_spike_occupancy": 0.9998128414154053
+          },
+          "theta": {
+            "max_abs_difference": 0.0,
+            "mean_abs_difference": 0.0,
+            "changed_elements": 0
+          },
+          "membrane": {
+            "max_abs_difference": 1.6253414154052734,
+            "mean_abs_difference": 0.38739514350891113,
+            "changed_elements": 1047552
+          },
+          "spikes": {
+            "max_abs_difference": 0.49591320753097534,
+            "mean_abs_difference": 1.6637812223052606e-05,
+            "changed_elements": 73
+          },
+          "component_membrane": {
+            "max_abs_difference": 2.083563804626465,
+            "mean_abs_difference": 0.3874936103820801,
+            "changed_elements": 4190208
+          },
+          "component_spikes": {
+            "max_abs_difference": 0.9999999403953552,
+            "mean_abs_difference": 1.6637812223052606e-05,
+            "changed_elements": 74
+          },
+          "component_gates": {
+            "max_abs_difference": 0.0,
+            "mean_abs_difference": 0.0,
+            "changed_elements": 0
+          }
+        },
+        "membrane_voltage_history_off": {
+          "diagnostics": {
+            "zero_gate_positions": 404,
+            "zero_gate_hold_positions": 404,
+            "event_transitions": 39,
+            "event_occupancy": 0.9999208450317383,
+            "natural_threshold_event_occupancy": 0.9999208450317383,
+            "emitted_spike_occupancy": 0.9998245239257812
+          },
+          "theta": {
+            "max_abs_difference": 0.0,
+            "mean_abs_difference": 0.0,
+            "changed_elements": 0
+          },
+          "membrane": {
+            "max_abs_difference": 2.547469139099121,
+            "mean_abs_difference": 0.3816160261631012,
+            "changed_elements": 1047552
+          },
+          "spikes": {
+            "max_abs_difference": 0.25,
+            "mean_abs_difference": 2.5281767648266396e-06,
+            "changed_elements": 11
+          },
+          "component_membrane": {
+            "max_abs_difference": 2.7660086154937744,
+            "mean_abs_difference": 0.3816257417201996,
+            "changed_elements": 4190208
+          },
+          "component_spikes": {
+            "max_abs_difference": 1.0,
+            "mean_abs_difference": 3.0039354896871373e-06,
+            "changed_elements": 13
+          },
+          "component_gates": {
+            "max_abs_difference": 0.0,
+            "mean_abs_difference": 0.0,
+            "changed_elements": 0
+          }
+        },
+        "spike_reset_off": {
+          "diagnostics": {
+            "zero_gate_positions": 404,
+            "zero_gate_hold_positions": 404,
+            "event_transitions": 39,
+            "event_occupancy": 0.9999215602874756,
+            "natural_threshold_event_occupancy": 0.9999215602874756,
+            "emitted_spike_occupancy": 0.9998252391815186
+          },
+          "theta": {
+            "max_abs_difference": 0.0,
+            "mean_abs_difference": 0.0,
+            "changed_elements": 0
+          },
+          "membrane": {
+            "max_abs_difference": 0.12323188781738281,
+            "mean_abs_difference": 0.03626405447721481,
+            "changed_elements": 1047542
+          },
+          "spikes": {
+            "max_abs_difference": 0.0,
+            "mean_abs_difference": 0.0,
+            "changed_elements": 0
+          },
+          "component_membrane": {
+            "max_abs_difference": 0.12323236465454102,
+            "mean_abs_difference": 0.03626405447721481,
+            "changed_elements": 4189845
+          },
+          "component_spikes": {
+            "max_abs_difference": 0.0,
+            "mean_abs_difference": 0.0,
+            "changed_elements": 0
+          },
+          "component_gates": {
+            "max_abs_difference": 0.0,
+            "mean_abs_difference": 0.0,
+            "changed_elements": 0
+          }
+        },
+        "binary_events_forced_on": {
+          "diagnostics": {
+            "zero_gate_positions": 404,
+            "zero_gate_hold_positions": 404,
+            "event_transitions": 0,
+            "event_occupancy": 1.0,
+            "natural_threshold_event_occupancy": 0.999990701675415,
+            "emitted_spike_occupancy": 0.999903678894043
+          },
+          "theta": {
+            "max_abs_difference": 0.0,
+            "mean_abs_difference": 0.0,
+            "changed_elements": 0
+          },
+          "membrane": {
+            "max_abs_difference": 0.7807867527008057,
+            "mean_abs_difference": 0.00011722851922968403,
+            "changed_elements": 795
+          },
+          "spikes": {
+            "max_abs_difference": 0.49996665120124817,
+            "mean_abs_difference": 7.416962762363255e-05,
+            "changed_elements": 298
+          },
+          "component_membrane": {
+            "max_abs_difference": 1.6032954454421997,
+            "mean_abs_difference": 0.00011722851195372641,
+            "changed_elements": 1023
+          },
+          "component_spikes": {
+            "max_abs_difference": 1.0,
+            "mean_abs_difference": 7.416962762363255e-05,
+            "changed_elements": 329
+          },
+          "component_gates": {
+            "max_abs_difference": 0.0,
+            "mean_abs_difference": 0.0,
+            "changed_elements": 0
+          },
+          "natural_threshold_event_occupancy": 0.999990701675415,
+          "imposed_event_occupancy": 1.0
+        }
+      }
+    }
+  ],
+  "interpretation_limit": "GT-free causal trace screen only; not a segmentation metric or gate-necessity proof"
+}
