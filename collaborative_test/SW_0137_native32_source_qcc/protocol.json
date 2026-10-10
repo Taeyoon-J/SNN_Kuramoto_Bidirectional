@@ -1,0 +1,25 @@
+{
+  "experiment": "SW0137_native32_source_qcc",
+  "status": "prospective_evaluation_only",
+  "purpose": "Evaluate the three registered frozen SW0097 source models with their genuine native32 actual-spike QCC readout against the existing own70k Slot native32 baseline.",
+  "source": "SW0097 seed-specific strict checkpoint and original frozen encoder, mapped through registered SW0135 native32 foundation",
+  "prediction": {
+    "image_ids": [1320, 1639],
+    "count": 320,
+    "microbatch_size": 1,
+    "native_rgb": [128, 128],
+    "grid": [32, 32],
+    "timesteps": 1024,
+    "settle": 512,
+    "readout": "actual-spike QCC product-positive synchrony; threshold .50, minimum component size 8, largest connected component mapped to background",
+    "ground_truth_used": false,
+    "optimizer_updates": 0
+  },
+  "scoring": {
+    "ground_truth": "native128 target masks modal/minimum-ID-tie pooled directly to32 with the production 4x4 evaluator",
+    "metrics": ["fg_ari", "foreground_iou", "matched_object_iou"],
+    "slot_reference": "saved SW0092 own70k native128 hard labels pooled directly by4x4; original perimeter-background remap retained",
+    "ordering": "All three source prediction archives and protocols plus all Slot prediction archives, IDs and hashes are validated and frozen before opening any target mask."
+  },
+  "interpretation": "Evaluation-only source baseline screen. It does not train a native32 model, establish gate necessity or scaling, or promote an incumbent."
+}
