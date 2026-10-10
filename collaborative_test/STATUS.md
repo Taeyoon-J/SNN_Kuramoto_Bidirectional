@@ -1,3 +1,5 @@
+SW0132 terminal (2026-10-09): seed0 failed the registered hard-H row-scramble guard; mean full-RGB loss excess was -9.807680180529132e-5 in both arms (20/64 positive images). Source/gamma parity and RGB credit checks passed. A 32-step decoder warmup and one disposable step per arm ran; joint-training optimizer updates=0, no GT. Seeds1/2 blocked; no retry, evaluation, score, or incumbent change. Exact report/state/log bytes and hashes: SW_0132_partition_relative_rgb/results_archive/terminal_preflight_failure_20261009/.
+
 SW0125 completed 2026-10-09: all9 stages valid; mean FG/FGIoU/ObjectIoU .767077/.585208/.592722. FG below incumbent97 and matchedSlot; no promotion/70k expansion. See SW_0125_late_rollout_credit/three_seed_summary_20261009.json.
 
 SW0125 FOUNDATION PASS (2026-10-09): all3 actualB16 native1024 vs960detached+64live parity exact for alltraces/Q/H/loss; RGB credit finite/nonzero into all6families. Original layout-related failure archived, tolerance unchanged. Zero optimizerupdates; full256training/evaluation notstarted. Incumbent97 unchanged. See SW_0125_late_rollout_credit/foundation_outcome_20261009.md.

@@ -1235,13 +1235,32 @@
   },
   "latest_partition_relative_rgb": {
     "experiment": "SW0132",
-    "status": "relative_decoder_implemented_root_review_and_cpu_checks_passed",
-    "cpu_tests_passed": 5,
-    "preflight_implementation_in_progress": true,
-    "training_started": false,
+    "status": "closed_seed0_scientific_preflight_failure",
+    "preflight_seed": 0,
+    "failure": "hard-H row-scramble mean full-RGB excess was not positive in both arms",
+    "row_scramble_mean_excess_by_arm": {
+      "phase": -9.807680180529132e-05,
+      "constant": -9.807680180529132e-05
+    },
+    "row_scramble_positive_images_by_arm": {
+      "phase": 20,
+      "constant": 20
+    },
+    "row_scramble_images_per_arm": 64,
+    "source_parity_passed": true,
+    "live_gamma_max_abs_diff": 5.960464477539062e-07,
+    "rgb_gradient_credit_all_registered_families": true,
+    "decoder_warmup_updates": 32,
+    "disposable_updates_per_arm": 1,
+    "joint_training_updates": 0,
+    "ground_truth_used": false,
+    "seed1_seed2": "blocked_after_seed0_failure",
+    "summary": "collaborative_test/SW_0132_partition_relative_rgb/results_archive/terminal_preflight_failure_20261009/summary.json",
+    "raw_evidence": "collaborative_test/SW_0132_partition_relative_rgb/results_archive/terminal_preflight_failure_20261009/",
     "incumbent_changed": false,
     "gating_contribution_proven": false,
     "data_scaling_proven": false,
+    "goal_completion_proven": false,
     "protocol": "collaborative_test/SW_0132_partition_relative_rgb/protocol.json"
   }
 }

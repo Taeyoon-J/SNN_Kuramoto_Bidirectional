@@ -1,0 +1,103 @@
+{
+  "experiment": "SW0132_partition_relative_rgb",
+  "status": "scientific_preflight_failed",
+  "seed": 0,
+  "scientific_failure": "hard-H row-scramble mean full-RGB excess was not positive in both arms",
+  "lambda": 295.3573165700601,
+  "live_source_gamma_max_abs_diff_first_batch": 5.960464477539062e-07,
+  "row_scramble_mean_excess_by_arm": {
+    "phase": -9.807680180529132e-05,
+    "constant": -9.807680180529132e-05
+  },
+  "row_scramble_positive_images_by_arm": {
+    "phase": 20,
+    "constant": 20
+  },
+  "row_scramble_images_per_arm": 64,
+  "source_trace_parity_passed": true,
+  "rgb_gradient_families_finite_positive_by_arm": {
+    "phase": [
+      "a_d",
+      "a_m",
+      "b",
+      "core_other",
+      "dendrite",
+      "encoder",
+      "graph",
+      "kuramoto",
+      "membrane",
+      "oscillator_drive"
+    ],
+    "constant": [
+      "a_d",
+      "a_m",
+      "b",
+      "core_other",
+      "dendrite",
+      "encoder",
+      "graph",
+      "kuramoto",
+      "membrane",
+      "oscillator_drive"
+    ]
+  },
+  "disposable_update_changes": {
+    "phase": {
+      "native_core_families": {
+        "graph": true,
+        "oscillator_drive": true,
+        "kuramoto": true,
+        "dendrite": true,
+        "membrane": true
+      },
+      "encoder_parameters": 2,
+      "decoder_parameters": 6,
+      "integration_parameters": [
+        "a_d",
+        "a_m",
+        "b"
+      ],
+      "throwaway_updates": 1
+    },
+    "constant": {
+      "native_core_families": {
+        "graph": true,
+        "oscillator_drive": true,
+        "kuramoto": true,
+        "dendrite": true,
+        "membrane": true
+      },
+      "encoder_parameters": 2,
+      "decoder_parameters": 6,
+      "integration_parameters": [
+        "a_d",
+        "a_m",
+        "b"
+      ],
+      "throwaway_updates": 1
+    }
+  },
+  "decoder_warmup_updates": 32,
+  "joint_training_optimizer_updates": 0,
+  "ground_truth_used": false,
+  "source_core_sha256": "36f2481dd1fa51fa29bd4dc34275a876b71d8b76fbee13ac47a0a1bfe6766fbf",
+  "artifact_files": {
+    "preflight_seed0.json": {
+      "sha256": "0e60f9fd96f5c9783602b267ae20675984a4c77e0c26a17322dff700d793b97e",
+      "size_bytes": 60835
+    },
+    "preflight_queue_state.json": {
+      "sha256": "a7e86d982dcc5867d24aa3aaabd140e50b24192d9f0cb47d9fdf04446239d381",
+      "size_bytes": 4983
+    },
+    "sw0132_preflight_s0.log": {
+      "sha256": "008d05273d5b143b9ef9f2d30dca3631717c5f42df313c3cf1a762304d6be341",
+      "size_bytes": 206
+    }
+  },
+  "seed1_seed2": "blocked_after_seed0_failure",
+  "training_started": false,
+  "evaluation_started": false,
+  "incumbent_changed": false,
+  "archive_path": "collaborative_test/SW_0132_partition_relative_rgb/results_archive/terminal_preflight_failure_20261009"
+}
