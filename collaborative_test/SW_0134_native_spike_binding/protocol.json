@@ -1,0 +1,98 @@
+{
+  "experiment": "SW0134_native_spike_binding",
+  "status": "prospective_before_training",
+  "launch_dependency": "Complete and archive the unchanged SW0133 three-arm pilot first",
+  "hypothesis": "Assignments learned directly from the full actual spike history can separate objects without depending on current QCC group seeds and count",
+  "source": "Immutable same-seed SW0097 core and registered encoder/statistics; frozen SW0130 integration equations",
+  "training_masks_or_object_counts": false,
+  "input": {
+    "actual": "Raw emitted component spikes [B,4,256,512] from settled half of native1024 rollout",
+    "gate_control": "Native component gates [B,4,256,512]; retain each component, no replication of one component",
+    "excluded": ["RGB", "gamma", "theta", "absolute XY", "QCC H or K", "time averaging", "history centering"]
+  },
+  "binder": {
+    "mechanism": "Explicit Slot Attention-style competitive binding; no novelty claim for slot algorithm",
+    "input_projection": "Flatten component/time per patch:2048->64, then LayerNorm",
+    "slots": 11,
+    "dimension": 64,
+    "iterations": 3,
+    "initialization": "Fixed iid noise seed134 [1,11,64], shared learned mu/log_scale [1,1,64]; same head initialization across arms",
+    "updates": "Shared key/query/value; softmax over slots; per-slot patch-normalized value update; shared GRU and residual64->128->64 MLP",
+    "final_P": "Recompute assignment from slots after third refinement",
+    "occupancy": "Unused slots allowed; no equal-occupancy loss or GT count"
+  },
+  "decoder": {
+    "initialization_seed": 106,
+    "shared_mlp": [66,64,64,3],
+    "activations": ["ReLU","ReLU","sigmoid"],
+    "inputs": "Slot64 latent and live P-derived relative pixel XY; SW0132 centroid/variance with exact intra-cell variance",
+    "mixture": "Patch P expanded to8x8 pixels is the sole RGB mask mixture; no independent alpha head",
+    "loss": "Full128x128x3 RGB MSE per image, batch mean",
+    "chunk_pixels": 1024,
+    "checkpoint": "Nonreentrant complete render-and-mixture chunks"
+  },
+  "arms": {
+    "actual_joint": "Actual spikes; encoder/graph/core/integration jointly trainable",
+    "gate_joint": "Native gates only into binder; same trainable backbone; original actual-Q objective remains",
+    "actual_frozen": "Actual spikes; entire source encoder/core/integration frozen; only binder/decoder train"
+  },
+  "warmup": {
+    "updates": 32,
+    "batch": 16,
+    "ids": "First512 registered TRAIN images",
+    "backbone": "Frozen",
+    "actual_arms": "Share warmed head/decoder weights and Adam32 moments within seed",
+    "gate_arm": "Identical initial weights and equal images/updates; separate warm artifact appropriate to gate input"
+  },
+  "temporal_credit": {
+    "total_steps": 1024,
+    "settle_steps": 512,
+    "live_tail_steps": 64,
+    "prefix_steps": 960,
+    "boundary": "Detach recurrent states and delayed phase history; static gamma/coupling prepared live once and reused in tail",
+    "limitation": "Truncated BPTT, not full1024 backward; full512 head input retained",
+    "native_parity_required": true
+  },
+  "objective": {
+    "joint": "Original phase-primary+5*positive-product actual-Q loss + lambda*R",
+    "head_decoder": "Unweighted R",
+    "lambda": "Fresh source0 after new actual-spike warm32:0.25*median(old/R joint-gradient norm) over first4 TRAIN batches; excludes head/decoder; frozen for arms/seeds",
+    "old_loss_coefficients": "Unchanged source recipe, including0.867 density target"
+  },
+  "pilot": {
+    "seed": 1,
+    "training_images": 4096,
+    "shuffle_seed": 118,
+    "batch": 16,
+    "updates": 256,
+    "learning_rates": {"core_graph":0.00003,"encoder":0.000003,"integration":0.01,"head_decoder":0.0003},
+    "gradient_clipping": "Unique joint union1; head/decoder union1 separately",
+    "projection": "a_D/a_M into[0,1] after update",
+    "optimizer": "Fresh joint Adam; exact appropriate warm head/decoder Adam32"
+  },
+  "evaluation": {
+    "ids": [1320,1639],
+    "images": 320,
+    "batch": 8,
+    "time_steps": 1024,
+    "settle_steps": 512,
+    "primary": "Argmax learned P masks; largest hard slot background, ties first occupied patch then slot index; canonical foreground IDs by first occupied patch",
+    "secondary": "Original actual-spike QCC .50/minFG2/largest-component background on same backbone; cannot replace failed primary",
+    "ground_truth": "Unchanged modal8x8 pixel vote on native128 instance masks, min-ID tie",
+    "metrics": ["patch_fg_ari","patch_foreground_iou","patch_matched_object_iou"],
+    "prediction_freeze_before_GT": true,
+    "bootstrap": "RandomState134,10000 common paired image resamples",
+    "expansion": "Primary actual_joint FG strictly above source97,gate_joint,actual_frozen AND positive paired95% lower bounds for all three comparisons",
+    "failed_recipe": "Close without slot/temperature/decoder/LR sweeps",
+    "reserved_ids_unread": [90640,90959]
+  },
+  "release_checks": [
+    "Strict checkpoint/data/implementation fingerprints",
+    "Exact native zero-init full1024 trace/Q parity on actual source",
+    "Finite real optimizer updates and all declared trained families",
+    "Shared actual-arm warm state; equally budgeted separate gate warm state",
+    "Gate-head R has no dendritic/membrane/integration downstream credit",
+    "Record P occupancy, event activity and RGB slot-scramble diagnostics without positivity eligibility rule"
+  ],
+  "scientific_limits": "Pilot alone proves neither every gate necessary nor data scaling. Follow with matched retrained stage controls and separate fresh-initialization scaling curves; final70k three-seed comparable Slot comparison remains required."
+}

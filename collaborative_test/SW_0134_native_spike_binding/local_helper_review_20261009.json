@@ -1,0 +1,17 @@
+{
+  "status": "model_helper_locally_verified_not_launched",
+  "tests": 5,
+  "scope": "synthetic CPU helper tests; not source1024 parity, actual GPU update, segmentation result, gating/scaling proof",
+  "shared_slot_initialization_shapes": [
+    1,
+    1,
+    64
+  ],
+  "files": {
+    "binder.py": "f0b63f613682e44d8ecad8a1b610bd8ea1530faa08d66e487056a4cdc17756a1",
+    "test_binder.py": "abca7339db8acef6c079c0f58fe4810a129d625820de94e3632344bffd7ce3c1",
+    "protocol.json": "42876233e0ff70ed8c33e885d1f4b3ed2b539c63059c3234c0af366d04e7b99a"
+  },
+  "local_environment_note": "standalone torch-first invocation hit duplicate OpenMP runtime; numpy-first test invocation passed without unsafe duplicate-runtime override",
+  "next_required": "native truncated rollout parity and complete actual-source train/eval pipeline"
+}
