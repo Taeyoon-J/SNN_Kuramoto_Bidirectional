@@ -1,0 +1,86 @@
+{
+  "experiment": "SW0141_native32_source_preservation",
+  "status": "registered_cache_running_training_queued",
+  "hypothesis": "Removing old phase/Q statistical priors and preserving native source spike relations may improve view-stable object separation.",
+  "patch_grid": [
+    32,
+    32
+  ],
+  "patch_count": 1024,
+  "seed_scope": [
+    1
+  ],
+  "source": "SW0097/SW0135 strict native32 mapped source, inherited70k lineage",
+  "training": {
+    "unique_images": 4096,
+    "ordered_source_ids": true,
+    "logical_batch": 16,
+    "microbatch": 4,
+    "updates": 256,
+    "passes": 1,
+    "steps": 1024,
+    "settle": 512,
+    "live_tail": 64,
+    "views": 2,
+    "encoder_lr": 3e-06,
+    "graph_lr": 3e-05,
+    "clip": 1,
+    "fresh_source_and_Adam_per_arm": true,
+    "trainable": [
+      "encoder",
+      "learned graph"
+    ],
+    "native_core_and_12_scalars": "frozen"
+  },
+  "arms": {
+    "c_only": "lambda_C * SW0139 symmetric temporal InfoNCE",
+    "c_plus_anchor": "same C plus lambda_A * float32 offdiagonal native source-Q MSE"
+  },
+  "old_phase_and_Q_priors": "removed in both arms",
+  "teacher": {
+    "source1_images": 4096,
+    "source0_calibration_images": 64,
+    "payload_GiB": [
+      16,
+      0.25
+    ],
+    "target_masks_used": false
+  },
+  "calibration": "One disposable C-only source0 update, first4 accumulated B16 gradient norm ratios; frozen median lambda_A; probe discarded; no epsilon fallback.",
+  "endpoint": {
+    "image_ids": [
+      1320,
+      1639,
+      320
+    ],
+    "native32_modal_patch_GT": true,
+    "readout": "actual-spike QCC threshold.50/min8/largest connected component background",
+    "metrics": [
+      "patch_fg_ari",
+      "patch_foreground_iou",
+      "patch_matched_object_iou"
+    ],
+    "references": [
+      "same-seed source97",
+      "completed SW0139 old+C",
+      "same-seed comparable Slot32"
+    ],
+    "all_predictions_frozen_before_GT": true
+  },
+  "expansion": "C+A FG must beat source and C-only, each paired-image95% lower bound >0; otherwise close this fixed recipe.",
+  "reserve_ids": [
+    90640,
+    90959
+  ],
+  "reserve_read": false,
+  "limitations": [
+    "one-seed continuation pilot",
+    "not fresh native32 70k training",
+    "not all-gating contribution proof",
+    "not data-scaling proof",
+    "no new performance result yet"
+  ],
+  "code_review": "Sol6.1 concrete runtime blockers resolved; final producer/validator roundtrip independently checked.",
+  "implementation_fingerprint_sha256": "062e47d41ec96ab3f690575a3dcb1ba6db35014e97ca600fbfebcbe5ae070aff",
+  "driver_preparation_labels": "Original unregistered suffixes are retained in frozen driver metadata; this registry and actual execution receipts record admission."
+}
