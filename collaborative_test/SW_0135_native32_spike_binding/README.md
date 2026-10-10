@@ -61,3 +61,12 @@ supervisor2658960 / child2658986 (observed2026-10-10 05:59 UTC). See
 resource_execution_start_20261010.json. This disposable logicalB16 Adam
 measurement uses lambda1 before warmup; it is not candidate training,
 scientific calibration, temporal-parity certification or performance.
+
+Resource-only probe completed exit0: logicalB16 microB1 update56.880s;
+peak allocated .869GiB/reserved1.047GiB. All20 joint and23 head/decoder
+parameter tensors changed; all declared joint RGB gradient families are
+finite/nonzero. This does not establish gating usefulness or FG-ARI.
+Naive4096-update extrapolation is64.72h, so throughput must be measured
+with larger image batches before committing to main training. Original
+source/protocol/scientific budget stays recorded; see archived result,
+queue/log SHA and resource_probe_analysis.json.

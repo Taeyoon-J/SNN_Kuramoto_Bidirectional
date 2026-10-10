@@ -1,0 +1,53 @@
+{
+  "experiment": "SW0135_native32_spike_binding",
+  "stage": "resource_probe_only",
+  "status": "resource_probe_complete",
+  "supervisor_pid": 2658960,
+  "started": 1791611898.5100706,
+  "max_parallel": 1,
+  "task_count": 1,
+  "owner_dispatcher_sha256": "e37dcc0777871a91593041c99f3b1bfe55cc45f88d5d5be49a2e12d0116d8574",
+  "queue_sha256": "216cfbf65552198caecbe64c45af3eebaae3997b2f2ddb1c4affab4c20f6a0b4",
+  "tasks": {
+    "sw0135_resource_probe_seed0": {
+      "task": {
+        "task_id": "sw0135_resource_probe_seed0",
+        "seed": 0,
+        "stage": "resource_probe",
+        "device": "cuda:0"
+      },
+      "status": "passed",
+      "gpu": 0,
+      "gpu_uuid": "GPU-a0a7d03d-adc1-37ca-4342-328878b3657c",
+      "memory_before_mib": 16,
+      "lease_path": "/tmp/kevinswk_sw0113_gpu_leases/gpu0.lock",
+      "reservation_pid": 2658960,
+      "reserved": 1791611898.664933,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-m",
+        "collaborative_test.SW_0135_native32_spike_binding.resource_probe",
+        "--seed",
+        "0",
+        "--device",
+        "cuda:0",
+        "--output",
+        "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0135_native32_spike_binding/results_archive/resource_probe_seed0.json"
+      ],
+      "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0135_native32_spike_binding/results_archive/resource_probe_seed0.json",
+      "log_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0135_native32_spike_binding/results_archive/resource_probe_seed0.log",
+      "triton_cache": "/tmp/kevinswk_sw0135_resource_sw0135_resource_probe_seed0_1791611898669",
+      "environment": {
+        "CUDA_VISIBLE_DEVICES": "0",
+        "TRITON_CACHE_DIR": "/tmp/kevinswk_sw0135_resource_sw0135_resource_probe_seed0_1791611898669"
+      },
+      "launched": 1791611898.6698253,
+      "child_pid": 2658986,
+      "started": 1791611898.6748412,
+      "returncode": 0,
+      "artifact_valid": true,
+      "finished": 1791611971.2805374
+    }
+  },
+  "finished": 1791611971.2848449
+}
