@@ -1,0 +1,185 @@
+{
+  "experiment": "SW0136_native32_transfer",
+  "stage": "two_arm_transfer_screen",
+  "status": "transfer_evaluation_complete",
+  "supervisor_pid": 2675399,
+  "started": 1791614995.2924116,
+  "max_parallel": 2,
+  "implementation_fingerprint": {
+    "collaborative_test/SW_0136_native32_transfer/protocol.json": "ea1f8e79255956e9f845bf09ed72ea3efabb83ef2454822815f2c1f8f21320dc",
+    "collaborative_test/SW_0136_native32_transfer/transfer.py": "a1b1101e5e0f3e06c870e66da6f0c850556417bb7fb56405063cec78e9aea2f5",
+    "collaborative_test/SW_0136_native32_transfer/evaluate.py": "1c2846b69fb4bc936bf06723fc9f1b4c12f6632a02aff7e40c1e21a28b7a30ea",
+    "collaborative_test/SW_0135_native32_spike_binding/foundation.py": "9c241cacf1479c339fa56376b881672535c8d7ac4966a7ddff3b4b47f24cb867",
+    "collaborative_test/SW_0135_native32_spike_binding/resolution.py": "dd98e62c48e6260e4bd1ba36f0f9a8ff2c6ecf7ade53e0f5780849d3bae49264",
+    "collaborative_test/SW_0135_native32_spike_binding/binder.py": "38450abd18eb0db390959727b95f88f96633117be20d053870ff28ccf5dae8ac",
+    "collaborative_test/SW_0135_native32_spike_binding/score_slot32.py": "4c8f8e5622ea16f65059bc1146277ded06411debcca503dbd573af132a916bb5",
+    "collaborative_test/SW_0134_native_spike_binding/train.py": "34fe6796b85d7a1ffb247fd74162ec3b1928b2cbab50bacb305db9a726fd21a2",
+    "collaborative_test/SW_0134_native_spike_binding/run.py": "90b17f9bf1e9e0865849621a2be291bd19ee90ca8d483bebb531ded0dbed4bf8",
+    "collaborative_test/SW_0134_native_spike_binding/binder.py": "f0b63f613682e44d8ecad8a1b610bd8ea1530faa08d66e487056a4cdc17756a1",
+    "collaborative_test/SW_0134_native_spike_binding/pilot_queue.py": "79f581b25818cdae05ff210dcdd30c9500090b8d93c56dcf103a6e9d03669d02",
+    "collaborative_test/SW_0134_native_spike_binding/rollout.py": "66c08404af91b50fb4cbfa63fe44650dd6a698ea669cd3d6a672dfc5c78503f3",
+    "collaborative_test/SW_0135_native32_spike_binding/evaluation_contract32.py": "e601280ade9a2b9545f6bbf94df22deca6ebfe123750229f6a7244105c57b1bd",
+    "snn_kuramoto_bidirectional/spike_classifier.py": "2d13c15a928f503bc09239aae2153a5f1a82de77aab4b5a76d0dfe876b755181",
+    "snn_kuramoto_bidirectional/evaluation.py": "4a15980c9aa0248dbe0e837ad1b0b430ce26a7ab367c004d290a1272bb1025d7"
+  },
+  "queue_sha256": "77ddf27d94ec9b76e2e4c118526e01636fe3363032f0c5665d154f7c96e98519",
+  "owner_dispatcher_sha256": "e37dcc0777871a91593041c99f3b1bfe55cc45f88d5d5be49a2e12d0116d8574",
+  "ground_truth_used_for_prediction": false,
+  "optimizer_updates": 0,
+  "tasks": {
+    "sw0136_actual_joint_seed1": {
+      "task": {
+        "task_id": "sw0136_actual_joint_seed1",
+        "arm": "actual_joint"
+      },
+      "status": "passed",
+      "physical_gpu": 0,
+      "gpu_uuid": "GPU-a0a7d03d-adc1-37ca-4342-328878b3657c",
+      "memory_before_mib": 16,
+      "lease_path": "/tmp/kevinswk_sw0113_gpu_leases/gpu0.lock",
+      "reservation_pid": 2675399,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-m",
+        "collaborative_test.SW_0136_native32_transfer.evaluate",
+        "--stage",
+        "predict",
+        "--arm",
+        "actual_joint",
+        "--device",
+        "cuda:0",
+        "--output-root",
+        "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0136_native32_transfer/results_archive/transfer_predictions_seed1"
+      ],
+      "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0136_native32_transfer/results_archive/transfer_predictions_seed1/actual_joint",
+      "log_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0136_native32_transfer/results_archive/sw0136_actual_joint_seed1.log",
+      "triton_cache": "/tmp/kevinswk_sw0136_sw0136_actual_joint_seed1_1791614995463",
+      "environment": {
+        "CUDA_VISIBLE_DEVICES": "0",
+        "TRITON_CACHE_DIR": "/tmp/kevinswk_sw0136_sw0136_actual_joint_seed1_1791614995463"
+      },
+      "launched": 1791614995.4636297,
+      "child_pid": 2675421,
+      "started": 1791614995.466194,
+      "returncode": 0,
+      "artifact_valid": true,
+      "result_sha256": "be7015c0236fafac4bee861893dbfe33ac68a1485c8ba396f6e358a8e3c4875e",
+      "finished": 1791616382.4339905
+    },
+    "sw0136_actual_frozen_seed1": {
+      "task": {
+        "task_id": "sw0136_actual_frozen_seed1",
+        "arm": "actual_frozen"
+      },
+      "status": "passed",
+      "physical_gpu": 1,
+      "gpu_uuid": "GPU-45604115-c231-56a5-32ea-d3001e8ff243",
+      "memory_before_mib": 2,
+      "lease_path": "/tmp/kevinswk_sw0113_gpu_leases/gpu1.lock",
+      "reservation_pid": 2675399,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-m",
+        "collaborative_test.SW_0136_native32_transfer.evaluate",
+        "--stage",
+        "predict",
+        "--arm",
+        "actual_frozen",
+        "--device",
+        "cuda:0",
+        "--output-root",
+        "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0136_native32_transfer/results_archive/transfer_predictions_seed1"
+      ],
+      "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0136_native32_transfer/results_archive/transfer_predictions_seed1/actual_frozen",
+      "log_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0136_native32_transfer/results_archive/sw0136_actual_frozen_seed1.log",
+      "triton_cache": "/tmp/kevinswk_sw0136_sw0136_actual_frozen_seed1_1791614995485",
+      "environment": {
+        "CUDA_VISIBLE_DEVICES": "1",
+        "TRITON_CACHE_DIR": "/tmp/kevinswk_sw0136_sw0136_actual_frozen_seed1_1791614995485"
+      },
+      "launched": 1791614995.4854443,
+      "child_pid": 2675422,
+      "started": 1791614995.4880712,
+      "returncode": 0,
+      "artifact_valid": true,
+      "result_sha256": "1790ea7f85bb492dff67cafb9bfdb6bf54707af726694791eb6d8079396c508f",
+      "finished": 1791615572.5203457
+    },
+    "score": {
+      "task": {
+        "task_id": "score",
+        "stage": "gt_last_score"
+      },
+      "status": "passed",
+      "started": 1791616382.4383705,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-m",
+        "collaborative_test.SW_0136_native32_transfer.evaluate",
+        "--stage",
+        "score"
+      ],
+      "artifact_valid": true,
+      "arm_metrics": {
+        "actual_joint": {
+          "primary": {
+            "fg_ari": 0.29626682069936644,
+            "foreground_iou": 0.3732309379702423,
+            "matched_object_iou": 0.14170414359188066
+          },
+          "qcc": {
+            "fg_ari": 0.6595211429295882,
+            "foreground_iou": 0.37103555793025395,
+            "matched_object_iou": 0.5097502220889434
+          }
+        },
+        "actual_frozen": {
+          "primary": {
+            "fg_ari": 0.1150186191703864,
+            "foreground_iou": 0.47508741228839557,
+            "matched_object_iou": 0.08725412251383753
+          },
+          "qcc": {
+            "fg_ari": 0.7541350949944816,
+            "foreground_iou": 0.606899549668619,
+            "matched_object_iou": 0.582200586329909
+          }
+        },
+        "source97_qcc": {
+          "qcc": {
+            "fg_ari": 0.7541350949944816,
+            "foreground_iou": 0.606899549668619,
+            "matched_object_iou": 0.582200586329909
+          }
+        },
+        "slot_seed0": {
+          "slot32": {
+            "fg_ari": 0.626661115666405,
+            "foreground_iou": 0.2119002726173212,
+            "matched_object_iou": 0.19100922463690687
+          }
+        },
+        "slot_seed1": {
+          "slot32": {
+            "fg_ari": 0.8418192917733233,
+            "foreground_iou": 0.20341670897019232,
+            "matched_object_iou": 0.2221151564255643
+          }
+        },
+        "slot_seed2": {
+          "slot32": {
+            "fg_ari": 0.8764755084430126,
+            "foreground_iou": 0.19776340171215284,
+            "matched_object_iou": 0.1963705775028791
+          }
+        }
+      },
+      "finished": 1791616390.9375246
+    }
+  },
+  "task_outcomes": {
+    "sw0136_actual_joint_seed1": "passed",
+    "sw0136_actual_frozen_seed1": "passed"
+  },
+  "finished": 1791616390.941613
+}

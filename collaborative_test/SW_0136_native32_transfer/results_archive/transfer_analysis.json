@@ -1,0 +1,96 @@
+{
+  "experiment": "SW0136",
+  "status": "completed_seed1_transfer_analysis",
+  "result_sha256": "9b518a8230f86eebe66e621b9b2fb39e66a9ddcb2f7aac7e436fe2dcdaf77d79",
+  "seed_scope": [
+    1
+  ],
+  "grid": [
+    32,
+    32
+  ],
+  "means": {
+    "actual_joint": {
+      "primary": {
+        "fg_ari": 0.29626682069936644,
+        "foreground_iou": 0.3732309379702423,
+        "matched_object_iou": 0.14170414359188066
+      },
+      "qcc": {
+        "fg_ari": 0.6595211429295882,
+        "foreground_iou": 0.37103555793025395,
+        "matched_object_iou": 0.5097502220889434
+      }
+    },
+    "actual_frozen": {
+      "primary": {
+        "fg_ari": 0.1150186191703864,
+        "foreground_iou": 0.47508741228839557,
+        "matched_object_iou": 0.08725412251383753
+      },
+      "qcc": {
+        "fg_ari": 0.7541350949944816,
+        "foreground_iou": 0.606899549668619,
+        "matched_object_iou": 0.582200586329909
+      }
+    },
+    "source97_qcc": {
+      "qcc": {
+        "fg_ari": 0.7541350949944816,
+        "foreground_iou": 0.606899549668619,
+        "matched_object_iou": 0.582200586329909
+      }
+    },
+    "slot_seed0": {
+      "slot32": {
+        "fg_ari": 0.626661115666405,
+        "foreground_iou": 0.2119002726173212,
+        "matched_object_iou": 0.19100922463690687
+      }
+    },
+    "slot_seed1": {
+      "slot32": {
+        "fg_ari": 0.8418192917733233,
+        "foreground_iou": 0.20341670897019232,
+        "matched_object_iou": 0.2221151564255643
+      }
+    },
+    "slot_seed2": {
+      "slot32": {
+        "fg_ari": 0.8764755084430126,
+        "foreground_iou": 0.19776340171215284,
+        "matched_object_iou": 0.1963705775028791
+      }
+    }
+  },
+  "paired_fg_ari": {
+    "joint_primary_minus_source_qcc": {
+      "mean": -0.4578682742951151,
+      "paired95_percentile_ci": [
+        -0.48397746350901855,
+        -0.43171994546725223
+      ]
+    },
+    "joint_primary_minus_frozen_primary": {
+      "mean": 0.18124820152898002,
+      "paired95_percentile_ci": [
+        0.15319680531448596,
+        0.20970445629505943
+      ]
+    },
+    "joint_qcc_minus_source_qcc": {
+      "mean": -0.09461395206489347,
+      "paired95_percentile_ci": [
+        -0.10914939457533411,
+        -0.08073393376550077
+      ]
+    }
+  },
+  "bootstrap": {
+    "random_state": 135,
+    "resamples": 10000,
+    "paired_images": 320
+  },
+  "decision": "Do not expand the transferred-head recipe into the expensive native32 training pilot; primary joint underperforms source QCC and learned joint dynamics also reduce QCC FG. Preserve source97 native32 baseline and wait for all3 source scores before choosing the next model-training hypothesis.",
+  "limits": "Single-seed transfer screen, not native32 training; cannot establish learned binder impossibility, individual gate usefulness, scaling, or a three-seed victory."
+}

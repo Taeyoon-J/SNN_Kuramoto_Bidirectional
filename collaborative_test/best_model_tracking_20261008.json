@@ -1610,19 +1610,14 @@
     },
     "next_candidate": {
       "experiment": "SW0136",
-      "status": "GPU_prediction_workers_verified_live",
+      "status": "completed_seed1_transfer_not_promoted",
       "supervisor_pid": 2675399,
-      "child_pids": [
-        2675421,
-        2675422
-      ],
-      "physical_GPUs": [
-        0,
-        1
-      ],
-      "evidence": "SW_0136_native32_transfer/execution_start_20261010.json",
+      "child_pids": [],
+      "physical_GPUs": [],
+      "evidence": "SW_0136_native32_transfer/results_archive/transfer_analysis.json",
       "scope": "Two completed seed1 models transferred to genuine1024 patches; no new training or three-seed victory established",
-      "performance_result_available": false
+      "performance_result_available": true,
+      "decision": "Do not expand the transferred-head recipe into the expensive native32 training pilot; primary joint underperforms source QCC and learned joint dynamics also reduce QCC FG. Preserve source97 native32 baseline and wait for all3 source scores before choosing the next model-training hypothesis."
     },
     "followup_candidate": {
       "experiment": "SW0137",
