@@ -2,12 +2,12 @@
   "status": "latest_research_incumbents_and_candidates_tracked",
   "latest_native_spike_binding_preparation": {
     "experiment": "SW0134",
-    "status": "three_pilot_arms_running_on_reserved_gpus",
+    "status": "terminal_partial_models_completed_gate_arm_interrupted",
     "local_tests_passed": 15,
     "server_cpu_tests_passed": 15,
     "queue_supervisor_pid": 2566458,
     "original_queue_supervisor_pid": 2427541,
-    "queue_process_verified_alive": true,
+    "queue_process_verified_alive": false,
     "queue_tasks": 5,
     "automatic_start_when_exclusive_gpu_available": true,
     "queue_evidence": "SW_0134_native_spike_binding/owner_interruption_recovery_20261009.json",
@@ -53,7 +53,15 @@
         "pid": 2575584,
         "gpu": "1"
       }
-    ]
+    ],
+    "completed_arms": [
+      "actual_joint",
+      "actual_frozen"
+    ],
+    "interrupted_arm": "gate_joint",
+    "terminal_evidence": "SW_0134_native_spike_binding/results_archive/terminal_partial_completion_20261010/summary.json",
+    "new16_retry_started": false,
+    "interruption_owner_attribution": "PID2658338 provenance unknown; do not attribute to a peer"
   },
   "metrics_order": [
     "fg_ari",
@@ -1516,7 +1524,7 @@
   },
   "latest_native_spike_binding": {
     "experiment": "SW0134",
-    "status": "three_pilot_arms_running_on_reserved_gpus",
+    "status": "terminal_partial_models_completed_gate_arm_interrupted",
     "training_started": true,
     "score": null,
     "promotion": false,
@@ -1524,7 +1532,7 @@
     "training_unique_ids": 4096,
     "passes": 16,
     "scope": "fresh learned binder independent ofQCC H/K; no allgating or scaling proof",
-    "evidence": "SW_0134_native_spike_binding/recovery_gpu_start_20261010.json"
+    "evidence": "SW_0134_native_spike_binding/results_archive/terminal_partial_completion_20261010/summary.json"
   },
   "active_new_experiment_contract": {
     "effective_date": "2026-10-10",
@@ -1550,13 +1558,13 @@
     "historical16_incumbents_preserved": true,
     "existing_SW0134_immutable": true,
     "implementation": {
-      "status": "local_CPU_implementation_verified_GPU_pending",
+      "status": "native32_resource_updates_and_three_seed_exact_parity_GPU_verified",
       "record": "SW_0135_native32_spike_binding/implementation_review.json",
       "tests_passed": 8,
-      "native32_GPU_optimizer_verified": false,
+      "native32_GPU_optimizer_verified": true,
       "training_started": false,
       "foundation": {
-        "status": "local_CPU_foundation_verified_GPU_pending",
+        "status": "actual_native32_gamma_and_mapped_source_GPU_verified",
         "record": "SW_0135_native32_spike_binding/foundation_review.json",
         "tests_passed": 4
       },
@@ -1573,7 +1581,38 @@
         "logical_update_seconds": 56.87983477162197,
         "peak_allocated_GiB": 0.8694238662719727,
         "all_declared_joint_RGB_gradient_families_nonzero": true
+      },
+      "batched_resource_probe": {
+        "status": "resource_only_verified",
+        "result": "SW_0135_native32_spike_binding/results_archive/batched_resource_probe_seed0.json",
+        "analysis": "SW_0135_native32_spike_binding/results_archive/batched_resource_analysis.json",
+        "logical_update_seconds": 33.85822719009593,
+        "training_admission": false,
+        "execution_microbatch": 4,
+        "logical_batch": 16
+      },
+      "native32_validation": {
+        "status": "three_seed_exact_zero_adapter_parity_passed_and_batching_diagnostic_completed",
+        "result": "SW_0135_native32_spike_binding/results_archive/validation_analysis.json",
+        "supervisor_pid": 2669738,
+        "terminal": true,
+        "parity_seeds": [
+          0,
+          1,
+          2
+        ],
+        "horizons": [
+          64,
+          1024
+        ],
+        "scientific_training_admission": false
       }
+    },
+    "next_candidate": {
+      "experiment": "SW0136",
+      "status": "implementation_in_progress",
+      "scope": "Native32 inference transfer of both completed SW134 seed1 arms; no new training or three-seed victory established",
+      "design": "SW_0135_native32_spike_binding/transfer_design_review.md"
     }
   }
 }

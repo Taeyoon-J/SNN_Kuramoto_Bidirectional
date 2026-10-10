@@ -1,0 +1,333 @@
+{
+  "status": "all_native32_validation_tasks_completed",
+  "patch_count": 1024,
+  "exact_parity_seeds": [
+    0,
+    1,
+    2
+  ],
+  "horizons": [
+    64,
+    1024
+  ],
+  "zero_adapter_arms": [
+    "phase",
+    "constant"
+  ],
+  "source_code_and_result_sha256": {
+    "validation_queue_state.json": "c10b416f624baf80c793d84eef65f4d3a00991063fb0a93a2192b6d7b72a3f0b",
+    "batching_diagnostic_seed0_b4.json": "81324d30b058201142ea2eca0691435a1464aa8f961480682991f152ee145891",
+    "native32_zero_adapter_parity_seed0_b4.json": "a139ed9d8e713ea3b19caf761564624ceee9ce11b44eda6d0d156f7a7e2ce169",
+    "native32_zero_adapter_parity_seed1_b4.json": "d1ba016ef5f1ce8c68434bc9dcac497de5912ba02b0a1bf7f1b50a5698ad45cb",
+    "native32_zero_adapter_parity_seed2_b4.json": "c804028a8faa535c4abef8647cea6db6f086c55fe11f1109b75b18b20bba1c61",
+    "sw0135_parity_s0_b4.log": "0776b70c20dc882dcf7871cc65e9987b04827bc90fcc2db4eb9db838453b9859",
+    "sw0135_parity_s1_b4.log": "b1524e166f66905edfbb975f4a7f39a7bf717250ffff0b02f6fa2e7b13531453",
+    "sw0135_parity_s2_b4.log": "6a59e1cf2c30147fede6a86c5583dfae3203e4451b9d7811b27d7f688b06dc82",
+    "sw0135_batching_diagnostic_s0_b4.log": "a8f7d64ea9b46114038aac8aace6e3a8be449e8c6e5b78f0c9b6a7324f06be48"
+  },
+  "ground_truth_used": false,
+  "scientific_training_admission": false,
+  "loss_reduction_diagnostic": {
+    "batch_loss": 18.804311752319336,
+    "mean_per_image_loss": 18.80431056022644,
+    "batch_vs_mean_loss_abs": 1.1920928955078125e-06,
+    "phase_batch": 2.5049397945404053,
+    "phase_mean_per_image": 2.5049399733543396,
+    "positive_q_batch": 3.2598743438720703,
+    "positive_q_mean_per_image": 3.259874165058136,
+    "dtheta_gradient_batch_vs_mean_images": {
+      "shape": [
+        4,
+        1024,
+        1024,
+        4
+      ],
+      "max_abs": 7.275957614183426e-12,
+      "rms": 3.2986308885678324e-13,
+      "relative_l2": 8.050899275051585e-07,
+      "cosine": 0.9999999999992051
+    },
+    "dq_gradient_batch_vs_mean_images": {
+      "shape": [
+        4,
+        1024,
+        1024
+      ],
+      "max_abs": 3.637978807091713e-12,
+      "rms": 7.347165917510178e-13,
+      "relative_l2": 5.1308729865867826e-08,
+      "cosine": 0.9999999999992046
+    },
+    "per_image": [
+      {
+        "phase": 2.1916162967681885,
+        "positive_q": 3.6346657276153564,
+        "total": 20.364944458007812
+      },
+      {
+        "phase": 2.3471860885620117,
+        "positive_q": 2.473801374435425,
+        "total": 14.716193199157715
+      },
+      {
+        "phase": 2.2626192569732666,
+        "positive_q": 2.9479966163635254,
+        "total": 17.002601623535156
+      },
+      {
+        "phase": 3.2183382511138916,
+        "positive_q": 3.9830329418182373,
+        "total": 23.133502960205078
+      }
+    ]
+  },
+  "batch_trajectory_diagnostic": {
+    "gamma_b4_vs_independent_b1": {
+      "shape": [
+        4,
+        8,
+        1024
+      ],
+      "max_abs": 0.0,
+      "rms": 0.0,
+      "relative_l2": 0.0,
+      "cosine": 0.9999999999999851
+    },
+    "prepared_graph_b4_vs_b1": {
+      "shape": [
+        4,
+        1024,
+        1024
+      ],
+      "max_abs": 5.960464477539062e-07,
+      "rms": 4.487483988229141e-09,
+      "relative_l2": 1.2713814537194996e-07,
+      "cosine": 0.9999999999999334
+    },
+    "prepared_coupling_b4_vs_b1": [
+      {
+        "shape": [
+          4,
+          1024,
+          1024
+        ],
+        "max_abs": 5.960464477539062e-07,
+        "rms": 4.4874832513162645e-09,
+        "relative_l2": 1.2713736585528965e-07,
+        "cosine": 1.0000000000016496
+      },
+      {
+        "shape": [
+          4,
+          1024,
+          1024
+        ],
+        "max_abs": 5.960464477539062e-07,
+        "rms": 4.4874832513162645e-09,
+        "relative_l2": 1.2713736585529028e-07,
+        "cosine": 1.0000000000015745
+      },
+      {
+        "shape": [
+          4,
+          1024,
+          1024
+        ],
+        "max_abs": 1.0658141036401503e-14,
+        "rms": 2.1425015815314099e-16,
+        "relative_l2": 1.0889406525616653e-08,
+        "cosine": 0.9999999999997984
+      }
+    ],
+    "trace_b4_vs_concatenated_b1": {
+      "theta": {
+        "shape": [
+          4,
+          1024,
+          1024,
+          4
+        ],
+        "max_abs": 19.864959716796875,
+        "rms": 0.12377229190133568,
+        "relative_l2": 0.0004842115301683753,
+        "cosine": 0.9999998827698506
+      },
+      "membrane": {
+        "shape": [
+          4,
+          1024,
+          1024
+        ],
+        "max_abs": 2.4384580850601196,
+        "rms": 0.01955509649692793,
+        "relative_l2": 0.013864749671771235,
+        "cosine": 0.9999038842584504
+      },
+      "spikes": {
+        "shape": [
+          4,
+          1024,
+          1024
+        ],
+        "max_abs": 0.9980924129486084,
+        "rms": 0.013446357043315295,
+        "relative_l2": 0.0223137179714735,
+        "cosine": 0.9997510428069393
+      },
+      "component_membrane": {
+        "shape": [
+          4,
+          4,
+          1024,
+          1024
+        ],
+        "max_abs": 4.025715351104736,
+        "rms": 0.030223130157299567,
+        "relative_l2": 0.0196273974590558,
+        "cosine": 0.9998073810055381
+      },
+      "component_spikes": {
+        "shape": [
+          4,
+          4,
+          1024,
+          1024
+        ],
+        "max_abs": 0.9999992847442627,
+        "rms": 0.014774856987231664,
+        "relative_l2": 0.024495147006857565,
+        "cosine": 0.9996999881039201
+      },
+      "component_gates": {
+        "shape": [
+          4,
+          4,
+          1024,
+          1024
+        ],
+        "max_abs": 0.9980924129486084,
+        "rms": 0.013126197201323346,
+        "relative_l2": 0.02173390292934505,
+        "cosine": 0.9997638162887108
+      }
+    },
+    "q_b4_vs_concatenated_b1": {
+      "shape": [
+        4,
+        1024,
+        1024
+      ],
+      "max_abs": 0.9570232033729553,
+      "rms": 0.007456974781301669,
+      "relative_l2": 0.010169708426221787,
+      "cosine": 0.9999482871901628
+    },
+    "old_loss_b4": 18.804311752319336,
+    "old_loss_mean_b1": 18.797998905181885,
+    "old_loss_abs_difference": 0.006312847137451172,
+    "old_gradient_b4_vs_accumulated_b1": {
+      "shape": [
+        1062302
+      ],
+      "max_abs": 0.09622903168201447,
+      "rms": 0.00038158988449549523,
+      "relative_l2": 0.06089932086315615,
+      "cosine": 0.9989741732731224
+    },
+    "b1_old_losses": [
+      20.36496353149414,
+      14.680986404418945,
+      17.012619018554688,
+      23.133426666259766
+    ],
+    "b4_trace_summary": {
+      "theta": {
+        "shape": [
+          4,
+          1024,
+          1024,
+          4
+        ],
+        "mean": -32.51936340332031,
+        "std": 253.53916931152344,
+        "finite": true
+      },
+      "membrane": {
+        "shape": [
+          4,
+          1024,
+          1024
+        ],
+        "mean": 1.3096990585327148,
+        "std": 0.5234193205833435,
+        "finite": true
+      },
+      "spikes": {
+        "shape": [
+          4,
+          1024,
+          1024
+        ],
+        "mean": 0.4886874556541443,
+        "std": 0.3525865972042084,
+        "finite": true
+      },
+      "component_membrane": {
+        "shape": [
+          4,
+          4,
+          1024,
+          1024
+        ],
+        "mean": 1.309699296951294,
+        "std": 0.8098194599151611,
+        "finite": true
+      },
+      "component_spikes": {
+        "shape": [
+          4,
+          4,
+          1024,
+          1024
+        ],
+        "mean": 0.4886874556541443,
+        "std": 0.3535597622394562,
+        "finite": true
+      },
+      "component_gates": {
+        "shape": [
+          4,
+          4,
+          1024,
+          1024
+        ],
+        "mean": 0.4896422326564789,
+        "std": 0.35356250405311584,
+        "finite": true
+      }
+    },
+    "event_occupancy_by_component": [
+      0.9997196197509766,
+      0.9999880790710449,
+      0.9985935688018799,
+      0.9977700710296631
+    ],
+    "events_b4_vs_b1": {
+      "shape": [
+        4,
+        4,
+        1024,
+        1024
+      ],
+      "max_abs": 1.0,
+      "rms": 0.007275226770386396,
+      "relative_l2": 0.007278802142081593,
+      "cosine": 0.9999735094298996
+    },
+    "topk_indices": null,
+    "topk_unavailable_reason": "The registered graph-generator API returns adjacency but does not expose selection indices.",
+    "earliest_nonzero_difference_stage": "prepared_graph",
+    "interpretation": "Descriptive batch-size differences; no equivalence gate or causal attribution."
+  },
+  "interpretation": "Exact adapter parity passed independently at native32 for every source seed. Fixed-trace loss reduction agrees numerically; real B1/B4 gamma is exact, first nonzero difference is graph numerical output, followed by recurrent differences. Native32 learned-mask segmentation and calibrated training remain untested."
+}
