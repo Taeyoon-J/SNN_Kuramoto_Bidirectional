@@ -1,0 +1,30 @@
+{
+  "experiment": "SW0140_native32_causal_endpoint",
+  "status": "prospective_fixed_endpoint_evaluation",
+  "source": "SW0097 same-seed native32 checkpoint; frozen encoder and native source; T=1024, settle=512, batch=1",
+  "screen_dependency": "all three SW0140 GT-free causal screens must be complete, finite, and exact NONE-parity before prediction",
+  "conditions": [
+    "kuramoto_interaction_off",
+    "delayed_gate_constant_half",
+    "dendrite_history_off",
+    "membrane_voltage_history_off",
+    "spike_reset_off",
+    "binary_events_forced_on"
+  ],
+  "prediction": {
+    "seeds": [0, 1, 2],
+    "image_ids": [1320, 1639],
+    "count": 320,
+    "grid": [32, 32],
+    "ground_truth_used": false,
+    "optimizer_updates": 0,
+    "readout": "actual-spike QCC; positive signed component Pearson product; threshold 0.50; min group size 8; largest connected component background"
+  },
+  "scoring": {
+    "ground_truth_read_only_after": "all 18 intervention prediction archives and protocols are written, revalidated, and SHA-frozen; existing SW0137 source97 and SW0135 Slot32 references are also revalidated",
+    "ground_truth": "native128 masks converted directly to32 by production modal 4x4 pooling with minimum-ID tie rule",
+    "metrics": ["fg_ari", "foreground_iou", "matched_object_iou"],
+    "paired_bootstrap": {"replicates": 10000, "rng": "numpy RandomState(140)", "unit": "common image indices across all three seeds"}
+  },
+  "reporting": "Report every seed, intervention, metric, paired interval versus same-seed frozen source97 and registered Slot32 predictions. This is a frozen causal-ablation endpoint; no intervention is a promotion candidate and no gate-necessity claim is made."
+}
