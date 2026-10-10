@@ -1,0 +1,38 @@
+{
+  "status": "local_CPU_implementation_verified_GPU_pending",
+  "observed_utc": "2026-10-10T05:43:27.705996+00:00",
+  "experiment": "SW0135",
+  "patch_grid": [
+    32,
+    32
+  ],
+  "patches": 1024,
+  "files": {
+    "binder.py": "38450abd18eb0db390959727b95f88f96633117be20d053870ff28ccf5dae8ac",
+    "resolution.py": "dd98e62c48e6260e4bd1ba36f0f9a8ff2c6ecf7ade53e0f5780849d3bae49264",
+    "test_binder.py": "12e657e2ef4d195581ba320ba7ff282a1ba70cf3cd3fe411baf1dbe83700b327",
+    "test_resolution.py": "aacdacfe38174c198ae43f2135ff3b6b0673a123e7eb8e3e28c0bf38c6df015f",
+    "protocol.json": "bcea5cb37b7279c7db7e505127b7ca01a70d3a5b39b725ae6e37b6565cf29ea9"
+  },
+  "verification": {
+    "command": "python -m unittest collaborative_test.SW_0135_native32_spike_binding.test_binder collaborative_test.SW_0135_native32_spike_binding.test_resolution",
+    "tests_passed": 8,
+    "exit_code": 0,
+    "coverage": [
+      "Actual raw-spike1024 binder forward and RGB gradient",
+      "Exchangeable slot permutation",
+      "Native4px placement and differentiable geometry",
+      "Checkpointed RGB renderer values/gradients",
+      "Deterministic primary mask construction",
+      "Strict declared source node and pairwise mapping",
+      "Dense-vs-checkpointed full-node geodesic value and gradient equality at small N",
+      "Actual native32 core construction with live learned graph"
+    ],
+    "limitations": [
+      "Dense gradient equivalence tested at N16, not dense1024 memory",
+      "Full1024 core rollout and live64 temporal tail not GPU verified",
+      "No training or candidate evaluation result"
+    ]
+  },
+  "next_required": "Native32 source/encoder foundation validation then actual exclusive-GPU logicalB16 resource and optimizer verification"
+}

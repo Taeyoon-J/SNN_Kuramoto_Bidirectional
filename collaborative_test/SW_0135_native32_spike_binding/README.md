@@ -35,3 +35,14 @@ are FG-ARI .781651972, foreground IoU .204360128 and matched-object IoU
 See results_archive/slot70k_native32_baseline.json and
 results_archive/slot32_execution_record.json. This is baseline scoring,
 not new candidate training or evidence of a native32 victory.
+
+## Native32 implementation
+
+Implemented genuine1024 raw-spike binder,4px decoder geometry, strict spatial
+source conversion and a differentiable checkpointed full-reduction graph.
+Eight focused CPU tests passed, including graph values/gradients against a
+dense registered reference and a real native32 core construction with live
+graph parameters. See implementation_review.json and protocol.json.
+
+Actual1024 GPU rollout/optimizer/resource checks remain pending; CPU tests
+do not certify main-training readiness or any candidate performance.

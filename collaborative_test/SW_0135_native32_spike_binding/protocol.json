@@ -1,0 +1,161 @@
+{
+  "experiment": "SW0135_native32_spike_binding",
+  "status": "prospective_before_native32_GPU_verification",
+  "launch_dependency": "Native32 implementation review, exact gradient tests, strict mapped-source parity and exclusive-GPU logicalB16 optimizer update/resource forecast; no dependency on SW0134 evaluation",
+  "hypothesis": "Native1024 actual-spike binding with jointly trainable native32 encoder/graph/core improves foreground instance grouping relative to the same frozen native32 backbone",
+  "source": "Same-seed immutable SW0097 source spatially mapped256->1024; fresh native32 RGB encoding and unchanged SW0130 integration equations",
+  "training_masks_or_object_counts": false,
+  "input": {
+    "actual": "Raw emitted spikes [B,4,1024,512] from settled half of native1024 rollout",
+    "excluded": [
+      "RGB into binder",
+      "gamma into binder",
+      "theta into binder",
+      "absolute XY into binder",
+      "QCC seeds or GT object count",
+      "time averaging",
+      "16-grid feature cache expansion"
+    ]
+  },
+  "binder": {
+    "mechanism": "Explicit Slot Attention-style competitive binding; no novelty claim for slot algorithm",
+    "input_projection": "Flatten component/time per patch:2048->64, then LayerNorm",
+    "slots": 11,
+    "dimension": 64,
+    "iterations": 3,
+    "initialization": "Fixed iid noise seed135 [1,11,64]; shared learned mu/log_scale; exact same head initialization across arms",
+    "updates": "Shared key/query/value; softmax over slots; per-slot patch-normalized value update; shared GRU and residual64->128->64 MLP",
+    "final_P": "Recompute assignment from slots after third refinement",
+    "occupancy": "Unused slots allowed; no equal-occupancy loss or GT count"
+  },
+  "decoder": {
+    "initialization_seed": 106,
+    "shared_mlp": [
+      66,
+      64,
+      64,
+      3
+    ],
+    "activations": [
+      "ReLU",
+      "ReLU",
+      "sigmoid"
+    ],
+    "inputs": "Slot64 latent and live P-derived relative pixel XY; SW0132 centroid/variance with exact intra-cell variance",
+    "mixture": "Genuine patch P expanded to its4x4 pixels is the sole RGB mixture; no independent alpha head",
+    "loss": "Full128x128x3 RGB MSE per image, batch mean",
+    "chunk_pixels": 1024,
+    "checkpoint": "Nonreentrant complete render-and-mixture chunks",
+    "intra_cell_variance": 0.00030517578125
+  },
+  "arms": {
+    "actual_joint": "Actual spikes; encoder/graph/core/integration jointly trainable",
+    "actual_frozen": "Same actual spikes; source encoder/core/integration frozen; only binder/decoder train"
+  },
+  "warmup": {
+    "updates": 32,
+    "batch": 16,
+    "ids": "First512 registered TRAIN images",
+    "backbone": "Frozen",
+    "actual_arms": "Share warmed head/decoder weights and Adam32 moments within seed"
+  },
+  "temporal_credit": {
+    "total_steps": 1024,
+    "settle_steps": 512,
+    "live_tail_steps": 64,
+    "prefix_steps": 960,
+    "boundary": "Detach recurrent states and delayed phase history; static gamma/coupling prepared live once and reused in tail",
+    "limitation": "Truncated BPTT, not full1024 backward; full512 head input retained",
+    "native_parity_required": true
+  },
+  "objective": {
+    "joint": "Original phase-primary+5*positive-product actual-Q loss + lambda*R",
+    "head_decoder": "Unweighted R",
+    "lambda": "Fresh source0 after native32 actual-spike warm32: .25*median(old/R norm ratio), first4 logical TRAIN batches; accumulated gradient vector norms; excludes head/decoder; frozen across seeds/arms",
+    "old_loss_coefficients": "Source recipe including density target .867, except prospectively registered native32 coherence1.0"
+  },
+  "pilot": {
+    "seed": 1,
+    "training_images": 4096,
+    "shuffle_seed": 118,
+    "batch": 16,
+    "updates": 4096,
+    "learning_rates": {
+      "core_graph": 3e-05,
+      "encoder": 3e-06,
+      "integration": 0.01,
+      "head_decoder": 0.0003
+    },
+    "gradient_clipping": "Unique joint union1; head/decoder union1 separately",
+    "projection": "a_D/a_M into[0,1] after update",
+    "optimizer": "Fresh joint Adam; exact appropriate warm head/decoder Adam32",
+    "passes": 16,
+    "training_exposures": 65536,
+    "pass_order": "Pass0 exact source order117+seed; pass1..15 RandomState(135000+seed*100+pass_index); record actual-ID SHA",
+    "endpoint": "Final4096 only; no intermediate validation masks, checkpoint selection or scientific early stop",
+    "microbatch": 1,
+    "gradient_accumulation": "16 imagewise mean contributions scaled1/16, one union clip and optimizer step per logical batch; no per-micro clipping"
+  },
+  "evaluation": {
+    "ids": [
+      1320,
+      1639
+    ],
+    "images": 320,
+    "batch": 1,
+    "time_steps": 1024,
+    "settle_steps": 512,
+    "primary": "Direct32 argmax learned P; largest hard slot background, ties first occupied patch then slot index; canonical foreground IDs by first occupied patch",
+    "secondary": "Native32 actual-spike QCC .50/minFG8/largest-component background; separately reported and cannot replace primary",
+    "ground_truth": "Production modal4x4 pixel vote on native128 masks; minimum instance-ID ties",
+    "metrics": [
+      "patch_fg_ari",
+      "patch_foreground_iou",
+      "patch_matched_object_iou"
+    ],
+    "prediction_freeze_before_GT": true,
+    "bootstrap": "RandomState135,10000 common paired image resamples",
+    "expansion": "Final actual_joint primary FG strictly above same-seed mapped-source QCC and actual_frozen, both paired95% lower bounds positive; only then registered seeds0/2",
+    "failed_recipe": "Close registered native32 16-pass recipe if primary development gate fails; no silent slot/LR/threshold/checkpoint sweeps",
+    "reserved_ids_unread": [
+      90640,
+      90959
+    ]
+  },
+  "release_checks": [
+    "Exact source/data/implementation SHA bindings",
+    "Native32 zero-init integration versus independently mapped32 reference at T64 and T1024",
+    "Checkpointed graph values and gradients versus dense registered log4 formula",
+    "Strict source spatial mapping with both pairwise axes",
+    "Actual [B,4,1024,512] binder,4px decoder geometry",
+    "Real logicalB16 GPU update with finite/nonzero reconstruction gradients and updates for encoder/graph/core/integration/head/decoder",
+    "Shared within-seed warm head/decoder and optimizer moments",
+    "All predictions frozen before GT; original16 Slot provenance audit; matched32 metrics"
+  ],
+  "scientific_limits": "Two-arm pilot does not prove individual gate necessity or fresh-initialization data scaling. Same-seed source already has70k training lineage; pilot4096 images is continuation. Final native32 three-seed means must exceed comparable Slot32 on all3 metrics; ultimate70k target remains. Register matched stage controls and independent scaling curves after useful32 recipe.",
+  "evaluation_contract": "../evaluation_contract32.md",
+  "native32": {
+    "grid": [
+      32,
+      32
+    ],
+    "patches": 1024,
+    "pixel_patch": 4,
+    "gamma": "Actual native128 RGB encoder, registered feature normalization/clipping, adaptive average pool32 -> [B,8,1024]",
+    "source_mapping": "Spatial2x2 parent mapping; direction_learner both axes; strict full state; SC identity1024; physical grid_distance .5 old-patch units",
+    "graph_top_k": 128,
+    "kuramoto_k": 1024.0,
+    "geodesic": "Full intermediate-node soft-min reduction; output-row chunks32 with complete nonreentrant checkpoint; temperature*log4 correction each relaxation",
+    "coherence_coefficient": 1.0,
+    "no_hidden_resolution_or_graph_freezing": true
+  },
+  "resource_admission": {
+    "required": "Complete genuine1024 logicalB16 optimizer update via microB1x16 with all declared joint-family finite gradients and parameter updates",
+    "measurements": [
+      "peak allocated/reserved bytes",
+      "logical update seconds",
+      "warm32 and4096-update runtime forecast"
+    ],
+    "OOM_policy": "Preserve failure; revise resource implementation prospectively. No shortening rollout, reducing patch count or silently freezing graph."
+  }
+}
