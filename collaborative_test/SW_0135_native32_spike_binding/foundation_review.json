@@ -1,0 +1,28 @@
+{
+  "status": "local_CPU_foundation_verified_GPU_pending",
+  "observed_utc": "2026-10-10T05:50:28.743779+00:00",
+  "experiment": "SW0135",
+  "patch_grid": [
+    32,
+    32
+  ],
+  "files": {
+    "foundation.py": "9c241cacf1479c339fa56376b881672535c8d7ac4966a7ddff3b4b47f24cb867",
+    "test_foundation.py": "c42a71064e34bc79ccf3e65ec65e779fcbde2ed8c806b500ee72cffaa1baebd6"
+  },
+  "local_verification": {
+    "command": "python -m unittest collaborative_test.SW_0135_native32_spike_binding.test_foundation",
+    "tests_passed": 4,
+    "exit_code": 0,
+    "coverage": [
+      "Uint8 RGB scaled exactly once, native32 adaptive pooling and live encoder gradient",
+      "RGB/statistics failure checks",
+      "Strict native32 source construction before integration wrapper; trainable graph",
+      "Registered native32 coherence loss1.0 and source other coefficients"
+    ]
+  },
+  "actual_server_source_loaded": false,
+  "actual_GPU_optimizer_verified": false,
+  "training_started": false,
+  "limitations": "CPU fixtures certify structure, not server assets, native1024 temporal parity or full GPU update."
+}

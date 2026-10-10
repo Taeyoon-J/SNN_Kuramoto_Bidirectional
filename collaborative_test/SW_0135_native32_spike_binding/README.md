@@ -46,3 +46,9 @@ graph parameters. See implementation_review.json and protocol.json.
 
 Actual1024 GPU rollout/optimizer/resource checks remain pending; CPU tests
 do not certify main-training readiness or any candidate performance.
+
+Native32 encoder/source foundation is implemented and four focused CPU
+checks passed. It regenerates gamma from registered uint8 RGB, maps the
+complete source before the integration wrapper, and uses native32 losses.
+See foundation_review.json. Actual server assets,1024 GPU rollout/parity
+and logical-batch resource admission remain pending.
