@@ -14,3 +14,17 @@ Completed control/context predictions were frozen and scored with the registered
 ## Seed1 partition-error diagnostic
 
 The completed control/context output was decomposed on true-foreground patch pairs. The context arm shows a larger background-label merge component and higher missed-foreground fraction; see [the analysis](partition_failure_analysis.md) and the hash-bound [diagnostic JSON](results_archive/partition_diagnostic_seed1.json). This is descriptive and does not change the source97 incumbent or establish a causal layer claim.
+
+
+## Completed all-arm seed1 endpoint
+
+All11 queue tasks completed successfully; terminal state/log snapshots and all3 prediction protocols are archived. Fixed320 per-image means and common paired10k bootstrap intervals were independently reproduced.
+
+| Arm | FG-ARI | Foreground IoU | Object IoU |
+|---|---:|---:|---:|
+| control | 0.726187 | 0.592371 | 0.557006 |
+| context_residual | 0.666608 | 0.650807 | 0.477581 |
+| cross_view | 0.738505 | 0.592047 | 0.566686 |
+| source97 | 0.754135 | 0.606900 | 0.582201 |
+
+Cross-view improves FG over old-loss control by.012319 (paired95% CI[.004287,.021231]) but remains below source by.015630 (CI[-.024289,-.007376]). Both registered candidate expansion gates fail. Close these exact recipes without seed/70k expansion; incumbent staysSW0137. The conditional C-only/C+source-Q objective pilot is now justified for preparation, with actual integration/preflight required before training. No new pilot has run. This endpoint is one-seed continuation, not fresh70k native32 training or a scaling proof.
