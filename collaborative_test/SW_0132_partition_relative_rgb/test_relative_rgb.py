@@ -6,8 +6,6 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 sys.path[:0] = [str(ROOT), str(ROOT / "snn_kuramoto_bidirectional"),
                 str(ROOT / "collaborative_test")]
-sys.path[:] = [p for p in sys.path if not p or Path(p).resolve() != Path(__file__).resolve().parent]
-
 import numpy as np  # import numpy before torch in the registered environment
 import torch
 
