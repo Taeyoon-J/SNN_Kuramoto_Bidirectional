@@ -1,0 +1,67 @@
+{
+  "experiment": "SW0133",
+  "status": "seed1_paired_pilot_training_started",
+  "local_cpu_tests": {
+    "passed": 16,
+    "scope": "synthetic CPU tests; real source-shaped train loop executes 2 updates each live/detached, decoder Adam32 advances34; not segmentation evidence"
+  },
+  "server_cpu_tests": {
+    "passed": 16
+  },
+  "actual_source_preflights": {
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "canonical_validation_passed": true,
+    "evidence": "results_archive/passed_preflights_20261009/summary.json"
+  },
+  "deployed_files": [
+    {
+      "path": "collaborative_test/SW_0133_soft_partition_rgb/train.py",
+      "sha256": "f622c2c64ca36cceb3b6ed120fe18b55ae3323cbbe91bf81afa6a6f1659e4290"
+    },
+    {
+      "path": "collaborative_test/SW_0133_soft_partition_rgb/evaluate.py",
+      "sha256": "c04d93921474aa9c5c689d88ea0c9a769cb526e6617b28fae175427297388b87"
+    },
+    {
+      "path": "collaborative_test/SW_0133_soft_partition_rgb/coordinator.py",
+      "sha256": "2766f3c7023658fdcfd6553126631b11509db8b3a5b0461e651ccf0bb82def13"
+    },
+    {
+      "path": "collaborative_test/SW_0133_soft_partition_rgb/pilot_queue.py",
+      "sha256": "94f52a71d449c8ea1ffc168cbc77e6eec763ed56a1fee93214bb1fc9cda2c0a5"
+    },
+    {
+      "path": "collaborative_test/SW_0133_soft_partition_rgb/test_train_evaluate.py",
+      "sha256": "2a191f5bd7c65aca2bdccdee6e4b0c5899e4a03e352fe07d3e505d758ac04aef"
+    }
+  ],
+  "dependency_count": 29,
+  "math_review": [
+    "true soft P forward/backward; original actual-QCC H/K detached",
+    "joint old+lambda*R for live; old only for detached; decoder unweighted R",
+    "unique joint optimizer, native/encoder/integration LR, clip1 and projection",
+    "same immutable warm weights and Adam32; fresh joint Adam",
+    "fixed original spike readout and320 IDs; GT opened after prediction persistence",
+    "paired bootstrap all three references; no automatic expansion/70k"
+  ],
+  "lambda": 3915.7727006964174,
+  "supervisor_pid": 2351983,
+  "first_training_child": {
+    "pid": 2352578,
+    "alive": true,
+    "argv": "/Data0/kevinswk/envs/snn/bin/python /Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0133_soft_partition_rgb/train.py --seed 1 --arm phase_live --device cuda:0 --output /Data0/kevinswk/patch_v2_sw/trained_models/SW0133_soft_partition_rgb/seed1_phase_live ",
+    "cuda_visible_devices": "0"
+  },
+  "tasks": 6,
+  "serial": true,
+  "no_automatic_retries": true,
+  "joint_training_completed": false,
+  "performance_result": null,
+  "incumbent_unchanged": "SW0097",
+  "gating_and_scaling_proved": false,
+  "publication": "local record only; not yet published on GitHub"
+}

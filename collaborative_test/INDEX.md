@@ -1,3 +1,5 @@
+SW0133: [soft-partition joint-learning pilot](SW_0133_soft_partition_rgb/README.md) - three source preflights passed; actual seed1 phase_live GPU training started; all3 arms train/eval queued, no scores yet. [Launch evidence](SW_0133_soft_partition_rgb/pilot_launch_review_20261009.json).
+
 # Collaborative experiments
 
 | ID | Status | Change | Validation result |
