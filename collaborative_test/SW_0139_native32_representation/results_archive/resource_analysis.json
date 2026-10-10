@@ -1,0 +1,42 @@
+{
+  "experiment": "SW0139",
+  "status": "actual_disposable_GPU_preflights_verified",
+  "arms": {
+    "control": {
+      "preflight_sha256": "e730ac1fc410dc47888358593584b60ee2152c155f8ff6d9de2db3c3b366b7a1",
+      "observed_disposable_updates": 1,
+      "mean_seconds_per_logical16_update": 20.890238310676068,
+      "peak_allocated_GiB": 2.3753342628479004,
+      "peak_reserved_GiB": 3.490234375,
+      "encoder_and_graph_have_finite_nonzero_credit": true,
+      "naive_256_update_hours": 1.485528057648076,
+      "naive_70000_image_one_pass_hours": 25.387442391446612,
+      "view_exposures_per_unique_image": 1
+    },
+    "context_residual": {
+      "preflight_sha256": "5191ff94de30b711ac726d0c92eb28fe045a15292d4c02017e65df6033f07bd9",
+      "observed_disposable_updates": 2,
+      "mean_seconds_per_logical16_update": 20.321894894121215,
+      "peak_allocated_GiB": 2.419919490814209,
+      "peak_reserved_GiB": 3.55078125,
+      "encoder_and_graph_have_finite_nonzero_credit": true,
+      "naive_256_update_hours": 1.4451125258041753,
+      "naive_70000_image_one_pass_hours": 24.6967472671612,
+      "view_exposures_per_unique_image": 1
+    },
+    "cross_view": {
+      "preflight_sha256": "ebc2c9e5426ed3aeae98e40c1125a68898d93398818a51a18ca3ac12f48c2b07",
+      "observed_disposable_updates": 1,
+      "mean_seconds_per_logical16_update": 51.04511756775901,
+      "peak_allocated_GiB": 5.686963081359863,
+      "peak_reserved_GiB": 6.330078125,
+      "encoder_and_graph_have_finite_nonzero_credit": true,
+      "naive_256_update_hours": 3.6298750270406406,
+      "naive_70000_image_one_pass_hours": 62.03399704415157,
+      "view_exposures_per_unique_image": 2
+    }
+  },
+  "limits": "Only1/2 disposable logical updates measured, not steady throughput. Cross-view includes extra gradient-credit probes. Forecast excludes loading, scoring and repeated epochs. No evaluation score or scaling benefit inferred.",
+  "implementation_note": "Encoder and learned graph receive actual finite nonzero gradients; other core gates are frozen for this representation pilot. Context hidden branches validated after its second update.",
+  "performance_result_available": false
+}
