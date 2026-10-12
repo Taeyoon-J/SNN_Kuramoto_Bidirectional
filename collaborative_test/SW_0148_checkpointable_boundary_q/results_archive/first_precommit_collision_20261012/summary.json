@@ -1,0 +1,17 @@
+{
+  "status": "verified_foreign_owner_requeue_before_first_commit",
+  "supervisor_pid": 551842,
+  "attempt_child_pid": 623933,
+  "physical_gpu": 2,
+  "foreign_owner_pids": [
+    624137
+  ],
+  "stopped_child_returncode": -15,
+  "committed_checkpoint_exists": false,
+  "completed_updates_unverified": true,
+  "production_cuda_resume_verified": false,
+  "segmentation_scores": null,
+  "scientific_recipe_unchanged": true,
+  "goal_status": "active",
+  "interpretation": "Live supervisor automatically requeued after stopping only its own child. This proves pre-first-commit dispatch recovery, not continuation from an actual CUDA optimizer checkpoint."
+}
