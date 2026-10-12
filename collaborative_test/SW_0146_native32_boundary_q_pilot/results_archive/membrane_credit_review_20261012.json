@@ -1,0 +1,39 @@
+{
+  "status": "train_only_disposable_preflight_diagnostic",
+  "source_preflight_sha256": "dc6ef041e8478bf40722cc7ce5430dffd71b2ca9be27697ca1511b2943086787",
+  "reported_settled512_component_occupancy_by_microbatch": [
+    [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ]
+  ],
+  "gradient_norms": {
+    "encoder": 0.019973271630691517,
+    "graph": 0.0059705968056587315,
+    "native_core": 0.0015437614064735164,
+    "integration_scalars": 5.255674215139317e-08
+  },
+  "interpretation": "Reported mean occupancy is 1.0 on this initial 16-image TRAIN probe; not proof of tensor identity or global saturation. All parameter families changed, but positive gradients alone do not prove segmentation utility or gate necessity.",
+  "next_action": "Keep frozen SW146 training unchanged; inspect final first64 TRAIN diagnostics and registered segmentation gates before considering membrane-to-emitted-spike efficacy residual.",
+  "segmentation_result": null
+}
