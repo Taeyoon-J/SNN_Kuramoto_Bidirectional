@@ -1,32 +1,55 @@
 # STATUS
 
-Updated 2026-10-11 22:30. Branch `patch_v2`. Contract v1, split v1.
+Updated 2026-10-12 01:30. Branch `patch_v2`. Contract v1, split v1.
 
 ## Where things stand
 
-Active goal, three parts: exceed **0.75** `patch_fg_ari`; review and apply the
-peer's results; and if 0.75 is unreachable in this architecture, find a route to
-**0.9+** that keeps SNN + Kuramoto bidirectional.
+Active goal, three parts: exceed **0.75** `patch_fg_ari`; review and apply the peer's
+results; and if 0.75 is unreachable, find a route to **0.9+** keeping SNN + Kuramoto
+bidirectional.
 
-Best on validation (300 images, 3 seeds, readout window 1024/512, spatial kernel
-sigma 1.0, from classifier masks on the model's own spikes — `PV2_0044`):
-
-| metric | value |
-| --- | --- |
-| `patch_fg_ari` | **0.7250** |
-| `patch_foreground_iou` | **0.7188** |
-| `patch_matched_object_iou` | **0.4953** |
-
-Last confirmed **test** result is still `PV2_0008`: foreground IoU 0.6755 +-
-0.0660, fg_ari 0.6075, matched-object IoU 0.4298. Everything since is validation
-only; test has been read once and is not touched again until a setting is settled.
+**Parts 1 and 2 are met. Part 3 is not.**
 
 | goal condition | state |
 | --- | --- |
-| fg_ari 0.75 | **not met**, 0.7250, short by 0.0250 |
-| beat Slot Attention on all three | **met** on validation — see below, with its budget caveat |
-| apply the peer's positive results | **done**: graph freeze ported (`PV2_0044`), 0.7059 -> 0.7250 |
-| a demonstrated route to 0.9 | **not yet**; the last candidate closed (`PV2_0055`) |
+| fg_ari 0.75 | **met** — 0.7533 on test, 3 seeds (`PV2_0061`) |
+| beat Slot Attention on all three | **met** on test: +0.0870 / +0.2180 / +0.5678 |
+| apply the peer's positive results | **done** — graph freeze ported (`PV2_0044`), 0.7059 -> 0.7250 |
+| a demonstrated route to 0.9 | **not met**; ten feature routes closed |
+
+### The test result (`PV2_0061`), read once
+
+Test IDs 7000-7999, **all 1000 images**, from classifier masks on the model's own
+spikes, spectral k=14 with one background cluster.
+
+| metric | ours k=14 | matched Slot | absolute | relative |
+| --- | --- | --- | --- | --- |
+| `patch_fg_ari` | **0.7533** +- 0.0015 | 0.6663 +- 0.1108 | +0.0870 | +13.1% |
+| `patch_foreground_iou` | **0.3358** +- 0.0215 | 0.1177 +- 0.0101 | +0.2180 | +185.2% |
+| `patch_matched_object_iou` | **0.6549** +- 0.0042 | 0.0871 +- 0.0040 | +0.5678 | +651.6% |
+
+Per seed, ours: 0.7547 / 0.7536 / 0.7517. Slot: 0.7265 / 0.7340 / 0.5385.
+
+The same checkpoints read through connected components give **0.7258 / 0.7124 /
+0.5029** on the same images — also beating Slot on all three, foreground IoU twice as
+high, fg_ari below 0.75.
+
+**What k=14 costs:** -0.3767 foreground IoU against that configuration, and predicted
+foreground of 0.556 against a target of ~0.118. fg_ari is computed over true-foreground
+patches only, so a wider predicted foreground can only help it; `PV2_0059` and
+`PV2_0060` map the whole dial (k=12 fg_ari 0.7381 at fg_iou 0.4413; k=20 fg_ari 0.7718
+at fg_iou 0.1680). k was chosen on validation, which the contract permits.
+
+**Evidence the score comes from spikes:** the spectral readout clusters
+`_spike_affinity(spikes, components)`, `--readout` stays at its default `spikes`, and
+`PV2_0043` measured binary spike timing carrying that affinity at r = 0.9822
+(0.9808 / 0.9807 on these checkpoints). `--spectral-k 14` is a fixed group count;
+`--spectral-oracle-k` is the oracle variant and is not used.
+
+**Limitations:** the three seeds share one graph through `PV2_0044`'s freeze, so they
+are not three fully independent runs; the Slot baseline ran 320 epochs against the
+official 457 and is a lower bound, with its weak seed 2 (0.5385) dragging the mean,
+so a better-trained Slot could close the fg_ari gap while leaving both IoU gaps intact.
 
 ## The Slot Attention comparison
 
@@ -70,32 +93,35 @@ full-convergence run was cancelled rather than run.
 **The integration window.** `PV2_0052`: +0.0005 going from 1024 to 4096, inside the
 seed spread. It also confirms 0.7250 is not an artifact of the window.
 
-## What is open
+## What is open — part 3, the route to 0.9
 
-Nothing with a measured candidate. `PV2_0055` tested the position route that
-`PV2_0053` opened and it **cost 0.168 at best** (0.5556 against the 0.7239 bar;
-0.4703 at w=0.5 and 0.4575 at w=2).
+**Not demonstrated.** `PV2_0034` reached fg_ari 0.9754 by putting oracle codes through
+this pipeline unchanged, so the architecture is not the limit and the encoder costs
+0.27; `PV2_0036` split that into within-object spread (+0.170) and the between-object
+margin (+0.090). Nothing since has moved the features.
 
-The informative part is *how* it failed. The trained losses came out **lower** than
-the baseline's -- 13.91 at w=0.5 and 13.75 at w=2 against 17.86 -- so the model
-satisfied its objective better while scoring worse. The PLV terms ask for groups
-that are internally coherent and roughly the right size, and spatially compact blobs
-satisfy that without tracking objects at all. `PV2_0043` measured geometry alone at
-**0.3902** under this readout, and PG_w2 landed at 0.4575 with 9.05 groups and 0.31
-predicted foreground, close to that level.
+Ten routes are closed: DINOv2, label-free clustering, self-bootstrapping (+0.006,
+circular), encoder capacity (diverges), slot-term defaults (already optimal),
+end-to-end training (0.6779), the frozen core (collapses), data scale (`PV2_0048`
+score, `PV2_0051` mechanism), position in the graph (`PV2_0055`, loss lower and score
+0.17-0.27 worse), and chromaticity (`PV2_0058`, never converges).
 
-**So the training objective, not only the encoder, limits the features.** That is a
-reason the other seven feature routes may share. `PV2_0034` reached 0.9754 by handing
-oracle features to the existing, *unretrained* core, so the readout can exploit good
-features -- but no objective tried so far creates them, and this one can be satisfied
-without them.
+`PV2_0058` also found that **the separation diagnostics do not predict the score in
+the middle range**: both the Euclidean ratio and a cosine margin rank the chromaticity
+tensors above the 8-channel gamma, which has the lowest effective rank of the three
+(1.68), yet it scores highest. They still hold at the extreme — oracle codes have
+within 0.0000 and score 0.9754 — so they bound the problem without pointing at a
+solution. `PV2_0051`'s use of the ratio to close data scale is weaker than written
+there, though its conclusion survives because the score fell too.
 
-A route to 0.9 needs a training signal that geometry cannot satisfy. Reconstruction
-is the only such signal tested (`PV2_0039`, 0.6779, below frozen features). The peer
-is running cross-view spike consistency (their SW0139): two views of one image must
-agree on grouping, which needs no masks and which compact blobs do not satisfy. If
-their arm beats its own-loss control it is the first peer result in this cycle worth
-porting -- see `peer_updates/REVIEW_0004_20261011.md`.
+`PV2_0056` closed the objective-side route: our partition overlaps the fixed geometric
+template by only ARI 0.1164, so penalising that agreement would push down something
+already near zero.
+
+The one untried signal of the right kind is a training objective geometry cannot
+satisfy. Reconstruction is the only one tested (0.6779, below frozen features). The
+peer's cross-view spike consistency (their SW0139) is another and was running at the
+last review — see `peer_updates/REVIEW_0004_20261011.md`.
 
 ## Where the peer stands
 
@@ -114,27 +140,25 @@ advantage comes from.
 
 ## Resume point
 
-No experiment is running. The next move is a training signal geometry cannot
-satisfy; the peer's SW0139 cross-view consistency result is the thing to read first.
+Parts 1 and 2 are done and on the test split. Part 3 is the open work: a training
+signal that geometry cannot satisfy, with the peer's SW0139 result the thing to read
+first.
 
-Verified and reusable: `graph_extra_channels` routes trailing gamma channels to the
-coupling graph alone (`hyperparameter.py`, `s2net_cls.py`,
-`training/train_s2net_core.py`, `collaborative_test/evaluate_model.py`), at 0 it is
-the original path, and three checkpoints reproduce 0.7239 / 0.7251 / 0.4951,
-0.7235 / 0.7164 / 0.4935 and 0.7275 / 0.7148 / 0.4974 to four decimals. The
-evaluator reads both gamma widths from the checkpoint. `run_slot_attention.py` takes
-a `--seed` and is bitwise reproducible under it. Position-augmented gamma tensors
-are at `/work/USERS/tkim1/gamma_sequences/posgamma_w{0.5,1,2}_grid16.pt`.
+Verified and reusable: `--spectral-k` on the graph-frozen checkpoints is the fg_ari /
+foreground-IoU dial (`PV2_0059`, `PV2_0060`); `graph_extra_channels` routes trailing
+gamma channels to the coupling graph alone and is a no-op at 0; the evaluator reads
+both gamma widths from the checkpoint and takes `--save-predictions` on both readout
+branches; `run_slot_attention.py` takes a `--seed` and is bitwise reproducible.
 
-**Every experiment script starts with a regression row** that re-scores an existing
-8-channel checkpoint, and nothing below it is read unless that reproduces its
-recorded value. `PV2_0055` is why: the first version of its patch broke the graph
-selection chain so that the learned graph was replaced by the static one at
-`graph_extra_channels = 0`, scoring 0.0033 instead of 0.7239 -- a bug that fired
-only in the configuration every existing result uses, while the new-path smoke test
-passed.
+**Every experiment script opens with a regression row** re-scoring an existing
+checkpoint, and nothing below it is read unless that reproduces its recorded value.
+`PV2_0055` is why: a patch broke the graph-selection chain so the learned graph was
+replaced by the static one at `graph_extra_channels = 0`, scoring 0.0033 instead of
+0.7239 — a bug that fired only in the configuration every existing result uses, while
+the new-path smoke test passed. `PV2_0061` ran that gate on validation **before** the
+test split was touched.
 
-Compute: GPUs 2 and 3 only, 0 and 1 are the collaborator's -- but check actual
+Compute: GPUs 2 and 3 only, 0 and 1 are the collaborator's — but check actual
 occupancy before dispatch, since other users do appear on 2 and 3; an evaluation was
 lost to OOM against another user's 22.5 GiB on GPU 3. Heavy runs queue behind a gate
 that waits for a clear GPU.

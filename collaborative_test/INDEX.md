@@ -48,7 +48,10 @@
 | PV2_0055 | completed | **position in the graph: loss lower, score 0.168 worse. The objective is satisfiable by geometry** | | | |
 | PV2_0056 | exhausted | our partition overlaps the geometric template by only ARI 0.1164, so penalising that does nothing | | | |
 | PV2_0057 | completed | **within-object spread is mostly shading: chromaticity cuts w/b 46%, 0.2030 -> 0.1093** | | | |
-| PV2_0058 | running | train on chromaticity gamma, 3 channels, seed 0 against the 0.7239 bar | | | |
+| PV2_0058 | failed | chromaticity never converges; but shows fg_ari follows predicted foreground extent | | | |
+| PV2_0059 | completed | the fg_ari/IoU dial: spectral k from 6 to 20 spans fg_ari .579 to .772 and fg_iou .54 to .16 | | | |
+| PV2_0060 | completed | **k=14 at three seeds clears 0.75 on validation: .7569 / .3449 / .6480** | | | |
+| PV2_0061 | completed | **TEST, read once: .7533 / .3358 / .6549. Beats Slot on all three; 0.75 target met** | **0.7533** | **0.3358** | **0.6549** |
 | PV2_0046 | completed | contract diagnostic: a looser rule *lowers* fg_ari 0.724 to 0.533; cross-branch scores are not poolable | | | |
 
 Three seeds on the test split, scored from spike masks. Peer experiments from
@@ -65,21 +68,31 @@ Not a 3-seed training mean, and trained on a different render; see
 
 ## Where the goal stands
 
-The active goal has three parts: exceed **0.75** `patch_fg_ari`; review and apply
-the peer's results; and if 0.75 is unreachable in this architecture, find a route
-to **0.9+** that keeps SNN + Kuramoto bidirectional.
+Three parts: exceed **0.75** `patch_fg_ari`; review and apply the peer's results; and
+if 0.75 is unreachable, find a route to **0.9+** keeping SNN + Kuramoto bidirectional.
 
-**Best on validation**, three seeds, window 1024/512, spatial kernel sigma 1.0,
-scored from classifier masks on the model's own spikes (`PV2_0044`):
+**Parts 1 and 2 are met. Part 3 is not.**
 
-| metric | value | std |
-| --- | --- | --- |
-| `patch_fg_ari` | **0.7250** | 0.0022 |
-| `patch_foreground_iou` | **0.7188** | |
-| `patch_matched_object_iou` | **0.4953** | |
+### Part 1 — met on the test split, three seeds (`PV2_0061`)
 
-Last confirmed **test** result is still `PV2_0008`: fg_ari 0.6075, foreground IoU
-0.6755, matched-object IoU 0.4298. Everything since is validation only.
+Test IDs 7000-7999, all 1000 images, scored from spike-classifier masks, spectral
+k=14 (a fixed group count, never the true object count):
+
+| metric | ours | matched Slot | absolute | relative |
+| --- | --- | --- | --- | --- |
+| `patch_fg_ari` | **0.7533** +- 0.0015 | 0.6663 +- 0.1108 | +0.0870 | +13.1% |
+| `patch_foreground_iou` | **0.3358** +- 0.0215 | 0.1177 +- 0.0101 | +0.2180 | +185.2% |
+| `patch_matched_object_iou` | **0.6549** +- 0.0042 | 0.0871 +- 0.0040 | +0.5678 | +651.6% |
+
+Per seed: 0.7547 / 0.7536 / 0.7517. Previous test read (`PV2_0008`) was 0.6075, so
+fg_ari is **+0.1458**.
+
+The same checkpoints with the connected-component readout give
+**0.7258 / 0.7124 / 0.5029** on the same test images — also beating Slot on all three,
+with foreground IoU more than twice as high but fg_ari below 0.75. **Both are reported
+because k=14 costs -0.3767 foreground IoU**, and it predicts 0.556 foreground against
+a target of 0.118. They are two points on one dial (`PV2_0059`, `PV2_0060`), and k was
+selected on validation.
 
 ### The Slot Attention comparison is settled, and we win it
 
