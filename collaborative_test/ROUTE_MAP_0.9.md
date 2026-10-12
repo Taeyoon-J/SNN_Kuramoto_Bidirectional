@@ -116,6 +116,23 @@ two-sided optimum (`PV2_0079`, `PV2_0080`).
 **Already closed before this cycle:** per-region transduction (`PV2_0016-18`) — "the shared
 map is the prior, not the bottleneck".
 
+## The metric is not the obstacle (`PV2_0082`)
+
+It is tempting to suspect the measurement, since the field's standard method scores .6663
+here and the peer's 32x32 contract puts comparable models near .78. **It does not hold.**
+Labelling patches from the TRUE pixel masks under rules other than the contract's own:
+
+| rule | fg_ari |
+| --- | --- |
+| majority, ties to low ID — contract v1 | 1.0000 (check) |
+| majority, ties to **high** ID | 0.9996 |
+| an object must hold **half** the patch | 0.9756 |
+
+17.3% of foreground patches straddle two or more objects, and a perfect segmenter still
+scores .9756 under a far stronger rule change than a tie-break. **Contract v1 admits 0.9
+comfortably**, so the 0.14 gap is model error and moving to a finer grid would change the
+number without addressing the cause. Do not spend effort on the contract.
+
 ## What a credible attempt would have to do
 
 - **Not** optimise this loss (finding 4).
