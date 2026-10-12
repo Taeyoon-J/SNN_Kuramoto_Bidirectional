@@ -1,0 +1,19 @@
+# PV2_0074: inference only, BIM6_s1, validation 300, contract v1, window 1024/512. The
+# geodesic contrast is a learned nn.Parameter, so the value was written directly into
+# the checkpoint; the stored scalar is pre-softplus and the column is the effective one.
+# PV2_0075: ORACLE-GUIDED diagnostic, adjacent-pair 1-cosine by pair type, which is the
+# factor multiplying each geodesic step.
+test,condition,fg_ari,fg_iou,obj_iou,groups,pred_foreground
+PV2_0074,contrast_0.5,0.7243,0.7272,0.4927,5.3767,0.1292
+PV2_0074,contrast_1,0.7208,0.7249,0.4906,5.3767,0.1296
+PV2_0074,contrast_2,0.7239,0.7276,0.4963,5.4567,0.1290
+PV2_0074,contrast_2.17_learned,0.7239,0.7251,0.4951,5.4567,0.1290
+PV2_0074,contrast_4,0.7246,0.7223,0.5005,5.6033,0.1285
+PV2_0074,contrast_8,0.7183,0.7184,0.5015,5.7900,0.1275
+PV2_0074,contrast_16,0.6945,0.6990,0.4958,6.1633,0.1257
+PV2_0074,contrast_32,0.6406,0.6675,0.4764,6.5900,0.1224
+test,pair_type,mean_dissimilarity,median,p90,count,
+PV2_0075,within_one_object,0.0331,0.0152,0.0880,9782,
+PV2_0075,background_to_background,0.0054,0.0003,0.0096,119087,
+PV2_0075,object_to_background,0.1743,0.1491,0.3431,13742,
+PV2_0075,between_two_objects,0.1587,0.1169,0.3539,1389,

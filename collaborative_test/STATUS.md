@@ -15,7 +15,7 @@ bidirectional.
 | fg_ari 0.75 | **met** — 0.7533 on test, 3 seeds (`PV2_0061`) |
 | beat Slot Attention on all three | **met** on test: +0.0870 / +0.2180 / +0.5678 |
 | apply the peer's positive results | **done** — graph freeze ported (`PV2_0044`), 0.7059 -> 0.7250 |
-| a demonstrated route to 0.9 | **not met**; 19 routes closed, and the 0.9671 'feasibility' is withdrawn (`PV2_0072`) |
+| a demonstrated route to 0.9 | **not met**; 21 routes closed, the 0.9671 'feasibility' withdrawn (`PV2_0072`), failure explained arithmetically (`PV2_0075`) |
 
 ### The test result (`PV2_0061`), read once
 
@@ -214,18 +214,46 @@ label-free procedure here produces that is in the data: these are single static 
 so nothing in the input distinguishes two same-coloured objects except spatial
 separation, which the pipeline already uses.
 
+### The arithmetic of the failure (`PV2_0074`, `PV2_0075`)
+
+`_geodesic_distance` exists to separate same-coloured objects -- "walking between them
+crosses background, so the route is what tells them apart" -- and its strength is a
+**learned** parameter, so `PV2_0071` could not vary it. Written directly into the
+checkpoint, the learned 2.17 turns out to be the best of 0.5 through 32 (best +0.0007,
+noise; 32 gives 0.6406). Groups per image climb 5.46 -> 6.59 as it rises, so objects do
+split, and fg_ari falls, so the splits miss the boundaries.
+
+`PV2_0075` says why, in adjacent-pair dissimilarity, which is all the geodesic sees:
+
+| pair type | mean `1 - cosine` |
+| --- | --- |
+| within one object | 0.0331 |
+| **background to background** | **0.0054** |
+| object to background | 0.1743 |
+| between two objects | 0.1587 |
+
+The wall is real -- crossing into background costs **5.27x** a shading step inside an
+object. **The corridor is the problem**: background-to-background is six times *cheaper*
+than a within-object step, so the route between two same-coloured objects is two thin
+walls with a nearly frictionless corridor. At the learned contrast a wall step costs
+1.378, a background step 1.012 and a within-object step 1.072, so reaching an object six
+patches away costs about 6.8 while crossing a six-patch-wide object costs 6.4 -- nearly
+a tie, which is the merge.
+
+The contrast cannot fix it because it multiplies `(1 - similarity)` **uniformly**:
+raising it scales walls and shading steps together, and objects with shading gradients
+split before the walls dominate.
+
 ### Resume here
 
-Part 3 needs either a dataset with motion or several views of one scene, or supervision
-the contract does not allow. Everything built this session is reusable for that:
-`--phase-gamma-path` and `graph_extra_channels` route a transform to the graph alone,
-`--recon-target-path` threads an external per-patch target through training with frozen
-features, `--view-consistency-weight` adds a second view and a consistency term, and
-`--save-predictions` dumps labels from either readout.
+Within the architecture, the next thing to change is `_geodesic_distance` itself: a step
+cost **superlinear** in dissimilarity, or a fixed per-step toll so a long cheap corridor
+costs something. Both are core changes rather than parameter choices, and the margin is
+tight -- within-object 0.0331 against wall 0.1743, with the usable window for a
+selective threshold roughly between 6 and 30, already sampled at 8 for 0.7183.
 
-The peer's SW0139 cross-view arm had no result at three fetches this session, so there
-is still nothing to port; this session's `PV2_0070` is the same idea run here, and it
-closed.
+Outside the architecture, part 3 needs what a single static render does not contain:
+motion, or several views of one scene.
 
 ## Where the peer stands
 

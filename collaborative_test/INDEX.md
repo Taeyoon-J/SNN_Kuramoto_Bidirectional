@@ -64,6 +64,8 @@
 | PV2_0071 | exhausted | the generator's own knobs: best is +0.0062 for -0.0401 fg_iou; contrast and decay are learned, so those rows were vacuous | | | |
 | PV2_0072 | completed | **the oracle number measures transcription, not discovery; the pipeline repairs random damage (+0.15 at heavy corruption)** | | | |
 | PV2_0073 | exhausted | iterating the model's own grouping converges to 0.7274: its errors are spatially coherent, which the repair cannot touch | | | |
+| PV2_0074 | exhausted | the learned geodesic contrast is already best; 0.5-32 spans .7243 to .6406 and groups split before walls dominate | | | |
+| PV2_0075 | completed | **why: the barrier is two thin walls (5.27x) with a background corridor 6x cheaper than a within-object step** | | | |
 | PV2_0046 | completed | contract diagnostic: a looser rule *lowers* fg_ari 0.724 to 0.533; cross-branch scores are not poolable | | | |
 
 Three seeds on the test split, scored from spike masks. Peer experiments from
