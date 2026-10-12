@@ -1,0 +1,30 @@
+{
+  "status": "completed_gradient_credit_probe",
+  "report_sha256": "2c470ac9e58eb952ab3a7d6d7d25f0b179bcd3169045ed764c9a1cc66fae9177",
+  "terminal_state_sha256": "a90546bda52477ad4044b9dd93db58e36322a93aeb9024a75ab3ded51bc787ed",
+  "independent_report_arithmetic_verified": true,
+  "source_seed": 0,
+  "optimizer_updates": 1,
+  "logical_update_images": 16,
+  "gradient_comparison_images": 64,
+  "scale_calibration_unique_train_images": 4096,
+  "scale": 0.0007118072634665487,
+  "lambda_A": 0.19366687877861335,
+  "family_gradients": {
+    "encoder": 0.009057606539285504,
+    "graph": 0.0024837935203443533,
+    "native_core": 0.0014431599746739727,
+    "integration_scalars": 3.479300428970351e-06
+  },
+  "changed_families": {
+    "encoder": true,
+    "graph": true,
+    "native_core": true,
+    "integration_scalars": true
+  },
+  "first16_source_Q_exact": true,
+  "ground_truth_used": false,
+  "checkpoint_saved": false,
+  "interpretation": "Boundary-Q learning credit exists in all four parameter families; suitable for separately registered paired pilot admission.",
+  "limitations": "No segmentation score, gating necessity proof, performance gain or native32 70000-image scaling result."
+}
