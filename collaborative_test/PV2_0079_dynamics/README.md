@@ -39,10 +39,12 @@ has seen that: `PV2_0055` (position in the graph, 13.91 vs 17.86 for -0.17), `PV
 (chroma11 at 17.71 for 0.3599), `PV2_0068` (reconstruction), `PV2_0077` (training under
 the superlinear cost, 16.71 for 0.4268), and here.
 
-The reading is consistent: **a wider phase space gives the PLV terms more degenerate ways
-to be satisfied.** Bimodality, balance and target density are all statistics of the
-synchrony matrix, and more dimensions make it easier to produce a matrix with the right
-statistics and the wrong groups.
+I read this as a wider phase space giving the PLV terms more degenerate ways to be
+satisfied. **`PV2_0080` refutes that**: osc_dim 3 also reaches a lower loss (16.21) with a
+worse score (0.6783), so reducing capacity does the same thing and the pattern is not
+about capacity. The correct statement is that the objective and the metric are **decoupled
+around the operating point**, whose loss of 17.86 is higher than both neighbours' while
+its score is better than both.
 
 osc_dim 16 never trained at all — loss 86, the dead-membrane regime `PV2_0054` diagnosed,
 confirmed by predicted foreground 0.0000. k 1024 diverged (35.88 -> 80.78). k 64

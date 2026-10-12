@@ -291,12 +291,23 @@ trains (loss 86, the dead-membrane regime), coupling 64 gives 0.6088 and 1024 di
 **osc_dim 4 and k 256 are already the best of these**, and the hypothesis that four phase
 dimensions are too few for 6.32 objects is refuted.
 
-The losses explain it. **osc_dim 8 reached 14.19 against the baseline's 17.86 and scored
-0.5670** — the objective satisfied better, the score worse. That is the fifth instance:
-`PV2_0055`, `PV2_0058`, `PV2_0068`, `PV2_0077` and here. A wider phase space gives the
-PLV terms more degenerate ways to be satisfied, since bimodality, balance and target
-density are statistics of the synchrony matrix and more dimensions make a right-statistics
-wrong-groups matrix easier to produce.
+The losses explain it, but not the way I first wrote. **osc_dim 8 reached 14.19 against
+the baseline's 17.86 and scored 0.5670**, and `PV2_0080` then found **osc_dim 3 reaches
+16.21 for 0.6783** — lower loss, worse score, on the *small* side. So the pattern is not
+extra capacity creating degenerate solutions; reducing capacity does the same thing.
+
+| setting | loss | fg_ari |
+| --- | --- | --- |
+| osc_dim 3 | 16.21 | 0.6783 |
+| **osc_dim 4** | **17.86** | **0.7239** |
+| osc_dim 8 | 14.19 | 0.5670 |
+
+**The operating point has a relatively high loss and the best score**, so the objective
+and the metric are **decoupled around it**. All six instances fit that (`PV2_0055`,
+`PV2_0058`, `PV2_0068`, `PV2_0077`, `PV2_0079`, `PV2_0080`), and the constraint it puts on
+future work is sharp: **lowering this loss is not evidence of progress.** It also reframes
+`PV2_0044`'s graph freeze, the one intervention that raised the score — it constrains the
+solution rather than improving the objective's value.
 
 ### Exhausted, and the obstacle stated precisely
 

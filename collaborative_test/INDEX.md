@@ -70,6 +70,7 @@
 | PV2_0077 | failed | training under the superlinear cost gives .4268 and .5248: its gain is an inference-time correction only | | | |
 | PV2_0078 | exhausted | lowering the per-step toll: base 1.0 is already best when calibrated; the spectral 'gain' is the extent dial | | | |
 | PV2_0079 | exhausted | **the dynamics are not the limit: osc_dim 4 and k 256 already best; osc_dim 8 reached a LOWER loss for 0.5670** | | | |
+| PV2_0080 | exhausted | **less capacity fails too (osc_dim 3: loss 16.21, fg_ari .6783), so the pattern is loss/metric decoupling, not capacity** | | | |
 | PV2_0046 | completed | contract diagnostic: a looser rule *lowers* fg_ari 0.724 to 0.533; cross-branch scores are not poolable | | | |
 
 Three seeds on the test split, scored from spike masks. Peer experiments from
