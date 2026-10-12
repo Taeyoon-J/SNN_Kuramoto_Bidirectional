@@ -1,4 +1,4 @@
-Current status and results are summarized in [STATUS.md](STATUS.md). SW0142 joint training remains live; paired score pending. SW0143 R/C/T native32 three-seed frozen graph comparison is queued (supervisor370093), with 11 local/server CPU tests and actual source validation passed. No new segmentation score or promotion. [SW0143 evidence](SW_0143_native32_selective_geodesic/results_archive/server_start_20261012/summary.json).
+Current status and results are summarized in [STATUS.md](STATUS.md). SW0142 joint training continues. SW0143 GPU-owner interruption is preserved; unchanged scientific comparison recovery supervisor381401 verified live after7 local/server CPU tests. No new score or promotion. [Recovery evidence](SW_0143_native32_selective_geodesic/results_archive/owner_interruption_recovery_20261012/summary.json).
 
 Latest recovery observation: three actual training children verified in /proc and nvidia-smi on GPUs0/1/2. No scores yet. Evidence: SW_0134_native_spike_binding/recovery_gpu_start_20261010.json.
 
