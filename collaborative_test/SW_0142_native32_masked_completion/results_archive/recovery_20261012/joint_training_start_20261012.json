@@ -1,0 +1,73 @@
+﻿{
+    "observed_utc":  "2026-10-12T14:25:54.6428342Z",
+    "experiment":  "SW0142_native32_masked_completion",
+    "recovery_supervisor_pid":  359598,
+    "recovery_supervisor_live_argv":  "/Data0/kevinswk/envs/snn/bin/python /Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0142_native32_masked_completion/results_archive/recovery_code_v3_20261012/recover_train_core.py --repo /Data0/kevinswk/patch_v2_sw --original-state /Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0142_native32_masked_completion/queue_runtime/queue_state.json --execute ",
+    "completed_control_prediction":  {
+                                         "task":  {
+                                                      "task_id":  "predict_encoder_graph_recovery",
+                                                      "stage":  "predict",
+                                                      "arm":  "encoder_graph",
+                                                      "deps":  [
+                                                                   "train_encoder_graph"
+                                                               ]
+                                                  },
+                                         "status":  "passed",
+                                         "gpu":  0,
+                                         "gpu_uuid":  "GPU-a0a7d03d-adc1-37ca-4342-328878b3657c",
+                                         "memory_before_mib":  16,
+                                         "lease_path":  "/tmp/kevinswk_sw0113_gpu_leases/gpu0.lock",
+                                         "child_started":  1791814462.5947852,
+                                         "log_path":  "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0142_native32_masked_completion/queue_runtime_recovery_v3_20261012/predict_encoder_graph_recovery.log",
+                                         "argv":  [
+                                                      "/Data0/kevinswk/envs/snn/bin/python",
+                                                      "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0142_native32_masked_completion/run.py",
+                                                      "--stage",
+                                                      "predict",
+                                                      "--arm",
+                                                      "encoder_graph",
+                                                      "--device",
+                                                      "cuda:0"
+                                                  ],
+                                         "cuda_visible_devices":  "0",
+                                         "child_pid":  359609,
+                                         "returncode":  0,
+                                         "artifact_valid":  true,
+                                         "completed":  1791815088.282689,
+                                         "actual_live_argv":  null,
+                                         "log_tail":  "{\"stage\": \"predict\", \"arm\": \"encoder_graph\", \"predicted\": 40, \"count\": 320}\n{\"stage\": \"predict\", \"arm\": \"encoder_graph\", \"predicted\": 80, \"count\": 320}\n{\"stage\": \"predict\", \"arm\": \"encoder_graph\", \"predicted\": 120, \"count\": 320}\n{\"stage\": \"predict\", \"arm\": \"encoder_graph\", \"predicted\": 160, \"count\": 320}\n{\"stage\": \"predict\", \"arm\": \"encoder_graph\", \"predicted\": 200, \"count\": 320}\n{\"stage\": \"predict\", \"arm\": \"encoder_graph\", \"predicted\": 240, \"count\": 320}\n{\"stage\": \"predict\", \"arm\": \"encoder_graph\", \"predicted\": 280, \"count\": 320}\n{\"stage\": \"predict\", \"arm\": \"encoder_graph\", \"predicted\": 320, \"count\": 320}\n{\"directory\": \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0142_native32_masked_completion/results/encoder_graph\", \"prediction_sha256\": \"695de65b9b3b9e48b1f09076e68eeb519a6b5a4006ac4cc9173d168423fff64c\", \"protocol_sha256\": \"be0669a9f2c06f2aa046d699129a54f7f964f30fe33a2f4ba6ecaafe3def7b38\"}\n"
+                                     },
+    "joint_training":  {
+                           "task":  {
+                                        "task_id":  "train_core_trainable_recovery",
+                                        "stage":  "train",
+                                        "arm":  "core_trainable",
+                                        "deps":  [
+                                                     "preflight_core_trainable"
+                                                 ]
+                                    },
+                           "status":  "running",
+                           "gpu":  0,
+                           "gpu_uuid":  "GPU-a0a7d03d-adc1-37ca-4342-328878b3657c",
+                           "memory_before_mib":  16,
+                           "lease_path":  "/tmp/kevinswk_sw0113_gpu_leases/gpu0.lock",
+                           "child_started":  1791815088.4443648,
+                           "log_path":  "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0142_native32_masked_completion/queue_runtime_recovery_v3_20261012/train_core_trainable_recovery.log",
+                           "argv":  [
+                                        "/Data0/kevinswk/envs/snn/bin/python",
+                                        "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0142_native32_masked_completion/run.py",
+                                        "--stage",
+                                        "train",
+                                        "--arm",
+                                        "core_trainable",
+                                        "--device",
+                                        "cuda:0"
+                                    ],
+                           "cuda_visible_devices":  "0",
+                           "child_pid":  361308,
+                           "actual_live_argv":  "/Data0/kevinswk/envs/snn/bin/python /Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0142_native32_masked_completion/run.py --stage train --arm core_trainable --device cuda:0 ",
+                           "log_tail":  ""
+                       },
+    "final_paired_score_available":  false,
+    "scientific_recipe_unchanged":  true
+}
