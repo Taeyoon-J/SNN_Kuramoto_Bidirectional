@@ -1,0 +1,39 @@
+{
+  "status": "completed_registered_gate_failed",
+  "score_sha256": "2ed9a82e85d610be4ad772a1648652846e962e38380a2986fe26980878870a5c",
+  "terminal_state_sha256": "cccfbb856da9797d671f65cd75c8730829a28effcdd98dac1edf30ddb55bdf6b",
+  "independently_verified_metric_means": 12,
+  "independently_verified_paired_intervals": 12,
+  "three_seed_means": {
+    "R": {
+      "fg_ari": 0.7819186736813425,
+      "foreground_iou": 0.605427133598362,
+      "matched_object_iou": 0.597013806658626
+    },
+    "C": {
+      "fg_ari": 0.7567793407144596,
+      "foreground_iou": 0.5905643648073009,
+      "matched_object_iou": 0.6016166026508326
+    },
+    "T": {
+      "fg_ari": 0.7830440057720661,
+      "foreground_iou": 0.6099754484530632,
+      "matched_object_iou": 0.5961971295173867
+    },
+    "Slot32": {
+      "fg_ari": 0.7816519719609136,
+      "foreground_iou": 0.20436012776655543,
+      "matched_object_iou": 0.2031649861884501
+    }
+  },
+  "registered_gate": {
+    "T_FG_mean_above_R": true,
+    "T_FG_mean_above_Slot32": true,
+    "T_minus_R_FG_CI_lower_positive": false,
+    "T_IoUs_above_Slot32": true,
+    "T_minus_Slot32_FG_CI_lower_positive": false
+  },
+  "all_registered_gate_conditions_pass": false,
+  "interpretation": "Power2 restores the contrast8 FG drop and yields a small FG mean increase over R, but both registered FG confidence gates fail.",
+  "limits": "Inference-only graph intervention on native32 mapped sources; not fresh native32 70000-image training or robust FG superiority."
+}

@@ -1,0 +1,627 @@
+{
+  "experiment": "SW0143_native32_selective_geodesic_recovery_v3",
+  "status": "complete",
+  "supervisor_pid": 404277,
+  "started": 1791822067.0247068,
+  "v2_state_sha256": "b63e45f05def81d4c5feb6aab912fccaf19002b2f8614eef95335b50b92256a9",
+  "prior_implementation_fingerprint": {
+    "collaborative_test/SW_0135_native32_spike_binding/foundation.py": "9c241cacf1479c339fa56376b881672535c8d7ac4966a7ddff3b4b47f24cb867",
+    "collaborative_test/SW_0135_native32_spike_binding/protocol.json": "bcea5cb37b7279c7db7e505127b7ca01a70d3a5b39b725ae6e37b6565cf29ea9",
+    "collaborative_test/SW_0135_native32_spike_binding/resolution.py": "dd98e62c48e6260e4bd1ba36f0f9a8ff2c6ecf7ade53e0f5780849d3bae49264",
+    "collaborative_test/SW_0135_native32_spike_binding/binder.py": "38450abd18eb0db390959727b95f88f96633117be20d053870ff28ccf5dae8ac",
+    "collaborative_test/SW_0130_phase_state_integration/run.py": "92ac0032467c6bff2e31a76c66021c5e211f9402d15ff868382d71ecc807e988",
+    "collaborative_test/SW_0130_phase_state_integration/model.py": "2ba6bbe44dbbf2a5a444e724db71caafc1b9915570bfd7ab31343b86915cbd0b",
+    "collaborative_test/SW_0134_native_spike_binding/rollout.py": "66c08404af91b50fb4cbfa63fe44650dd6a698ea669cd3d6a672dfc5c78503f3",
+    "collaborative_test/SW_0110_xy_graph_route/run.py": "b7d4b90cbf74c8085d2a5cfc8b78a5772f77bc086240939a332f429c1ca344fd",
+    "collaborative_test/SW_0094_aligned_joint_pilot/run.py": "9f4e9046a2960e7aa53bf16d7e0663bee162b3f56a11f11d45554d79889536a3",
+    "snn_kuramoto_bidirectional/s2net_cls.py": "18313e5ee7358146703256e7e29d9846bfa60394feedba3237f2f7eac8791288",
+    "snn_kuramoto_bidirectional/graph_generator.py": "4f4c4d680a60822a5e4645eec3bbceb960846d4fac89e799076f6b4cf1bc6dde",
+    "snn_kuramoto_bidirectional/loss_function.py": "6542d084f66c07101b75869709df9302db45e0dde87b6b5945d1790daa316543",
+    "snn_kuramoto_bidirectional/spike_classifier.py": "2d13c15a928f503bc09239aae2153a5f1a82de77aab4b5a76d0dfe876b755181",
+    "snn_kuramoto_bidirectional/evaluation.py": "4a15980c9aa0248dbe0e837ad1b0b430ce26a7ab367c004d290a1272bb1025d7",
+    "snn_kuramoto_bidirectional/hyperparameter.py": "bceea67a10a4533eae48ce682b23ce81330c981d687fa928cca7b9f3b97fc73e",
+    "snn_kuramoto_bidirectional/gamma_initializer.py": "9b5f3e077c755738b1636b97ac9640321a5b7abf5ec85b9a12557209cf5ad50b",
+    "snn_kuramoto_bidirectional/training/train_gamma_initializer.py": "845f91d3255d1d72d2a69c432c7b559a9d29d90a4186a4821e75864af9e47d20",
+    "snn_kuramoto_bidirectional/training/train_input_layer_generator.py": "df45612ad4e069bc645c8cf335da1ebf1dd73d73ae0b9a40de96cefa9025f38d",
+    "snn_kuramoto_bidirectional/dendric_layer.py": "69d960809ff1ad73a91a7067f87f605ae69ef612be9b936e4b486cc29511dd1a",
+    "snn_kuramoto_bidirectional/membrane_layer.py": "680ad89277b60206f192123165d13eca916e5183dc71eaa443a8eeb5f4b8fac8",
+    "snn_kuramoto_bidirectional/kuramoto_layer.py": "76e61785fb19228fe4ecf6bbdfd4dc72519b9d6bd34d5f4fd9165e29c76d263e",
+    "snn_kuramoto_bidirectional/sinusoidal_gating.py": "e323a3b6472f51def23d63628fe25cc83088822ae73b5e0fcd1789884739f6c4",
+    "collaborative_test/SW_0137_native32_source_qcc/protocol.json": "498cc0f80ca4cf96eebd4dd272377ed0d1caf3581e63fd05c0be02dc170a238c",
+    "collaborative_test/SW_0137_native32_source_qcc/run.py": "2498629d119d73d7e1ae06d359e99dda87355c8a577951fbf5b1af28570de7d2",
+    "collaborative_test/SW_0135_native32_spike_binding/evaluation_contract32.py": "e601280ade9a2b9545f6bbf94df22deca6ebfe123750229f6a7244105c57b1bd",
+    "collaborative_test/SW_0135_native32_spike_binding/score_slot32.py": "4c8f8e5622ea16f65059bc1146277ded06411debcca503dbd573af132a916bb5",
+    "collaborative_test/SW_0136_native32_transfer/evaluate.py": "1c2846b69fb4bc936bf06723fc9f1b4c12f6632a02aff7e40c1e21a28b7a30ea",
+    "collaborative_test/SW_0143_native32_selective_geodesic/protocol.json": "77c37ccc0ba38e9011cf4d5a1b642ae92b8c4005b7c1038a6677838eec51ce41",
+    "collaborative_test/SW_0143_native32_selective_geodesic/run.py": "4f83687346e2fea78a16e694a3a22ed621e8cd41139cb585d27fdfc122ec276a",
+    "collaborative_test/SW_0143_native32_selective_geodesic/geodesic_operator.py": "268ad6ea010b123feaf6a2c41a02e3fd5e716b5a8d96b53e11d4f93098d5da98"
+  },
+  "current_implementation_fingerprint": {
+    "collaborative_test/SW_0135_native32_spike_binding/foundation.py": "9c241cacf1479c339fa56376b881672535c8d7ac4966a7ddff3b4b47f24cb867",
+    "collaborative_test/SW_0135_native32_spike_binding/protocol.json": "bcea5cb37b7279c7db7e505127b7ca01a70d3a5b39b725ae6e37b6565cf29ea9",
+    "collaborative_test/SW_0135_native32_spike_binding/resolution.py": "dd98e62c48e6260e4bd1ba36f0f9a8ff2c6ecf7ade53e0f5780849d3bae49264",
+    "collaborative_test/SW_0135_native32_spike_binding/binder.py": "38450abd18eb0db390959727b95f88f96633117be20d053870ff28ccf5dae8ac",
+    "collaborative_test/SW_0130_phase_state_integration/run.py": "92ac0032467c6bff2e31a76c66021c5e211f9402d15ff868382d71ecc807e988",
+    "collaborative_test/SW_0130_phase_state_integration/model.py": "2ba6bbe44dbbf2a5a444e724db71caafc1b9915570bfd7ab31343b86915cbd0b",
+    "collaborative_test/SW_0134_native_spike_binding/rollout.py": "66c08404af91b50fb4cbfa63fe44650dd6a698ea669cd3d6a672dfc5c78503f3",
+    "collaborative_test/SW_0110_xy_graph_route/run.py": "b7d4b90cbf74c8085d2a5cfc8b78a5772f77bc086240939a332f429c1ca344fd",
+    "collaborative_test/SW_0094_aligned_joint_pilot/run.py": "9f4e9046a2960e7aa53bf16d7e0663bee162b3f56a11f11d45554d79889536a3",
+    "snn_kuramoto_bidirectional/s2net_cls.py": "18313e5ee7358146703256e7e29d9846bfa60394feedba3237f2f7eac8791288",
+    "snn_kuramoto_bidirectional/graph_generator.py": "4f4c4d680a60822a5e4645eec3bbceb960846d4fac89e799076f6b4cf1bc6dde",
+    "snn_kuramoto_bidirectional/loss_function.py": "6542d084f66c07101b75869709df9302db45e0dde87b6b5945d1790daa316543",
+    "snn_kuramoto_bidirectional/spike_classifier.py": "2d13c15a928f503bc09239aae2153a5f1a82de77aab4b5a76d0dfe876b755181",
+    "snn_kuramoto_bidirectional/evaluation.py": "4a15980c9aa0248dbe0e837ad1b0b430ce26a7ab367c004d290a1272bb1025d7",
+    "snn_kuramoto_bidirectional/hyperparameter.py": "bceea67a10a4533eae48ce682b23ce81330c981d687fa928cca7b9f3b97fc73e",
+    "snn_kuramoto_bidirectional/gamma_initializer.py": "9b5f3e077c755738b1636b97ac9640321a5b7abf5ec85b9a12557209cf5ad50b",
+    "snn_kuramoto_bidirectional/training/train_gamma_initializer.py": "845f91d3255d1d72d2a69c432c7b559a9d29d90a4186a4821e75864af9e47d20",
+    "snn_kuramoto_bidirectional/training/train_input_layer_generator.py": "df45612ad4e069bc645c8cf335da1ebf1dd73d73ae0b9a40de96cefa9025f38d",
+    "snn_kuramoto_bidirectional/dendric_layer.py": "69d960809ff1ad73a91a7067f87f605ae69ef612be9b936e4b486cc29511dd1a",
+    "snn_kuramoto_bidirectional/membrane_layer.py": "680ad89277b60206f192123165d13eca916e5183dc71eaa443a8eeb5f4b8fac8",
+    "snn_kuramoto_bidirectional/kuramoto_layer.py": "76e61785fb19228fe4ecf6bbdfd4dc72519b9d6bd34d5f4fd9165e29c76d263e",
+    "snn_kuramoto_bidirectional/sinusoidal_gating.py": "e323a3b6472f51def23d63628fe25cc83088822ae73b5e0fcd1789884739f6c4",
+    "collaborative_test/SW_0137_native32_source_qcc/protocol.json": "498cc0f80ca4cf96eebd4dd272377ed0d1caf3581e63fd05c0be02dc170a238c",
+    "collaborative_test/SW_0137_native32_source_qcc/run.py": "2498629d119d73d7e1ae06d359e99dda87355c8a577951fbf5b1af28570de7d2",
+    "collaborative_test/SW_0135_native32_spike_binding/evaluation_contract32.py": "e601280ade9a2b9545f6bbf94df22deca6ebfe123750229f6a7244105c57b1bd",
+    "collaborative_test/SW_0135_native32_spike_binding/score_slot32.py": "4c8f8e5622ea16f65059bc1146277ded06411debcca503dbd573af132a916bb5",
+    "collaborative_test/SW_0136_native32_transfer/evaluate.py": "1c2846b69fb4bc936bf06723fc9f1b4c12f6632a02aff7e40c1e21a28b7a30ea",
+    "collaborative_test/SW_0143_native32_selective_geodesic/protocol.json": "77c37ccc0ba38e9011cf4d5a1b642ae92b8c4005b7c1038a6677838eec51ce41",
+    "collaborative_test/SW_0143_native32_selective_geodesic/run.py": "c004674618d3a714a3093beafd03b27f12b94cf3e16ce775fc36da954da7aa5d",
+    "collaborative_test/SW_0143_native32_selective_geodesic/geodesic_operator.py": "268ad6ea010b123feaf6a2c41a02e3fd5e716b5a8d96b53e11d4f93098d5da98"
+  },
+  "run_py_previous_sha256": "4f83687346e2fea78a16e694a3a22ed621e8cd41139cb585d27fdfc122ec276a",
+  "run_py_repaired_sha256": "c004674618d3a714a3093beafd03b27f12b94cf3e16ce775fc36da954da7aa5d",
+  "v1_helper_sha256": "4ad493180d63a89e44bb9f6a27cd79aaaf9e520907a339958d16b4cec38499ed",
+  "implementation_fingerprint": {
+    "collaborative_test/SW_0135_native32_spike_binding/foundation.py": "9c241cacf1479c339fa56376b881672535c8d7ac4966a7ddff3b4b47f24cb867",
+    "collaborative_test/SW_0135_native32_spike_binding/protocol.json": "bcea5cb37b7279c7db7e505127b7ca01a70d3a5b39b725ae6e37b6565cf29ea9",
+    "collaborative_test/SW_0135_native32_spike_binding/resolution.py": "dd98e62c48e6260e4bd1ba36f0f9a8ff2c6ecf7ade53e0f5780849d3bae49264",
+    "collaborative_test/SW_0135_native32_spike_binding/binder.py": "38450abd18eb0db390959727b95f88f96633117be20d053870ff28ccf5dae8ac",
+    "collaborative_test/SW_0130_phase_state_integration/run.py": "92ac0032467c6bff2e31a76c66021c5e211f9402d15ff868382d71ecc807e988",
+    "collaborative_test/SW_0130_phase_state_integration/model.py": "2ba6bbe44dbbf2a5a444e724db71caafc1b9915570bfd7ab31343b86915cbd0b",
+    "collaborative_test/SW_0134_native_spike_binding/rollout.py": "66c08404af91b50fb4cbfa63fe44650dd6a698ea669cd3d6a672dfc5c78503f3",
+    "collaborative_test/SW_0110_xy_graph_route/run.py": "b7d4b90cbf74c8085d2a5cfc8b78a5772f77bc086240939a332f429c1ca344fd",
+    "collaborative_test/SW_0094_aligned_joint_pilot/run.py": "9f4e9046a2960e7aa53bf16d7e0663bee162b3f56a11f11d45554d79889536a3",
+    "snn_kuramoto_bidirectional/s2net_cls.py": "18313e5ee7358146703256e7e29d9846bfa60394feedba3237f2f7eac8791288",
+    "snn_kuramoto_bidirectional/graph_generator.py": "4f4c4d680a60822a5e4645eec3bbceb960846d4fac89e799076f6b4cf1bc6dde",
+    "snn_kuramoto_bidirectional/loss_function.py": "6542d084f66c07101b75869709df9302db45e0dde87b6b5945d1790daa316543",
+    "snn_kuramoto_bidirectional/spike_classifier.py": "2d13c15a928f503bc09239aae2153a5f1a82de77aab4b5a76d0dfe876b755181",
+    "snn_kuramoto_bidirectional/evaluation.py": "4a15980c9aa0248dbe0e837ad1b0b430ce26a7ab367c004d290a1272bb1025d7",
+    "snn_kuramoto_bidirectional/hyperparameter.py": "bceea67a10a4533eae48ce682b23ce81330c981d687fa928cca7b9f3b97fc73e",
+    "snn_kuramoto_bidirectional/gamma_initializer.py": "9b5f3e077c755738b1636b97ac9640321a5b7abf5ec85b9a12557209cf5ad50b",
+    "snn_kuramoto_bidirectional/training/train_gamma_initializer.py": "845f91d3255d1d72d2a69c432c7b559a9d29d90a4186a4821e75864af9e47d20",
+    "snn_kuramoto_bidirectional/training/train_input_layer_generator.py": "df45612ad4e069bc645c8cf335da1ebf1dd73d73ae0b9a40de96cefa9025f38d",
+    "snn_kuramoto_bidirectional/dendric_layer.py": "69d960809ff1ad73a91a7067f87f605ae69ef612be9b936e4b486cc29511dd1a",
+    "snn_kuramoto_bidirectional/membrane_layer.py": "680ad89277b60206f192123165d13eca916e5183dc71eaa443a8eeb5f4b8fac8",
+    "snn_kuramoto_bidirectional/kuramoto_layer.py": "76e61785fb19228fe4ecf6bbdfd4dc72519b9d6bd34d5f4fd9165e29c76d263e",
+    "snn_kuramoto_bidirectional/sinusoidal_gating.py": "e323a3b6472f51def23d63628fe25cc83088822ae73b5e0fcd1789884739f6c4",
+    "collaborative_test/SW_0137_native32_source_qcc/protocol.json": "498cc0f80ca4cf96eebd4dd272377ed0d1caf3581e63fd05c0be02dc170a238c",
+    "collaborative_test/SW_0137_native32_source_qcc/run.py": "2498629d119d73d7e1ae06d359e99dda87355c8a577951fbf5b1af28570de7d2",
+    "collaborative_test/SW_0135_native32_spike_binding/evaluation_contract32.py": "e601280ade9a2b9545f6bbf94df22deca6ebfe123750229f6a7244105c57b1bd",
+    "collaborative_test/SW_0135_native32_spike_binding/score_slot32.py": "4c8f8e5622ea16f65059bc1146277ded06411debcca503dbd573af132a916bb5",
+    "collaborative_test/SW_0136_native32_transfer/evaluate.py": "1c2846b69fb4bc936bf06723fc9f1b4c12f6632a02aff7e40c1e21a28b7a30ea",
+    "collaborative_test/SW_0143_native32_selective_geodesic/protocol.json": "77c37ccc0ba38e9011cf4d5a1b642ae92b8c4005b7c1038a6677838eec51ce41",
+    "collaborative_test/SW_0143_native32_selective_geodesic/run.py": "c004674618d3a714a3093beafd03b27f12b94cf3e16ce775fc36da954da7aa5d",
+    "collaborative_test/SW_0143_native32_selective_geodesic/geodesic_operator.py": "268ad6ea010b123feaf6a2c41a02e3fd5e716b5a8d96b53e11d4f93098d5da98"
+  },
+  "queue_sha256": "47dd7d94c7d1059dfb396ea2431925680b7dc357669e73f8b7305091f25ca6fe",
+  "recovery_helper_sha256": "b32c1aa5ce8417359aaab40bb9606e6fdee2c8d8314281f365616c24805dbe00",
+  "owner_dispatcher_sha256": "e37dcc0777871a91593041c99f3b1bfe55cc45f88d5d5be49a2e12d0116d8574",
+  "stable_idle_seconds_required": 60.0,
+  "gpu_sample_seconds": 5.0,
+  "preserved_artifacts": [],
+  "tasks": {
+    "preflight_s0": {
+      "task": {
+        "task_id": "preflight_s0",
+        "stage": "preflight",
+        "seed": 0,
+        "deps": []
+      },
+      "status": "passed",
+      "physical_gpu": 0,
+      "gpu_uuid": "GPU-a0a7d03d-adc1-37ca-4342-328878b3657c",
+      "stable_seconds": 60.1604265361093,
+      "memory_mib": 16,
+      "quiet_window_required_seconds": 60.0,
+      "lease_path": "/tmp/kevinswk_sw0113_gpu_leases/gpu0.lock",
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0143_native32_selective_geodesic/run.py",
+        "--stage",
+        "preflight",
+        "--seed",
+        "0",
+        "--device",
+        "cuda:0"
+      ],
+      "log_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0143_native32_selective_geodesic/results_archive/recovery_v3_20261012/logs/preflight_s0.attempt01.log",
+      "environment": {
+        "CUDA_VISIBLE_DEVICES": "0"
+      },
+      "started": 1791822127.6115334,
+      "launch_attempt": 1,
+      "child_pid": 404724,
+      "returncode": 0,
+      "artifact_valid": true,
+      "finished": 1791822174.3394628
+    },
+    "preflight_s1": {
+      "task": {
+        "task_id": "preflight_s1",
+        "stage": "preflight",
+        "seed": 1,
+        "deps": []
+      },
+      "status": "passed",
+      "last_wait": 1791822172.7401168,
+      "physical_gpu": 0,
+      "gpu_uuid": "GPU-a0a7d03d-adc1-37ca-4342-328878b3657c",
+      "stable_seconds": 60.11615211237222,
+      "memory_mib": 16,
+      "quiet_window_required_seconds": 60.0,
+      "lease_path": "/tmp/kevinswk_sw0113_gpu_leases/gpu0.lock",
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0143_native32_selective_geodesic/run.py",
+        "--stage",
+        "preflight",
+        "--seed",
+        "1",
+        "--device",
+        "cuda:0"
+      ],
+      "log_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0143_native32_selective_geodesic/results_archive/recovery_v3_20261012/logs/preflight_s1.attempt01.log",
+      "environment": {
+        "CUDA_VISIBLE_DEVICES": "0"
+      },
+      "started": 1791822238.2402246,
+      "launch_attempt": 1,
+      "child_pid": 405390,
+      "returncode": 0,
+      "artifact_valid": true,
+      "finished": 1791822284.8780699
+    },
+    "preflight_s2": {
+      "task": {
+        "task_id": "preflight_s2",
+        "stage": "preflight",
+        "seed": 2,
+        "deps": []
+      },
+      "status": "passed",
+      "last_wait": 1791822281.6430151,
+      "physical_gpu": 0,
+      "gpu_uuid": "GPU-a0a7d03d-adc1-37ca-4342-328878b3657c",
+      "stable_seconds": 60.18265447486192,
+      "memory_mib": 16,
+      "quiet_window_required_seconds": 60.0,
+      "lease_path": "/tmp/kevinswk_sw0113_gpu_leases/gpu0.lock",
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0143_native32_selective_geodesic/run.py",
+        "--stage",
+        "preflight",
+        "--seed",
+        "2",
+        "--device",
+        "cuda:0"
+      ],
+      "log_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0143_native32_selective_geodesic/results_archive/recovery_v3_20261012/logs/preflight_s2.attempt01.log",
+      "environment": {
+        "CUDA_VISIBLE_DEVICES": "0"
+      },
+      "started": 1791822347.442792,
+      "launch_attempt": 1,
+      "child_pid": 406337,
+      "returncode": 0,
+      "artifact_valid": true,
+      "finished": 1791822394.3039496
+    },
+    "reference_R_s0": {
+      "task": {
+        "task_id": "reference_R_s0",
+        "stage": "reference",
+        "seed": 0,
+        "arm": "R",
+        "deps": [
+          "preflight_s0"
+        ]
+      },
+      "status": "passed",
+      "physical_gpu": 0,
+      "gpu_uuid": "GPU-a0a7d03d-adc1-37ca-4342-328878b3657c",
+      "stable_seconds": 60.18196487892419,
+      "memory_mib": 16,
+      "quiet_window_required_seconds": 60.0,
+      "lease_path": "/tmp/kevinswk_sw0113_gpu_leases/gpu0.lock",
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0143_native32_selective_geodesic/run.py",
+        "--stage",
+        "reference",
+        "--seed",
+        "0",
+        "--device",
+        "cuda:0"
+      ],
+      "log_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0143_native32_selective_geodesic/results_archive/recovery_v3_20261012/logs/reference_R_s0.attempt01.log",
+      "environment": {
+        "CUDA_VISIBLE_DEVICES": "0"
+      },
+      "started": 1791822454.9805229,
+      "launch_attempt": 1,
+      "child_pid": 406842,
+      "returncode": 0,
+      "artifact_valid": true,
+      "finished": 1791823064.7080348
+    },
+    "reference_R_s1": {
+      "task": {
+        "task_id": "reference_R_s1",
+        "stage": "reference",
+        "seed": 1,
+        "arm": "R",
+        "deps": [
+          "preflight_s1"
+        ]
+      },
+      "status": "passed",
+      "last_wait": 1791823738.143945,
+      "physical_gpu": 0,
+      "gpu_uuid": "GPU-a0a7d03d-adc1-37ca-4342-328878b3657c",
+      "stable_seconds": 60.22998833609745,
+      "memory_mib": 16,
+      "quiet_window_required_seconds": 60.0,
+      "stability_failure": "owner_or_memory",
+      "lease_path": "/tmp/kevinswk_sw0113_gpu_leases/gpu0.lock",
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0143_native32_selective_geodesic/run.py",
+        "--stage",
+        "reference",
+        "--seed",
+        "1",
+        "--device",
+        "cuda:0"
+      ],
+      "log_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0143_native32_selective_geodesic/results_archive/recovery_v3_20261012/logs/reference_R_s1.attempt01.log",
+      "environment": {
+        "CUDA_VISIBLE_DEVICES": "0"
+      },
+      "started": 1791823803.8846786,
+      "launch_attempt": 1,
+      "child_pid": 415071,
+      "returncode": 0,
+      "artifact_valid": true,
+      "finished": 1791824418.0132976
+    },
+    "reference_R_s2": {
+      "task": {
+        "task_id": "reference_R_s2",
+        "stage": "reference",
+        "seed": 2,
+        "arm": "R",
+        "deps": [
+          "preflight_s2"
+        ]
+      },
+      "status": "passed",
+      "last_wait": 1791823064.5674114,
+      "physical_gpu": 0,
+      "gpu_uuid": "GPU-a0a7d03d-adc1-37ca-4342-328878b3657c",
+      "stable_seconds": 60.17176259076223,
+      "memory_mib": 16,
+      "quiet_window_required_seconds": 60.0,
+      "lease_path": "/tmp/kevinswk_sw0113_gpu_leases/gpu0.lock",
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0143_native32_selective_geodesic/run.py",
+        "--stage",
+        "reference",
+        "--seed",
+        "2",
+        "--device",
+        "cuda:0"
+      ],
+      "log_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0143_native32_selective_geodesic/results_archive/recovery_v3_20261012/logs/reference_R_s2.attempt01.log",
+      "environment": {
+        "CUDA_VISIBLE_DEVICES": "0"
+      },
+      "started": 1791823130.3140593,
+      "launch_attempt": 1,
+      "child_pid": 411232,
+      "returncode": 0,
+      "artifact_valid": true,
+      "finished": 1791823739.0921645
+    },
+    "predict_C_s0": {
+      "task": {
+        "task_id": "predict_C_s0",
+        "stage": "predict",
+        "seed": 0,
+        "arm": "C",
+        "deps": [
+          "reference_R_s0"
+        ]
+      },
+      "status": "passed",
+      "last_wait": 1791827298.2961986,
+      "physical_gpu": 2,
+      "gpu_uuid": "GPU-50cc59a2-8312-ff02-5889-1becf63c7cd4",
+      "stable_seconds": 60.20346248196438,
+      "memory_mib": 2,
+      "quiet_window_required_seconds": 60.0,
+      "stability_failure": "owner_or_memory",
+      "lease_path": "/tmp/kevinswk_sw0113_gpu_leases/gpu2.lock",
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0143_native32_selective_geodesic/run.py",
+        "--stage",
+        "predict",
+        "--seed",
+        "0",
+        "--arm",
+        "C",
+        "--device",
+        "cuda:0"
+      ],
+      "log_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0143_native32_selective_geodesic/results_archive/recovery_v3_20261012/logs/predict_C_s0.attempt01.log",
+      "environment": {
+        "CUDA_VISIBLE_DEVICES": "2"
+      },
+      "started": 1791827364.134974,
+      "launch_attempt": 1,
+      "child_pid": 447039,
+      "returncode": 0,
+      "artifact_valid": true,
+      "finished": 1791827945.015548
+    },
+    "predict_C_s1": {
+      "task": {
+        "task_id": "predict_C_s1",
+        "stage": "predict",
+        "seed": 1,
+        "arm": "C",
+        "deps": [
+          "reference_R_s1"
+        ]
+      },
+      "status": "passed",
+      "physical_gpu": 0,
+      "gpu_uuid": "GPU-a0a7d03d-adc1-37ca-4342-328878b3657c",
+      "stable_seconds": 60.1223746240139,
+      "memory_mib": 16,
+      "quiet_window_required_seconds": 60.0,
+      "lease_path": "/tmp/kevinswk_sw0113_gpu_leases/gpu0.lock",
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0143_native32_selective_geodesic/run.py",
+        "--stage",
+        "predict",
+        "--seed",
+        "1",
+        "--arm",
+        "C",
+        "--device",
+        "cuda:0"
+      ],
+      "log_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0143_native32_selective_geodesic/results_archive/recovery_v3_20261012/logs/predict_C_s1.attempt01.log",
+      "environment": {
+        "CUDA_VISIBLE_DEVICES": "0"
+      },
+      "started": 1791824478.8693233,
+      "launch_attempt": 1,
+      "child_pid": 417939,
+      "returncode": 0,
+      "artifact_valid": true,
+      "finished": 1791825071.6753402
+    },
+    "predict_C_s2": {
+      "task": {
+        "task_id": "predict_C_s2",
+        "stage": "predict",
+        "seed": 2,
+        "arm": "C",
+        "deps": [
+          "reference_R_s2"
+        ]
+      },
+      "status": "passed",
+      "last_wait": 1791826371.6819692,
+      "physical_gpu": 0,
+      "gpu_uuid": "GPU-a0a7d03d-adc1-37ca-4342-328878b3657c",
+      "stable_seconds": 60.15199570171535,
+      "memory_mib": 16,
+      "quiet_window_required_seconds": 60.0,
+      "stability_failure": "owner_or_memory",
+      "lease_path": "/tmp/kevinswk_sw0113_gpu_leases/gpu0.lock",
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0143_native32_selective_geodesic/run.py",
+        "--stage",
+        "predict",
+        "--seed",
+        "2",
+        "--arm",
+        "C",
+        "--device",
+        "cuda:0"
+      ],
+      "log_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0143_native32_selective_geodesic/results_archive/recovery_v3_20261012/logs/predict_C_s2.attempt01.log",
+      "environment": {
+        "CUDA_VISIBLE_DEVICES": "0"
+      },
+      "started": 1791826437.3237653,
+      "launch_attempt": 1,
+      "child_pid": 439046,
+      "returncode": 0,
+      "artifact_valid": true,
+      "finished": 1791827035.0884871
+    },
+    "predict_T_s0": {
+      "task": {
+        "task_id": "predict_T_s0",
+        "stage": "predict",
+        "seed": 0,
+        "arm": "T",
+        "deps": [
+          "reference_R_s0"
+        ]
+      },
+      "status": "passed",
+      "last_wait": 1791826661.3088958,
+      "physical_gpu": 2,
+      "gpu_uuid": "GPU-50cc59a2-8312-ff02-5889-1becf63c7cd4",
+      "stable_seconds": 60.168969315011054,
+      "memory_mib": 2,
+      "quiet_window_required_seconds": 60.0,
+      "stability_failure": "owner_or_memory",
+      "lease_path": "/tmp/kevinswk_sw0113_gpu_leases/gpu2.lock",
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0143_native32_selective_geodesic/run.py",
+        "--stage",
+        "predict",
+        "--seed",
+        "0",
+        "--arm",
+        "T",
+        "--device",
+        "cuda:0"
+      ],
+      "log_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0143_native32_selective_geodesic/results_archive/recovery_v3_20261012/logs/predict_T_s0.attempt01.log",
+      "environment": {
+        "CUDA_VISIBLE_DEVICES": "2"
+      },
+      "started": 1791826726.8871937,
+      "launch_attempt": 1,
+      "child_pid": 442464,
+      "returncode": 0,
+      "artifact_valid": true,
+      "finished": 1791827301.4120302
+    },
+    "predict_T_s1": {
+      "task": {
+        "task_id": "predict_T_s1",
+        "stage": "predict",
+        "seed": 1,
+        "arm": "T",
+        "deps": [
+          "reference_R_s1"
+        ]
+      },
+      "status": "passed",
+      "physical_gpu": 0,
+      "gpu_uuid": "GPU-a0a7d03d-adc1-37ca-4342-328878b3657c",
+      "stable_seconds": 60.12697417102754,
+      "memory_mib": 16,
+      "quiet_window_required_seconds": 60.0,
+      "lease_path": "/tmp/kevinswk_sw0113_gpu_leases/gpu0.lock",
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0143_native32_selective_geodesic/run.py",
+        "--stage",
+        "predict",
+        "--seed",
+        "1",
+        "--arm",
+        "T",
+        "--device",
+        "cuda:0"
+      ],
+      "log_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0143_native32_selective_geodesic/results_archive/recovery_v3_20261012/logs/predict_T_s1.attempt01.log",
+      "environment": {
+        "CUDA_VISIBLE_DEVICES": "0"
+      },
+      "started": 1791825132.1870036,
+      "launch_attempt": 1,
+      "child_pid": 424943,
+      "returncode": 0,
+      "artifact_valid": true,
+      "finished": 1791825724.7166965
+    },
+    "predict_T_s2": {
+      "task": {
+        "task_id": "predict_T_s2",
+        "stage": "predict",
+        "seed": 2,
+        "arm": "T",
+        "deps": [
+          "reference_R_s2"
+        ]
+      },
+      "status": "passed",
+      "physical_gpu": 0,
+      "gpu_uuid": "GPU-a0a7d03d-adc1-37ca-4342-328878b3657c",
+      "stable_seconds": 60.16668803989887,
+      "memory_mib": 16,
+      "quiet_window_required_seconds": 60.0,
+      "lease_path": "/tmp/kevinswk_sw0113_gpu_leases/gpu0.lock",
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0143_native32_selective_geodesic/run.py",
+        "--stage",
+        "predict",
+        "--seed",
+        "2",
+        "--arm",
+        "T",
+        "--device",
+        "cuda:0"
+      ],
+      "log_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0143_native32_selective_geodesic/results_archive/recovery_v3_20261012/logs/predict_T_s2.attempt01.log",
+      "environment": {
+        "CUDA_VISIBLE_DEVICES": "0"
+      },
+      "started": 1791825785.238395,
+      "launch_attempt": 1,
+      "child_pid": 431534,
+      "returncode": 0,
+      "artifact_valid": true,
+      "finished": 1791826376.1857896
+    },
+    "score_all": {
+      "task": {
+        "task_id": "score_all",
+        "stage": "score",
+        "deps": [
+          "reference_R_s0",
+          "reference_R_s1",
+          "reference_R_s2",
+          "predict_C_s0",
+          "predict_C_s1",
+          "predict_C_s2",
+          "predict_T_s0",
+          "predict_T_s1",
+          "predict_T_s2"
+        ]
+      },
+      "status": "passed",
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0143_native32_selective_geodesic/run.py",
+        "--stage",
+        "score",
+        "--device",
+        "cuda:0",
+        "--output",
+        "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0143_native32_selective_geodesic/results_archive/evaluation.json"
+      ],
+      "log_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0143_native32_selective_geodesic/results_archive/recovery_v3_20261012/logs/score_all.attempt01.log",
+      "environment": {
+        "CUDA_VISIBLE_DEVICES": ""
+      },
+      "started": 1791827945.5672984,
+      "launch_attempt": 1,
+      "child_pid": 452096,
+      "returncode": 0,
+      "artifact_valid": true,
+      "finished": 1791827970.6049633
+    }
+  },
+  "previous_recovery": "recovery_v2_20261012",
+  "recovery_reason": "known mixed tensor/scalar trace slicing TypeError",
+  "repair_helper_sha256": "7cda67608df3857d8944c39f13186fac09edc0b71a3276fd975b830d74286859",
+  "repaired_run_sha256": "c004674618d3a714a3093beafd03b27f12b94cf3e16ce775fc36da954da7aa5d",
+  "finished": 1791827970.6099634
+}
