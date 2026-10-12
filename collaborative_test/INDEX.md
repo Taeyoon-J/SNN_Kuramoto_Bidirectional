@@ -52,6 +52,8 @@
 | PV2_0059 | completed | the fg_ari/IoU dial: spectral k from 6 to 20 spans fg_ari .579 to .772 and fg_iou .54 to .16 | | | |
 | PV2_0060 | completed | **k=14 at three seeds clears 0.75 on validation: .7569 / .3449 / .6480** | | | |
 | PV2_0061 | completed | **TEST, read once: .7533 / .3358 / .6549. Beats Slot on all three; 0.75 target met** | **0.7533** | **0.3358** | **0.6549** |
+| PV2_0062 | exhausted | features improved at inference: best foreground IoU yet (.7626) but no fg_ari gain | | | |
+| PV2_0063 | exhausted | no spectral k on the smoothed gamma dominates the settled configuration | | | |
 | PV2_0046 | completed | contract diagnostic: a looser rule *lowers* fg_ari 0.724 to 0.533; cross-branch scores are not poolable | | | |
 
 Three seeds on the test split, scored from spike masks. Peer experiments from

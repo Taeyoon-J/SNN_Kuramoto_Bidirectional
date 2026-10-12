@@ -96,32 +96,54 @@ seed spread. It also confirms 0.7250 is not an artifact of the window.
 ## What is open — part 3, the route to 0.9
 
 **Not demonstrated.** `PV2_0034` reached fg_ari 0.9754 by putting oracle codes through
-this pipeline unchanged, so the architecture is not the limit and the encoder costs
-0.27; `PV2_0036` split that into within-object spread (+0.170) and the between-object
-margin (+0.090). Nothing since has moved the features.
+this pipeline unchanged and unretrained, so the architecture is not the limit and the
+encoder costs 0.27. Eleven routes to better features are closed: DINOv2, label-free
+clustering, self-bootstrapping, encoder capacity, slot-term defaults, end-to-end
+training, the frozen core, data scale, position in the graph, chromaticity, and
+inference-time smoothing.
 
-Ten routes are closed: DINOv2, label-free clustering, self-bootstrapping (+0.006,
-circular), encoder capacity (diverges), slot-term defaults (already optimal),
-end-to-end training (0.6779), the frozen core (collapses), data scale (`PV2_0048`
-score, `PV2_0051` mechanism), position in the graph (`PV2_0055`, loss lower and score
-0.17-0.27 worse), and chromaticity (`PV2_0058`, never converges).
+### The sharpest statement of what is missing
 
-`PV2_0058` also found that **the separation diagnostics do not predict the score in
-the middle range**: both the Euclidean ratio and a cosine margin rank the chromaticity
-tensors above the 8-channel gamma, which has the lowest effective rank of the three
-(1.68), yet it scores highest. They still hold at the extreme — oracle codes have
-within 0.0000 and score 0.9754 — so they bound the problem without pointing at a
-solution. `PV2_0051`'s use of the ratio to close data scale is weaker than written
-there, though its conclusion survives because the score fell too.
+`PV2_0062` closed the last one but located the gap better than anything before it.
+Oracle codes have within-object spread **0.0000 and between-object distance 3.9462**,
+which is **2.4x** the baseline's 1.6592. Edge-preserving smoothing lowers within (to
+0.0564 at its strongest, nearly the oracle's zero) but lowers **between** with it
+(1.6592 -> 1.5180). So:
 
-`PV2_0056` closed the objective-side route: our partition overlaps the fixed geometric
-template by only ARI 0.1164, so penalising that agreement would push down something
-already near zero.
+- every label-free method tried reduces within-object spread and **shrinks** the
+  between-object margin;
+- what makes the oracle code special is the **enlarged** margin, and increasing it
+  without labels is close to knowing which object is which.
 
-The one untried signal of the right kind is a training objective geometry cannot
-satisfy. Reconstruction is the only one tested (0.6779, below frozen features). The
-peer's cross-view spike consistency (their SW0139) is another and was running at the
-last review — see `peer_updates/REVIEW_0004_20261011.md`.
+Two experiments now show the within/between ratio is **not** the quantity limiting
+fg_ari. `PV2_0058`: both the Euclidean ratio and a cosine margin rank the chromaticity
+tensors above the 8-channel gamma (which has the lowest effective rank of the three,
+1.68) and the scores go the other way. `PV2_0062`: a 41% ratio improvement moves
+fg_ari by -0.005 in the calibrated regime. The measures bound the problem; they do not
+point at a solution, and `PV2_0051`'s use of the ratio to close data scale is weaker
+than written there, though its conclusion survives on the score.
+
+`PV2_0056` closed the objective-side route separately: our partition overlaps the
+fixed geometric template by only ARI 0.1164, so penalising that agreement would push
+down something already near zero.
+
+### The one by-product worth keeping
+
+`PV2_0062`'s smoothed gamma under the connected-component readout gives **foreground
+IoU 0.7626**, the highest this project has measured (previous best 0.7251), at a
+predicted foreground of **0.1166 against a target of 0.118** — better calibrated than
+the baseline's 0.129. Its fg_ari is 0.7187, below 0.75, so it is not the published
+configuration, but it is the best foreground segmentation available and is on disk at
+`/work/USERS/tkim1/gamma_sequences/bilat_s1.0_r0.5_i3_grid16.pt`.
+
+### Untried
+
+A training objective geometry cannot satisfy, which would have to act on the
+between-object margin rather than within-object spread. Reconstruction is the only
+such signal tested (0.6779, below frozen features). The peer's cross-view spike
+consistency (their SW0139) is another; at the last two fetches their branch head was
+unchanged at `94de778` and that arm still reported "cross-view calibration remains
+running, its training queued", so there is no result to port.
 
 ## Where the peer stands
 
