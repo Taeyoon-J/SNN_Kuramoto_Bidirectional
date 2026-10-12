@@ -1,0 +1,21 @@
+{
+  "experiment": "SW0144_native32_assignment_boundary_diagnostic",
+  "status": "prospective GT-free diagnostic",
+  "input": {
+    "source": "completed SW0142 seed1 masked float16 spike cache and its shared 256-update warm binder",
+    "rows": "first64 registered source1 TRAIN IDs in cache order",
+    "cached_spikes": "actual emitted [B,4,1024,512] traces, float16 on disk; promoted to float32 by the production cache reader",
+    "warm_assignment": "native32 P argmax and existing largest-hard-slot background rule"
+  },
+  "readouts": {
+    "fragmentation": "For each nonbackground hard P label, 4-neighbor component masses and (label mass - largest component)/label mass; aggregate by foreground patch mass.",
+    "spike_affinity": "Existing spike_synchrony_affinity(spikes.mean(dim=1), components=spikes, settle=0, affinity_mode='spike').",
+    "boundary_energy": "Mean squared RGB difference across the shared pixel seam for each adjacent native32 patch pair; only pairs whose two patches are visible in the cached SW0142 mask are retained.",
+    "descriptive_target": "exp(-boundary_energy / s), where s is the mean retained RGB boundary energy over these same64 TRAIN rows. This is descriptive only, not an objective coefficient or calibration."
+  },
+  "scope_limits": [
+    "CPU-only, first64 rows, no GT, no optimizer step, no model update, no predictions.",
+    "The source spikes are float16 cached traces from the masked SW0142 input; no clean-input parity or gradient claim is made.",
+    "This association diagnostic does not establish a causal mechanism or justify a training recipe, threshold, or model-selection decision."
+  ]
+}
