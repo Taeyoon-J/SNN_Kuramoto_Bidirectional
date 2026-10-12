@@ -140,15 +140,36 @@ in the calibrated regime (`PV2_0058`, `PV2_0062`, `PV2_0064`), so separation sta
 are not sufficient statistics for the score — they bound the problem without pointing
 at a solution.
 
+### Sixteen routes, and what each kind of failure says
+
+| route | result |
+| --- | --- |
+| eleven on feature geometry | closed; three improved a separation statistic without moving fg_ari (`PV2_0058`, `PV2_0062`, `PV2_0064`) |
+| transforms confined to the graph (`PV2_0067`) | margin without calibration, or calibration without margin |
+| the matched Slot encoder's features (`PV2_0065`) | within-object cosine 0.0019, near the oracle's zero; between-object 0.0316, eight times too small; fg_ari 0.0604 |
+| reconstruction training the graph, features frozen (`PV2_0068`) | optimisation worked (loss 18.06 vs 17.86) but best calibrated 0.7175, -0.0064 |
+| the graph fed its own groups as one-hot (`PV2_0069`) | **0.7239 in, 0.7199 out** -- a fixed point, no amplification |
+
+`PV2_0069` is the sharpest of these. Oracle one-hot codes into the graph give 0.9671;
+one-hot codes built from the model's own 0.7239-accurate groups give 0.7199. The graph
+does not amplify its own estimate, so no iterative scheme climbs, and the errors in the
+predicted groups are exactly the errors that survive it.
+
+What the oracle supplies is **instance identity**. Every label-free route tried either
+reproduces its geometry without the information, or is a fixed point at the accuracy it
+starts from.
+
 ### Resume here
 
-The precise open question: produce gamma with graph-side cos_between near 1.0 at
-predicted foreground near 0.12, without labels. Untested sources of object-level
-information: cross-view consistency as a training objective (the peer's SW0139, no
-result at three fetches this session), and reconstruction with slot competition used to
-train the **graph** while gamma stays frozen — `PV2_0039` trained the encoder that way
-and `PV2_0045` froze the graph, but training the graph under reconstruction with frozen
-features has not been run and is the combination `PV2_0066` now motivates.
+The one untested source of object-level information is **cross-view consistency as a
+training objective** -- two views of a scene having to agree on the grouping, which
+needs no masks and which a fixed point at the current accuracy would not satisfy. The
+peer has it queued as SW0139 and it had no result at three fetches this session.
+
+Everything needed to run it here is in place: `--recon-target-path` shows how an
+external per-patch target threads through training with frozen features, and
+`--phase-gamma-path` plus `graph_extra_channels` let a transform reach the graph alone.
+What is missing is the augmentation pipeline and the consistency term itself.
 
 ## Where the peer stands
 

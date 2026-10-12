@@ -1,0 +1,16 @@
+# PV2_0068: seed 0, frozen gamma, reconstruction target = precomputed pooled RGB.
+# PV2_0069: inference only, one-hot codes from the model's own predictions to the graph
+# with the phase path on real gamma. Validation 300, contract v1, window 1024/512,
+# spike-classifier masks. Target foreground ~0.118; a gain counts only below 0.20.
+test,arm,fg_ari,fg_iou,obj_iou,pred_foreground,loss_start,loss_end
+PV2_0068,bar_no_term,0.7239,0.7251,0.4951,0.1290,32.4879,17.8649
+PV2_0068,recon_w0.5,0.4141,0.4533,0.3234,0.1525,,
+PV2_0068,recon_w1.0,0.6392,0.4905,0.4678,0.2198,24.3384,18.0555
+PV2_0068,recon_w2.0,0.6822,0.4586,0.4904,0.2503,24.6050,18.7012
+PV2_0068,recon_w1.0_from_trained,0.7175,0.7035,0.4958,0.1289,18.3691,15.4878
+PV2_0069,input_groups,0.7239,0.7251,0.4951,0.1290,,
+PV2_0069,codes_to_graph_FZG_s0,0.7214,0.7212,0.4830,0.1271,,
+PV2_0069,codes_to_graph_BIM6_s1,0.7174,0.7183,0.4767,0.1250,,
+PV2_0069,codes_to_graph_FZG_s2,0.7210,0.7209,0.4823,0.1271,,
+PV2_0069,codes_to_graph_mean,0.7199,0.7201,0.4807,0.1264,,
+PV2_0069,oracle_onehot_to_graph,0.9671,0.9353,0.7584,0.1121,,

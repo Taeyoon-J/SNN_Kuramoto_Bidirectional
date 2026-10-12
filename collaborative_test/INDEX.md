@@ -58,6 +58,8 @@
 | PV2_0065 | failed | gamma from the matched Slot encoder: cos_between .0316, fg_ari .0604; whitened at best .4840 | | | |
 | PV2_0066 | completed | **the GRAPH carries 94% of the oracle's gain (.9671 at pred_fg .112); PV2_0005's +0.06 measured something else** | | | |
 | PV2_0067 | exhausted | transforms confined to the graph: whitening still breaks calibration, smoothing still gains no fg_ari | | | |
+| PV2_0068 | exhausted | reconstruction training the graph with features frozen: best calibrated .7175, -0.0064 | | | |
+| PV2_0069 | exhausted | the graph fed its own groups as one-hot: .7239 in, .7199 out -- a fixed point, no amplification | | | |
 | PV2_0046 | completed | contract diagnostic: a looser rule *lowers* fg_ari 0.724 to 0.533; cross-branch scores are not poolable | | | |
 
 Three seeds on the test split, scored from spike masks. Peer experiments from
