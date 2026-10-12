@@ -1,0 +1,21 @@
+{
+  "status": "completed_gt_free_train_diagnostic",
+  "rows": 64,
+  "mass_weighted_disconnected_fraction": 0.18894736842105264,
+  "mean_per_image_disconnected_fraction": 0.21594412865709464,
+  "mean_foreground_labels": 1.765625,
+  "foreground_fraction": 0.115966796875,
+  "visible_edges": 89828,
+  "spike_q_vs_rgb_boundary_target_pearson": 0.6295234369190039,
+  "boundary_scale": {
+    "value": 0.0007178126901283328,
+    "definition": "mean visible adjacent-patch RGB boundary pixel-pair MSE over these same64 rows",
+    "scope": "descriptive scale only; not training calibration"
+  },
+  "limitations": [
+    "Masked-cache float16 actual spikes; no clean-input parity or gradient claim.",
+    "First64-only descriptive association; no threshold or training decision.",
+    "No GT, training, optimizer step, prediction, or model update."
+  ],
+  "decision": "Descriptive evidence only. Keep SW0143 running; do not select a new loss/threshold or claim segmentation improvement from this diagnostic."
+}
