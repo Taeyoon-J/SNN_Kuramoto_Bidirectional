@@ -1,0 +1,32 @@
+﻿{
+    "status":  "technical_owner_interruption",
+    "scientific_result_available":  false,
+    "original_supervisor_pid":  25027,
+    "original_child_pids_verified_absent":  [
+                                                25048,
+                                                36014,
+                                                36590,
+                                                36891,
+                                                37052,
+                                                38687
+                                            ],
+    "completed_stages":  [
+                             "cache_seed1",
+                             "warm_seed1",
+                             "preflight_encoder_graph",
+                             "preflight_core_trainable",
+                             "train_encoder_graph"
+                         ],
+    "interrupted_stage":  "train_core_trainable",
+    "interrupted_returncode":  -15,
+    "foreign_gpu_pid_at_interruption":  38618,
+    "completed_arm_updates":  256,
+    "interrupted_training_directory_files":  0,
+    "restart_scope":  "Only interrupted core_trainable arm, identical source and warm optimizer; preserve completed artifacts and original queue",
+    "segmentation_improvement_proven":  false,
+    "notes":  [
+                  "A lower reconstruction loss on different minibatches does not prove segmentation gain.",
+                  "Nonzero core gradient does not prove useful core contribution.",
+                  "Completed cached spikes and shared warm checkpoint will be reused."
+              ]
+}

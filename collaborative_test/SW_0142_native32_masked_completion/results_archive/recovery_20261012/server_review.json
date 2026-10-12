@@ -1,0 +1,55 @@
+﻿{
+    "status":  "recovery_server_cpu_verified",
+    "tests_run":  10,
+    "skipped":  0,
+    "files":  [
+                  {
+                      "name":  "recover_train_core.py",
+                      "sha256":  "6098dbe592c52d651fa772103175df87bfba9c16af04df9b8b41a17488a8b249",
+                      "bytes":  19291
+                  },
+                  {
+                      "name":  "test_recovery.py",
+                      "sha256":  "43c39610666ef7e605c0374d186534c72019d383f6daa4ee8d4a4da64387f174",
+                      "bytes":  11668
+                  }
+              ],
+    "plan":  {
+                 "status":  "dry_run_validated",
+                 "plan":  {
+                              "experiment":  "SW0142_native32_masked_completion",
+                              "recovery_name":  "SW0142_core_trainable_recovery_20261012",
+                              "original_queue_state":  "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0142_native32_masked_completion/queue_runtime/queue_state.json",
+                              "original_failed_task":  "train_core_trainable",
+                              "gpu_policy":  "GPU0 only; wait when owned/busy; never kill foreign processes",
+                              "validated_inherited_tasks":  [
+                                                                "cache_seed1",
+                                                                "warm_seed1",
+                                                                "preflight_encoder_graph",
+                                                                "preflight_core_trainable",
+                                                                "train_encoder_graph"
+                                                            ],
+                              "stages":  [
+                                             "predict encoder_graph",
+                                             "train core_trainable",
+                                             "predict core_trainable",
+                                             "CPU score"
+                                         ],
+                              "outputs_must_be_absent":  [
+                                                             "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0142_native32_masked_completion/results/encoder_graph",
+                                                             "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0142_native32_masked_completion/results/core_trainable",
+                                                             "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0142_native32_masked_completion/results_archive/score_seed1.json"
+                                                         ],
+                              "original_state_sha256":  "24f00983a01d70590e0566d94b80b66d4c291980e255e245a345dc63d6485284",
+                              "terminal_guard":  {
+                                                     "recorded_pid_count":  7,
+                                                     "foreign_owner_pids":  [
+                                                                                38618
+                                                                            ],
+                                                     "interrupted_task_status":  "interrupted_foreign_gpu_owner",
+                                                     "interrupted_task_returncode":  -15
+                                                 }
+                          }
+             },
+    "training_started":  false
+}

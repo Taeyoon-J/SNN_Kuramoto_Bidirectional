@@ -1,4 +1,4 @@
-Current status and results are summarized in [STATUS.md](STATUS.md). SW0142 passed all 14 server CPU tests and launched its nine-stage queue; source-cache child PID25048 was verified live on GPU0 under supervisor PID25027. Training and scoring remain queued. [Server start evidence](SW_0142_native32_masked_completion/results_archive/server_start_20261011/queue_observation.json). SW0141 recipes are closed; incumbent unchanged.
+Current status and results are summarized in [STATUS.md](STATUS.md). SW0142 owner interruption is preserved; guarded recovery reuses completed artifacts and passed 10 server CPU checks. Supervisor359598 and encoder_graph prediction child359609 verified live on GPU0; interrupted core training and paired evaluation queued. No new score or promotion. [Recovery evidence](SW_0142_native32_masked_completion/results_archive/recovery_20261012/summary.json).
 
 Latest recovery observation: three actual training children verified in /proc and nvidia-smi on GPUs0/1/2. No scores yet. Evidence: SW_0134_native_spike_binding/recovery_gpu_start_20261010.json.
 

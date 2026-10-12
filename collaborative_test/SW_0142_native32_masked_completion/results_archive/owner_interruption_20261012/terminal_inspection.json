@@ -1,0 +1,787 @@
+﻿{
+    "queue_status":  "failed",
+    "supervisor_pid":  25027,
+    "original_pid_live":  {
+                              "25027":  null,
+                              "25048":  null,
+                              "36014":  null,
+                              "36590":  null,
+                              "36891":  null,
+                              "37052":  null,
+                              "38687":  null
+                          },
+    "tasks":  {
+                  "cache_seed1":  {
+                                      "task":  {
+                                                   "task_id":  "cache_seed1",
+                                                   "stage":  "cache",
+                                                   "deps":  [
+
+                                                            ]
+                                               },
+                                      "status":  "passed",
+                                      "gpu":  0,
+                                      "gpu_uuid":  "GPU-a0a7d03d-adc1-37ca-4342-328878b3657c",
+                                      "memory_before_mib":  16,
+                                      "lease_path":  "/tmp/kevinswk_sw0113_gpu_leases/gpu0.lock",
+                                      "child_started":  1791775528.5269856,
+                                      "log_path":  "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0142_native32_masked_completion/queue_runtime/cache_seed1.log",
+                                      "argv":  [
+                                                   "/Data0/kevinswk/envs/snn/bin/python",
+                                                   "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0142_native32_masked_completion/run.py",
+                                                   "--stage",
+                                                   "cache",
+                                                   "--device",
+                                                   "cuda:0"
+                                               ],
+                                      "cuda_visible_devices":  "0",
+                                      "child_pid":  25048,
+                                      "returncode":  0,
+                                      "artifact_valid":  true,
+                                      "completed":  1791778470.778869
+                                  },
+                  "warm_seed1":  {
+                                     "task":  {
+                                                  "task_id":  "warm_seed1",
+                                                  "stage":  "warm",
+                                                  "deps":  [
+                                                               "cache_seed1"
+                                                           ]
+                                              },
+                                     "status":  "passed",
+                                     "gpu":  0,
+                                     "gpu_uuid":  "GPU-a0a7d03d-adc1-37ca-4342-328878b3657c",
+                                     "memory_before_mib":  16,
+                                     "lease_path":  "/tmp/kevinswk_sw0113_gpu_leases/gpu0.lock",
+                                     "child_started":  1791778470.9732893,
+                                     "log_path":  "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0142_native32_masked_completion/queue_runtime/warm_seed1.log",
+                                     "argv":  [
+                                                  "/Data0/kevinswk/envs/snn/bin/python",
+                                                  "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0142_native32_masked_completion/run.py",
+                                                  "--stage",
+                                                  "warm",
+                                                  "--device",
+                                                  "cuda:0"
+                                              ],
+                                     "cuda_visible_devices":  "0",
+                                     "child_pid":  36014,
+                                     "returncode":  0,
+                                     "artifact_valid":  true,
+                                     "completed":  1791778663.6664767
+                                 },
+                  "preflight_encoder_graph":  {
+                                                  "task":  {
+                                                               "task_id":  "preflight_encoder_graph",
+                                                               "stage":  "preflight",
+                                                               "arm":  "encoder_graph",
+                                                               "deps":  [
+                                                                            "warm_seed1"
+                                                                        ]
+                                                           },
+                                                  "status":  "passed",
+                                                  "gpu":  0,
+                                                  "gpu_uuid":  "GPU-a0a7d03d-adc1-37ca-4342-328878b3657c",
+                                                  "memory_before_mib":  16,
+                                                  "lease_path":  "/tmp/kevinswk_sw0113_gpu_leases/gpu0.lock",
+                                                  "child_started":  1791778663.79301,
+                                                  "log_path":  "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0142_native32_masked_completion/queue_runtime/preflight_encoder_graph.log",
+                                                  "argv":  [
+                                                               "/Data0/kevinswk/envs/snn/bin/python",
+                                                               "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0142_native32_masked_completion/run.py",
+                                                               "--stage",
+                                                               "preflight",
+                                                               "--arm",
+                                                               "encoder_graph",
+                                                               "--device",
+                                                               "cuda:0"
+                                                           ],
+                                                  "cuda_visible_devices":  "0",
+                                                  "child_pid":  36590,
+                                                  "returncode":  0,
+                                                  "artifact_valid":  true,
+                                                  "completed":  1791778710.5574608
+                                              },
+                  "preflight_core_trainable":  {
+                                                   "task":  {
+                                                                "task_id":  "preflight_core_trainable",
+                                                                "stage":  "preflight",
+                                                                "arm":  "core_trainable",
+                                                                "deps":  [
+                                                                             "warm_seed1"
+                                                                         ]
+                                                            },
+                                                   "status":  "passed",
+                                                   "last_wait":  1791778707.814796,
+                                                   "gpu":  0,
+                                                   "gpu_uuid":  "GPU-a0a7d03d-adc1-37ca-4342-328878b3657c",
+                                                   "memory_before_mib":  16,
+                                                   "lease_path":  "/tmp/kevinswk_sw0113_gpu_leases/gpu0.lock",
+                                                   "child_started":  1791778712.978204,
+                                                   "log_path":  "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0142_native32_masked_completion/queue_runtime/preflight_core_trainable.log",
+                                                   "argv":  [
+                                                                "/Data0/kevinswk/envs/snn/bin/python",
+                                                                "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0142_native32_masked_completion/run.py",
+                                                                "--stage",
+                                                                "preflight",
+                                                                "--arm",
+                                                                "core_trainable",
+                                                                "--device",
+                                                                "cuda:0"
+                                                            ],
+                                                   "cuda_visible_devices":  "0",
+                                                   "child_pid":  36891,
+                                                   "returncode":  0,
+                                                   "artifact_valid":  true,
+                                                   "completed":  1791778759.695031
+                                               },
+                  "train_encoder_graph":  {
+                                              "task":  {
+                                                           "task_id":  "train_encoder_graph",
+                                                           "stage":  "train",
+                                                           "arm":  "encoder_graph",
+                                                           "deps":  [
+                                                                        "preflight_encoder_graph"
+                                                                    ]
+                                                       },
+                                              "status":  "passed",
+                                              "gpu":  0,
+                                              "gpu_uuid":  "GPU-a0a7d03d-adc1-37ca-4342-328878b3657c",
+                                              "memory_before_mib":  16,
+                                              "lease_path":  "/tmp/kevinswk_sw0113_gpu_leases/gpu0.lock",
+                                              "child_started":  1791778759.858173,
+                                              "log_path":  "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0142_native32_masked_completion/queue_runtime/train_encoder_graph.log",
+                                              "argv":  [
+                                                           "/Data0/kevinswk/envs/snn/bin/python",
+                                                           "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0142_native32_masked_completion/run.py",
+                                                           "--stage",
+                                                           "train",
+                                                           "--arm",
+                                                           "encoder_graph",
+                                                           "--device",
+                                                           "cuda:0"
+                                                       ],
+                                              "cuda_visible_devices":  "0",
+                                              "child_pid":  37052,
+                                              "returncode":  0,
+                                              "artifact_valid":  true,
+                                              "completed":  1791783980.5495358
+                                          },
+                  "train_core_trainable":  {
+                                               "task":  {
+                                                            "task_id":  "train_core_trainable",
+                                                            "stage":  "train",
+                                                            "arm":  "core_trainable",
+                                                            "deps":  [
+                                                                         "preflight_core_trainable"
+                                                                     ]
+                                                        },
+                                               "status":  "interrupted_foreign_gpu_owner",
+                                               "last_wait":  1791778984.7370472,
+                                               "gpu":  2,
+                                               "gpu_uuid":  "GPU-50cc59a2-8312-ff02-5889-1becf63c7cd4",
+                                               "memory_before_mib":  2,
+                                               "lease_path":  "/tmp/kevinswk_sw0113_gpu_leases/gpu2.lock",
+                                               "child_started":  1791778989.9698994,
+                                               "log_path":  "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0142_native32_masked_completion/queue_runtime/train_core_trainable.log",
+                                               "argv":  [
+                                                            "/Data0/kevinswk/envs/snn/bin/python",
+                                                            "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0142_native32_masked_completion/run.py",
+                                                            "--stage",
+                                                            "train",
+                                                            "--arm",
+                                                            "core_trainable",
+                                                            "--device",
+                                                            "cuda:0"
+                                                        ],
+                                               "cuda_visible_devices":  "2",
+                                               "child_pid":  38687,
+                                               "foreign_owner_pids":  [
+                                                                          38618
+                                                                      ],
+                                               "returncode":  -15
+                                           },
+                  "predict_encoder_graph":  {
+                                                "task":  {
+                                                             "task_id":  "predict_encoder_graph",
+                                                             "stage":  "predict",
+                                                             "arm":  "encoder_graph",
+                                                             "deps":  [
+                                                                          "train_encoder_graph"
+                                                                      ]
+                                                         },
+                                                "status":  "queued"
+                                            },
+                  "predict_core_trainable":  {
+                                                 "task":  {
+                                                              "task_id":  "predict_core_trainable",
+                                                              "stage":  "predict",
+                                                              "arm":  "core_trainable",
+                                                              "deps":  [
+                                                                           "train_core_trainable"
+                                                                       ]
+                                                          },
+                                                 "status":  "queued"
+                                             },
+                  "score_seed1":  {
+                                      "task":  {
+                                                   "task_id":  "score_seed1",
+                                                   "stage":  "score",
+                                                   "deps":  [
+                                                                "predict_encoder_graph",
+                                                                "predict_core_trainable"
+                                                            ]
+                                               },
+                                      "status":  "queued"
+                                  }
+              },
+    "training_files":  {
+                           "encoder_graph":  [
+                                                 {
+                                                     "name":  "checkpoint.pt",
+                                                     "bytes":  13431733
+                                                 },
+                                                 {
+                                                     "name":  "backbone_optimizer.pt",
+                                                     "bytes":  9933
+                                                 },
+                                                 {
+                                                     "name":  "head_optimizer.pt",
+                                                     "bytes":  1571489
+                                                 },
+                                                 {
+                                                     "name":  "history.json",
+                                                     "bytes":  81184
+                                                 },
+                                                 {
+                                                     "name":  "manifest.json",
+                                                     "bytes":  58547
+                                                 },
+                                                 {
+                                                     "name":  "TRAINING_COMPLETED.json",
+                                                     "bytes":  264
+                                                 },
+                                                 {
+                                                     "history_summary":  {
+                                                                             "updates":  256,
+                                                                             "first_mean_loss":  1.046238750219345,
+                                                                             "last_mean_loss":  0.9271641075611115
+                                                                         }
+                                                 }
+                                             ],
+                           "core_trainable":  [
+
+                                              ]
+                       },
+    "preflight":  {
+                      "encoder_graph":  {
+                                            "status":  "preflight_complete",
+                                            "elapsed_seconds":  25.908023476134986,
+                                            "peak_allocated_bytes":  2644061184,
+                                            "gradient_norms":  {
+                                                                   "backbone":  0.019437583381757276,
+                                                                   "head":  0.5389283529415619
+                                                               },
+                                            "rgb_gradient_families":  {
+                                                                          "graph":  {
+                                                                                        "norm":  0.0037307258430686334,
+                                                                                        "parameters_with_gradient":  5,
+                                                                                        "parameters_without_gradient":  0
+                                                                                    },
+                                                                          "kuramoto":  {
+                                                                                           "norm":  0.0,
+                                                                                           "parameters_with_gradient":  0,
+                                                                                           "parameters_without_gradient":  4
+                                                                                       },
+                                                                          "dendrite":  {
+                                                                                           "norm":  0.0,
+                                                                                           "parameters_with_gradient":  0,
+                                                                                           "parameters_without_gradient":  3
+                                                                                       },
+                                                                          "membrane":  {
+                                                                                           "norm":  0.0,
+                                                                                           "parameters_with_gradient":  0,
+                                                                                           "parameters_without_gradient":  1
+                                                                                       },
+                                                                          "integration_scalars":  {
+                                                                                                      "norm":  0.0,
+                                                                                                      "parameters_with_gradient":  0,
+                                                                                                      "parameters_without_gradient":  3
+                                                                                                  },
+                                                                          "encoder":  {
+                                                                                          "norm":  0.019076198059535514,
+                                                                                          "parameters_with_gradient":  2,
+                                                                                          "parameters_without_gradient":  0
+                                                                                      },
+                                                                          "binder":  {
+                                                                                         "norm":  0.13892779754213014,
+                                                                                         "parameters_with_gradient":  17,
+                                                                                         "parameters_without_gradient":  0
+                                                                                     },
+                                                                          "decoder":  {
+                                                                                          "norm":  0.5207137761519256,
+                                                                                          "parameters_with_gradient":  6,
+                                                                                          "parameters_without_gradient":  0
+                                                                                      }
+                                                                      },
+                                            "integration_scalars_before":  {
+                                                                               "a_d":  [
+                                                                                           0.0,
+                                                                                           0.0,
+                                                                                           0.0,
+                                                                                           0.0
+                                                                                       ],
+                                                                               "a_m":  [
+                                                                                           0.0,
+                                                                                           0.0,
+                                                                                           0.0,
+                                                                                           0.0
+                                                                                       ],
+                                                                               "b":  [
+                                                                                         0.0,
+                                                                                         0.0,
+                                                                                         0.0,
+                                                                                         0.0
+                                                                                     ]
+                                                                           },
+                                            "integration_scalars_after":  {
+                                                                              "a_d":  [
+                                                                                          0.0,
+                                                                                          0.0,
+                                                                                          0.0,
+                                                                                          0.0
+                                                                                      ],
+                                                                              "a_m":  [
+                                                                                          0.0,
+                                                                                          0.0,
+                                                                                          0.0,
+                                                                                          0.0
+                                                                                      ],
+                                                                              "b":  [
+                                                                                        0.0,
+                                                                                        0.0,
+                                                                                        0.0,
+                                                                                        0.0
+                                                                                    ]
+                                                                          },
+                                            "event_occupancy_before":  {
+                                                                           "event_threshold":  "component_membrane \u003e 0.06 * exp(b[component])",
+                                                                           "all_steps":  {
+                                                                                             "events":  {
+                                                                                                            "per_component":  [
+                                                                                                                                  1.0,
+                                                                                                                                  0.9999465942382812,
+                                                                                                                                  0.9998400211334229,
+                                                                                                                                  1.0
+                                                                                                                              ],
+                                                                                                            "overall":  0.999946653842926
+                                                                                                        },
+                                                                                             "emitted_spikes":  {
+                                                                                                                    "per_component":  [
+                                                                                                                                          0.49335840344429016,
+                                                                                                                                          0.49330753087997437,
+                                                                                                                                          0.4932079315185547,
+                                                                                                                                          0.49335840344429016
+                                                                                                                                      ],
+                                                                                                                    "overall":  0.49330803751945496
+                                                                                                                }
+                                                                                         },
+                                                                           "settled_512":  {
+                                                                                               "events":  {
+                                                                                                              "per_component":  [
+                                                                                                                                    1.0,
+                                                                                                                                    1.0,
+                                                                                                                                    1.0,
+                                                                                                                                    1.0
+                                                                                                                                ],
+                                                                                                              "overall":  1.0
+                                                                                                          },
+                                                                                               "emitted_spikes":  {
+                                                                                                                      "per_component":  [
+                                                                                                                                            0.5090162754058838,
+                                                                                                                                            0.5090162754058838,
+                                                                                                                                            0.5090162754058838,
+                                                                                                                                            0.5090162754058838
+                                                                                                                                        ],
+                                                                                                                      "overall":  0.5090162754058838
+                                                                                                                  }
+                                                                                           }
+                                                                       },
+                                            "event_occupancy_after_same_masked_train_microbatch":  {
+                                                                                                       "event_threshold":  "component_membrane \u003e 0.06 * exp(b[component])",
+                                                                                                       "all_steps":  {
+                                                                                                                         "events":  {
+                                                                                                                                        "per_component":  [
+                                                                                                                                                              1.0,
+                                                                                                                                                              0.9999465942382812,
+                                                                                                                                                              0.9998400211334229,
+                                                                                                                                                              1.0
+                                                                                                                                                          ],
+                                                                                                                                        "overall":  0.999946653842926
+                                                                                                                                    },
+                                                                                                                         "emitted_spikes":  {
+                                                                                                                                                "per_component":  [
+                                                                                                                                                                      0.49353352189064026,
+                                                                                                                                                                      0.49348264932632446,
+                                                                                                                                                                      0.49338310956954956,
+                                                                                                                                                                      0.49353352189064026
+                                                                                                                                                                  ],
+                                                                                                                                                "overall":  0.49348321557044983
+                                                                                                                                            }
+                                                                                                                     },
+                                                                                                       "settled_512":  {
+                                                                                                                           "events":  {
+                                                                                                                                          "per_component":  [
+                                                                                                                                                                1.0,
+                                                                                                                                                                1.0,
+                                                                                                                                                                1.0,
+                                                                                                                                                                1.0
+                                                                                                                                                            ],
+                                                                                                                                          "overall":  1.0
+                                                                                                                                      },
+                                                                                                                           "emitted_spikes":  {
+                                                                                                                                                  "per_component":  [
+                                                                                                                                                                        0.5093372464179993,
+                                                                                                                                                                        0.5093372464179993,
+                                                                                                                                                                        0.5093372464179993,
+                                                                                                                                                                        0.5093372464179993
+                                                                                                                                                                    ],
+                                                                                                                                                  "overall":  0.509337306022644
+                                                                                                                                              }
+                                                                                                                       }
+                                                                                                   }
+                                        },
+                      "core_trainable":  {
+                                             "status":  "preflight_complete",
+                                             "elapsed_seconds":  26.203109981957823,
+                                             "peak_allocated_bytes":  2648312832,
+                                             "gradient_norms":  {
+                                                                    "backbone":  0.020188133286531774,
+                                                                    "head":  0.5389283529415619
+                                                                },
+                                             "rgb_gradient_families":  {
+                                                                           "graph":  {
+                                                                                         "norm":  0.0037307258430686334,
+                                                                                         "parameters_with_gradient":  5,
+                                                                                         "parameters_without_gradient":  0
+                                                                                     },
+                                                                           "kuramoto":  {
+                                                                                            "norm":  0.0003278474215413182,
+                                                                                            "parameters_with_gradient":  4,
+                                                                                            "parameters_without_gradient":  0
+                                                                                        },
+                                                                           "dendrite":  {
+                                                                                            "norm":  0.00013064928740399626,
+                                                                                            "parameters_with_gradient":  3,
+                                                                                            "parameters_without_gradient":  0
+                                                                                        },
+                                                                           "membrane":  {
+                                                                                            "norm":  8.2003118894658262E-08,
+                                                                                            "parameters_with_gradient":  1,
+                                                                                            "parameters_without_gradient":  0
+                                                                                        },
+                                                                           "integration_scalars":  {
+                                                                                                       "norm":  3.231349977359099E-06,
+                                                                                                       "parameters_with_gradient":  3,
+                                                                                                       "parameters_without_gradient":  0
+                                                                                                   },
+                                                                           "encoder":  {
+                                                                                           "norm":  0.019076198465822588,
+                                                                                           "parameters_with_gradient":  2,
+                                                                                           "parameters_without_gradient":  0
+                                                                                       },
+                                                                           "binder":  {
+                                                                                          "norm":  0.13892779754213014,
+                                                                                          "parameters_with_gradient":  17,
+                                                                                          "parameters_without_gradient":  0
+                                                                                      },
+                                                                           "decoder":  {
+                                                                                           "norm":  0.5207137761519256,
+                                                                                           "parameters_with_gradient":  6,
+                                                                                           "parameters_without_gradient":  0
+                                                                                       }
+                                                                       },
+                                             "integration_scalars_before":  {
+                                                                                "a_d":  [
+                                                                                            0.0,
+                                                                                            0.0,
+                                                                                            0.0,
+                                                                                            0.0
+                                                                                        ],
+                                                                                "a_m":  [
+                                                                                            0.0,
+                                                                                            0.0,
+                                                                                            0.0,
+                                                                                            0.0
+                                                                                        ],
+                                                                                "b":  [
+                                                                                          0.0,
+                                                                                          0.0,
+                                                                                          0.0,
+                                                                                          0.0
+                                                                                      ]
+                                                                            },
+                                             "integration_scalars_after":  {
+                                                                               "a_d":  [
+                                                                                           0.0,
+                                                                                           0.0,
+                                                                                           0.00088765803957358,
+                                                                                           0.000909367692656815
+                                                                                       ],
+                                                                               "a_m":  [
+                                                                                           0.0,
+                                                                                           0.0,
+                                                                                           0.0008632380049675703,
+                                                                                           0.0009149457328021526
+                                                                                       ],
+                                                                               "b":  [
+                                                                                         -0.0009943059412762523,
+                                                                                         -0.00099373038392514,
+                                                                                         -0.0009927588980644941,
+                                                                                         -0.0009941165335476398
+                                                                                     ]
+                                                                           },
+                                             "event_occupancy_before":  {
+                                                                            "event_threshold":  "component_membrane \u003e 0.06 * exp(b[component])",
+                                                                            "all_steps":  {
+                                                                                              "events":  {
+                                                                                                             "per_component":  [
+                                                                                                                                   1.0,
+                                                                                                                                   0.9999465942382812,
+                                                                                                                                   0.9998400211334229,
+                                                                                                                                   1.0
+                                                                                                                               ],
+                                                                                                             "overall":  0.999946653842926
+                                                                                                         },
+                                                                                              "emitted_spikes":  {
+                                                                                                                     "per_component":  [
+                                                                                                                                           0.49335840344429016,
+                                                                                                                                           0.49330753087997437,
+                                                                                                                                           0.4932079315185547,
+                                                                                                                                           0.49335840344429016
+                                                                                                                                       ],
+                                                                                                                     "overall":  0.49330803751945496
+                                                                                                                 }
+                                                                                          },
+                                                                            "settled_512":  {
+                                                                                                "events":  {
+                                                                                                               "per_component":  [
+                                                                                                                                     1.0,
+                                                                                                                                     1.0,
+                                                                                                                                     1.0,
+                                                                                                                                     1.0
+                                                                                                                                 ],
+                                                                                                               "overall":  1.0
+                                                                                                           },
+                                                                                                "emitted_spikes":  {
+                                                                                                                       "per_component":  [
+                                                                                                                                             0.5090162754058838,
+                                                                                                                                             0.5090162754058838,
+                                                                                                                                             0.5090162754058838,
+                                                                                                                                             0.5090162754058838
+                                                                                                                                         ],
+                                                                                                                       "overall":  0.5090162754058838
+                                                                                                                   }
+                                                                                            }
+                                                                        },
+                                             "event_occupancy_after_same_masked_train_microbatch":  {
+                                                                                                        "event_threshold":  "component_membrane \u003e 0.06 * exp(b[component])",
+                                                                                                        "all_steps":  {
+                                                                                                                          "events":  {
+                                                                                                                                         "per_component":  [
+                                                                                                                                                               1.0,
+                                                                                                                                                               0.9999465942382812,
+                                                                                                                                                               0.9998400211334229,
+                                                                                                                                                               1.0
+                                                                                                                                                           ],
+                                                                                                                                         "overall":  0.999946653842926
+                                                                                                                                     },
+                                                                                                                          "emitted_spikes":  {
+                                                                                                                                                 "per_component":  [
+                                                                                                                                                                       0.49354320764541626,
+                                                                                                                                                                       0.49349236488342285,
+                                                                                                                                                                       0.49339279532432556,
+                                                                                                                                                                       0.49354320764541626
+                                                                                                                                                                   ],
+                                                                                                                                                 "overall":  0.49349290132522583
+                                                                                                                                             }
+                                                                                                                      },
+                                                                                                        "settled_512":  {
+                                                                                                                            "events":  {
+                                                                                                                                           "per_component":  [
+                                                                                                                                                                 1.0,
+                                                                                                                                                                 1.0,
+                                                                                                                                                                 1.0,
+                                                                                                                                                                 1.0
+                                                                                                                                                             ],
+                                                                                                                                           "overall":  1.0
+                                                                                                                                       },
+                                                                                                                            "emitted_spikes":  {
+                                                                                                                                                   "per_component":  [
+                                                                                                                                                                         0.5094035863876343,
+                                                                                                                                                                         0.5094035863876343,
+                                                                                                                                                                         0.5094035863876343,
+                                                                                                                                                                         0.5094035863876343
+                                                                                                                                                                     ],
+                                                                                                                                                   "overall":  0.5094035863876343
+                                                                                                                                               }
+                                                                                                                        }
+                                                                                                    }
+                                         }
+                  },
+    "warm":  {
+                 "status":  "warm_complete",
+                 "updates":  256,
+                 "assignment_diagnostic_first64_train":  {
+                                                             "scope":  "first64 registered TRAIN rows",
+                                                             "batches":  [
+                                                                             {
+                                                                                 "images":  4,
+                                                                                 "unshuffled_completion_loss":  0.8640844821929932,
+                                                                                 "row_permuted_P_loss":  0.8697880506515503,
+                                                                                 "within_coarse_RGB_bin_permuted_P_loss":  0.8656132817268372,
+                                                                                 "row_permuted_minus_base":  0.005703568458557129,
+                                                                                 "within_bin_permuted_minus_base":  0.0015287995338439941,
+                                                                                 "intervention":  "P rows permuted; slot latents held fixed and P-derived geometry recomputed; color condition permutes P only within each target patch coarse RGB bin; no GT"
+                                                                             },
+                                                                             {
+                                                                                 "images":  4,
+                                                                                 "unshuffled_completion_loss":  1.0632498264312744,
+                                                                                 "row_permuted_P_loss":  1.0747748613357544,
+                                                                                 "within_coarse_RGB_bin_permuted_P_loss":  1.0713629722595215,
+                                                                                 "row_permuted_minus_base":  0.01152503490447998,
+                                                                                 "within_bin_permuted_minus_base":  0.00811314582824707,
+                                                                                 "intervention":  "P rows permuted; slot latents held fixed and P-derived geometry recomputed; color condition permutes P only within each target patch coarse RGB bin; no GT"
+                                                                             },
+                                                                             {
+                                                                                 "images":  4,
+                                                                                 "unshuffled_completion_loss":  1.0466245412826538,
+                                                                                 "row_permuted_P_loss":  1.0473240613937378,
+                                                                                 "within_coarse_RGB_bin_permuted_P_loss":  1.0441687107086182,
+                                                                                 "row_permuted_minus_base":  0.0006995201110839844,
+                                                                                 "within_bin_permuted_minus_base":  -0.0024558305740356445,
+                                                                                 "intervention":  "P rows permuted; slot latents held fixed and P-derived geometry recomputed; color condition permutes P only within each target patch coarse RGB bin; no GT"
+                                                                             },
+                                                                             {
+                                                                                 "images":  4,
+                                                                                 "unshuffled_completion_loss":  1.048666000366211,
+                                                                                 "row_permuted_P_loss":  1.0500872135162354,
+                                                                                 "within_coarse_RGB_bin_permuted_P_loss":  1.0504777431488037,
+                                                                                 "row_permuted_minus_base":  0.001421213150024414,
+                                                                                 "within_bin_permuted_minus_base":  0.0018117427825927734,
+                                                                                 "intervention":  "P rows permuted; slot latents held fixed and P-derived geometry recomputed; color condition permutes P only within each target patch coarse RGB bin; no GT"
+                                                                             },
+                                                                             {
+                                                                                 "images":  4,
+                                                                                 "unshuffled_completion_loss":  1.231684923171997,
+                                                                                 "row_permuted_P_loss":  1.236100196838379,
+                                                                                 "within_coarse_RGB_bin_permuted_P_loss":  1.2379348278045654,
+                                                                                 "row_permuted_minus_base":  0.004415273666381836,
+                                                                                 "within_bin_permuted_minus_base":  0.006249904632568359,
+                                                                                 "intervention":  "P rows permuted; slot latents held fixed and P-derived geometry recomputed; color condition permutes P only within each target patch coarse RGB bin; no GT"
+                                                                             },
+                                                                             {
+                                                                                 "images":  4,
+                                                                                 "unshuffled_completion_loss":  1.0146175622940063,
+                                                                                 "row_permuted_P_loss":  1.0226500034332275,
+                                                                                 "within_coarse_RGB_bin_permuted_P_loss":  1.0212653875350952,
+                                                                                 "row_permuted_minus_base":  0.008032441139221191,
+                                                                                 "within_bin_permuted_minus_base":  0.006647825241088867,
+                                                                                 "intervention":  "P rows permuted; slot latents held fixed and P-derived geometry recomputed; color condition permutes P only within each target patch coarse RGB bin; no GT"
+                                                                             },
+                                                                             {
+                                                                                 "images":  4,
+                                                                                 "unshuffled_completion_loss":  0.8732607960700989,
+                                                                                 "row_permuted_P_loss":  0.8725160360336304,
+                                                                                 "within_coarse_RGB_bin_permuted_P_loss":  0.8749260306358337,
+                                                                                 "row_permuted_minus_base":  -0.0007447600364685059,
+                                                                                 "within_bin_permuted_minus_base":  0.0016652345657348633,
+                                                                                 "intervention":  "P rows permuted; slot latents held fixed and P-derived geometry recomputed; color condition permutes P only within each target patch coarse RGB bin; no GT"
+                                                                             },
+                                                                             {
+                                                                                 "images":  4,
+                                                                                 "unshuffled_completion_loss":  0.9106572270393372,
+                                                                                 "row_permuted_P_loss":  0.9149289131164551,
+                                                                                 "within_coarse_RGB_bin_permuted_P_loss":  0.9097914099693298,
+                                                                                 "row_permuted_minus_base":  0.00427168607711792,
+                                                                                 "within_bin_permuted_minus_base":  -0.0008658170700073242,
+                                                                                 "intervention":  "P rows permuted; slot latents held fixed and P-derived geometry recomputed; color condition permutes P only within each target patch coarse RGB bin; no GT"
+                                                                             },
+                                                                             {
+                                                                                 "images":  4,
+                                                                                 "unshuffled_completion_loss":  0.9763874411582947,
+                                                                                 "row_permuted_P_loss":  0.9784873127937317,
+                                                                                 "within_coarse_RGB_bin_permuted_P_loss":  0.9781844019889832,
+                                                                                 "row_permuted_minus_base":  0.0020998716354370117,
+                                                                                 "within_bin_permuted_minus_base":  0.0017969608306884766,
+                                                                                 "intervention":  "P rows permuted; slot latents held fixed and P-derived geometry recomputed; color condition permutes P only within each target patch coarse RGB bin; no GT"
+                                                                             },
+                                                                             {
+                                                                                 "images":  4,
+                                                                                 "unshuffled_completion_loss":  1.0393189191818237,
+                                                                                 "row_permuted_P_loss":  1.039046287536621,
+                                                                                 "within_coarse_RGB_bin_permuted_P_loss":  1.0447386503219604,
+                                                                                 "row_permuted_minus_base":  -0.0002726316452026367,
+                                                                                 "within_bin_permuted_minus_base":  0.005419731140136719,
+                                                                                 "intervention":  "P rows permuted; slot latents held fixed and P-derived geometry recomputed; color condition permutes P only within each target patch coarse RGB bin; no GT"
+                                                                             },
+                                                                             {
+                                                                                 "images":  4,
+                                                                                 "unshuffled_completion_loss":  1.0193064212799072,
+                                                                                 "row_permuted_P_loss":  1.0202386379241943,
+                                                                                 "within_coarse_RGB_bin_permuted_P_loss":  1.0191688537597656,
+                                                                                 "row_permuted_minus_base":  0.0009322166442871094,
+                                                                                 "within_bin_permuted_minus_base":  -0.00013756752014160156,
+                                                                                 "intervention":  "P rows permuted; slot latents held fixed and P-derived geometry recomputed; color condition permutes P only within each target patch coarse RGB bin; no GT"
+                                                                             },
+                                                                             {
+                                                                                 "images":  4,
+                                                                                 "unshuffled_completion_loss":  1.1409988403320312,
+                                                                                 "row_permuted_P_loss":  1.1400697231292725,
+                                                                                 "within_coarse_RGB_bin_permuted_P_loss":  1.1433929204940796,
+                                                                                 "row_permuted_minus_base":  -0.0009291172027587891,
+                                                                                 "within_bin_permuted_minus_base":  0.00239408016204834,
+                                                                                 "intervention":  "P rows permuted; slot latents held fixed and P-derived geometry recomputed; color condition permutes P only within each target patch coarse RGB bin; no GT"
+                                                                             },
+                                                                             {
+                                                                                 "images":  4,
+                                                                                 "unshuffled_completion_loss":  0.9135856628417969,
+                                                                                 "row_permuted_P_loss":  0.9184438586235046,
+                                                                                 "within_coarse_RGB_bin_permuted_P_loss":  0.9156721830368042,
+                                                                                 "row_permuted_minus_base":  0.004858195781707764,
+                                                                                 "within_bin_permuted_minus_base":  0.0020865201950073242,
+                                                                                 "intervention":  "P rows permuted; slot latents held fixed and P-derived geometry recomputed; color condition permutes P only within each target patch coarse RGB bin; no GT"
+                                                                             },
+                                                                             {
+                                                                                 "images":  4,
+                                                                                 "unshuffled_completion_loss":  0.9876230359077454,
+                                                                                 "row_permuted_P_loss":  0.9899664521217346,
+                                                                                 "within_coarse_RGB_bin_permuted_P_loss":  0.990138828754425,
+                                                                                 "row_permuted_minus_base":  0.002343416213989258,
+                                                                                 "within_bin_permuted_minus_base":  0.0025157928466796875,
+                                                                                 "intervention":  "P rows permuted; slot latents held fixed and P-derived geometry recomputed; color condition permutes P only within each target patch coarse RGB bin; no GT"
+                                                                             },
+                                                                             {
+                                                                                 "images":  4,
+                                                                                 "unshuffled_completion_loss":  0.8999271988868713,
+                                                                                 "row_permuted_P_loss":  0.9012621641159058,
+                                                                                 "within_coarse_RGB_bin_permuted_P_loss":  0.9017539024353027,
+                                                                                 "row_permuted_minus_base":  0.0013349652290344238,
+                                                                                 "within_bin_permuted_minus_base":  0.0018267035484313965,
+                                                                                 "intervention":  "P rows permuted; slot latents held fixed and P-derived geometry recomputed; color condition permutes P only within each target patch coarse RGB bin; no GT"
+                                                                             },
+                                                                             {
+                                                                                 "images":  4,
+                                                                                 "unshuffled_completion_loss":  1.4705841541290283,
+                                                                                 "row_permuted_P_loss":  1.4708625078201294,
+                                                                                 "within_coarse_RGB_bin_permuted_P_loss":  1.470073938369751,
+                                                                                 "row_permuted_minus_base":  0.0002783536911010742,
+                                                                                 "within_bin_permuted_minus_base":  -0.0005102157592773438,
+                                                                                 "intervention":  "P rows permuted; slot latents held fixed and P-derived geometry recomputed; color condition permutes P only within each target patch coarse RGB bin; no GT"
+                                                                             }
+                                                                         ],
+                                                             "mean_unshuffled_loss":  1.0312860645353794,
+                                                             "mean_row_permuted_loss":  1.034159142524004,
+                                                             "mean_within_bin_permuted_loss":  1.0336665026843548
+                                                         }
+             }
+}
