@@ -44,7 +44,8 @@
 | PV2_0051 | exhausted | data scale closed on the mechanism too: w/b improved only 7% while fg_ari fell; 27-hour run cancelled | | | |
 | PV2_0052 | exhausted | integration window saturated: +0.0005 from 1024 to 4096, inside the seed spread | | | |
 | PV2_0053 | completed | **38.8% of images hold an object pair the graph's cosine cannot separate; position takes it to 18.1%** | | | |
-| PV2_0054 | running | position channels in the code the graph compares, w in {0.5, 1, 2}, seed 0 | | | |
+| PV2_0054 | failed | widening gamma killed the spike path: joint standardisation rescaled the appearance channels | | | |
+| PV2_0055 | completed | **position in the graph: loss lower, score 0.168 worse. The objective is satisfiable by geometry** | | | |
 | PV2_0046 | completed | contract diagnostic: a looser rule *lowers* fg_ari 0.724 to 0.533; cross-branch scores are not poolable | | | |
 
 Three seeds on the test split, scored from spike masks. Peer experiments from
@@ -110,13 +111,20 @@ window is saturated (`PV2_0052`, +0.0005 from 1024 to 4096).
 
 ### Open
 
-`PV2_0053` found a loss never measured before: **38.8% of validation images hold an
-object pair whose centroids sit closer together than the objects are internally
-spread** — pairs the graph's feature cosine cannot keep apart, because
-`graph_generator.py:123` builds every edge from eight appearance channels and
-**position never enters that code**. Appending coordinates takes that rate to 18.1%
-at w=1 and 4.3% at w=4, against 0% for the oracle code. `PV2_0054` tests whether it
-converts into fg_ari.
+Nothing with a measured candidate. `PV2_0055` closed the position route and, in
+doing so, added a reason the other seven may share: the trained losses were **lower**
+than the baseline's (13.91 and 13.75 against 17.86) while the scores were 0.17-0.27
+worse. The PLV terms ask for groups that are coherent and roughly the right size,
+and spatially compact blobs satisfy that without tracking objects -- geometry alone
+is worth 0.3902 under this readout (`PV2_0043`), and PG_w2 landed at 0.4575. **The
+objective is partly satisfiable by geometry**, so feeding geometry into the code it
+is computed from makes the shortcut available.
+
+`PV2_0034` reached 0.9754 by handing oracle features to the existing, unretrained
+core. So the readout can exploit good features and no objective tried so far creates
+them. A route to 0.9 needs a training signal geometry cannot satisfy. Reconstruction
+is the only one tested (`PV2_0039`, 0.6779); the peer's cross-view spike consistency
+(SW0139) is another and is running -- see `peer_updates/REVIEW_0004_20261011.md`.
 
 ## Diagnostics kept out of the headline
 

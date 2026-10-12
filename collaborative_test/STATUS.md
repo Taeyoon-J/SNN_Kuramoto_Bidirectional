@@ -1,6 +1,6 @@
 # STATUS
 
-Updated 2026-10-08 02:40. Branch `patch_v2`. Contract v1, split v1.
+Updated 2026-10-11 22:30. Branch `patch_v2`. Contract v1, split v1.
 
 ## Where things stand
 
@@ -26,7 +26,7 @@ only; test has been read once and is not touched again until a setting is settle
 | fg_ari 0.75 | **not met**, 0.7250, short by 0.0250 |
 | beat Slot Attention on all three | **met** on validation — see below, with its budget caveat |
 | apply the peer's positive results | **done**: graph freeze ported (`PV2_0044`), 0.7059 -> 0.7250 |
-| a demonstrated route to 0.9 | **not yet**; one candidate open (`PV2_0054`) |
+| a demonstrated route to 0.9 | **not yet**; the last candidate closed (`PV2_0055`) |
 
 ## The Slot Attention comparison
 
@@ -72,42 +72,69 @@ seed spread. It also confirms 0.7250 is not an artifact of the window.
 
 ## What is open
 
-`PV2_0053` measured a loss this project had never looked at.
-`graph_generator.py:123` builds every graph edge from the cosine of eight
-appearance channels, and **position never enters that code** — it arrives only as a
-distance prior on the logits and as the readout's Gaussian kernel. Counting images
-where some object pair's centroids sit closer together than the objects are
-internally spread, pairs that cosine cannot keep apart:
+Nothing with a measured candidate. `PV2_0055` tested the position route that
+`PV2_0053` opened and it **cost 0.168 at best** (0.5556 against the 0.7239 bar;
+0.4703 at w=0.5 and 0.4575 at w=2).
 
-| code | unseparable images | min pair distance |
-| --- | --- | --- |
-| gamma as used (8 channels) | **38.8%** | 0.7024 |
-| + position w=0.5 | 28.4% | 0.7920 |
-| + position w=1 | **18.1%** | 0.9466 |
-| + position w=4 | 4.3% | 1.7802 |
-| oracle code (fg_ari 0.9754) | **0%** | 2.4765 |
+The informative part is *how* it failed. The trained losses came out **lower** than
+the baseline's -- 13.91 at w=0.5 and 13.75 at w=2 against 17.86 -- so the model
+satisfied its objective better while scoring worse. The PLV terms ask for groups
+that are internally coherent and roughly the right size, and spatially compact blobs
+satisfy that without tracking objects at all. `PV2_0043` measured geometry alone at
+**0.3902** under this readout, and PG_w2 landed at 0.4575 with 9.05 groups and 0.31
+predicted foreground, close to that level.
 
-This is a different kind of information from the seven closed routes, all of which
-tried to improve the **appearance** code. Slot Attention, the baseline we beat, has
-always added position to its CNN features through `SoftPositionEmbed`; we never
-did. SNN and Kuramoto bidirectional stay untouched — only the input encoding widens
-from 8 to 10 channels.
+**So the training objective, not only the encoder, limits the features.** That is a
+reason the other seven feature routes may share. `PV2_0034` reached 0.9754 by handing
+oracle features to the existing, *unretrained* core, so the readout can exploit good
+features -- but no objective tried so far creates them, and this one can be satisfied
+without them.
 
-`PV2_0054` is queued on it: weights 0.5, 1, 2 at seed 0 against the 8-channel bar
-of 0.7239. Whatever wins gets seeds 0, 1, 2 and the graph freeze before any claim.
+A route to 0.9 needs a training signal that geometry cannot satisfy. Reconstruction
+is the only such signal tested (`PV2_0039`, 0.6779, below frozen features). The peer
+is running cross-view spike consistency (their SW0139): two views of one image must
+agree on grouping, which needs no masks and which compact blobs do not satisfy. If
+their arm beats its own-loss control it is the first peer result in this cycle worth
+porting -- see `peer_updates/REVIEW_0004_20261011.md`.
+
+## Where the peer stands
+
+Their branch moved to 32x32 = 1024 patches under its own contract. Three-seed
+native32: **0.7819 / 0.6054 / 0.5970** against their matched Slot32 **0.7817 /
+0.2044 / 0.2032** -- ahead on all three, but the FG-ARI margin is **+0.0003** while
+their Slot32 seed spread is **0.1353**, so FG-ARI is a tie and the win is the IoUs.
+Scores are not poolable with ours (128x128 vs 240x320, 4px vs 15x20 patches, 70,000
+vs 6,000 training IDs). Of 25 new records none carries a positive, reproduced,
+promotable result; their incumbent is unchanged at SW0097.
+
+One mechanism does transfer: Slot Attention's foreground IoU is 0.2044 on their
+contract and 0.1184 on ours. Across two resolutions, two label rules and two
+budgets it still over-predicts foreground, and that is where both branches' real
+advantage comes from.
 
 ## Resume point
 
-Read `PV2_0054`'s result in `/work/USERS/tkim1/runs/posgamma_results.txt`. If a
-weight beats 0.7239 at seed 0, retrain it at seeds 0, 1, 2, then apply the graph
-freeze as in `PV2_0044` and re-evaluate all three metrics.
+No experiment is running. The next move is a training signal geometry cannot
+satisfy; the peer's SW0139 cross-view consistency result is the thing to read first.
 
-Verified and reusable: position-augmented gamma tensors at
-`/work/USERS/tkim1/gamma_sequences/posgamma_w{0.5,1,2}_grid16.pt`, appearance
-channels bitwise equal to the source; `evaluate_model.py` now reads its gamma
-channel count from the checkpoint, and the 8-channel path still reproduces
-0.7239 / 0.7251 / 0.4951 to four decimals; `run_slot_attention.py` takes a
-`--seed` and is bitwise reproducible under it.
+Verified and reusable: `graph_extra_channels` routes trailing gamma channels to the
+coupling graph alone (`hyperparameter.py`, `s2net_cls.py`,
+`training/train_s2net_core.py`, `collaborative_test/evaluate_model.py`), at 0 it is
+the original path, and three checkpoints reproduce 0.7239 / 0.7251 / 0.4951,
+0.7235 / 0.7164 / 0.4935 and 0.7275 / 0.7148 / 0.4974 to four decimals. The
+evaluator reads both gamma widths from the checkpoint. `run_slot_attention.py` takes
+a `--seed` and is bitwise reproducible under it. Position-augmented gamma tensors
+are at `/work/USERS/tkim1/gamma_sequences/posgamma_w{0.5,1,2}_grid16.pt`.
 
-Compute: GPUs 2 and 3 only, 0 and 1 are the collaborator's. Heavy runs are queued
-behind a gate that waits for one of 2 or 3 to be clear of other users.
+**Every experiment script starts with a regression row** that re-scores an existing
+8-channel checkpoint, and nothing below it is read unless that reproduces its
+recorded value. `PV2_0055` is why: the first version of its patch broke the graph
+selection chain so that the learned graph was replaced by the static one at
+`graph_extra_channels = 0`, scoring 0.0033 instead of 0.7239 -- a bug that fired
+only in the configuration every existing result uses, while the new-path smoke test
+passed.
+
+Compute: GPUs 2 and 3 only, 0 and 1 are the collaborator's -- but check actual
+occupancy before dispatch, since other users do appear on 2 and 3; an evaluation was
+lost to OOM against another user's 22.5 GiB on GPU 3. Heavy runs queue behind a gate
+that waits for a clear GPU.
