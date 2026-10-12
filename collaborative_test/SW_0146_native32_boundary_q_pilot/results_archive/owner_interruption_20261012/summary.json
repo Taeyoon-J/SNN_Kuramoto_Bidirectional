@@ -1,0 +1,26 @@
+{
+  "status": "both_training_arms_interrupted_by_foreign_gpu_owners",
+  "original_terminal_state_sha256": "4423732ec980c1c8dd36baea5565ce9ce83a093ebca556dd4ad0b8835d5704b1",
+  "original_supervisor_pid": 458960,
+  "preflights_preserved": true,
+  "arms": {
+    "encoder_graph": {
+      "child_pid": 461418,
+      "error": "RuntimeError: foreign GPU owner appeared: [464125]",
+      "output_files": [],
+      "log_bytes": 0,
+      "child_alive": false,
+      "partial_updates": "unknown; no saved checkpoint; discarded"
+    },
+    "joint": {
+      "child_pid": 462591,
+      "error": "RuntimeError: foreign GPU owner appeared: [463556]",
+      "output_files": [],
+      "log_bytes": 0,
+      "child_alive": false,
+      "partial_updates": "unknown; no saved checkpoint; discarded"
+    }
+  },
+  "segmentation_result": null,
+  "recovery": "Fresh source and optimizer for both frozen 256-update arms; no scientific change."
+}

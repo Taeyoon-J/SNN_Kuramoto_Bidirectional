@@ -1,0 +1,84 @@
+{
+  "status": "paired_recovery_supervisor_live",
+  "supervisor_pid": 467558,
+  "actual_live_argv": "/Data0/kevinswk/envs/snn/bin/python /Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0146_native32_boundary_q_pilot/results_archive/recovery_code_v2_20261012/recover_queue.py ",
+  "files": [
+    {
+      "name": "recover_queue.py",
+      "sha256": "10b771bd630e65098c91e592b4c7240ea4aa384504ff15c9bf71f6319fc05b77"
+    },
+    {
+      "name": "test_recovery.py",
+      "sha256": "8d8181b6ab62f796601bbe231bffefa93b8c312614f6c898ac4a784617f7cc00"
+    }
+  ],
+  "review_sha256": "44097e827f370a2728653fd4ea280276147701f2896c527edbf5ec8bb30e76f6",
+  "science_unchanged": true,
+  "both_preflights_preserved": true,
+  "state": {
+    "experiment": "SW0146_native32_boundary_q_pilot_recovery_v2",
+    "status": "training_fresh_arms",
+    "supervisor_pid": 467558,
+    "run_sha256": "9f94c097e0f1765f32247c729523ab306f1319c508cef4160bdefef1c4dea489",
+    "protocol_sha256": "9d86bb93e52e84dee13e160099a3cd91899c9ec16d37dce3f1763b99d3aaca0c",
+    "original_queue_sha256": "f87cb9a138a439c369f9d74d284a6c9f0d0cc87f778510af04c49c01f7030cc2",
+    "recovery_helper_sha256": "10b771bd630e65098c91e592b4c7240ea4aa384504ff15c9bf71f6319fc05b77",
+    "owner_helper_sha256": "b32c1aa5ce8417359aaab40bb9606e6fdee2c8d8314281f365616c24805dbe00",
+    "original_state_sha256": "4423732ec980c1c8dd36baea5565ce9ce83a093ebca556dd4ad0b8835d5704b1",
+    "preflights_reused": true,
+    "prior_update_count": "unknown; discarded, never resumed",
+    "archived_empty_dirs": {
+      "encoder_graph": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0146_native32_boundary_q_pilot/results_archive/recovery_v2_20261012/archived_empty_encoder_graph",
+      "joint": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0146_native32_boundary_q_pilot/results_archive/recovery_v2_20261012/archived_empty_joint"
+    },
+    "dependencies": {
+      "train_encoder_graph": [
+        "preflight_encoder_graph",
+        "preflight_joint"
+      ],
+      "train_joint": [
+        "preflight_encoder_graph",
+        "preflight_joint"
+      ],
+      "predict_encoder_graph": [
+        "train_encoder_graph"
+      ],
+      "predict_joint": [
+        "train_joint"
+      ],
+      "score": [
+        "predict_encoder_graph",
+        "predict_joint"
+      ]
+    },
+    "tasks": {
+      "preflight_encoder_graph": {
+        "status": "passed",
+        "reused_from_original": true
+      },
+      "preflight_joint": {
+        "status": "passed",
+        "reused_from_original": true
+      },
+      "train_encoder_graph": {
+        "status": "queued"
+      },
+      "train_joint": {
+        "status": "waiting_for_stable_idle_window",
+        "physical_gpu": 2,
+        "gpu_uuid": "GPU-50cc59a2-8312-ff02-5889-1becf63c7cd4",
+        "stable_seconds": 0.0,
+        "memory_mib": 4
+      },
+      "predict_encoder_graph": {
+        "status": "queued"
+      },
+      "predict_joint": {
+        "status": "queued"
+      },
+      "score": {
+        "status": "queued"
+      }
+    }
+  }
+}

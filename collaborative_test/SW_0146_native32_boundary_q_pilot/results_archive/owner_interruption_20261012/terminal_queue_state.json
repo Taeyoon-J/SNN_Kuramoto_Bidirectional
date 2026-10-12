@@ -1,0 +1,194 @@
+{
+  "experiment": "SW0146_native32_boundary_q_pilot",
+  "status": "failed",
+  "supervisor_pid": 458960,
+  "run_sha256": "9f94c097e0f1765f32247c729523ab306f1319c508cef4160bdefef1c4dea489",
+  "protocol_sha256": "9d86bb93e52e84dee13e160099a3cd91899c9ec16d37dce3f1763b99d3aaca0c",
+  "queue_sha256": "f87cb9a138a439c369f9d74d284a6c9f0d0cc87f778510af04c49c01f7030cc2",
+  "owner_helper_sha256": "b32c1aa5ce8417359aaab40bb9606e6fdee2c8d8314281f365616c24805dbe00",
+  "owner_dispatcher_sha256": "e37dcc0777871a91593041c99f3b1bfe55cc45f88d5d5be49a2e12d0116d8574",
+  "admission_sha256": "aa109ba805f3b3ab7c2bf914eddc6e760458d0897aa8525d5a29dd598bbf4bcc",
+  "sw0145_report_sha256": "2c470ac9e58eb952ab3a7d6d7d25f0b179bcd3169045ed764c9a1cc66fae9177",
+  "sw0143_score_sha256": "2ed9a82e85d610be4ad772a1648652846e962e38380a2986fe26980878870a5c",
+  "dependencies": {
+    "preflight_encoder_graph": [],
+    "preflight_joint": [],
+    "train_encoder_graph": [
+      "preflight_encoder_graph",
+      "preflight_joint"
+    ],
+    "train_joint": [
+      "preflight_encoder_graph",
+      "preflight_joint"
+    ],
+    "predict_encoder_graph": [
+      "train_encoder_graph"
+    ],
+    "predict_joint": [
+      "train_joint"
+    ],
+    "score": [
+      "predict_encoder_graph",
+      "predict_joint"
+    ]
+  },
+  "tasks": {
+    "preflight_encoder_graph": {
+      "status": "passed",
+      "task": {
+        "task_id": "preflight_encoder_graph",
+        "stage": "preflight",
+        "arm": "encoder_graph",
+        "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0146_native32_boundary_q_pilot/preflight/encoder_graph_seed1.json"
+      },
+      "physical_gpu": 0,
+      "gpu_uuid": "GPU-a0a7d03d-adc1-37ca-4342-328878b3657c",
+      "stable_seconds": 57.044930164236575,
+      "memory_mib": 16,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-m",
+        "collaborative_test.SW_0146_native32_boundary_q_pilot.run",
+        "--stage",
+        "preflight",
+        "--admission",
+        "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0146_native32_boundary_q_pilot/admission.json",
+        "--arm",
+        "encoder_graph",
+        "--device",
+        "cuda:0"
+      ],
+      "log_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0146_native32_boundary_q_pilot/results_archive/queue_runtime_20261012/logs/preflight_encoder_graph.log",
+      "cuda_visible_devices": "0",
+      "child_pid": 460316,
+      "started": 1791828298.5788498,
+      "returncode": 0,
+      "artifact_valid": true,
+      "finished": 1791828428.1380465
+    },
+    "preflight_joint": {
+      "status": "passed",
+      "task": {
+        "task_id": "preflight_joint",
+        "stage": "preflight",
+        "arm": "joint",
+        "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0146_native32_boundary_q_pilot/preflight/joint_seed1.json"
+      },
+      "physical_gpu": 2,
+      "gpu_uuid": "GPU-50cc59a2-8312-ff02-5889-1becf63c7cd4",
+      "stable_seconds": 56.9666648725979,
+      "memory_mib": 2,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-m",
+        "collaborative_test.SW_0146_native32_boundary_q_pilot.run",
+        "--stage",
+        "preflight",
+        "--admission",
+        "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0146_native32_boundary_q_pilot/admission.json",
+        "--arm",
+        "joint",
+        "--device",
+        "cuda:0"
+      ],
+      "log_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0146_native32_boundary_q_pilot/results_archive/queue_runtime_20261012/logs/preflight_joint.log",
+      "cuda_visible_devices": "2",
+      "child_pid": 460319,
+      "started": 1791828298.6962504,
+      "returncode": 0,
+      "artifact_valid": true,
+      "finished": 1791828417.980721
+    },
+    "train_encoder_graph": {
+      "status": "failed",
+      "task": {
+        "task_id": "train_encoder_graph",
+        "stage": "train",
+        "arm": "encoder_graph",
+        "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0146_native32_boundary_q_pilot/training/encoder_graph_seed1/manifest.json"
+      },
+      "physical_gpu": 0,
+      "gpu_uuid": "GPU-a0a7d03d-adc1-37ca-4342-328878b3657c",
+      "stable_seconds": 57.029940684791654,
+      "memory_mib": 16,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-m",
+        "collaborative_test.SW_0146_native32_boundary_q_pilot.run",
+        "--stage",
+        "train",
+        "--admission",
+        "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0146_native32_boundary_q_pilot/admission.json",
+        "--arm",
+        "encoder_graph",
+        "--device",
+        "cuda:0"
+      ],
+      "log_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0146_native32_boundary_q_pilot/results_archive/queue_runtime_20261012/logs/train_encoder_graph.log",
+      "cuda_visible_devices": "0",
+      "child_pid": 461418,
+      "started": 1791828488.8628812,
+      "error": "RuntimeError: foreign GPU owner appeared: [464125]",
+      "finished": 1791828983.504858
+    },
+    "train_joint": {
+      "status": "failed",
+      "task": {
+        "task_id": "train_joint",
+        "stage": "train",
+        "arm": "joint",
+        "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0146_native32_boundary_q_pilot/training/joint_seed1/manifest.json"
+      },
+      "physical_gpu": 2,
+      "gpu_uuid": "GPU-50cc59a2-8312-ff02-5889-1becf63c7cd4",
+      "stable_seconds": 57.16731563024223,
+      "memory_mib": 2,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-m",
+        "collaborative_test.SW_0146_native32_boundary_q_pilot.run",
+        "--stage",
+        "train",
+        "--admission",
+        "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0146_native32_boundary_q_pilot/admission.json",
+        "--arm",
+        "joint",
+        "--device",
+        "cuda:0"
+      ],
+      "log_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0146_native32_boundary_q_pilot/results_archive/queue_runtime_20261012/logs/train_joint.log",
+      "cuda_visible_devices": "2",
+      "child_pid": 462591,
+      "started": 1791828660.6957455,
+      "error": "RuntimeError: foreign GPU owner appeared: [463556]",
+      "finished": 1791828827.5918965
+    },
+    "predict_encoder_graph": {
+      "status": "blocked_by_prior_failure",
+      "task": {
+        "task_id": "predict_encoder_graph",
+        "stage": "predict",
+        "arm": "encoder_graph",
+        "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0146_native32_boundary_q_pilot/predictions/encoder_graph_seed1/protocol.json"
+      }
+    },
+    "predict_joint": {
+      "status": "blocked_by_prior_failure",
+      "task": {
+        "task_id": "predict_joint",
+        "stage": "predict",
+        "arm": "joint",
+        "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0146_native32_boundary_q_pilot/predictions/joint_seed1/protocol.json"
+      }
+    },
+    "score": {
+      "status": "blocked_by_prior_failure",
+      "task": {
+        "task_id": "score",
+        "stage": "score",
+        "arm": null,
+        "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0146_native32_boundary_q_pilot/results_archive/evaluation_seed1.json"
+      }
+    }
+  }
+}

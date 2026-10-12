@@ -1,0 +1,28 @@
+{
+  "status": "recovery_plumbing_verified_not_launched",
+  "files": [
+    {
+      "name": "recover_queue.py",
+      "sha256": "10b771bd630e65098c91e592b4c7240ea4aa384504ff15c9bf71f6319fc05b77"
+    },
+    {
+      "name": "test_recovery.py",
+      "sha256": "8d8181b6ab62f796601bbe231bffefa93b8c312614f6c898ac4a784617f7cc00"
+    }
+  ],
+  "test_stdout": "",
+  "test_stderr": "test_accepts_only_observed_two_arm_foreign_failures_and_dead_processes (__main__.RecoveryV2Tests) ... ok\ntest_concurrent_worker_state_updates_are_atomic (__main__.RecoveryV2Tests) ... ok\ntest_only_empty_arm_directory_can_be_archived_and_missing_is_preserved (__main__.RecoveryV2Tests) ... ok\ntest_preflights_reused_and_predictions_wait_for_both_new_arms (__main__.RecoveryV2Tests) ... ok\ntest_preserves_healthy_process_and_rejects_other_live_experiment_argv (__main__.RecoveryV2Tests) ... ok\ntest_terminal_state_sha_and_both_children_are_part_of_guard (__main__.RecoveryV2Tests) ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 0.344s\n\nOK\n",
+  "dry_run": {
+    "status": "recovery_prechecked",
+    "tasks": [
+      "train_encoder_graph",
+      "train_joint",
+      "predict_encoder_graph",
+      "predict_joint",
+      "score"
+    ],
+    "preflights_reused": true,
+    "fresh_updates_per_arm": 256,
+    "prior_partial_updates": "unknown_discarded"
+  }
+}
