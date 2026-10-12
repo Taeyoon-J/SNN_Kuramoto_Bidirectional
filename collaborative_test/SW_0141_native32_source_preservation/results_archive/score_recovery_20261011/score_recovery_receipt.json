@@ -1,0 +1,48 @@
+{
+  "status": "score_recovery_complete",
+  "pilot": "SW0141_native32_source_preservation",
+  "original_queue_status": "failed_or_blocked",
+  "original_task_count": 10,
+  "original_passed_prerequisites": 9,
+  "original_score_failure": "KeyError: 'prediction_sha256' before GT access",
+  "original_state_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0141_native32_source_preservation/source_preservation_pilot/queue_runtime/queue_state.json",
+  "original_state_sha256": "39ab633c99182ecb81e9eff7b2a29b2b3df426774cfa36b2ca04c7db0ee5a59f",
+  "original_failure_log_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0141_native32_source_preservation/source_preservation_pilot/queue_runtime/score_seed1.log",
+  "original_failure_log_sha256": "66e255bb419df81e1f9a03460536bb6fbe30cf1ee97ac2cdfe613fcaf62ad63e",
+  "original_queue_script_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0141_native32_source_preservation/source_preservation_pilot/source_preservation_queue.py",
+  "original_queue_script_sha256": "73d565b3090101456c9aa70035cc222c212cb86ff95330eccd980c14eb121a69",
+  "frozen_pilot_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0141_native32_source_preservation/source_preservation_pilot/pilot.py",
+  "frozen_pilot_sha256": "f6b483d0ce840272e0d1ca0c0f183a2502c4851b36900a5b4501f9eba034f0ce",
+  "loaded_implementation_fingerprint_sha256": "062e47d41ec96ab3f690575a3dcb1ba6db35014e97ca600fbfebcbe5ae070aff",
+  "implementation_fingerprint_sha256": "062e47d41ec96ab3f690575a3dcb1ba6db35014e97ca600fbfebcbe5ae070aff",
+  "recovery_patch": "use digest returned by contract32.validate_slot_protocol; actual Slot protocol has no prediction_sha256 key",
+  "patched_in_memory_source_sha256": "1dab306d9dbca6b627d6865dd692c3e51caa039c46a9b13b85490fd376ce9d8c",
+  "output_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0141_native32_source_preservation/source_preservation_pilot/results/evaluation_score_recovery.json",
+  "output_sha256": "f53d7c1202b1c71a3e9e25541a58450505238f55ac3d89b1e69b34cca48afd71",
+  "five_prediction_artifacts": {
+    "c_only": {
+      "prediction_sha256": "f9c6e64f29ad2d388e1bf4dbb5c5a44b9ac6559e70496170205dfcedd10b6ee2",
+      "protocol_sha256": "091715365aac5523e22e797a3e1d30518205b164008c13d5ad84c65bb25d52aa"
+    },
+    "c_plus_anchor": {
+      "prediction_sha256": "c58452e3ef23d12c005a1e4c97d71e9b8ead4f83d3e89534eaa42bf5ee94baed",
+      "protocol_sha256": "c7e2b0425e9a727fd3ff20fcaa74c346a23761c3bdddc610eac5c97a52412e8f"
+    },
+    "source97": {
+      "prediction_sha256": "df1401efb85e57c324a1b35a6658c16596b1208fb23ef1a3a6899a614f260756",
+      "protocol_sha256": "adfdd7b3a30a6f1878fee053c77c64362c465208de9df8f08e579170ad1e95b8"
+    },
+    "old_c": {
+      "prediction_sha256": "7a19371a043ff8c6549ba6242fda2fd11466ad1bdd906dfe66d298e9ae05585c",
+      "protocol_sha256": "43d7fd0e96f07199490c3155b4e17b6740f01966fdd6bb0b11961f8f1a29a84f"
+    },
+    "slot32": {
+      "prediction_sha256": "48969cac290eaada34f721fd959628abcbad69f1c9e38c384e0198e8bfc2b43b",
+      "protocol_sha256": "a561033539b7e7253b74f1e313712c77c6880916d4e578ef1a83e9cd094ad5eb"
+    }
+  },
+  "result_status": "complete_local_unregistered",
+  "ground_truth_opened_after_all_prediction_hashes": true,
+  "training_cache_predictions_rerun": false,
+  "original_failed_state_preserved": true
+}

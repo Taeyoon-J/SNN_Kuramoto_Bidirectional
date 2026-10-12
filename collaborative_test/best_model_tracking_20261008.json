@@ -1538,7 +1538,7 @@
     "source_preservation_pilot": {
       "experiment": "SW0141",
       "name": "SW0141_native32_source_preservation",
-      "status": "registered_cache_running_training_queued",
+      "status": "completed_seed1_score_recovered_expansion_closed",
       "registered": true,
       "driver_reported_registered": false,
       "protocol": "SW_0141_native32_source_preservation/protocol.json",
@@ -1547,13 +1547,64 @@
       "implementation_fingerprint_sha256": "062e47d41ec96ab3f690575a3dcb1ba6db35014e97ca600fbfebcbe5ae070aff",
       "launch_receipt": "SW_0141_native32_source_preservation/results_archive/launch_receipt.json",
       "execution_record": "SW_0141_native32_source_preservation/results_archive/execution_start.json",
-      "source0_cache": {"status": "passed", "child_pid": 2908822, "gpu": 0},
-      "source1_cache": {"status": "running", "child_pid": 2908823, "gpu": 1},
-      "later_tasks_queued": 8,
-      "training_started": false,
-      "score_available": false,
+      "source0_cache": {
+        "status": "passed",
+        "child_pid": 2908822,
+        "gpu": 0
+      },
+      "source1_cache": {
+        "status": "passed",
+        "child_pid": 2908823,
+        "gpu": 1
+      },
+      "later_tasks_queued": 0,
+      "training_started": true,
+      "score_available": true,
       "incumbent_changed": false,
-      "data_scaling_proven": false
+      "data_scaling_proven": false,
+      "training_completed": true,
+      "original_queue_status": "failed_or_blocked",
+      "original_score_failure": "legacy Slot protocol has no prediction_sha256 key; CPU-only hash-handoff recovery completed",
+      "result": "SW_0141_native32_source_preservation/results_archive/score_recovery_20261011/evaluation.json",
+      "result_sha256": "f53d7c1202b1c71a3e9e25541a58450505238f55ac3d89b1e69b34cca48afd71",
+      "scores": {
+        "c_only": {
+          "fg_ari": 0.7521226790091873,
+          "foreground_iou": 0.5662578154918732,
+          "matched_object_iou": 0.5805255654513101
+        },
+        "c_plus_anchor": {
+          "fg_ari": 0.7521076691705627,
+          "foreground_iou": 0.6077669562039276,
+          "matched_object_iou": 0.5811906592675804
+        },
+        "source97": {
+          "fg_ari": 0.7541350949944816,
+          "foreground_iou": 0.606899549668619,
+          "matched_object_iou": 0.582200586329909
+        },
+        "old_c": {
+          "fg_ari": 0.738505492760271,
+          "foreground_iou": 0.5920467993822293,
+          "matched_object_iou": 0.5666861231897373
+        },
+        "slot32": {
+          "fg_ari": 0.8418192917733233,
+          "foreground_iou": 0.20341670897019232,
+          "matched_object_iou": 0.2221151564255643
+        }
+      },
+      "expansion_eligible": false,
+      "training_processes": {
+        "c_only": {
+          "pid": 2926522,
+          "status": "completed"
+        },
+        "c_plus_anchor": {
+          "pid": 2926523,
+          "status": "completed"
+        }
+      }
     },
     "effective_date": "2026-10-10",
     "patch_grid": [

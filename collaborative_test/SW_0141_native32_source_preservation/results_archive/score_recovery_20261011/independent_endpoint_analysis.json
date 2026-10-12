@@ -1,0 +1,67 @@
+{
+  "result_sha256": "f53d7c1202b1c71a3e9e25541a58450505238f55ac3d89b1e69b34cca48afd71",
+  "all_five_models_all_three_means_replayed": true,
+  "all_paired_FG_intervals_replayed": true,
+  "paired_fg": {
+    "c_only": {
+      "source97": {
+        "delta": -0.0020124159852944706,
+        "paired_95_ci": [
+          -0.01022905278245443,
+          0.005731681651849697
+        ]
+      },
+      "old_c": {
+        "delta": 0.013617186248916103,
+        "paired_95_ci": [
+          0.00494820513820884,
+          0.02264506600918607
+        ]
+      },
+      "slot32": {
+        "delta": -0.08969661276413615,
+        "paired_95_ci": [
+          -0.11359449936272323,
+          -0.06544026692693829
+        ]
+      }
+    },
+    "c_plus_anchor": {
+      "source97": {
+        "delta": -0.0020274258239188652,
+        "paired_95_ci": [
+          -0.005757759397228618,
+          0.001434868578624333
+        ]
+      },
+      "old_c": {
+        "delta": 0.013602176410291707,
+        "paired_95_ci": [
+          0.004634574729542395,
+          0.02290465321933749
+        ]
+      },
+      "c_only": {
+        "delta": -1.5009838624393915e-05,
+        "paired_95_ci": [
+          -0.008020748147587797,
+          0.008183966611135969
+        ]
+      },
+      "slot32": {
+        "delta": -0.08971162260276053,
+        "paired_95_ci": [
+          -0.11386660031723383,
+          -0.06540761884259956
+        ]
+      }
+    }
+  },
+  "fixed_seed": 1,
+  "fixed_image_count": 320,
+  "GT_or_prediction_arrays_reopened": false,
+  "eligible_for_expansion": false,
+  "incumbent_changed": false,
+  "interpretation": "Old statistical priors removal recovered the old+C loss of FG-ARI; source-Q anchoring recovered foreground IoU but did not improve FG grouping. Close both fixed recipes; no seed/lambda/70000 expansion.",
+  "source_and_slot_per_image_references_exact_SW0137": true
+}
