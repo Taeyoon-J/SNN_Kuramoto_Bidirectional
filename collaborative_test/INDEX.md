@@ -46,6 +46,9 @@
 | PV2_0053 | completed | **38.8% of images hold an object pair the graph's cosine cannot separate; position takes it to 18.1%** | | | |
 | PV2_0054 | failed | widening gamma killed the spike path: joint standardisation rescaled the appearance channels | | | |
 | PV2_0055 | completed | **position in the graph: loss lower, score 0.168 worse. The objective is satisfiable by geometry** | | | |
+| PV2_0056 | exhausted | our partition overlaps the geometric template by only ARI 0.1164, so penalising that does nothing | | | |
+| PV2_0057 | completed | **within-object spread is mostly shading: chromaticity cuts w/b 46%, 0.2030 -> 0.1093** | | | |
+| PV2_0058 | running | train on chromaticity gamma, 3 channels, seed 0 against the 0.7239 bar | | | |
 | PV2_0046 | completed | contract diagnostic: a looser rule *lowers* fg_ari 0.724 to 0.533; cross-branch scores are not poolable | | | |
 
 Three seeds on the test split, scored from spike masks. Peer experiments from
@@ -111,20 +114,31 @@ window is saturated (`PV2_0052`, +0.0005 from 1024 to 4096).
 
 ### Open
 
-Nothing with a measured candidate. `PV2_0055` closed the position route and, in
-doing so, added a reason the other seven may share: the trained losses were **lower**
-than the baseline's (13.91 and 13.75 against 17.86) while the scores were 0.17-0.27
-worse. The PLV terms ask for groups that are coherent and roughly the right size,
-and spatially compact blobs satisfy that without tracking objects -- geometry alone
-is worth 0.3902 under this readout (`PV2_0043`), and PG_w2 landed at 0.4575. **The
-objective is partly satisfiable by geometry**, so feeding geometry into the code it
-is computed from makes the shortcut available.
+`PV2_0057` found the first thing in this cycle that points forward. `PV2_0036` had
+measured that taking within-object spread from 0.465 to zero is worth **+0.170** and
+reaches 0.8935 -- enough on its own -- and all nine closed routes tried to *learn*
+better features. None asked what that spread is made of. In CLEVR an object's albedo
+is one of eight colours while its pixels vary with shading, and chromaticity is
+invariant to a multiplicative intensity factor, so:
 
-`PV2_0034` reached 0.9754 by handing oracle features to the existing, unretrained
-core. So the readout can exploit good features and no objective tried so far creates
-them. A route to 0.9 needs a training signal geometry cannot satisfy. Reconstruction
-is the only one tested (`PV2_0039`, 0.6779); the peer's cross-view spike consistency
-(SW0139) is another and is running -- see `peer_updates/REVIEW_0004_20261011.md`.
+| input | w/b |
+| --- | --- |
+| current gamma, behind 0.7250 | 0.2030 |
+| raw RGB patch means | 0.2144 |
+| **chromaticity** | **0.1093** |
+| oracle codes, fg_ari 0.9754 | 0.0000 |
+
+A 46% cut by arithmetic. Two further things fall out: unit RGB reaches the same 0.1095
+and log-domain centring does not (0.2085), so it is specifically dividing by intensity
+that works; and **raw RGB patch means (0.2144) nearly match the trained encoder
+(0.2030)**, so the encoder adds almost no separation over patch colour.
+
+`PV2_0058` is training on it. The ratio is not linear in fg_ari and chromaticity
+halves rather than zeroes the spread, so the expected gain is a fraction of +0.170.
+
+`PV2_0056` closed the objective-side route from `PV2_0055`: our partition overlaps the
+fixed geometric template by only ARI 0.1164, so a term penalising that agreement would
+push down something already near zero.
 
 ## Diagnostics kept out of the headline
 
