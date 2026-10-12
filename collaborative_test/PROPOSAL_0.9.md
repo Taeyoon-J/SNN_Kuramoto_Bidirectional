@@ -112,6 +112,22 @@ term, and the smoke test caught the drift before a run was wasted.
 **Next:** a per-patch motion affinity as that target, against the appearance-only arm,
 which trains healthily.
 
+## Outcome (`PV2_0085`): run, negative, with a caveat
+
+The term was built as specified -- motion affinity as an external target, not channels --
+and it worked: it falls from .2033 to .1810 as its weight rises, so the model did pull its
+PLV toward it. The score did not follow. Uncalibrated the arms read .4181 / .4150 / .5090
+at predicted foreground .58-.61 against a target of .1061, so none is interpretable; with
+the population threshold restoring calibration, the control reaches **.3042** and the
+motion arm **.0823**.
+
+**The caveat matters more than the headline.** The control itself only reaches .3042
+against contract v1's .7250, because its gamma is 3-channel RGB patch means rather than a
+trained encoder, and the operating point was tuned for that encoder. This compares two
+poorly-calibrated models, so it is weaker evidence against motion than it looks. A fair
+test needs a gamma initialiser trained on MOVi-A first -- a day of work, and the honest
+next step.
+
 ## If the answer is no
 
 The session's result stands on its own: **test 0.7603 / 0.3373 / 0.6598**, three seeds,
