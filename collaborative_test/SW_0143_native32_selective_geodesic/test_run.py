@@ -59,6 +59,21 @@ class SelectiveGeodesicOperatorTests(unittest.TestCase):
         with self.assertRaisesRegex(AssertionError, "differs"):
             run.assert_same_batch_trace(one, changed, "R B1")
 
+    def test_cross_batch_selection_ignores_scalar_rollout_metadata(self):
+        torch.manual_seed(1404)
+        batch4 = {key: torch.randn(4, 3) for key in run.TRACE_FIELDS}
+        batch1 = {key: value[:1].clone() for key, value in batch4.items()}
+        batch4["live_tail_steps"] = 0
+        batch4["prefix_steps"] = 1024
+        batch4["truncated_bptt"] = False
+        selected = run.first_batch_trace(batch4)
+        self.assertEqual(set(selected), set(run.TRACE_FIELDS))
+        self.assertTrue(all(value.shape[0] == 1 for value in selected.values()))
+        self.assertTrue(all(value == 0.0 for value in run.trace_max_abs(selected, batch1).values()))
+        del batch4["component_gates"]
+        with self.assertRaisesRegex(KeyError, "registered fields"):
+            run.first_batch_trace(batch4)
+
     def test_R_is_bit_exact_native135_value_and_gradient(self):
         torch.manual_seed(143)
         z = torch.randn(2, 7, 5, dtype=torch.float64, requires_grad=True)

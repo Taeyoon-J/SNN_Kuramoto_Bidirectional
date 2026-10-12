@@ -1,0 +1,41 @@
+{
+  "status": "repair_server_cpu_verified",
+  "previous_state_sha256": "b63e45f05def81d4c5feb6aab912fccaf19002b2f8614eef95335b50b92256a9",
+  "files": [
+    {
+      "name": "run.py",
+      "sha256": "c004674618d3a714a3093beafd03b27f12b94cf3e16ce775fc36da954da7aa5d"
+    },
+    {
+      "name": "test_run.py",
+      "sha256": "c80719d26155b29c5ee05adec4b16c7bdd21a961ceb9fb2484604dd21f55c1c4"
+    },
+    {
+      "name": "repair_queue.py",
+      "sha256": "7cda67608df3857d8944c39f13186fac09edc0b71a3276fd975b830d74286859"
+    },
+    {
+      "name": "test_repair.py",
+      "sha256": "30521e475e829cf86c6a6e40da8105b53231b875f8a354186a94492bce8635a7"
+    }
+  ],
+  "checks": [
+    {
+      "name": "scientific_queue",
+      "tests": 12,
+      "skips": 0
+    },
+    {
+      "name": "repair_adapter",
+      "tests": 5,
+      "skips": 0
+    },
+    {
+      "name": "real_dry_run",
+      "missing": 13
+    }
+  ],
+  "science_changed": false,
+  "source_run_changed_only_in_trace_diagnostics": true,
+  "cuda_visible_devices": ""
+}

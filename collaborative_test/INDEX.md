@@ -1,4 +1,4 @@
-Current results are summarized in [STATUS.md](STATUS.md). [SW0142 completion](SW_0142_native32_masked_completion/results_archive/completion_20261012/RESULT.md): failed primary assignment gate, closed without seed expansion. SW0143 three-seed selective graph comparison remains queued under exclusive GPU leases. No robust new FG victory.
+Current results are summarized in [STATUS.md](STATUS.md). [SW0142 completion](SW_0142_native32_masked_completion/results_archive/completion_20261012/RESULT.md): closed failed pilot. [SW0143 metadata repair and restart](SW_0143_native32_selective_geodesic/results_archive/preflight_metadata_fix_20261012/summary.json): supervisor404277 live after17 server CPU tests and full dry-run; graph comparison unchanged, no new score.
 
 Latest recovery observation: three actual training children verified in /proc and nvidia-smi on GPUs0/1/2. No scores yet. Evidence: SW_0134_native_spike_binding/recovery_gpu_start_20261010.json.
 

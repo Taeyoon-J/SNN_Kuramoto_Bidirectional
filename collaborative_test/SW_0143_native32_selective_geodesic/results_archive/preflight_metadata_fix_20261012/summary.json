@@ -1,0 +1,16 @@
+{
+  "status": "diagnostic_metadata_bug_repaired_queue_live",
+  "previous_supervisor": 390000,
+  "previous_failed_child": 400821,
+  "previous_terminal_state_sha256": "b63e45f05def81d4c5feb6aab912fccaf19002b2f8614eef95335b50b92256a9",
+  "cause": "cross-batch descriptive trace code sliced all fields, including scalar rollout metadata",
+  "fix": "select only six registered tensor TRACE_FIELDS; actual mixed-schema regression added",
+  "unchanged": "graph operators, model, loss, training/validation IDs, source checkpoints, R replay, metric contract, 13-stage DAG",
+  "server_cpu_tests": 17,
+  "linux_skips": 0,
+  "actual_supervisor": 404277,
+  "runtime": "results_archive/recovery_v3_20261012/recovery_state.json",
+  "admission": "same reviewed 60-second stable-idle GPU checks and shared FD leases; foreign owner watcher retained",
+  "score_available": false,
+  "limitations": "queue start is not a scientific result; post-admission foreign launch remains possible"
+}

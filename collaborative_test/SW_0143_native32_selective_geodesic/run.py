@@ -138,6 +138,14 @@ def trace_max_abs(left, right):
     return result
 
 
+def first_batch_trace(trace):
+    """Select only registered tensor traces, excluding scalar rollout metadata."""
+    missing = set(TRACE_FIELDS) - set(trace)
+    if missing:
+        raise KeyError(f"trace is missing registered fields: {sorted(missing)}")
+    return {key: trace[key][:1] for key in TRACE_FIELDS}
+
+
 def assert_same_batch_trace(reference, candidate, label):
     """Require exact parity for identically shaped production rollouts."""
     parity = {}
@@ -187,9 +195,8 @@ def preflight_seed(seed, *, device="cuda:0", output_root=PREFLIGHTS):
         "B1": assert_same_batch_trace(native_trace, trace1, "R B1"),
         "B4": assert_same_batch_trace(native_trace4, trace4, "R B4"),
     }
-    cross_batch_native = trace_max_abs(
-        {key: value[:1] for key, value in native_trace4.items()}, native_trace)
-    cross_batch_r = trace_max_abs({key: value[:1] for key, value in trace4.items()}, trace1)
+    cross_batch_native = trace_max_abs(first_batch_trace(native_trace4), native_trace)
+    cross_batch_r = trace_max_abs(first_batch_trace(trace4), trace1)
     # Verify both registered intervention operators can execute a full B4
     # native32 training-shaped forward before any fixed320 predictions.
     intervention_shapes = {}
