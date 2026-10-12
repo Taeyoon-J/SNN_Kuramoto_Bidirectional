@@ -1,0 +1,89 @@
+﻿{
+    "experiment":  "SW0142_native32_masked_completion",
+    "queue_state_exists":  true,
+    "status":  "running",
+    "supervisor_pid":  25027,
+    "supervisor_live_argv":  "/Data0/kevinswk/envs/snn/bin/python /Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0142_native32_masked_completion/stage_queue.py ",
+    "tasks":  {
+                  "cache_seed1":  {
+                                      "status":  "running",
+                                      "child_pid":  25048,
+                                      "gpu":  0,
+                                      "error":  null,
+                                      "returncode":  null,
+                                      "live_argv":  "/Data0/kevinswk/envs/snn/bin/python /Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0142_native32_masked_completion/run.py --stage cache --device cuda:0 ",
+                                      "log_tail":  ""
+                                  },
+                  "warm_seed1":  {
+                                     "status":  "queued",
+                                     "child_pid":  null,
+                                     "gpu":  null,
+                                     "error":  null,
+                                     "returncode":  null,
+                                     "live_argv":  null
+                                 },
+                  "preflight_encoder_graph":  {
+                                                  "status":  "queued",
+                                                  "child_pid":  null,
+                                                  "gpu":  null,
+                                                  "error":  null,
+                                                  "returncode":  null,
+                                                  "live_argv":  null
+                                              },
+                  "preflight_core_trainable":  {
+                                                   "status":  "queued",
+                                                   "child_pid":  null,
+                                                   "gpu":  null,
+                                                   "error":  null,
+                                                   "returncode":  null,
+                                                   "live_argv":  null
+                                               },
+                  "train_encoder_graph":  {
+                                              "status":  "queued",
+                                              "child_pid":  null,
+                                              "gpu":  null,
+                                              "error":  null,
+                                              "returncode":  null,
+                                              "live_argv":  null
+                                          },
+                  "train_core_trainable":  {
+                                               "status":  "queued",
+                                               "child_pid":  null,
+                                               "gpu":  null,
+                                               "error":  null,
+                                               "returncode":  null,
+                                               "live_argv":  null
+                                           },
+                  "predict_encoder_graph":  {
+                                                "status":  "queued",
+                                                "child_pid":  null,
+                                                "gpu":  null,
+                                                "error":  null,
+                                                "returncode":  null,
+                                                "live_argv":  null
+                                            },
+                  "predict_core_trainable":  {
+                                                 "status":  "queued",
+                                                 "child_pid":  null,
+                                                 "gpu":  null,
+                                                 "error":  null,
+                                                 "returncode":  null,
+                                                 "live_argv":  null
+                                             },
+                  "score_seed1":  {
+                                      "status":  "queued",
+                                      "child_pid":  null,
+                                      "gpu":  null,
+                                      "error":  null,
+                                      "returncode":  null,
+                                      "live_argv":  null
+                                  }
+              },
+    "server_cpu_verified":  true,
+    "deployed_source_files":  {
+                                  "run.py":  true,
+                                  "stage_queue.py":  true,
+                                  "protocol.json":  true
+                              },
+    "gpu_memory":  "0, 2139, 18\n1, 23858, 90\n2, 7568, 41\n3, 22518, 88\n"
+}
