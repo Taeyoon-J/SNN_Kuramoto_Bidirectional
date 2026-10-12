@@ -337,6 +337,13 @@ only outside the objective (`PV2_0077`).
 4. Five changes reached a lower loss and a worse score, so the objective admits degenerate
    solutions that more capacity makes easier to find.
 
+### Start here for part 3
+
+`ROUTE_MAP_0.9.md` holds the consolidated map: the five structural findings and all 27
+closed routes, with the protocol devices that caught wrong conclusions. It exists because
+after 27 routes I nearly re-ran one that was already closed at `PV2_0016-18` — check it
+before spending compute.
+
 ### Resume here
 
 Within the architecture, the next thing to change is `_geodesic_distance` itself: a step
