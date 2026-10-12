@@ -303,11 +303,24 @@ extra capacity creating degenerate solutions; reducing capacity does the same th
 | osc_dim 8 | 14.19 | 0.5670 |
 
 **The operating point has a relatively high loss and the best score**, so the objective
-and the metric are **decoupled around it**. All six instances fit that (`PV2_0055`,
-`PV2_0058`, `PV2_0068`, `PV2_0077`, `PV2_0079`, `PV2_0080`), and the constraint it puts on
-future work is sharp: **lowering this loss is not evidence of progress.** It also reframes
-`PV2_0044`'s graph freeze, the one intervention that raised the score — it constrains the
-solution rather than improving the objective's value.
+and the metric are **decoupled around it**. Ten instances now fit that (`PV2_0055`,
+`PV2_0058`, `PV2_0068`, `PV2_0077`, `PV2_0079`, `PV2_0080` and all four arms of
+`PV2_0081`), and the constraint it puts on future work is sharp: **lowering this loss is
+not evidence of progress.**
+
+I also read it as reframing `PV2_0044`'s graph freeze into "constraint is the lever".
+`PV2_0081` corrects that: at the **same seed** the graph freeze gives 0.7235 against the
+untouched 0.7239, so its +0.019 was in the 3-seed mean, by rescuing the weak seed from
+0.6639. It reduced **seed variance** rather than improving any seed, and no other
+component freeze helps either.
+
+`PV2_0081` also found that **1,325 of 69,042 trainable parameters (1.9%) match full
+training** — `kuramoto` and `graph_generator` frozen together, leaving only the dendrite,
+membrane and gamma projection, scores 0.7249. The 67,585 `kuramoto` parameters contribute
+nothing measurable once their graph is held with them, and freezing `kuramoto` alone drops
+to 0.6858 because the graph then drifts from the dynamics it was fitted to. There is very
+little here for an optimiser to improve, which is consistent with every capacity and
+constraint experiment failing.
 
 ### Exhausted, and the obstacle stated precisely
 
