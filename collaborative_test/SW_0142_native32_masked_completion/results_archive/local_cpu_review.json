@@ -1,0 +1,31 @@
+{
+  "experiment": "SW0142_native32_masked_completion",
+  "status": "local_cpu_verified_awaiting_server_connection",
+  "review_scope": "local CPU tests and source-level review only",
+  "tests": {
+    "command": "python -m unittest collaborative_test.SW_0142_native32_masked_completion.test_run collaborative_test.SW_0142_native32_masked_completion.test_queue -v",
+    "discovered": 14,
+    "passed": 13,
+    "skipped": 1,
+    "skip_reason": "The flock-backed GPU lease failure test is server/Linux-only; this review ran on Windows.",
+    "independent_root_run_seconds": 8.228,
+    "compile": "passed",
+    "pyflakes": "passed",
+    "git_diff_check": "passed"
+  },
+  "execution": {
+    "server_deployment": false,
+    "gpu_run": false,
+    "joint_training_updates": 0,
+    "ground_truth_used": false,
+    "note": "SSH transfer was blocked by a BrokenPipe/banner timeout. No server or GPU execution is claimed."
+  },
+  "frozen_local_files_sha256": {
+    "run.py": "7f928a836b3d32fbca3aac21faf284f6390de55a94b0e127b3485c0e6558e0fd",
+    "test_run.py": "9791d141aa37d464217ba22b094c5bac3ec064e0259fb8d30054c76002e40e16",
+    "stage_queue.py": "dbd9dac577daf63e5d6a9b26a9faaf96bd77ecfc0e2731654799a066324c14ee",
+    "test_queue.py": "2985ade6ee8ddb69e5c8ec68f15d004994945b221becf4512f342fb6a3eefe64",
+    "protocol.json": "a3d2ff59d60e1d2862e7da31f5883c8720b59f69651ac3198b1049387f97656e",
+    "README.md": "a7b8ae906b5b0eb57ddede52107a59f85e086a57c18e0e64f77a2a8598fcfb34"
+  }
+}

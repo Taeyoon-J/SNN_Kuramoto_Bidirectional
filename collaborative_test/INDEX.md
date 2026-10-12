@@ -1,4 +1,4 @@
-Current status and results are summarized in [STATUS.md](STATUS.md). SW0141 completed training and CPU score recovery; neither candidate improved source FG-ARI, so its fixed recipes are closed.
+Current status and results are summarized in [STATUS.md](STATUS.md). SW0142 masked native32 completion is locally CPU-verified and awaiting SSH reconnection for server verification; no server/GPU run has started. [Local review](SW_0142_native32_masked_completion/results_archive/local_cpu_review.json). SW0141 completed and its fixed recipes are closed; incumbent unchanged.
 
 Latest recovery observation: three actual training children verified in /proc and nvidia-smi on GPUs0/1/2. No scores yet. Evidence: SW_0134_native_spike_binding/recovery_gpu_start_20261010.json.
 
@@ -14,6 +14,7 @@ SW0133: [soft-partition joint-learning pilot](SW_0133_soft_partition_rgb/README.
 
 | ID | Status | Change | Validation result |
 |---|---|---|---|
+| SW0142 | planned; local CPU verified; awaiting SSH | Masked native32 RGB completion, paired encoder+graph-only versus core-trainable arms | 14 tests discovered: 13 pass and one Windows-only flock test skip; no server/GPU run. [Review](SW_0142_native32_masked_completion/results_archive/local_cpu_review.json). |
 | SW0132 | closed at seed0 scientific preflight failure; no training | Relative-coordinate RGB decoder driven by the registered hard-H spike partition; phase and constant-state arms | Server/local CPU tests 10/10 and all three source contracts passed. Hard-H row shuffling had mean RGB-loss excess -9.81e-5 in both arms (20/64 positive images); source parity/credit checks passed. Decoder warmup and disposable steps ran, but joint training remained at0 updates; seeds1/2 were blocked. No retry, score, or incumbent change. |
 | SW0137 | complete; native32 fixed-source baseline | Source97 native32 actual-spike QCC on the fixed320 endpoint, compared with fixed Slot32 | Means FG-ARI/foreground-IoU/object-IoU .781919/.605427/.597014 vs Slot .781652/.204360/.203165. FG advantage is tiny and its paired interval includes zero; no fresh native32 training or scaling claim. [Analysis](SW_0137_native32_source_qcc/results_archive/source32_analysis.json). |
 | SW0138 | complete; score-only event-information comparison | Same frozen native32 source, actual-spike readout vs retained-gate readout | Source exactly reproduces SW0137; gate-readout FG difference is effectively zero with CI crossing zero. No gate-removal/necessity or scaling claim. [Analysis](SW_0138_native32_event_information/results_archive/event32_analysis.json). |
