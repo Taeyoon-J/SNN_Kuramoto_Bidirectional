@@ -284,6 +284,35 @@ produce, and a barrier in the cost matrix still has to survive the rollout, the 
 membrane threshold and the component extraction. `PV2_0076` is the only change of this
 family that transferred, and `PV2_0077` showed it works only outside the objective.
 
+### The dynamics, and the pattern that now has five instances (`PV2_0079`)
+
+The Kuramoto dynamics were the last untouched axis. `osc_dim` 8 scores 0.5670, 16 never
+trains (loss 86, the dead-membrane regime), coupling 64 gives 0.6088 and 1024 diverges.
+**osc_dim 4 and k 256 are already the best of these**, and the hypothesis that four phase
+dimensions are too few for 6.32 objects is refuted.
+
+The losses explain it. **osc_dim 8 reached 14.19 against the baseline's 17.86 and scored
+0.5670** — the objective satisfied better, the score worse. That is the fifth instance:
+`PV2_0055`, `PV2_0058`, `PV2_0068`, `PV2_0077` and here. A wider phase space gives the
+PLV terms more degenerate ways to be satisfied, since bimodality, balance and target
+density are statistics of the synchrony matrix and more dimensions make a right-statistics
+wrong-groups matrix easier to produce.
+
+### Exhausted, and the obstacle stated precisely
+
+Twenty-eight interventions across twenty-five numbered routes: features 11, graph 8,
+geodesic cost 3, readout 2, dynamics 4. One transferred (`PV2_0076`, +0.0070 on test), and
+only outside the objective (`PV2_0077`).
+
+1. The oracle numbers measure **transcription**, not discovery (`PV2_0072`).
+2. The pipeline repairs spatially **incoherent** damage; its own errors are coherent
+   object merges and it is a fixed point on those at 0.727 (`PV2_0073`).
+3. The geodesic barrier is two thin walls (5.27x) with a corridor six times cheaper than a
+   within-object step, and no shape of the cost fixes that without splitting objects
+   (`PV2_0075`, `PV2_0078`).
+4. Five changes reached a lower loss and a worse score, so the objective admits degenerate
+   solutions that more capacity makes easier to find.
+
 ### Resume here
 
 Within the architecture, the next thing to change is `_geodesic_distance` itself: a step
