@@ -1,0 +1,460 @@
+{
+  "status": "archived_score_arrays_independently_verified",
+  "metric_means_checked": [
+    "encoder_graph/primary/fg_ari",
+    "encoder_graph/primary/foreground_iou",
+    "encoder_graph/primary/matched_object_iou",
+    "encoder_graph/qcc/fg_ari",
+    "encoder_graph/qcc/foreground_iou",
+    "encoder_graph/qcc/matched_object_iou",
+    "core_trainable/primary/fg_ari",
+    "core_trainable/primary/foreground_iou",
+    "core_trainable/primary/matched_object_iou",
+    "core_trainable/qcc/fg_ari",
+    "core_trainable/qcc/foreground_iou",
+    "core_trainable/qcc/matched_object_iou",
+    "source97_qcc/qcc/fg_ari",
+    "source97_qcc/qcc/foreground_iou",
+    "source97_qcc/qcc/matched_object_iou",
+    "slot32/primary/fg_ari",
+    "slot32/primary/foreground_iou",
+    "slot32/primary/matched_object_iou"
+  ],
+  "paired_CI_checked": 6,
+  "diagnostics": {
+    "encoder_graph": {
+      "assignment": {
+        "scope": "first64 registered TRAIN rows",
+        "mask_exposure": 1,
+        "batches": [
+          {
+            "images": 4,
+            "unshuffled_completion_loss": 1.2058966159820557,
+            "row_permuted_P_loss": 1.3335294723510742,
+            "within_coarse_RGB_bin_permuted_P_loss": 1.0711240768432617,
+            "row_permuted_minus_base": 0.12763285636901855,
+            "within_bin_permuted_minus_base": -0.13477253913879395,
+            "intervention": "P rows permuted; slot latents held fixed and P-derived geometry recomputed; color condition permutes P only within each target patch coarse RGB bin; no GT"
+          },
+          {
+            "images": 4,
+            "unshuffled_completion_loss": 0.9274080991744995,
+            "row_permuted_P_loss": 1.1531201601028442,
+            "within_coarse_RGB_bin_permuted_P_loss": 0.9204391241073608,
+            "row_permuted_minus_base": 0.22571206092834473,
+            "within_bin_permuted_minus_base": -0.006968975067138672,
+            "intervention": "P rows permuted; slot latents held fixed and P-derived geometry recomputed; color condition permutes P only within each target patch coarse RGB bin; no GT"
+          },
+          {
+            "images": 4,
+            "unshuffled_completion_loss": 1.2511179447174072,
+            "row_permuted_P_loss": 1.2936135530471802,
+            "within_coarse_RGB_bin_permuted_P_loss": 1.189222812652588,
+            "row_permuted_minus_base": 0.04249560832977295,
+            "within_bin_permuted_minus_base": -0.061895132064819336,
+            "intervention": "P rows permuted; slot latents held fixed and P-derived geometry recomputed; color condition permutes P only within each target patch coarse RGB bin; no GT"
+          },
+          {
+            "images": 4,
+            "unshuffled_completion_loss": 0.7329257130622864,
+            "row_permuted_P_loss": 0.8817496299743652,
+            "within_coarse_RGB_bin_permuted_P_loss": 0.734783411026001,
+            "row_permuted_minus_base": 0.14882391691207886,
+            "within_bin_permuted_minus_base": 0.0018576979637145996,
+            "intervention": "P rows permuted; slot latents held fixed and P-derived geometry recomputed; color condition permutes P only within each target patch coarse RGB bin; no GT"
+          },
+          {
+            "images": 4,
+            "unshuffled_completion_loss": 1.0316903591156006,
+            "row_permuted_P_loss": 1.2927542924880981,
+            "within_coarse_RGB_bin_permuted_P_loss": 1.1345853805541992,
+            "row_permuted_minus_base": 0.26106393337249756,
+            "within_bin_permuted_minus_base": 0.10289502143859863,
+            "intervention": "P rows permuted; slot latents held fixed and P-derived geometry recomputed; color condition permutes P only within each target patch coarse RGB bin; no GT"
+          },
+          {
+            "images": 4,
+            "unshuffled_completion_loss": 0.9782204627990723,
+            "row_permuted_P_loss": 1.2146238088607788,
+            "within_coarse_RGB_bin_permuted_P_loss": 1.0188531875610352,
+            "row_permuted_minus_base": 0.23640334606170654,
+            "within_bin_permuted_minus_base": 0.04063272476196289,
+            "intervention": "P rows permuted; slot latents held fixed and P-derived geometry recomputed; color condition permutes P only within each target patch coarse RGB bin; no GT"
+          },
+          {
+            "images": 4,
+            "unshuffled_completion_loss": 1.1218221187591553,
+            "row_permuted_P_loss": 1.175861120223999,
+            "within_coarse_RGB_bin_permuted_P_loss": 1.0418956279754639,
+            "row_permuted_minus_base": 0.05403900146484375,
+            "within_bin_permuted_minus_base": -0.0799264907836914,
+            "intervention": "P rows permuted; slot latents held fixed and P-derived geometry recomputed; color condition permutes P only within each target patch coarse RGB bin; no GT"
+          },
+          {
+            "images": 4,
+            "unshuffled_completion_loss": 0.8170545101165771,
+            "row_permuted_P_loss": 0.9848911166191101,
+            "within_coarse_RGB_bin_permuted_P_loss": 0.7383670806884766,
+            "row_permuted_minus_base": 0.16783660650253296,
+            "within_bin_permuted_minus_base": -0.07868742942810059,
+            "intervention": "P rows permuted; slot latents held fixed and P-derived geometry recomputed; color condition permutes P only within each target patch coarse RGB bin; no GT"
+          },
+          {
+            "images": 4,
+            "unshuffled_completion_loss": 0.9997340440750122,
+            "row_permuted_P_loss": 1.0586494207382202,
+            "within_coarse_RGB_bin_permuted_P_loss": 0.9472417831420898,
+            "row_permuted_minus_base": 0.05891537666320801,
+            "within_bin_permuted_minus_base": -0.05249226093292236,
+            "intervention": "P rows permuted; slot latents held fixed and P-derived geometry recomputed; color condition permutes P only within each target patch coarse RGB bin; no GT"
+          },
+          {
+            "images": 4,
+            "unshuffled_completion_loss": 0.9422992467880249,
+            "row_permuted_P_loss": 1.0939457416534424,
+            "within_coarse_RGB_bin_permuted_P_loss": 0.9157794117927551,
+            "row_permuted_minus_base": 0.15164649486541748,
+            "within_bin_permuted_minus_base": -0.026519834995269775,
+            "intervention": "P rows permuted; slot latents held fixed and P-derived geometry recomputed; color condition permutes P only within each target patch coarse RGB bin; no GT"
+          },
+          {
+            "images": 4,
+            "unshuffled_completion_loss": 0.8318349123001099,
+            "row_permuted_P_loss": 0.9827218651771545,
+            "within_coarse_RGB_bin_permuted_P_loss": 0.8142091631889343,
+            "row_permuted_minus_base": 0.15088695287704468,
+            "within_bin_permuted_minus_base": -0.017625749111175537,
+            "intervention": "P rows permuted; slot latents held fixed and P-derived geometry recomputed; color condition permutes P only within each target patch coarse RGB bin; no GT"
+          },
+          {
+            "images": 4,
+            "unshuffled_completion_loss": 0.9879480004310608,
+            "row_permuted_P_loss": 1.1202988624572754,
+            "within_coarse_RGB_bin_permuted_P_loss": 1.0313923358917236,
+            "row_permuted_minus_base": 0.1323508620262146,
+            "within_bin_permuted_minus_base": 0.04344433546066284,
+            "intervention": "P rows permuted; slot latents held fixed and P-derived geometry recomputed; color condition permutes P only within each target patch coarse RGB bin; no GT"
+          },
+          {
+            "images": 4,
+            "unshuffled_completion_loss": 0.7961716055870056,
+            "row_permuted_P_loss": 0.9716840982437134,
+            "within_coarse_RGB_bin_permuted_P_loss": 0.7150053977966309,
+            "row_permuted_minus_base": 0.17551249265670776,
+            "within_bin_permuted_minus_base": -0.08116620779037476,
+            "intervention": "P rows permuted; slot latents held fixed and P-derived geometry recomputed; color condition permutes P only within each target patch coarse RGB bin; no GT"
+          },
+          {
+            "images": 4,
+            "unshuffled_completion_loss": 0.6054050922393799,
+            "row_permuted_P_loss": 0.7643404006958008,
+            "within_coarse_RGB_bin_permuted_P_loss": 0.5881190299987793,
+            "row_permuted_minus_base": 0.1589353084564209,
+            "within_bin_permuted_minus_base": -0.017286062240600586,
+            "intervention": "P rows permuted; slot latents held fixed and P-derived geometry recomputed; color condition permutes P only within each target patch coarse RGB bin; no GT"
+          },
+          {
+            "images": 4,
+            "unshuffled_completion_loss": 0.784838080406189,
+            "row_permuted_P_loss": 0.9512366652488708,
+            "within_coarse_RGB_bin_permuted_P_loss": 0.7393627166748047,
+            "row_permuted_minus_base": 0.16639858484268188,
+            "within_bin_permuted_minus_base": -0.04547536373138428,
+            "intervention": "P rows permuted; slot latents held fixed and P-derived geometry recomputed; color condition permutes P only within each target patch coarse RGB bin; no GT"
+          },
+          {
+            "images": 4,
+            "unshuffled_completion_loss": 0.9896029233932495,
+            "row_permuted_P_loss": 1.1496790647506714,
+            "within_coarse_RGB_bin_permuted_P_loss": 0.9251312017440796,
+            "row_permuted_minus_base": 0.16007614135742188,
+            "within_bin_permuted_minus_base": -0.06447172164916992,
+            "intervention": "P rows permuted; slot latents held fixed and P-derived geometry recomputed; color condition permutes P only within each target patch coarse RGB bin; no GT"
+          }
+        ],
+        "mean_unshuffled_loss": 0.9377481080591679,
+        "mean_row_permuted_loss": 1.0889187045395374,
+        "mean_within_bin_permuted_loss": 0.9078444838523865
+      },
+      "first_history": {
+        "update": 1,
+        "image_ids": [
+          68304,
+          49032,
+          70041,
+          7829,
+          16499,
+          31675,
+          67612,
+          54671,
+          17331,
+          2330,
+          23312,
+          50490,
+          56080,
+          20867,
+          3891,
+          34682
+        ],
+        "loss_micro": [
+          1.21514892578125,
+          0.9099887609481812,
+          1.2093396186828613,
+          0.8504776954650879
+        ],
+        "gradient_norms": {
+          "backbone": 0.07680343463771619,
+          "head": 0.6587789246645293
+        }
+      },
+      "last_history": {
+        "update": 256,
+        "image_ids": [
+          60030,
+          5258,
+          27894,
+          62587,
+          14611,
+          60914,
+          67883,
+          10595,
+          2212,
+          47787,
+          20325,
+          31163,
+          51750,
+          58655,
+          616,
+          16810
+        ],
+        "loss_micro": [
+          0.8942939043045044,
+          1.068044662475586,
+          0.7996320724487305,
+          0.946685791015625
+        ],
+        "gradient_norms": {
+          "backbone": 0.4021181762347233,
+          "head": 0.6183827721414477
+        }
+      }
+    },
+    "core_trainable": {
+      "assignment": {
+        "scope": "first64 registered TRAIN rows",
+        "mask_exposure": 1,
+        "batches": [
+          {
+            "images": 4,
+            "unshuffled_completion_loss": 1.2145127058029175,
+            "row_permuted_P_loss": 1.299795389175415,
+            "within_coarse_RGB_bin_permuted_P_loss": 1.1180343627929688,
+            "row_permuted_minus_base": 0.08528268337249756,
+            "within_bin_permuted_minus_base": -0.09647834300994873,
+            "intervention": "P rows permuted; slot latents held fixed and P-derived geometry recomputed; color condition permutes P only within each target patch coarse RGB bin; no GT"
+          },
+          {
+            "images": 4,
+            "unshuffled_completion_loss": 0.9108667969703674,
+            "row_permuted_P_loss": 1.0178110599517822,
+            "within_coarse_RGB_bin_permuted_P_loss": 0.8953273892402649,
+            "row_permuted_minus_base": 0.1069442629814148,
+            "within_bin_permuted_minus_base": -0.015539407730102539,
+            "intervention": "P rows permuted; slot latents held fixed and P-derived geometry recomputed; color condition permutes P only within each target patch coarse RGB bin; no GT"
+          },
+          {
+            "images": 4,
+            "unshuffled_completion_loss": 1.215806245803833,
+            "row_permuted_P_loss": 1.2171828746795654,
+            "within_coarse_RGB_bin_permuted_P_loss": 1.1860703229904175,
+            "row_permuted_minus_base": 0.0013766288757324219,
+            "within_bin_permuted_minus_base": -0.029735922813415527,
+            "intervention": "P rows permuted; slot latents held fixed and P-derived geometry recomputed; color condition permutes P only within each target patch coarse RGB bin; no GT"
+          },
+          {
+            "images": 4,
+            "unshuffled_completion_loss": 0.7448741793632507,
+            "row_permuted_P_loss": 0.8306778073310852,
+            "within_coarse_RGB_bin_permuted_P_loss": 0.7265936136245728,
+            "row_permuted_minus_base": 0.08580362796783447,
+            "within_bin_permuted_minus_base": -0.01828056573867798,
+            "intervention": "P rows permuted; slot latents held fixed and P-derived geometry recomputed; color condition permutes P only within each target patch coarse RGB bin; no GT"
+          },
+          {
+            "images": 4,
+            "unshuffled_completion_loss": 1.0378544330596924,
+            "row_permuted_P_loss": 1.169654130935669,
+            "within_coarse_RGB_bin_permuted_P_loss": 1.0853416919708252,
+            "row_permuted_minus_base": 0.13179969787597656,
+            "within_bin_permuted_minus_base": 0.04748725891113281,
+            "intervention": "P rows permuted; slot latents held fixed and P-derived geometry recomputed; color condition permutes P only within each target patch coarse RGB bin; no GT"
+          },
+          {
+            "images": 4,
+            "unshuffled_completion_loss": 1.0059092044830322,
+            "row_permuted_P_loss": 1.1050214767456055,
+            "within_coarse_RGB_bin_permuted_P_loss": 0.9725796580314636,
+            "row_permuted_minus_base": 0.09911227226257324,
+            "within_bin_permuted_minus_base": -0.033329546451568604,
+            "intervention": "P rows permuted; slot latents held fixed and P-derived geometry recomputed; color condition permutes P only within each target patch coarse RGB bin; no GT"
+          },
+          {
+            "images": 4,
+            "unshuffled_completion_loss": 1.1531476974487305,
+            "row_permuted_P_loss": 1.1727323532104492,
+            "within_coarse_RGB_bin_permuted_P_loss": 1.0907036066055298,
+            "row_permuted_minus_base": 0.01958465576171875,
+            "within_bin_permuted_minus_base": -0.062444090843200684,
+            "intervention": "P rows permuted; slot latents held fixed and P-derived geometry recomputed; color condition permutes P only within each target patch coarse RGB bin; no GT"
+          },
+          {
+            "images": 4,
+            "unshuffled_completion_loss": 0.8402868509292603,
+            "row_permuted_P_loss": 0.9474467039108276,
+            "within_coarse_RGB_bin_permuted_P_loss": 0.7930208444595337,
+            "row_permuted_minus_base": 0.10715985298156738,
+            "within_bin_permuted_minus_base": -0.04726600646972656,
+            "intervention": "P rows permuted; slot latents held fixed and P-derived geometry recomputed; color condition permutes P only within each target patch coarse RGB bin; no GT"
+          },
+          {
+            "images": 4,
+            "unshuffled_completion_loss": 0.9995418787002563,
+            "row_permuted_P_loss": 1.0605454444885254,
+            "within_coarse_RGB_bin_permuted_P_loss": 0.9852667450904846,
+            "row_permuted_minus_base": 0.06100356578826904,
+            "within_bin_permuted_minus_base": -0.014275133609771729,
+            "intervention": "P rows permuted; slot latents held fixed and P-derived geometry recomputed; color condition permutes P only within each target patch coarse RGB bin; no GT"
+          },
+          {
+            "images": 4,
+            "unshuffled_completion_loss": 0.9394365549087524,
+            "row_permuted_P_loss": 0.9988127946853638,
+            "within_coarse_RGB_bin_permuted_P_loss": 0.9257705211639404,
+            "row_permuted_minus_base": 0.05937623977661133,
+            "within_bin_permuted_minus_base": -0.013666033744812012,
+            "intervention": "P rows permuted; slot latents held fixed and P-derived geometry recomputed; color condition permutes P only within each target patch coarse RGB bin; no GT"
+          },
+          {
+            "images": 4,
+            "unshuffled_completion_loss": 0.8752323389053345,
+            "row_permuted_P_loss": 0.9277294278144836,
+            "within_coarse_RGB_bin_permuted_P_loss": 0.8612864017486572,
+            "row_permuted_minus_base": 0.05249708890914917,
+            "within_bin_permuted_minus_base": -0.013945937156677246,
+            "intervention": "P rows permuted; slot latents held fixed and P-derived geometry recomputed; color condition permutes P only within each target patch coarse RGB bin; no GT"
+          },
+          {
+            "images": 4,
+            "unshuffled_completion_loss": 1.1755154132843018,
+            "row_permuted_P_loss": 1.2094647884368896,
+            "within_coarse_RGB_bin_permuted_P_loss": 1.1660268306732178,
+            "row_permuted_minus_base": 0.03394937515258789,
+            "within_bin_permuted_minus_base": -0.009488582611083984,
+            "intervention": "P rows permuted; slot latents held fixed and P-derived geometry recomputed; color condition permutes P only within each target patch coarse RGB bin; no GT"
+          },
+          {
+            "images": 4,
+            "unshuffled_completion_loss": 0.9180530309677124,
+            "row_permuted_P_loss": 1.0111347436904907,
+            "within_coarse_RGB_bin_permuted_P_loss": 0.8500266075134277,
+            "row_permuted_minus_base": 0.09308171272277832,
+            "within_bin_permuted_minus_base": -0.06802642345428467,
+            "intervention": "P rows permuted; slot latents held fixed and P-derived geometry recomputed; color condition permutes P only within each target patch coarse RGB bin; no GT"
+          },
+          {
+            "images": 4,
+            "unshuffled_completion_loss": 0.6536572575569153,
+            "row_permuted_P_loss": 0.7289249897003174,
+            "within_coarse_RGB_bin_permuted_P_loss": 0.6344115734100342,
+            "row_permuted_minus_base": 0.0752677321434021,
+            "within_bin_permuted_minus_base": -0.019245684146881104,
+            "intervention": "P rows permuted; slot latents held fixed and P-derived geometry recomputed; color condition permutes P only within each target patch coarse RGB bin; no GT"
+          },
+          {
+            "images": 4,
+            "unshuffled_completion_loss": 0.8069657683372498,
+            "row_permuted_P_loss": 0.879098117351532,
+            "within_coarse_RGB_bin_permuted_P_loss": 0.7815718650817871,
+            "row_permuted_minus_base": 0.07213234901428223,
+            "within_bin_permuted_minus_base": -0.025393903255462646,
+            "intervention": "P rows permuted; slot latents held fixed and P-derived geometry recomputed; color condition permutes P only within each target patch coarse RGB bin; no GT"
+          },
+          {
+            "images": 4,
+            "unshuffled_completion_loss": 1.0937819480895996,
+            "row_permuted_P_loss": 1.1687262058258057,
+            "within_coarse_RGB_bin_permuted_P_loss": 1.0570073127746582,
+            "row_permuted_minus_base": 0.07494425773620605,
+            "within_bin_permuted_minus_base": -0.036774635314941406,
+            "intervention": "P rows permuted; slot latents held fixed and P-derived geometry recomputed; color condition permutes P only within each target patch coarse RGB bin; no GT"
+          }
+        ],
+        "mean_unshuffled_loss": 0.9740901440382004,
+        "mean_row_permuted_loss": 1.046547394245863,
+        "mean_within_bin_permuted_loss": 0.9455649591982365
+      },
+      "first_history": {
+        "update": 1,
+        "image_ids": [
+          68304,
+          49032,
+          70041,
+          7829,
+          16499,
+          31675,
+          67612,
+          54671,
+          17331,
+          2330,
+          23312,
+          50490,
+          56080,
+          20867,
+          3891,
+          34682
+        ],
+        "loss_micro": [
+          1.21514892578125,
+          0.9099887609481812,
+          1.2093396186828613,
+          0.8504776954650879
+        ],
+        "gradient_norms": {
+          "backbone": 0.08015456473508022,
+          "head": 0.6587789246645293
+        }
+      },
+      "last_history": {
+        "update": 256,
+        "image_ids": [
+          60030,
+          5258,
+          27894,
+          62587,
+          14611,
+          60914,
+          67883,
+          10595,
+          2212,
+          47787,
+          20325,
+          31163,
+          51750,
+          58655,
+          616,
+          16810
+        ],
+        "loss_micro": [
+          0.8822657465934753,
+          1.102863073348999,
+          0.8469887971878052,
+          0.9639173150062561
+        ],
+        "gradient_norms": {
+          "backbone": 0.22970283875959022,
+          "head": 0.5770504616258972
+        }
+      }
+    }
+  }
+}
