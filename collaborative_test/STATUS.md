@@ -1,4 +1,4 @@
-Current native32 status (2026-10-12): SW0148 v3 supervisor551842 is live. The first encoder_graph child623933 acquired GPU2 but foreign owner624137 entered before any checkpoint was observed; our child exited-15 and the supervisor automatically requeued. No committed update, production CUDA resume, trained endpoint, or new segmentation score is verified. Both scientific arms and later prediction/score stages remain registered. Idle admission5 seconds, owner guard and checkpoint GPU affinity remain active. SW0143 T FG mean0.783044 versus Slot32 0.781652 failed registered confidence gates. Fresh native32 70000-image scaling and gating necessity remain unproven; the goal remains active.
+SW0148: actual joint CUDA checkpoint resume verified (k3 to k6, unchanged source/runtime bindings); original encoder_graph training preserved; paired evaluation pending.
 
 ## Earlier observations (historical; superseded by the current status above)
 
