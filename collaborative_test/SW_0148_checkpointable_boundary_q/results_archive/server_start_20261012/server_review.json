@@ -1,0 +1,92 @@
+{
+  "status": "server_verified_not_launched",
+  "files": [
+    {
+      "name": "checkpoint.py",
+      "sha256": "75d5076c051f81a51a39bbafedd363e589aa58ffc41ba4a662a87ffb91601f53"
+    },
+    {
+      "name": "train.py",
+      "sha256": "c8e2e1081224ed92f4d1158ee6d979b63e881db65c445bf730ec23fed394534b"
+    },
+    {
+      "name": "run.py",
+      "sha256": "bc895543dba46ea4a61f0761367763f927d6f543d76b9f7553392f91fea2c679"
+    },
+    {
+      "name": "stage_queue.py",
+      "sha256": "124a05c3f5091f6969d9e852a89fbb5f1fabf97de05af3d60a19b08cd63b2b47"
+    },
+    {
+      "name": "protocol.json",
+      "sha256": "8a34122b30f8d4fd34e519b7dd20f165588fca1d3aba48f570b270406d5abccb"
+    },
+    {
+      "name": "README.md",
+      "sha256": "07eb1697fc6242746807b1c3f52e44c67de94894f1a586eba60b5da3a6a23264"
+    },
+    {
+      "name": "test_checkpoint.py",
+      "sha256": "f71d91b6da7e653d23f7b2132cf1b2744e1f25faff8016f09360ee4a9f3a24cc"
+    },
+    {
+      "name": "test_queue.py",
+      "sha256": "bc5bbdae2df21d1dfb2333922e59e886dbc41011b62d5caf8d0173a38e9f4a25"
+    }
+  ],
+  "test_stdout": "",
+  "test_stderr": "test_actual_logical_update_commits_only_after_projection_and_keeps_order (collaborative_test.SW_0148_checkpointable_boundary_q.test_checkpoint.BoundaryCheckpointTests) ... ok\ntest_interrupted_and_resumed_training_matches_uninterrupted (collaborative_test.SW_0148_checkpointable_boundary_q.test_checkpoint.BoundaryCheckpointTests) ... ok\ntest_k256_boundary_finalizes_without_replaying_an_update (collaborative_test.SW_0148_checkpointable_boundary_q.test_checkpoint.BoundaryCheckpointTests) ... ok\ntest_only_empty_or_our_uncommitted_atomic_temps_can_fresh_start (collaborative_test.SW_0148_checkpointable_boundary_q.test_checkpoint.BoundaryCheckpointTests) ... ok\ntest_rejects_changed_source_or_runtime_before_loading (collaborative_test.SW_0148_checkpointable_boundary_q.test_checkpoint.BoundaryCheckpointTests) ... ok\ntest_rejects_truncated_or_corrupt_container (collaborative_test.SW_0148_checkpointable_boundary_q.test_checkpoint.BoundaryCheckpointTests) ... ok\ntest_failed_training_branch_blocks_predictions_and_score (collaborative_test.SW_0148_checkpointable_boundary_q.test_queue.QueueContractTests) ... ok\ntest_foreign_retry_requires_safe_boundary_or_absent_prediction (collaborative_test.SW_0148_checkpointable_boundary_q.test_queue.QueueContractTests) ... ok\ntest_registered_five_stage_dag_and_cpu_score_command (collaborative_test.SW_0148_checkpointable_boundary_q.test_queue.QueueContractTests) ... ok\ntest_score_runs_only_after_both_arm_predictions (collaborative_test.SW_0148_checkpointable_boundary_q.test_queue.QueueContractTests) ... ok\n\n----------------------------------------------------------------------\nRan 10 tests in 2.709s\n\nOK\n",
+  "dry_run": {
+    "experiment": "SW0148_checkpointable_boundary_q",
+    "tasks": [
+      {
+        "task_id": "train_encoder_graph",
+        "stage": "train",
+        "arm": "encoder_graph",
+        "depends_on": [],
+        "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0148_checkpointable_boundary_q/training/encoder_graph_seed1"
+      },
+      {
+        "task_id": "train_joint",
+        "stage": "train",
+        "arm": "joint",
+        "depends_on": [],
+        "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0148_checkpointable_boundary_q/training/joint_seed1"
+      },
+      {
+        "task_id": "predict_encoder_graph",
+        "stage": "predict",
+        "arm": "encoder_graph",
+        "depends_on": [
+          "train_encoder_graph"
+        ],
+        "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0148_checkpointable_boundary_q/predictions/encoder_graph_seed1"
+      },
+      {
+        "task_id": "predict_joint",
+        "stage": "predict",
+        "arm": "joint",
+        "depends_on": [
+          "train_joint"
+        ],
+        "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0148_checkpointable_boundary_q/predictions/joint_seed1"
+      },
+      {
+        "task_id": "score",
+        "stage": "score",
+        "arm": null,
+        "depends_on": [
+          "predict_encoder_graph",
+          "predict_joint"
+        ],
+        "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0148_checkpointable_boundary_q/results_archive/evaluation_seed1.json"
+      }
+    ],
+    "stable_idle_seconds": 60.0,
+    "owner_aware": true,
+    "training_resume": "committed logical update only",
+    "dry_run": true
+  },
+  "parent_run_sha256": "9f94c097e0f1765f32247c729523ab306f1319c508cef4160bdefef1c4dea489",
+  "parent_protocol_sha256": "9d86bb93e52e84dee13e160099a3cd91899c9ec16d37dce3f1763b99d3aaca0c"
+}

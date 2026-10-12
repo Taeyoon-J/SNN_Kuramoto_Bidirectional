@@ -1,0 +1,35 @@
+{
+  "experiment": "SW0148_checkpointable_boundary_q",
+  "status": "prospective_registered_recovery",
+  "parent": {
+    "experiment": "SW0146_native32_boundary_q_pilot",
+    "run_sha256": "9f94c097e0f1765f32247c729523ab306f1319c508cef4160bdefef1c4dea489",
+    "protocol_sha256": "9d86bb93e52e84dee13e160099a3cd91899c9ec16d37dce3f1763b99d3aaca0c"
+  },
+  "scientific_recipe": "The SW0146 seed1 encoder_graph or joint arm, unchanged: source97 native32, clean ordered TRAIN IDs, T1024/settle512/live-tail64, B16 in four B4 microbatches, exact SW0145 boundary-Q plus fixed source-Q preservation objective, source0-registered lambda and scale, fresh Adam, clip1, project joint a_d/a_m after each optimizer step.",
+  "recovery": {
+    "checkpoint": "single self-verifying boundary.ptx container atomically replaced after each completed logical update",
+    "commit_boundary": "four microbatch gradients -> clip -> Adam.step -> joint scalar projection -> append history -> atomic checkpoint replacement",
+    "payload": ["wrapped/source core and integration state", "encoder state", "complete Adam state and parameter-group schema", "completed update count", "completed update history", "Python/NumPy/Torch CPU and owned CUDA RNG states", "source/admission/assets/preflight/ordered-ID/science/helper hashes", "initial source parity and initial parameter hashes", "runtime/device/software/kernel settings"],
+    "partial_update_policy": "Never checkpoint or restore accumulated microbatch gradients. A pre-commit interruption replays all four microbatches from the prior committed update.",
+    "resume": "Reuse the validated initial SW0146 preflights and admission; reconstruct the source and teacher, validate checkpoint lineage/runtime, restore student/Adam/RNG, then continue at the next update. No cross-device bitwise-equivalence claim.",
+    "finalization": "After update 256, write outputs to a unique staging directory and publish by directory rename. A preemption during finalization does not repeat training."
+  },
+  "outputs": {
+    "work_root": "work/{arm}_seed1/checkpoints/boundary.ptx",
+    "final_root": "training/{arm}_seed1",
+    "write_policy": "Create-only final outputs; no existing SW0146 artifacts are modified."
+  },
+  "queue": {
+    "stages": ["train_encoder_graph", "train_joint", "predict_encoder_graph", "predict_joint", "score"],
+    "dependencies": "Each prediction follows its own completed training artifact; CPU score follows both hash-validated prediction artifacts.",
+    "gpu_admission": "Exclusive shared GPU lease; require 60 seconds continuously at or below 512 MiB with no foreign compute owners, then recheck before launch.",
+    "foreign_owner_recovery": "Only a queue-observed foreign-owner interruption permits retry. Training resumes from a valid committed boundary; before the first commit, it restarts fresh only if the checkpoint directory is absent, empty, or contains exclusively recognized uncommitted atomic temporary files. Interrupted prediction restarts only when its final output directory is absent. Numerical, provenance, invalid artifact, and other child failures are terminal; foreign processes are never killed.",
+    "preflights": "Reuse both existing validated SW0146 preflights and admission; do not rerun them."
+  },
+  "limits": [
+    "This is an operational continuation of the unchanged SW0146 recipe after verified technical foreign-owner interruptions; it produces no result until both arms, predictions, and GT-last scoring complete.",
+    "Scoring and promotion criteria remain exactly those preregistered for SW0146; checkpointing does not change the scientific recipe.",
+    "The CPU fixture establishes exact same-runtime resume for a deterministic test model; it does not claim cross-GPU or cross-software bitwise identity."
+  ]
+}
