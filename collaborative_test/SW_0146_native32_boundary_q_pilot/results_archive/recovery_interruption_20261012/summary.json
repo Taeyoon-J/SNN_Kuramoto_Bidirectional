@@ -1,0 +1,44 @@
+{
+  "status": "recovery_v2_terminal_foreign_owner_interruption",
+  "supervisor_pid": 467558,
+  "terminal_state_sha256": "5f3ef5f671a3e219be4a220afde2bd0653443f5bc27210c14e7d3ea398a1c5ab",
+  "joint": {
+    "status": "failed",
+    "physical_gpu": 2,
+    "gpu_uuid": "GPU-50cc59a2-8312-ff02-5889-1becf63c7cd4",
+    "stable_seconds": 57.12818827154115,
+    "memory_mib": 4,
+    "argv": [
+      "/Data0/kevinswk/envs/snn/bin/python",
+      "-m",
+      "collaborative_test.SW_0146_native32_boundary_q_pilot.run",
+      "--stage",
+      "train",
+      "--admission",
+      "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0146_native32_boundary_q_pilot/admission.json",
+      "--arm",
+      "joint",
+      "--device",
+      "cuda:0"
+    ],
+    "log_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0146_native32_boundary_q_pilot/results_archive/recovery_v2_20261012/logs/train_joint.log",
+    "cuda_visible_devices": "2",
+    "child_pid": 469726,
+    "started": 1791830073.1645877,
+    "error": "RuntimeError: foreign GPU owner appeared: [476387]",
+    "finished": 1791830623.6878335
+  },
+  "control": {
+    "status": "failed",
+    "physical_gpu": 0,
+    "gpu_uuid": "GPU-a0a7d03d-adc1-37ca-4342-328878b3657c",
+    "stable_seconds": 0.0,
+    "memory_mib": 16,
+    "error": "RuntimeError: queue stopped before GPU reservation",
+    "finished": 1791830624.086898
+  },
+  "output_checkpoint": null,
+  "partial_updates": "unknown; no checkpoint saved",
+  "segmentation_result": null,
+  "next_action": "Prepare separate SW0148 with unchanged SW146 science and update-boundary transactional checkpoints; preserve old attempts."
+}
