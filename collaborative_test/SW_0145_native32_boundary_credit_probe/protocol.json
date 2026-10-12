@@ -1,0 +1,9 @@
+{
+  "experiment": "SW0145_native32_boundary_credit_probe",
+  "status": "prospective disposable diagnostic; not an admitted segmentation experiment",
+  "source": "SW0097 native32 same-seed source checkpoint, strict SW0135 mapping, SW0130 phase adapter, source0",
+  "input": {"training_ids": "first4096 source0 registered TRAIN order; same first16 for disposable update and first64 for gradient comparison", "rgb": "clean uint8 native128 RGB, converted through the registered encoder/statistics once per rollout", "rollout": "T1024, settle512, live_tail64, actual native dynamics"},
+  "target": {"pairs": "all horizontally/vertically adjacent native32 patches", "edge_energy": "mean squared RGB pixel-pair difference across the shared 4-pixel seam, normalized to [0,1]", "scale": "mean edge energy over all adjacent seams from all first4096 registered source0 TRAIN images", "relation": "exp(-edge_energy / scale)"},
+  "probe": {"update": "one disposable logicalB16 Adam step minimizing squared error between production actual-spike Q on adjacent patch pairs and the fixed boundary relation", "learning_rates": {"encoder": 0.000003, "graph": 0.00003, "native_core": 0.00003, "integration_scalars": 0.001}, "global_clip": 1.0, "projection": "a_d and a_m projected to [0,1] after the step", "preservation_comparison": "after the disposable update, compare boundary-Q loss gradient B and detached initial-source full off-diagonal Q-preservation loss A on the same first four logical TRAIN batches; report encoder and graph norms and 0.25*median(B/A) only when all ratios are defined"},
+  "limits": ["No GT, validation, binder, segmentation prediction, saved checkpoint, or persistent model update.", "This single disposable update is diagnostic only; it does not establish a mask-quality gain, causal mechanism, or a training admission.", "A/B norms are descriptive diagnostics and do not authorize objective or hyperparameter tuning."]
+}

@@ -1,0 +1,13 @@
+{
+  "status": "probe_queued",
+  "supervisor_pid": 437576,
+  "server_cpu_tests": 11,
+  "server_linux_skips": 0,
+  "optimizer_updates_planned": 1,
+  "ground_truth_used": false,
+  "checkpoint_saved": false,
+  "segmentation_score_available": false,
+  "purpose": "Measure boundary-Q gradient credit to encoder, graph, core and integration scalars; calibratability of same-input source-Q preservation.",
+  "admission": "all four idle exclusive GPUs; sixty-second stable idle gate; shared inherited GPU lease; terminate only owned child upon foreign collision",
+  "limits": "One disposable gradient probe; not a segmentation improvement or native32 70000-image training result."
+}
