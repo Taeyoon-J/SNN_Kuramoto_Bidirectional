@@ -1,0 +1,29 @@
+# geodesic_power is a plain float, not an nn.Parameter, so it applies to existing
+# checkpoints at inference; at 1.0 the step cost is identical to the original, which
+# every run gates on. contrast 8 is written into the checkpoint (the contrast IS a
+# learned Parameter). Validation 300 for selection; TEST 1000 read once, the second
+# test read of the session. Target foreground ~0.118.
+split,readout,power,contrast,seed,fg_ari,fg_iou,obj_iou,pred_foreground
+validation,cc,1.0,learned,FZG_s0,0.7235,0.7164,0.4935,0.1296
+validation,cc,1.0,learned,BIM6_s1,0.7239,0.7251,0.4951,0.1290
+validation,cc,1.0,learned,FZG_s2,0.7275,0.7148,0.4974,0.1310
+validation,cc,2.0,8,FZG_s0,0.7297,0.7137,0.4986,0.1299
+validation,cc,2.0,8,BIM6_s1,0.7327,0.7255,0.5033,0.1291
+validation,cc,2.0,8,FZG_s2,0.7331,0.7170,0.5027,0.1310
+validation,spectral_k14,1.0,learned,FZG_s0,0.7573,0.3510,0.6415,0.5312
+validation,spectral_k14,1.0,learned,BIM6_s1,0.7562,0.3266,0.6551,0.5729
+validation,spectral_k14,1.0,learned,FZG_s2,0.7573,0.3572,0.6475,0.5228
+validation,spectral_k14,2.0,8,FZG_s0,0.7625,0.3585,0.6476,0.5246
+validation,spectral_k14,2.0,8,BIM6_s1,0.7654,0.3336,0.6605,0.5642
+validation,spectral_k14,2.0,8,FZG_s2,0.7621,0.3647,0.6500,0.5170
+test,spectral_k14,2.0,8,FZG_s0,0.7600,0.3471,0.6551,0.5438
+test,spectral_k14,2.0,8,BIM6_s1,0.7605,0.3136,0.6667,0.5886
+test,spectral_k14,2.0,8,FZG_s2,0.7604,0.3513,0.6577,0.5367
+test,spectral_k14,2.0,8,mean,0.7603,0.3373,0.6598,0.5564
+test,spectral_k14,1.0,learned,mean_PV2_0061,0.7533,0.3358,0.6549,0.5556
+test,cc,2.0,8,FZG_s0,0.7283,0.7100,0.5030,0.1306
+test,cc,2.0,8,BIM6_s1,0.7317,0.7221,0.5070,0.1299
+test,cc,2.0,8,FZG_s2,0.7301,0.7075,0.5051,0.1313
+test,cc,2.0,8,mean,0.7300,0.7132,0.5050,0.1306
+test,cc,1.0,learned,mean_PV2_0061,0.7258,0.7124,0.5029,0.1308
+test,matched_slot_attention,,,mean,0.6663,0.1177,0.0871,0.7213

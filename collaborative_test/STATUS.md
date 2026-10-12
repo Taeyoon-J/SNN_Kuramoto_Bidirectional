@@ -1,6 +1,6 @@
 # STATUS
 
-Updated 2026-10-12 07:15. Branch `patch_v2`. Contract v1, split v1.
+Updated 2026-10-12 08:25. Branch `patch_v2`. Contract v1, split v1.
 
 ## Where things stand
 
@@ -22,13 +22,17 @@ bidirectional.
 Test IDs 7000-7999, **all 1000 images**, from classifier masks on the model's own
 spikes, spectral k=14 with one background cluster.
 
-| metric | ours k=14 | matched Slot | absolute | relative |
+| metric | ours k=14, power 2 | matched Slot | absolute | relative |
 | --- | --- | --- | --- | --- |
-| `patch_fg_ari` | **0.7533** +- 0.0015 | 0.6663 +- 0.1108 | +0.0870 | +13.1% |
-| `patch_foreground_iou` | **0.3358** +- 0.0215 | 0.1177 +- 0.0101 | +0.2180 | +185.2% |
-| `patch_matched_object_iou` | **0.6549** +- 0.0042 | 0.0871 +- 0.0040 | +0.5678 | +651.6% |
+| `patch_fg_ari` | **0.7603** +- 0.0003 | 0.6663 +- 0.1108 | +0.0940 | +14.1% |
+| `patch_foreground_iou` | **0.3373** +- 0.0207 | 0.1177 +- 0.0101 | +0.2196 | +186.6% |
+| `patch_matched_object_iou` | **0.6598** +- 0.0061 | 0.0871 +- 0.0040 | +0.5727 | +657.6% |
 
-Per seed, ours: 0.7547 / 0.7536 / 0.7517. Slot: 0.7265 / 0.7340 / 0.5385.
+Per seed, ours: 0.7600 / 0.7605 / 0.7604. Slot: 0.7265 / 0.7340 / 0.5385. The
+superlinear geodesic step cost (`PV2_0076`) adds +0.0070 / +0.0015 / +0.0049 over
+`PV2_0061`'s 0.7533 / 0.3358 / 0.6549 at the same readout, and the connected-component
+configuration improves with it too, 0.7258 / 0.7124 / 0.5029 -> **0.7300 / 0.7132 /
+0.5050**. This is the second test read of the session; the first was `PV2_0061`.
 
 The same checkpoints read through connected components give **0.7258 / 0.7124 /
 0.5029** on the same images — also beating Slot on all three, foreground IoU twice as

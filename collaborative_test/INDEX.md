@@ -66,6 +66,7 @@
 | PV2_0073 | exhausted | iterating the model's own grouping converges to 0.7274: its errors are spatially coherent, which the repair cannot touch | | | |
 | PV2_0074 | exhausted | the learned geodesic contrast is already best; 0.5-32 spans .7243 to .6406 and groups split before walls dominate | | | |
 | PV2_0075 | completed | **why: the barrier is two thin walls (5.27x) with a background corridor 6x cheaper than a within-object step** | | | |
+| PV2_0076 | completed | **superlinear geodesic step cost: TEST .7603 / .3373 / .6598, all three up, no calibration cost** | **0.7603** | **0.3373** | **0.6598** |
 | PV2_0046 | completed | contract diagnostic: a looser rule *lowers* fg_ari 0.724 to 0.533; cross-branch scores are not poolable | | | |
 
 Three seeds on the test split, scored from spike masks. Peer experiments from
@@ -94,12 +95,14 @@ k=14 (a fixed group count, never the true object count):
 
 | metric | ours | matched Slot | absolute | relative |
 | --- | --- | --- | --- | --- |
-| `patch_fg_ari` | **0.7533** +- 0.0015 | 0.6663 +- 0.1108 | +0.0870 | +13.1% |
-| `patch_foreground_iou` | **0.3358** +- 0.0215 | 0.1177 +- 0.0101 | +0.2180 | +185.2% |
-| `patch_matched_object_iou` | **0.6549** +- 0.0042 | 0.0871 +- 0.0040 | +0.5678 | +651.6% |
+| `patch_fg_ari` | **0.7603** +- 0.0003 | 0.6663 +- 0.1108 | +0.0940 | +14.1% |
+| `patch_foreground_iou` | **0.3373** +- 0.0207 | 0.1177 +- 0.0101 | +0.2196 | +186.6% |
+| `patch_matched_object_iou` | **0.6598** +- 0.0061 | 0.0871 +- 0.0040 | +0.5727 | +657.6% |
 
-Per seed: 0.7547 / 0.7536 / 0.7517. Previous test read (`PV2_0008`) was 0.6075, so
-fg_ari is **+0.1458**.
+Per seed: 0.7600 / 0.7605 / 0.7604. This is `PV2_0076`, the superlinear geodesic step
+cost, on the same checkpoints and readout; `PV2_0061` at power 1.0 gave
+0.7533 / 0.3358 / 0.6549 and the change is +0.0070 / +0.0015 / +0.0049. The previous
+test read before this session (`PV2_0008`) was 0.6075, so fg_ari is **+0.1528**.
 
 The same checkpoints with the connected-component readout give
 **0.7258 / 0.7124 / 0.5029** on the same test images — also beating Slot on all three,
