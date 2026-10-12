@@ -54,6 +54,7 @@
 | PV2_0061 | completed | **TEST, read once: .7533 / .3358 / .6549. Beats Slot on all three; 0.75 target met** | **0.7533** | **0.3358** | **0.6549** |
 | PV2_0062 | exhausted | features improved at inference: best foreground IoU yet (.7626) but no fg_ari gain | | | |
 | PV2_0063 | exhausted | no spectral k on the smoothed gamma dominates the settled configuration | | | |
+| PV2_0064 | exhausted | **whitening enlarges the cosine margin 2.7x without labels and fg_ari still does not move** | | | |
 | PV2_0046 | completed | contract diagnostic: a looser rule *lowers* fg_ari 0.724 to 0.533; cross-branch scores are not poolable | | | |
 
 Three seeds on the test split, scored from spike masks. Peer experiments from

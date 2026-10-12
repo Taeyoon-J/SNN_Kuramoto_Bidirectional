@@ -102,30 +102,39 @@ clustering, self-bootstrapping, encoder capacity, slot-term defaults, end-to-end
 training, the frozen core, data scale, position in the graph, chromaticity, and
 inference-time smoothing.
 
-### The sharpest statement of what is missing
+### Why the search for part 3 has failed, stated precisely
 
-`PV2_0062` closed the last one but located the gap better than anything before it.
-Oracle codes have within-object spread **0.0000 and between-object distance 3.9462**,
-which is **2.4x** the baseline's 1.6592. Edge-preserving smoothing lowers within (to
-0.0564 at its strongest, nearly the oracle's zero) but lowers **between** with it
-(1.6592 -> 1.5180). So:
+`PV2_0064` closed the twelfth route and refuted the framework that chose eleven of
+them. The diagnosis after `PV2_0062` was that the missing ingredient is an enlarged
+**between-object margin**, since every label-free method reduced within-object spread
+while shrinking between. Two things came out of testing that.
 
-- every label-free method tried reduces within-object spread and **shrinks** the
-  between-object margin;
-- what makes the oracle code special is the **enlarged** margin, and increasing it
-  without labels is close to knowing which object is which.
+**The margin can be enlarged without labels.** All previous separation numbers were
+Euclidean, but `graph_generator.py:123` compares `F.normalize(projection(gamma))` by
+cosine. Measured there, ZCA whitening of the channel covariance (train rows only, no
+masks) takes between-object cosine distance from **0.2483 to 0.7693** against the
+oracle's 1.0000, and combined with smoothing holds within *below* the baseline
+(0.0127 vs 0.0142). It works because it is anisotropic, so unlike a rescaling it
+changes cosine similarity.
 
-Two experiments now show the within/between ratio is **not** the quantity limiting
-fg_ari. `PV2_0058`: both the Euclidean ratio and a cosine margin rank the chromaticity
-tensors above the 8-channel gamma (which has the lowest effective rank of the three,
-1.68) and the scores go the other way. `PV2_0062`: a 41% ratio improvement moves
-fg_ari by -0.005 in the calibrated regime. The measures bound the problem; they do not
-point at a solution, and `PV2_0051`'s use of the ratio to close data scale is weaker
-than written there, though its conclusion survives on the score.
+**It still does not help.** Every whitened variant pushes predicted foreground from
+0.129 to 0.51-0.62 and foreground IoU to ~0.18. Nothing stayed in the calibrated
+regime, and the highest fg_ari (0.7670) is the extent dial of `PV2_0059`, since plain
+gamma already reaches 0.7718 at predicted foreground 0.8084.
 
-`PV2_0056` closed the objective-side route separately: our partition overlaps the
-fixed geometric template by only ARI 0.1164, so penalising that agreement would push
-down something already near zero.
+So **three** transforms have now improved a separation measure without improving
+fg_ari in the calibrated regime: chromaticity (`PV2_0058`), smoothing (`PV2_0062`) and
+whitening (`PV2_0064`). **Separation statistics are not sufficient statistics for
+fg_ari in this pipeline.** The oracle's 0.9754 does not come from the geometry of its
+feature cloud; it comes from the codes being the answer. A margin can be manufactured;
+the information cannot.
+
+That constrains where a route to 0.9 could come from: it has to supply object-level
+information, not feature-cloud geometry. The label-free sources are reconstruction
+with slot competition (tested, 0.6779, below frozen features); motion or several views
+of one scene, which **this dataset does not contain** — the CLEVR frames here are
+single static renders; and cross-view consistency under augmentation, which the peer
+has queued as SW0139 and which had no result at either fetch this session.
 
 ### The one by-product worth keeping
 
