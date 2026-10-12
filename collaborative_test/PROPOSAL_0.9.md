@@ -89,6 +89,29 @@ Not a contract change. `PV2_0082` measured that moving to a finer grid changes t
 without addressing the cause, and `ROUTE_MAP_0.9.md` records it so nobody spends effort
 there.
 
+## Progress (`PV2_0084`)
+
+Started, with the dataset in place and two corrections to the reasoning above.
+
+**Done:** MOVi-A downloaded and prepared (1,000 train, 250 validation scenes, 9 GB), with
+statistics close to contract v1 — foreground 0.103 against 0.118, 5.97 objects against
+6.32, the same labelling rule. Motion saturates around a 6-12 frame gap at 17-19% of
+pixels changing instance label.
+
+**Correction 1.** Motion's margin looked 13x appearance's against *raw* RGB means; against
+*standardised* appearance it is **1.4x** (0.717 against 0.501). And MOVi-A's standardised
+appearance already has twice contract v1's margin, so **the dataset change confounds the
+motion test** — any claim has to be made within MOVi-A.
+
+**Correction 2.** I took a shortcut and concatenated motion as extra gamma channels; it
+hit `PV2_0054`'s dead-membrane wall (`spike_plv_collapse` 9.21 = log(10^4), no spikes),
+and routing it to the graph alone did not rescue it. **Concatenation was never this
+proposal** — the design above specifies motion as the external target of a consistency
+term, and the smoke test caught the drift before a run was wasted.
+
+**Next:** a per-patch motion affinity as that target, against the appearance-only arm,
+which trains healthily.
+
 ## If the answer is no
 
 The session's result stands on its own: **test 0.7603 / 0.3373 / 0.6598**, three seeds,
