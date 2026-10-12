@@ -1,0 +1,5 @@
+SW0148 parity resume correction
+
+The original resume comparison removed initial_source_Q_parity from saved bindings but retained its None placeholder in fresh bindings. recovery_v2 installs a process-local wrapper that removes only that unset fresh marker, then invokes the unchanged trainer. The original trainer reattaches saved exact parity and enforces full checkpoint bindings, runtime, optimizer and RNG checks. All eight original files retain their registered hashes. No model, loss, data, update budget or decoder changes.
+
+Create-only, file-and-directory-fsynced attempt receipts bind the adapter, helper, original source hashes, incoming checkpoint, completed update, source lineage and runtime. Six Linux CPU regression tests passed with zero skips, including the original train_arm resume branch with expensive setup/load mocked. This proves the comparison correction; actual intermediate-update CUDA resume remains unverified. The live encoder_graph child is preserved. Recovery dispatch and final scientific scores remain pending.
