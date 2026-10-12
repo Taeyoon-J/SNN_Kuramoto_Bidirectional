@@ -1,0 +1,42 @@
+{
+  "status": "recovery_server_cpu_verified",
+  "tests_run": 9,
+  "skipped": 0,
+  "cuda_initialized": false,
+  "files": [
+    {
+      "name": "recover_queue.py",
+      "bytes": 20599,
+      "sha256": "b32c1aa5ce8417359aaab40bb9606e6fdee2c8d8314281f365616c24805dbe00"
+    },
+    {
+      "name": "test_recovery.py",
+      "bytes": 14767,
+      "sha256": "7e3198b2e5a465b7d81730cdf727fd9c87937e44bcb26f06e8b3b31ab0315a86"
+    }
+  ],
+  "plan": {
+    "status": "recovery_prechecked",
+    "original_state_sha256": "9ef6a919ed029f8b432e2ccebb419e9c01bea834809f1a8a85af23c6162178ce",
+    "v1_state_sha256": "3889eda3ecbec37b23a87d2007d0cc089cab6b4ca1cb0756534ab6800472d9bc",
+    "previous_state_sha256": "3889eda3ecbec37b23a87d2007d0cc089cab6b4ca1cb0756534ab6800472d9bc",
+    "preserved": [],
+    "missing": [
+      "preflight_s0",
+      "preflight_s1",
+      "preflight_s2",
+      "reference_R_s0",
+      "reference_R_s1",
+      "reference_R_s2",
+      "predict_C_s0",
+      "predict_C_s1",
+      "predict_C_s2",
+      "predict_T_s0",
+      "predict_T_s1",
+      "predict_T_s2",
+      "score_all"
+    ],
+    "max_parallel": 4,
+    "quiet_window_seconds": 60.0
+  }
+}
