@@ -95,64 +95,60 @@ seed spread. It also confirms 0.7250 is not an artifact of the window.
 
 ## What is open — part 3, the route to 0.9
 
-**Not demonstrated.** `PV2_0034` reached fg_ari 0.9754 by putting oracle codes through
-this pipeline unchanged and unretrained, so the architecture is not the limit and the
-encoder costs 0.27. Eleven routes to better features are closed: DINOv2, label-free
-clustering, self-bootstrapping, encoder capacity, slot-term defaults, end-to-end
-training, the frozen core, data scale, position in the graph, chromaticity, and
-inference-time smoothing.
+**Not met, but the target is now exact and a correction matters more than the rest.**
 
-### Why the search for part 3 has failed, stated precisely
+### `PV2_0005` was wrong, and I leaned on it all session
 
-`PV2_0064` closed the twelfth route and refuted the framework that chose eleven of
-them. The diagnosis after `PV2_0062` was that the missing ingredient is an enlarged
-**between-object margin**, since every label-free method reduced within-object spread
-while shrinking between. Two things came out of testing that.
+`PV2_0066` split the two paths features take into the dynamics. Feeding oracle features
+to the **graph alone** gives **0.9671 / 0.9353 / 0.7584 at predicted foreground 0.1121**
+— 94% of the total oracle gain, and the first fg_ari gain in this project that does
+**not** come with foreground over-prediction. Through theta initialisation alone it is
+only +0.0922.
 
-**The margin can be enlarged without labels.** All previous separation numbers were
-Euclidean, but `graph_generator.py:123` compares `F.normalize(projection(gamma))` by
-cosine. Measured there, ZCA whitening of the channel covariance (train rows only, no
-masks) takes between-object cosine distance from **0.2483 to 0.7693** against the
-oracle's 1.0000, and combined with smoothing holds within *below* the baseline
-(0.0127 vs 0.0142). It works because it is anisotropic, so unlike a rescaling it
-changes cosine similarity.
+`PV2_0005` had reported an oracle coupling graph worth +0.06, and I repeated "the graph
+is spent" throughout. That test forced the **final coupling matrix**, bypassing the
+generator's projection, cosine, top-k, geodesic relaxation and spatial decay. Given
+oracle **features** instead, that machinery amplifies them. **Nearly all the headroom
+is in the graph**, not in theta initialisation and not outside the graph.
 
-**It still does not help.** Every whitened variant pushes predicted foreground from
-0.129 to 0.51-0.62 and foreground IoU to ~0.18. Nothing stayed in the calibrated
-regime, and the highest fg_ari (0.7670) is the extent dial of `PV2_0059`, since plain
-gamma already reaches 0.7718 at predicted foreground 0.8084.
+### So the 0.9 target is reachable by this architecture, unmodified
 
-So **three** transforms have now improved a separation measure without improving
-fg_ari in the calibrated regime: chromaticity (`PV2_0058`), smoothing (`PV2_0062`) and
-whitening (`PV2_0064`). **Separation statistics are not sufficient statistics for
-fg_ari in this pipeline.** The oracle's 0.9754 does not come from the geometry of its
-feature cloud; it comes from the codes being the answer. A margin can be manufactured;
-the information cannot.
+0.9671 / 0.9353 / 0.7584 in the calibrated regime, with SNN + Kuramoto bidirectional
+exactly as they are. The one missing piece is a gamma whose **graph-side between-object
+cosine distance approaches 1.0 without inflating predicted foreground**.
 
-That constrains where a route to 0.9 could come from: it has to supply object-level
-information, not feature-cloud geometry. The label-free sources are reconstruction
-with slot competition (tested, 0.6779, below frozen features); motion or several views
-of one scene, which **this dataset does not contain** — the CLEVR frames here are
-single static renders; and cross-view consistency under augmentation, which the peer
-has queued as SW0139 and which had no result at either fetch this session.
+### Fourteen routes have failed to produce it, and they fail in two opposite ways
 
-### The one by-product worth keeping
+`PV2_0067` sent every transform to the graph alone, with the phase path on real gamma:
 
-`PV2_0062`'s smoothed gamma under the connected-component readout gives **foreground
-IoU 0.7626**, the highest this project has measured (previous best 0.7251), at a
-predicted foreground of **0.1166 against a target of 0.118** — better calibrated than
-the baseline's 0.129. Its fg_ari is 0.7187, below 0.75, so it is not the published
-configuration, but it is the best foreground segmentation available and is on disk at
-`/work/USERS/tkim1/gamma_sequences/bilat_s1.0_r0.5_i3_grid16.pt`.
+| graph gamma | cos_between | fg_ari | fg_iou | pred_fg |
+| --- | --- | --- | --- | --- |
+| real | 0.2483 | 0.7250 | 0.7188 | **0.1299** |
+| whitened eps=0.1 | **0.6900** | 0.7602 | 0.2256 | 0.4861 |
+| smoothed | 0.2113 | 0.7196 | **0.7618** | **0.1178** |
+| oracle (diagnostic) | **1.0000** | **0.9671** | **0.9353** | **0.1121** |
 
-### Untried
+The margin can be enlarged (whitening, 0.2483 -> 0.7693) but only by widening predicted
+foreground to 0.45-0.49 — **and that happens even confined to the graph**, so the phase
+path was never the obstacle. Calibration can be kept (smoothing, 0.1178) but only
+without a margin gain. Oracle codes are one-hot per object, orthogonal between objects
+by construction; no fixed transform of appearance features reproduces that, and a
+trained one would need object identity.
 
-A training objective geometry cannot satisfy, which would have to act on the
-between-object margin rather than within-object spread. Reconstruction is the only
-such signal tested (0.6779, below frozen features). The peer's cross-view spike
-consistency (their SW0139) is another; at the last two fetches their branch head was
-unchanged at `94de778` and that arm still reported "cross-view calibration remains
-running, its training queued", so there is no result to port.
+Three separate transforms also improved a separation statistic without improving fg_ari
+in the calibrated regime (`PV2_0058`, `PV2_0062`, `PV2_0064`), so separation statistics
+are not sufficient statistics for the score — they bound the problem without pointing
+at a solution.
+
+### Resume here
+
+The precise open question: produce gamma with graph-side cos_between near 1.0 at
+predicted foreground near 0.12, without labels. Untested sources of object-level
+information: cross-view consistency as a training objective (the peer's SW0139, no
+result at three fetches this session), and reconstruction with slot competition used to
+train the **graph** while gamma stays frozen — `PV2_0039` trained the encoder that way
+and `PV2_0045` froze the graph, but training the graph under reconstruction with frozen
+features has not been run and is the combination `PV2_0066` now motivates.
 
 ## Where the peer stands
 

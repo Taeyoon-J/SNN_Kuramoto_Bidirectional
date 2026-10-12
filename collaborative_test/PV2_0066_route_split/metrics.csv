@@ -1,0 +1,16 @@
+# Inference only; the core carries a diagnostic hook that is inert unless set, and the
+# regression gate confirmed that (0.7239/0.7251/0.4951 reproduced). Validation 300,
+# contract v1, window 1024/512, three graph-frozen checkpoints. Rows using an oracle
+# tensor are DIAGNOSTICS: it is built from the true masks. Target foreground ~0.118.
+test,graph_gamma,phase_gamma,cos_between,fg_ari,fg_iou,obj_iou,pred_foreground
+PV2_0066,real,real,0.2483,0.7250,0.7188,0.4953,0.1299
+PV2_0066,oracle,real,1.0000,0.9671,0.9353,0.7584,0.1121
+PV2_0066,real,oracle,0.2483,0.8172,0.7410,0.6051,0.1292
+PV2_0066,oracle,oracle,1.0000,0.9826,0.9190,0.7706,0.1186
+PV2_0067,bilat_s1.0_r0.5_i3,real,0.2113,0.7196,0.7618,0.4741,0.1178
+PV2_0067,marg_whitened_eps0.01,real,0.7693,0.6579,0.2448,0.4395,0.4453
+PV2_0067,marg_whitened_eps0.1,real,0.6900,0.7602,0.2256,0.4535,0.4861
+PV2_0067,marg_smoothed+whitened_eps0.01,real,0.7434,0.7454,0.2692,0.4486,0.4464
+PV2_0067,marg_smoothed+whitened_eps0.1,real,0.6688,0.7384,0.2396,0.4107,0.4677
+PV2_0067,safeat_s1,real,0.0316,0.3247,0.2084,0.1605,0.4681
+PV2_0067,sawhite_eps0.0001,real,0.2110,0.6122,0.2304,0.2857,0.5059

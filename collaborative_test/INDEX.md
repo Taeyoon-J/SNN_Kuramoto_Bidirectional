@@ -55,6 +55,9 @@
 | PV2_0062 | exhausted | features improved at inference: best foreground IoU yet (.7626) but no fg_ari gain | | | |
 | PV2_0063 | exhausted | no spectral k on the smoothed gamma dominates the settled configuration | | | |
 | PV2_0064 | exhausted | **whitening enlarges the cosine margin 2.7x without labels and fg_ari still does not move** | | | |
+| PV2_0065 | failed | gamma from the matched Slot encoder: cos_between .0316, fg_ari .0604; whitened at best .4840 | | | |
+| PV2_0066 | completed | **the GRAPH carries 94% of the oracle's gain (.9671 at pred_fg .112); PV2_0005's +0.06 measured something else** | | | |
+| PV2_0067 | exhausted | transforms confined to the graph: whitening still breaks calibration, smoothing still gains no fg_ari | | | |
 | PV2_0046 | completed | contract diagnostic: a looser rule *lowers* fg_ari 0.724 to 0.533; cross-branch scores are not poolable | | | |
 
 Three seeds on the test split, scored from spike masks. Peer experiments from
