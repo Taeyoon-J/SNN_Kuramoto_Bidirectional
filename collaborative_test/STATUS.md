@@ -339,6 +339,12 @@ only outside the objective (`PV2_0077`).
 
 ### Start here for part 3
 
+`PROPOSAL_0.9.md` is the one route left, costed and written to be run: independent object
+motion as the signal, the existing consistency term pointed at frame pairs, contract v1
+and the architecture untouched. **It needs a decision** — it adds data this project does
+not use. `PV2_0082` and `PV2_0083` removed the two alternatives that were not the model
+(the metric and the input resolution), so there is nothing else outstanding.
+
 `ROUTE_MAP_0.9.md` holds the consolidated map: the five structural findings and all 27
 closed routes, with the protocol devices that caught wrong conclusions. It exists because
 after 27 routes I nearly re-ran one that was already closed at `PV2_0016-18` — check it

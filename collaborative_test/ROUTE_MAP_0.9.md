@@ -165,6 +165,11 @@ merges are **between** patches, not inside them.
   adjacent similarly-coloured objects is what is missing, and in a single static render the
   only cue is their separation, which the pipeline already uses.
 
+`PROPOSAL_0.9.md` writes the one remaining route up as something executable: a dataset
+with independent object motion, the existing `--view-consistency-weight` term pointed at
+frame pairs instead of appearance jitter, everything else unchanged. It needs a decision
+because it introduces data this project does not use.
+
 The label-free sources of object-level information are all tested: reconstruction with
 slot competition (`PV2_0039`, `PV2_0068`), cross-view consistency (`PV2_0070`) and
 self-reference (`PV2_0069`, `PV2_0073`). What remains is **data this dataset does not
