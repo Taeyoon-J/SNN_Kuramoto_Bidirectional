@@ -15,7 +15,7 @@ bidirectional.
 | fg_ari 0.75 | **met** — 0.7533 on test, 3 seeds (`PV2_0061`) |
 | beat Slot Attention on all three | **met** on test: +0.0870 / +0.2180 / +0.5678 |
 | apply the peer's positive results | **done** — graph freeze ported (`PV2_0044`), 0.7059 -> 0.7250 |
-| a demonstrated route to 0.9 | **not met**; 17 routes closed, feasibility proven at 0.9671 |
+| a demonstrated route to 0.9 | **not met**; 19 routes closed, and the 0.9671 'feasibility' is withdrawn (`PV2_0072`) |
 
 ### The test result (`PV2_0061`), read once
 
@@ -111,11 +111,38 @@ generator's projection, cosine, top-k, geodesic relaxation and spatial decay. Gi
 oracle **features** instead, that machinery amplifies them. **Nearly all the headroom
 is in the graph**, not in theta initialisation and not outside the graph.
 
-### So the 0.9 target is reachable by this architecture, unmodified
+### What the 0.9671 actually measures — corrected by `PV2_0072`
 
-0.9671 / 0.9353 / 0.7584 in the calibrated regime, with SNN + Kuramoto bidirectional
-exactly as they are. The one missing piece is a gamma whose **graph-side between-object
-cosine distance approaches 1.0 without inflating predicted foreground**.
+`make_oracle_gamma.py` builds its tensor as `codes[true_labels]`, so the oracle gamma is
+the **answer** rather than better features. 0.9671 / 0.9353 / 0.7584 therefore measures
+how faithfully the readout **transcribes a grouping it is handed**, not whether these
+dynamics can discover one. I had written it as "the 0.9 target is reachable by this
+architecture unmodified"; **that does not follow and is withdrawn.**
+
+What `PV2_0072` does establish is sharper and more useful. Feeding the graph a grouping
+corrupted to a known degree:
+
+| input fg_ari | output fg_ari | gain |
+| --- | --- | --- |
+| 1.0000 | 0.9678 | -0.032 |
+| 0.7525 | 0.7766 | +0.024 |
+| 0.4205 | 0.5087 | +0.088 |
+| 0.0416 | 0.1933 | **+0.152** |
+
+**The pipeline repairs damaged groupings**, strongly for badly damaged ones, with the
+crossing where output = input near 0.85-0.88.
+
+But `PV2_0073` iterates the model's **own** grouping through the same path and it
+converges at **0.7274** in one step (+0.0035, inside the seed spread). The two results
+reconcile through the error type: `PV2_0072`'s corruption is random, so its errors are
+spatially **incoherent** -- a wrong patch among right ones, exactly what the geodesic
+relaxation and distance prior are built to repair. The model's own errors are spatially
+**coherent**: whole objects merged, which `PV2_0053` measured in 38.8% of images. A
+merged pair is internally consistent, so there is nothing local to fix.
+
+**The amplification is real but acts on the wrong error type.** That is why nineteen
+routes failed: each tried to reduce the amount of error, while the pipeline can only
+remove error of a kind it does not make.
 
 ### Fourteen routes have failed to produce it, and they fail in two opposite ways
 

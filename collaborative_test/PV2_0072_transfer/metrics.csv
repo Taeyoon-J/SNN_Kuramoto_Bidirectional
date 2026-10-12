@@ -1,0 +1,17 @@
+# ORACLE-GUIDED DIAGNOSTICS. Inference only, BIM6_s1, validation 300, contract v1,
+# window 1024/512. Degraded codes go to the GRAPH only; the phase path keeps real gamma.
+# PV2_0072 corruption is random per patch, so its errors are spatially incoherent;
+# PV2_0073 iterates the model's own predictions, whose errors are spatially coherent.
+test,condition,input_fg_ari,fg_ari,fg_iou,obj_iou,pred_foreground
+PV2_0072,corrupt_0.0,1.0000,0.9678,0.9373,0.7585,0.1120
+PV2_0072,corrupt_0.1,0.7525,0.7766,0.8554,0.6527,0.1026
+PV2_0072,corrupt_0.2,0.5894,0.6473,0.8074,0.5870,0.0963
+PV2_0072,corrupt_0.3,0.4205,0.5087,0.7667,0.5140,0.0911
+PV2_0072,corrupt_0.5,0.1649,0.2900,0.6972,0.3854,0.0825
+PV2_0072,corrupt_0.7,0.0416,0.1933,0.6594,0.3203,0.0767
+PV2_0072,real_features,,0.7239,0.7251,0.4951,0.1290
+PV2_0073,iteration_0,0.7239,0.7239,0.7251,0.4951,0.1290
+PV2_0073,iteration_1,0.7239,0.7269,0.7247,0.4936,0.1288
+PV2_0073,iteration_2,0.7269,0.7270,0.7247,0.4931,0.1288
+PV2_0073,iteration_3,0.7270,0.7274,0.7247,0.4932,0.1288
+PV2_0073,iteration_4,0.7274,0.7274,0.7247,0.4932,0.1288

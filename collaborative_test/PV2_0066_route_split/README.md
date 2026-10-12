@@ -73,11 +73,14 @@ transform, and the verdict is corrected here.
 
 ## What is now established, and what is not
 
-**Established:** the architecture reaches **0.9671 / 0.9353 / 0.7584 at predicted
-foreground 0.1121** when the graph's input separates objects. The 0.9 target is
-reachable by this SNN + Kuramoto pipeline, unmodified, and the single thing standing in
-the way is a gamma whose graph-side between-object cosine distance approaches 1.0
-without inflating predicted foreground.
+**Established, with a correction from `PV2_0072`:** given a gamma that encodes the
+grouping, the pipeline reproduces it at **0.9671 / 0.9353 / 0.7584, predicted foreground
+0.1121**. But `make_oracle_gamma.py` builds that gamma as `codes[true_labels]`, so it is
+the **answer** rather than better features, and the number measures **transcription
+fidelity, not discovery**. I originally wrote this as "the 0.9 target is reachable by
+this pipeline unmodified"; that does not follow and is withdrawn. What does follow is
+that the readout is faithful, and that the graph rather than theta initialisation is
+where features act.
 
 **Not established:** any label-free way to produce that gamma. Fourteen routes have
 failed, and the two levers available to a fixed transform pull against each other — the

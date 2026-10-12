@@ -62,6 +62,8 @@
 | PV2_0069 | exhausted | the graph fed its own groups as one-hot: .7239 in, .7199 out -- a fixed point, no amplification | | | |
 | PV2_0070 | exhausted | **cross-view consistency: invariance achieved (term 2-3x down), fg_ari -0.0482** | | | |
 | PV2_0071 | exhausted | the generator's own knobs: best is +0.0062 for -0.0401 fg_iou; contrast and decay are learned, so those rows were vacuous | | | |
+| PV2_0072 | completed | **the oracle number measures transcription, not discovery; the pipeline repairs random damage (+0.15 at heavy corruption)** | | | |
+| PV2_0073 | exhausted | iterating the model's own grouping converges to 0.7274: its errors are spatially coherent, which the repair cannot touch | | | |
 | PV2_0046 | completed | contract diagnostic: a looser rule *lowers* fg_ari 0.724 to 0.533; cross-branch scores are not poolable | | | |
 
 Three seeds on the test split, scored from spike masks. Peer experiments from
