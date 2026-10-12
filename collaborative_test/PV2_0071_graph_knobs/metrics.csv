@@ -1,0 +1,23 @@
+# Inference only, BIM6_s1, validation 300, contract v1, window 1024/512, spatial sigma
+# 1.0. One knob at a time around the current point. geodesic_contrast and spatial_decay
+# rows are VACUOUS: both are learned nn.Parameters stored in the checkpoint
+# (geodesic_contrast 2.0523, spatial_rate -0.2093), so the constructor argument only
+# sets an initial value and load_state_dict overwrites it. Target foreground ~0.118.
+knob,value,fg_ari,fg_iou,obj_iou,pred_foreground,informative
+current,default,0.7239,0.7251,0.4951,0.1290,yes
+top_k,8,0.7301,0.6850,0.5040,0.1440,yes
+top_k,16,0.7238,0.7137,0.4955,0.1330,yes
+top_k,64,0.7228,0.7286,0.4949,0.1281,yes
+top_k,128,0.7230,0.7299,0.4950,0.1260,yes
+geodesic_steps,1,0.7191,0.7031,0.5077,0.1327,yes
+geodesic_steps,2,0.7275,0.7185,0.5067,0.1301,yes
+geodesic_steps,5,0.7194,0.7231,0.4777,0.1314,yes
+geodesic_steps,8,0.7077,0.6406,0.4733,0.1789,yes
+geodesic_contrast,0.5,0.7239,0.7251,0.4951,0.1290,no
+geodesic_contrast,1.0,0.7239,0.7251,0.4951,0.1290,no
+geodesic_contrast,4.0,0.7239,0.7251,0.4951,0.1290,no
+geodesic_contrast,8.0,0.7239,0.7251,0.4951,0.1290,no
+spatial_decay,0.1,0.7239,0.7251,0.4951,0.1290,no
+spatial_decay,0.2,0.7239,0.7251,0.4951,0.1290,no
+spatial_decay,0.6,0.7239,0.7251,0.4951,0.1290,no
+oracle_features_diagnostic,,0.9671,0.9353,0.7584,0.1121,yes
