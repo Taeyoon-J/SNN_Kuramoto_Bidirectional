@@ -1,0 +1,26 @@
+{
+  "scope": "training-objective summary only; different minibatches prevent a controlled loss-decrease claim",
+  "core_and_12_integration_scalars": "frozen by registered protocol",
+  "arms": {
+    "c_only": {
+      "history_sha256": "705ecea2b3e799a1560b51619087d6981a1f80bd660166e28cef34851c46745f",
+      "updates": 256,
+      "first32_C_mean": 2.7845533760264516,
+      "last32_C_mean": 2.925289540551603,
+      "first32_anchor_mean": null,
+      "last32_anchor_mean": null,
+      "gradient_norm_median": 3.6381310268978737,
+      "gradient_clip_fraction": 0.9765625
+    },
+    "c_plus_anchor": {
+      "history_sha256": "51372c9627e3b1a55680db17fbee73b79199cd834f16243701315d599aab5cd3",
+      "updates": 256,
+      "first32_C_mean": 2.792744296602905,
+      "last32_C_mean": 2.7166200010105968,
+      "first32_anchor_mean": 0.001278050222509819,
+      "last32_anchor_mean": 0.0019073468528176818,
+      "gradient_norm_median": 4.6614297947226735,
+      "gradient_clip_fraction": 1.0
+    }
+  }
+}
