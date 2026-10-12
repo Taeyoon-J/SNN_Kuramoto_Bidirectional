@@ -1,0 +1,51 @@
+{
+  "experiment": "SW0143_native32_selective_geodesic",
+  "status": "registered_local_implementation_not_deployed",
+  "source": "Same-seed immutable SW0097 native16-grid-trained core, strictly mapped by frozen SW0135 to native32; native128 RGB encoder and feature normalization; existing SW0137 fixed320 source predictions are R.",
+  "arms": {
+    "R": "Exact frozen SW0135 chunked linear geodesic operator and learned source effective contrast; all320 labels are re-inferred and must be bit-identical to SW0137.",
+    "C": "Same linear cosine dissimilarity and SW0135 relaxation, but effective softplus contrast fixed at8 via inverse_softplus(8).",
+    "T": "Squared cosine dissimilarity (1-cosine)^2 and effective softplus contrast fixed at8; only the adjacent-step dissimilarity changes versus C."
+  },
+  "geodesic": {
+    "base_step_cost": 1.0,
+    "steps": 3,
+    "radius": 1.5,
+    "temperature": 0.5,
+    "cap": 16.0,
+    "chunk_rows": 32,
+    "log4_correction_each_relaxation": true,
+    "full_intermediate_node_axis": true,
+    "checkpoint_complete_chunk": true,
+    "effective_contrast_C_T": 8.0
+  },
+  "prediction": {
+    "seeds": [0, 1, 2],
+    "image_ids": [1320, 1639],
+    "count": 320,
+    "native_size": [128, 128],
+    "grid": [32, 32],
+    "steps": 1024,
+    "settle": 512,
+    "microbatch": 1,
+    "readout": "Unchanged source97 actual-spike QCC, positive-clamped component-product signed Pearson affinity, threshold .50, minimum foreground group8, largest connected component background.",
+    "ground_truth_during_prediction": false,
+    "optimizer_updates": 0,
+    "R_regression": "R labels must exactly equal validated SW0137 source97 QCC labels for all320 same-seed IDs before C/T predictions are accepted."
+  },
+  "preflight": {
+    "split": "TRAIN only, first four rows of each seed's registered 4096-ID order",
+    "ground_truth": false,
+    "steps": 1024,
+    "batch_parity": "Require exact equality for the original SW0135 versus R traces separately at B1 and B4, plus exact graph-output equality. Record B1-versus-B4 trace differences descriptively only; they are not an admission threshold.",
+    "optimizer_updates": 0
+  },
+  "scoring": {
+    "target": "Native128 masks converted by production modal/minimum-ID-tie 4x4 pooling to32x32.",
+    "metrics": ["fg_ari", "foreground_iou", "matched_object_iou"],
+    "baseline": "Frozen SW0135 all-three-seed Slot32 baseline, SHA 4dc12cb54c3114375b8428cd250c013ff94015c4826915751f2fcb0a2204d753.",
+    "paired_bootstrap": "RandomState(139), 10000 shared-image resamples; resample image indices once and use identical draws across all seeds and paired arms.",
+    "gate": "Report whether T mean FG-ARI exceeds R and Slot32; T-R paired FG-ARI 95% lower bound is positive; both T IoUs exceed Slot32; and T-Slot FG-ARI paired lower bound is positive. Report these separately; no training, scaling, gate-necessity, or publication claim follows."
+  },
+  "scientific_limits": "Source lineage was previously trained on70k images at16x16 before strict spatial mapping to1024 nodes. This is frozen inference only, not fresh native32 training, scaling evidence, or proof that the geodesic mechanism generalizes. Peer numbers are not local reproduction."
+}
