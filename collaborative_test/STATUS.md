@@ -263,6 +263,27 @@ So the sharper cost is a better **readout** of the graph these weights produce a
 **objective** to fit them with. `PV2_0076`'s +0.0070 on test stands as a post-hoc
 correction.
 
+### The toll, and a fourth mispredicted arithmetic (`PV2_0078`)
+
+`PV2_0075`'s other candidate, a per-step toll on the corridor, turns out to be the
+leading `1` already in the cost. Lowering it should have helped: at power 2 and contrast
+8 the route to an object six patches away costs 6.48 against 6.05 for crossing a
+six-patch object, a ratio of 1.07, and at base 0.1 those become 1.09 and 0.654, ratio
+1.66.
+
+It does not. In the calibrated regime base 1.0 is the best of 1.0 down to 0.02, trading a
+little fg_ari for a little foreground IoU monotonically. The spectral rows look like a
++0.0140 gain and are not: predicted foreground goes 0.5423 -> 0.6522 while foreground IoU
+falls 0.0796, the extent dial again, and the automated check missed it because the
+spectral readout never sits below the 0.20 threshold.
+
+That is the **fourth** time a geometric or arithmetic quantity improved without the score
+following (`PV2_0058`, `PV2_0062`, `PV2_0064`, here). The common thread: these quantities
+are computed on ground-truth object pairs, while the readout acts on whatever the dynamics
+produce, and a barrier in the cost matrix still has to survive the rollout, the gate, the
+membrane threshold and the component extraction. `PV2_0076` is the only change of this
+family that transferred, and `PV2_0077` showed it works only outside the objective.
+
 ### Resume here
 
 Within the architecture, the next thing to change is `_geodesic_distance` itself: a step

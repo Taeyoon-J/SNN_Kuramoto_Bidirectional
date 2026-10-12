@@ -1,0 +1,19 @@
+# Inference only, BIM6_s1, validation 300, contract v1, window 1024/512. geodesic_base is
+# the leading per-step toll; 1.0 reproduces the original expression, which the gate
+# confirmed. Calibrated regime is predicted foreground < 0.20, which the connected-
+# component rows satisfy and the spectral rows never do -- the spectral fg_ari rise comes
+# with predicted foreground 0.5423 -> 0.6522 and is the extent dial, not a gain.
+readout,power,contrast,base,fg_ari,fg_iou,obj_iou,pred_foreground,calibrated
+cc,2.0,8,1.0,0.7327,0.7255,0.5033,0.1291,yes
+cc,2.0,8,0.5,0.7312,0.7288,0.4927,0.1284,yes
+cc,2.0,8,0.2,0.7273,0.7303,0.4866,0.1283,yes
+cc,2.0,8,0.1,0.7266,0.7306,0.4853,0.1285,yes
+cc,2.0,8,0.05,0.7243,0.7314,0.4840,0.1285,yes
+cc,2.0,8,0.02,0.7241,0.7313,0.4844,0.1284,yes
+cc,1.0,learned,0.5,0.7271,0.7305,0.4875,0.1279,yes
+cc,1.0,learned,0.2,0.7224,0.7324,0.4812,0.1281,yes
+cc,1.0,learned,0.1,0.7230,0.7303,0.4814,0.1288,yes
+spectral_k14,2.0,8,1.0,0.7569,0.3449,0.6480,0.5423,no
+spectral_k14,2.0,8,0.2,0.7662,0.2612,0.6456,0.6533,no
+spectral_k14,2.0,8,0.1,0.7709,0.2653,0.6480,0.6522,no
+spectral_k14,2.0,8,0.05,0.7709,0.2554,0.6469,0.6576,no
