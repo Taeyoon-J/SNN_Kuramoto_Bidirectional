@@ -133,6 +133,22 @@ scores .9756 under a far stronger rule change than a tie-break. **Contract v1 ad
 comfortably**, so the 0.14 gap is model error and moving to a finer grid would change the
 number without addressing the cause. Do not spend effort on the contract.
 
+## Input resolution is not the obstacle either (`PV2_0083`)
+
+The other tempting explanation: 17.3% of foreground patches hold two or more objects, and
+the encoder pools to 16x16 before anything else, so sub-patch detail is gone at the input.
+Measured on the published configuration's own predictions:
+
+| foreground patches | agreement | share | share of error |
+| --- | --- | --- | --- |
+| holding one object | 0.7979 | 82.7% | **70.7%** |
+| holding two or more | 0.5999 | 17.3% | 29.3% |
+
+Straddling patches are harder by 0.198 and carry under a third of the error. **70.7% is on
+patches holding exactly one object**, where nothing is ambiguous and the model still
+mis-groups 20% of them. A finer encoder would address at most a third of the error. The
+merges are **between** patches, not inside them.
+
 ## What a credible attempt would have to do
 
 - **Not** optimise this loss (finding 4).
