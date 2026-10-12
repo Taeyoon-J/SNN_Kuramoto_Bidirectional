@@ -67,6 +67,7 @@
 | PV2_0074 | exhausted | the learned geodesic contrast is already best; 0.5-32 spans .7243 to .6406 and groups split before walls dominate | | | |
 | PV2_0075 | completed | **why: the barrier is two thin walls (5.27x) with a background corridor 6x cheaper than a within-object step** | | | |
 | PV2_0076 | completed | **superlinear geodesic step cost: TEST .7603 / .3373 / .6598, all three up, no calibration cost** | **0.7603** | **0.3373** | **0.6598** |
+| PV2_0077 | failed | training under the superlinear cost gives .4268 and .5248: its gain is an inference-time correction only | | | |
 | PV2_0046 | completed | contract diagnostic: a looser rule *lowers* fg_ari 0.724 to 0.533; cross-branch scores are not poolable | | | |
 
 Three seeds on the test split, scored from spike masks. Peer experiments from

@@ -248,6 +248,21 @@ The contrast cannot fix it because it multiplies `(1 - similarity)` **uniformly*
 raising it scales walls and shading steps together, and objects with shading gradients
 split before the walls dominate.
 
+### `PV2_0076` is a readout correction, not a training change (`PV2_0077`)
+
+Training under the superlinear cost gives 0.4268 at power 2 and 0.5248 at power 3,
+against the 0.7239 bar. The control settles where the damage is: the same checkpoints
+evaluated at power 1 give 0.4249 and 0.5254, so the **weights** are bad, not the
+evaluation. The loss meanwhile went *down* -- 16.71 and 16.80 against 17.86 -- so the
+objective was satisfied better while the score collapsed, the pattern `PV2_0055` recorded
+for position in the graph. And training **lowered** the contrast, 2.1732 -> 1.9588,
+choosing to rely on the geodesic selectivity less rather than more; the prediction that it
+would prefer a stronger one was wrong.
+
+So the sharper cost is a better **readout** of the graph these weights produce and a worse
+**objective** to fit them with. `PV2_0076`'s +0.0070 on test stands as a post-hoc
+correction.
+
 ### Resume here
 
 Within the architecture, the next thing to change is `_geodesic_distance` itself: a step
