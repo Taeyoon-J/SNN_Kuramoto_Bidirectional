@@ -1,0 +1,66 @@
+{
+  "experiment": "SW0148_checkpointable_boundary_q",
+  "status": "running",
+  "supervisor_pid": 529175,
+  "no_overwrite": true,
+  "owner_dispatcher_sha256": "c59cdc39af20c824930d1926c8cec1418ee818577b8cc4240ad6eaae836764f6",
+  "tasks": {
+    "train_encoder_graph": {
+      "task": {
+        "task_id": "train_encoder_graph",
+        "stage": "train",
+        "arm": "encoder_graph",
+        "depends_on": [],
+        "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0148_checkpointable_boundary_q/training/encoder_graph_seed1"
+      },
+      "status": "queued"
+    },
+    "train_joint": {
+      "task": {
+        "task_id": "train_joint",
+        "stage": "train",
+        "arm": "joint",
+        "depends_on": [],
+        "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0148_checkpointable_boundary_q/training/joint_seed1"
+      },
+      "status": "queued"
+    },
+    "predict_encoder_graph": {
+      "task": {
+        "task_id": "predict_encoder_graph",
+        "stage": "predict",
+        "arm": "encoder_graph",
+        "depends_on": [
+          "train_encoder_graph"
+        ],
+        "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0148_checkpointable_boundary_q/predictions/encoder_graph_seed1"
+      },
+      "status": "queued"
+    },
+    "predict_joint": {
+      "task": {
+        "task_id": "predict_joint",
+        "stage": "predict",
+        "arm": "joint",
+        "depends_on": [
+          "train_joint"
+        ],
+        "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0148_checkpointable_boundary_q/predictions/joint_seed1"
+      },
+      "status": "queued"
+    },
+    "score": {
+      "task": {
+        "task_id": "score",
+        "stage": "score",
+        "arm": null,
+        "depends_on": [
+          "predict_encoder_graph",
+          "predict_joint"
+        ],
+        "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0148_checkpointable_boundary_q/results_archive/evaluation_seed1.json"
+      },
+      "status": "queued"
+    }
+  }
+}

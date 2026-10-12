@@ -1,0 +1,69 @@
+{
+  "status": "v2_verified_not_launched",
+  "files": [
+    {
+      "name": "stage_queue_v2.py",
+      "sha256": "07623f57dc236941861b85b10ad1c2ade4fdc04b37bcecf5d7e77bdc351a58d6"
+    },
+    {
+      "name": "test_queue_v2.py",
+      "sha256": "a3c6b84b3f740a8a1fb6f96af797e82080141836001dc26ca5c610f6e803a4f3"
+    }
+  ],
+  "tests_passed": 19,
+  "tests_skipped": 0,
+  "test_stdout": "",
+  "test_stderr": "test_actual_logical_update_commits_only_after_projection_and_keeps_order (collaborative_test.SW_0148_checkpointable_boundary_q.test_checkpoint.BoundaryCheckpointTests) ... ok\ntest_interrupted_and_resumed_training_matches_uninterrupted (collaborative_test.SW_0148_checkpointable_boundary_q.test_checkpoint.BoundaryCheckpointTests) ... ok\ntest_k256_boundary_finalizes_without_replaying_an_update (collaborative_test.SW_0148_checkpointable_boundary_q.test_checkpoint.BoundaryCheckpointTests) ... ok\ntest_only_empty_or_our_uncommitted_atomic_temps_can_fresh_start (collaborative_test.SW_0148_checkpointable_boundary_q.test_checkpoint.BoundaryCheckpointTests) ... ok\ntest_rejects_changed_source_or_runtime_before_loading (collaborative_test.SW_0148_checkpointable_boundary_q.test_checkpoint.BoundaryCheckpointTests) ... ok\ntest_rejects_truncated_or_corrupt_container (collaborative_test.SW_0148_checkpointable_boundary_q.test_checkpoint.BoundaryCheckpointTests) ... ok\ntest_failed_training_branch_blocks_predictions_and_score (collaborative_test.SW_0148_checkpointable_boundary_q.test_queue.QueueContractTests) ... ok\ntest_foreign_retry_requires_safe_boundary_or_absent_prediction (collaborative_test.SW_0148_checkpointable_boundary_q.test_queue.QueueContractTests) ... ok\ntest_registered_five_stage_dag_and_cpu_score_command (collaborative_test.SW_0148_checkpointable_boundary_q.test_queue.QueueContractTests) ... ok\ntest_score_runs_only_after_both_arm_predictions (collaborative_test.SW_0148_checkpointable_boundary_q.test_queue.QueueContractTests) ... ok\ntest_acquire_pins_to_gpu3_until_lease_is_released (collaborative_test.SW_0148_checkpointable_boundary_q.test_queue_v2.ResumeGpuAdmissionTests) ... ok\ntest_committed_checkpoint_requires_its_exact_physical_gpu (collaborative_test.SW_0148_checkpointable_boundary_q.test_queue_v2.ResumeGpuAdmissionTests) ... ok\ntest_completed_training_is_reused_without_gpu_admission (collaborative_test.SW_0148_checkpointable_boundary_q.test_queue_v2.ResumeGpuAdmissionTests) ... ok\ntest_corrupt_checkpoint_fails_before_gpu_reservation (collaborative_test.SW_0148_checkpointable_boundary_q.test_queue_v2.ResumeGpuAdmissionTests) ... ok\ntest_corrupt_or_unbound_checkpoint_fails_closed (collaborative_test.SW_0148_checkpointable_boundary_q.test_queue_v2.ResumeGpuAdmissionTests) ... ok\ntest_execute_gpu_forwards_checkpoint_affinity (collaborative_test.SW_0148_checkpointable_boundary_q.test_queue_v2.ResumeGpuAdmissionTests) ... ok\ntest_no_commit_may_choose_any_gpu_but_unknown_work_is_rejected (collaborative_test.SW_0148_checkpointable_boundary_q.test_queue_v2.ResumeGpuAdmissionTests) ... ok\ntest_pinned_busy_gpu_wait_can_be_cancelled_without_fallback (collaborative_test.SW_0148_checkpointable_boundary_q.test_queue_v2.ResumeGpuAdmissionTests) ... ok\ntest_resume_metadata_rejects_cpu_bad_device_index_and_bad_update_counts (collaborative_test.SW_0148_checkpointable_boundary_q.test_queue_v2.ResumeGpuAdmissionTests) ... ok\n\n----------------------------------------------------------------------\nRan 19 tests in 7.254s\n\nOK\n",
+  "dry_run": {
+    "experiment": "SW0148_checkpointable_boundary_q",
+    "tasks": [
+      {
+        "task_id": "train_encoder_graph",
+        "stage": "train",
+        "arm": "encoder_graph",
+        "depends_on": [],
+        "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0148_checkpointable_boundary_q/training/encoder_graph_seed1"
+      },
+      {
+        "task_id": "train_joint",
+        "stage": "train",
+        "arm": "joint",
+        "depends_on": [],
+        "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0148_checkpointable_boundary_q/training/joint_seed1"
+      },
+      {
+        "task_id": "predict_encoder_graph",
+        "stage": "predict",
+        "arm": "encoder_graph",
+        "depends_on": [
+          "train_encoder_graph"
+        ],
+        "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0148_checkpointable_boundary_q/predictions/encoder_graph_seed1"
+      },
+      {
+        "task_id": "predict_joint",
+        "stage": "predict",
+        "arm": "joint",
+        "depends_on": [
+          "train_joint"
+        ],
+        "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0148_checkpointable_boundary_q/predictions/joint_seed1"
+      },
+      {
+        "task_id": "score",
+        "stage": "score",
+        "arm": null,
+        "depends_on": [
+          "predict_encoder_graph",
+          "predict_joint"
+        ],
+        "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0148_checkpointable_boundary_q/results_archive/evaluation_seed1.json"
+      }
+    ],
+    "stable_idle_seconds": 60.0,
+    "owner_aware": true,
+    "training_resume": "committed logical update only",
+    "dry_run": true
+  },
+  "original_files_unchanged": true
+}
