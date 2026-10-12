@@ -1,0 +1,12 @@
+﻿{
+  "experiment": "SW0146_native32_boundary_q_pilot",
+  "status": "prospective_local_draft",
+  "source": {"checkpoint": "SW0097 native source seed1", "grid": 32, "train_unique_images": 4096, "train_order": "exact registered source1 TRAIN order", "input": "clean uint8 native128 RGB"},
+  "dynamics": {"steps": 1024, "settle": 512, "live_tail": 64, "readout": "unchanged production actual-spike QCC"},
+  "arms": {"encoder_graph": "train only source encoder and graph; freeze remaining source core and 12 integration scalars", "joint": "train encoder, graph, remaining core and all 12 integration scalars"},
+  "objective": {"boundary": "exact SW0145 actual-spike local-boundary Q MSE against exp(-seam_RGB_MSE / fixed_s)", "preservation": "exact SW0145 full off-diagonal MSE between student Q and detached initial source Q on the same clean inputs", "lambda_A": "fixed from verified immutable SW0145 source0 report: 0.25 times median of its four common-input encoder+graph B/A gradient ratios; no recalibration, cap, or fallback", "optimizer": "fresh Adam per arm; encoder LR 3e-6, graph/native core LR 3e-5, integration scalars LR 1e-3; global clip 1; project a_d/a_m to [0,1]"},
+  "training": {"logical_batch": 16, "microbatch": 4, "updates": 256, "exposures": 4096, "ground_truth": false, "teacher": "initial same-seed source model, float32 detached actual-spike Q"},
+  "evaluation": {"image_ids": [1320, 1639], "count": 320, "grid": [32, 32], "primary": "unchanged actual-spike QCC labels", "ground_truth_access": "after both candidate predictions, source97 seed1 and Slot seed1 prediction bytes and protocols are validated and rehashed", "bootstrap": {"replicates": 10000, "rng": "numpy RandomState", "seed": 139, "paired_common_image_indices": true}},
+  "promotion": {"joint_fg_mean": "strictly greater than source97 seed1 and encoder_graph control by 0.01", "paired_fg_ci": "95% lower bounds of joint-control and joint-source per-image FG ARI differences both positive", "iou": "joint FG-IoU and object-IoU exceed registered three-seed Slot32 means by 0.05", "failure": "close the candidate without sweeps or automatic scaling"},
+  "limits": ["A seed1 pilot does not prove all gating mechanisms or scaling.", "No classifier, decoder, PLV, density, or learned readout changes.", "Training requires a sealed admission file binding the verified SW0145 disposable report and completed SW0143 terminal score."]
+}

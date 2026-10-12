@@ -1,0 +1,51 @@
+{
+  "status": "server_cpu_verified_not_launched",
+  "checks": [
+    {
+      "label": "science",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "test_actual_sw0145_report_schema_uses_admission_protocol_pin (collaborative_test.SW_0146_native32_boundary_q_pilot.test_run.AdmissionSchemaTests)\nThe disposable report has no protocol_sha256 field; pin protocol separately. ... ok\ntest_schema_rejects_missing_or_inconsistent_registered_ratios (collaborative_test.SW_0146_native32_boundary_q_pilot.test_run.AdmissionSchemaTests) ... ok\ntest_score_uses_real_metric_and_slot_contract_before_opening_gt (collaborative_test.SW_0146_native32_boundary_q_pilot.test_run.AdmissionSchemaTests)\nExercise the GT-last scorer with real production metrics and legacy Slot metadata. ... ok\n\n----------------------------------------------------------------------\nRan 3 tests in 2.731s\n\nOK\n"
+    },
+    {
+      "label": "queue",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ".....\n----------------------------------------------------------------------\nRan 5 tests in 0.024s\n\nOK\n"
+    }
+  ],
+  "files": [
+    {
+      "name": "run.py",
+      "bytes": 35202,
+      "sha256": "9f94c097e0f1765f32247c729523ab306f1319c508cef4160bdefef1c4dea489"
+    },
+    {
+      "name": "test_run.py",
+      "bytes": 13060,
+      "sha256": "c933847a2fa1cef5ff2da2a6b3d9aaa721e5547088ff6e35fc104bec7af27b97"
+    },
+    {
+      "name": "protocol.json",
+      "bytes": 2414,
+      "sha256": "9d86bb93e52e84dee13e160099a3cd91899c9ec16d37dce3f1763b99d3aaca0c"
+    },
+    {
+      "name": "README.md",
+      "bytes": 1603,
+      "sha256": "1292e87a64e6414af49f400f6dae6b6526e677ff2bec9bc600bda89548bc859d"
+    },
+    {
+      "name": "results_archive/queue_code_20261012/probe_queue.py",
+      "bytes": 15283,
+      "sha256": "f87cb9a138a439c369f9d74d284a6c9f0d0cc87f778510af04c49c01f7030cc2"
+    },
+    {
+      "name": "results_archive/queue_code_20261012/test_queue.py",
+      "bytes": 3400,
+      "sha256": "5be6998782281e4ff3f46279dd4e3960583786e24f23606bd3e26c0793948f82"
+    }
+  ],
+  "cuda_visible_devices": "",
+  "ground_truth_used": false
+}

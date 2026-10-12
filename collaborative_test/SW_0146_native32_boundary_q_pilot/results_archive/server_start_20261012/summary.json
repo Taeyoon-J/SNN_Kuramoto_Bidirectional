@@ -1,0 +1,23 @@
+{
+  "status": "paired_pilot_queue_started",
+  "supervisor_pid": 458960,
+  "server_cpu_tests": 8,
+  "linux_skips": 0,
+  "tasks": 7,
+  "seed": 1,
+  "train_unique_images": 4096,
+  "optimizer_updates_per_arm": 256,
+  "logical_batch": 16,
+  "microbatch": 4,
+  "arms": [
+    "encoder_graph",
+    "joint"
+  ],
+  "lambda_A": 0.19366687877861335,
+  "scale": 0.0007118072634665487,
+  "objective": "Exact SW145 boundary-Q loss plus fixed-lambda source-Q preservation on same clean inputs.",
+  "upstream145_report_sha256": "2c470ac9e58eb952ab3a7d6d7d25f0b179bcd3169045ed764c9a1cc66fae9177",
+  "upstream143_score_sha256": "2ed9a82e85d610be4ad772a1648652846e962e38380a2986fe26980878870a5c",
+  "result_available": false,
+  "limits": "Paired seed1 screening only; no segmentation improvement, gate necessity or fresh native32 70000-image scaling claim."
+}
