@@ -1,6 +1,6 @@
 # STATUS
 
-Updated 2026-10-12 01:30. Branch `patch_v2`. Contract v1, split v1.
+Updated 2026-10-12 07:15. Branch `patch_v2`. Contract v1, split v1.
 
 ## Where things stand
 
@@ -15,7 +15,7 @@ bidirectional.
 | fg_ari 0.75 | **met** — 0.7533 on test, 3 seeds (`PV2_0061`) |
 | beat Slot Attention on all three | **met** on test: +0.0870 / +0.2180 / +0.5678 |
 | apply the peer's positive results | **done** — graph freeze ported (`PV2_0044`), 0.7059 -> 0.7250 |
-| a demonstrated route to 0.9 | **not met**; ten feature routes closed |
+| a demonstrated route to 0.9 | **not met**; 17 routes closed, feasibility proven at 0.9671 |
 
 ### The test result (`PV2_0061`), read once
 
@@ -159,17 +159,46 @@ What the oracle supplies is **instance identity**. Every label-free route tried 
 reproduces its geometry without the information, or is a fixed point at the accuracy it
 starts from.
 
+### `PV2_0070`, the last route I had named as untested
+
+Cross-view consistency: view two is view one under per-image per-channel gain/offset
+jitter plus noise, so the partition is unchanged and the two views' PLV matrices must
+agree. `PV2_0057` had identified shading as the main source of within-object spread, and
+a consistency objective is the one kind of signal that does not admit `PV2_0069`'s fixed
+point, since agreeing on a wrong grouping is not free when the views differ in the
+nuisance that caused the error.
+
+**The term worked and the score fell.** `view_consistency` drops from 0.004486 to
+0.001360-0.002252, so the dynamics became 2-3x more invariant to the jitter, and every
+arm stayed calibrated (predicted foreground 0.115-0.134) — this failure is not
+over-prediction. Best is 0.6757 at weight 200, **-0.0482** on the bar; weight 1000
+collapses to 0.3989.
+
+The direction suggests something sharper: **part of what the model uses is
+shading-correlated**, so forcing invariance removes usable signal. `PV2_0058`, where
+chromaticity removes the same factor analytically, scored below the baseline too.
+
+### The pattern across seventeen routes
+
+Anything that makes the features more regular — lower within-object spread, a bigger
+margin, invariance to a nuisance — leaves fg_ari where it was or lowers it. The oracle's
+gain comes from its codes **being** instance identity, and the structural reason no
+label-free procedure here produces that is in the data: these are single static renders,
+so nothing in the input distinguishes two same-coloured objects except spatial
+separation, which the pipeline already uses.
+
 ### Resume here
 
-The one untested source of object-level information is **cross-view consistency as a
-training objective** -- two views of a scene having to agree on the grouping, which
-needs no masks and which a fixed point at the current accuracy would not satisfy. The
-peer has it queued as SW0139 and it had no result at three fetches this session.
+Part 3 needs either a dataset with motion or several views of one scene, or supervision
+the contract does not allow. Everything built this session is reusable for that:
+`--phase-gamma-path` and `graph_extra_channels` route a transform to the graph alone,
+`--recon-target-path` threads an external per-patch target through training with frozen
+features, `--view-consistency-weight` adds a second view and a consistency term, and
+`--save-predictions` dumps labels from either readout.
 
-Everything needed to run it here is in place: `--recon-target-path` shows how an
-external per-patch target threads through training with frozen features, and
-`--phase-gamma-path` plus `graph_extra_channels` let a transform reach the graph alone.
-What is missing is the augmentation pipeline and the consistency term itself.
+The peer's SW0139 cross-view arm had no result at three fetches this session, so there
+is still nothing to port; this session's `PV2_0070` is the same idea run here, and it
+closed.
 
 ## Where the peer stands
 

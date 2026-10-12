@@ -60,6 +60,7 @@
 | PV2_0067 | exhausted | transforms confined to the graph: whitening still breaks calibration, smoothing still gains no fg_ari | | | |
 | PV2_0068 | exhausted | reconstruction training the graph with features frozen: best calibrated .7175, -0.0064 | | | |
 | PV2_0069 | exhausted | the graph fed its own groups as one-hot: .7239 in, .7199 out -- a fixed point, no amplification | | | |
+| PV2_0070 | exhausted | **cross-view consistency: invariance achieved (term 2-3x down), fg_ari -0.0482** | | | |
 | PV2_0046 | completed | contract diagnostic: a looser rule *lowers* fg_ari 0.724 to 0.533; cross-branch scores are not poolable | | | |
 
 Three seeds on the test split, scored from spike masks. Peer experiments from
