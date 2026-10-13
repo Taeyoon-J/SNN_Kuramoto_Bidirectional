@@ -1,0 +1,88 @@
+{
+  "experiment": "SW0149_spike_graph_modularity",
+  "local_cpu_tests": {
+    "passed": 12,
+    "failed": 0,
+    "cuda_visible_devices": ""
+  },
+  "server_cpu_tests": {
+    "cpu_test_returncode": 0,
+    "stdout": "",
+    "stderr": "test_all_ones_q_has_zero_modularity_and_finite_gradient (collaborative_test.SW_0149_spike_graph_modularity.test_modularity.ModularityKernelTests) ... ok\ntest_batched_production_shape_is_accepted (collaborative_test.SW_0149_spike_graph_modularity.test_modularity.ModularityKernelTests) ... ok\ntest_degree_correction_matches_direct_registered_formula (collaborative_test.SW_0149_spike_graph_modularity.test_modularity.ModularityKernelTests) ... ok\ntest_invalid_graph_and_q_values_are_rejected (collaborative_test.SW_0149_spike_graph_modularity.test_modularity.ModularityKernelTests) ... ok\ntest_modularity_favors_two_source_communities_and_is_scale_invariant (collaborative_test.SW_0149_spike_graph_modularity.test_modularity.ModularityKernelTests) ... ok\ntest_nonfinite_or_negative_source_graph_is_rejected_before_preparation (collaborative_test.SW_0149_spike_graph_modularity.test_modularity.ModularityKernelTests) ... ok\ntest_source_graph_is_symmetrized_detached_and_diagonal_cleared (collaborative_test.SW_0149_spike_graph_modularity.test_modularity.ModularityKernelTests) ... ok\ntest_teacher_must_be_detached_and_q_diagonal_is_fixed_without_credit (collaborative_test.SW_0149_spike_graph_modularity.test_modularity.ModularityKernelTests) ... ok\ntest_registered_saved_sw0135_parity_receipt_is_accepted (collaborative_test.SW_0149_spike_graph_modularity.test_preflight.PreflightContractTests) ... ok\ntest_saved_parity_rejects_changed_source_binding_and_nonexact_trace (collaborative_test.SW_0149_spike_graph_modularity.test_preflight.PreflightContractTests) ... ok\ntest_result_validator_checks_complete_source_evidence (collaborative_test.SW_0149_spike_graph_modularity.test_preflight_queue.PreflightQueueTests) ... ok\ntest_single_preflight_dag_and_cpu_parent_does_not_initialize_cuda (collaborative_test.SW_0149_spike_graph_modularity.test_preflight_queue.PreflightQueueTests) ... ok\n\n----------------------------------------------------------------------\nRan 12 tests in 1.425s\n\nOK\n",
+    "files": [
+      {
+        "name": "design_review.md",
+        "sha256": "7fdb8da0059db19fd13448877596c78a8e97c64b0815b747396cd8df5b4e315f"
+      },
+      {
+        "name": "kernel_cpu_review.json",
+        "sha256": "37af2da4fd882747b5b0a7e4c71f0d662f20786eb7c92c01557074beaea9c258"
+      },
+      {
+        "name": "modularity.py",
+        "sha256": "2a5fc08ae1de635f689241fdab51eff0d1c697ea5d76f586c8776225fb2cff76"
+      },
+      {
+        "name": "preflight.py",
+        "sha256": "59bd1ee96e557514616221b585fd33cd5db82acadf5c3bbe4e46a0745e81c9fb"
+      },
+      {
+        "name": "preflight_queue.py",
+        "sha256": "a03f34e9950059e5de7b17f6980aca1affa9c5e35c234ac3b32887ddffd915b2"
+      },
+      {
+        "name": "protocol.json",
+        "sha256": "0f6dfda810c976aea6a42d703e2bf3c909f98e707b41d024e6ab8ceadb2eea18"
+      },
+      {
+        "name": "README.md",
+        "sha256": "2d71cc54a753ca17e5f6c3c9a2883bed5c85bd4755aff12660493a99a8b84ffc"
+      },
+      {
+        "name": "test_modularity.py",
+        "sha256": "d24f2e41515a26af326354d5f7a3d6e2d975d1b8f9310e581cea7857b84b7f2d"
+      },
+      {
+        "name": "test_preflight.py",
+        "sha256": "b7bcf7d7e9375094593c7271e3c3b7782561c524bd4bd69c9b6ca3083e1fdc04"
+      },
+      {
+        "name": "test_preflight_queue.py",
+        "sha256": "e67b6289ef833a4a7a3175d96567732537c1fa3543f20c0c1c9413bcdeece73e"
+      }
+    ],
+    "cuda_visible_devices": "",
+    "training_launched": false
+  },
+  "gpu_preflight_launch": {
+    "supervisor_pid": 1431729,
+    "argv": [
+      "/Data0/kevinswk/envs/snn/bin/python",
+      "-m",
+      "collaborative_test.SW_0149_spike_graph_modularity.preflight_queue"
+    ],
+    "actual_proc_argv": [
+      "/Data0/kevinswk/envs/snn/bin/python",
+      "-m",
+      "collaborative_test.SW_0149_spike_graph_modularity.preflight_queue"
+    ],
+    "parent_cuda_visible_devices": "",
+    "hashes": {
+      "preflight_queue.py": "a03f34e9950059e5de7b17f6980aca1affa9c5e35c234ac3b32887ddffd915b2",
+      "preflight.py": "59bd1ee96e557514616221b585fd33cd5db82acadf5c3bbe4e46a0745e81c9fb",
+      "modularity.py": "2a5fc08ae1de635f689241fdab51eff0d1c697ea5d76f586c8776225fb2cff76",
+      "protocol.json": "0f6dfda810c976aea6a42d703e2bf3c909f98e707b41d024e6ab8ceadb2eea18"
+    },
+    "stage": "disposable_gpu_preflight_only",
+    "launch_time": 1791853771.8755612
+  },
+  "verified_child_pid": 1431962,
+  "verified_physical_gpu": 0,
+  "scientific_result_pending": true,
+  "main_training_launched": false,
+  "all_three_seed_or_native32_70000_success_proven": false,
+  "notes": [
+    "Loss fixes only self-diagonal internally; production QCC and off-diagonal affinities are unchanged.",
+    "Existing kernel_cpu_review.json records a prior kernel hash; this receipt validates the currently deployed hash."
+  ]
+}

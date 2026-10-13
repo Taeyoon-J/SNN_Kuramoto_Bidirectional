@@ -102,12 +102,17 @@ class ModularityKernelTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "raw source adjacency"):
             source_adjacency(torch.tensor([[[-1.0, 1.0], [0.0, 0.0]]]))
 
-    def test_teacher_must_be_detached_and_q_diagonal_must_be_one(self):
+    def test_teacher_must_be_detached_and_q_diagonal_is_fixed_without_credit(self):
         a = torch.tensor([[[0.0, 1.0], [1.0, 0.0]]], dtype=torch.float32)
         with self.assertRaisesRegex(ValueError, "teacher must be detached"):
             degree_corrected_modularity_loss(a.requires_grad_(), torch.ones_like(a, requires_grad=True))
-        with self.assertRaisesRegex(ValueError, "diagonal must be one"):
-            degree_corrected_modularity_loss(a.detach(), torch.zeros_like(a, requires_grad=True))
+        q_native = torch.tensor([[[0.0, .6], [.6, 0.0]]], requires_grad=True)
+        q_one = torch.tensor([[[1.0, .6], [.6, 1.0]]], requires_grad=True)
+        loss_native = degree_corrected_modularity_loss(a.detach(), q_native)
+        loss_one = degree_corrected_modularity_loss(a.detach(), q_one)
+        self.assertTrue(torch.equal(loss_native, loss_one))
+        grad, = torch.autograd.grad(loss_native, q_native)
+        self.assertTrue(torch.equal(torch.diagonal(grad, dim1=-2, dim2=-1), torch.zeros((1, 2))))
 
 
 if __name__ == "__main__":

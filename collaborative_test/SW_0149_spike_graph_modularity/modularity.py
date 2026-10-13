@@ -62,21 +62,22 @@ def validate_modularity_inputs(adjacency: torch.Tensor, q: torch.Tensor) -> torc
 
 def degree_corrected_modularity_loss(adjacency: torch.Tensor,
                                      q: torch.Tensor) -> torch.Tensor:
-    """Compute mean_b -(M_b * Q_b).sum() / Z_b, M=A-ddᵀ/Z.
+    """Compute mean_b -(M_b * Q_b).sum() / Z_b, where M=A-dd^T/Z.
 
     ``adjacency`` is the detached frozen source graph. ``q`` remains live, so
     autograd reaches the native spike dynamics through the registered QCC.
+    Its diagonal is replaced by the fixed self-similarity one; the production
+    QCC diagonal itself remains untouched and is excluded from gradient credit.
     """
     z = validate_modularity_inputs(adjacency, q)
     if adjacency.requires_grad:
         raise ValueError("source adjacency teacher must be detached")
-    q_diagonal = torch.diagonal(q, dim1=-2, dim2=-1)
-    if not torch.allclose(q_diagonal, torch.ones_like(q_diagonal), rtol=0.0, atol=2e-6):
-        raise ValueError("production actual-spike Q diagonal must be one")
     degree = adjacency.sum(dim=-1)
     expected = degree.unsqueeze(-1) * degree.unsqueeze(-2) / z[:, None, None]
     modularity = adjacency - expected
-    per_image = -(modularity * q).sum(dim=(-2, -1)) / z
+    diagonal = torch.eye(q.shape[-1], dtype=torch.bool, device=q.device)
+    q_objective = q.masked_fill(diagonal.unsqueeze(0), 1.0)
+    per_image = -(modularity * q_objective).sum(dim=(-2, -1)) / z
     loss = per_image.mean()
     if not torch.isfinite(loss):
         raise FloatingPointError("degree-corrected modularity loss is nonfinite")

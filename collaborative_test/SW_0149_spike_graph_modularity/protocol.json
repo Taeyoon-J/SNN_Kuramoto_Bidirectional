@@ -1,0 +1,61 @@
+{
+  "experiment": "SW0149_spike_graph_modularity",
+  "status": "prospective_preflight_implementation",
+  "source": {
+    "lineage": "same frozen SW0097 seed1 mapped by SW0135 to native32",
+    "train_images": 4096,
+    "ordering": "exact registered seed1 source TRAIN order",
+    "input": "clean uint8 RGB, native128",
+    "teacher_graph": "frozen source encoder, native32 patcher, and learned source graph; recomputed per microbatch; no temporal source rollout or adjacency cache"
+  },
+  "dynamics": {
+    "native_grid": [32, 32],
+    "nodes": 1024,
+    "steps": 1024,
+    "settle": 512,
+    "live_tail": 64,
+    "student_relation": "unchanged production actual-spike Q from SW0145._actual_q / spike_synchrony_affinity affinity_mode=spike"
+  },
+  "objective": {
+    "source_adjacency": "A is the frozen source graph output symmetrized, with its diagonal set to zero; finite and nonnegative",
+    "degree_correction": "d=A*1; Z=sum(d)>0; M=A-dd^T/Z",
+    "loss": "per-image -sum(M*Q)/Z, averaged over the batch; Q's diagonal is the fixed self-similarity one, while all off-diagonal values are unchanged production actual-spike Q",
+    "exclusions": ["masks", "RGB seam targets", "decoder", "source-Q distillation", "prescribed affinity density", "semantic-ground-truth interpretation of A"]
+  },
+  "arms": {
+    "encoder_graph": "train native32 encoder and graph; freeze remaining native core and all 12 integration scalar values",
+    "joint": "train native32 encoder, graph, remaining native core, and all 12 integration scalar values"
+  },
+  "training": {
+    "logical_batch": 16,
+    "microbatch": 4,
+    "updates": 256,
+    "exposures": 4096,
+    "optimizer": "fresh Adam per arm; encoder LR 3e-6, graph/native core LR 3e-5, integration scalars LR 1e-3; global clip 1; project a_d/a_m to [0,1]",
+    "ground_truth": false,
+    "initialization": "same fresh mapped source97 seed1 state for both arms; never initialize from SW0148 trained weights"
+  },
+  "preflight": {
+    "required": ["verified existing exact SW0135 seed1 native parity", "finite positive source-graph total degree", "positive and negative off-diagonal modularity contributions on first64 TRAIN images", "two disposable real logical optimizer updates per arm with family gradient and parameter-change records"],
+    "disposable_updates_are_discarded": true
+  },
+  "evaluation": {
+    "image_ids": [1320, 1639],
+    "count": 320,
+    "grid": [32, 32],
+    "primary": "unchanged actual-spike QCC labels",
+    "ground_truth_access": "after both candidate prediction archives and protocols plus source97 seed1 and Slot32 seed1 references are validated and rehashed",
+    "bootstrap": {"replicates": 10000, "rng": "numpy RandomState", "seed": 139, "paired_common_image_indices": true}
+  },
+  "promotion": {
+    "joint_fg_mean": "at least 0.01 greater than source97 seed1 and encoder_graph control",
+    "paired_fg_ci": "95% lower bounds for joint-control and joint-source per-image FG ARI differences both positive",
+    "iou": "joint FG-IoU and object-IoU exceed registered three-seed Slot32 means by 0.05",
+    "failure": "close this fixed recipe without coefficient, threshold, or density sweeps"
+  },
+  "limits": [
+    "The source graph is a fixed reference, not semantic ground truth.",
+    "CPU fixtures do not admit training; the registered actual-source GPU preflight is required.",
+    "A seed1 pilot does not prove all-gate necessity or fresh-initialization data scaling."
+  ]
+}
