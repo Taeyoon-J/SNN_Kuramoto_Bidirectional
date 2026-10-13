@@ -1,0 +1,14 @@
+{
+  "status": "root_cpu_review_passed_pending_actual_source_gpu_probe",
+  "root_tests_passed": 3,
+  "tests_scope": "Synthetic four-node core; real native 1024-step implementation and production spike synchrony. Not actual trained native32 source.",
+  "review": "Reference native/zero no_grad; detached gamma; positive live graph released before control; same-forward detached auxiliary-history comparison; explicit measured event/Q changes and gradient records.",
+  "training_admission": false,
+  "gpu_executed": false,
+  "performance_claim": false,
+  "implementation": {
+    "temporal_credit_probe.py": "702b17ab896bb2f2d20fa613c9bac0b5cb39e9b8e03fcba32d8923d32b59da29",
+    "test_temporal_credit_probe.py": "2bd09928c0dd2ae938bc11452c82e83c862416d4e11c4b99df609801f53e7885"
+  },
+  "next_requirement": "Use fixed64-TRAIN calibrated scale from successful actual-source preflight; no coefficient tuning or GT."
+}

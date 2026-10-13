@@ -1,0 +1,22 @@
+{
+  "status": "measurements_independently_recomputed_metadata_recovery_pending",
+  "original_report_sha256": "b00996434d361e7532680095f148c5167011bd1de35a5fb2035229cc706842ee",
+  "arms": {
+    "encoder_graph": {
+      "mean_permuted_minus_original_nll": -0.0012937411665916443,
+      "changed_assignment_fraction": 0.959228515625,
+      "permuted_better_images": 35,
+      "unchanged_model": true
+    },
+    "joint": {
+      "mean_permuted_minus_original_nll": -0.0005205385386943817,
+      "changed_assignment_fraction": 0.9557037353515625,
+      "permuted_better_images": 34,
+      "unchanged_model": true
+    }
+  },
+  "interpretation": "With ~96% assignment rows changed within RGB bins, mean likelihood favors permuted assignments. This does not establish segmentation causality; it gives no support for retaining this RGB likelihood unchanged as primary object grouping objective.",
+  "next_action": "Finish metadata-only lineage recovery, then actual-source event-history preflight and temporal-credit probe. Do not expand SW0150 to other seeds.",
+  "ground_truth_used": false,
+  "optimizer_updates": 0
+}
