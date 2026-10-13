@@ -1,0 +1,187 @@
+{
+  "experiment": "SW0150 spike spatial Gaussian RGB likelihood",
+  "status": "complete_seed1_not_promoted",
+  "evaluation_sha256": "fd5706d97f2ad9a64abe3649127a3f23aa9b76eefbea8ced6b91dda2e5853b39",
+  "means": {
+    "encoder_graph": {
+      "primary": {
+        "fg_ari": 0.7551578926127694,
+        "foreground_iou": 0.45944549442033883,
+        "matched_object_iou": 0.4715813207010098
+      },
+      "qcc": {
+        "fg_ari": 0.7404188399223377,
+        "foreground_iou": 0.604864980107856,
+        "matched_object_iou": 0.5757695047018885
+      }
+    },
+    "joint": {
+      "primary": {
+        "fg_ari": 0.7451502785492439,
+        "foreground_iou": 0.4556375008091324,
+        "matched_object_iou": 0.4651446084831223
+      },
+      "qcc": {
+        "fg_ari": 0.7369445924663408,
+        "foreground_iou": 0.602867612002336,
+        "matched_object_iou": 0.5695615256460986
+      }
+    },
+    "source_p": {
+      "primary": {
+        "fg_ari": 0.7661165627719582,
+        "foreground_iou": 0.44478121610541815,
+        "matched_object_iou": 0.4678848171190877
+      }
+    },
+    "source97_qcc": {
+      "qcc": {
+        "fg_ari": 0.7541350949944816,
+        "foreground_iou": 0.606899549668619,
+        "matched_object_iou": 0.582200586329909
+      }
+    },
+    "slot32_seed1": {
+      "slot32": {
+        "fg_ari": 0.8418192917733233,
+        "foreground_iou": 0.20341670897019232,
+        "matched_object_iou": 0.2221151564255643
+      }
+    }
+  },
+  "paired_bootstrap": {
+    "joint_primary_minus_source_qcc": {
+      "fg_ari": {
+        "mean_difference": -0.008984816445237681,
+        "ci95": [
+          -0.022516578297556655,
+          0.0043145821834978315
+        ]
+      },
+      "foreground_iou": {
+        "mean_difference": -0.1512620488594866,
+        "ci95": [
+          -0.17288986216581664,
+          -0.1307693965930707
+        ]
+      },
+      "matched_object_iou": {
+        "mean_difference": -0.11705597784678674,
+        "ci95": [
+          -0.1308871210823753,
+          -0.10381233899624233
+        ]
+      }
+    },
+    "joint_primary_minus_control_primary": {
+      "fg_ari": {
+        "mean_difference": -0.010007614063525619,
+        "ci95": [
+          -0.025092603661735016,
+          0.004551117582871858
+        ]
+      },
+      "foreground_iou": {
+        "mean_difference": -0.00380799361120636,
+        "ci95": [
+          -0.018808882679113233,
+          0.011334965208634133
+        ]
+      },
+      "matched_object_iou": {
+        "mean_difference": -0.006436712217887469,
+        "ci95": [
+          -0.01938154705247127,
+          0.00570336017148497
+        ]
+      }
+    },
+    "encoder_graph_primary_minus_source_primary": {
+      "fg_ari": {
+        "mean_difference": -0.010958670159188617,
+        "ci95": [
+          -0.0250854831052415,
+          0.003296187251766693
+        ]
+      },
+      "foreground_iou": {
+        "mean_difference": 0.014664278314920611,
+        "ci95": [
+          -0.0002893945191656772,
+          0.03041340343916328
+        ]
+      },
+      "matched_object_iou": {
+        "mean_difference": 0.003696503581921965,
+        "ci95": [
+          -0.009070660322778368,
+          0.016397381511238134
+        ]
+      }
+    },
+    "joint_primary_minus_source_primary": {
+      "fg_ari": {
+        "mean_difference": -0.020966284222714238,
+        "ci95": [
+          -0.03619543659218305,
+          -0.00628237273615443
+        ]
+      },
+      "foreground_iou": {
+        "mean_difference": 0.010856284703714249,
+        "ci95": [
+          -0.005630148285201362,
+          0.028487933435139272
+        ]
+      },
+      "matched_object_iou": {
+        "mean_difference": -0.0027402086359655043,
+        "ci95": [
+          -0.015800584302564626,
+          0.010250199990681566
+        ]
+      }
+    },
+    "source_primary_minus_source_qcc": {
+      "fg_ari": {
+        "mean_difference": 0.01198146777747656,
+        "ci95": [
+          -1.8048988305115093e-06,
+          0.023864828266696093
+        ]
+      },
+      "foreground_iou": {
+        "mean_difference": -0.16211833356320085,
+        "ci95": [
+          -0.18530026912850686,
+          -0.13984134451957805
+        ]
+      },
+      "matched_object_iou": {
+        "mean_difference": -0.11431576921082123,
+        "ci95": [
+          -0.12730128293289994,
+          -0.101879279235206
+        ]
+      }
+    }
+  },
+  "promotion_gate": {
+    "joint_primary_fg_at_least_source_qcc_plus_0_01": false,
+    "joint_primary_fg_at_least_encoder_graph_primary_plus_0_01": false,
+    "joint_source_qcc_fg_ci_lower_positive": false,
+    "joint_control_fg_ci_lower_positive": false,
+    "joint_primary_foreground_iou_above_slot_three_seed_plus_0_05": true,
+    "joint_primary_matched_object_iou_above_slot_three_seed_plus_0_05": true
+  },
+  "decision": "Do not expand this unchanged training objective to seeds0/2 or a fresh70k pass.",
+  "evidence": "Both learned arms reduce primary FG-ARI versus their identical source primary readout; joint learning also trails encoder/graph-only primary. Both QCC readouts decline versus source QCC.",
+  "next_action": "Run reserved color-bin/permuted-spike diagnostic, then source-preserving event-history GPU preflight. Choose subsequent training only after these results.",
+  "trained_incumbent_changed": false,
+  "seed_expansion": false,
+  "fresh_native32_70000_training": false,
+  "gating_necessity_proven": false,
+  "scaling_proven": false,
+  "score_recovery": "Exact registered baseline descriptive fields accepted; sealed scorer and prediction bytes preserved; no training/prediction rerun.",
+  "publication_status": "Local research record only; GitHub expanded-publication approval remains pending."
+}

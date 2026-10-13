@@ -1,0 +1,63 @@
+{
+  "status": "verified",
+  "evaluation_sha256": "fd5706d97f2ad9a64abe3649127a3f23aa9b76eefbea8ced6b91dda2e5853b39",
+  "all_recorded_means_recomputed": true,
+  "all_paired_confidence_intervals_recomputed": true,
+  "means": {
+    "encoder_graph": {
+      "primary": {
+        "fg_ari": 0.7551578926127696,
+        "foreground_iou": 0.45944549442033883,
+        "matched_object_iou": 0.47158132070100967
+      },
+      "qcc": {
+        "fg_ari": 0.7404188399223377,
+        "foreground_iou": 0.604864980107856,
+        "matched_object_iou": 0.5757695047018885
+      }
+    },
+    "joint": {
+      "primary": {
+        "fg_ari": 0.7451502785492439,
+        "foreground_iou": 0.4556375008091324,
+        "matched_object_iou": 0.4651446084831223
+      },
+      "qcc": {
+        "fg_ari": 0.7369445924663409,
+        "foreground_iou": 0.602867612002336,
+        "matched_object_iou": 0.5695615256460985
+      }
+    },
+    "source_p": {
+      "primary": {
+        "fg_ari": 0.7661165627719582,
+        "foreground_iou": 0.4447812161054182,
+        "matched_object_iou": 0.4678848171190878
+      }
+    },
+    "source97_qcc": {
+      "qcc": {
+        "fg_ari": 0.7541350949944816,
+        "foreground_iou": 0.606899549668619,
+        "matched_object_iou": 0.582200586329909
+      }
+    },
+    "slot32_seed1": {
+      "slot32": {
+        "fg_ari": 0.8418192917733233,
+        "foreground_iou": 0.20341670897019232,
+        "matched_object_iou": 0.2221151564255643
+      }
+    }
+  },
+  "promotion_gate": {
+    "joint_primary_fg_at_least_source_qcc_plus_0_01": false,
+    "joint_primary_fg_at_least_encoder_graph_primary_plus_0_01": false,
+    "joint_source_qcc_fg_ci_lower_positive": false,
+    "joint_control_fg_ci_lower_positive": false,
+    "joint_primary_foreground_iou_above_slot_three_seed_plus_0_05": true,
+    "joint_primary_matched_object_iou_above_slot_three_seed_plus_0_05": true
+  },
+  "may_promote_seed_expansion": false,
+  "training_or_prediction_repeated": false
+}
