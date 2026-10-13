@@ -1,0 +1,58 @@
+{
+  "status": "training_complete_only",
+  "seed_scope": [
+    1
+  ],
+  "shared_initial_parameters": true,
+  "identical_ordered_training_ids": true,
+  "encoder_graph_frozen_core_preserved": true,
+  "arms": {
+    "encoder_graph": {
+      "completed_updates": 256,
+      "unique_train_images": 4096,
+      "mean_nll_first32": -2.5184226846322417,
+      "mean_nll_last32": -2.9270852468907833,
+      "mean_gradient_norms_last32": {
+        "encoder": 0.028634040445019045,
+        "graph": 0.006865401031532189,
+        "native_core": 0.0,
+        "integration_scalars": 0.0,
+        "decoder": 2.1884549857093702
+      },
+      "changed_parameter_families": [
+        "encoder",
+        "graph",
+        "decoder"
+      ]
+    },
+    "joint": {
+      "completed_updates": 256,
+      "unique_train_images": 4096,
+      "mean_nll_first32": -2.5192376347258687,
+      "mean_nll_last32": -2.9264036510139704,
+      "mean_gradient_norms_last32": {
+        "encoder": 0.025198637463657414,
+        "graph": 0.006234518433764972,
+        "native_core": 0.003703460068967886,
+        "integration_scalars": 3.6813897250953213e-07,
+        "decoder": 2.2004878561297927
+      },
+      "changed_parameter_families": [
+        "encoder",
+        "graph",
+        "native_core",
+        "integration_scalars",
+        "decoder"
+      ]
+    }
+  },
+  "mask_evaluation_complete": false,
+  "training_scope": "4096-image pilot plus 512 shared warm decoder exposures; not fresh native32 70000 training",
+  "interpretation": "NLL and gradients describe learning, not segmentation improvement or causal necessity of gating",
+  "file_sha256": {
+    "training/encoder_graph_seed1/manifest.json": "150194b0a952b647e3926a5f4d0a5812015c88828e0cc175c6c3004c696788f0",
+    "training/encoder_graph_seed1/history.json": "f2b24f7f88d6ef145fbdbf3a3735134c1659f77a33f1e927e472a4179e72c311",
+    "training/joint_seed1/manifest.json": "19976bbdfc6ded66d1dfab0ec76b802e62e598da3bc01fda1dddb3332eeb54f7",
+    "training/joint_seed1/history.json": "1f42a02962489e8a4b9dc0a7c745aefb647ca5c013108e745d639c9c7af434bd"
+  }
+}
