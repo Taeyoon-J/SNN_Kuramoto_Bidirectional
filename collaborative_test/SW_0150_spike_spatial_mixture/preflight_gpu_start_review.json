@@ -1,0 +1,64 @@
+{
+  "reviewed_at_utc": "2026-10-13T03:18:23.902Z",
+  "experiment": "SW0150_spike_spatial_mixture",
+  "evidence_kind": "actual_gpu_preflight_start",
+  "supervisor_pid": 1832979,
+  "actual_supervisor_cmdline": "/Data0/kevinswk/envs/snn/bin/python -m collaborative_test.SW_0150_spike_spatial_mixture.preflight_queue ",
+  "task": {
+    "task": {
+      "task_id": "preflight_seed1",
+      "stage": "preflight",
+      "seed": 1,
+      "device": "cuda:0",
+      "depends_on": [],
+      "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0150_spike_spatial_mixture/results_archive/preflight_seed1.json",
+      "warm_output": "/Data0/kevinswk/collaborative_private_runtime_20261008/SW0150_preflight_20261012/decoder_warm_seed1.pt",
+      "parity": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0135_native32_spike_binding/results_archive/native32_zero_adapter_parity_seed1_b4.json",
+      "log": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0150_spike_spatial_mixture/results_archive/preflight_queue_20261012/preflight_seed1.log"
+    },
+    "status": "running",
+    "gpu": 2,
+    "gpu_uuid": "GPU-50cc59a2-8312-ff02-5889-1becf63c7cd4",
+    "stable_seconds": 5.221024722792208,
+    "memory_used_mib": 2,
+    "child_pid": 1911605,
+    "child_argv": [
+      "/Data0/kevinswk/envs/snn/bin/python",
+      "-m",
+      "collaborative_test.SW_0150_spike_spatial_mixture.preflight",
+      "--device",
+      "cuda:0",
+      "--output",
+      "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0150_spike_spatial_mixture/results_archive/preflight_seed1.json",
+      "--warm-output",
+      "/Data0/kevinswk/collaborative_private_runtime_20261008/SW0150_preflight_20261012/decoder_warm_seed1.pt",
+      "--parity",
+      "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0135_native32_spike_binding/results_archive/native32_zero_adapter_parity_seed1_b4.json"
+    ],
+    "physical_gpu": 2,
+    "memory_before_mib": 2,
+    "inherited_lease_fd": true,
+    "log": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0150_spike_spatial_mixture/results_archive/preflight_queue_20261012/preflight_seed1.attempt01.log",
+    "started": 1791861328.3629065
+  },
+  "actual_child_cmdline": "/Data0/kevinswk/envs/snn/bin/python -m collaborative_test.SW_0150_spike_spatial_mixture.preflight --device cuda:0 --output /Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0150_spike_spatial_mixture/results_archive/preflight_seed1.json --warm-output /Data0/kevinswk/collaborative_private_runtime_20261008/SW0150_preflight_20261012/decoder_warm_seed1.pt --parity /Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0135_native32_spike_binding/results_archive/native32_zero_adapter_parity_seed1_b4.json ",
+  "implementation_fingerprint": {
+    "collaborative_test/SW_0150_spike_spatial_mixture/preflight_queue.py": "6fc63d20c4d77878e328aa3fcf3ca164a558fe3646e4ed8ab73d71755ca6b53a",
+    "collaborative_test/SW_0150_spike_spatial_mixture/preflight.py": "b19791641383e5648d7598b1a5150b3f1940ca2215efb242707189d436454317",
+    "collaborative_test/SW_0150_spike_spatial_mixture/protocol.json": "a66983462892e01a71ee84b4041efd0df0986459515f4ddc4ad29e0de7e26a61",
+    "collaborative_test/SW_0150_spike_spatial_mixture/integration.py": "fb3f44c5d52e8eccccc60b9a19f9a13f388a91f905c5f8aa9de326dcce58e0ca",
+    "collaborative_test/SW_0150_spike_spatial_mixture/spatial_diffusion.py": "591fa1128b0cbfb6c0f135d28397868704d46fe1140275c67b37790ebdde3d1a",
+    "collaborative_test/SW_0150_spike_spatial_mixture/seed_selection.py": "d2bfd420b4ce7d1fcdc7124b5e0257b892bbb0a3eed362aa35d51a358a10d429",
+    "collaborative_test/SW_0150_spike_spatial_mixture/likelihood.py": "2c779c779eac7f1bc116ecf019078735a98f8ff2d513b87eb490d0ddb340785a",
+    "collaborative_test/SW_0135_native32_spike_binding/foundation.py": "9c241cacf1479c339fa56376b881672535c8d7ac4966a7ddff3b4b47f24cb867",
+    "collaborative_test/SW_0135_native32_spike_binding/parity.py": "9aa08a7dbc7d4d48166809c6c023aada85fe6aa6c961b7df4eecf3c3da9fe83a",
+    "collaborative_test/SW_0136_native32_transfer/evaluate.py": "1c2846b69fb4bc936bf06723fc9f1b4c12f6632a02aff7e40c1e21a28b7a30ea",
+    "collaborative_test/SW_0145_native32_boundary_credit_probe/run.py": "9b3db438992b55260ebdf6bbafe421bdf1b54c5522624f6c66a0b7b363180fbe",
+    "collaborative_test/SW_0148_checkpointable_boundary_q/stage_queue_v4.py": "14fae39aeb6e958df60edf25680f412acb50a01126fd7af725c61fdba3794623",
+    "collaborative_test/SW_0126_history_event_binding/pilot_queue.py": "c59cdc39af20c824930d1926c8cec1418ee818577b8cc4240ad6eaae836764f6"
+  },
+  "claim_limits": [
+    "GPU preflight is executing; feasibility result remains unverified.",
+    "No main training, segmentation metric, scaling, or Slot Attention victory is claimed."
+  ]
+}
