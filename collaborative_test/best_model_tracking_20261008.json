@@ -2656,35 +2656,92 @@
     "gating_contribution_required": true,
     "current_highest_measured_mean": 0.7830440057720661,
     "gap": 0.08695599422793387,
-    "next_action": "Major model/objective design review; do not expand unchanged SW0150 RGB likelihood after negative grouping evidence.",
+    "next_action": "SW0152 failed primary grouping improvement; design review for materially different grouping signal.",
     "achieved": false
   },
   "latest_native32_partition_equivariance_preparation": {
     "experiment": "SW0152",
-    "status": "pilot_candidate_started_control_queued",
+    "status": "completed_negative_not_promoted",
     "tests_passed": 9,
     "training_started": true,
     "source_seed": 1,
     "planned_unique_train_images": 2048,
     "actual_source_gpu_preflight_passed": true,
     "performance_gain_proven": false,
-    "record": "collaborative_test/SW_0152_source_preserving_partition_equivariance/results_archive/preflight_20261013/root_review.json",
+    "record": "collaborative_test/SW_0152_source_preserving_partition_equivariance/results_archive/completed_20261013/root_review.json",
     "actual_gpu": 1,
     "supervisor_pid": 2669111,
     "child_pid": 2675454,
     "local_cpu_tests_passed": 22,
     "server_cpu_tests_passed": 32,
-    "child_live": true,
+    "child_live": false,
     "pilot_training_admitted": true,
     "permutation_js_delta": 0.007704662479227409,
     "queue_record": "collaborative_test/SW_0152_source_preserving_partition_equivariance/results_archive/stage_queue_20261013/state.json",
     "task_statuses": {
-      "train_equivariance": "running",
-      "train_mass_control": "waiting_for_exclusive_gpu",
+      "train_equivariance": "passed",
+      "train_mass_control": "passed",
+      "predict_equivariance": "passed",
+      "predict_mass_control": "passed",
       "predict_source_p": "passed",
-      "predict_equivariance": "queued",
-      "predict_mass_control": "queued",
-      "score": "queued"
-    }
+      "score": "passed"
+    },
+    "observation_status": "server_complete_verified",
+    "last_verified_candidate_pid": 2675454,
+    "remote_job_terminal": true,
+    "restart_performed": false,
+    "result_means": {
+      "equivariance": {
+        "qcc": {
+          "fg_ari": 0.7514569338575434,
+          "foreground_iou": 0.6061937044704173,
+          "matched_object_iou": 0.5823702662713272
+        },
+        "p": {
+          "fg_ari": 0.7683898066392643,
+          "foreground_iou": 0.45812577175709357,
+          "matched_object_iou": 0.4740264920458852
+        }
+      },
+      "mass_control": {
+        "qcc": {
+          "fg_ari": 0.7543550427132136,
+          "foreground_iou": 0.6063042134404176,
+          "matched_object_iou": 0.5833826540099297
+        },
+        "p": {
+          "fg_ari": 0.7679828926613161,
+          "foreground_iou": 0.45386976776471843,
+          "matched_object_iou": 0.47344614892676684
+        }
+      },
+      "source_p": {
+        "qcc": {
+          "fg_ari": 0.7541350949944816,
+          "foreground_iou": 0.606899549668619,
+          "matched_object_iou": 0.582200586329909
+        },
+        "p": {
+          "fg_ari": 0.7661165627719582,
+          "foreground_iou": 0.44478121610541815,
+          "matched_object_iou": 0.4678848171190877
+        }
+      },
+      "source97_qcc": {
+        "qcc": {
+          "fg_ari": 0.7541350949944816,
+          "foreground_iou": 0.606899549668619,
+          "matched_object_iou": 0.582200586329909
+        }
+      },
+      "slot32_seed1": {
+        "slot32": {
+          "fg_ari": 0.8418192917733233,
+          "foreground_iou": 0.20341670897019232,
+          "matched_object_iou": 0.2221151564255643
+        }
+      }
+    },
+    "seed_expansion": false
   }
 }

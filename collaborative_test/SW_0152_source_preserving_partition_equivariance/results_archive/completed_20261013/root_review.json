@@ -1,0 +1,152 @@
+{
+  "status": "completed_negative_not_promoted",
+  "evaluation_sha256": "01e92d4c7270ee5fbdecbf15fd0be3087608270db79b9d846a06327adc9b9ea1",
+  "training_verification": [
+    {
+      "arm": "equivariance",
+      "updates": 128,
+      "unique_train_images": 2048,
+      "all_four_parameter_families_changed": true,
+      "optimizer_steps_verified": true
+    },
+    {
+      "arm": "mass_control",
+      "updates": 128,
+      "unique_train_images": 2048,
+      "all_four_parameter_families_changed": true,
+      "optimizer_steps_verified": true
+    }
+  ],
+  "primary_readout": "qcc",
+  "seed_scope": [
+    1
+  ],
+  "means": {
+    "equivariance": {
+      "qcc": {
+        "fg_ari": 0.7514569338575434,
+        "foreground_iou": 0.6061937044704173,
+        "matched_object_iou": 0.5823702662713272
+      },
+      "p": {
+        "fg_ari": 0.7683898066392643,
+        "foreground_iou": 0.45812577175709357,
+        "matched_object_iou": 0.4740264920458852
+      }
+    },
+    "mass_control": {
+      "qcc": {
+        "fg_ari": 0.7543550427132136,
+        "foreground_iou": 0.6063042134404176,
+        "matched_object_iou": 0.5833826540099297
+      },
+      "p": {
+        "fg_ari": 0.7679828926613161,
+        "foreground_iou": 0.45386976776471843,
+        "matched_object_iou": 0.47344614892676684
+      }
+    },
+    "source_p": {
+      "qcc": {
+        "fg_ari": 0.7541350949944816,
+        "foreground_iou": 0.606899549668619,
+        "matched_object_iou": 0.582200586329909
+      },
+      "p": {
+        "fg_ari": 0.7661165627719582,
+        "foreground_iou": 0.44478121610541815,
+        "matched_object_iou": 0.4678848171190877
+      }
+    },
+    "source97_qcc": {
+      "qcc": {
+        "fg_ari": 0.7541350949944816,
+        "foreground_iou": 0.606899549668619,
+        "matched_object_iou": 0.582200586329909
+      }
+    },
+    "slot32_seed1": {
+      "slot32": {
+        "fg_ari": 0.8418192917733233,
+        "foreground_iou": 0.20341670897019232,
+        "matched_object_iou": 0.2221151564255643
+      }
+    }
+  },
+  "paired_bootstrap": {
+    "equivariance_qcc_minus_source_qcc_fg_ari": {
+      "mean_difference": -0.0026781611369381063,
+      "ci95": [
+        -0.007953368363055949,
+        0.002188422627558235
+      ]
+    },
+    "equivariance_qcc_minus_control_qcc_fg_ari": {
+      "mean_difference": -0.002898108855670119,
+      "ci95": [
+        -0.009359658194217479,
+        0.00321867767794823
+      ]
+    },
+    "equivariance_qcc_minus_source_p_qcc_fg_ari": {
+      "mean_difference": -0.0026781611369381063,
+      "ci95": [
+        -0.007953368363055949,
+        0.002188422627558235
+      ]
+    },
+    "equivariance_qcc_minus_source_qcc_foreground_iou": {
+      "mean_difference": -0.0007058451982017093,
+      "ci95": [
+        -0.010032849262429767,
+        0.00901008609576873
+      ]
+    },
+    "equivariance_qcc_minus_control_qcc_foreground_iou": {
+      "mean_difference": -0.00011050897000039334,
+      "ci95": [
+        -0.007665293908251257,
+        0.007418343646087312
+      ]
+    },
+    "equivariance_qcc_minus_source_p_qcc_foreground_iou": {
+      "mean_difference": -0.0007058451982017093,
+      "ci95": [
+        -0.010032849262429767,
+        0.00901008609576873
+      ]
+    },
+    "equivariance_qcc_minus_source_qcc_matched_object_iou": {
+      "mean_difference": 0.00016967994141820747,
+      "ci95": [
+        -0.006264546696113103,
+        0.006394677895192109
+      ]
+    },
+    "equivariance_qcc_minus_control_qcc_matched_object_iou": {
+      "mean_difference": -0.0010123877386024975,
+      "ci95": [
+        -0.008252262252974825,
+        0.0060365051086289714
+      ]
+    },
+    "equivariance_qcc_minus_source_p_qcc_matched_object_iou": {
+      "mean_difference": 0.00016967994141820747,
+      "ci95": [
+        -0.006264546696113103,
+        0.006394677895192109
+      ]
+    }
+  },
+  "promotion_gate": {
+    "equivariance_qcc_fg_at_least_source_T_plus_0_02": false,
+    "equivariance_vs_source_qcc_fg_ci_lower_positive": false,
+    "equivariance_vs_control_fg_ci_lower_positive": false
+  },
+  "decision": "Do not repeat unchanged equivariance/mass objective or expand it to seeds0/2 or fresh70k. Seek a different instance-grouping signal.",
+  "loss_interpretation": "Different image batches; first/last loss is not a controlled convergence comparison. Finite surrogate gradients do not prove forward event gating necessity.",
+  "incumbent_changed": false,
+  "fresh_70000": false,
+  "gating_necessity_proven": false,
+  "scaling_proven": false
+}
