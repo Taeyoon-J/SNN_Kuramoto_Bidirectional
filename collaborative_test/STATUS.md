@@ -1,4 +1,4 @@
-SW0149 native32 source-graph modularity: actual GPU preflight PASS; encoder_graph (GPU2/PID1505115) and joint (GPU0/PID1505101) 256-update/4096-image pilot training running; supervisor PID1498991; fixed320 QCC prediction and GT-last scoring queued. No current FG result or fresh native32/70000 all-seed victory claim. SW0148 closed after joint FG .733767 < source .754135 and EG .745394.
+??: SW0149 native32 spike-graph modularity main ?? EG GPU2/PID1505115 + joint GPU0/PID1505101 ?? ?? ?(supervisor1498991); 256 updates/4096 TRAIN, fixed320 GT-last ?? ?? ?. SW0150 spike?spatial diffusion mask?RGB mixture likelihood ?? ?? ?? ?? CPU38/38 PASS ? ?? ??(supervisor1832979, ? GPU0..3 ?? ??); ?? GPU preflight PASS/main ?? ??? ??. ?? FG-ARI ??/? native32 70k 3seed ?? ?? ??. SW0148 ??(.733767<source .754135/control .745394)? ?????.
 
 ## Earlier observations (historical; superseded by the current status above)
 
