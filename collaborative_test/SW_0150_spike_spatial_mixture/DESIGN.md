@@ -43,6 +43,13 @@ This encourages spatial continuity but does not guarantee connected argmax
 regions, correct count, or semantic instances. Small regions, merges and
 all-background collapse remain possible.
 
+Each selected seed is clamped one-hot and therefore occupies at least one
+patch. This kernel cannot establish that unused foreground candidates disappear
+or that object count is learned. The seed selector's exact stopping/count rule
+is not implemented or admitted yet; it must be resolved before any full pilot.
+The standalone kernel accepts external seed identities only. Its probability
+and gradient tests are not segmentation or object-count evidence.
+
 ## Likelihood hypothesis
 
 Pool detached gamma content with live P. Foreground uses a small shared RGB
