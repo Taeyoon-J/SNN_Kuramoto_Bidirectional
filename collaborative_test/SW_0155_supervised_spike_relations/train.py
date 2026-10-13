@@ -358,8 +358,8 @@ def train_arm(arm, *, device="cuda:0", preflight_path=PREFLIGHT_PATH,
         stream.flush(); os.fsync(stream.fileno())
     with optimizer_path.open("xb") as stream:
         torch.save(optimizer.state_dict(), stream); stream.flush(); os.fsync(stream.fileno())
-    with history_path.open("x", encoding="utf-8", newline="\\n") as stream:
-        json.dump(history, stream, allow_nan=False); stream.write("\\n"); stream.flush(); os.fsync(stream.fileno())
+    with history_path.open("x", encoding="utf-8", newline="\n") as stream:
+        json.dump(history, stream, allow_nan=False); stream.write("\n"); stream.flush(); os.fsync(stream.fileno())
     final_hashes = {name: source_training.parameter_hash(parameters) for name, parameters in families.items()}
     manifest = {"status": "training_complete", "experiment": EXPERIMENT, "arm": arm,
         "seed": SEED, "completed_updates": UPDATES, "logical_batch": BATCH, "microbatch": MICRO,
@@ -373,8 +373,8 @@ def train_arm(arm, *, device="cuda:0", preflight_path=PREFLIGHT_PATH,
             (int(optimizer.state[p]["step"].item()) for p in group["params"] if p in optimizer.state),
             default=0) for group in optimizer.param_groups},
         "ground_truth_used": True, "ground_truth_scope": "TRAIN masks only"}
-    with (staging / "manifest.json").open("x", encoding="utf-8", newline="\\n") as stream:
-        json.dump(manifest, stream, indent=2, allow_nan=False); stream.write("\\n"); stream.flush(); os.fsync(stream.fileno())
+    with (staging / "manifest.json").open("x", encoding="utf-8", newline="\n") as stream:
+        json.dump(manifest, stream, indent=2, allow_nan=False); stream.write("\n"); stream.flush(); os.fsync(stream.fileno())
     os.rename(staging, output_dir)
     return manifest
 
