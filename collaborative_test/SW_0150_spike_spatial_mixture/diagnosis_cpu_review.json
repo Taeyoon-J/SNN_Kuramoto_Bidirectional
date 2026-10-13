@@ -1,0 +1,26 @@
+{
+  "experiment": "SW0150_spike_spatial_mixture",
+  "reviewed_at_utc": "2026-10-13T03:20:23.413Z",
+  "stage": "diagnostic_cpu_review",
+  "tests": {
+    "module": "collaborative_test.SW_0150_spike_spatial_mixture.test_diagnosis",
+    "independent_root_tests_passed": 9,
+    "actual_gpu_diagnostic_run": false
+  },
+  "fingerprints": {
+    "diagnosis.py": "3953e769f5603c4374641688de1beea3e8da0263891fcb0bf402c70b04adbdf4",
+    "test_diagnosis.py": "dad4fbe98a94bcfd28ebd54cca4b214bf0339053fbf31e1f4374665c3a62aeed",
+    "DIAGNOSIS_PROTOCOL.json": "e3c19d151284836b3e3c6e8e20ff16edcb9a6376d2f47c85a0d61449e533a183"
+  },
+  "root_findings_resolved": [
+    "Variable slot count across independent microbatches is padded with zero-mass trailing slots; real NLL invariant checked.",
+    "Gamma is validated as B x 1024 x 8.",
+    "Dependency fingerprint includes actual SW0134 native rollout via sealed trainer graph."
+  ],
+  "scientific_scope": "GT-free descriptive first64 TRAIN within-image RGB-bin P-row intervention using completed trained models. No-op assignment interventions are inconclusive.",
+  "limits": [
+    "No causal all-gates, scaling, segmentation or promotion claim.",
+    "Existing sealed research runners/protocols/queues remain unchanged.",
+    "Actual diagnostic inference remains pending completed SW0150 training and an idle exclusive GPU."
+  ]
+}

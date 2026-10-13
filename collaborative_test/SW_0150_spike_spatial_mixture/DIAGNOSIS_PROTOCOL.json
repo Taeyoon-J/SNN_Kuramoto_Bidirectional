@@ -1,0 +1,50 @@
+{
+  "experiment": "SW0150_spike_spatial_mixture",
+  "diagnostic": "first64_train_color_bin_assignment_permutation",
+  "status": "prospective_diagnostic_only",
+  "purpose": "Measure whether the trained decoder likelihood is sensitive to native P-to-location assignment beyond coarse RGB color-bin membership.",
+  "data": {
+    "split": "registered TRAIN only",
+    "image_count": 64,
+    "image_ids": "first 64 IDs in the validated source97 seed1 TRAIN order",
+    "ground_truth_used": false,
+    "masks_read": false,
+    "optimizer_updates": 0
+  },
+  "models": ["encoder_graph", "joint"],
+  "rollout": {
+    "steps": 1024,
+    "settle_steps": 512,
+    "live_tail_steps": 64,
+    "one_actual_rollout_per_image_per_model": true,
+    "shared_trace_for_original_and_intervened_scores": true
+  },
+  "intervention": {
+    "seed": 150002,
+    "assignment": "permute P rows only within each image",
+    "patch_rgb": "mean of each native 4x4 RGB patch, divided by 255",
+    "bins_per_channel": 8,
+    "bin_edges": "equal-width on [0,1], floor(8*x), clipped to 0..7",
+    "joint_bin": "(red_bin, green_bin, blue_bin)",
+    "rng": "NumPy RandomState seed 150002, traversing images then joint bins in fixed order",
+    "recompute_decoder_pooling_and_patch_centers": true,
+    "gamma": "held fixed and detached by the registered likelihood",
+    "rgb_target": "same clean source TRAIN image"
+  },
+  "readout": {
+    "objective": "unchanged registered SW0150 Gaussian mixture NLL",
+    "sigma2": "exact validated shared source preflight value",
+    "assignment_shape": "batch 1..4 by 1024 nodes by the model's native K (1..11)",
+    "background_only": "K=1 is valid and a row permutation is a no-op; classify no changed assignment rows as inconclusive",
+    "padded_slots": "if a batch/model contains zero-mass padded columns, permute complete P rows so padding remains zero and preserve the registered likelihood masking",
+    "original_original_sanity": "repeat original assignment scoring on the first image per model; require exact repeat equality"
+  },
+  "reported": [
+    "eligible rows and occupied multirow bins",
+    "permuted row positions and rows whose assignment vector actually changed",
+    "per-image original/permuted NLL and paired delta",
+    "per-arm mean paired delta",
+    "validated source, preflight, warm, model, and implementation hashes"
+  ],
+  "interpretation": "Descriptive objective-alignment diagnostic only. A worse permuted NLL does not establish causal necessity, segmentation quality, generalization, or promotion eligibility. If few rows are eligible or assignments do not move, report the intervention as inconclusive. No labels, GT, sweeps, model updates, or model-selection decisions are allowed."
+}

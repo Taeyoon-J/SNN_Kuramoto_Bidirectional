@@ -1,0 +1,25 @@
+{
+  "reviewed_at_utc": "2026-10-13T03:21:10.641Z",
+  "experiment": "SW0150_spike_spatial_mixture",
+  "evidence_kind": "actual_cuda_hidden_server_cpu_verification",
+  "cpu_test_returncode": 0,
+  "stderr": "test_background_only_and_zero_padded_slots_remain_valid (collaborative_test.SW_0150_spike_spatial_mixture.test_diagnosis.ColorBinDiagnosticTests) ... ok\ntest_bad_shapes_duplicate_ids_and_nonstochastic_rows_are_rejected (collaborative_test.SW_0150_spike_spatial_mixture.test_diagnosis.ColorBinDiagnosticTests) ... ok\ntest_declared_protocol_pins_fixed_scope_and_rollout (collaborative_test.SW_0150_spike_spatial_mixture.test_diagnosis.ColorBinDiagnosticTests) ... ok\ntest_fingerprint_inherits_registered_native_rollout_dependency (collaborative_test.SW_0150_spike_spatial_mixture.test_diagnosis.ColorBinDiagnosticTests) ... ok\ntest_full_arm_diagnostic_pads_variable_microbatch_k_with_no_nll_effect (collaborative_test.SW_0150_spike_spatial_mixture.test_diagnosis.ColorBinDiagnosticTests) ... ok\ntest_identical_rows_can_make_index_motion_but_no_assignment_motion (collaborative_test.SW_0150_spike_spatial_mixture.test_diagnosis.ColorBinDiagnosticTests) ... ok\ntest_pair_lineage_requires_same_validated_source_preflight_and_warm (collaborative_test.SW_0150_spike_spatial_mixture.test_diagnosis.ColorBinDiagnosticTests) ... ok\ntest_permutation_is_deterministic_and_never_crosses_joint_rgb_bins (collaborative_test.SW_0150_spike_spatial_mixture.test_diagnosis.ColorBinDiagnosticTests) ... ok\ntest_registered_gaussian_nll_original_repeat_and_intervention_are_finite (collaborative_test.SW_0150_spike_spatial_mixture.test_diagnosis.ColorBinDiagnosticTests) ... ok\n\n----------------------------------------------------------------------\nRan 9 tests in 1.687s\n\nOK\n",
+  "files": [
+    {
+      "name": "diagnosis.py",
+      "sha256": "3953e769f5603c4374641688de1beea3e8da0263891fcb0bf402c70b04adbdf4"
+    },
+    {
+      "name": "DIAGNOSIS_PROTOCOL.json",
+      "sha256": "e3c19d151284836b3e3c6e8e20ff16edcb9a6376d2f47c85a0d61449e533a183"
+    },
+    {
+      "name": "test_diagnosis.py",
+      "sha256": "dad4fbe98a94bcfd28ebd54cca4b214bf0339053fbf31e1f4374665c3a62aeed"
+    }
+  ],
+  "cuda_visible_devices": "",
+  "training_launched": false,
+  "actual_diagnostic_inference_completed": false,
+  "scope": "New descriptive diagnostic installed only; all existing deployed runner bytes verified identical and active queues preserved."
+}
