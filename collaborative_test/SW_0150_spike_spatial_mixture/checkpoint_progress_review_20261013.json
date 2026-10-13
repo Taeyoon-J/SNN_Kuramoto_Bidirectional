@@ -1,0 +1,12 @@
+{
+  "kind": "cuda_hidden_actual_checkpoint_integrity_and_progress_check",
+  "method": "checkpoint.inspect_committed_metadata on both actual SW0150 work/{arm}_seed1/checkpoints directories",
+  "ssh_python_returncode": 0,
+  "cuda_visible_devices_for_inspection": "",
+  "encoder_graph": {"completed_updates": 93, "bound_physical_gpu": 0, "integrity_inspection": "passed"},
+  "joint": {"completed_updates": 28, "bound_physical_gpu": 2, "integrity_inspection": "passed"},
+  "previous_independent_review": "owner_recovery_observation_20261013.json",
+  "previous_verified_updates": {"encoder_graph": 86, "joint": 21},
+  "interpretation": "Both arms accumulated additional committed updates despite intermittent external GPU occupancy. Existing queues and source/runtime bindings are preserved; no manual relaunch or migration.",
+  "limits": ["Intermediate checkpoint integrity and progress are not final segmentation scores.", "Committed logical updates do not count any replayed work interrupted before an atomic commit."]
+}
