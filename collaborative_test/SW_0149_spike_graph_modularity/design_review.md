@@ -1,0 +1,15 @@
+# SW0149 objective transition after SW0148
+
+Design decision, not an executed training result. SW0148 completed with seed1 FG-ARI source .754135, encoder/graph .745394, and joint .733767. Joint minus source and joint minus control paired FG confidence intervals were negative. Fixed320 error analysis found increased foreground splitting, merging, and missed foreground. On the same first64 TRAIN images, count-weighted boundary MSE was source .055386, control .055014, and joint .055619. Improving selected RGB-edge strata did not establish better object grouping.
+
+Close the unchanged seam-loss recipe and hold SW0147 training under that recipe. Preserve its independently tested efficacy kernel for a future justified mechanism intervention. Preserve all completed artifacts and the native32 incumbent.
+
+The next candidate replaces the objective with degree-corrected modularity of the actual-spike Q relation. A frozen source encoder/graph supplies a nonnegative symmetric adjacency A with zero diagonal. For each image, d=A1, Z=sum(d)>0, M=A-dd^T/Z, and L=-sum(M*Q)/Z. Average losses across images. Q is the unchanged production positive-clamped component-product spike affinity, with diagonal one. The source graph is a fixed reference, not semantic ground truth. No masks, RGB seam targets, decoder, source-Q distillation, or prescribed affinity density enter training.
+
+Compare encoder/graph training with encoder/graph plus native core and integration scalar training from identical original source97 seed1 states. Keep native32, ordered4096 TRAIN IDs, 256 logical B16/microB4 updates, T1024/settle512/live-tail64, existing learning rates, clip and scalar projection. Compute frozen source graph per batch without another temporal rollout or a large adjacency cache. Never initialize from the failed SW0148 trained weights.
+
+Before training, verify actual native32 source parity, finite positive total degree, positive and negative off-diagonal modularity credit on the fixed first64 TRAIN inputs, and two disposable real optimizer updates. Check registered parameter credit and actual changes without forcing small scalar gradients to be large. Preserve strict checkpoint lineage, Adam, RNG and runtime restoration across interruptions. CPU fixture success alone does not admit training.
+
+Freeze both fixed320 prediction archives before opening targets. Report source, control, joint and comparable Slot32 metrics and paired image intervals. Expand only if joint FG improves by at least .01 over both source and control, both paired95% FG interval lower bounds are positive, and both IoUs exceed registered Slot32 three-seed means by .05. Otherwise close the fixed recipe without a coefficient, threshold or density sweep.
+
+Success would justify seed0/2 replication, then separate fresh native32 70000-image and scaling tests. It would not establish all-gate necessity: explicit causal interventions remain required. Source graph errors and a mismatch between modularity and object grouping remain substantive risks to be measured at the endpoint.
