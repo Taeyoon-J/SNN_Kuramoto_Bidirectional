@@ -35,14 +35,41 @@ def main():
     ap.add_argument("--num-slots", type=int, default=7)
     ap.add_argument("--num-iterations", type=int, default=3)
     ap.add_argument("--grid", type=int, default=16)
+    # The published preprocessing crops to the short side, so on a 240x320 frame the
+    # slot masks describe the centre 240x240 only, while the contract's targets
+    # describe the whole frame. Grid column c then means different pixels in the two
+    # maps -- up to 40 px apart -- which would depress every metric for reasons that
+    # have nothing to do with the model. "resize" is the alignment-preserving
+    # alternative, and is what our own encoder does to the same images.
+    ap.add_argument("--preprocess", default="crop", choices=["crop", "resize"],
+                    help="crop: as published. resize: whole frame to 128x128.")
     ap.add_argument("--out", required=True, help="npz of patch labels")
+    # Slot Attention samples its slots from
+    # slots_mu + exp(slots_log_sigma) * tf.random.normal(...) on EVERY forward
+    # pass, so inference is stochastic and two runs of one checkpoint give
+    # different masks. Without this the training-seed spread cannot be separated
+    # from the draw: re-scoring the same checkpoints moved seed 0 from 0.7223 to
+    # 0.7234 and seed 1 from 0.7391 to 0.7279. Fixing the draw makes a run
+    # reproducible, and averaging over several draws gives the checkpoint's score
+    # rather than one sample of it.
+    ap.add_argument("--seed", type=int, default=None,
+                    help="seed the slot sampling so the run is reproducible")
     args = ap.parse_args()
 
     sys.path.insert(0, str(Path(args.model_dir).parent))
     import tensorflow as tf
+    for _dev in tf.config.list_physical_devices("GPU"):
+        tf.config.experimental.set_memory_growth(_dev, True)
     from PIL import Image
     sys.path.insert(0, args.model_dir)
     import model as sa_model
+
+    # Seeded here, not after parse_args: tensorflow is imported locally above, so
+    # touching tf any earlier raises UnboundLocalError. Must also come before
+    # build_model, whose slot sampling is what the seed controls.
+    if args.seed is not None:
+        tf.random.set_seed(args.seed)
+        np.random.seed(args.seed)
 
     manifest = json.load(open(args.manifest))
     names = manifest["splits"][args.split]
@@ -63,10 +90,12 @@ def main():
     labels = np.zeros((len(names), args.grid, args.grid), dtype=np.int64)
     for i, name in enumerate(names):
         image = Image.open(Path(args.image_dir) / name).convert("RGB")
-        width, height = image.size
-        side = min(width, height)
-        left, top = (width - side) // 2, (height - side) // 2
-        image = image.crop((left, top, left + side, top + side)).resize((128, 128), Image.BILINEAR)
+        if args.preprocess == "crop":
+            width, height = image.size
+            side = min(width, height)
+            left, top = (width - side) // 2, (height - side) // 2
+            image = image.crop((left, top, left + side, top + side))
+        image = image.resize((128, 128), Image.BILINEAR)
         array = np.asarray(image, dtype=np.float32) / 255.0 * 2.0 - 1.0
         _, _, masks, _ = net(array[None])
         # masks: [1, num_slots, 128, 128, 1] -> hard assignment per pixel

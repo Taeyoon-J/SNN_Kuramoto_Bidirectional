@@ -1,6 +1,29 @@
 # STATUS
 
-Updated 2026-10-12 08:25. Branch `patch_v2`. Contract v1, split v1.
+Updated 2026-10-13 15:45. Branch `patch_v2`. Contract v1, split v1.
+
+> ## Correction, `PV2_0090`
+>
+> **The claim that we beat Slot Attention on all three metrics does not survive.**
+> The baseline was run through the published centre crop, which on a 240x320 frame
+> is the centre 240x240, so its 16x16 prediction map and the 16x16 target map
+> described **different regions of the image** -- column `c` up to 40 px, two target
+> columns, apart. Correcting it, on test, three seeds x three seeded draws:
+>
+> | metric | ours (best) | Slot, crop | Slot, aligned | verdict |
+> | --- | --- | --- | --- | --- |
+> | `patch_fg_ari` | 0.7603 | 0.6656 | **0.8102** | **Slot leads by 0.0499** |
+> | `patch_foreground_iou` | **0.7132** | 0.1151 | 0.1151 | ours, +0.5981 |
+> | `patch_matched_object_iou` | **0.6598** | 0.0874 | 0.1025 | ours, +0.5573 |
+>
+> Our own numbers are unchanged; the error was in the baseline harness and ran in
+> our favour. The 0.75 bar is still cleared in absolute terms (0.7603). The fg_ari
+> **lead** is gone. The two IoU results stand and are the part of this project that
+> does not depend on a tie-break: Slot Attention predicts 85% foreground against an
+> 11.8% target under every preprocessing tried.
+>
+> Everything below this box predates the correction. Read the Slot Attention column
+> in it as the **crop** column above.
 
 ## Where things stand
 
@@ -13,7 +36,7 @@ bidirectional.
 | goal condition | state |
 | --- | --- |
 | fg_ari 0.75 | **met** — 0.7533 on test, 3 seeds (`PV2_0061`) |
-| beat Slot Attention on all three | **met** on test: +0.0870 / +0.2180 / +0.5678 |
+| beat Slot Attention on all three | **NOT met** -- `PV2_0090` corrected the baseline; aligned Slot leads fg_ari 0.8102 vs 0.7603. The two IoU wins stand |
 | apply the peer's positive results | **done** — graph freeze ported (`PV2_0044`), 0.7059 -> 0.7250 |
 | a demonstrated route to 0.9 | **not met**; 21 routes closed, the 0.9671 'feasibility' withdrawn (`PV2_0072`), failure explained arithmetically (`PV2_0075`) |
 
