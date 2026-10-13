@@ -1,0 +1,45 @@
+{
+  "status": "passed",
+  "new_integration_tests_run": 3,
+  "previous_unchanged_helper_tests": 8,
+  "reviewed_at_utc": "2026-10-13T05:17:26.289048+00:00",
+  "files": {
+    "adaptive_rollout.py": "dbe195559b4b7f5f5a3ee38ae0c584f56b146d2ce1d2bcb1b2e8051ef804563e",
+    "test_adaptive_rollout.py": "42e37ab8305392d4029cf03a5c40f6504c1c3383e619e4c335f403701fcaaaba",
+    "event_history.py": "9e1d2f838483975c8d0b37a93ef192a1bd6b31df1a1377d8623c887446ced8b9",
+    "test_event_history.py": "4d7abba3a48372e9fa62df60ea576d0efec7b7a82037632fc1cb3e4446f82630",
+    "README.md": "87b1abad809bebbd35a223def46855fdd66ee743db22d2537d315c5b45281565"
+  },
+  "pinned_source_dependencies": {
+    "collaborative_test/SW_0134_native_spike_binding/rollout.py": "66c08404af91b50fb4cbfa63fe44650dd6a698ea669cd3d6a672dfc5c78503f3",
+    "collaborative_test/SW_0130_phase_state_integration/model.py": "2ba6bbe44dbbf2a5a444e724db71caafc1b9915570bfd7ab31343b86915cbd0b",
+    "snn_kuramoto_bidirectional/membrane_layer.py": "680ad89277b60206f192123165d13eca916e5183dc71eaa443a8eeb5f4b8fac8",
+    "snn_kuramoto_bidirectional/sinusoidal_gating.py": "e323a3b6472f51def23d63628fe25cc83088822ae73b5e0fcd1789884739f6c4"
+  },
+  "cuda_visible_devices": "",
+  "fixture": {
+    "core": "real S2NetCore and PhaseStateIntegration with synthetic parameters/input",
+    "batch": 2,
+    "nodes": 4,
+    "steps": 1024,
+    "live_tails": [
+      0,
+      64,
+      1024
+    ],
+    "nonzero_existing_threshold_parameters": true
+  },
+  "verified": [
+    "Exact six native trace outputs and spike affinity parity at zero history gain",
+    "Active history changes emitted spikes, keeps theta unchanged, receives nonzero finite lambda/kappa credit in live tail",
+    "Independent t2 native membrane transition uses adaptive previous emitted spike; source-spike alternative produces different membrane"
+  ],
+  "actual_trained_checkpoint_parity": false,
+  "server_deployed": false,
+  "training_admission": false,
+  "limits": [
+    "Synthetic small-node CPU evidence only, not trained native32 checkpoint parity.",
+    "Per-step validation CUDA synchronization overhead remains unmeasured.",
+    "No segmentation improvement, causal gate benefit or scaling proof."
+  ]
+}
