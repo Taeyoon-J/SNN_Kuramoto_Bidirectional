@@ -1,0 +1,18 @@
+{
+  "scope": "Root independent CPU modularity kernel verification only; no production preflight, GPU training or segmentation scores.",
+  "tests_run": 8,
+  "skipped": 0,
+  "files_unchanged_during_test": true,
+  "sha256": {
+    "modularity.py": "6b6ec66315cc18ac6822b862228534176931634839a7cd838258b8f7dbee63c4",
+    "test_modularity.py": "fb3e8e512f2308eb0f30a84e6eebf44f77c8bc5a00e9ada30d3fe33f71bdaaab"
+  },
+  "cpu_log_sha256": "52af98d9b831c56614f9168a2fb8331191166ac5f6e1e0e0aa63aab25c9af7f3",
+  "checks": [
+    "Degree correction and graph scale invariance",
+    "Source community affinity beats collapsed and wrong-cross-community affinities",
+    "Frozen nonnegative symmetric source graph with zero diagonal",
+    "Production Q symmetry/range/diagonal and invalid-input rejection",
+    "Finite Q gradients and production node-count shape"
+  ]
+}
