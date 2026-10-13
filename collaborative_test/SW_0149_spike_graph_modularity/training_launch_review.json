@@ -1,0 +1,231 @@
+{
+  "experiment": "SW0149_spike_graph_modularity",
+  "server_cpu_verification": {
+    "cpu_test_returncode": 0,
+    "stdout": "",
+    "stderr": "test_cli_prediction_and_scoring_ground_truth_flags_are_distinct (collaborative_test.SW_0149_spike_graph_modularity.test_evaluate.ScoreFreezeTests) ... ok\ntest_score_rejects_reference_id_mismatch_before_ground_truth_open (collaborative_test.SW_0149_spike_graph_modularity.test_evaluate.ScoreFreezeTests) ... ok\ntest_score_uses_production_metrics_and_opens_gt_after_all_reference_freezes (collaborative_test.SW_0149_spike_graph_modularity.test_evaluate.ScoreFreezeTests) ... ok\ntest_all_ones_q_has_zero_modularity_and_finite_gradient (collaborative_test.SW_0149_spike_graph_modularity.test_modularity.ModularityKernelTests) ... ok\ntest_batched_production_shape_is_accepted (collaborative_test.SW_0149_spike_graph_modularity.test_modularity.ModularityKernelTests) ... ok\ntest_degree_correction_matches_direct_registered_formula (collaborative_test.SW_0149_spike_graph_modularity.test_modularity.ModularityKernelTests) ... ok\ntest_invalid_graph_and_q_values_are_rejected (collaborative_test.SW_0149_spike_graph_modularity.test_modularity.ModularityKernelTests) ... ok\ntest_modularity_favors_two_source_communities_and_is_scale_invariant (collaborative_test.SW_0149_spike_graph_modularity.test_modularity.ModularityKernelTests) ... ok\ntest_nonfinite_or_negative_source_graph_is_rejected_before_preparation (collaborative_test.SW_0149_spike_graph_modularity.test_modularity.ModularityKernelTests) ... ok\ntest_source_graph_is_symmetrized_detached_and_diagonal_cleared (collaborative_test.SW_0149_spike_graph_modularity.test_modularity.ModularityKernelTests) ... ok\ntest_teacher_must_be_detached_and_q_diagonal_is_fixed_without_credit (collaborative_test.SW_0149_spike_graph_modularity.test_modularity.ModularityKernelTests) ... ok\ntest_registered_saved_sw0135_parity_receipt_is_accepted (collaborative_test.SW_0149_spike_graph_modularity.test_preflight.PreflightContractTests) ... ok\ntest_saved_parity_rejects_changed_source_binding_and_nonexact_trace (collaborative_test.SW_0149_spike_graph_modularity.test_preflight.PreflightContractTests) ... ok\ntest_result_validator_checks_complete_source_evidence (collaborative_test.SW_0149_spike_graph_modularity.test_preflight_queue.PreflightQueueTests) ... ok\ntest_single_preflight_dag_and_cpu_parent_does_not_initialize_cuda (collaborative_test.SW_0149_spike_graph_modularity.test_preflight_queue.PreflightQueueTests) ... ok\ntest_argv_routing_uses_registered_entrypoints (collaborative_test.SW_0149_spike_graph_modularity.test_stage_queue.StageQueueContractTests) ... ok\ntest_cpu_score_child_is_cuda_hidden_and_does_not_inherit_gpu_lease (collaborative_test.SW_0149_spike_graph_modularity.test_stage_queue.StageQueueContractTests) ... ok\ntest_failed_training_blocks_prediction_and_score (collaborative_test.SW_0149_spike_graph_modularity.test_stage_queue.StageQueueContractTests) ... ok\ntest_fixed_train_predict_score_dag (collaborative_test.SW_0149_spike_graph_modularity.test_stage_queue.StageQueueContractTests) ... ok\ntest_run_orders_training_then_prediction_then_cpu_score (collaborative_test.SW_0149_spike_graph_modularity.test_stage_queue.StageQueueContractTests) ... ok\ntest_safe_foreign_retry_only_resumes_or_restarts_absent_outputs (collaborative_test.SW_0149_spike_graph_modularity.test_stage_queue.StageQueueContractTests) ... ok\ntest_score_validity_requires_ground_truth_only_for_scoring (collaborative_test.SW_0149_spike_graph_modularity.test_stage_queue.StageQueueContractTests) ... ok\ntest_real_logical_update_accumulates_four_microbatches_and_steps_adam (collaborative_test.SW_0149_spike_graph_modularity.test_train.ModularityTrainStepTests) ... ok\n\n----------------------------------------------------------------------\nRan 23 tests in 6.051s\n\nOK\n",
+    "files": [
+      {
+        "name": "design_review.md",
+        "sha256": "7fdb8da0059db19fd13448877596c78a8e97c64b0815b747396cd8df5b4e315f"
+      },
+      {
+        "name": "evaluate.py",
+        "sha256": "c5113950738d4a05ae8dbb50a51b200c936e54e07e2de1a1c573656957e84367"
+      },
+      {
+        "name": "kernel_cpu_review.json",
+        "sha256": "37af2da4fd882747b5b0a7e4c71f0d662f20786eb7c92c01557074beaea9c258"
+      },
+      {
+        "name": "modularity.py",
+        "sha256": "2a5fc08ae1de635f689241fdab51eff0d1c697ea5d76f586c8776225fb2cff76"
+      },
+      {
+        "name": "preflight.py",
+        "sha256": "59bd1ee96e557514616221b585fd33cd5db82acadf5c3bbe4e46a0745e81c9fb"
+      },
+      {
+        "name": "preflight_launch_review.json",
+        "sha256": "a16df7a6f2a4f3c095d46e88da86bf8f48af39dd8f491a1a9bf8ba0212f0e5af"
+      },
+      {
+        "name": "preflight_queue.py",
+        "sha256": "a03f34e9950059e5de7b17f6980aca1affa9c5e35c234ac3b32887ddffd915b2"
+      },
+      {
+        "name": "protocol.json",
+        "sha256": "0f6dfda810c976aea6a42d703e2bf3c909f98e707b41d024e6ab8ceadb2eea18"
+      },
+      {
+        "name": "stage_queue.py",
+        "sha256": "fffe4c08042968bd27fcb152ca62c8cb06ea7ad644fd00667b54284e8dcef428"
+      },
+      {
+        "name": "test_evaluate.py",
+        "sha256": "5d44666d22b5fcf93ac7db3a863a8a5f46e7eec11f8c8b7c6b9c921b3ead78d6"
+      },
+      {
+        "name": "test_modularity.py",
+        "sha256": "d24f2e41515a26af326354d5f7a3d6e2d975d1b8f9310e581cea7857b84b7f2d"
+      },
+      {
+        "name": "test_preflight.py",
+        "sha256": "b7bcf7d7e9375094593c7271e3c3b7782561c524bd4bd69c9b6ca3083e1fdc04"
+      },
+      {
+        "name": "test_preflight_queue.py",
+        "sha256": "e67b6289ef833a4a7a3175d96567732537c1fa3543f20c0c1c9413bcdeece73e"
+      },
+      {
+        "name": "test_stage_queue.py",
+        "sha256": "65d195a71dfc16da326b0c2c858333864e8ade73e08d4db2574bd9611bd9a3b5"
+      },
+      {
+        "name": "test_train.py",
+        "sha256": "cff20d1018c44da3b537286a325d5e50733c219fa297d3ae070dac18f35913e5"
+      },
+      {
+        "name": "train.py",
+        "sha256": "d77015da78a59118b25fe60751c7d758b65834ac64f7be845d062f99ec27b97d"
+      }
+    ],
+    "cuda_visible_devices": "",
+    "training_launched": false
+  },
+  "actual_stage_launch": {
+    "supervisor_pid": 1498991,
+    "argv": [
+      "/Data0/kevinswk/envs/snn/bin/python",
+      "-m",
+      "collaborative_test.SW_0149_spike_graph_modularity.stage_queue"
+    ],
+    "actual_proc_argv": [
+      "/Data0/kevinswk/envs/snn/bin/python",
+      "-m",
+      "collaborative_test.SW_0149_spike_graph_modularity.stage_queue"
+    ],
+    "parent_cuda_visible_devices": "",
+    "hashes": {
+      "design_review.md": "7fdb8da0059db19fd13448877596c78a8e97c64b0815b747396cd8df5b4e315f",
+      "evaluate.py": "c5113950738d4a05ae8dbb50a51b200c936e54e07e2de1a1c573656957e84367",
+      "kernel_cpu_review.json": "37af2da4fd882747b5b0a7e4c71f0d662f20786eb7c92c01557074beaea9c258",
+      "modularity.py": "2a5fc08ae1de635f689241fdab51eff0d1c697ea5d76f586c8776225fb2cff76",
+      "preflight.py": "59bd1ee96e557514616221b585fd33cd5db82acadf5c3bbe4e46a0745e81c9fb",
+      "preflight_launch_review.json": "a16df7a6f2a4f3c095d46e88da86bf8f48af39dd8f491a1a9bf8ba0212f0e5af",
+      "preflight_queue.py": "a03f34e9950059e5de7b17f6980aca1affa9c5e35c234ac3b32887ddffd915b2",
+      "protocol.json": "0f6dfda810c976aea6a42d703e2bf3c909f98e707b41d024e6ab8ceadb2eea18",
+      "stage_queue.py": "fffe4c08042968bd27fcb152ca62c8cb06ea7ad644fd00667b54284e8dcef428",
+      "test_evaluate.py": "5d44666d22b5fcf93ac7db3a863a8a5f46e7eec11f8c8b7c6b9c921b3ead78d6",
+      "test_modularity.py": "d24f2e41515a26af326354d5f7a3d6e2d975d1b8f9310e581cea7857b84b7f2d",
+      "test_preflight.py": "b7bcf7d7e9375094593c7271e3c3b7782561c524bd4bd69c9b6ca3083e1fdc04",
+      "test_preflight_queue.py": "e67b6289ef833a4a7a3175d96567732537c1fa3543f20c0c1c9413bcdeece73e",
+      "test_stage_queue.py": "65d195a71dfc16da326b0c2c858333864e8ade73e08d4db2574bd9611bd9a3b5",
+      "test_train.py": "cff20d1018c44da3b537286a325d5e50733c219fa297d3ae070dac18f35913e5",
+      "train.py": "d77015da78a59118b25fe60751c7d758b65834ac64f7be845d062f99ec27b97d"
+    },
+    "stage": "two_arm_train_prediction_score_dag",
+    "launch_time": 1791854441.54553
+  },
+  "actual_gpu_start_evidence": {
+    "state": {
+      "experiment": "SW0149_spike_graph_modularity",
+      "status": "running",
+      "queue_version": 1,
+      "supervisor_pid": 1498991,
+      "no_overwrite": true,
+      "owner_dispatcher_sha256": "c59cdc39af20c824930d1926c8cec1418ee818577b8cc4240ad6eaae836764f6",
+      "owner_queue_sha256": "14fae39aeb6e958df60edf25680f412acb50a01126fd7af725c61fdba3794623",
+      "implementation_sha256": "9ff93c2aea3253a8680be59957d191f685476df5609301aa8bf881e37299b7f8",
+      "preflight_sha256": "a4d934fa53fac093c1bd7ea4aab5196335afe624c5300565c6a96a5c0fa26a30",
+      "tasks": {
+        "train_encoder_graph": {
+          "task": {
+            "task_id": "train_encoder_graph",
+            "stage": "train",
+            "arm": "encoder_graph",
+            "depends_on": [],
+            "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0149_spike_graph_modularity/training/encoder_graph_seed1"
+          },
+          "status": "running",
+          "gpu": 2,
+          "gpu_uuid": "GPU-50cc59a2-8312-ff02-5889-1becf63c7cd4",
+          "stable_seconds": 5.226779747288674,
+          "memory_used_mib": 2,
+          "child_pid": 1505115,
+          "argv": [
+            "/Data0/kevinswk/envs/snn/bin/python",
+            "-m",
+            "collaborative_test.SW_0149_spike_graph_modularity.train",
+            "--arm",
+            "encoder_graph",
+            "--device",
+            "cuda:0"
+          ],
+          "memory_used_before_mib": 2,
+          "cuda_hidden": false,
+          "log": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0149_spike_graph_modularity/results_archive/stage_queue_20261012/train_encoder_graph.attempt01.log",
+          "attempt": 1
+        },
+        "train_joint": {
+          "task": {
+            "task_id": "train_joint",
+            "stage": "train",
+            "arm": "joint",
+            "depends_on": [],
+            "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0149_spike_graph_modularity/training/joint_seed1"
+          },
+          "status": "running",
+          "gpu": 0,
+          "gpu_uuid": "GPU-a0a7d03d-adc1-37ca-4342-328878b3657c",
+          "stable_seconds": 5.25241471407935,
+          "memory_used_mib": 16,
+          "child_pid": 1505101,
+          "argv": [
+            "/Data0/kevinswk/envs/snn/bin/python",
+            "-m",
+            "collaborative_test.SW_0149_spike_graph_modularity.train",
+            "--arm",
+            "joint",
+            "--device",
+            "cuda:0"
+          ],
+          "memory_used_before_mib": 16,
+          "cuda_hidden": false,
+          "log": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0149_spike_graph_modularity/results_archive/stage_queue_20261012/train_joint.attempt01.log",
+          "attempt": 1
+        },
+        "predict_encoder_graph": {
+          "task": {
+            "task_id": "predict_encoder_graph",
+            "stage": "predict",
+            "arm": "encoder_graph",
+            "depends_on": [
+              "train_encoder_graph"
+            ],
+            "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0149_spike_graph_modularity/predictions/encoder_graph_seed1"
+          },
+          "status": "queued"
+        },
+        "predict_joint": {
+          "task": {
+            "task_id": "predict_joint",
+            "stage": "predict",
+            "arm": "joint",
+            "depends_on": [
+              "train_joint"
+            ],
+            "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0149_spike_graph_modularity/predictions/joint_seed1"
+          },
+          "status": "queued"
+        },
+        "score": {
+          "task": {
+            "task_id": "score",
+            "stage": "score",
+            "arm": null,
+            "depends_on": [
+              "predict_encoder_graph",
+              "predict_joint"
+            ],
+            "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0149_spike_graph_modularity/results_archive/evaluation_seed1.json"
+          },
+          "status": "queued"
+        }
+      }
+    },
+    "processes": {
+      "train_encoder_graph": "/Data0/kevinswk/envs/snn/bin/python -m collaborative_test.SW_0149_spike_graph_modularity.train --arm encoder_graph --device cuda:0 ",
+      "train_joint": "/Data0/kevinswk/envs/snn/bin/python -m collaborative_test.SW_0149_spike_graph_modularity.train --arm joint --device cuda:0 "
+    },
+    "logs": {
+      "train_encoder_graph": "",
+      "train_joint": ""
+    },
+    "gpu_apps": "1505101, GPU-a0a7d03d-adc1-37ca-4342-328878b3657c, 232 MiB\n3905341, GPU-45604115-c231-56a5-32ea-d3001e8ff243, 23854 MiB\n1505115, GPU-50cc59a2-8312-ff02-5889-1becf63c7cd4, 164 MiB\n3905342, GPU-6801a3dc-cde3-86c6-d665-6d9ecf063a1e, 22514 MiB\n"
+  },
+  "source_preflight_sha256": "a4d934fa53fac093c1bd7ea4aab5196335afe624c5300565c6a96a5c0fa26a30",
+  "scientific_result_pending": true,
+  "native32_70000_all_seed_success_proven": false,
+  "server_readme_unchanged": true
+}
