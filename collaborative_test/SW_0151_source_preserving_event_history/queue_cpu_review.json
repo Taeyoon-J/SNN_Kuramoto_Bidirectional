@@ -1,0 +1,32 @@
+{
+  "experiment": "SW0151_source_preserving_event_history",
+  "stage": "root_independent_queue_cpu_review",
+  "status": "passed_local_preparation_only",
+  "new_or_changed_cpu_tests": 15,
+  "prior_unchanged_helper_rollout_tests": 11,
+  "root_result": "15 tests passed with CUDA hidden, NumPy preloaded, OMP/MKL=1",
+  "inspection": [
+    "Float64 pooled central moments avoid negative variance from cancellation at constant saturated history",
+    "One read-only TRAIN first64 native32 parity/calibration task waits for both existing SW0150 main and diagnostic success",
+    "Strict existing GPU owner guard and shared exclusive lease, stable idle admission, selected physical device and inherited lease",
+    "Unstable reservation releases and rechecks; query failures do not stop owned child; foreign collision stops own child only and preserves partial logs without automatic retry",
+    "Actual source order/checkpoint and code hashes bound; report validates exact six native traces and production Q plus model parameters/buffers unchanged",
+    "No active SW0150 source files changed"
+  ],
+  "code_sha256": {
+    "event_history.py": "9e1d2f838483975c8d0b37a93ef192a1bd6b31df1a1377d8623c887446ced8b9",
+    "adaptive_rollout.py": "dbe195559b4b7f5f5a3ee38ae0c584f56b146d2ce1d2bcb1b2e8051ef804563e",
+    "preflight.py": "c113bb1dade2d4cee7a7f16c9becc722a2e621ab560492587f9518caaf07074a",
+    "preflight_queue.py": "452e0216985ed40aa8f110d6d457f96dc5bd22ceaf29d2177e3f3b07fe060c5c",
+    "test_preflight.py": "a16a91c82e560715449eb022ce068da19709724a4a4f862f4ebd0a609a32bedd",
+    "test_preflight_queue.py": "f6ff510ee71fe4083fe93381a9cf19a762b2aa4f5ab7863750132f6e5a9f0636",
+    "protocol.json": "7fdb10780e0f0e99d65e36fa4bd7ce3c8dd8f058c1979cb67e24813997d83142"
+  },
+  "limitations": [
+    "No actual trained source CUDA preflight executed",
+    "CPU queue tests mock Linux flock, GPU owners and subprocesses; actual server checks are required before registration",
+    "No learning feasibility, causal gating or segmentation improvement shown",
+    "Read-only inference parity uses live_tail_steps0; actual live-tail gradient validation remains future",
+    "Combined memory peak is not per-arm comparison; synchronized timings are descriptive"
+  ]
+}

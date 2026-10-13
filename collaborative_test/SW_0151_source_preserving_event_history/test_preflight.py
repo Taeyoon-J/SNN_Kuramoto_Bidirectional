@@ -19,6 +19,7 @@ from collaborative_test.SW_0151_source_preserving_event_history.preflight import
     event_summaries,
     finish_threshold_rms,
     implementation_fingerprint,
+    merge_history_moments,
     module_state_digest,
     new_rms_accumulator,
     validate_registered_train_order,
@@ -118,6 +119,25 @@ class ActualSourcePreflightHelpersTests(unittest.TestCase):
         with torch.no_grad():
             module.temporary.add_(1)
         self.assertNotEqual(before, module_state_digest({"model": module}))
+
+    def test_history_variance_uses_stable_pooled_moments_for_constant_and_mixed_batches(self):
+        mean = np.zeros(4, dtype=np.float64)
+        m2 = np.zeros(4, dtype=np.float64)
+        count = 0
+        constant = torch.full((1, 4, 1, 32), 1.0 - 2 ** -24, dtype=torch.float64)
+        mean, m2, count = merge_history_moments(mean, m2, count, constant)
+        mean, m2, count = merge_history_moments(mean, m2, count, constant.clone())
+        self.assertEqual(count, 64)
+        self.assertEqual(m2.tolist(), [0.0] * 4)
+        self.assertEqual((m2 / count).tolist(), [0.0] * 4)
+
+        mean, m2, count = np.zeros(4), np.zeros(4), 0
+        mean, m2, count = merge_history_moments(
+            mean, m2, count, torch.ones(1, 4, 1, 1, dtype=torch.float64))
+        mean, m2, count = merge_history_moments(
+            mean, m2, count, torch.full((1, 4, 1, 1), 3.0, dtype=torch.float64))
+        self.assertEqual(mean.tolist(), [2.0] * 4)
+        self.assertEqual((m2 / count).tolist(), [1.0] * 4)
 
 
 if __name__ == "__main__":

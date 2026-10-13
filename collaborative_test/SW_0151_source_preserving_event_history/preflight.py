@@ -171,6 +171,28 @@ def event_summaries(trace: dict) -> dict:
     }
 
 
+def merge_history_moments(mean: np.ndarray, m2: np.ndarray, count: int,
+                          values: torch.Tensor) -> tuple[np.ndarray, np.ndarray, int]:
+    """Stable pooled float64 population moments for [B,4,N,T] history values."""
+    if (not torch.is_tensor(values) or values.ndim != 4 or values.shape[1] != 4
+            or values.dtype != torch.float64 or not torch.isfinite(values).all()):
+        raise ValueError("history moment input must be finite float64 [B,4,N,T]")
+    batch_count = int(values.shape[0] * values.shape[2] * values.shape[3])
+    if batch_count <= 0 or count < 0 or np.asarray(mean).shape != (4,) or np.asarray(m2).shape != (4,):
+        raise ValueError("invalid history moment accumulator")
+    batch_mean_t = values.mean(dim=(0, 2, 3))
+    centered = values - batch_mean_t.view(1, 4, 1, 1)
+    batch_m2 = centered.square().sum(dim=(0, 2, 3)).detach().cpu().numpy()
+    batch_mean = batch_mean_t.detach().cpu().numpy()
+    if count == 0:
+        return batch_mean.copy(), batch_m2, batch_count
+    total = count + batch_count
+    delta = batch_mean - mean
+    merged_mean = mean + delta * (batch_count / total)
+    merged_m2 = m2 + batch_m2 + np.square(delta) * (count * batch_count / total)
+    return merged_mean, merged_m2, total
+
+
 def _rng_snapshot(device):
     return torch.random.get_rng_state(), torch.cuda.get_rng_state(device)
 
@@ -236,8 +258,8 @@ def run_preflight(*, device="cuda:0", output=OUTPUT_DEFAULT):
     rows64 = np.asarray(source_rows[:FIRST_TRAIN_COUNT], dtype=np.int64)
     scale_accumulator = new_rms_accumulator()
     event_counts = None
-    history_sums = None
-    history_sq_sums = None
+    history_mean = None
+    history_m2 = None
     history_count = 0
     native_elapsed = adaptive_elapsed = 0.0
     exact_trace_batches = exact_q_batches = 0
@@ -282,16 +304,15 @@ def run_preflight(*, device="cuda:0", output=OUTPUT_DEFAULT):
             if event_counts is None:
                 event_counts = {key: np.zeros(4, dtype=np.float64)
                                 for key in ("on", "zero", "one")}
-                history_sums = np.zeros(4, dtype=np.float64)
-                history_sq_sums = np.zeros(4, dtype=np.float64)
+                history_mean = np.zeros(4, dtype=np.float64)
+                history_m2 = np.zeros(4, dtype=np.float64)
             n = MICRO_BATCH * 1024 * (STEPS - SETTLE)
             event_counts["on"] += np.asarray(summaries["settled_event_on_fraction_by_component"]) * n
             event_counts["zero"] += np.asarray(summaries["settled_event_exact_zero_fraction_by_component"]) * n
             event_counts["one"] += np.asarray(summaries["settled_event_exact_one_fraction_by_component"]) * n
             h = adaptive["component_event_history"][..., SETTLE:].to(torch.float64)
-            history_sums += h.sum(dim=(0, 2, 3)).cpu().numpy()
-            history_sq_sums += h.square().sum(dim=(0, 2, 3)).cpu().numpy()
-            history_count += n
+            history_mean, history_m2, history_count = merge_history_moments(
+                history_mean, history_m2, history_count, h)
             del rgb, rgb_tensor, gamma, native, adaptive, native_q, adaptive_q, h
 
     scale = finish_threshold_rms(scale_accumulator)
@@ -304,8 +325,7 @@ def run_preflight(*, device="cuda:0", output=OUTPUT_DEFAULT):
         "settled_event_on_fraction_by_component": (event_counts["on"] / history_count).tolist(),
         "settled_event_exact_zero_fraction_by_component": (event_counts["zero"] / history_count).tolist(),
         "settled_event_exact_one_fraction_by_component": (event_counts["one"] / history_count).tolist(),
-        "settled_history_variance_by_component": (
-            history_sq_sums / history_count - (history_sums / history_count) ** 2).tolist(),
+        "settled_history_variance_by_component": (history_m2 / history_count).tolist(),
     }
     if (not np.isfinite(np.asarray(list(event_stats.values()), dtype=np.float64)).all()
             or not all(math.isfinite(value) for value in scale)):
