@@ -1,0 +1,129 @@
+{
+  "metric_order": [
+    "fg_ari",
+    "foreground_iou",
+    "matched_object_iou"
+  ],
+  "selection": "Highest verified three-seed FG configurations in tracked leaderboard; separate budgets and transfer vs training explicitly disclosed. Missing cells are not inferred from peer scores.",
+  "rows": [
+    {
+      "train": "ours",
+      "eval": "ours",
+      "grid": 16,
+      "ours": {
+        "fg_ari": 0.7814074870193034,
+        "foreground_iou": 0.47803820820271564,
+        "matched_object_iou": 0.6167461822406115
+      },
+      "ours_source": "SW0072; 2500 training budget",
+      "slot": {
+        "fg_ari": 0.7749334666743514,
+        "foreground_iou": 0.20358913115224261,
+        "matched_object_iou": 0.20693697915214362
+      },
+      "slot_scope": "three seeds, ours70000 epoch10"
+    },
+    {
+      "train": "ours",
+      "eval": "ours",
+      "grid": 16,
+      "ours": {
+        "fg_ari": 0.7763481729577292,
+        "foreground_iou": 0.5770703960502432,
+        "matched_object_iou": 0.601537457416796
+      },
+      "ours_source": "SW0097; 70000 lineage plus4096 continuation",
+      "slot": {
+        "fg_ari": 0.7749334666743514,
+        "foreground_iou": 0.20358913115224261,
+        "matched_object_iou": 0.20693697915214362
+      },
+      "slot_scope": "three seeds, ours70000 epoch10"
+    },
+    {
+      "train": "ours",
+      "eval": "ours",
+      "grid": 32,
+      "ours": {
+        "fg_ari": 0.7830440057720661,
+        "foreground_iou": 0.6099754484530632,
+        "matched_object_iou": 0.5961971295173867
+      },
+      "ours_source": "SW143T inference graph; SW97 native16-trained source transferred to32, not fresh32 training",
+      "slot": {
+        "fg_ari": 0.7816519719609136,
+        "foreground_iou": 0.20436012776655543,
+        "matched_object_iou": 0.2031649861884501
+      },
+      "slot_scope": "same ours70000 checkpoints evaluated32, three seeds"
+    },
+    {
+      "train": "official70k additional continuation",
+      "eval": "ours",
+      "grid": 16,
+      "ours": {
+        "fg_ari": 0.7694233600674542,
+        "foreground_iou": 0.5323909924901714,
+        "matched_object_iou": 0.5918816381885884
+      },
+      "ours_source": "SW107; inherited ours-trained SW97, not exclusive official training",
+      "slot": {
+        "fg_ari": 0.8946414574875314,
+        "foreground_iou": 0.22351117892035982,
+        "matched_object_iou": 0.24596825542415796
+      },
+      "slot_scope": "official released single checkpoint; training recipe differs"
+    },
+    {
+      "train": "official",
+      "eval": "ours",
+      "grid": 32,
+      "ours": null,
+      "slot": null,
+      "status": "not verified"
+    },
+    {
+      "train": "official",
+      "eval": "official",
+      "grid": 16,
+      "ours": null,
+      "slot": null,
+      "status": "not verified under our matched evaluation contract"
+    },
+    {
+      "train": "official",
+      "eval": "official",
+      "grid": 32,
+      "ours": null,
+      "slot": null,
+      "status": "not verified under our matched evaluation contract"
+    }
+  ],
+  "sources": {
+    "SW_0072_frozen_trained_graph/results/long/summary.json": "f96680ebafbddeb73d40a8ce31fb58b8b9497d29ecd8372f56dac27f2015570b",
+    "SW_0097_graph_adaptation/results/summary.json": "829fa3fa33ab8c86717f37f580abba20c5a0a72dcd16888ca09a041da0face0a",
+    "SW_0107_official_full70k_transfer/results_archive/summary.json": "420e1f18198341c2dafa1f371d73bf1c937d7af02b77b2ad6eccd29ad4146a00",
+    "SW_0092_cross_dataset_training/results/test123_final_comparison.json": "567ca6985567d71afaa72d991ee20be1cdbde4e2fa757f9a18d3a4a8e29cc30a",
+    "SW_0143_native32_selective_geodesic/results_archive/completion_20261012/evaluation.json": "2ed9a82e85d610be4ad772a1648652846e962e38380a2986fe26980878870a5c"
+  },
+  "single_seed_best16": {
+    "experiment": "SW0106",
+    "seed": 0,
+    "metrics": {
+      "fg_ari": 0.832809688168696,
+      "foreground_iou": 0.72373455905931,
+      "matched_object_iou": 0.6676368372885767
+    },
+    "promotion_status": "Registered expansion guard failed; retain measured scores, no three-seed promotion."
+  },
+  "official_filtered_34766_prior": {
+    "fg_ari": 0.769129338339102,
+    "foreground_iou": 0.48658191042719934,
+    "matched_object_iou": 0.6084722670647684
+  },
+  "new_requests": {
+    "gamma_ordering": "SW0153 implementation in progress",
+    "native64": "feasibility/design in progress, no run claimed",
+    "supervised": "separate ceiling protocol in progress, no run claimed"
+  }
+}
