@@ -1,0 +1,42 @@
+{
+  "status": "server_cpu_verification_passed",
+  "returncode": 0,
+  "tests_passed": 9,
+  "server": "frontier.med.unc.edu",
+  "python": "/Data0/kevinswk/envs/snn/bin/python",
+  "cuda_visible_devices": "",
+  "training_launched": false,
+  "deployment": "create-only exact bytes",
+  "files": [
+    {
+      "name": "component_cpu_review.json",
+      "sha256": "b20ac77bb9a2c6d9f27b2373c107a5d4ad25011bae586b6598509b2a1127c672"
+    },
+    {
+      "name": "deep_encoder.py",
+      "sha256": "228a0f88b594b81c645e935cbbcaba13b524748b8f27d34415e677348109d0ad"
+    },
+    {
+      "name": "partition_objective.py",
+      "sha256": "4d4d390e4f0784637e7f1be93428bcfcd0067517b382327e371c92e866760d1a"
+    },
+    {
+      "name": "protocol.json",
+      "sha256": "4fc93563208b4faf66c7ae5c0527f75b1fb2200ed5abbc73664407cf8b48aa63"
+    },
+    {
+      "name": "test_deep_encoder.py",
+      "sha256": "700947ad2fdad36c04fa9ac1d774b6f896245fbbffdf499660e98bae2f165e2d"
+    },
+    {
+      "name": "test_partition_objective.py",
+      "sha256": "786c0dbb22511b0a872f89052f7ceb257ffc191cf11a699a54a12d278b3aaad5"
+    },
+    {
+      "name": "view_augmentation.py",
+      "sha256": "5b2c728030fa1a7a3a1e8c4f37f26bc67a07e3c37e97c5e34dafcb10fad59701"
+    }
+  ],
+  "manifest_sha256": "3b6a0877d23f63c50373277ada1963b06f4fea5ac9a15c40b880dcd1058081cc",
+  "scope": "Component CPU tests only. Actual source checkpoint training integration not yet admitted."
+}
