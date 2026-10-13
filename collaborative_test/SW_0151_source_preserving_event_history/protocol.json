@@ -1,0 +1,53 @@
+{
+  "experiment": "SW0151_source_preserving_event_history",
+  "status": "prospective_actual_source_preflight_only",
+  "training_admission": false,
+  "source": {
+    "seed": 1,
+    "lineage": "immutable SW0097 seed1 checkpoint mapped by frozen SW0135 native32 foundation",
+    "images": "first64 ordered registered source1 TRAIN IDs only",
+    "rgb": "registered clean uint8 NHWC [B,128,128,3] TRAIN cache",
+    "ground_truth_used": false,
+    "masks_read": false
+  },
+  "rollout": {
+    "steps": 1024,
+    "settle": 512,
+    "live_tail_steps": 0,
+    "native_fields_exact": [
+      "component_membrane",
+      "component_spikes",
+      "component_gates",
+      "membrane",
+      "spikes",
+      "theta"
+    ],
+    "q": "unchanged SW0145._actual_q from the same native emitted-spike trace; exact equality required at kappa=0",
+    "rng": "snapshot CPU and selected CUDA RNG before native rollout and restore before adaptive rollout"
+  },
+  "event_history": {
+    "existing_source_threshold": "0.06*exp(wrapped.b), unchanged in membrane reset equation",
+    "adaptive_threshold": "existing source threshold + kappa*s*r",
+    "lambda_initial": 0.95,
+    "kappa_initial": 0.0,
+    "new_trainable_scalars": 8,
+    "zero_gate": "emitted spike is zero; auxiliary event/history recurrent states hold",
+    "truncation": "live recurrence; detach auxiliary state only at registered TBPTT boundary"
+  },
+  "calibration": {
+    "scale": "per-component float64 RMS of settled native membrane minus existing source threshold over exactly first64 source TRAIN images",
+    "parity_execution": "kappa=0 makes scale inactive; use a fixed positive unit scale for the paired exact-parity call and reuse the same native rollout traces for scale calculation",
+    "failure": "reject nonfinite or nonpositive component scale; no event-rate tuning"
+  },
+  "outputs": {
+    "reports": "create-once compact JSON; no predictions, labels, checkpoints, masks, or training artifacts",
+    "diagnostics": ["settled event on/zero/one fractions by component", "settled auxiliary-history variance by component", "native/adaptive rollout timing and peak CUDA memory"],
+    "ground_truth_used": false,
+    "optimizer_updates": 0
+  },
+  "limitations": [
+    "This driver has not been executed on a GPU or trained source checkpoint.",
+    "CPU synthetic-core parity does not establish parity on actual trained native32 weights.",
+    "The preflight is not training admission and makes no learning, causal, or segmentation claim."
+  ]
+}

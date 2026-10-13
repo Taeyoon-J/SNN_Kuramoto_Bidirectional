@@ -1,0 +1,29 @@
+{
+  "experiment": "SW0151_source_preserving_event_history",
+  "stage": "root_independent_preflight_cpu_review",
+  "status": "passed_local_preparation_only",
+  "new_cpu_tests": 7,
+  "prior_unchanged_cpu_tests": 11,
+  "new_cpu_test_result": "7 passed; root independently ran test_preflight with CUDA hidden and NumPy preloaded",
+  "inspection": [
+    "Exact six-trace and production-Q equality fails closed on mismatch",
+    "4096 unique ordered source IDs and rows bound to actual source_contract and saved SW0135 parity receipt; registered TRAIN cache header must be uint8 [70000,128,128,3]",
+    "First64 TRAIN source traces reused for fixed positive float64 RMS threshold calibration; no GT or masks accessed by local tests",
+    "All model parameters and persistent/nonpersistent buffers hashed before/after; scalar dtype-view issue fixed and regression tested",
+    "Source eval mode matches actual SW0135 parity.py; CPU and assigned CUDA RNG restored for paired rollouts",
+    "Read-only kappa-zero helper explicitly frozen; no optimizer updates; output create-once"
+  ],
+  "code_sha256": {
+    "preflight.py": "a66e391138752fb5d4b041c0c3893601c922b0e4f9e7a4b0178e956a1d3d46a6",
+    "test_preflight.py": "55552fd6e1ae9d7887167ed0d41a54ea500b32d489c0a0f58b3a077940148065",
+    "protocol.json": "7fdb10780e0f0e99d65e36fa4bd7ce3c8dd8f058c1979cb67e24813997d83142",
+    "README.md": "9ea9ed68ffe1c3d85011650f5ed418960aaaa456021b6f524ec4859f6bd16619"
+  },
+  "limitations": [
+    "Actual trained native32 CUDA checkpoint preflight has NOT run",
+    "No performance, event-history efficacy, or gating causal contribution demonstrated",
+    "Parity is inference tail0 only; actual live-tail gradient validation remains separate",
+    "CUDA overhead timings will be aggregate synchronized descriptive measurements; combined memory peak is not a per-arm memory comparison",
+    "No deployment or training admission; future objective chosen from SW0150 evidence, not assumed from CPU checks"
+  ]
+}
