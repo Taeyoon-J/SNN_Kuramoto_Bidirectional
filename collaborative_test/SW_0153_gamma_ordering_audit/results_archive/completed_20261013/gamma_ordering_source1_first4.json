@@ -1,0 +1,342 @@
+{
+  "status": "complete",
+  "experiment": "SW0153_gamma_ordering_audit",
+  "seed": 1,
+  "ids": [
+    68304,
+    49032,
+    70041,
+    7829
+  ],
+  "pool_rows": [
+    67664,
+    48392,
+    69401,
+    7189
+  ],
+  "count": 4,
+  "gamma_layout": [
+    "batch",
+    "feature_channel=8",
+    "spatial_patch=1024"
+  ],
+  "ordered_train_ids_sha256": "c4b63443ed87c6c22c93c22e9b76c969d6c5282271e08ce60c2401dd78c03717",
+  "source_core_sha256": "76f379d5a7e4cd9d12fdf0b701f3dd9dbbf28b5eea270a9cee2d30d87b4dad98",
+  "source_manifest_sha256": "241c9ea96fc3d3d2b168cb49d941e39c6751eca4436192e614760673545da38b",
+  "rgb_asset_validation": {
+    "train_cache_sha256": "22e220f937a4d92b8504df592ae7e956ad792b6874a2bbaa64c2d3030fbcc492",
+    "train_manifest_sha256": "2578e616478798cd0c3ceab696688a937d18c8f0c54be8c4c62bde9ebd80ddd6",
+    "validation_cache_sha256": "9bed98a5bb040b69e1821c687161b1b928495cc80d90d7a5e1fffcd631926d1e",
+    "validation_manifest_sha256": "971b24a1a945a9b9c77177dc012d9ae5e3f12966817236f3ad3f887dfa759908",
+    "encoder_source_sha256": "9b9c9c59725f872084a6c9bfae1ebbd1b89de40d18ef4f8ab6b8ec014c2ab868",
+    "feature_preprocessing_sha256": "a9ec3281b9603021c37f7c346baa6cf62513c5ce7edde867ab7eddf24b18e127"
+  },
+  "implementation_fingerprint": {
+    "collaborative_test/SW_0135_native32_spike_binding/foundation.py": "9c241cacf1479c339fa56376b881672535c8d7ac4966a7ddff3b4b47f24cb867",
+    "collaborative_test/SW_0135_native32_spike_binding/protocol.json": "bcea5cb37b7279c7db7e505127b7ca01a70d3a5b39b725ae6e37b6565cf29ea9",
+    "collaborative_test/SW_0135_native32_spike_binding/resolution.py": "dd98e62c48e6260e4bd1ba36f0f9a8ff2c6ecf7ade53e0f5780849d3bae49264",
+    "collaborative_test/SW_0135_native32_spike_binding/binder.py": "38450abd18eb0db390959727b95f88f96633117be20d053870ff28ccf5dae8ac",
+    "collaborative_test/SW_0130_phase_state_integration/run.py": "92ac0032467c6bff2e31a76c66021c5e211f9402d15ff868382d71ecc807e988",
+    "collaborative_test/SW_0130_phase_state_integration/model.py": "2ba6bbe44dbbf2a5a444e724db71caafc1b9915570bfd7ab31343b86915cbd0b",
+    "collaborative_test/SW_0134_native_spike_binding/rollout.py": "66c08404af91b50fb4cbfa63fe44650dd6a698ea669cd3d6a672dfc5c78503f3",
+    "collaborative_test/SW_0110_xy_graph_route/run.py": "b7d4b90cbf74c8085d2a5cfc8b78a5772f77bc086240939a332f429c1ca344fd",
+    "collaborative_test/SW_0094_aligned_joint_pilot/run.py": "9f4e9046a2960e7aa53bf16d7e0663bee162b3f56a11f11d45554d79889536a3",
+    "snn_kuramoto_bidirectional/s2net_cls.py": "18313e5ee7358146703256e7e29d9846bfa60394feedba3237f2f7eac8791288",
+    "snn_kuramoto_bidirectional/graph_generator.py": "4f4c4d680a60822a5e4645eec3bbceb960846d4fac89e799076f6b4cf1bc6dde",
+    "snn_kuramoto_bidirectional/loss_function.py": "6542d084f66c07101b75869709df9302db45e0dde87b6b5945d1790daa316543",
+    "snn_kuramoto_bidirectional/spike_classifier.py": "2d13c15a928f503bc09239aae2153a5f1a82de77aab4b5a76d0dfe876b755181",
+    "snn_kuramoto_bidirectional/evaluation.py": "4a15980c9aa0248dbe0e837ad1b0b430ce26a7ab367c004d290a1272bb1025d7",
+    "snn_kuramoto_bidirectional/hyperparameter.py": "bceea67a10a4533eae48ce682b23ce81330c981d687fa928cca7b9f3b97fc73e",
+    "snn_kuramoto_bidirectional/gamma_initializer.py": "9b5f3e077c755738b1636b97ac9640321a5b7abf5ec85b9a12557209cf5ad50b",
+    "snn_kuramoto_bidirectional/training/train_gamma_initializer.py": "845f91d3255d1d72d2a69c432c7b559a9d29d90a4186a4821e75864af9e47d20",
+    "snn_kuramoto_bidirectional/training/train_input_layer_generator.py": "df45612ad4e069bc645c8cf335da1ebf1dd73d73ae0b9a40de96cefa9025f38d",
+    "snn_kuramoto_bidirectional/dendric_layer.py": "69d960809ff1ad73a91a7067f87f605ae69ef612be9b936e4b486cc29511dd1a",
+    "snn_kuramoto_bidirectional/membrane_layer.py": "680ad89277b60206f192123165d13eca916e5183dc71eaa443a8eeb5f4b8fac8",
+    "snn_kuramoto_bidirectional/kuramoto_layer.py": "76e61785fb19228fe4ecf6bbdfd4dc72519b9d6bd34d5f4fd9165e29c76d263e",
+    "snn_kuramoto_bidirectional/sinusoidal_gating.py": "e323a3b6472f51def23d63628fe25cc83088822ae73b5e0fcd1789884739f6c4",
+    "collaborative_test/SW_0153_gamma_ordering_audit/audit_source.py": "7ae9240fe4841e03c1356c79accb8b1d2a241614233bb558fb587a575fd9735b",
+    "collaborative_test/SW_0153_gamma_ordering_audit/README.md": "26faf1dfcf80aefd2af81b2c46f596f8aad4934a7744f04e6b326f8cf3a981d1",
+    "collaborative_test/SW_0153_gamma_ordering_audit/test_ordering.py": "7f6d71ab3a9ade8e03fc1e4b538fa7d50e0b2235fe21acc710ec75663f7b17e8"
+  },
+  "model_state_sha256_before_after": {
+    "foundation": "8504d227fdfacdd59f7051fb6ef08e45bff69cdaddb74d4350b9fabe1dc61702",
+    "encoder": "85085bec46639858f9199550a00b487f303e848a0add914345a16d2794bd53ee"
+  },
+  "channel_random_seed": 153001,
+  "train_mean_order_ascending": [
+    4,
+    7,
+    2,
+    6,
+    3,
+    1,
+    0,
+    5
+  ],
+  "per_image": [
+    {
+      "image_id": 68304,
+      "variants": {
+        "naive_fixed_channel_shuffle": {
+          "permutation": [
+            0,
+            4,
+            5,
+            1,
+            2,
+            7,
+            6,
+            3
+          ],
+          "drive_mse": 3.968569040298462,
+          "graph_adjacency_mse": 0.0005106554599478841,
+          "actual_q_offdiag_mse": 0.1737195626441137,
+          "qcc_changed_fraction": 0.7041015625
+        },
+        "naive_train_mean_channel_order": {
+          "permutation": [
+            4,
+            7,
+            2,
+            6,
+            3,
+            1,
+            0,
+            5
+          ],
+          "drive_mse": 16.132816314697266,
+          "graph_adjacency_mse": 0.0006381466519087553,
+          "actual_q_offdiag_mse": 0.21948247853786057,
+          "qcc_changed_fraction": 0.353515625
+        },
+        "consistent_global_channel_reindex": {
+          "permutation": [
+            0,
+            4,
+            5,
+            1,
+            2,
+            7,
+            6,
+            3
+          ],
+          "drive_max_abs": 8.344650268554688e-07,
+          "graph_adjacency_max_abs": 4.76837158203125e-06,
+          "actual_q_offdiag_mse": 3.459380825561621e-06,
+          "qcc_changed_fraction": 0.0
+        },
+        "per_image_patch_permutation": {
+          "permutation_sha256": "f3d4f32174077d9f95db19be3215f550087f313d8bbf5953cf6b132681e8e054",
+          "drive_mse_after_node_unpermutation": 0.0,
+          "graph_adjacency_mse_after_node_unpermutation": 0.004865296185016632,
+          "actual_q_offdiag_mse_after_node_unpermutation": 0.19320601385086375,
+          "qcc_changed_fraction_after_node_unpermutation": 0.34375
+        }
+      }
+    },
+    {
+      "image_id": 49032,
+      "variants": {
+        "naive_fixed_channel_shuffle": {
+          "permutation": [
+            0,
+            4,
+            5,
+            1,
+            2,
+            7,
+            6,
+            3
+          ],
+          "drive_mse": 4.144765377044678,
+          "graph_adjacency_mse": 0.0008380287326872349,
+          "actual_q_offdiag_mse": 0.12879866335597887,
+          "qcc_changed_fraction": 0.49609375
+        },
+        "naive_train_mean_channel_order": {
+          "permutation": [
+            4,
+            7,
+            2,
+            6,
+            3,
+            1,
+            0,
+            5
+          ],
+          "drive_mse": 15.53934383392334,
+          "graph_adjacency_mse": 0.0010342206805944443,
+          "actual_q_offdiag_mse": 0.1625029126896241,
+          "qcc_changed_fraction": 0.4072265625
+        },
+        "consistent_global_channel_reindex": {
+          "permutation": [
+            0,
+            4,
+            5,
+            1,
+            2,
+            7,
+            6,
+            3
+          ],
+          "drive_max_abs": 8.642673492431641e-07,
+          "graph_adjacency_max_abs": 0.004425946623086929,
+          "actual_q_offdiag_mse": 1.712834861882311e-08,
+          "qcc_changed_fraction": 0.0
+        },
+        "per_image_patch_permutation": {
+          "permutation_sha256": "81e41cf2fea7d7127e6572c0fd3dc33da36f6fc67a397be78ac76038dedc8294",
+          "drive_mse_after_node_unpermutation": 1.1300752746231345e-14,
+          "graph_adjacency_mse_after_node_unpermutation": 0.007167138159275055,
+          "actual_q_offdiag_mse_after_node_unpermutation": 0.20658640223030636,
+          "qcc_changed_fraction_after_node_unpermutation": 0.4853515625
+        }
+      }
+    },
+    {
+      "image_id": 70041,
+      "variants": {
+        "naive_fixed_channel_shuffle": {
+          "permutation": [
+            0,
+            4,
+            5,
+            1,
+            2,
+            7,
+            6,
+            3
+          ],
+          "drive_mse": 4.547491550445557,
+          "graph_adjacency_mse": 0.0003556912997737527,
+          "actual_q_offdiag_mse": 0.24840436701421106,
+          "qcc_changed_fraction": 0.3779296875
+        },
+        "naive_train_mean_channel_order": {
+          "permutation": [
+            4,
+            7,
+            2,
+            6,
+            3,
+            1,
+            0,
+            5
+          ],
+          "drive_mse": 16.343242645263672,
+          "graph_adjacency_mse": 0.00043624010868370533,
+          "actual_q_offdiag_mse": 0.20206729296447407,
+          "qcc_changed_fraction": 0.1142578125
+        },
+        "consistent_global_channel_reindex": {
+          "permutation": [
+            0,
+            4,
+            5,
+            1,
+            2,
+            7,
+            6,
+            3
+          ],
+          "drive_max_abs": 8.344650268554688e-07,
+          "graph_adjacency_max_abs": 5.0067901611328125e-06,
+          "actual_q_offdiag_mse": 1.0319704639829705e-11,
+          "qcc_changed_fraction": 0.0
+        },
+        "per_image_patch_permutation": {
+          "permutation_sha256": "2afb8d09bd65a446084ca8266db6a77969ab59cc6060fabe8a5aebc5b4977453",
+          "drive_mse_after_node_unpermutation": 0.0,
+          "graph_adjacency_mse_after_node_unpermutation": 0.004259142093360424,
+          "actual_q_offdiag_mse_after_node_unpermutation": 0.16462093964054117,
+          "qcc_changed_fraction_after_node_unpermutation": 0.1083984375
+        }
+      }
+    },
+    {
+      "image_id": 7829,
+      "variants": {
+        "naive_fixed_channel_shuffle": {
+          "permutation": [
+            0,
+            4,
+            5,
+            1,
+            2,
+            7,
+            6,
+            3
+          ],
+          "drive_mse": 4.357348442077637,
+          "graph_adjacency_mse": 0.000668264226987958,
+          "actual_q_offdiag_mse": 0.43465865459489667,
+          "qcc_changed_fraction": 0.3486328125
+        },
+        "naive_train_mean_channel_order": {
+          "permutation": [
+            4,
+            7,
+            2,
+            6,
+            3,
+            1,
+            0,
+            5
+          ],
+          "drive_mse": 16.386709213256836,
+          "graph_adjacency_mse": 0.0007881637429818511,
+          "actual_q_offdiag_mse": 0.13830311896647665,
+          "qcc_changed_fraction": 0.0947265625
+        },
+        "consistent_global_channel_reindex": {
+          "permutation": [
+            0,
+            4,
+            5,
+            1,
+            2,
+            7,
+            6,
+            3
+          ],
+          "drive_max_abs": 9.5367431640625e-07,
+          "graph_adjacency_max_abs": 3.6954879760742188e-06,
+          "actual_q_offdiag_mse": 2.071527341289383e-07,
+          "qcc_changed_fraction": 0.0
+        },
+        "per_image_patch_permutation": {
+          "permutation_sha256": "f078c965bd0e525732b0ddd31fe155063bda23d41514a2bb0aa66e2ba73e1256",
+          "drive_mse_after_node_unpermutation": 0.0,
+          "graph_adjacency_mse_after_node_unpermutation": 0.003458793740719557,
+          "actual_q_offdiag_mse_after_node_unpermutation": 0.18622701946068437,
+          "qcc_changed_fraction_after_node_unpermutation": 0.0908203125
+        }
+      }
+    }
+  ],
+  "mean_change_summary": {
+    "naive_fixed_channel_shuffle": {
+      "drive_mse": 4.254543602466583,
+      "graph_adjacency_mse": 0.0005931599298492074,
+      "actual_q_offdiag_mse": 0.24639531190230007,
+      "qcc_changed_fraction": 0.481689453125
+    },
+    "naive_train_mean_channel_order": {
+      "drive_mse": 16.10052800178528,
+      "graph_adjacency_mse": 0.000724192796042189,
+      "actual_q_offdiag_mse": 0.18058895078960882,
+      "qcc_changed_fraction": 0.242431640625
+    },
+    "consistent_global_channel_reindex": {
+      "drive_max_abs": 8.717179298400879e-07,
+      "graph_adjacency_max_abs": 0.001109854318201542,
+      "actual_q_offdiag_mse": 9.209180570035056e-07,
+      "qcc_changed_fraction": 0.0
+    },
+    "per_image_patch_permutation": {}
+  },
+  "ground_truth_used": false,
+  "optimizer_updates": 0,
+  "interpretation_limit": "Ordering sensitivity is representational evidence only; no mask correctness or segmentation improvement is inferred."
+}

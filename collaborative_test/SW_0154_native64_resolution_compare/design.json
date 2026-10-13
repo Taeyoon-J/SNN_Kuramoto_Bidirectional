@@ -1,0 +1,74 @@
+{
+  "experiment": "SW0154_native64_resolution_compare",
+  "registration_date": "2026-10-13",
+  "status": "prospective_resource_first_source_only_design",
+  "claim_scope": "Genuine native4096-node inference from a pretrained native16 source; not upsampled32 masks, fresh64 training, or a scaling result",
+  "source": "Immutable same-seed SW0097 whole core plus registered native RGB encoder/statistics; no completed joint/adaptive-history checkpoints",
+  "resolution": {
+    "rgb": [128, 128, 3],
+    "grid": [64, 64],
+    "nodes": 4096,
+    "gamma": "Frozen registered encoder, unchanged standardization/clipping, FeaturePatchGammaInitializer adaptive_avg_pool2d64, output[B,8,4096]",
+    "feature_geometry_note": "The valid-convolution126 feature map is adaptively pooled; its receptive fields are not asserted to equal disjoint2x2 GT pixel blocks.",
+    "mapping": "parent=(row//4)*16+(column//4); replicate declared node-leading source tensors with this spatial mapping; direction_learner maps both axes; strict-load all shared state",
+    "regenerated": "SC identity and64-grid physical-distance buffer; no unregistered shape-dependent state guesses"
+  },
+  "physical_invariants": {
+    "kuramoto_K": 4096.0,
+    "K_over_N": 1.0,
+    "graph_top_k": 512,
+    "distance_units_per_cell": 0.25,
+    "minimum_foreground_group": 32,
+    "minimum_group_native_pixel_area": 128,
+    "interpretation": "Resolution adaptation preserves effectiveK/N, approximate top-k physical extent and minimum group area. It is not a same-constant isolation."
+  },
+  "graph": {
+    "dissimilarity": "Original linear1-cosine; source learned contrast unchanged",
+    "geodesic_steps": 3,
+    "geodesic_radius": 1.5,
+    "geodesic_temperature": 0.5,
+    "geodesic_cap": 16.0,
+    "normalization": "Exactly current SW0135 relaxation: -temperature*logsumexp(-(D_ik+D_kj)/temperature,k)+temperature*log(4), followed by minimum with prior distance",
+    "full_intermediate_axis": true,
+    "initial_row_chunk": 1,
+    "forbidden_silent_approximations": ["coarse32 graph/prediction replication", "sparse intermediate-node truncation", "dropping log4", "changing geodesic power or learned contrast", "shortened inference horizon"]
+  },
+  "preallocation_cpu_checks": [
+    "Validate source SHA, encoder/stats/RGB asset identity and exact spatial mapping on small fixtures",
+    "Generalized32 settings reproduce frozen SW0135 parameter/buffer mapping and graph relaxation; source predictions remain regression references",
+    "Estimate every4096-square allocation and full source state before CUDA construction; reject undocumented node/pair keys"
+  ],
+  "resource_stage": {
+    "source_seed": 1,
+    "images": 1,
+    "selection": "First clean TRAIN global ID of registered source1 order, never VAL masks",
+    "batch": 1,
+    "total_steps": 1024,
+    "settle": 512,
+    "gradient": false,
+    "optimizer_updates": 0,
+    "training_admission": false,
+    "gpu": "One genuinely idle GPU under global exclusive lease; never share or kill foreign owners",
+    "measure": ["CUDA peak allocated/reserved", "graph wall time", "rollout wall time", "Q/QCC wall time", "host peak or declared state sizes", "finite six traces/gamma/Q", "4096-node shapes", "prediction counts", "actual4096-neuron lineage/source/code hashes"],
+    "memory_note": "AtB1 row-chunk32 the candidate through-distance temporary alone is2GiB; row-chunk1 is64MiB before extra temporaries. One dense4096-square float32 tensor is64MiB.",
+    "compute_note": "Full-k geodesic complexity is64x native32 per sample; denseN-squared recurrence/affinity is16x. Chunking does not reduce cubic work.",
+    "next_admission": "Root explicitly reviews measured peak/time and extrapolated320/960-image GPU cost before any full320 queue; resource exit0 alone does not authorize blind full fanout. Preserve an OOM/failure artifact; do not silently reduce horizon or approximate graph."
+  },
+  "evaluation_stage_conditional": {
+    "source_seeds": [0, 1, 2],
+    "image_ids_inclusive": [1320, 1639],
+    "count_per_seed": 320,
+    "batch": 1,
+    "total_steps": 1024,
+    "settle": 512,
+    "ours": "Direct actual emitted-spike positive-clamped Pearson-product QCC, threshold.50, min-group32, largest connected component BG",
+    "slot": "Reuse SHA-bound saved native128 hard labels for own70k Slot seeds0/1/2; retain existing perimeter BG mapping; direct2x2 modal pooling, smallest-ID tie; no probability averaging or32-label expansion",
+    "target": "Same native128 integer GT masks converted with production2x2 modal/min-ID tie; no purity/foreground filtering",
+    "prediction_shape": [320, 64, 64],
+    "metrics": ["fg_ari", "foreground_iou", "matched_object_iou"],
+    "freeze_before_gt": "All accepted model predictions/IDs/provenance frozen before evaluator opens targets",
+    "reserve": "90640..90959 unread",
+    "interpretation": "Report paired same-grid source/Slot results and all seeds;64 success does not substitute for the native32 FG>=.87 target"
+  },
+  "training": "No training in this design. A fresh native64 pilot needs separate prospective budget, actual optimizer resource/gradient preflight, and source/fresh-training disclosure after source-only measurements."
+}

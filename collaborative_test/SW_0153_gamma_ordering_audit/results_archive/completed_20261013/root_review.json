@@ -1,0 +1,35 @@
+{
+  "status": "actual_source_diagnostic_complete",
+  "source_images": 4,
+  "ground_truth_used": false,
+  "optimizer_updates": 0,
+  "means_recomputed_from_raw_per_image": {
+    "naive_fixed_channel_shuffle": {
+      "drive_mse": 4.254543602466583,
+      "graph_adjacency_mse": 0.0005931599298492074,
+      "actual_q_offdiag_mse": 0.24639531190230007,
+      "qcc_changed_fraction": 0.481689453125
+    },
+    "naive_train_mean_channel_order": {
+      "drive_mse": 16.10052800178528,
+      "graph_adjacency_mse": 0.000724192796042189,
+      "actual_q_offdiag_mse": 0.18058895078960882,
+      "qcc_changed_fraction": 0.242431640625
+    },
+    "consistent_global_channel_reindex": {
+      "drive_max_abs": 8.717179298400879e-07,
+      "graph_adjacency_max_abs": 0.001109854318201542,
+      "actual_q_offdiag_mse": 9.209180570035056e-07,
+      "qcc_changed_fraction": 0.0
+    },
+    "per_image_patch_permutation": {
+      "drive_mse_after_node_unpermutation": 2.8251881865578362e-15,
+      "graph_adjacency_mse_after_node_unpermutation": 0.004937592544592917,
+      "actual_q_offdiag_mse_after_node_unpermutation": 0.1876600937955989,
+      "qcc_changed_fraction_after_node_unpermutation": 0.257080078125
+    }
+  },
+  "score_gain_proven": false,
+  "interpretation": "Naive channel changes alter pretrained drive/graph/Q. Corresponding projection-column reindex preserves QCC labels on TRAIN4 but not bit-exact graph due to floating-point/top-k discontinuity. Label changed fraction is not ground-truth error or permutation-invariant partition agreement.",
+  "metadata_note": "Original report omitted patch-permutation aggregate fields due to suffix filter; means recomputed from existing raw rows, no GPU rerun."
+}

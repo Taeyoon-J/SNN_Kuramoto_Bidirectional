@@ -1,0 +1,34 @@
+{
+  "status": "slot64_baseline_complete_own64_pending",
+  "server_cpu_tests_passed": 7,
+  "native64_own_model_run": false,
+  "scores": {
+    "fg_ari": {
+      "per_seed": {
+        "0": 0.6362654413147755,
+        "1": 0.8461613938549044,
+        "2": 0.8782782409093706
+      },
+      "three_seed_mean": 0.7869016920263502
+    },
+    "foreground_iou": {
+      "per_seed": {
+        "0": 0.20550839815827332,
+        "1": 0.1971932266473949,
+        "2": 0.19190074283029854
+      },
+      "three_seed_mean": 0.19820078921198891
+    },
+    "matched_object_iou": {
+      "per_seed": {
+        "0": 0.18498561410276237,
+        "1": 0.2124113860630577,
+        "2": 0.18821057093816224
+      },
+      "three_seed_mean": 0.19520252370132743
+    }
+  },
+  "checkpoint_training": "ours70000",
+  "evaluation": "ours fixed320 IDs1320..1639, directnative128pixels pooled2x2",
+  "no_new_training": true
+}

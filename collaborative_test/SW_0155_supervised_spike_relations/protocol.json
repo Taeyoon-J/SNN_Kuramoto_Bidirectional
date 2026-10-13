@@ -1,0 +1,96 @@
+{
+  "experiment": "SW0155_supervised_spike_relations",
+  "registration_date": "2026-10-13",
+  "status": "prospective_design_no_training_admission",
+  "scope": "Mask-supervised continuation diagnostic; separate from every unsupervised leaderboard. A short run is not an absolute architecture ceiling.",
+  "source": {
+    "seed": 1,
+    "core": "Immutable SW0097 seed1 native16-trained whole checkpoint, strictly mapped to native32 by frozen SW0135",
+    "graph": "SW0135 linear cosine dissimilarity; learned source contrast; full-k soft min-plus reduction with temperature*log(4) correction",
+    "encoder": "Registered native RGB encoder/statistics plus SW0152 exact-zero-output residual; original base encoder frozen",
+    "initialization": "Both arms use identical source, residual weights, and fresh Adam state; no completed SW0152 training checkpoint reuse",
+    "training_lineage": "Pretrained source continuation, not fresh native32 70k training"
+  },
+  "data": {
+    "canonical_hdf5": "/Data0/kevinswk/datasets/object_centric_data/clevr_10-full.hdf5",
+    "image_key": "image",
+    "image_shape": [100000, 128, 128, 3],
+    "mask_key": "mask",
+    "mask_schema": "Nonnegative integer native128 instance IDs, [100000,128,128] or [100000,128,128,1]; background ID0",
+    "rgb_cache_manifest": "data/SW_0106_spike_partition_rgb/train_rgb_uint8.npy.complete.json",
+    "train_pool_global_ids_inclusive": [[0, 999], [1640, 70639]],
+    "ordered_selection": "First2048 images in the immutable SW0097 seed1 ordered4096 TRAIN source contract; select RGB and mask by identical global ID and restore that exact order after sorted HDF5 reads",
+    "unique_training_images": 2048,
+    "mask_cache": "Optional TRAIN-only cache binding ordered global IDs, canonical dataset identity, RGB mapping and mask bytes; never create an all-split mask cache",
+    "forbidden_trainer_ids": [[1000, 1639], [90640, 90959]],
+    "ground_truth_permitted": "TRAIN masks only; explicit user-authorized supervision",
+    "official_tfds_warning": "SW0107 export contains image/tfds_train_index and no masks. Never attach canonical masks by matching TFDS row numbers."
+  },
+  "target": {
+    "grid": [32, 32],
+    "patch_pixels": [4, 4],
+    "conversion": "Production clevr_mask_patch: modal instance ID, smallest-ID tie, retain mixed/BG patches",
+    "pairs": "Unordered off-diagonal pairs i<j; exclude self pairs; no purity filtering",
+    "classes": ["same_foreground_instance", "different_foreground_instances", "foreground_background", "background_background"],
+    "same_target": "Y=1 for same foreground instance and background-background, otherwise Y=0",
+    "balancing": "For each image, mean within every nonempty pair class, then mean those class means, then mean images. Empty classes contribute neither value nor denominator."
+  },
+  "objective": {
+    "signed_correlations": "Exact production per-component centered/epsilon-normalized Pearson arithmetic on actual emitted component_spikes settled frames512:1024",
+    "native_q": "Q=stack(rho_d).clamp_min(0).prod(component); preserve production affinity exactly",
+    "q_loss": "L_Q=balanced class/image mean of (Q-Y)^2",
+    "positive_credit": "For each nonempty positive class (same-FG and BG-BG), mean over pairs of mean_d (1-rho_d)^2; average positive-class means per image and then images. This supplies credit to positive pairs blocked by native positive-clamp.",
+    "total": "L_Q+L_positive",
+    "coefficients": [1.0, 1.0],
+    "removed": ["RGB reconstruction", "cross-view JS", "source mass/Q anchor", "phase binding objective", "fixed density0.867 prior"],
+    "coefficient_selection": "None; no validation calibration or sweep"
+  },
+  "arms": {
+    "encoder_graph": "Train residual encoder and learned graph; freeze all non-graph native-core parameters and all three integration tensors",
+    "joint": "Same residual encoder and graph plus every non-graph native-core parameter and integration a_d/a_m/b",
+    "integration_parameter_accounting": "a_d,a_m,b are THREE Parameter tensors of length4: TWELVE scalar elements, not three scalars",
+    "shared": "Frozen base encoder, matched source, identical ordered TRAIN IDs and exposure budget, no additional mask classifier or external teacher"
+  },
+  "optimization": {
+    "updates": 128,
+    "logical_batch": 16,
+    "microbatch": 4,
+    "microbatches_per_update": 4,
+    "aggregation": "Sum micro image-mean losses divided by4; global clip and Adam once per logical update",
+    "optimizer": "Fresh Adam, default beta/epsilon and no weight decay, restored exactly on interruption",
+    "learning_rates": {"spatial_residual": 0.000003, "graph": 0.00003, "native_core_joint_only": 0.00003, "integration_tensors_joint_only": 0.001},
+    "global_clip_norm": 1.0,
+    "total_time_steps": 1024,
+    "loss_settle": 512,
+    "live_tail": 64,
+    "static_preparation": "Graph, drive and coupling prepared live before no-grad burn-in; native states detached only at step960",
+    "completion": "Last completed update128 only; transactional weights/Adam/RNG/history checkpoint after each full logical update; no validation checkpoint selection"
+  },
+  "preflight": [
+    "Validate raw mask schema and exact RGB/mask/global-ID alignment on TRAIN only; reject any forbidden IDs before mask access",
+    "Synthetic unordered-label, empty-class, BG, mixed-patch/tie and pair-balancing checks",
+    "Exact source zero-residual gamma/actual-spike/QCC parity; independent production Q versus reconstructed positive-product equality",
+    "Two disposable logical updates for each arm with finite loss/gradient and actual changes in intended groups; confirm frozen groups unchanged and preserve fresh source for pilot",
+    "First-update hidden residual gradients may be zero because final projection is zero; inspect hidden credit on update2",
+    "Measure exclusive-GPU peak/time, per-family gradient/update and actual event occupancy/change; tiny surrogate gradients do not establish gate usefulness"
+  ],
+  "evaluation": {
+    "image_ids_inclusive": [1320, 1639],
+    "count": 320,
+    "grid": [32, 32],
+    "rollout": 1024,
+    "settle": 512,
+    "prediction": "Original actual-spike QCC, threshold0.50, minimum group8, largest connected component BG; no GT or GT object count at inference",
+    "metrics": ["fg_ari", "foreground_iou", "matched_object_iou"],
+    "freeze_rule": "Freeze both arms and source predictions/provenance before evaluator opens VAL masks",
+    "checkpoint": "Last only; both arms reported regardless of result",
+    "reference": "Same-seed source plus SW0143T incumbent reported separately; existing unsupervised Slot is contextual, not a supervised matched training control",
+    "supervised_slot": "Separate registered Slot continuation on identical canonical TRAIN masks/images/exposures;11 fixed output slots, Hungarian mask BCE+Dice, no inference object count and unchanged perimeter BG policy"
+  },
+  "decision": {
+    "expansion": "Extend promising supervised recipe to seeds0/2 only if FG gain>=0.02 over same-seed SW0143T and shared-image paired95% CI lower>0; joint superiority claim additionally requires positive CI versus encoder_graph",
+    "iou_policy": "Report both IoUs; retain useful FG-first tradeoffs under SELECTION_POLICY; final goal still requires all three comparable metrics",
+    "failure": "Close this fixed short recipe if endpoint does not advance; no LR/target/readout/threshold sweep. Failure is not proof of an absolute ceiling.",
+    "goal_claim": "Native32 FG>=0.87 must be verified as seed0/1/2 mean. Supervised success does not satisfy the unsupervised70k goal, all-gates contribution, or unique-data scaling claim."
+  }
+}
