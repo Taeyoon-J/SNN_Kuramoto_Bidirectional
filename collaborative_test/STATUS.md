@@ -1,4 +1,4 @@
-SW0148: both seed1 native32 pilot arms completed 256 updates; training output hashes verified; prediction and paired evaluation pending.
+SW0148 complete: seed1 FG-ARI encoder_graph 0.745394 / joint 0.733767 / source 0.754135; promotion failed; no seed expansion. Training diagnostics archived for next structural decision.
 
 ## Earlier observations (historical; superseded by the current status above)
 
