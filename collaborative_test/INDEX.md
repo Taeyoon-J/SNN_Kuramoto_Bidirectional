@@ -76,6 +76,10 @@
 | PV2_0083 | completed | **70.7% of the error is on single-object patches: the merges are between patches, not inside them, so input resolution is not the limit** | | | |
 | PV2_0084 | completed | MOVi-A prepared; motion's margin is 1.4x standardised appearance, not 13x; channel concatenation hits the dead-membrane wall | | | |
 | PV2_0085 | completed | **motion as a PLV target: calibrated control .3042, motion .0823. Negative -- but the pilot's control is too weak to be the platform** | | | |
+| PV2_0086 | running | the motion test again on an 8-channel MOVi platform, because `PV2_0085`'s control was too weak to carry a verdict | | | |
+| PV2_0087 | completed | **complexity: ours is O(N^3 + T N^2) in patches, Slot Attention O(K L P k^2 C^2) in pixels. 17.6x cheaper at 16x16, parity at 32x32, 13x with a sparse rollout** | | | |
+| PV2_0088 | completed | **the 32x32 enablers: grid rule verified IDENTICAL to v1 at grid 16; geodesic 68.7 GB -> 4.72 GB bit-identical; gamma recipe reconstructed** | | | |
+| PV2_0089 | running | the published configuration at a 32x32 grid, contract v2 | | | |
 | PV2_0046 | completed | contract diagnostic: a looser rule *lowers* fg_ari 0.724 to 0.533; cross-branch scores are not poolable | | | |
 
 Three seeds on the test split, scored from spike masks. Peer experiments from
