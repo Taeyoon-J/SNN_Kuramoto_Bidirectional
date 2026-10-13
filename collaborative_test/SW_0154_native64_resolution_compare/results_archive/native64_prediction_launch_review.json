@@ -1,0 +1,20 @@
+{
+  "observed_at_utc": "2026-10-13T23:27:40.877075+00:00",
+  "status": "seed1_running_seed0_guard_failed_seed2_queued",
+  "server_cpu_tests": 7,
+  "server_cap_queue_tests": 3,
+  "supervisor_pid": 2788921,
+  "seed1_child_pid": 2789343,
+  "physical_gpu": 1,
+  "max_parallel_gpu_tasks": 1,
+  "registered_seeds": [
+    0,
+    1,
+    2
+  ],
+  "fixed_images_per_seed": 320,
+  "seed0_failure": "Legacy SW0150 parity receipt validator is seed1-only; fails before any GPU image prediction.",
+  "next_action": "Preserve live seed1. Separate explicit seed0/2 admission repair entrypoint; frozen prediction and metric implementation unchanged.",
+  "main_supervised_training_started": false,
+  "full_native64_scores_available": false
+}
