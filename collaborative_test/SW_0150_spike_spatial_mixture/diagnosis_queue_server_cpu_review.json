@@ -1,0 +1,22 @@
+{
+  "cpu_test_returncode": 0,
+  "cpu_test_module_count": 1,
+  "stdout": "",
+  "stderr": "test_bad_prediction_in_completed_queue_fails_closed (collaborative_test.SW_0150_spike_spatial_mixture.test_diagnosis_queue.DiagnosisQueueTests) ... ok\ntest_complete_main_queue_revalidates_each_frozen_prediction (collaborative_test.SW_0150_spike_spatial_mixture.test_diagnosis_queue.DiagnosisQueueTests) ... ok\ntest_dry_run_is_one_diagnostic_after_three_predictions (collaborative_test.SW_0150_spike_spatial_mixture.test_diagnosis_queue.DiagnosisQueueTests) ... ok\ntest_existing_output_is_preserved_and_not_restarted (collaborative_test.SW_0150_spike_spatial_mixture.test_diagnosis_queue.DiagnosisQueueTests) ... ok\ntest_existing_valid_report_is_adopted_without_rewrite (collaborative_test.SW_0150_spike_spatial_mixture.test_diagnosis_queue.DiagnosisQueueTests) ... ok\ntest_failed_main_queue_is_terminal_and_never_reserves_gpu (collaborative_test.SW_0150_spike_spatial_mixture.test_diagnosis_queue.DiagnosisQueueTests) ... ok\ntest_launch_accepts_actual_diagnostic_report_fingerprint_and_lineage (collaborative_test.SW_0150_spike_spatial_mixture.test_diagnosis_queue.DiagnosisQueueTests) ... ok\ntest_launch_validates_actual_diagnostic_fingerprint_and_completed_lineage (collaborative_test.SW_0150_spike_spatial_mixture.test_diagnosis_queue.DiagnosisQueueTests) ... ok\ntest_main_queue_absent_or_running_waits_without_prediction_validation (collaborative_test.SW_0150_spike_spatial_mixture.test_diagnosis_queue.DiagnosisQueueTests) ... ok\ntest_transient_gpu_query_error_does_not_stop_owned_diagnostic (collaborative_test.SW_0150_spike_spatial_mixture.test_diagnosis_queue.DiagnosisQueueTests) ... ok\ntest_unstable_gpu_releases_lease_then_reacquires_before_one_launch (collaborative_test.SW_0150_spike_spatial_mixture.test_diagnosis_queue.DiagnosisQueueTests) ... ok\n\n----------------------------------------------------------------------\nRan 11 tests in 2.297s\n\nOK\n",
+  "files": [
+    {
+      "name": "diagnosis_queue.py",
+      "sha256": "7dd9c1f53db765311d195dc16b205fed31c5cc875de05a0ad80beebe329267b2"
+    },
+    {
+      "name": "diagnosis_queue_cpu_review.json",
+      "sha256": "979c36b727915b1f52a3c92aabae9164391cbd1946a58c8148400781bf0fb0f2"
+    },
+    {
+      "name": "test_diagnosis_queue.py",
+      "sha256": "8ec9965df2900541f54c8949485d11cbe7f9cd2de2d5ea8241caffb6823bacd1"
+    }
+  ],
+  "cuda_visible_devices": "",
+  "training_launched": false
+}

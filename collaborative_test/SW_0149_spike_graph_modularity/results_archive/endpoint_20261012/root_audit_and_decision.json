@@ -1,0 +1,91 @@
+{
+  "experiment": "SW0149_spike_graph_modularity",
+  "status": "complete_no_credible_gain_closed",
+  "seed": 1,
+  "result_sha256": "4001b35c66d61fe845215daefe1ad1f058d55d0da0a3913d342cc3fe0fc5f259",
+  "means": {
+    "encoder_graph": {
+      "fg_ari": 0.752341088569999,
+      "foreground_iou": 0.6091121495314219,
+      "matched_object_iou": 0.5846308280572783
+    },
+    "joint": {
+      "fg_ari": 0.7550577306282023,
+      "foreground_iou": 0.5938802133810002,
+      "matched_object_iou": 0.5855699296902761
+    },
+    "source97_seed1": {
+      "fg_ari": 0.7541350949944816,
+      "foreground_iou": 0.606899549668619,
+      "matched_object_iou": 0.582200586329909
+    },
+    "Slot32_seed1": {
+      "fg_ari": 0.8418192917733233,
+      "foreground_iou": 0.20341670897019232,
+      "matched_object_iou": 0.2221151564255643
+    }
+  },
+  "paired_bootstrap": {
+    "joint_minus_encoder_graph": {
+      "fg_ari": {
+        "mean_difference": 0.002716642058203292,
+        "ci95": [
+          -0.009206644970214894,
+          0.014428766902709637
+        ]
+      },
+      "foreground_iou": {
+        "mean_difference": -0.01523193615042182,
+        "ci95": [
+          -0.029685473992863514,
+          -0.001313711105638619
+        ]
+      },
+      "matched_object_iou": {
+        "mean_difference": 0.0009391016329977524,
+        "ci95": [
+          -0.010727254528835288,
+          0.012506743400959554
+        ]
+      }
+    },
+    "joint_minus_source97_seed1": {
+      "fg_ari": {
+        "mean_difference": 0.0009226356337206266,
+        "ci95": [
+          -0.01071722576988138,
+          0.012276194358648391
+        ]
+      },
+      "foreground_iou": {
+        "mean_difference": -0.013019336287618838,
+        "ci95": [
+          -0.03265387010261891,
+          0.007101182065133328
+        ]
+      },
+      "matched_object_iou": {
+        "mean_difference": 0.0033693433603670386,
+        "ci95": [
+          -0.007622632023269036,
+          0.01414331300325192
+        ]
+      }
+    }
+  },
+  "promotion_gate": {
+    "joint_fg_at_least_source_plus_0_01": false,
+    "joint_fg_at_least_encoder_graph_plus_0_01": false,
+    "joint_source_fg_ci_lower_positive": false,
+    "joint_encoder_graph_fg_ci_lower_positive": false,
+    "joint_foreground_iou_above_slot_three_seed_plus_0_05": true,
+    "joint_matched_object_iou_above_slot_three_seed_plus_0_05": true
+  },
+  "independent_root_audit": "All recorded 320-image means and shared RandomState139 10000-replicate paired CIs recomputed; raw prediction/training JSON lineage and unchanged evaluator fingerprint verified. Segmentation targets were not reread locally.",
+  "incumbent_changed": false,
+  "seed_expansion": false,
+  "fresh_native32_70000_training": false,
+  "gating_necessity_proven": false,
+  "scaling_proven": false,
+  "next_action": "Close unchanged modularity recipe; continue already running SW0150 primary spike-derived spatial assignment Gaussian NLL comparison. No blind coefficient/threshold sweep."
+}
