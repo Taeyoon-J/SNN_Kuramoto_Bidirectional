@@ -1,0 +1,136 @@
+{
+  "experiment": "SW0149_spike_graph_modularity",
+  "evidence_kind": "actual_completed_training_history_summary",
+  "arms": {
+    "encoder_graph": {
+      "manifest_sha256": "0e9e9fcafaefabd622da70c6b767d9af3bf2551dd585f0e0d7c7cd711477e440",
+      "checkpoint_sha256": "4fb2bfcdd389240242bdf751a36372a3ba8f5a8f2ad9af540c88ca402aa0cb42",
+      "history_sha256": "4360adf346dedca57d45d1925a599c00d90895898a14256e84a133c4682a9cff",
+      "updates": 256,
+      "exposures": 4096,
+      "loss_first16_mean": -0.5128151816315949,
+      "loss_last16_mean": -0.5065774666145444,
+      "loss_minimum": -0.6346268653869629,
+      "loss_maximum": -0.415423184633255,
+      "gradient_norms": {
+        "encoder": {
+          "minimum": 0.011130781364024374,
+          "maximum": 0.9521020626018223,
+          "median": 0.08838933557216617,
+          "positive_update_fraction": 1,
+          "first16_mean": 0.09281786536397604,
+          "last16_mean": 0.11230307322852211
+        },
+        "graph": {
+          "minimum": 0.003160735480239839,
+          "maximum": 0.3772823668508695,
+          "median": 0.008049460399202547,
+          "positive_update_fraction": 1,
+          "first16_mean": 0.006960638222639957,
+          "last16_mean": 0.009371947770662624
+        },
+        "native_core": {
+          "minimum": 0,
+          "maximum": 0,
+          "median": 0,
+          "positive_update_fraction": 0,
+          "first16_mean": 0,
+          "last16_mean": 0
+        },
+        "integration_scalars": {
+          "minimum": 0,
+          "maximum": 0,
+          "median": 0,
+          "positive_update_fraction": 0,
+          "first16_mean": 0,
+          "last16_mean": 0
+        }
+      },
+      "initial_parameter_sha256": {
+        "encoder": "9dcba99ffc656936b27017fe000f00bc287514fc1ce451667f8805d7ef6dff8f",
+        "graph": "5d4e5b56bd91e6f8cf3feaa1f41be2bf49db86160f9879664c9daf385343b0ae",
+        "native_core": "6658954458e7b67eba8ca22ee22bb2af8b404b3ed99d2024dc42df46db32ed72",
+        "integration_scalars": "2c2cc2aee292e24c12c06b7b7c4b2d51c8778de0740c2d0eeab8a792ba79748b"
+      },
+      "final_parameter_sha256": {
+        "encoder": "0efd47843afab8d841692e473d56cc4e317585d1c6c52d96a49acccd4a8c327f",
+        "graph": "70308f6f150c13925da80540d89398db60ea388127df8e0b3e110913a2847462",
+        "native_core": "6658954458e7b67eba8ca22ee22bb2af8b404b3ed99d2024dc42df46db32ed72",
+        "integration_scalars": "2c2cc2aee292e24c12c06b7b7c4b2d51c8778de0740c2d0eeab8a792ba79748b"
+      },
+      "optimizer_step_range": [
+        256,
+        256
+      ],
+      "ground_truth_used": false
+    },
+    "joint": {
+      "manifest_sha256": "d18030eda95825a3e83471673b22254ec1f1a33bd0f6e50a29fe18ee1fa97784",
+      "checkpoint_sha256": "62d2b24a423d033ae494abd8cee97e28657ebba25ba62e6fce3b7b3ca6804b60",
+      "history_sha256": "0db595acb389ef36e5c1bc5ed6068d1460a2921f39f965e5fb8e1b4e1abed0d6",
+      "updates": 256,
+      "exposures": 4096,
+      "loss_first16_mean": -0.5127538242377341,
+      "loss_last16_mean": -0.5227714939974248,
+      "loss_minimum": -0.6399641782045364,
+      "loss_maximum": -0.41708215326070786,
+      "gradient_norms": {
+        "encoder": {
+          "minimum": 0.019526252087717497,
+          "maximum": 0.3965668889852528,
+          "median": 0.08897630683569611,
+          "positive_update_fraction": 1,
+          "first16_mean": 0.06826878713914117,
+          "last16_mean": 0.0965633102532191
+        },
+        "graph": {
+          "minimum": 0.0031907227314787916,
+          "maximum": 0.07808367733895076,
+          "median": 0.008190852258832404,
+          "positive_update_fraction": 1,
+          "first16_mean": 0.008229328379182124,
+          "last16_mean": 0.007608359354525136
+        },
+        "native_core": {
+          "minimum": 0.0038959666621090306,
+          "maximum": 0.07407663300718761,
+          "median": 0.019738196434690825,
+          "positive_update_fraction": 1,
+          "first16_mean": 0.01528520728523963,
+          "last16_mean": 0.021704062931809476
+        },
+        "integration_scalars": {
+          "minimum": 4.778464686653759e-7,
+          "maximum": 0.000007145655900134721,
+          "median": 0.0000019079744696847404,
+          "positive_update_fraction": 1,
+          "first16_mean": 0.0000017642822360690816,
+          "last16_mean": 0.000002030813756329786
+        }
+      },
+      "initial_parameter_sha256": {
+        "encoder": "9dcba99ffc656936b27017fe000f00bc287514fc1ce451667f8805d7ef6dff8f",
+        "graph": "5d4e5b56bd91e6f8cf3feaa1f41be2bf49db86160f9879664c9daf385343b0ae",
+        "native_core": "6658954458e7b67eba8ca22ee22bb2af8b404b3ed99d2024dc42df46db32ed72",
+        "integration_scalars": "2c2cc2aee292e24c12c06b7b7c4b2d51c8778de0740c2d0eeab8a792ba79748b"
+      },
+      "final_parameter_sha256": {
+        "encoder": "c0d78de0927bc8f94401b65d89fc64cc1ba4b5b8c9a4f3f31747140466d6b612",
+        "graph": "8b6f046c4a152e95bc6858e888ebde2b9c0a77d8325431e18a3b55cca6a00ed0",
+        "native_core": "42c2a474b7a124ccf3f8dad7af59f32fd61fffca9d2e9aaeb0a45622d87d7f7e",
+        "integration_scalars": "3f7b750c8fb811ee7529a91671174cc55af8ebd5ca2082e61f8066bfbb5186f5"
+      },
+      "optimizer_step_range": [
+        256,
+        256
+      ],
+      "ground_truth_used": false
+    }
+  },
+  "limits": [
+    "Training-loss windows contain different images and do not measure matched-image improvement.",
+    "Positive family gradients do not prove individual gate necessity or segmentation improvement.",
+    "Fixed320 evaluation and three-seed/native70k requirements remain pending."
+  ],
+  "reviewed_at_utc": "2026-10-13T03:25:42.238Z"
+}
