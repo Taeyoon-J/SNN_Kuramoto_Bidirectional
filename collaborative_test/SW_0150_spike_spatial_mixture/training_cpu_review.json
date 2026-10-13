@@ -1,0 +1,19 @@
+{
+  "experiment": "SW0150_spike_spatial_mixture",
+  "reviewer": "root",
+  "tests_run": 6,
+  "passed": 6,
+  "skipped": 0,
+  "scope": "actual durable checkpoint CPU fixtures for both arms, shared warm Adam32 and decoder, interruption/resume exact model/Adam/history/RNG equivalence, dependency paths and serialized optimizer validation",
+  "sha256": {
+    "train.py": "eec6f67efccc31c5175a8f3946d5afdc2a8db5c2ec9270dd69b8ee58001270da",
+    "test_train.py": "4b002b1842d07a3fcd454eba30cc924613cda761bdc928758f895d277d58d2a3"
+  },
+  "actual_source_gpu_preflight_passed": false,
+  "gpu_main_training_launched": false,
+  "training_admission": false,
+  "limitations": [
+    "CPU durable fixtures do not establish source model feasibility, instance performance or native32 70k scaling.",
+    "GPU admission must independently validate the queued actual-source SW150 preflight."
+  ]
+}
