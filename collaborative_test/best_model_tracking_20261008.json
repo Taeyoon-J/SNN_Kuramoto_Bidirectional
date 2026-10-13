@@ -2193,5 +2193,99 @@
       "incumbent_changed": false,
       "scaling_claim": false
     }
+  },
+  "latest_native32_boundary_training": {
+    "experiment": "SW0148_checkpointable_SW0146",
+    "status": "complete_failed_promotion",
+    "seed": 1,
+    "unique_training_images": 4096,
+    "logical_updates": 256,
+    "metrics": {
+      "encoder_graph": {
+        "fg_ari": 0.7453941807821867,
+        "foreground_iou": 0.6153920269554645,
+        "matched_object_iou": 0.5789704403037474
+      },
+      "joint": {
+        "fg_ari": 0.7337670057376904,
+        "foreground_iou": 0.5978693802925017,
+        "matched_object_iou": 0.5668954550810562
+      },
+      "source97_seed1": {
+        "fg_ari": 0.7541350949944816,
+        "foreground_iou": 0.606899549668619,
+        "matched_object_iou": 0.582200586329909
+      },
+      "Slot32_seed1": {
+        "fg_ari": 0.8418192917733233,
+        "foreground_iou": 0.20341670897019232,
+        "matched_object_iou": 0.2221151564255643
+      }
+    },
+    "paired_bootstrap": {
+      "joint_minus_source97": {
+        "fg_ari": {
+          "mean_difference": -0.0203680892567912,
+          "ci95": [
+            -0.028748273200010242,
+            -0.012151749273251867
+          ]
+        },
+        "foreground_iou": {
+          "mean_difference": -0.009030169376117333,
+          "ci95": [
+            -0.01990013992402962,
+            0.0018718945041969492
+          ]
+        },
+        "matched_object_iou": {
+          "mean_difference": -0.01530513124885273,
+          "ci95": [
+            -0.02572703378421893,
+            -0.004869128900029579
+          ]
+        }
+      },
+      "joint_minus_encoder_graph": {
+        "fg_ari": {
+          "mean_difference": -0.011627175044496339,
+          "ci95": [
+            -0.02012956568942863,
+            -0.0034139834269332316
+          ]
+        },
+        "foreground_iou": {
+          "mean_difference": -0.017522646662962844,
+          "ci95": [
+            -0.02887547588467675,
+            -0.006664121288060021
+          ]
+        },
+        "matched_object_iou": {
+          "mean_difference": -0.01207498522269124,
+          "ci95": [
+            -0.0216011876084639,
+            -0.0028716274922649093
+          ]
+        }
+      }
+    },
+    "promotion": {
+      "joint_fg_at_least_source_plus_0_01": false,
+      "joint_fg_at_least_control_plus_0_01": false,
+      "joint_control_fg_ci_lower_positive": false,
+      "joint_source_fg_ci_lower_positive": false,
+      "joint_foreground_iou_above_slot_three_seed_plus_0_05": true,
+      "joint_matched_object_iou_above_slot_three_seed_plus_0_05": true
+    },
+    "seed_expansion": false,
+    "incumbent_changed": false,
+    "fresh_native32_70000_training": false,
+    "gating_necessity_proven": false,
+    "scaling_proven": false,
+    "evaluation": "SW_0148_checkpointable_boundary_q/results_archive/evaluation_seed1.json",
+    "evaluation_sha256": "f630e399d63006d0964798a4a70ca86fe16700a0b484220533ebf010e235b4b9",
+    "error_diagnosis": "SW_0148_checkpointable_boundary_q/results_archive/error_20261012/decision.json",
+    "next_action": "Close unchanged RGB seam recipe and hold SW0147 same-loss training; review semantic relation learning objective."
   }
 }
