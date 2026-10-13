@@ -41,6 +41,23 @@ The one-task owner-aware GPU queue can be inspected without starting it:
 python -m collaborative_test.SW_0149_spike_graph_modularity.preflight_queue --dry-run
 ```
 
+After the source preflight report has been completed and validated, the
+two-arm pilot queue can also be inspected or started from the repository root:
+
+```powershell
+python -m collaborative_test.SW_0149_spike_graph_modularity.stage_queue --dry-run
+python -m collaborative_test.SW_0149_spike_graph_modularity.stage_queue
+```
+
+The queue runs both 256-update arms on separate owner-checked GPUs, then each
+arm's fixed320 prediction, and finally scoring in a CUDA-hidden CPU process.
+It never overwrites existing outputs. GPU-owner interruption may resume a
+training arm only from its validated logical-update checkpoint; predictions
+retry only while their final output is absent. Ground truth is opened by the
+last scoring stage, after both candidate predictions and registered references
+have passed their hash and ID checks. The score reports the preregistered
+paired bootstrap and promotion gates; it does not expand training automatically.
+
 Passing the CPU tests or preflight does not admit training or establish a
 semantic interpretation of the source graph. Fixed pilot expansion and
 promotion criteria are recorded in `protocol.json`.
