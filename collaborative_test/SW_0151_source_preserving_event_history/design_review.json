@@ -1,0 +1,25 @@
+{
+  "status": "conditional_cpu_helper_review_passed",
+  "training_admission": false,
+  "review_model": "gpt-6.1-sol",
+  "implementation_model": "gpt-6-luna",
+  "independent_root_cpu_tests": 8,
+  "new_parameter_count": 8,
+  "existing_threshold": "Caller owns and supplies existing 0.06*exp(wrapped.b); no duplicate b parameters.",
+  "native_reset": "Helper changes neither membrane integration nor native reset coefficient. Future integration must feed the emitted spike into the existing next-step reset path.",
+  "temporal_credit": "Use returned previous_event/history across live steps. Detach both only at the truncated-rollout boundary; default per-step detach would invalidate the proposed temporal credit.",
+  "initialization": "kappa=0 preserves helper native events/spikes. Initial lambda gradient is expected to be zero; post-adaptation credit must be measured separately.",
+  "dtype": "Native event function emits float32, so helper explicitly supports float32 membrane and matching gate/state tensors.",
+  "held_prerequisites": [
+    "Review completed SW0150 objective and grouping evidence before choosing a training objective.",
+    "Calibrate fixed scale from the declared source TRAIN membrane margins; no GT or event-rate target.",
+    "Integrate in an isolated prospective rollout, leaving existing experiments unchanged.",
+    "Verify whole T1024 trace and spike-Q parity at zero gain, including boundary960 and correct source reset semantics.",
+    "Verify actual changed events, nonconstant history and live history credit after adaptation; gradients alone are insufficient.",
+    "Define matched temporal control without claiming equal active capacity when memoryless lambda is unused."
+  ],
+  "performance_claim": false,
+  "gating_necessity_proven": false,
+  "fresh_native32_70000_training": false,
+  "scaling_proven": false
+}

@@ -1,0 +1,28 @@
+{
+  "status": "passed",
+  "tests_run": 8,
+  "reviewed_at_utc": "2026-10-13T04:29:19.308074+00:00",
+  "files": {
+    "event_history.py": "9e1d2f838483975c8d0b37a93ef192a1bd6b31df1a1377d8623c887446ced8b9",
+    "test_event_history.py": "4d7abba3a48372e9fa62df60ea576d0efec7b7a82037632fc1cb3e4446f82630",
+    "README.md": "5953a2eb0bf4c140bb9d22a390ed5f8f2246b9047467b42b228a233aba1d4ece"
+  },
+  "cuda_visible_devices": "",
+  "actual_rollout_integrated": false,
+  "server_deployed": false,
+  "training_admission": false,
+  "native_dtype": "float32",
+  "source_preservation_scope": "Synthetic event/spike kernel sequences only; not actual whole-rollout parity.",
+  "verified": [
+    "Zero-gain event/spike parity with caller supplied native thresholds",
+    "Live multistep temporal credit using returned previous_event/history; explicit boundary detachment removes earlier membrane/event/history gradients",
+    "Correct batch/component parameter order",
+    "Zero-gate state hold; input states unchanged",
+    "Finite gradients, expected zero initial lambda credit, parameter projection and input rejection"
+  ],
+  "limitations": [
+    "No event selectivity, causal history benefit, segmentation gain, or scaling proof.",
+    "Objective and matched temporal-control design require SW0150 endpoint review.",
+    "Memoryless lambda is inactive; equal tensor count does not prove equal active capacity."
+  ]
+}
