@@ -1,0 +1,43 @@
+{
+  "experiment": "SW0150_spike_spatial_mixture",
+  "evidence_kind": "actual_atomic_training_progress_and_shared_warm_lineage",
+  "arms": {
+    "encoder_graph": {
+      "status": "validated_committed_boundary",
+      "completed_updates": 9,
+      "bindings_sha256": "66ad0ccfe2e34f40971507c164fa6b59dac3eda89936794f2fad60802cfbe128",
+      "runtime": {
+        "device_type": "cuda",
+        "torch_version": "2.13.0+cu130",
+        "cuda_runtime": "13.0",
+        "cudnn_version": 92000,
+        "python_version": "3.10.20",
+        "platform": "Linux-4.18.0-553.157.1.el8_10.x86_64-x86_64-with-glibc2.28",
+        "deterministic_algorithms": false,
+        "cudnn_benchmark": false,
+        "cudnn_deterministic": false,
+        "allow_tf32_matmul": false,
+        "allow_tf32_cudnn": true,
+        "float32_matmul_precision": "highest",
+        "cublas_workspace_config": null,
+        "cuda_visible_devices": "0",
+        "device_index": 0,
+        "device_name": "NVIDIA TITAN RTX",
+        "device_capability": [
+          7,
+          5
+        ],
+        "device_total_memory": 25197805568
+      },
+      "warm_sha256": "d06f85d5e8518e61e7b7b64461674df1c6ffabb03c96f89286d71ab1e7458bfe",
+      "initial_parameter_groups_match_actual_preflight": true
+    },
+    "joint": {
+      "status": "no_committed_boundary_yet"
+    }
+  },
+  "limits": [
+    "Committed progress and shared initialization are verified, not endpoint quality or segmentation improvement."
+  ],
+  "reviewed_at_utc": "2026-10-13T03:37:47.784Z"
+}
