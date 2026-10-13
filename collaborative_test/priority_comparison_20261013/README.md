@@ -11,5 +11,6 @@ All scores are FG-ARI / foreground IoU / matched-object IoU. Rows with measured 
 | official / ours | 32x32 | Not verified | Not verified | not verified |
 | official / official | 16x16 | Not verified | Not verified | not verified under our matched evaluation contract |
 | official / official | 32x32 | Not verified | Not verified | not verified under our matched evaluation contract |
+| ours / ours | 64x64 | Not verified | 0.7869 / 0.1982 / 0.1952 | Slot baseline completed; own native64 pending |
 
 The .894641 released Slot result is evaluation on our images, not official-domain evaluation. SW107 continues an already ours-trained model. Neither SW107 nor SW143T is an exclusive official-domain or fresh native32 experiment. No contract/split/gamma recipe changes were used to fill missing cells.

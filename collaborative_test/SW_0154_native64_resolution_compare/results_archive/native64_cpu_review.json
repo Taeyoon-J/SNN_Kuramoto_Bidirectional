@@ -1,0 +1,18 @@
+{
+  "status": "server_cpu_12_passed_resource_not_launched",
+  "tests_passed": 12,
+  "runtime_seconds": 2.111,
+  "resource_probe_import_fingerprint_count": 29,
+  "runtime_module_paths": [
+    "repo",
+    "repo/collaborative_test"
+  ],
+  "first_subset_test_failure": "Missing collaborative_test module path for two bare legacy imports. Identical code passed under explicit production runtime paths; no model/loss/target changes.",
+  "files": {
+    "native64_model.py": "7b0dad833d675823958ade079afbe51e1843b580780be08baf661d3ae8f95c8a",
+    "resource_probe.py": "f4f41b2e456cd34a00bb8322abecc5954efaaba3708fb66a81d63b9f65526cfa",
+    "test_native64_model.py": "6e236d394767ae9b4b28e1dd832b594a00314d2056119cfc4b14545022a3034b"
+  },
+  "actual_native64_model_run": false,
+  "new_training_started": false
+}
