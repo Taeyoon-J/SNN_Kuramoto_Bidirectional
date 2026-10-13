@@ -2661,9 +2661,9 @@
   },
   "latest_native32_partition_equivariance_preparation": {
     "experiment": "SW0152",
-    "status": "pilot_queued_source_prediction_running",
+    "status": "pilot_candidate_started_control_queued",
     "tests_passed": 9,
-    "training_started": false,
+    "training_started": true,
     "source_seed": 1,
     "planned_unique_train_images": 2048,
     "actual_source_gpu_preflight_passed": true,
@@ -2671,19 +2671,19 @@
     "record": "collaborative_test/SW_0152_source_preserving_partition_equivariance/results_archive/preflight_20261013/root_review.json",
     "actual_gpu": 1,
     "supervisor_pid": 2669111,
-    "child_pid": 2663261,
+    "child_pid": 2675454,
     "local_cpu_tests_passed": 22,
     "server_cpu_tests_passed": 32,
-    "child_live": false,
+    "child_live": true,
     "pilot_training_admitted": true,
     "permutation_js_delta": 0.007704662479227409,
     "queue_record": "collaborative_test/SW_0152_source_preserving_partition_equivariance/results_archive/stage_queue_20261013/state.json",
     "task_statuses": {
-      "train_equivariance": "waiting_for_exclusive_gpu",
+      "train_equivariance": "running",
       "train_mass_control": "waiting_for_exclusive_gpu",
+      "predict_source_p": "passed",
       "predict_equivariance": "queued",
       "predict_mass_control": "queued",
-      "predict_source_p": "running",
       "score": "queued"
     }
   }
