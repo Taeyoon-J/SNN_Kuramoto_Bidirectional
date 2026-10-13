@@ -1,0 +1,157 @@
+﻿{
+  "experiment": "SW0150_spike_spatial_mixture",
+  "server_cpu_tests": {
+    "passed": 8,
+    "failed": 0,
+    "cuda_visible_devices": "",
+    "files": [
+      {
+        "name": "stage_queue.py",
+        "sha256": "69a21766e76a11dbcd3b31b1093a515d14b0b49d54ceb47e7ee89de2f5131465"
+      },
+      {
+        "name": "test_stage_queue.py",
+        "sha256": "6208277189ec021a274b11236f3c4aeece13eedac8df631f5198102a784db8af"
+      }
+    ]
+  },
+  "actual_launch_receipt": {
+    "experiment": "SW0150_spike_spatial_mixture",
+    "supervisor_pid": 1849094,
+    "actual_supervisor_cmdline": "/Data0/kevinswk/envs/snn/bin/python -m collaborative_test.SW_0150_spike_spatial_mixture.stage_queue ",
+    "argv": [
+      "/Data0/kevinswk/envs/snn/bin/python",
+      "-m",
+      "collaborative_test.SW_0150_spike_spatial_mixture.stage_queue"
+    ],
+    "running": true,
+    "returncode": null,
+    "implementation_fingerprint": {
+      "collaborative_test/SW_0150_spike_spatial_mixture/stage_queue.py": "69a21766e76a11dbcd3b31b1093a515d14b0b49d54ceb47e7ee89de2f5131465",
+      "collaborative_test/SW_0150_spike_spatial_mixture/train.py": "eec6f67efccc31c5175a8f3946d5afdc2a8db5c2ec9270dd69b8ee58001270da",
+      "collaborative_test/SW_0150_spike_spatial_mixture/evaluate.py": "2941bdb9aa0c14d207317c1234347fc44d730fea253de61b7aafda61b331bfaa",
+      "collaborative_test/SW_0150_spike_spatial_mixture/preflight.py": "b19791641383e5648d7598b1a5150b3f1940ca2215efb242707189d436454317",
+      "collaborative_test/SW_0150_spike_spatial_mixture/preflight_queue.py": "6fc63d20c4d77878e328aa3fcf3ca164a558fe3646e4ed8ab73d71755ca6b53a",
+      "collaborative_test/SW_0150_spike_spatial_mixture/protocol.json": "a66983462892e01a71ee84b4041efd0df0986459515f4ddc4ad29e0de7e26a61",
+      "collaborative_test/SW_0150_spike_spatial_mixture/integration.py": "fb3f44c5d52e8eccccc60b9a19f9a13f388a91f905c5f8aa9de326dcce58e0ca",
+      "collaborative_test/SW_0150_spike_spatial_mixture/spatial_diffusion.py": "591fa1128b0cbfb6c0f135d28397868704d46fe1140275c67b37790ebdde3d1a",
+      "collaborative_test/SW_0150_spike_spatial_mixture/seed_selection.py": "d2bfd420b4ce7d1fcdc7124b5e0257b892bbb0a3eed362aa35d51a358a10d429",
+      "collaborative_test/SW_0150_spike_spatial_mixture/likelihood.py": "2c779c779eac7f1bc116ecf019078735a98f8ff2d513b87eb490d0ddb340785a",
+      "collaborative_test/SW_0148_checkpointable_boundary_q/checkpoint.py": "75d5076c051f81a51a39bbafedd363e589aa58ffc41ba4a662a87ffb91601f53",
+      "collaborative_test/SW_0148_checkpointable_boundary_q/stage_queue_v4.py": "14fae39aeb6e958df60edf25680f412acb50a01126fd7af725c61fdba3794623",
+      "collaborative_test/SW_0126_history_event_binding/pilot_queue.py": "c59cdc39af20c824930d1926c8cec1418ee818577b8cc4240ad6eaae836764f6"
+    },
+    "state": {
+      "experiment": "SW0150_spike_spatial_mixture",
+      "queue_version": 1,
+      "status": "running",
+      "supervisor_pid": 1849094,
+      "owner_dispatcher_sha256": "c59cdc39af20c824930d1926c8cec1418ee818577b8cc4240ad6eaae836764f6",
+      "owner_queue_sha256": "14fae39aeb6e958df60edf25680f412acb50a01126fd7af725c61fdba3794623",
+      "implementation_fingerprint": {
+        "collaborative_test/SW_0150_spike_spatial_mixture/stage_queue.py": "69a21766e76a11dbcd3b31b1093a515d14b0b49d54ceb47e7ee89de2f5131465",
+        "collaborative_test/SW_0150_spike_spatial_mixture/train.py": "eec6f67efccc31c5175a8f3946d5afdc2a8db5c2ec9270dd69b8ee58001270da",
+        "collaborative_test/SW_0150_spike_spatial_mixture/evaluate.py": "2941bdb9aa0c14d207317c1234347fc44d730fea253de61b7aafda61b331bfaa",
+        "collaborative_test/SW_0150_spike_spatial_mixture/preflight.py": "b19791641383e5648d7598b1a5150b3f1940ca2215efb242707189d436454317",
+        "collaborative_test/SW_0150_spike_spatial_mixture/preflight_queue.py": "6fc63d20c4d77878e328aa3fcf3ca164a558fe3646e4ed8ab73d71755ca6b53a",
+        "collaborative_test/SW_0150_spike_spatial_mixture/protocol.json": "a66983462892e01a71ee84b4041efd0df0986459515f4ddc4ad29e0de7e26a61",
+        "collaborative_test/SW_0150_spike_spatial_mixture/integration.py": "fb3f44c5d52e8eccccc60b9a19f9a13f388a91f905c5f8aa9de326dcce58e0ca",
+        "collaborative_test/SW_0150_spike_spatial_mixture/spatial_diffusion.py": "591fa1128b0cbfb6c0f135d28397868704d46fe1140275c67b37790ebdde3d1a",
+        "collaborative_test/SW_0150_spike_spatial_mixture/seed_selection.py": "d2bfd420b4ce7d1fcdc7124b5e0257b892bbb0a3eed362aa35d51a358a10d429",
+        "collaborative_test/SW_0150_spike_spatial_mixture/likelihood.py": "2c779c779eac7f1bc116ecf019078735a98f8ff2d513b87eb490d0ddb340785a",
+        "collaborative_test/SW_0148_checkpointable_boundary_q/checkpoint.py": "75d5076c051f81a51a39bbafedd363e589aa58ffc41ba4a662a87ffb91601f53",
+        "collaborative_test/SW_0148_checkpointable_boundary_q/stage_queue_v4.py": "14fae39aeb6e958df60edf25680f412acb50a01126fd7af725c61fdba3794623",
+        "collaborative_test/SW_0126_history_event_binding/pilot_queue.py": "c59cdc39af20c824930d1926c8cec1418ee818577b8cc4240ad6eaae836764f6"
+      },
+      "implementation_sha256": "304bc204b85aa7fb3a4622b32ec0c6b04f618ec4a9fa752936d79e644467d65d",
+      "preflight": {
+        "status": "waiting_for_external_preflight",
+        "report": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0150_spike_spatial_mixture/results_archive/preflight_seed1.json",
+        "warm_artifact": "/Data0/kevinswk/collaborative_private_runtime_20261008/SW0150_preflight_20261012/decoder_warm_seed1.pt",
+        "checked": 1791859636.0557399,
+        "error": null
+      },
+      "tasks": {
+        "train_encoder_graph": {
+          "task": {
+            "task_id": "train_encoder_graph",
+            "stage": "train",
+            "arm": "encoder_graph",
+            "depends_on": [
+              "external_preflight"
+            ],
+            "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0150_spike_spatial_mixture/training/encoder_graph_seed1"
+          },
+          "status": "queued"
+        },
+        "train_joint": {
+          "task": {
+            "task_id": "train_joint",
+            "stage": "train",
+            "arm": "joint",
+            "depends_on": [
+              "external_preflight"
+            ],
+            "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0150_spike_spatial_mixture/training/joint_seed1"
+          },
+          "status": "queued"
+        },
+        "predict_encoder_graph": {
+          "task": {
+            "task_id": "predict_encoder_graph",
+            "stage": "predict",
+            "arm": "encoder_graph",
+            "depends_on": [
+              "train_encoder_graph"
+            ],
+            "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0150_spike_spatial_mixture/predictions/encoder_graph_seed1"
+          },
+          "status": "queued"
+        },
+        "predict_joint": {
+          "task": {
+            "task_id": "predict_joint",
+            "stage": "predict",
+            "arm": "joint",
+            "depends_on": [
+              "train_joint"
+            ],
+            "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0150_spike_spatial_mixture/predictions/joint_seed1"
+          },
+          "status": "queued"
+        },
+        "predict_source_p": {
+          "task": {
+            "task_id": "predict_source_p",
+            "stage": "predict_source",
+            "arm": null,
+            "depends_on": [],
+            "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0150_spike_spatial_mixture/predictions/source_p_seed1"
+          },
+          "status": "waiting_for_exclusive_gpu"
+        },
+        "score": {
+          "task": {
+            "task_id": "score",
+            "stage": "score",
+            "arm": null,
+            "depends_on": [
+              "predict_encoder_graph",
+              "predict_joint",
+              "predict_source_p"
+            ],
+            "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0150_spike_spatial_mixture/results_archive/evaluation_seed1.json"
+          },
+          "status": "queued"
+        }
+      }
+    },
+    "tasks_registered": 6,
+    "initial_main_training_admission": false,
+    "purpose": "queue main stages behind independently validated actual-source preflight; all four idle GPUs eligible"
+  },
+  "limitations": [
+    "Main training is queued behind an independently validated actual-source preflight; no main GPU training or scores are claimed yet.",
+    "Source P prediction is GT-free and independently awaits an exclusive idle GPU."
+  ]
+}
