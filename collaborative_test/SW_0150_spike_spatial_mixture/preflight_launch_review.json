@@ -1,0 +1,131 @@
+﻿{
+  "experiment": "SW0150_spike_spatial_mixture",
+  "server_cpu_checks": {
+    "passed": 38,
+    "failed": 0,
+    "cuda_visible_devices": "",
+    "files": [
+      {
+        "name": "DESIGN.md",
+        "sha256": "cf5cb1f7dd9ed9847fe805a15b0c2dc24c8715c62d73396213c37c0ee4f9fff0"
+      },
+      {
+        "name": "integration.py",
+        "sha256": "fb3f44c5d52e8eccccc60b9a19f9a13f388a91f905c5f8aa9de326dcce58e0ca"
+      },
+      {
+        "name": "integration_cpu_review.json",
+        "sha256": "8b5e53b1664e2008ecc5f4cfe7837bdb12651ca31f072d3eb36877b49d053341"
+      },
+      {
+        "name": "kernel_cpu_review.json",
+        "sha256": "3fd1081705ce9492bef6bd9f017eed903c7eef607994c6fd0f481393d902c872"
+      },
+      {
+        "name": "likelihood.py",
+        "sha256": "2c779c779eac7f1bc116ecf019078735a98f8ff2d513b87eb490d0ddb340785a"
+      },
+      {
+        "name": "likelihood_cpu_review.json",
+        "sha256": "28fabd9b725a262ad5ff2d7288c14577a11f17bb4af9aed42b5492f0c4bb968e"
+      },
+      {
+        "name": "preflight.py",
+        "sha256": "b19791641383e5648d7598b1a5150b3f1940ca2215efb242707189d436454317"
+      },
+      {
+        "name": "preflight_cpu_review.json",
+        "sha256": "da9afea5de44931d0a374a4efeea6af9be4833857d19b3a0b601a67b9f909b42"
+      },
+      {
+        "name": "preflight_queue.py",
+        "sha256": "6fc63d20c4d77878e328aa3fcf3ca164a558fe3646e4ed8ab73d71755ca6b53a"
+      },
+      {
+        "name": "protocol.json",
+        "sha256": "a66983462892e01a71ee84b4041efd0df0986459515f4ddc4ad29e0de7e26a61"
+      },
+      {
+        "name": "queue_cpu_review.json",
+        "sha256": "35e4e1af2134d48c505f257e9ca92a562a5518fdb40fc729cf880dbfc82aa05f"
+      },
+      {
+        "name": "seed_selection.py",
+        "sha256": "d2bfd420b4ce7d1fcdc7124b5e0257b892bbb0a3eed362aa35d51a358a10d429"
+      },
+      {
+        "name": "seed_selector_cpu_review.json",
+        "sha256": "9f4969e9a0ecf3200fe3716556efe2b9f4b504a8cfe3ed73c9280dfa23cbb997"
+      },
+      {
+        "name": "spatial_diffusion.py",
+        "sha256": "591fa1128b0cbfb6c0f135d28397868704d46fe1140275c67b37790ebdde3d1a"
+      },
+      {
+        "name": "test_integration.py",
+        "sha256": "79d306a856ff4100ae7c124d2983657e116ed1072692bc805807bde7ba959468"
+      },
+      {
+        "name": "test_likelihood.py",
+        "sha256": "cff70cd2924a5faa38bc687fe06e5501ea1172cf09111cfa6e8030bbd6153380"
+      },
+      {
+        "name": "test_preflight.py",
+        "sha256": "aaab891d7a0de71cf643f2969087394c6ba24a744cfe250fb56472009b0ff79c"
+      },
+      {
+        "name": "test_preflight_queue.py",
+        "sha256": "338d4a743e376bcba0515dacc0d2b3d22cbc0046009b9915ec3b8b361c89ec81"
+      },
+      {
+        "name": "test_seed_selection.py",
+        "sha256": "61400fdc8bda08e3b49833ae5e0935ff42b153608e349fb42068ce4426e42c17"
+      },
+      {
+        "name": "test_spatial_diffusion.py",
+        "sha256": "03395d5af0693cace8adde42fd1a1c13f2e8c032a5d4c710a4eedb42cdd93467"
+      }
+    ]
+  },
+  "actual_queue_observation": {
+    "experiment": "SW0150_spike_spatial_mixture",
+    "supervisor_pid": 1832979,
+    "supervisor_cmdline": "/Data0/kevinswk/envs/snn/bin/python -m collaborative_test.SW_0150_spike_spatial_mixture.preflight_queue ",
+    "status": "running",
+    "tasks": {
+      "preflight_seed1": {
+        "task": {
+          "task_id": "preflight_seed1",
+          "stage": "preflight",
+          "seed": 1,
+          "device": "cuda:0",
+          "depends_on": [],
+          "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0150_spike_spatial_mixture/results_archive/preflight_seed1.json",
+          "warm_output": "/Data0/kevinswk/collaborative_private_runtime_20261008/SW0150_preflight_20261012/decoder_warm_seed1.pt",
+          "parity": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0135_native32_spike_binding/results_archive/native32_zero_adapter_parity_seed1_b4.json",
+          "log": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0150_spike_spatial_mixture/results_archive/preflight_queue_20261012/preflight_seed1.log"
+        },
+        "status": "waiting_for_exclusive_gpu"
+      }
+    },
+    "preflight_fingerprint": {
+      "collaborative_test/SW_0150_spike_spatial_mixture/preflight.py": "b19791641383e5648d7598b1a5150b3f1940ca2215efb242707189d436454317",
+      "collaborative_test/SW_0150_spike_spatial_mixture/protocol.json": "a66983462892e01a71ee84b4041efd0df0986459515f4ddc4ad29e0de7e26a61",
+      "collaborative_test/SW_0150_spike_spatial_mixture/integration.py": "fb3f44c5d52e8eccccc60b9a19f9a13f388a91f905c5f8aa9de326dcce58e0ca",
+      "collaborative_test/SW_0150_spike_spatial_mixture/spatial_diffusion.py": "591fa1128b0cbfb6c0f135d28397868704d46fe1140275c67b37790ebdde3d1a",
+      "collaborative_test/SW_0150_spike_spatial_mixture/seed_selection.py": "d2bfd420b4ce7d1fcdc7124b5e0257b892bbb0a3eed362aa35d51a358a10d429",
+      "collaborative_test/SW_0150_spike_spatial_mixture/likelihood.py": "2c779c779eac7f1bc116ecf019078735a98f8ff2d513b87eb490d0ddb340785a",
+      "collaborative_test/SW_0135_native32_spike_binding/foundation.py": "9c241cacf1479c339fa56376b881672535c8d7ac4966a7ddff3b4b47f24cb867",
+      "collaborative_test/SW_0135_native32_spike_binding/parity.py": "9aa08a7dbc7d4d48166809c6c023aada85fe6aa6c961b7df4eecf3c3da9fe83a",
+      "collaborative_test/SW_0136_native32_transfer/evaluate.py": "1c2846b69fb4bc936bf06723fc9f1b4c12f6632a02aff7e40c1e21a28b7a30ea",
+      "collaborative_test/SW_0145_native32_boundary_credit_probe/run.py": "9b3db438992b55260ebdf6bbafe421bdf1b54c5522624f6c66a0b7b363180fbe"
+    },
+    "owner_queue_sha256": "14fae39aeb6e958df60edf25680f412acb50a01126fd7af725c61fdba3794623",
+    "owner_dispatcher_sha256": "c59cdc39af20c824930d1926c8cec1418ee818577b8cc4240ad6eaae836764f6",
+    "training_admission": false
+  },
+  "limitations": [
+    "Actual-source preflight is queued and waiting; GPU feasibility and scientific training are not yet admitted.",
+    "SW149 main training remains running separately; no new endpoint scores."
+  ]
+}

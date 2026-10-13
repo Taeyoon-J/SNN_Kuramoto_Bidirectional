@@ -150,12 +150,19 @@ def transplant_decoder_adam(warm_optimizer, pilot_optimizer, warm_parameters,
     if len({id(parameter) for parameter in source}) != len(source) or len(
             {id(parameter) for parameter in target}) != len(target):
         raise ValueError("optimizer parameter lists must not contain duplicates")
-    if len(warm_optimizer.param_groups) != 1 or len(warm_optimizer.param_groups[0]["params"]) != len(source):
+    if (len(warm_optimizer.param_groups) != 1
+            or [id(p) for p in warm_optimizer.param_groups[0]["params"]]
+            != [id(p) for p in source]
+            or [tuple(p.shape) for p in warm_optimizer.param_groups[0]["params"]]
+            != [tuple(p.shape) for p in source]):
         raise ValueError("warm Adam must have exactly the registered decoder parameters")
     target_decoder_groups = [group for group in pilot_optimizer.param_groups
                              if group.get("name") == "decoder"]
     if (len(target_decoder_groups) != 1
-            or len(target_decoder_groups[0]["params"]) != len(target)):
+            or [id(p) for p in target_decoder_groups[0]["params"]]
+            != [id(p) for p in target]
+            or [tuple(p.shape) for p in target_decoder_groups[0]["params"]]
+            != [tuple(p.shape) for p in target]):
         raise ValueError("pilot Adam must expose exactly one matching decoder group")
     warm_state = warm_optimizer.state_dict()
     pilot_state = pilot_optimizer.state_dict()

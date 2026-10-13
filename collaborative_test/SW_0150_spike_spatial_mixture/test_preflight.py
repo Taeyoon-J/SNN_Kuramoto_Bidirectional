@@ -125,6 +125,22 @@ class PreflightContractTests(unittest.TestCase):
             transplant_decoder_adam(warm, wrong, list(source.parameters()),
                                     list(target.parameters()))
 
+    def test_warm_adam_transplant_rejects_same_length_reordered_parameters(self):
+        source = torch.nn.Sequential(torch.nn.Linear(3, 5), torch.nn.Linear(5, 2))
+        target = copy.deepcopy(source)
+        warm_params = list(source.parameters())
+        warm = torch.optim.Adam(warm_params, lr=1e-3)
+        warm.zero_grad(set_to_none=True)
+        source(torch.ones((2, 3))).sum().backward()
+        warm.step()
+        target_params = list(target.parameters())
+        pilot = torch.optim.Adam([{"params": target_params, "name": "decoder"}], lr=1e-3)
+
+        with self.assertRaisesRegex(ValueError, "registered decoder parameters"):
+            transplant_decoder_adam(warm, pilot, list(reversed(warm_params)), target_params)
+        with self.assertRaisesRegex(ValueError, "matching decoder group"):
+            transplant_decoder_adam(warm, pilot, warm_params, list(reversed(target_params)))
+
 
 if __name__ == "__main__":
     unittest.main()
