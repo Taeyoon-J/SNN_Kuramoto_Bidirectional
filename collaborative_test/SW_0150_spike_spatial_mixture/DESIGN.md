@@ -32,6 +32,14 @@ foreground seeds from non-background patches by farthest-point distance 1-Q;
 ties use the smallest patch index. Only seed selection is detached. There is
 no frozen source teacher or cached source labeling.
 
+The prospective seed count is the number of distinct current-QCC foreground
+regions, capped at ten, rather than always selecting ten foreground seeds.
+Select the first foreground patch farthest from the background medoid and each
+subsequent patch by its minimum 1-Q distance to all already selected seeds,
+including background. Selection uses detached CPU float64 values and exact
+argmax ties resolve to the smallest patch index. This count is inherited from
+the current QCC rule, not a new trained count classifier. It may remain wrong.
+
 For a 32x32 grid, four-neighbor weights are Q_ij + 1e-8 and self-loop weight is
 one. Row-normalize the transition. Initialize unseeded P rows uniformly over
 active seeds and seeded rows one-hot. Perform 64 differentiable diffusion
@@ -45,8 +53,9 @@ all-background collapse remain possible.
 
 Each selected seed is clamped one-hot and therefore occupies at least one
 patch. This kernel cannot establish that unused foreground candidates disappear
-or that object count is learned. The seed selector's exact stopping/count rule
-is not implemented or admitted yet; it must be resolved before any full pilot.
+or that object count is learned. The selector is implemented locally with
+deterministic selection tests, but its actual source-Q/current-QCC input
+binding is not admitted and must be checked before any pilot.
 The standalone kernel accepts external seed identities only. Its probability
 and gradient tests are not segmentation or object-count evidence.
 
@@ -61,6 +70,21 @@ population variance average; do not learn variance or tune it on validation.
 The exact decoder implementation and variance-zero rejection must be registered
 and checked before any training. This likelihood is a hypothesis, not a proven
 solution to SW0142's color-compatible merging failure.
+
+Prospective decoder specification: detached gamma has generic content dimension
+D. Pool it using live P and each slot's normalized mass. A shared foreground
+MLP D->32 (SiLU)->18 produces six coefficients per RGB channel, using bases
+[1, x, y, x^2, xy, y^2] around the live P-weighted patch center. A background
+MLP D->16 (SiLU)->9 produces per-image RGB affine coefficients on absolute
+coordinates. Pixel coordinates are scaled to [-1,1]; patch centers use the
+centers of their actual 4x4 pixels. There is no alpha head or direct RGB input
+to the decoder. P, pooled content and coordinate centers remain differentiable;
+gamma is detached only on this decoder-content path, not on Q generation.
+Calibrate sigma^2 in CPU float64 from exactly 64 clean uint8 RGB TRAIN images
+after division by 255. A zero/nonfinite result fails calibration. Evaluate the
+three-channel Gaussian log density with logsumexp and zero-weight components
+masked without differentiating log(0). Decoder Adam LR is fixed at 1e-3 for
+warmup and pilot; this is prospective and must pass actual-source feasibility.
 
 ## Planned comparison and stopping
 
