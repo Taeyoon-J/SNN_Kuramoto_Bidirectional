@@ -1,0 +1,215 @@
+{
+  "reviewed_at_utc": "2026-10-13T04:12:32.081419+00:00",
+  "kind": "verified_wait_and_checkpoint_recovery_observation",
+  "main_status": "running",
+  "actual_processes": {
+    "train_encoder_graph": "/Data0/kevinswk/envs/snn/bin/python -m collaborative_test.SW_0150_spike_spatial_mixture.train --arm encoder_graph --device cuda:0 ",
+    "train_joint": "/Data0/kevinswk/envs/snn/bin/python -m collaborative_test.SW_0150_spike_spatial_mixture.train --arm joint --device cuda:0 ",
+    "predict_source_p": null
+  },
+  "training_tasks": {
+    "train_encoder_graph": {
+      "task": {
+        "task_id": "train_encoder_graph",
+        "stage": "train",
+        "arm": "encoder_graph",
+        "depends_on": [
+          "external_preflight"
+        ],
+        "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0150_spike_spatial_mixture/training/encoder_graph_seed1"
+      },
+      "status": "running",
+      "gpu": 0,
+      "gpu_uuid": "GPU-a0a7d03d-adc1-37ca-4342-328878b3657c",
+      "stable_seconds": 5.194816052913666,
+      "memory_used_mib": 16,
+      "child_pid": 1934725,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-m",
+        "collaborative_test.SW_0150_spike_spatial_mixture.train",
+        "--arm",
+        "encoder_graph",
+        "--device",
+        "cuda:0"
+      ],
+      "memory_before_mib": 16,
+      "inherited_lease_fd": true,
+      "log": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0150_spike_spatial_mixture/results_archive/stage_queue_20261012/train_encoder_graph.attempt01.log",
+      "attempt": 1,
+      "started": 1791862327.602901
+    },
+    "train_joint": {
+      "task": {
+        "task_id": "train_joint",
+        "stage": "train",
+        "arm": "joint",
+        "depends_on": [
+          "external_preflight"
+        ],
+        "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0150_spike_spatial_mixture/training/joint_seed1"
+      },
+      "status": "running",
+      "gpu": 2,
+      "gpu_uuid": "GPU-50cc59a2-8312-ff02-5889-1becf63c7cd4",
+      "stable_seconds": 5.252832273952663,
+      "memory_used_mib": 2,
+      "child_pid": 2056547,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-m",
+        "collaborative_test.SW_0150_spike_spatial_mixture.train",
+        "--arm",
+        "joint",
+        "--device",
+        "cuda:0"
+      ],
+      "memory_before_mib": 2,
+      "inherited_lease_fd": true,
+      "log": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0150_spike_spatial_mixture/results_archive/stage_queue_20261012/train_joint.attempt05.log",
+      "attempt": 5,
+      "started": 1791864582.5611217,
+      "foreign_owner_pids": [
+        2055664
+      ],
+      "finished": 1791864560.394915,
+      "returncode": -15,
+      "artifact_valid": false
+    }
+  },
+  "diagnostic_state": {
+    "experiment": "SW0150_spike_spatial_mixture",
+    "queue_version": 1,
+    "diagnostic": "first64_train_color_bin_assignment_permutation",
+    "status": "waiting_for_main_queue",
+    "supervisor_pid": 2054678,
+    "training_admission": false,
+    "diagnostic_fingerprint": {
+      "collaborative_test/SW_0135_native32_spike_binding/foundation.py": "9c241cacf1479c339fa56376b881672535c8d7ac4966a7ddff3b4b47f24cb867",
+      "collaborative_test/SW_0135_native32_spike_binding/protocol.json": "bcea5cb37b7279c7db7e505127b7ca01a70d3a5b39b725ae6e37b6565cf29ea9",
+      "collaborative_test/SW_0135_native32_spike_binding/resolution.py": "dd98e62c48e6260e4bd1ba36f0f9a8ff2c6ecf7ade53e0f5780849d3bae49264",
+      "collaborative_test/SW_0135_native32_spike_binding/binder.py": "38450abd18eb0db390959727b95f88f96633117be20d053870ff28ccf5dae8ac",
+      "collaborative_test/SW_0130_phase_state_integration/run.py": "92ac0032467c6bff2e31a76c66021c5e211f9402d15ff868382d71ecc807e988",
+      "collaborative_test/SW_0130_phase_state_integration/model.py": "2ba6bbe44dbbf2a5a444e724db71caafc1b9915570bfd7ab31343b86915cbd0b",
+      "collaborative_test/SW_0134_native_spike_binding/rollout.py": "66c08404af91b50fb4cbfa63fe44650dd6a698ea669cd3d6a672dfc5c78503f3",
+      "collaborative_test/SW_0110_xy_graph_route/run.py": "b7d4b90cbf74c8085d2a5cfc8b78a5772f77bc086240939a332f429c1ca344fd",
+      "collaborative_test/SW_0094_aligned_joint_pilot/run.py": "9f4e9046a2960e7aa53bf16d7e0663bee162b3f56a11f11d45554d79889536a3",
+      "snn_kuramoto_bidirectional/s2net_cls.py": "18313e5ee7358146703256e7e29d9846bfa60394feedba3237f2f7eac8791288",
+      "snn_kuramoto_bidirectional/graph_generator.py": "4f4c4d680a60822a5e4645eec3bbceb960846d4fac89e799076f6b4cf1bc6dde",
+      "snn_kuramoto_bidirectional/loss_function.py": "6542d084f66c07101b75869709df9302db45e0dde87b6b5945d1790daa316543",
+      "snn_kuramoto_bidirectional/spike_classifier.py": "2d13c15a928f503bc09239aae2153a5f1a82de77aab4b5a76d0dfe876b755181",
+      "snn_kuramoto_bidirectional/evaluation.py": "4a15980c9aa0248dbe0e837ad1b0b430ce26a7ab367c004d290a1272bb1025d7",
+      "snn_kuramoto_bidirectional/hyperparameter.py": "bceea67a10a4533eae48ce682b23ce81330c981d687fa928cca7b9f3b97fc73e",
+      "snn_kuramoto_bidirectional/gamma_initializer.py": "9b5f3e077c755738b1636b97ac9640321a5b7abf5ec85b9a12557209cf5ad50b",
+      "snn_kuramoto_bidirectional/training/train_gamma_initializer.py": "845f91d3255d1d72d2a69c432c7b559a9d29d90a4186a4821e75864af9e47d20",
+      "snn_kuramoto_bidirectional/training/train_input_layer_generator.py": "df45612ad4e069bc645c8cf335da1ebf1dd73d73ae0b9a40de96cefa9025f38d",
+      "snn_kuramoto_bidirectional/dendric_layer.py": "69d960809ff1ad73a91a7067f87f605ae69ef612be9b936e4b486cc29511dd1a",
+      "snn_kuramoto_bidirectional/membrane_layer.py": "680ad89277b60206f192123165d13eca916e5183dc71eaa443a8eeb5f4b8fac8",
+      "snn_kuramoto_bidirectional/kuramoto_layer.py": "76e61785fb19228fe4ecf6bbdfd4dc72519b9d6bd34d5f4fd9165e29c76d263e",
+      "snn_kuramoto_bidirectional/sinusoidal_gating.py": "e323a3b6472f51def23d63628fe25cc83088822ae73b5e0fcd1789884739f6c4",
+      "collaborative_test/SW_0150_spike_spatial_mixture/train.py": "eec6f67efccc31c5175a8f3946d5afdc2a8db5c2ec9270dd69b8ee58001270da",
+      "collaborative_test/SW_0150_spike_spatial_mixture/protocol.json": "a66983462892e01a71ee84b4041efd0df0986459515f4ddc4ad29e0de7e26a61",
+      "collaborative_test/SW_0150_spike_spatial_mixture/preflight.py": "b19791641383e5648d7598b1a5150b3f1940ca2215efb242707189d436454317",
+      "collaborative_test/SW_0150_spike_spatial_mixture/preflight_queue.py": "6fc63d20c4d77878e328aa3fcf3ca164a558fe3646e4ed8ab73d71755ca6b53a",
+      "collaborative_test/SW_0150_spike_spatial_mixture/integration.py": "fb3f44c5d52e8eccccc60b9a19f9a13f388a91f905c5f8aa9de326dcce58e0ca",
+      "collaborative_test/SW_0150_spike_spatial_mixture/spatial_diffusion.py": "591fa1128b0cbfb6c0f135d28397868704d46fe1140275c67b37790ebdde3d1a",
+      "collaborative_test/SW_0150_spike_spatial_mixture/seed_selection.py": "d2bfd420b4ce7d1fcdc7124b5e0257b892bbb0a3eed362aa35d51a358a10d429",
+      "collaborative_test/SW_0150_spike_spatial_mixture/likelihood.py": "2c779c779eac7f1bc116ecf019078735a98f8ff2d513b87eb490d0ddb340785a",
+      "collaborative_test/SW_0136_native32_transfer/evaluate.py": "1c2846b69fb4bc936bf06723fc9f1b4c12f6632a02aff7e40c1e21a28b7a30ea",
+      "collaborative_test/SW_0145_native32_boundary_credit_probe/run.py": "9b3db438992b55260ebdf6bbafe421bdf1b54c5522624f6c66a0b7b363180fbe",
+      "collaborative_test/SW_0148_checkpointable_boundary_q/checkpoint.py": "75d5076c051f81a51a39bbafedd363e589aa58ffc41ba4a662a87ffb91601f53",
+      "collaborative_test/SW_0150_spike_spatial_mixture/diagnosis.py": "3953e769f5603c4374641688de1beea3e8da0263891fcb0bf402c70b04adbdf4",
+      "collaborative_test/SW_0150_spike_spatial_mixture/DIAGNOSIS_PROTOCOL.json": "e3c19d151284836b3e3c6e8e20ff16edcb9a6376d2f47c85a0d61449e533a183",
+      "collaborative_test/SW_0150_spike_spatial_mixture/evaluate.py": "2941bdb9aa0c14d207317c1234347fc44d730fea253de61b7aafda61b331bfaa"
+    },
+    "diagnostic_fingerprint_sha256": "04ea16be1550d53d0a0f434f26e09bc0148bac897cb859fee3024d46728d0a62",
+    "queue_fingerprint": {
+      "collaborative_test/SW_0135_native32_spike_binding/foundation.py": "9c241cacf1479c339fa56376b881672535c8d7ac4966a7ddff3b4b47f24cb867",
+      "collaborative_test/SW_0135_native32_spike_binding/protocol.json": "bcea5cb37b7279c7db7e505127b7ca01a70d3a5b39b725ae6e37b6565cf29ea9",
+      "collaborative_test/SW_0135_native32_spike_binding/resolution.py": "dd98e62c48e6260e4bd1ba36f0f9a8ff2c6ecf7ade53e0f5780849d3bae49264",
+      "collaborative_test/SW_0135_native32_spike_binding/binder.py": "38450abd18eb0db390959727b95f88f96633117be20d053870ff28ccf5dae8ac",
+      "collaborative_test/SW_0130_phase_state_integration/run.py": "92ac0032467c6bff2e31a76c66021c5e211f9402d15ff868382d71ecc807e988",
+      "collaborative_test/SW_0130_phase_state_integration/model.py": "2ba6bbe44dbbf2a5a444e724db71caafc1b9915570bfd7ab31343b86915cbd0b",
+      "collaborative_test/SW_0134_native_spike_binding/rollout.py": "66c08404af91b50fb4cbfa63fe44650dd6a698ea669cd3d6a672dfc5c78503f3",
+      "collaborative_test/SW_0110_xy_graph_route/run.py": "b7d4b90cbf74c8085d2a5cfc8b78a5772f77bc086240939a332f429c1ca344fd",
+      "collaborative_test/SW_0094_aligned_joint_pilot/run.py": "9f4e9046a2960e7aa53bf16d7e0663bee162b3f56a11f11d45554d79889536a3",
+      "snn_kuramoto_bidirectional/s2net_cls.py": "18313e5ee7358146703256e7e29d9846bfa60394feedba3237f2f7eac8791288",
+      "snn_kuramoto_bidirectional/graph_generator.py": "4f4c4d680a60822a5e4645eec3bbceb960846d4fac89e799076f6b4cf1bc6dde",
+      "snn_kuramoto_bidirectional/loss_function.py": "6542d084f66c07101b75869709df9302db45e0dde87b6b5945d1790daa316543",
+      "snn_kuramoto_bidirectional/spike_classifier.py": "2d13c15a928f503bc09239aae2153a5f1a82de77aab4b5a76d0dfe876b755181",
+      "snn_kuramoto_bidirectional/evaluation.py": "4a15980c9aa0248dbe0e837ad1b0b430ce26a7ab367c004d290a1272bb1025d7",
+      "snn_kuramoto_bidirectional/hyperparameter.py": "bceea67a10a4533eae48ce682b23ce81330c981d687fa928cca7b9f3b97fc73e",
+      "snn_kuramoto_bidirectional/gamma_initializer.py": "9b5f3e077c755738b1636b97ac9640321a5b7abf5ec85b9a12557209cf5ad50b",
+      "snn_kuramoto_bidirectional/training/train_gamma_initializer.py": "845f91d3255d1d72d2a69c432c7b559a9d29d90a4186a4821e75864af9e47d20",
+      "snn_kuramoto_bidirectional/training/train_input_layer_generator.py": "df45612ad4e069bc645c8cf335da1ebf1dd73d73ae0b9a40de96cefa9025f38d",
+      "snn_kuramoto_bidirectional/dendric_layer.py": "69d960809ff1ad73a91a7067f87f605ae69ef612be9b936e4b486cc29511dd1a",
+      "snn_kuramoto_bidirectional/membrane_layer.py": "680ad89277b60206f192123165d13eca916e5183dc71eaa443a8eeb5f4b8fac8",
+      "snn_kuramoto_bidirectional/kuramoto_layer.py": "76e61785fb19228fe4ecf6bbdfd4dc72519b9d6bd34d5f4fd9165e29c76d263e",
+      "snn_kuramoto_bidirectional/sinusoidal_gating.py": "e323a3b6472f51def23d63628fe25cc83088822ae73b5e0fcd1789884739f6c4",
+      "collaborative_test/SW_0150_spike_spatial_mixture/train.py": "eec6f67efccc31c5175a8f3946d5afdc2a8db5c2ec9270dd69b8ee58001270da",
+      "collaborative_test/SW_0150_spike_spatial_mixture/protocol.json": "a66983462892e01a71ee84b4041efd0df0986459515f4ddc4ad29e0de7e26a61",
+      "collaborative_test/SW_0150_spike_spatial_mixture/preflight.py": "b19791641383e5648d7598b1a5150b3f1940ca2215efb242707189d436454317",
+      "collaborative_test/SW_0150_spike_spatial_mixture/preflight_queue.py": "6fc63d20c4d77878e328aa3fcf3ca164a558fe3646e4ed8ab73d71755ca6b53a",
+      "collaborative_test/SW_0150_spike_spatial_mixture/integration.py": "fb3f44c5d52e8eccccc60b9a19f9a13f388a91f905c5f8aa9de326dcce58e0ca",
+      "collaborative_test/SW_0150_spike_spatial_mixture/spatial_diffusion.py": "591fa1128b0cbfb6c0f135d28397868704d46fe1140275c67b37790ebdde3d1a",
+      "collaborative_test/SW_0150_spike_spatial_mixture/seed_selection.py": "d2bfd420b4ce7d1fcdc7124b5e0257b892bbb0a3eed362aa35d51a358a10d429",
+      "collaborative_test/SW_0150_spike_spatial_mixture/likelihood.py": "2c779c779eac7f1bc116ecf019078735a98f8ff2d513b87eb490d0ddb340785a",
+      "collaborative_test/SW_0136_native32_transfer/evaluate.py": "1c2846b69fb4bc936bf06723fc9f1b4c12f6632a02aff7e40c1e21a28b7a30ea",
+      "collaborative_test/SW_0145_native32_boundary_credit_probe/run.py": "9b3db438992b55260ebdf6bbafe421bdf1b54c5522624f6c66a0b7b363180fbe",
+      "collaborative_test/SW_0148_checkpointable_boundary_q/checkpoint.py": "75d5076c051f81a51a39bbafedd363e589aa58ffc41ba4a662a87ffb91601f53",
+      "collaborative_test/SW_0150_spike_spatial_mixture/diagnosis.py": "3953e769f5603c4374641688de1beea3e8da0263891fcb0bf402c70b04adbdf4",
+      "collaborative_test/SW_0150_spike_spatial_mixture/DIAGNOSIS_PROTOCOL.json": "e3c19d151284836b3e3c6e8e20ff16edcb9a6376d2f47c85a0d61449e533a183",
+      "collaborative_test/SW_0150_spike_spatial_mixture/evaluate.py": "2941bdb9aa0c14d207317c1234347fc44d730fea253de61b7aafda61b331bfaa",
+      "collaborative_test/SW_0150_spike_spatial_mixture/diagnosis_queue.py": "7dd9c1f53db765311d195dc16b205fed31c5cc875de05a0ad80beebe329267b2",
+      "collaborative_test/SW_0150_spike_spatial_mixture/stage_queue.py": "69a21766e76a11dbcd3b31b1093a515d14b0b49d54ceb47e7ee89de2f5131465",
+      "collaborative_test/SW_0126_history_event_binding/pilot_queue.py": "c59cdc39af20c824930d1926c8cec1418ee818577b8cc4240ad6eaae836764f6",
+      "collaborative_test/SW_0148_checkpointable_boundary_q/stage_queue_v4.py": "14fae39aeb6e958df60edf25680f412acb50a01126fd7af725c61fdba3794623"
+    },
+    "implementation_sha256": "7532be2e0144a8e29be75d707a43c05fa761f5ce7e9980ef5ff8ded84eeb54ea",
+    "main_queue_state": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0150_spike_spatial_mixture/results_archive/stage_queue_20261012/state.json",
+    "tasks": {
+      "first64_train_color_bin_assignment_permutation": {
+        "task": {
+          "task_id": "first64_train_color_bin_assignment_permutation",
+          "stage": "diagnosis",
+          "seed": 1,
+          "depends_on": [
+            "main_queue_complete",
+            "predict_encoder_graph",
+            "predict_joint",
+            "predict_source_p"
+          ],
+          "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0150_spike_spatial_mixture/results_archive/color_bin_assignment_diagnostic_seed1.json",
+          "log": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0150_spike_spatial_mixture/results_archive/diagnosis_queue_20261012/diagnosis.attempt01.log"
+        },
+        "status": "waiting_for_main_queue",
+        "checked": 1791864622.4346085
+      }
+    },
+    "updated": 1791864622.434615
+  },
+  "actual_diagnostic_processes": {
+    "supervisor": "/Data0/kevinswk/envs/snn/bin/python -m collaborative_test.SW_0150_spike_spatial_mixture.diagnosis_queue ",
+    "child": null
+  },
+  "separate_cuda_hidden_integrity_inspection": {
+    "encoder_graph": {
+      "completed_updates": 86,
+      "physical_gpu": 0
+    },
+    "joint": {
+      "completed_updates": 21,
+      "physical_gpu": 2
+    },
+    "method": "actual server checkpoint.inspect_committed_metadata on each work/{arm}_seed1/checkpoints directory",
+    "passed": true
+  },
+  "peer_fetch_commit": "cee08700f4547a5b28d33efb108b5ae57bc54548",
+  "peer_new_commits_since_previous_review": 0,
+  "limits": [
+    "Not new evaluation results.",
+    "Old foreign PID and returncode fields in running task state describe prior attempts, not the current live process.",
+    "Checkpoint counters and /proc observation are separate successive snapshots."
+  ],
+  "action": "Keep existing checkpointable main queue and post-completion diagnostic reservation active; no manual relaunch or code change."
+}
