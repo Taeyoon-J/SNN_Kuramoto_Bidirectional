@@ -1,0 +1,55 @@
+{
+  "observed_unix": 1791851190.256046,
+  "arms": {
+    "encoder_graph": {
+      "manifest_sha256": "89e79cfa210181857af6ea73e0b4ba6e97266222cb6d6baa719c7d71e4dcc46b",
+      "verified_output_sha256": {
+        "checkpoint.pt": "65908513b7349fbd2fbea996b73086d409cf574b693263cd73313872c9d1ec84",
+        "optimizer.pt": "bcd4dd2a6c160e5f62ceb37b301c3f93f4d3b9e699d20edd18dd20f3af13a3da",
+        "history.json": "ad1ce87311fdc442d79955ac252b5c79b3d1bacf64eaec3c23567d773cf6e2df",
+        "first64_boundary_diagnostic.json": "d49447836f29d52a969c91748c916f644dcd56cdd9a3c6d88ec116ff8cce1be7"
+      },
+      "completed_updates": 256,
+      "seed": 1,
+      "exposures": 4096,
+      "ground_truth_used": false
+    },
+    "joint": {
+      "manifest_sha256": "df6573fce199afbdd04f0784c7df9ddb2785d6df7cfe1ad1608dbc7619526c8e",
+      "verified_output_sha256": {
+        "checkpoint.pt": "7d392a83a41431dd13588679fa2ddb0b6dc2d7388f6275719da3f7d786701cb6",
+        "optimizer.pt": "f216e0bacc3ecde5ea857ae81d05bfa1bfffb219e479e021a8a51e656fe3dd5f",
+        "history.json": "053aeda4b0b86c7789922fb14a8e9c77a0e083aea4cc5df34661d10a1d6c8420",
+        "first64_boundary_diagnostic.json": "a47db920cb53ca114f0b923120753647b98236d2ce977439eb1aa63fbcf6f768"
+      },
+      "completed_updates": 256,
+      "seed": 1,
+      "exposures": 4096,
+      "ground_truth_used": false
+    }
+  },
+  "tasks": {
+    "train_encoder_graph": {
+      "status": "verified_existing",
+      "child_pid": null
+    },
+    "train_joint": {
+      "status": "passed",
+      "child_pid": 779656
+    },
+    "predict_encoder_graph": {
+      "status": "queued",
+      "child_pid": null
+    },
+    "predict_joint": {
+      "status": "queued",
+      "child_pid": null
+    },
+    "score": {
+      "status": "queued",
+      "child_pid": null
+    }
+  },
+  "actual_children": {},
+  "scope": "Both seed1 native32 pilot arms completed 256 updates/4096 exposures. Output hashes verified. Predictions and paired evaluation pending. Not a fresh native32 70000-image result."
+}

@@ -1,4 +1,4 @@
-SW0148: encoder_graph pilot training complete (256 updates), outputs hash-verified and adopted by queue v4; joint CUDA training continues; paired evaluation pending.
+SW0148: both seed1 native32 pilot arms completed 256 updates; training output hashes verified; prediction and paired evaluation pending.
 
 ## Earlier observations (historical; superseded by the current status above)
 
