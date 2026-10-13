@@ -339,7 +339,12 @@ def _validate_reconciled_main_schema_failure():
 
 def _validate_blocked_reservation(kind, module, state, log_path, output_path):
     expected_status, failure_reason = _queue_module(kind)[1:]
-    if state.get("status") != expected_status or state.get("reason") != failure_reason:
+    # The diagnosis supervisor records its failure reason on the task row;
+    # the preflight supervisor records it at the top level.
+    reason = state.get("reason")
+    if kind == "sw150_diagnosis":
+        reason = state.get("tasks", {}).get(module.diagnosis.DIAGNOSTIC, {}).get("reason")
+    if state.get("status") != expected_status or reason != failure_reason:
         raise ValueError("prerequisite queue is not blocked by the exact reconciled SW0150 score failure")
     if not isinstance(state.get("supervisor_pid"), int) or isinstance(state.get("supervisor_pid"), bool):
         raise ValueError("blocked prerequisite queue lacks a valid recorded supervisor PID")

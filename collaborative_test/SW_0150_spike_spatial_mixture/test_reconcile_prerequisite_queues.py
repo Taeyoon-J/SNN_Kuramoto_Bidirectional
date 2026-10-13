@@ -84,12 +84,12 @@ class PrerequisiteReservationTests(unittest.TestCase):
                 diag_fp, sort_keys=True, separators=(",", ":"),
                 allow_nan=False).encode("utf-8")).hexdigest()
             state = {
-                "status": blocked_status, "reason": reason, "supervisor_pid": 7101,
+                "status": blocked_status, "supervisor_pid": 7101,
                 "diagnostic_fingerprint": diag_fp,
                 "diagnostic_fingerprint_sha256": diag_sha,
                 "queue_fingerprint": module.implementation_fingerprint(),
                 "implementation_sha256": module.implementation_sha256(),
-                "tasks": {task["task_id"]: {"task": task, "status": blocked_status}},
+                "tasks": {task["task_id"]: {"task": task, "status": blocked_status, "reason": reason}},
             }
         else:
             self._patch(module, "upstream_readiness", lambda: ("ready", None))
