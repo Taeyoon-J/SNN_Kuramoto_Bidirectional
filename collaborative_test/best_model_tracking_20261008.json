@@ -2380,5 +2380,46 @@
     "next_action": "Close unchanged modularity recipe; continue already running SW0150 primary spike-derived spatial assignment Gaussian NLL comparison. No blind coefficient/threshold sweep.",
     "evaluation": "SW_0149_spike_graph_modularity/results_archive/endpoint_20261012/results_archive__evaluation_seed1.json",
     "decision": "SW_0149_spike_graph_modularity/results_archive/endpoint_20261012/root_audit_and_decision.json"
+  },
+  "highest_native32_measured_fg_configuration": {
+    "experiment": "SW0143 T selective geodesic",
+    "model": "SW0097 seed-matched sources mapped to native32",
+    "kind": "inference_only_graph_readout_intervention",
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "grid": [
+      32,
+      32
+    ],
+    "three_seed_mean": {
+      "fg_ari": 0.7830440057720661,
+      "foreground_iou": 0.6099754484530632,
+      "matched_object_iou": 0.5961971295173867
+    },
+    "comparable_slot_mean": {
+      "fg_ari": 0.7816519719609136,
+      "foreground_iou": 0.20436012776655543,
+      "matched_object_iou": 0.2031649861884501
+    },
+    "fg_paired_ci_vs_slot": [
+      -0.01798270930267265,
+      0.02037813805821261
+    ],
+    "fg_paired_ci_vs_source": [
+      -0.0028432121315289747,
+      0.005030457370965897
+    ],
+    "registered_promotion_passed": false,
+    "trained_incumbent_changed": false,
+    "fresh_native32_70000_training": false,
+    "gating_necessity_proven": false,
+    "scaling_proven": false,
+    "result": "collaborative_test/SW_0143_native32_selective_geodesic/results_archive/completion_20261012/evaluation.json",
+    "result_sha256": "2ed9a82e85d610be4ad772a1648652846e962e38380a2986fe26980878870a5c",
+    "independent_mean_check": "Recomputed all9 T per-seed metric means from each320-image array and corresponding3 seed averages.",
+    "interpretation": "Highest measured native32 three-seed FG among completed compared configurations; small uncertain FG difference is not robust superiority or a newly trained native32 model."
   }
 }
