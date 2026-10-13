@@ -1,0 +1,32 @@
+{
+  "experiment": "SW0150_spike_spatial_mixture",
+  "evidence_kind": "actual_gpu_preflight_independent_root_review",
+  "report_sha256": "6d9e84f410e4cf32132b475606a80ef472f1ea60c0ecd488bc8b3b9d27006446",
+  "warm_sha256": "d06f85d5e8518e61e7b7b64461674df1c6ffabb03c96f89286d71ab1e7458bfe",
+  "checks": "source parity, unchanged registered fingerprint, exact shared warm/Adam32, fresh equal source family hashes, required positive finite gradients, actual parameter changes, frozen control families, decoder Adam34, validated queue admission",
+  "passed": true,
+  "admission": {
+    "status": "passed",
+    "report": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0150_spike_spatial_mixture/results_archive/preflight_seed1.json",
+    "warm_artifact": "/Data0/kevinswk/collaborative_private_runtime_20261008/SW0150_preflight_20261012/decoder_warm_seed1.pt",
+    "checked": 1791862056.7365758,
+    "error": null,
+    "report_sha256": "6d9e84f410e4cf32132b475606a80ef472f1ea60c0ecd488bc8b3b9d27006446",
+    "warm_sha256": "d06f85d5e8518e61e7b7b64461674df1c6ffabb03c96f89286d71ab1e7458bfe",
+    "implementation_sha256": "0ed33f2f622958cd3eb02d72eb6d0159187104cb089006470b44f5d52019f4b9"
+  },
+  "exposures": {
+    "warmup_images": 512,
+    "each_disposable_arm_images": 32,
+    "full_native32_70000_image_training": false
+  },
+  "claim_limits": [
+    "Two disposable updates per arm are feasibility evidence only, not scientific training.",
+    "Warmup exposure is reported separately and is not part of the later registered pilot update count.",
+    "This preflight does not establish segmentation quality, gate necessity, or 70,000-image scaling."
+  ],
+  "threshold_event_fraction_first_four": {
+    "encoder_graph": 0.9999250173568726,
+    "joint": 0.9999250173568726
+  }
+}
