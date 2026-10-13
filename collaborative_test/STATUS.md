@@ -1,4 +1,4 @@
-SW0148 complete: seed1 FG-ARI encoder_graph 0.745394 / joint 0.733767 / source 0.754135; promotion failed; no seed expansion. Training diagnostics archived for next structural decision.
+SW0149 native32 source-graph modularity: actual GPU preflight PASS; encoder_graph (GPU2/PID1505115) and joint (GPU0/PID1505101) 256-update/4096-image pilot training running; supervisor PID1498991; fixed320 QCC prediction and GT-last scoring queued. No current FG result or fresh native32/70000 all-seed victory claim. SW0148 closed after joint FG .733767 < source .754135 and EG .745394.
 
 ## Earlier observations (historical; superseded by the current status above)
 
