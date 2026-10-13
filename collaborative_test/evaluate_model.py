@@ -126,6 +126,7 @@ def build_core(args, device):
         spike_pulse_gain=args.spike_pulse_gain, center_pulse=not args.no_center_pulse,
         geodesic_steps=args.geodesic_steps, geodesic_radius=args.geodesic_radius,
         geodesic_chunk=args.geodesic_chunk,
+        coupling_balance=args.coupling_balance,
         geodesic_contrast=args.geodesic_contrast,
         geodesic_power=args.geodesic_power,
         geodesic_base=args.geodesic_base,
@@ -171,6 +172,8 @@ def main():
                          "into its dendritic branches; the checkpoint will not load "
                          "without it.")
     ap.add_argument("--geodesic-steps", type=int, default=0, help="must match training")
+    ap.add_argument("--coupling-balance", type=float, default=0.0,
+                    help="must match training")
     ap.add_argument("--geodesic-chunk", type=int, default=0,
                     help="rows of the min-plus relaxation formed at once; "
                          "bit-identical, only the peak memory changes")
