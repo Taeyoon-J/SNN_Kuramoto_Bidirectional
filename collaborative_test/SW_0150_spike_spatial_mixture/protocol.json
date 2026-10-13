@@ -1,0 +1,62 @@
+{
+  "experiment": "SW0150_spike_spatial_mixture",
+  "status": "prospective_source1_preflight_only",
+  "training_admission": false,
+  "seed": 1,
+  "source": {
+    "lineage": "same-seed immutable SW0097 seed1 source, mapped through frozen SW0135 native32 foundation",
+    "required_saved_parity": "SW0135 seed1 B4 exact zero-adapter parity at T1024/settle512",
+    "ordered_train_images": 4096,
+    "rgb": "registered clean uint8 NHWC [B,128,128,3] source TRAIN cache only",
+    "ground_truth_used": false
+  },
+  "forward": {
+    "gamma_native": "[B,8,1024]",
+    "decoder_content_view": "gamma.transpose(1,2) [B,1024,8]; likelihood detaches only its content path",
+    "total_steps": 1024,
+    "settle_steps": 512,
+    "allowed_live_tail_steps": [0, 64],
+    "actual_q": "unchanged SW0145._actual_q from emitted native spike trace",
+    "qcc": "unchanged SW0136 production _qcc_labels on that same trace",
+    "assignment": "SW0150 deterministic QCC-derived seeds and 64-step four-neighbor Q diffusion"
+  },
+  "calibration": {
+    "sigma2": "CPU float64 mean of per-image, per-channel spatial population variance over exactly the first64 registered clean TRAIN IDs",
+    "validation_or_test_images": false,
+    "zero_or_nonfinite": "fail closed"
+  },
+  "shared_warmup": {
+    "updates": 32,
+    "logical_batch": 16,
+    "microbatch": 4,
+    "ordered_exposures": 512,
+    "image_ids": "first512 registered source1 TRAIN IDs",
+    "backbone": "source encoder, graph, native core and integration scalars frozen and checked unchanged",
+    "trainable": "spatial mixture decoder only",
+    "optimizer": "Adam LR 1e-3, clip decoder gradient norm to1; save weights, Adam moments/steps and CPU/selected-CUDA RNG",
+    "sharing": "both disposable arms load the identical warm decoder state and Adam moments"
+  },
+  "disposable_feasibility": {
+    "arms": ["encoder_graph", "joint"],
+    "updates_per_arm": 2,
+    "logical_batch": 16,
+    "microbatch": 4,
+    "images_per_arm": 32,
+    "inputs": "same first32 ordered registered source1 TRAIN IDs in both fresh source initializations",
+    "encoder_graph_trainable": ["source encoder", "native32 graph", "decoder"],
+    "joint_trainable": ["source encoder", "native32 graph", "native core", "12 integration scalars", "decoder"],
+    "learning_rates": {"encoder": 0.000003, "graph": 0.00003, "native_core": 0.00003, "integration_scalars": 0.001, "decoder": 0.001},
+    "clipping": "native parameter union norm1 and decoder norm1, clipped separately; project a_d/a_m after each Adam step",
+    "purpose": "finite loss/gradient/update and source-freeze diagnostics only; no scientific eligibility threshold"
+  },
+  "artifacts": {
+    "warm_checkpoint": "explicit create-once private work path; contains decoder, optimizer and RNG state plus source/parity/assets/order/code hashes",
+    "preflight_report": "create-once JSON; training_admission remains false pending independent review",
+    "no_outputs": ["semantic masks", "labels", "GT metrics", "trained candidate checkpoint"]
+  },
+  "limitations": [
+    "The shared32-update warmup is reported separately and is not the later pilot budget.",
+    "Two disposable updates per arm do not demonstrate image segmentation quality or performance.",
+    "No claim of fresh native32 70,000-image training or Slot Attention superiority is made."
+  ]
+}
