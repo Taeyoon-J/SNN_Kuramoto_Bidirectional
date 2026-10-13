@@ -1,0 +1,90 @@
+{
+  "seed": 0,
+  "selection": "first3 fixed validation IDs, not selected by quality",
+  "ours": "SW0097 source + SW0143 T inference mask postprocessing",
+  "slot": "SW0092 own70000 epoch10 seed0; fixed original perimeter background preserved",
+  "grid": [
+    32,
+    32
+  ],
+  "patch_size_pixels": 4,
+  "score_sha256": "2ed9a82e85d610be4ad772a1648652846e962e38380a2986fe26980878870a5c",
+  "ours_prediction_sha256": "76ad396dd70a6fa793a1bba6eb20440385af4708fe5482c09af5173160e59e6a",
+  "slot_prediction_sha256": "240118d55d39c2001ec612149f50a10b14b4a8f8ee1cf424f30569fd2c47e430",
+  "images": [
+    {
+      "image_id": 1320,
+      "ours": {
+        "fg_ari": 0.7928292992126231,
+        "foreground_iou": 0.875,
+        "matched_object_iou": 0.6040451153324288
+      },
+      "slot": {
+        "fg_ari": 0.6372154763698615,
+        "foreground_iou": 0.2432723358449946,
+        "matched_object_iou": 0.28792796126792897
+      }
+    },
+    {
+      "image_id": 1321,
+      "ours": {
+        "fg_ari": 1.0,
+        "foreground_iou": 0.9285714285714286,
+        "matched_object_iou": 0.9206349206349206
+      },
+      "slot": {
+        "fg_ari": 0.5481725393721192,
+        "foreground_iou": 0.10201793721973094,
+        "matched_object_iou": 0.1836124512873992
+      }
+    },
+    {
+      "image_id": 1322,
+      "ours": {
+        "fg_ari": 0.9480446013989493,
+        "foreground_iou": 0.9244186046511628,
+        "matched_object_iou": 0.8927567530508707
+      },
+      "slot": {
+        "fg_ari": 0.5427482815764286,
+        "foreground_iou": 0.18680089485458612,
+        "matched_object_iou": 0.29217618081715446
+      }
+    }
+  ],
+  "three_seed_full320_means": {
+    "R": {
+      "fg_ari": 0.7819186736813425,
+      "foreground_iou": 0.605427133598362,
+      "matched_object_iou": 0.597013806658626
+    },
+    "C": {
+      "fg_ari": 0.7567793407144596,
+      "foreground_iou": 0.5905643648073009,
+      "matched_object_iou": 0.6016166026508326
+    },
+    "T": {
+      "fg_ari": 0.7830440057720661,
+      "foreground_iou": 0.6099754484530632,
+      "matched_object_iou": 0.5961971295173867
+    },
+    "Slot32": {
+      "fg_ari": 0.7816519719609136,
+      "foreground_iou": 0.20436012776655543,
+      "matched_object_iou": 0.2031649861884501
+    }
+  },
+  "new_training": false,
+  "optimizer_updates": 0,
+  "limitations": "Three illustrative examples, not new evaluation or proof of superiority; ours is mapped native32 source plus inference intervention, not fresh native32 70000 training.",
+  "sample_bundle_sha256": "f1ee6c581deb958bf40f87f90d6efd9a32e17daac74f6ef28933352c48b949be",
+  "renderer_sha256": "fc39e893dd300fe3ae7f2f22c33fdc09b6ff794d7fdfde47fce4308e50a91a35",
+  "figure_sha256": {
+    "sw0143_vs_slot32_seed0_id1320.png": "850753c8cd16ad136ff1beceb07c1797abb8f3d19aba45fdf14cf531162c4250",
+    "sw0143_vs_slot32_seed0_id1321.png": "5741eeea1c7a972dd48ce6c15e16f2fc870ba1b755dd1ad8bbf78454930c9003",
+    "sw0143_vs_slot32_seed0_id1322.png": "bb647e65e99454b967c40773886a07c62b0ee7716f0643afeed6d3aafa85da95",
+    "sw0143_vs_slot32_seed0_overview.png": "9e8dc2161be8fd3af985755544dbe241235aac28c4b02dc4cb4f7e214e4e201b"
+  },
+  "artifact_location": "Workspace artifacts/best_masks_vs_slot_20261013; images and sample bundle excluded from repository",
+  "ground_truth_use": "Display only; predictions were frozen before sample extraction"
+}
