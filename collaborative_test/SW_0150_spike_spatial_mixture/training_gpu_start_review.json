@@ -1,0 +1,53 @@
+{
+  "experiment": "SW0150_spike_spatial_mixture",
+  "reviewed_at_utc": "2026-10-13T03:34:05.659Z",
+  "evidence_kind": "actual_gpu_main_training_start",
+  "preflight_admission": {
+    "status": "passed",
+    "report": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0150_spike_spatial_mixture/results_archive/preflight_seed1.json",
+    "warm_artifact": "/Data0/kevinswk/collaborative_private_runtime_20261008/SW0150_preflight_20261012/decoder_warm_seed1.pt",
+    "checked": 1791862056.7365758,
+    "error": null,
+    "report_sha256": "6d9e84f410e4cf32132b475606a80ef472f1ea60c0ecd488bc8b3b9d27006446",
+    "warm_sha256": "d06f85d5e8518e61e7b7b64461674df1c6ffabb03c96f89286d71ab1e7458bfe",
+    "implementation_sha256": "0ed33f2f622958cd3eb02d72eb6d0159187104cb089006470b44f5d52019f4b9"
+  },
+  "training_task": {
+    "task": {
+      "task_id": "train_encoder_graph",
+      "stage": "train",
+      "arm": "encoder_graph",
+      "depends_on": [
+        "external_preflight"
+      ],
+      "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0150_spike_spatial_mixture/training/encoder_graph_seed1"
+    },
+    "status": "running",
+    "gpu": 0,
+    "gpu_uuid": "GPU-a0a7d03d-adc1-37ca-4342-328878b3657c",
+    "stable_seconds": 5.194816052913666,
+    "memory_used_mib": 16,
+    "child_pid": 1934725,
+    "argv": [
+      "/Data0/kevinswk/envs/snn/bin/python",
+      "-m",
+      "collaborative_test.SW_0150_spike_spatial_mixture.train",
+      "--arm",
+      "encoder_graph",
+      "--device",
+      "cuda:0"
+    ],
+    "memory_before_mib": 16,
+    "inherited_lease_fd": true,
+    "log": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0150_spike_spatial_mixture/results_archive/stage_queue_20261012/train_encoder_graph.attempt01.log",
+    "attempt": 1,
+    "started": 1791862327.602901
+  },
+  "actual_training_cmdline": "/Data0/kevinswk/envs/snn/bin/python -m collaborative_test.SW_0150_spike_spatial_mixture.train --arm encoder_graph --device cuda:0 ",
+  "other_arm_status": "waiting_for_exclusive_gpu",
+  "claim_limits": [
+    "Encoder/graph training process is actually running; joint arm is awaiting an exclusive idle GPU.",
+    "Source P baseline prediction is independently running.",
+    "No completed scientific training, segmentation improvement, 3seed or native70k superiority is claimed."
+  ]
+}
