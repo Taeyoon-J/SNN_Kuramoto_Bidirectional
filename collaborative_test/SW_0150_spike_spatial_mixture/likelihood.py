@@ -127,7 +127,7 @@ def make_decoder(content_dim: int, *, seed: int) -> SpatialMixtureDecoder:
     if isinstance(seed, bool) or not isinstance(seed, int):
         raise TypeError("decoder initialization seed must be an integer")
     with torch.random.fork_rng(devices=[]):
-        torch.manual_seed(seed)
+        torch.random.default_generator.manual_seed(seed)
         return SpatialMixtureDecoder(content_dim)
 
 

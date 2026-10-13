@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import unittest
+from unittest import mock
 
 import torch
 
@@ -109,6 +110,13 @@ class SpatialLikelihoodTests(unittest.TestCase):
         second = make_decoder(4, seed=19)
         self.assertTrue(all(torch.equal(a, b) for a, b in
                             zip(first.state_dict().values(), second.state_dict().values())))
+
+    def test_decoder_initialization_never_seeds_cuda(self):
+        with mock.patch.object(torch.cuda, "manual_seed_all",
+                               side_effect=AssertionError("CUDA seeding is forbidden")) as seed_cuda:
+            decoder = make_decoder(4, seed=191)
+        self.assertIsInstance(decoder, SpatialMixtureDecoder)
+        seed_cuda.assert_not_called()
 
     def test_decoder_and_fixed_variance_contracts_reject_invalid_values(self):
         with self.assertRaises(ValueError):
