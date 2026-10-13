@@ -1,4 +1,4 @@
-SW0148: actual joint CUDA checkpoint resume verified (k3 to k6, unchanged source/runtime bindings); original encoder_graph training preserved; paired evaluation pending.
+SW0148: encoder_graph pilot training complete (256 updates), outputs hash-verified and adopted by queue v4; joint CUDA training continues; paired evaluation pending.
 
 ## Earlier observations (historical; superseded by the current status above)
 
