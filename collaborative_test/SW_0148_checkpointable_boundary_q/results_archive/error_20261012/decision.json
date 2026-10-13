@@ -1,0 +1,20 @@
+{
+  "pair_analysis_script_sha256": "4116219981ea797e1494dc47eb9dd7cbe4ffd07fa46af24e536fb0b479467b6f",
+  "same_train_first64_weighted_boundary": {
+    "enc": {
+      "student_boundary_mse": 0.05501358936013317,
+      "source_boundary_mse": 0.05538629499374473,
+      "student_event": 1.0,
+      "source_event": 1.0
+    },
+    "joint": {
+      "student_boundary_mse": 0.05561854041229207,
+      "source_boundary_mse": 0.05538629499374473,
+      "student_event": 1.0,
+      "source_event": 1.0
+    }
+  },
+  "decision": "Close SW0148 recipe; do not expand seeds or train conditional SW0147 with unchanged RGB seam objective. Review semantic relation learning objective before next GPU candidate.",
+  "evidence": "Joint increases foreground splitting, merging and foreground miss versus source; encoder control also increases splitting although its same-TRAIN boundary MSE improves.",
+  "limits": "Descriptive posthoc fixed320 diagnosis; no proof of shading mechanism, no fresh70k scaling result, no all-gate necessity claim. No new threshold selection or GT training targets."
+}
