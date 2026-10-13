@@ -2424,7 +2424,7 @@
   },
   "latest_native32_event_history_preparation": {
     "experiment": "SW0151_source_preserving_event_history",
-    "status": "registered_waiting_for_sw150_completion",
+    "status": "conditional_resume_reserved_after_sw150_diagnostic",
     "supervisor_pid": 2340767,
     "grid": [
       32,
@@ -2441,7 +2441,8 @@
     "fresh_native32_70000_training": false,
     "gating_necessity_proven": false,
     "scaling_proven": false,
-    "proof": "collaborative_test/SW_0151_source_preserving_event_history/results_archive/registration_20261013/root_registration_review.json"
+    "proof": "collaborative_test/SW_0151_source_preserving_event_history/results_archive/registration_20261013/root_registration_review.json",
+    "conditional_resume_supervisor_pid": 2643102
   },
   "latest_native32_spatial_likelihood_review": {
     "experiment": "SW0150 spike spatial Gaussian RGB likelihood",
@@ -2628,6 +2629,8 @@
     "gating_necessity_proven": false,
     "scaling_proven": false,
     "score_recovery": "Exact registered baseline descriptive fields accepted; sealed scorer and prediction bytes preserved; no training/prediction rerun.",
-    "publication_status": "Local research record only; GitHub expanded-publication approval remains pending."
+    "publication_status": "Local research record only; GitHub expanded-publication approval remains pending.",
+    "diagnostic_status": "running_gpu1",
+    "diagnostic_child_pid": 2642773
   }
 }
