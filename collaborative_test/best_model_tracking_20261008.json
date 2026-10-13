@@ -2424,7 +2424,7 @@
   },
   "latest_native32_event_history_preparation": {
     "experiment": "SW0151_source_preserving_event_history",
-    "status": "conditional_resume_reserved_after_sw150_diagnostic",
+    "status": "actual_source_preflight_passed_event_saturation_detected",
     "supervisor_pid": 2340767,
     "grid": [
       32,
@@ -2434,15 +2434,18 @@
     "initial_kappa": 0.0,
     "root_new_or_changed_cpu_tests": 15,
     "server_cpu_tests": 26,
-    "actual_gpu_preflight_completed": false,
+    "actual_gpu_preflight_completed": true,
     "training_admission": false,
     "trained_incumbent_changed": false,
     "segmentation_improvement_proven": false,
     "fresh_native32_70000_training": false,
     "gating_necessity_proven": false,
     "scaling_proven": false,
-    "proof": "collaborative_test/SW_0151_source_preserving_event_history/results_archive/registration_20261013/root_registration_review.json",
-    "conditional_resume_supervisor_pid": 2643102
+    "proof": "SW_0151_source_preserving_event_history/results_archive/actual_source_20261013/root_review.json",
+    "conditional_resume_supervisor_pid": 2643102,
+    "source_train_images": 64,
+    "settled_all_component_events_on": true,
+    "settled_auxiliary_history_variance_zero": true
   },
   "latest_native32_spatial_likelihood_review": {
     "experiment": "SW0150 spike spatial Gaussian RGB likelihood",
@@ -2622,7 +2625,7 @@
     },
     "decision": "Do not expand this unchanged training objective to seeds0/2 or a fresh70k pass.",
     "evidence": "Both learned arms reduce primary FG-ARI versus their identical source primary readout; joint learning also trails encoder/graph-only primary. Both QCC readouts decline versus source QCC.",
-    "next_action": "Run reserved color-bin/permuted-spike diagnostic, then source-preserving event-history GPU preflight. Choose subsequent training only after these results.",
+    "next_action": "SW0152 source-preserving spatial encoder and cross-view spike partition objective, matched control pilot.",
     "trained_incumbent_changed": false,
     "seed_expansion": false,
     "fresh_native32_70000_training": false,
@@ -2630,8 +2633,10 @@
     "scaling_proven": false,
     "score_recovery": "Exact registered baseline descriptive fields accepted; sealed scorer and prediction bytes preserved; no training/prediction rerun.",
     "publication_status": "Local research record only; GitHub expanded-publication approval remains pending.",
-    "diagnostic_status": "running_gpu1",
-    "diagnostic_child_pid": 2642773
+    "diagnostic_status": "passed_metadata_only_recovery_complete",
+    "diagnostic_child_pid": 2642773,
+    "diagnostic_process_live": false,
+    "diagnostic_conclusion": "Within-RGB-bin assignment permutation does not worsen RGB likelihood on source1 TRAIN64; unchanged SW0150 objective not promoted."
   },
   "user_fg_ari_target_20261013": {
     "target": 0.87,
@@ -2653,5 +2658,16 @@
     "gap": 0.08695599422793387,
     "next_action": "Major model/objective design review; do not expand unchanged SW0150 RGB likelihood after negative grouping evidence.",
     "achieved": false
+  },
+  "latest_native32_partition_equivariance_preparation": {
+    "experiment": "SW0152",
+    "status": "local_component_cpu_checks_passed",
+    "tests_passed": 9,
+    "training_started": false,
+    "source_seed": 1,
+    "planned_unique_train_images": 2048,
+    "actual_source_gpu_preflight_passed": false,
+    "performance_gain_proven": false,
+    "record": "collaborative_test/SW_0152_source_preserving_partition_equivariance/component_cpu_review.json"
   }
 }
