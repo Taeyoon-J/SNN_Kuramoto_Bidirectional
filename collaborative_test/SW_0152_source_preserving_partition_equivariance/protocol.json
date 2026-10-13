@@ -1,0 +1,25 @@
+{
+  "experiment": "SW0152_source_preserving_partition_equivariance",
+  "status": "prospective_local_components_not_admitted_for_training",
+  "user_target": {"fg_ari": 0.87, "aggregation": "seed0/1/2 mean", "grid": [32, 32], "fixed_evaluation_contract": true},
+  "hypothesis": "A wider spatial receptive field and explicit cross-view correspondence of actual-spike-derived assignments improve grouping beyond color reconstruction.",
+  "source": "Same immutable SW0097 seed1 mapped native32 foundation; source-preserving zero-head residual encoder; not fresh70k training",
+  "views": {"canonical": "clean uint8 RGB", "transformed": "horizontal flip plus fixed registered RNG channel gain Uniform[0.6,1.4] and offset Uniform[-0.1,0.1]; clip and round back to uint8"},
+  "assignment": "Production actual emitted-spike Q; canonical seeds map bijectively under flip; unchanged 64-step native32 spatial diffusion; no RGB/gamma input to assignment",
+  "loss": {
+    "candidate": "mean corresponding-patch Jensen-Shannon divergence + mean-view KL frozen-source sorted area mass to current sorted area mass",
+    "control": "same sorted area-mass KL only; same two views and compute",
+    "coefficients": [1.0, 1.0],
+    "external_teacher": false,
+    "rgb_decoder": false,
+    "old_density_prior": false,
+    "source_anchor_limitation": "Source seed selection and per-image area prior can retain source grouping errors; no guarantee of object correctness or improvement."
+  },
+  "prospective_budget": {"source_seed": 1, "unique_train_images": 2048, "logical_batch": 16, "microbatch": 4, "updates": 128, "rollout": 1024, "settle": 512, "live_tail": 64},
+  "training_admission": ["Exact encoder/gamma/source parity at initialization", "finite actual-source two-update preflight with intended parameter changes", "within-color row-permutation increases alignment objective on first64 TRAIN; diagnostic only", "all paths/functions/hash and GPU owner guards verified"],
+  "evaluation": {"images": "fixed320 IDs1320..1639", "primary": "unchanged native32 QCC", "secondary": "spatial diffusion P readout for diagnosis only", "checkpoint_selection": "last only", "promotion": "same-seed SW0143T FG+0.02 and paired FG CI lower>0 versus same-seed source and marginal-only control; report both IoUs and require original final three-metric objective for completion"},
+  "stop": "If matched pilot fails, do not launch a coefficient/augmentation sweep of this unchanged recipe.",
+  "gating_necessity_proven": false,
+  "scaling_proven": false,
+  "actual_training_started": false
+}
