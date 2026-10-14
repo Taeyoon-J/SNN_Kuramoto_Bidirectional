@@ -1,0 +1,28 @@
+{
+  "reviewed_at_utc": "2026-10-14 18:40:57 UTC",
+  "experiment": "SW0162_connected_signed_partition",
+  "status": "local_cpu_verified_server_admission_pending",
+  "source_repository_head": "244142bf905ba401e9a896fffe685e733786453c",
+  "local_cpu_tests": {"run": 14, "passed": 14, "skipped": 0},
+  "review_corrections": [
+    "CPU source/TRAIN RGB/encoder/statistics preparation precedes CUDA initialization",
+    "backend validation uses core.kuramoto_backend",
+    "source report producer and full queue validator bind the same identity fields",
+    "deterministic solver replay compares labels, merge count and energy"
+  ],
+  "server_evidence": {
+    "shared_master_processes_present": true,
+    "shared_remote_command_responded": false,
+    "independent_connection_error": "Connection timed out during banner exchange",
+    "existing_server_jobs_restarted": false,
+    "SW0162_deployed": false,
+    "SW0162_gpu_started": false
+  },
+  "claims": {
+    "accuracy_result_available": false,
+    "incumbent_changed": false,
+    "seventy_thousand_training_completed": false,
+    "goal_complete": false
+  },
+  "next_admission": "Bounded deployment, server CPU tests and actual production CPU preparation before the owner-reserved eight-TRAIN-image source parity test."
+}

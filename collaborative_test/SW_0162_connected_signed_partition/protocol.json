@@ -1,0 +1,94 @@
+{
+  "experiment": "SW0162_connected_signed_partition",
+  "registration_date": "2026-10-14",
+  "status": "prospective_design_only",
+  "hypothesis": "Global cross-group signed spike evidence with source coupling context can reject a transitive positive bridge while retaining spatially connected instances.",
+  "source": {
+    "seed": 1,
+    "loader": "SW0135.foundation.load_native32_foundation",
+    "source_lineage": "same-seed SW0097 strict native16-to32 source mapping",
+    "operator": "SW0143.geodesic_operator.install_operator(graph,'T')",
+    "graph_parameters": "untouched source learned parameters; fixed power2/effective contrast8 T operator",
+    "encoder_statistics_patcher": "unchanged registered source RGB encoder/standardization/clip/adaptive_pool32",
+    "patches": 1024,
+    "grid": [32, 32],
+    "rgb_shape": [128, 128, 3],
+    "microbatch": 1,
+    "steps": 1024,
+    "settle": 512,
+    "live_tail": 0,
+    "optimizer_updates": 0,
+    "feedback": false,
+    "spike_pulse": false,
+    "coupling_backend": "factorized"
+  },
+  "inputs": {
+    "Q": "exact production positive-clamped component-Pearson-product from actual emitted component spikes,settle512",
+    "A": "unmodified actual GraphVectorKuramoto.prepare_coupling return tuple[0], including native symmetrization/ReLU/1e-6 floor",
+    "capture": "process-local instance wrapper calls original prepare once and returns identical tuple; restore callable finally; one prepare call per static image",
+    "gain": "actual exp(graph.log_coupling_gain), not geodesic contrast or Kuramoto K",
+    "solver_dtype": "CPU float64 copies; preserve/hash original float32 Q/A bytes",
+    "forbidden_solver_features": ["RGB", "gamma", "theta", "GT masks", "GT object count", "teacher predictions"]
+  },
+  "energy": {
+    "q_sym": "(Q.double()+Q.double().T)/2",
+    "probability_epsilon": 0.000001,
+    "q_bar": "clamp(q_sym,epsilon,1-epsilon)",
+    "weight": "1+1024*(A_ij+A_ji)/(2*gain)",
+    "signed_energy": "weight*log(q_bar/(1-q_bar))",
+    "diagonal": 0,
+    "weight_threshold_K_sweep": false
+  },
+  "partition": {
+    "initial": "1024 row-major singleton groups",
+    "eligible": "at least one original horizontal/vertical grid edge between groups; no wrap/diagonal",
+    "merge_gain": "sum signed_energy over ALL cross-group patch pairs",
+    "selection": "largest strictly-positive eligible gain",
+    "tie": "exact equal gain: lexicographically smallest sorted pair of group first-patch indices",
+    "merged_group_id": "smallest member patch index",
+    "updates": "union group adjacency; summed dense group gains retained also for currently nonadjacent groups",
+    "stop": "no positive eligible merge gain",
+    "fixed_object_count": false,
+    "global_optimum_claim": false
+  },
+  "mask_readout": {
+    "minimum_group_size": 8,
+    "background": "largest size>=8 group; first row-major patch breaks size ties",
+    "dropped_and_background_label": 0,
+    "positive_labels": "remaining groups ordered by first patch index",
+    "no_retained_groups": "all-zero labels",
+    "control": "untouched SW0136.evaluate._qcc_labels at synchrony.50/min8/settle512/largest-component"
+  },
+  "preflight": {
+    "source_positions": [0, 1, 2, 3, 2048, 2049, 2050, 2051],
+    "images": 8,
+    "ground_truth_used": false,
+    "optimizer_updates": 0,
+    "required": ["source bindings/current code hashes", "same-RNG untouched/captured six-trace/Q/QCC exact parity", "actual A finite symmetric positive 1024 matrix", "positive finite actual gain", "source model state unchanged", "deterministic connected complete partition", "feasible memory/runtime without OOM"],
+    "diagnostic_only": ["predicted foreground coverage", "raw group-size distribution", "retained group count", "chosen BG size", "discarded mass", "merge count", "solver/rollout runtime", "peak RSS/CUDA memory"],
+    "diagnostic_values_select_parameters": false,
+    "TRAIN_mask_admission_criterion": false
+  },
+  "evaluation": {
+    "seed": 1,
+    "image_ids": [1320, 1639],
+    "count": 320,
+    "modal_patch_size": 4,
+    "metrics": ["foreground_ari", "foreground_iou", "object_iou"],
+    "reference": "validated SW0143-T seed1 archived exact labels and source lineage",
+    "control_replay": "all320 control labels exactly equal archived sourceT before GT access",
+    "ground_truth_order": "freeze and validate candidate/control/Slot predictions and protocols first; GT masks last",
+    "forbidden_reserve": [90640, 90959],
+    "bootstrap": {"replicates": 10000, "seed": 162, "shared_paired_image_indices": true},
+    "seed_extension_gate": {
+      "FG_mean_delta_vs_T": ">0",
+      "FG_paired95CI_lower_vs_T": ">0",
+      "foreground_iou_mean_delta_vs_T": ">=0",
+      "object_iou_mean_delta_vs_T": ">=0"
+    },
+    "failure": "close fixed recipe; no threshold/weight/K/neighbor sweep or automatic training",
+    "conditional_replication": "only after passing seed1 gate, consider same fixed source0/2 recipe",
+    "final_goal": "all3 mean metrics strictly above comparable own70kSlot; FG mean>=.87 separately assessed"
+  },
+  "claim_limits": ["source-only unsupervised inference intervention", "not fresh native32 70k training", "not positive unique-data scaling evidence", "not all-gate causal necessity", "not retrained ablation evidence", "no automatic new training objective or 70k queue"]
+}
