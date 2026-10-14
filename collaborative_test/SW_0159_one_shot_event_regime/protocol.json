@@ -1,0 +1,39 @@
+{
+  "experiment": "SW0159_one_shot_event_regime",
+  "status": "prospective bounded feasibility probe",
+  "source": "SW0097 seed1 native32 foundation with the registered SW0143-T graph operator",
+  "intervention": "one source-calibrated initialization of the existing four-component wrapped.b parameter; no SW0158 eta/amplitude path",
+  "calibration": {
+    "report_sha256": "83e968cade400d54dae56395c42f1bb54443231903cb5f2642fc4f34e5e56b0e",
+    "source_positions": [0, 1, 2, 3, 2048, 2049, 2050, 2051],
+    "threshold_fraction_of_source_margin_rms": 0.5,
+    "native_threshold_formula": "0.06*exp(b_d)",
+    "b_formula": "log((0.5*source_margin_rms_d)/0.06)",
+    "scope": "fixed source-T TRAIN calibration; no event-rate target, sweep, or recalibration"
+  },
+  "arms": {
+    "control": "existing b initialized to zero; exact original SW0134 late_rollout",
+    "candidate": "existing b initialized from the pinned calibration; exact original SW0134 late_rollout"
+  },
+  "bounded_preflight": {
+    "images": 8,
+    "updates": 2,
+    "logical_batch": 4,
+    "microbatch": 1,
+    "training_loss": "unchanged SW0155 balanced supervised relation objective on TRAIN masks only",
+    "native_core_learning_rate": 0.00003,
+    "integration_learning_rate": 0.001,
+    "steps": 1024,
+    "settle": 512,
+    "live_tail": 64,
+    "initial_control_parity": "six trace tensors, production actual-spike Q, and QCC labels"
+  },
+  "conditional_full_pilot_if_preflight_is_admitted": {
+    "ordered_train_images": 2048,
+    "updates": 128,
+    "logical_batch": 16,
+    "microbatch": 4,
+    "learning_rates": {"native_core": 0.00003, "integration_tensors": 0.001}
+  },
+  "interpretation": "Changing b jointly changes event threshold and reset subtraction. This probe does not isolate those effects, establish event saturation relief as causal, or claim performance. If the initialized events show no real transition/credit, close without a sweep."
+}

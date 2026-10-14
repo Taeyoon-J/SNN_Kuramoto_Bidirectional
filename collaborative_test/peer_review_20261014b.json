@@ -1,0 +1,25 @@
+{
+  "peer_branch": "patch_v2",
+  "reviewed_commit": "b36518dd762e13a7414e2e246eaf29caf8f7d953",
+  "files": [
+    "collaborative_test/PV2_0089_grid32/README.md",
+    "collaborative_test/PV2_0089_grid32/metrics.csv",
+    "collaborative_test/PV2_0089_grid32/commands.sh"
+  ],
+  "evidence": {
+    "native32_fresh_train_fg_ari": 0.0,
+    "spike_rate": 0.0009,
+    "evaluation_threshold_adjusted_fg_ari": 0.0588,
+    "evaluation_graph_decay_flag": "NOOP: checkpoint spatial_rate overwrites flag"
+  },
+  "incorporation": [
+    "Check actual event variation and membrane gradients before full training; phase PLV alone is insufficient.",
+    "Verify post-checkpoint-load actual parameters; do not infer applied settings from CLI flags.",
+    "Do not use evaluation threshold changes to claim recovery of missing training signal."
+  ],
+  "limits": [
+    "Different renderer, evaluation contract, initialization, and temporal budget; numeric results are not directly comparable.",
+    "Our diagnostic shows always-on events; peer run has sparse/dead events, so do not directly port its threshold.",
+    "Queued PV2_0093 arms have no completed results in this review."
+  ]
+}
