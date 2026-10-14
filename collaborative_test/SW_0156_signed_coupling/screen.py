@@ -54,7 +54,14 @@ def implementation_fingerprint():
         "collaborative_test/SW_0156_signed_coupling/screen.py": HERE / "screen.py",
     }
     merged = dict(sw143.implementation_fingerprint())
-    merged.update(sw145.implementation_fingerprint())
+    # SW0145 exposes the actual-spike Q helper in run.py, but it does not
+    # define an implementation_fingerprint API. Bind the module that supplies
+    # the helper directly, alongside SW0143's fingerprint (which already
+    # binds the classifier implementation used by that helper).
+    sw145_run = Path(sw145.__file__).resolve()
+    if not sw145_run.is_file():
+        raise FileNotFoundError(sw145_run)
+    merged[sw145_run.relative_to(ROOT).as_posix()] = sha256_file(sw145_run)
     for name, path in files.items():
         if not path.is_file():
             raise FileNotFoundError(path)

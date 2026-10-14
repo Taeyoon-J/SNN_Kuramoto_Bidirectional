@@ -24,6 +24,15 @@ class FakeRgbCache:
 
 
 class SourceScreenQueueTests(unittest.TestCase):
+    def test_real_screen_and_queue_fingerprints_resolve_actual_sw0145_api(self):
+        report_fp = screen.implementation_fingerprint()
+        sw145_path = Path(screen.sw145.__file__).resolve()
+        key = sw145_path.relative_to(screen.ROOT).as_posix()
+        self.assertIn(key, report_fp)
+        self.assertEqual(report_fp[key], screen.sha256_file(sw145_path))
+        queue_fp = queue.implementation_fingerprint()
+        self.assertEqual(queue_fp["report_fingerprint"], report_fp)
+
     def test_exception_cleanup_stops_owned_child_before_unlock(self):
         events = []
 
