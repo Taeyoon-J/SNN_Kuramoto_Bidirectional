@@ -79,7 +79,8 @@
 | PV2_0086 | completed | **the motion term helps on a working platform: control .4723 at pred_fg .1006, weight 10 .4826/.5613/.3735 at .1198. First positive in ~31 routes, one seed** | | | |
 | PV2_0087 | completed | **complexity: ours is O(N^3 + T N^2) in patches, Slot Attention O(K L P k^2 C^2) in pixels. 17.6x cheaper at 16x16, parity at 32x32, 13x with a sparse rollout** | | | |
 | PV2_0088 | completed | **the 32x32 enablers: grid rule verified IDENTICAL to v1 at grid 16; geodesic 68.7 GB -> 4.72 GB bit-identical; gamma recipe reconstructed** | | | |
-| PV2_0089 | running | the published configuration at a 32x32 grid, contract v2 | | | |
+| PV2_0089 | failed | **32x32: the phase side is healthy (plv_mean .7101 vs grid16's .753) but the spike path dies at epoch 17, spike_plv_collapse = log(10^4). Transduction hyperparameters do not transfer** | 0.0000 | 0.0000 | 0.0000 |
+| PV2_0093 | queued | three 8-epoch arms, one variable each, to keep the 32x32 spike path alive | | | |
 | PV2_0090 | completed | **the Slot Attention baseline was misaligned IN OUR FAVOUR: its centre crop made the prediction and target grids describe different regions. Aligned, Slot fg_ari 0.6656 -> 0.8102 and LEADS our 0.7603. Both IoU wins stand** | | | |
 | PV2_0046 | completed | contract diagnostic: a looser rule *lowers* fg_ari 0.724 to 0.533; cross-branch scores are not poolable | | | |
 
