@@ -1,0 +1,126 @@
+{
+  "schema": "sw161_cpu_deployment_review_v1",
+  "experiment": "SW0161_source_cache_and_head_preflight_queue",
+  "manifest_sha256": "40fafea916ffdec154c786eabce764a277c26961cc8b68a30f5fd693320049a2",
+  "files": {
+    "DESIGN_KO.md": {
+      "sha256": "4bca10175cac6a9db52409770f37b2c6938f2d548aba7d9d007f0dd7dab92f1b",
+      "size": 9094
+    },
+    "protocol.json": {
+      "sha256": "42b242ff135091fcc054d817b30366686cfb16ae1e385759d5180137c2061a7f",
+      "size": 2973
+    },
+    "objective.py": {
+      "sha256": "7a2aea977033fc4a44e20a4352270adddf81673105902ba73b0dc5d79e8d51f9",
+      "size": 8752
+    },
+    "test_objective.py": {
+      "sha256": "6a2815f6b0d994c39d80d9b92bac85ce55d76dbda2b1d05ea13fb92adc8478cb",
+      "size": 9700
+    },
+    "cache.py": {
+      "sha256": "990e335b03099351710916042707972173f60d36f8d044b09461020c680ee877",
+      "size": 35303
+    },
+    "test_cache.py": {
+      "sha256": "4c7cc8e12a8bfb10c521242c089657697374347c0e4b93555588f4354d5cf0e3",
+      "size": 10171
+    },
+    "train.py": {
+      "sha256": "66345b64b1b0cb2ac58330770db9d9239c95933477c000d78107435a0d376400",
+      "size": 28478
+    },
+    "test_train.py": {
+      "sha256": "a17bacda72336df9f317ab9034402a2002d1eeb33f1d442dee92a81f51148894",
+      "size": 14224
+    },
+    "preflight.py": {
+      "sha256": "a3fab511f1316d3ef1a0616b023b72c28e5ac45025431ea52145cd995b0d361a",
+      "size": 20110
+    },
+    "test_preflight.py": {
+      "sha256": "762126f3ca53e4c099f8a11862bb2b1288ce6d4d97b07b15a3a63ceb41cb0164",
+      "size": 12094
+    },
+    "cache_queue.py": {
+      "sha256": "0ee6f193e9ff3e320f01ae7954d5952a53e8c395ced76e015959678493c092a3",
+      "size": 19785
+    },
+    "test_cache_queue.py": {
+      "sha256": "51d0843af77ec9cfb370ec2c3b8aeab419fc9dc0dfbfdd71bb5255df1c371038",
+      "size": 10018
+    }
+  },
+  "py_compile": "passed",
+  "tests_passed": 37,
+  "tests_skipped": 0,
+  "test_argv": [
+    "/Data0/kevinswk/envs/snn/bin/python",
+    "-m",
+    "unittest",
+    "collaborative_test.SW_0161_supervised_spike_partition.test_objective",
+    "collaborative_test.SW_0161_supervised_spike_partition.test_cache",
+    "collaborative_test.SW_0161_supervised_spike_partition.test_train",
+    "collaborative_test.SW_0161_supervised_spike_partition.test_preflight",
+    "collaborative_test.SW_0161_supervised_spike_partition.test_cache_queue"
+  ],
+  "test_stdout": "",
+  "test_stderr": ".....................................\n----------------------------------------------------------------------\nRan 37 tests in 15.660s\n\nOK\n",
+  "dry_run": "passed",
+  "dry_run_plan": {
+    "status": "planned",
+    "plan": {
+      "experiment": "SW0161_source_cache_and_head_preflight_queue",
+      "stages": [
+        "cache",
+        "preflight"
+      ],
+      "cache_argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-m",
+        "collaborative_test.SW_0161_supervised_spike_partition.cache",
+        "--device",
+        "cuda:0",
+        "--output",
+        "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0161_supervised_spike_partition/results_archive/sourceT_cache_20261014"
+      ],
+      "preflight_argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-m",
+        "collaborative_test.SW_0161_supervised_spike_partition.preflight",
+        "--device",
+        "cuda:0",
+        "--cache-root",
+        "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0161_supervised_spike_partition/results_archive/sourceT_cache_20261014",
+        "--output",
+        "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0161_supervised_spike_partition/results_archive/preflight_20261014/preflight.json"
+      ],
+      "cache_root": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0161_supervised_spike_partition/results_archive/sourceT_cache_20261014",
+      "preflight_output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0161_supervised_spike_partition/results_archive/preflight_20261014/preflight.json",
+      "runtime": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0161_supervised_spike_partition/results_archive/cache_preflight_queue_20261014",
+      "gpu_candidates": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "max_memory_mib": 512,
+      "stable_seconds": 5.0,
+      "watchdog_seconds": 43200,
+      "queue_fingerprint": {
+        "collaborative_test/SW_0161_supervised_spike_partition/cache_queue.py": "0ee6f193e9ff3e320f01ae7954d5952a53e8c395ced76e015959678493c092a3",
+        "collaborative_test/SW_0161_supervised_spike_partition/cache.py": "990e335b03099351710916042707972173f60d36f8d044b09461020c680ee877",
+        "collaborative_test/SW_0161_supervised_spike_partition/preflight.py": "a3fab511f1316d3ef1a0616b023b72c28e5ac45025431ea52145cd995b0d361a",
+        "collaborative_test/SW_0161_supervised_spike_partition/train.py": "66345b64b1b0cb2ac58330770db9d9239c95933477c000d78107435a0d376400",
+        "collaborative_test/SW_0161_supervised_spike_partition/objective.py": "7a2aea977033fc4a44e20a4352270adddf81673105902ba73b0dc5d79e8d51f9",
+        "collaborative_test/SW_0161_supervised_spike_partition/protocol.json": "42b242ff135091fcc054d817b30366686cfb16ae1e385759d5180137c2061a7f",
+        "collaborative_test/SW_0148_checkpointable_boundary_q/stage_queue_v4.py": "14fae39aeb6e958df60edf25680f412acb50a01126fd7af725c61fdba3794623",
+        "collaborative_test/SW_0126_history_event_binding/pilot_queue.py": "c59cdc39af20c824930d1926c8cec1418ee818577b8cc4240ad6eaae836764f6"
+      }
+    },
+    "cuda_visible_devices_parent": ""
+  },
+  "cuda_visible_devices": "",
+  "gpu_allocated": false
+}
