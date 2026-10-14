@@ -1,0 +1,25 @@
+{
+  "score_sha256": "723bf11a5fbf499f868d9fa7877be6bb2e5e1156069abc5db62af6b039ceaa4f",
+  "post_score_diagnostic_only": true,
+  "seed_scope": [
+    1
+  ],
+  "image_count": 320,
+  "predicted_foreground_fraction": {
+    "connected_signed": 0.3433197021484375,
+    "source_T_control": 0.3315399169921875,
+    "source_T": 0.3315399169921875,
+    "source_qcc": 0.33817138671875,
+    "Slot70k": 0.750323486328125
+  },
+  "mean_discarded_patches": 29.853125,
+  "mean_retained_groups": 7.15,
+  "descriptive_correlations_foreground_iou_delta": {
+    "discarded_mass": -0.14031702049143752,
+    "candidate_foreground_fraction": -0.08759365697096953
+  },
+  "finding": "Candidate predicts more foreground than SourceT while foreground IoU worsens; foreground shortage is not established. Descriptive correlations do not establish causes.",
+  "decision": "Close the unchanged SW162 recipe. Review a distinct GT-free fixed-foreground induced partition hypothesis before implementation; continue the independently registered SW163 supervised assignment arms.",
+  "gating_causality_proven": false,
+  "larger_training_data_gain_proven": false
+}
