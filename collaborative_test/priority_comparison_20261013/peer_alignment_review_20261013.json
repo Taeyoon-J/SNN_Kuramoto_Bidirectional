@@ -1,0 +1,34 @@
+{
+  "peer_previous_commit": "c493a0dfbbce",
+  "peer_current_commit": "7d094e8",
+  "new_peer_tests": [
+    "PV2_0090_slot_alignment",
+    "PV2_0092_signed_coupling"
+  ],
+  "peer_alignment_finding": "Peer240x320 center-square crop predictions were scored against whole-frame targets. Corrected peer baseline improves FG-ARI; peermetrics not pooled with ours.",
+  "our_actual_baseline_review": {
+    "source_dataset": "/Data0/kevinswk/datasets/object_centric_data/clevr_10-full.hdf5",
+    "image_ids": [
+      1320,
+      1639
+    ],
+    "resolution": [
+      128,
+      128
+    ],
+    "preprocessing": "full HDF5 RGB image, float32 /127.5 - 1; no crop",
+    "protocol_sha256": {
+      "0": "11f4baf5db64101b815e3fd92d2255c8b423554d2c91e82caeb5bd681a115a03",
+      "1": "a561033539b7e7253b74f1e313712c77c6880916d4e578ef1a83e9cd094ad5eb",
+      "2": "d3e380da1995834a279d467e8d43e51e83b22ec0a6d666ba0361cb92c957f891"
+    },
+    "same_crop_mismatch_found": false
+  },
+  "signed_coupling": {
+    "peer_status": "pending_seed0_pilot",
+    "our_status": "Sol61_readonly_native32_feasibility_review_requested",
+    "implementation_changed": false
+  },
+  "baseline_retraining_or_prediction_rerun": false,
+  "supervised_and_native64_jobs_preserved": true
+}

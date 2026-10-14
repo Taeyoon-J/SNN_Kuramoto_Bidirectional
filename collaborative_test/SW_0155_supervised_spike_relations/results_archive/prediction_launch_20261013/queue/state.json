@@ -1,0 +1,62 @@
+{
+  "experiment": "SW0155_supervised_spike_relations",
+  "queue_version": 1,
+  "status": "queued",
+  "supervisor_pid": 2831262,
+  "queue_fingerprint": {
+    "collaborative_test/SW_0155_supervised_spike_relations/stage_queue.py": "836e6216ffab2f60dd0374412ded798e2f2f92c9e599766395c9d84fed1a28e4",
+    "collaborative_test/SW_0155_supervised_spike_relations/predict_evaluate.py": "c35c93badd8269383601e64c471e4aebbdd3017dfc2769957ec3f67ff6da2317",
+    "collaborative_test/SW_0155_supervised_spike_relations/protocol.json": "ba13ae2900d9bfa393a2bf1d3d7bcb437c89bb6302ac967b16f5926cc2871b96",
+    "collaborative_test/SW_0155_supervised_spike_relations/train.py": "68306bc5fa658487302dbcb20d0e95676957dbdbd3b04c471292cbfb4126db69",
+    "collaborative_test/SW_0155_supervised_spike_relations/objective.py": "07ea07f1fa06c6f2e05e4e98184db487f68549249d997e6991ea26a8e06b40fe",
+    "collaborative_test/SW_0155_supervised_spike_relations/artifactvalidator.py": "aae0e1af2412bff3b3d4be089fa8778084236f677bb01fea0dec9efc65f9a20c",
+    "collaborative_test/SW_0155_supervised_spike_relations/preflight.py": "9333460ef5e77604a1b4c8d89fe4b7e0b2fb9ee102d7c27fae6210a3dc6c4353",
+    "collaborative_test/SW_0155_supervised_spike_relations/preflight_migration.py": "811793451f513732f1fff44ad2a401ccb782f5231eddc8ef5eb03df3bc3a48ea",
+    "collaborative_test/SW_0148_checkpointable_boundary_q/stage_queue_v4.py": "14fae39aeb6e958df60edf25680f412acb50a01126fd7af725c61fdba3794623",
+    "collaborative_test/SW_0126_history_event_binding/pilot_queue.py": "c59cdc39af20c824930d1926c8cec1418ee818577b8cc4240ad6eaae836764f6"
+  },
+  "prediction_fingerprint": {
+    "collaborative_test/SW_0155_supervised_spike_relations/predict_evaluate.py": "c35c93badd8269383601e64c471e4aebbdd3017dfc2769957ec3f67ff6da2317",
+    "collaborative_test/SW_0155_supervised_spike_relations/protocol.json": "ba13ae2900d9bfa393a2bf1d3d7bcb437c89bb6302ac967b16f5926cc2871b96",
+    "collaborative_test/SW_0155_supervised_spike_relations/train.py": "68306bc5fa658487302dbcb20d0e95676957dbdbd3b04c471292cbfb4126db69",
+    "collaborative_test/SW_0155_supervised_spike_relations/objective.py": "07ea07f1fa06c6f2e05e4e98184db487f68549249d997e6991ea26a8e06b40fe",
+    "collaborative_test/SW_0155_supervised_spike_relations/artifactvalidator.py": "aae0e1af2412bff3b3d4be089fa8778084236f677bb01fea0dec9efc65f9a20c",
+    "collaborative_test/SW_0155_supervised_spike_relations/preflight.py": "9333460ef5e77604a1b4c8d89fe4b7e0b2fb9ee102d7c27fae6210a3dc6c4353",
+    "collaborative_test/SW_0155_supervised_spike_relations/preflight_migration.py": "811793451f513732f1fff44ad2a401ccb782f5231eddc8ef5eb03df3bc3a48ea",
+    "collaborative_test/SW_0130_phase_state_integration/run.py": "92ac0032467c6bff2e31a76c66021c5e211f9402d15ff868382d71ecc807e988",
+    "collaborative_test/SW_0135_native32_spike_binding/foundation.py": "9c241cacf1479c339fa56376b881672535c8d7ac4966a7ddff3b4b47f24cb867",
+    "collaborative_test/SW_0135_native32_spike_binding/evaluation_contract32.py": "e601280ade9a2b9545f6bbf94df22deca6ebfe123750229f6a7244105c57b1bd",
+    "collaborative_test/SW_0137_native32_source_qcc/run.py": "2498629d119d73d7e1ae06d359e99dda87355c8a577951fbf5b1af28570de7d2",
+    "collaborative_test/SW_0143_native32_selective_geodesic/run.py": "c004674618d3a714a3093beafd03b27f12b94cf3e16ce775fc36da954da7aa5d",
+    "collaborative_test/SW_0136_native32_transfer/evaluate.py": "1c2846b69fb4bc936bf06723fc9f1b4c12f6632a02aff7e40c1e21a28b7a30ea",
+    "collaborative_test/SW_0150_spike_spatial_mixture/integration.py": "fb3f44c5d52e8eccccc60b9a19f9a13f388a91f905c5f8aa9de326dcce58e0ca",
+    "collaborative_test/SW_0152_source_preserving_partition_equivariance/deep_encoder.py": "228a0f88b594b81c645e935cbbcaba13b524748b8f27d34415e677348109d0ad",
+    "collaborative_test/SW_0152_source_preserving_partition_equivariance/training.py": "0c38f71c43a39c8aed284ab62edd25f8a30b27ea2e121db479bea75eff96bff2",
+    "snn_kuramoto_bidirectional/evaluation.py": "4a15980c9aa0248dbe0e837ad1b0b430ce26a7ab367c004d290a1272bb1025d7"
+  },
+  "score_output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0155_supervised_spike_relations/results_archive/supervised_fixed320_evaluation.json",
+  "tasks": {
+    "predict_encoder_graph": {
+      "task": {
+        "task_id": "predict_encoder_graph",
+        "arm": "encoder_graph",
+        "seed": 1,
+        "stage": "fixed320_qcc_prediction",
+        "device": "cuda:0",
+        "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0155_supervised_spike_relations/predictions/encoder_graph_seed1"
+      },
+      "status": "queued"
+    },
+    "predict_joint": {
+      "task": {
+        "task_id": "predict_joint",
+        "arm": "joint",
+        "seed": 1,
+        "stage": "fixed320_qcc_prediction",
+        "device": "cuda:0",
+        "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0155_supervised_spike_relations/predictions/joint_seed1"
+      },
+      "status": "queued"
+    }
+  }
+}
