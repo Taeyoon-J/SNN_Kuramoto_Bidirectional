@@ -1,0 +1,60 @@
+{
+  "receipt": {
+    "experiment": "SW0162_connected_signed_partition",
+    "status": "cpu_deployment_verified_no_gpu_launch",
+    "files": [
+      {
+        "name": "collaborative_test/SW_0162_connected_signed_partition/DESIGN_KO.md",
+        "sha256": "54b210210666fa6589b35886b644cea2a2c759bbff76ac678e98f5c3c89c721e",
+        "size": 7724
+      },
+      {
+        "name": "collaborative_test/SW_0162_connected_signed_partition/protocol.json",
+        "sha256": "bd9eacf2ed6971776170bc27cd5ba556e2f9a2b6af89dfde7c50b3154b0aa980",
+        "size": 5324
+      },
+      {
+        "name": "collaborative_test/SW_0162_connected_signed_partition/connected_signed.py",
+        "sha256": "fd3c760b523b724a864c807e64a7b2d208f2e426b7980c8f4a944f7edd643af5",
+        "size": 6528
+      },
+      {
+        "name": "collaborative_test/SW_0162_connected_signed_partition/preflight.py",
+        "sha256": "06350ab58d4ef6d58b07c9bda86a0c6f5c28ac8e9ac38fe9f530b698e07f12f4",
+        "size": 22689
+      },
+      {
+        "name": "collaborative_test/SW_0162_connected_signed_partition/preflight_queue.py",
+        "sha256": "dc8277a792aafb3760ae29073ddb6dfc490567c55e0e778ad5ec9d99d6fe4fa0",
+        "size": 15422
+      },
+      {
+        "name": "collaborative_test/SW_0162_connected_signed_partition/test_connected_signed.py",
+        "sha256": "05ef37ac6bb9f9ca96ea623c77c6bcaff77937b689e4ea4e188f77a632975656",
+        "size": 4447
+      },
+      {
+        "name": "collaborative_test/SW_0162_connected_signed_partition/test_preflight.py",
+        "sha256": "94c154d401ac4368a4abd95d947d4b920893e2426264e8fcc547eace0106770f",
+        "size": 4326
+      },
+      {
+        "name": "collaborative_test/SW_0162_connected_signed_partition/test_preflight_queue.py",
+        "sha256": "b4af7cb804199a8e28c7efd43ba5c6fe47d0056cc273c97286e0c45587d8d3a1",
+        "size": 4538
+      }
+    ],
+    "test_output": "test_background_ties_use_first_patch_and_small_groups_fold_into_background (collaborative_test.SW_0162_connected_signed_partition.test_connected_signed.ConnectedSignedTests) ... ok\ntest_invalid_source_contract_rejects_nonfinite_asymmetry_and_gain (collaborative_test.SW_0162_connected_signed_partition.test_connected_signed.ConnectedSignedTests) ... ok\ntest_merge_gain_sums_positive_and_negative_cross_evidence (collaborative_test.SW_0162_connected_signed_partition.test_connected_signed.ConnectedSignedTests) ... ok\ntest_non_neighbor_positive_edge_cannot_merge_and_ties_are_repeatable (collaborative_test.SW_0162_connected_signed_partition.test_connected_signed.ConnectedSignedTests) ... ok\ntest_q_is_symmetrized_before_endpoint_clamping (collaborative_test.SW_0162_connected_signed_partition.test_connected_signed.ConnectedSignedTests) ... ok\ntest_signed_formula_uses_both_directed_source_edges_and_clamps (collaborative_test.SW_0162_connected_signed_partition.test_connected_signed.ConnectedSignedTests) ... ok\ntest_capture_restores_original_callable_when_rollout_raises (collaborative_test.SW_0162_connected_signed_partition.test_preflight.PreflightTests) ... ok\ntest_capture_uses_actual_prepare_tuple_and_restores_instance_descriptor (collaborative_test.SW_0162_connected_signed_partition.test_preflight.PreflightTests) ... ok\ntest_fixed_source_train_row_order_and_rgb_bytes (collaborative_test.SW_0162_connected_signed_partition.test_preflight.PreflightTests) ... ok\ntest_production_fingerprint_resolves_actual_source_dependencies (collaborative_test.SW_0162_connected_signed_partition.test_preflight.PreflightTests) ... ok\ntest_public_run_validates_cpu_inputs_before_cuda_probe (collaborative_test.SW_0162_connected_signed_partition.test_preflight.PreflightTests) ... ok\ntest_child_command_binds_actual_preflight_and_fixed_no_gt_contract (collaborative_test.SW_0162_connected_signed_partition.test_preflight_queue.PreflightQueueTests) ... ok\ntest_fingerprint_and_child_path_are_local_registered_files (collaborative_test.SW_0162_connected_signed_partition.test_preflight_queue.PreflightQueueTests) ... ok\ntest_report_validator_requires_all_eight_exact_parity_records (collaborative_test.SW_0162_connected_signed_partition.test_preflight_queue.PreflightQueueTests) ... ok\n\n----------------------------------------------------------------------\nRan 14 tests in 1.564s\n\nOK\n",
+    "cpu_source_preflight": "{\"source_sha256\": \"76f379d5a7e4cd9d12fdf0b701f3dd9dbbf28b5eea270a9cee2d30d87b4dad98\", \"manifest_sha256\": \"241c9ea96fc3d3d2b168cb49d941e39c6751eca4436192e614760673545da38b\", \"selected_ids\": [68304, 49032, 70041, 7829, 12850, 13538, 40735, 61788], \"selected_rows\": [67664, 48392, 69401, 7189, 12210, 12898, 40095, 61148], \"rgb_sha256\": \"3a070848f030a909eeabc0407c9f0d8547cedac0904b985d4a750c61efb1e1f8\", \"assets\": {\"train_manifest_sha256\": \"2578e616478798cd0c3ceab696688a937d18c8f0c54be8c4c62bde9ebd80ddd6\", \"train_cache_shape\": [70000, 128, 128, 3], \"train_ids_mapping_sha256\": \"4f6527527ab36aec1d45be1147a6a2d0af194e006db89a457d78e07e297bb4d6\", \"selected_rgb_sha256\": \"3a070848f030a909eeabc0407c9f0d8547cedac0904b985d4a750c61efb1e1f8\", \"encoder_source_path\": \"/Data0/kevinswk/patch_v2/trained_models/readme_patch_eval_20261002/input_encoder/input_layer_encoder.pt\", \"encoder_source_sha256\": \"9b9c9c59725f872084a6c9bfae1ebbd1b89de40d18ef4f8ab6b8ec014c2ab868\", \"feature_stats_path\": \"/Data0/kevinswk/patch_v2/trained_models/readme_patch_eval_20261002/feature_preprocessing.pt\", \"feature_stats_sha256\": \"a9ec3281b9603021c37f7c346baa6cf62513c5ce7edde867ab7eddf24b18e127\", \"feature_stats_mode\": \"standardize\", \"feature_clip\": 3.0, \"scope\": \"registered TRAIN RGB only; no validation images or masks opened\"}, \"cuda_visible_devices\": \"\"}\n",
+    "queue_dry_run": true,
+    "gpu_launched": false
+  },
+  "receipt_sha256": "238ef09ca9661dbdb95565da1ca34865cced0c5c8be4da5192c5856b14ec6b23",
+  "queue": {
+    "status": "waiting_for_idle_gpu",
+    "supervisor_pid": 3372185,
+    "child_pid": null,
+    "gpu": null
+  },
+  "supervisor_live": "/Data0/kevinswk/envs/snn/bin/python -m collaborative_test.SW_0162_connected_signed_partition.preflight_queue "
+}

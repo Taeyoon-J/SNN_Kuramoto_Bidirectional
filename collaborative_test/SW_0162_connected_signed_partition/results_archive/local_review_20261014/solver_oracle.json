@@ -1,0 +1,15 @@
+{
+  "experiment": "SW0162_connected_signed_partition",
+  "scope": "CPU algorithm verification; synthetic inputs only",
+  "implementation_sha256": "fd3c760b523b724a864c807e64a7b2d208f2e426b7980c8f4a944f7edd643af5",
+  "random_state_seed": 162,
+  "trials": 200,
+  "grid_shape": [4, 4],
+  "Q": "symmetrized independent uniform(.01,.99) 16x16 matrix",
+  "A": "symmetrized independent uniform(.001,.1) 16x16 matrix",
+  "gain": 1.0,
+  "oracle": "Recompute every eligible component pair gain directly from all member-patch energies at each step; test eligibility against original grid edges; maximum positive gain with lexicographic tie; no incremental cross matrix or heap.",
+  "comparison": "exact final representative labels",
+  "matched_trials": 200,
+  "accuracy_or_source_parity_claim": false
+}
