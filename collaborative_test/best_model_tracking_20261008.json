@@ -3010,7 +3010,7 @@
       "threshold_sweep": false
     },
     "SW0160": {
-      "status": "paired_training_and320_predictions_complete_missing_protocol_mirrors_under_CPU_recovery",
+      "status": "complete_small_mean_gain_FG_CI_crosses_zero_closed_without_replication",
       "design": "collaborative_test/SW_0160_end_to_end_source_encoder/DESIGN_KO.md",
       "intervention": "unfreeze actual source RGB encoder vs matched frozen-sourcebase residual/core/graph control",
       "mask_supervised": true,
@@ -3039,7 +3039,7 @@
         3124495
       ],
       "score_supervisor": 3124498,
-      "performance_result_available": false,
+      "performance_result_available": true,
       "training_children": [
         3124604,
         3124621
@@ -3062,10 +3062,43 @@
       "prediction_rows_complete_per_arm": 320,
       "prediction_validation_error": "source_base_before_sha256 omitted by protocol producer; trained manifest and model hashes already bound",
       "GPU_training_restart_needed": false,
-      "GPU_prediction_restart_needed": false
+      "GPU_prediction_restart_needed": false,
+      "means": {
+        "frozen_base_joint": {
+          "fg_ari": 0.7540949756691366,
+          "foreground_iou": 0.6072444091650514,
+          "matched_object_iou": 0.578872168560321
+        },
+        "full_encoder_joint": {
+          "fg_ari": 0.7590420592854362,
+          "foreground_iou": 0.6269355271133976,
+          "matched_object_iou": 0.5867145052126955
+        },
+        "source97": {
+          "fg_ari": 0.7541350949944816,
+          "foreground_iou": 0.606899549668619,
+          "matched_object_iou": 0.582200586329909
+        },
+        "SW0143_T": {
+          "fg_ari": 0.7552730828009764,
+          "foreground_iou": 0.6149934302630647,
+          "matched_object_iou": 0.5795137856780908
+        }
+      },
+      "registered_seed1_gate": {
+        "primary_metric": "fg_ari",
+        "candidate_fg_ari_exceeds_source_T": true,
+        "candidate_fg_ari_exceeds_matched_control": true,
+        "candidate_minus_source_T_fg_ari_ci95_lower_positive": false,
+        "candidate_minus_control_fg_ari_ci95_lower_positive": false,
+        "registered_seed1_gate_pass": false
+      },
+      "score_sha256": "0b2deb211716584e231e80194fc23adae740c125a683456ff6aad7e917732036",
+      "final_result_record": "collaborative_test/SW_0160_end_to_end_source_encoder/results_archive/completed_score_20261014/root_review.json",
+      "incumbent_changed": false
     },
     "SW0161": {
-      "status": "server_CPU_deployed37_tests_passed_awaiting_SW160_score_recovery",
+      "status": "first_queue_terminal_preCUDA_preparation_constant_error_repair_in_progress",
       "design": "collaborative_test/SW_0161_supervised_spike_partition/DESIGN_KO.md",
       "intervention": "actual-spike 11-slot binder with balanced coassignment MSE vs Hungarian balanced CE+all-slot Dice",
       "mask_supervised": true,
@@ -3079,13 +3112,20 @@
       "GPU_preflight_completed": false,
       "full_training_admitted": false,
       "full_training_started": false,
-      "queue_registered": false,
+      "queue_registered": true,
       "performance_result_available": false,
       "incumbent_changed": false,
       "science_prefix_record": "collaborative_test/SW_0161_supervised_spike_partition/LOCAL_SCIENCE_PREFIX_PREFLIGHT_20261014.json",
       "server_CPU_tests_passed": 37,
       "server_CPU_tests_skipped": 0,
-      "server_deployment_record": "collaborative_test/SW_0161_supervised_spike_partition/results_archive/deployment_CPU_20261014/deploy_cpu_receipt.json"
+      "server_deployment_record": "collaborative_test/SW_0161_supervised_spike_partition/results_archive/deployment_CPU_20261014/deploy_cpu_receipt.json",
+      "queue_supervisor_pid": 3169828,
+      "queue_actual_process_terminal_verified": true,
+      "first_cache_child_pid": 3169874,
+      "first_cache_child_terminal_verified": true,
+      "first_queue_error": "SW0155 objective has no SLOTS: public cache.run_cache capacity guard referenced wrong namespace",
+      "GPU_source_model_allocated": false,
+      "source_cache_rows_completed": 0
     }
   }
 }

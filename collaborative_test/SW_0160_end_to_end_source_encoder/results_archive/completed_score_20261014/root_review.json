@@ -1,0 +1,110 @@
+{
+  "status": "complete_recovered_metadata_only_no_GPU_rerun",
+  "files": [
+    {
+      "file": "0_record.json",
+      "source_name": "0_evaluation_seed1.json",
+      "sha256": "0b2deb211716584e231e80194fc23adae740c125a683456ff6aad7e917732036"
+    },
+    {
+      "file": "1_record.json",
+      "source_name": "1_state.json",
+      "sha256": "f53e922cc04786cae3ba5544a74c9c6b75690010d8e857c6caedbfafb588a211"
+    },
+    {
+      "file": "2_record.json",
+      "source_name": "2_recovery_cpu_deployment_20261014.json",
+      "sha256": "15dc7cbaa31fa9387f74d5f089cab43699d2005fd96cc8bd7df9d5493ba5f6d3"
+    },
+    {
+      "file": "3_record.json",
+      "source_name": "3_migration_validated.json",
+      "sha256": "75a3f841c905ac86af02a57f1d952a39128915d0747c66765afab5b3bed8be62"
+    },
+    {
+      "file": "4_record.json",
+      "source_name": "4_frozen_base_joint_protocol.original.json",
+      "sha256": "13191489b64264221d937f87809523c5f329eb02eb5fd7e93684f1c506da104a"
+    },
+    {
+      "file": "5_record.json",
+      "source_name": "5_full_encoder_joint_protocol.original.json",
+      "sha256": "33597cd58656946ec49423022355dcc5fcdc8b4c841b3db5b8dd0b21a9cdbfe5"
+    },
+    {
+      "file": "6_record.json",
+      "source_name": "6_prediction_queues_retry_20261014_frozen_base_joint_state.json",
+      "sha256": "8d7a4931d22e5a87b87e1946c237980c8a63e7da8c011685ea7b460d762ca6c7"
+    },
+    {
+      "file": "7_record.json",
+      "source_name": "7_prediction_queues_retry_20261014_full_encoder_joint_state.json",
+      "sha256": "27db9f71ff72fd702a69522a69bab043ae86c9ff075c3af4164cc2cdccadbdd0"
+    },
+    {
+      "file": "8_record.json",
+      "source_name": "8_results_archive_score_queue_retry_20261014_state.json",
+      "sha256": "159164ca3166b83af80ecc39101e51ea56704af7effef0f4df23e5b3d9b96f91"
+    },
+    {
+      "file": "9_record.json",
+      "source_name": "9_training_queues_retry_20261014_frozen_base_joint_state.json",
+      "sha256": "bdbb016031b60bdb83eeb373aa4eda906b8fc409c8c759b915bbda034b4dfd19"
+    },
+    {
+      "file": "10_record.json",
+      "source_name": "10_training_queues_retry_20261014_full_encoder_joint_state.json",
+      "sha256": "0d65296245788c784bea5ca4dc72c067c99945075e11a571cb9c8711a1ef0cbf"
+    },
+    {
+      "file": "11_record.json",
+      "source_name": "11_recovery_complete.json",
+      "sha256": "2dbd0687c21e30bf4b8280600f57a41d40ff2f1a8c86dcf2f39750f107c97ad3"
+    },
+    {
+      "file": "12_record.json",
+      "source_name": "12_recovery_started.json",
+      "sha256": "118383ff10435fd6ebd8910e7be34d92db0958480510faa87e6e1bb824bf8a45"
+    }
+  ],
+  "score_sha256": "0b2deb211716584e231e80194fc23adae740c125a683456ff6aad7e917732036",
+  "seed_scope": [
+    1
+  ],
+  "grid": [
+    32,
+    32
+  ],
+  "means": {
+    "frozen_base_joint": {
+      "fg_ari": 0.7540949756691366,
+      "foreground_iou": 0.6072444091650514,
+      "matched_object_iou": 0.578872168560321
+    },
+    "full_encoder_joint": {
+      "fg_ari": 0.7590420592854362,
+      "foreground_iou": 0.6269355271133976,
+      "matched_object_iou": 0.5867145052126955
+    },
+    "source97": {
+      "fg_ari": 0.7541350949944816,
+      "foreground_iou": 0.606899549668619,
+      "matched_object_iou": 0.582200586329909
+    },
+    "SW0143_T": {
+      "fg_ari": 0.7552730828009764,
+      "foreground_iou": 0.6149934302630647,
+      "matched_object_iou": 0.5795137856780908
+    }
+  },
+  "gate": {
+    "primary_metric": "fg_ari",
+    "candidate_fg_ari_exceeds_source_T": true,
+    "candidate_fg_ari_exceeds_matched_control": true,
+    "candidate_minus_source_T_fg_ari_ci95_lower_positive": false,
+    "candidate_minus_control_fg_ari_ci95_lower_positive": false,
+    "registered_seed1_gate_pass": false
+  },
+  "incumbent_changed": false,
+  "decision": "Close this pilot without LR/small-step sweep or seed replication; retain checkpoint as secondary supervised result; advance SW161 direct mask assignment objective."
+}

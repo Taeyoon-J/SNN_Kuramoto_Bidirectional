@@ -1,0 +1,50 @@
+{
+  "commands": [
+    {
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-m",
+        "py_compile",
+        "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0160_end_to_end_source_encoder/recovery.py",
+        "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0160_end_to_end_source_encoder/test_recovery.py"
+      ],
+      "output": "",
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-c",
+        "import numpy; import unittest; s=unittest.defaultTestLoader.loadTestsFromName('collaborative_test.SW_0160_end_to_end_source_encoder.test_recovery'); r=unittest.TextTestRunner(verbosity=2).run(s); raise SystemExit(not r.wasSuccessful())"
+      ],
+      "output": "test_actual_terminal_handoff_requires_exact_failed_cause_and_dead_owners (collaborative_test.SW_0160_end_to_end_source_encoder.test_recovery.ProtocolRecoveryTests) ... ok\ntest_candidate_and_control_source_base_semantics (collaborative_test.SW_0160_end_to_end_source_encoder.test_recovery.ProtocolRecoveryTests) ... ok\ntest_checkpoint_digest_must_match_protocol_model_fields (collaborative_test.SW_0160_end_to_end_source_encoder.test_recovery.ProtocolRecoveryTests) ... ok\ntest_numeric_contract_and_unexpected_fields_fail_closed (collaborative_test.SW_0160_end_to_end_source_encoder.test_recovery.ProtocolRecoveryTests) ... ok\ntest_partial_or_mismatching_mirror_is_rejected (collaborative_test.SW_0160_end_to_end_source_encoder.test_recovery.ProtocolRecoveryTests) ... ok\ntest_producer_protocol_migrates_only_two_missing_mirrors (collaborative_test.SW_0160_end_to_end_source_encoder.test_recovery.ProtocolRecoveryTests) ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 0.004s\n\nOK\n",
+      "returncode": 0
+    },
+    {
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-m",
+        "collaborative_test.SW_0160_end_to_end_source_encoder.recovery",
+        "--dry-run"
+      ],
+      "output": "{\"archive\": \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0160_end_to_end_source_encoder/results_archive/protocol_mirror_recovery_20261014\", \"arms\": [\"frozen_base_joint\", \"full_encoder_joint\"], \"experiment\": \"SW0160_end_to_end_source_encoder\", \"prediction_rerun\": false, \"score_output\": \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0160_end_to_end_source_encoder/results_archive/evaluation_seed1.json\", \"status\": \"planned\"}\n",
+      "returncode": 0
+    }
+  ],
+  "files": {
+    "recovery.py": "89ec2498774cd42b9588bf04d552ec4b5c1c48505c302923a9ff3e15ca5b5aaf",
+    "test_recovery.py": "17b99d0c2bde3afbef4057ef587aef80df7afc3af6cb0370eb2b7505c7054bce"
+  },
+  "frozen_dependencies": {
+    "DESIGN_KO.md": "07d92100cea215389cf91d575f757b455e17820b59fe49db24aa7f34edb593c4",
+    "model.py": "a992b2d45bc332cf7cc63354a82e9c13aa6711f9ebcf8adabbf918db7ed49e9d",
+    "predict_evaluate.py": "61acb0bae1f043cdd2138eecbaa6657117775579cb32ca27b63e41edb3d424ba",
+    "prediction_queue.py": "efaeed7b90ac3e360e2fe10e450560a4314e1932eb103347c4ba5947f82e1847",
+    "preflight.py": "b826440c919d83a666d14b477e28da829718ed79e9771a97abdffb18e6a14edd",
+    "score_queue.py": "f639d1c29f48dc1a4707b0b19a092f4334ac54de4f5f108c8067f706f204882d",
+    "train.py": "02b7d1208d0c1c611466c173bc723f541d8d18b6ac8c85e9474a2c8454f309d4",
+    "training_queue.py": "07e4496487a0bf6846569fad81d32966f6761f11fb9807dbc8f778f81e112265"
+  },
+  "gpu_launched": false,
+  "status": "cpu_verified"
+}
