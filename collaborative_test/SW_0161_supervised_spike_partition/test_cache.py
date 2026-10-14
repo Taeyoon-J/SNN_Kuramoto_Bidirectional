@@ -1,9 +1,11 @@
 from __future__ import annotations
 
 import shutil
+import json
 import unittest
 import uuid
 from pathlib import Path
+from unittest import mock
 
 import numpy as np  # Keep NumPy before torch on local Windows.
 import torch
@@ -103,6 +105,37 @@ class ExactTraceCacheTests(unittest.TestCase):
         bad_means["means"]["source97"] = {metric: float("nan") for metric in sw160_eval.contract.METRICS}
         with self.assertRaisesRegex(ValueError, "means schema"):
             cache._score_dependency_from_records(state, bad_means, score_sha, queue_fp, score_fp)
+
+    def test_score_completion_published_during_dead_owner_probe_is_adopted(self):
+        from collaborative_test.SW_0160_end_to_end_source_encoder import score_queue
+        self.root.mkdir(parents=True, exist_ok=True)
+        state_path, report_path = self.root / "state.json", self.root / "score.json"
+        queue_fp, score_fp = {"queue.py": "q" * 64}, {"evaluation.py": "e" * 64}
+        report = {"experiment": cache.SCORE_DEPENDENCY_EXPERIMENT, "status": "complete",
+            "seed_scope": [1], "ground_truth_opened_after_all_predictions_validated": True,
+            "ground_truth_used_for_prediction": False, "ground_truth_used_for_scoring": True,
+            "implementation_fingerprint": score_fp,
+            "means": {name: {metric: 0.5 for metric in sw160_eval.contract.METRICS}
+                      for name in ("source97", "SW0143_T", *sw160_eval.ARMS)}}
+        report_path.write_text(json.dumps(report), encoding="utf-8")
+        completed = {"experiment": cache.SCORE_DEPENDENCY_EXPERIMENT, "status": "complete",
+            "score_sha256": cache.sha256_file(report_path), "queue_fingerprint": queue_fp,
+            "score_fingerprint": score_fp}
+        state_path.write_text(json.dumps({"experiment": cache.SCORE_DEPENDENCY_EXPERIMENT,
+            "status": "running", "supervisor_pid": 123}), encoding="utf-8")
+
+        def publish_then_report_dead(_pid):
+            state_path.write_text(json.dumps(completed), encoding="utf-8")
+            return False
+
+        with (mock.patch.object(score_queue, "STATE", state_path),
+              mock.patch.object(sw160_eval, "SCORE_PATH", report_path),
+              mock.patch.object(score_queue, "implementation_fingerprint", return_value=queue_fp),
+              mock.patch.object(sw160_eval, "implementation_fingerprint", return_value=score_fp),
+              mock.patch.object(cache, "_score_queue_owner_live", side_effect=publish_then_report_dead)):
+            dependency = cache._current_score_dependency()
+        self.assertEqual(dependency["score_sha256"], cache.sha256_file(report_path))
+        self.assertEqual(dependency["status"], "complete")
 
     def test_resume_rejects_changed_binding_or_tampered_committed_row(self):
         store = cache._AtomicTraceCache(self.root, self.bindings, self.ids, self.rgb)

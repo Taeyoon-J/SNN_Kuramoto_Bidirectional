@@ -460,7 +460,19 @@ def _current_score_dependency():
         if (state.get("status") in {"waiting_for_both_predictions", "waiting_for_prediction_owner", "running"}
                 and _score_queue_owner_live(state.get("supervisor_pid"))):
             raise RuntimeError("SW0160 final score queue is still running; cache waits without GPU use")
-        raise ValueError("SW0160 final score queue is failed, orphaned, or incomplete")
+        # Publication can win the race between the first state read and the
+        # owner liveness probe. Re-read once before classifying a dead owner as
+        # an orphan, then validate the newly published immutable receipt.
+        if state.get("status") in {"waiting_for_both_predictions", "waiting_for_prediction_owner", "running"}:
+            latest = json.loads(state_path.read_text(encoding="utf-8"))
+            if latest.get("status") == "complete":
+                state = latest
+            elif _score_queue_owner_live(latest.get("supervisor_pid")):
+                raise RuntimeError("SW0160 final score queue is still running; cache waits without GPU use")
+            else:
+                raise ValueError("SW0160 final score queue is failed, orphaned, or incomplete")
+        else:
+            raise ValueError("SW0160 final score queue is failed, orphaned, or incomplete")
     if not score_path.is_file():
         raise ValueError("SW0160 score queue is complete but its score artifact is missing")
     # The score queue publishes "complete" only after its expensive independent
