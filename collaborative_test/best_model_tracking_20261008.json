@@ -2936,13 +2936,57 @@
       "eta_sweep": false
     },
     "SW0159": {
-      "status": "implementation_in_progress_no_GPU_run",
+      "status": "paired_training_running_after_admitted_actual_GPU_preflight",
       "source": "SW0143_T_seed1",
       "one_shot_threshold_init": "0.5*sourceT TRAIN margin RMS",
       "threshold_changes_event_cutoff_and_reset": true,
       "mask_supervised": true,
       "no_threshold_sweep": true,
-      "unsupervised_leaderboard_eligible": false
+      "unsupervised_leaderboard_eligible": false,
+      "preflight_record": "collaborative_test/SW_0159_one_shot_event_regime/results_archive/completed_preflight_20261014/root_review.json",
+      "preflight_sha256": "67b9387df1e6881e806cb1d7a860bb4451ce30f0c0689dd01a747b243e052e45",
+      "settled_candidate_event_on_fraction_by_TRAIN_batch": [
+        0.6823269128799438,
+        0.7353111505508423
+      ],
+      "settled_source_event_on_fraction": 1.0,
+      "settled_candidate_gate_positive_event_transitions": 1316165,
+      "actual_membrane_parameter_updates_verified": true,
+      "training_supervisors": {
+        "control": 3064968,
+        "candidate": 3064971
+      },
+      "training_children": {
+        "control": 3065108,
+        "candidate": 3065125
+      },
+      "physical_GPUs": {
+        "control": 1,
+        "candidate": 3
+      },
+      "prediction_supervisors": {
+        "control": 3064977,
+        "candidate": 3064983
+      },
+      "score_supervisor": 3064986,
+      "training_budget": {
+        "unique_TRAIN_images": 2048,
+        "updates": 128,
+        "logical_batch": 16,
+        "microbatch": 4
+      },
+      "performance_result_available": false,
+      "incumbent_changed": false
+    },
+    "SW0160": {
+      "status": "design_review_complete_implementation_started_no_GPU_run",
+      "design": "collaborative_test/SW_0160_end_to_end_source_encoder/DESIGN_KO.md",
+      "intervention": "unfreeze actual source RGB encoder vs matched frozen-sourcebase residual/core/graph control",
+      "mask_supervised": true,
+      "unsupervised_leaderboard_eligible": false,
+      "fresh_70000_training": false,
+      "scaling_proven": false,
+      "no_performance_claim": true
     }
   }
 }

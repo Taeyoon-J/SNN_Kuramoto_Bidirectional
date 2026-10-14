@@ -1,0 +1,26 @@
+{
+  "observed_at_UTC": "2026-10-14T07:49:46.835290+00:00",
+  "training_supervisors": {
+    "control": 3064968,
+    "candidate": 3064971
+  },
+  "training_children": {
+    "control": 3065108,
+    "candidate": 3065125
+  },
+  "physical_GPUs": {
+    "control": 1,
+    "candidate": 3
+  },
+  "prediction_supervisors": {
+    "control": 3064977,
+    "candidate": 3064983
+  },
+  "score_supervisor": 3064986,
+  "actual_training_process_liveness_and_committed_optimizer_progress_verified": true,
+  "observed_completed_updates_per_arm": 11,
+  "registered_pipeline": "paired training -> each fixed320 actual-spike QCC prediction -> GT-last scoring",
+  "readiness": "15 preflight server CPU tests + 14 pipeline server CPU tests; actual source/GPU preflight passed",
+  "test_file_note": "Deployed test_training_queue.py hash b856672148ee0cb08aced5fa494ecc355d7d3bebe7f8678d69c1eadee70e61ff; committed test adds mocked admitted/rejected/waiting/malformed coverage, hash a4c3afb70dc0724b1cc30d6880b407068aeaf9c003b7f76285890c717f4d0ec8. Training/queue production bytes match deployed manifest.",
+  "performance_claim": false
+}
