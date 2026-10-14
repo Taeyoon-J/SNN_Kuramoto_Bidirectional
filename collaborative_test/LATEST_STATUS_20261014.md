@@ -1,0 +1,13 @@
+# Research status: 2026-10-14
+
+This dated snapshot supersedes the older running paragraphs in STATUS.md and INDEX.md for SW0162–SW0164. Exact experiment artifacts remain authoritative.
+
+SW0162 completed fixed320/native32 seed1 evaluation: **.775385/.598386/.626825** versus identical-rollout SourceT **.755273/.614993/.579514**. FG-ARI and object IoU improve with positive paired CIs; foreground IoU decreases. The unchanged recipe fails its registered balanced expansion gate; retain ARI-first evidence without seed0/2 or 70k promotion. Candidate predicts MORE foreground (.343320 versus .331540), so simple insufficient extent is not established. Independent production metric recomputation passed. Evidence: `SW_0162_connected_signed_partition/RESULT_KO.md` and `results_archive/completed_score_20261014/`.
+
+SW0163 is a **supervised frozen-source assignment** comparison: raw_only/Q_only/A_only/Q_A, identical 512 TRAIN images, CE+Dice and 512 updates. The actual source/context cache is complete. GPU1 two-update preflight reports training_admission=true for all four arms; context supervisor3468342 and training supervisor3476869 were verified live, and main training waits for strict final prerequisite validation. Up to four exclusively idle GPUs are authorized. Actual server18 context/model/preflight CPU tests and13 trainer/queue CPU tests passed. No final head segmentation score exists yet. Prediction/scoring implementation is separate and under review. Evidence: `SW_0163_relation_context_assignment/DESIGN_KO.md`, `protocol.json`, and `results_archive/deployment_CPU_20261014/`. This pilot is not an unsupervised gain or new native32 70k training result.
+
+SW0164 is **DESIGN ONLY**, not a deployed or queued experiment: freeze SourceT binary foreground, and partition its induced four-neighbor support using unchanged SW0162 signed Q/A energy. Retain every foreground node, including small/isolated groups. Per-image foreground IoU must exactly replay SourceT; separately evaluate object separation. See `SW_0164_foreground_preserving_partition/DESIGN_KO.md`.
+
+Best established native32 three-seed SourceT mean remains **.783044/.609975/.596197**, versus matched own70k Slot **.781652/.204360/.203165**; FG paired CI includes zero. Source checkpoint was trained at16 and transferred to32. This does not prove fresh native32 70k scaling, .87 FG-ARI, or all-gate necessity. The full research goal remains active and incomplete.
+
+Deployed163 trainer/context code and162 results were shared on GitHub through commit9f718a1. Later prospective design and post-score diagnosis are recorded separately; current remote HEAD must be checked before assuming publication.
