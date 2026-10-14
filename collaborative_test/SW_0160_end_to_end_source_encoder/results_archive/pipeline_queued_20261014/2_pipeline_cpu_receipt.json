@@ -1,0 +1,45 @@
+{
+  "status": "passed",
+  "returncode": 0,
+  "stdout": "",
+  "stderr": "test_admission_binds_current_preflight_and_refuses_missing_or_changed_score (collaborative_test.SW_0160_end_to_end_source_encoder.test_train.SW0160TrainTests) ... ok\ntest_current_train_fingerprint_resolves_checkpoint_and_source_dependencies (collaborative_test.SW_0160_end_to_end_source_encoder.test_train.SW0160TrainTests) ... ok\ntest_four_micro_logical_update_records_finite_credit_and_real_change (collaborative_test.SW_0160_end_to_end_source_encoder.test_train.SW0160TrainTests) ... ok\ntest_serialized_optimizer_steps_match_training_manifest_and_arm_groups (collaborative_test.SW_0160_end_to_end_source_encoder.test_train.SW0160TrainTests) ... ok\ntest_committed_row_roundtrip_and_tamper_rejection (collaborative_test.SW_0160_end_to_end_source_encoder.test_predict_evaluate.SW0160PredictionTests) ... ok\ntest_gt_last_scoring_uses_fixed320_real_metrics_and_validates_all_predictions_first (collaborative_test.SW_0160_end_to_end_source_encoder.test_predict_evaluate.SW0160PredictionTests) ... ok\ntest_pilot_gate_requires_candidate_to_beat_both_registered_references (collaborative_test.SW_0160_end_to_end_source_encoder.test_predict_evaluate.SW0160PredictionTests) ... ok\ntest_commands_and_runtime_paths_are_arm_specific (collaborative_test.SW_0160_end_to_end_source_encoder.test_queues.SW0160QueueTests) ... ok\ntest_importing_queue_libraries_preserves_assigned_child_visibility (collaborative_test.SW_0160_end_to_end_source_encoder.test_queues.SW0160QueueTests) ... ok\ntest_missing_preflight_report_waits_only_for_live_registered_supervisor (collaborative_test.SW_0160_end_to_end_source_encoder.test_queues.SW0160QueueTests) ... ok\ntest_prediction_waits_for_training_queue_while_it_waits_for_sw0159_score (collaborative_test.SW_0160_end_to_end_source_encoder.test_queues.SW0160QueueTests) ... ok\ntest_preflight_and_score_dependencies_are_not_confused (collaborative_test.SW_0160_end_to_end_source_encoder.test_queues.SW0160QueueTests) ... ok\ntest_queue_fingerprints_resolve_owner_and_experiment_code (collaborative_test.SW_0160_end_to_end_source_encoder.test_queues.SW0160QueueTests) ... ok\ntest_score_queue_waits_for_each_registered_prediction_owner (collaborative_test.SW_0160_end_to_end_source_encoder.test_queues.SW0160QueueTests) ... ok\ntest_sw159_score_wait_observes_prediction_owner_after_training_terminal (collaborative_test.SW_0160_end_to_end_source_encoder.test_queues.SW0160QueueTests) ... ok\n\n----------------------------------------------------------------------\nRan 15 tests in 6.746s\n\nOK\n",
+  "files": [
+    {
+      "path": "collaborative_test/SW_0160_end_to_end_source_encoder/train.py",
+      "sha256": "3c96942c4a30ed2f103599ceb57218c66e5c0231d3dd9d6e983da8146ec41ac1"
+    },
+    {
+      "path": "collaborative_test/SW_0160_end_to_end_source_encoder/test_train.py",
+      "sha256": "5290ce755a643817376891989a4659d46df447f67d9c4eef23e9bbb1a80b84d0"
+    },
+    {
+      "path": "collaborative_test/SW_0160_end_to_end_source_encoder/predict_evaluate.py",
+      "sha256": "61acb0bae1f043cdd2138eecbaa6657117775579cb32ca27b63e41edb3d424ba"
+    },
+    {
+      "path": "collaborative_test/SW_0160_end_to_end_source_encoder/test_predict_evaluate.py",
+      "sha256": "07e182ca3d0f085defce47863e9b40dc7f04a4284018ec9161c9b83176267e62"
+    },
+    {
+      "path": "collaborative_test/SW_0160_end_to_end_source_encoder/training_queue.py",
+      "sha256": "686736a0dbd9f747d68227b88bc09e01863d24939e0a7eadf7a56413c2eb712e"
+    },
+    {
+      "path": "collaborative_test/SW_0160_end_to_end_source_encoder/prediction_queue.py",
+      "sha256": "1b3080e29d771c6fdbffbbca594d99335740b5c800c66bfdf2bdd02aa7eabb25"
+    },
+    {
+      "path": "collaborative_test/SW_0160_end_to_end_source_encoder/score_queue.py",
+      "sha256": "c794009e0ae2f7d9bb17a5fded375f6d7628924013f35c4800051a406f2d3159"
+    },
+    {
+      "path": "collaborative_test/SW_0160_end_to_end_source_encoder/test_queues.py",
+      "sha256": "1f92952ff3aed76fdee09becb6f1c9d7deb1410f4600194e05626f630b9ba02a"
+    },
+    {
+      "path": "collaborative_test/SW_0157_train_gate_credit/results_archive/completed_20261014/0_train_gate_credit_seed1.json",
+      "sha256": "83e968cade400d54dae56395c42f1bb54443231903cb5f2642fc4f34e5e56b0e"
+    }
+  ],
+  "training_launched": false
+}
