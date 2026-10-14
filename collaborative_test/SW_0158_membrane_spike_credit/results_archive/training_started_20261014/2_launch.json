@@ -1,0 +1,29 @@
+{
+  "launch_epoch": 1791956193.655125,
+  "jobs": [
+    {
+      "arm": "live_membrane_credit",
+      "supervisor_pid": 3007859,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-m",
+        "collaborative_test.SW_0158_membrane_spike_credit.training_queue",
+        "--arm",
+        "live_membrane_credit"
+      ],
+      "state": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0158_membrane_spike_credit/results_archive/training_queues_20261014/live_membrane_credit/state.json"
+    },
+    {
+      "arm": "detached_membrane_control",
+      "supervisor_pid": 3007860,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-m",
+        "collaborative_test.SW_0158_membrane_spike_credit.training_queue",
+        "--arm",
+        "detached_membrane_control"
+      ],
+      "state": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0158_membrane_spike_credit/results_archive/training_queues_20261014/detached_membrane_control/state.json"
+    }
+  ]
+}

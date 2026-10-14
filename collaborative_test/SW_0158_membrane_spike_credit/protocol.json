@@ -1,0 +1,50 @@
+{
+  "experiment": "SW0158_membrane_spike_credit",
+  "registration_date": "2026-10-14",
+  "status": "prospective_registered",
+  "seed": 1,
+  "comparison": ["live_membrane_credit", "detached_membrane_control", "source97_T_baseline"],
+  "source": {
+    "checkpoint": "same source97 seed1 weights used by SW0143-T",
+    "graph_operator": "frozen SW0143-T native32 geodesic graph operator",
+    "encoder": "frozen source97 seed1 RGB encoder and native32 patcher",
+    "ids": "same ordered first 2048 source TRAIN IDs as SW0155; TRAIN masks only",
+    "source_t_calibration_report": "SW0157 completed seed1 diagnostic, SHA256 83e968cade400d54dae56395c42f1bb54443231903cb5f2642fc4f34e5e56b0e",
+    "component_margin_rms": [2.7085165787417393, 2.598093824488581, 2.623449164156643, 2.2200754439435535],
+    "scale_rule": "Per component, sqrt(mean of squared source97_T margin RMS from equal-size registered SW0157 batches at source positions 0-3 and 2048-2051); fixed before training, no refit."
+  },
+  "emitter": {
+    "native_event": "E = ActFunMG(M - 0.06*exp(b)); unchanged",
+    "native_gate": "g from the existing sinusoidal gate; unchanged",
+    "emitted_spike": "S' = E*g*(1 + 0.5*tanh(eta_d)*tanh((M-vth)/r_d))",
+    "eta": "four learnable zero-initialized component scalars",
+    "detached_control": "Same forward expression and same recurrent emitted spike, but detach M only inside the additional amplitude factor; native event surrogate gradients remain intact.",
+    "recurrence": "Assign S' to the native membrane spike state before the next step; that same S' feeds the following dendrite and native membrane reset. Native reset formula/coefficient are unchanged."
+  },
+  "training": {
+    "objective": "Unchanged SW0155 supervised_relation_loss on actual amplitude-modulated emitted spikes and canonical TRAIN modal32 masks.",
+    "updates": 128,
+    "logical_batch": 16,
+    "microbatch": 4,
+    "steps": 1024,
+    "settle": 512,
+    "live_tail": 64,
+    "trainable": "Native core excluding frozen graph weights, 12 existing phase-integration scalars, and eta[4].",
+    "frozen": "Source RGB encoder, native32 patcher, and installed SW0143-T graph weights/operator.",
+    "learning_rates": {"native_core": 0.00003, "integration_tensors": 0.001, "eta": 0.001},
+    "ground_truth_scope": "TRAIN masks only"
+  },
+  "preflight": {
+    "training_images": "first four IDs of the registered ordered source TRAIN prefix; masks are used only through the unchanged SW0155 modal32 supervised-relation objective",
+    "requirements": ["eta-zero exact six-trace, production actual-spike Q, and production QCC parity with frozen source97-T", "two disposable updates with registered optimizer families", "finite actual emitted/reset traces and exact recurrence/reset input checks", "eta gradient and parameter change on both updates", "same-state/same-RNG live-vs-detached six-trace/Q/loss equality after update 1 and before update 2", "finite nonzero live amplitude-path membrane credit exceeding repeated-live gradient residual"],
+    "descriptive_outputs": ["post-update-1 actual-spike Q change versus eta zero at identical core state", "settled per-node temporal variance of the amplitude factor on nonzero native event-gate support", "aggregate amplitude-factor statistics, explicitly not a substitute for temporal variance"],
+    "training_admission": "No full training unless all preflight checks pass."
+  },
+  "evaluation": {
+    "readout": "Unchanged native actual-spike QCC at 32x32",
+    "fixed_validation_ids": "SW0143 registered IDs 1320..1639",
+    "ground_truth": "Open target masks only after source, live, and detached predictions are all frozen and validated.",
+    "promotion": "The live arm must exceed both frozen source-T and detached-control foreground ARI by at least 0.01 with positive paired 95% bootstrap lower bounds; otherwise close this recipe without sweeps or seed expansion.",
+    "limitations": "This intervention modulates event amplitude, not binary event occupancy. It does not claim to desaturate E, establish gate necessity, or guarantee performance improvement."
+  }
+}

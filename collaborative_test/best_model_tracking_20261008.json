@@ -2838,7 +2838,7 @@
       "record": "collaborative_test/priority_comparison_20261013/peer_alignment_review_20261013.json"
     },
     "publication": {
-      "committed_through": "ce923f16cfbfa838d9f6d7d3b6ab7262950dab54",
+      "committed_through": "f059feb82bacd6d5ad30a54ebacebc8869dd5fdc",
       "github_push_performed": true,
       "automatic_review_rejected_exact_payload_scope": true,
       "exact_manifest_approval_pending": false,
@@ -2869,7 +2869,7 @@
       "record": "collaborative_test/SW_0157_train_gate_credit/results_archive/completed_20261014/0_train_gate_credit_seed1.json"
     },
     "SW0158": {
-      "status": "implementation_in_progress_not_training",
+      "status": "matched_full_training_children_verified_live",
       "source": "SW143_T_seed1",
       "planned_arms": [
         "live_membrane_amplitude",
@@ -2877,7 +2877,33 @@
       ],
       "mask_supervised": true,
       "unsupervised_leaderboard_eligible": false,
-      "binary_event_desaturation_claim": false
+      "binary_event_desaturation_claim": false,
+      "supervisor_pid": 3004132,
+      "child_pid": null,
+      "physical_gpu": 1,
+      "full_training_started": true,
+      "record": "collaborative_test/SW_0158_membrane_spike_credit/results_archive/completed_preflight_20261014/0_preflight_seed1.json",
+      "preflight_complete": true,
+      "additional_membrane_gradient_delta_l2": 8.380115783545325e-08,
+      "best_model_changed": false,
+      "training_unique_images": 2048,
+      "updates_per_arm": 128,
+      "seed_scope": [
+        1
+      ],
+      "training_children": [
+        {
+          "arm": "live_membrane_credit",
+          "pid": 3008130,
+          "gpu": 1
+        },
+        {
+          "arm": "detached_membrane_control",
+          "pid": 3008140,
+          "gpu": 3
+        }
+      ],
+      "training_start_record": "collaborative_test/SW_0158_membrane_spike_credit/results_archive/training_started_20261014/2_launch.json"
     }
   }
 }
