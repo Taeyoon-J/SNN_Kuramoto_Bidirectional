@@ -1,0 +1,38 @@
+﻿{
+  "experiment": "SW0156_native32_signed_coupling",
+  "status": "local_implementation_pending_source_screen_review",
+  "source": {
+    "model": "Same-seed SW0097 seed1 frozen native16-grid checkpoint, strictly mapped by SW0135 to native32, with SW0143 T squared-geodesic override installed.",
+    "source_reference": "SW0143 T seed1 actual-spike QCC; beta0 must match all six trace tensors, Q, and labels exactly before any signed arm is accepted.",
+    "peer_context": "Peer origin 7d094e8 PV2_0092_signed_coupling is a pending seed0 hypothesis only, not a result or reproduced recipe."
+  },
+  "graph_perturbation": {
+    "native_graph": "Recompute source graph logits from SW0143 T embeddings with its unchanged source projection, temperature, spatial/geodesic prior, support, and learned gain; assert the resulting adjacency exactly equals the native graph output.",
+    "directed_support": "The source graph logits topk(min(source_top_k,N)) indices per row, including any diagonal indices selected by the original implementation.",
+    "u_directed": "Scatter exp(log_coupling_gain)/K on each directed selected entry, where K=min(source_top_k,N); do not use the source softmax edge values.",
+    "u": "Symmetrize the directed scatter once as (U_directed+U_directed.T)/2. No row normalization, abs, ReLU, signed inverse, or support surgery.",
+    "signed_candidate": "Let A0 be the source positive symmetric graph before the native 1e-6 floor. The interaction matrix is A0+1e-6-0.5*U.",
+    "matched_control": "0.5*A0+1e-6 interaction lag multipliers, retaining the same native 1e-6 floor as the signed arm and the same source alpha/cost preparation.",
+    "pulse_graph": "Keep the original native positive symmetric graph+1e-6 for pulse coupling; only factorized interaction lag_cos/lag_sin use signed weights.",
+    "alpha_and_cost": "Compute source lag/cost/alpha from positive A0+1e-6 first, then multiply its cos(alpha),sin(alpha) factors by the candidate/control interaction matrix.",
+    "zero_intervention": "beta=0 and base_scale=1 returns the exact original native coupling tuple."
+  },
+  "source_only_screen": {
+    "status": "not_yet_run",
+    "split": "The first registered seed1 source97 TRAIN RGB row only; no VAL masks, HDF5 labels, or ground-truth reads.",
+    "rollout": "native32, 1024 steps, settle512, actual SW0143 T graph and unchanged actual-spike Q/QCC.",
+    "checks": ["six-trace/Q/QCC exact parity at beta0", "finite candidate and control traces/Q/QCC", "actual negative interaction mass and finite dynamics", "runtime and peak CUDA memory descriptive"],
+    "admission": "A successful single-image screen only permits preparing fixed320 inference; it does not establish segmentation improvement or authorize training."
+  },
+  "fixed_evaluation": {
+    "split": "Existing fixed320 IDs1320..1639, native32 labels, all predictions for candidate/control frozen and validated before any mask access.",
+    "readout": "Unchanged production native32 actual-spike QCC.",
+    "expansion": "Expand seeds0/2 only if candidate improves FG-ARI by at least0.01 over both source T and matched control and both paired-image 95% CI lower bounds are positive; otherwise close this fixed recipe."
+  },
+  "scientific_limits": [
+    "Inference intervention only; no training or optimizer updates.",
+    "One fixed beta and matched control; no coefficient sweeps.",
+    "A single seed/image screen or fixed320 seed1 score is not a generalization, scaling, source-graph truth, or mechanism-necessity claim."
+  ]
+}
+
