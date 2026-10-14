@@ -1,0 +1,105 @@
+{
+  "status": "local_objective_and_synthetic_binder_verified",
+  "cpu_tests": 7,
+  "actual_source_cache_verified": false,
+  "gpu_preflight_completed": false,
+  "server_deployed": false,
+  "training_started": false,
+  "synthetic_spike_shape": [
+    1,
+    4,
+    1024,
+    512
+  ],
+  "arms": [
+    {
+      "arm": "pair_supervised_P",
+      "loss": 0.4172310531139374,
+      "gradient_abs_sum": {
+        "slot_mu": 0.00046316825319081545,
+        "slot_log_scale": 0.0006712679751217365,
+        "input_projection.weight": 2.8454325199127197,
+        "input_projection.bias": 0.002780121983960271,
+        "input_norm.weight": 0.0007462650537490845,
+        "input_norm.bias": 0.0009921678574755788,
+        "key.weight": 0.06985241174697876,
+        "query.weight": 0.06880170851945877,
+        "value.weight": 0.023983046412467957,
+        "gru.weight_ih": 0.04401961714029312,
+        "gru.weight_hh": 0.05993346497416496,
+        "gru.bias_ih": 0.0015413145301863551,
+        "gru.bias_hh": 0.0011429127771407366,
+        "slot_mlp.0.weight": 0.050900500267744064,
+        "slot_mlp.0.bias": 0.0018181719351559877,
+        "slot_mlp.2.weight": 0.0619613453745842,
+        "slot_mlp.2.bias": 0.0007174047641456127
+      },
+      "parameter_max_abs_change": {
+        "slot_mu": 0.00029987230664119124,
+        "slot_log_scale": 0.0002999311254825443,
+        "input_projection.weight": 0.0002999529242515564,
+        "input_projection.bias": 0.00029997527599334717,
+        "input_norm.weight": 0.0002999305725097656,
+        "input_norm.bias": 0.0002999337448272854,
+        "key.weight": 0.00029998054378665984,
+        "query.weight": 0.000299990177154541,
+        "value.weight": 0.00029994547367095947,
+        "gru.weight_ih": 0.0002999529242515564,
+        "gru.weight_hh": 0.00029997900128364563,
+        "gru.bias_ih": 0.00029993802309036255,
+        "gru.bias_hh": 0.0002999305725097656,
+        "slot_mlp.0.weight": 0.0002999827265739441,
+        "slot_mlp.0.bias": 0.0002999827265739441,
+        "slot_mlp.2.weight": 0.0002999706193804741,
+        "slot_mlp.2.bias": 0.0002999305725097656
+      }
+    },
+    {
+      "arm": "mask_supervised_P",
+      "loss": 3.2989280223846436,
+      "gradient_abs_sum": {
+        "slot_mu": 0.12271721661090851,
+        "slot_log_scale": 0.17834360897541046,
+        "input_projection.weight": 679.9425659179688,
+        "input_projection.bias": 0.6641672849655151,
+        "input_norm.weight": 0.1778273582458496,
+        "input_norm.bias": 0.24272556602954865,
+        "key.weight": 17.79155158996582,
+        "query.weight": 19.454601287841797,
+        "value.weight": 6.2838897705078125,
+        "gru.weight_ih": 11.445322036743164,
+        "gru.weight_hh": 15.941598892211914,
+        "gru.bias_ih": 0.4009850323200226,
+        "gru.bias_hh": 0.3078281879425049,
+        "slot_mlp.0.weight": 14.843826293945312,
+        "slot_mlp.0.bias": 0.5053091645240784,
+        "slot_mlp.2.weight": 18.903894424438477,
+        "slot_mlp.2.bias": 0.20918144285678864
+      },
+      "parameter_max_abs_change": {
+        "slot_mu": 0.0002999987918883562,
+        "slot_log_scale": 0.00029999957769177854,
+        "input_projection.weight": 0.0003000004217028618,
+        "input_projection.bias": 0.0002999997232109308,
+        "input_norm.weight": 0.0003000497817993164,
+        "input_norm.bias": 0.00029999931575730443,
+        "key.weight": 0.00030000507831573486,
+        "query.weight": 0.00030000507831573486,
+        "value.weight": 0.0003000013530254364,
+        "gru.weight_ih": 0.0003000013530254364,
+        "gru.weight_hh": 0.00030000507831573486,
+        "gru.bias_ih": 0.00030000507831573486,
+        "gru.bias_hh": 0.00029999949038028717,
+        "slot_mlp.0.weight": 0.00030000507831573486,
+        "slot_mlp.0.bias": 0.0003000013530254364,
+        "slot_mlp.2.weight": 0.0003000013530254364,
+        "slot_mlp.2.bias": 0.00029999949038028717
+      }
+    }
+  ],
+  "files": {
+    "DESIGN_KO.md": "4bca10175cac6a9db52409770f37b2c6938f2d548aba7d9d007f0dd7dab92f1b",
+    "objective.py": "7a2aea977033fc4a44e20a4352270adddf81673105902ba73b0dc5d79e8d51f9",
+    "test_objective.py": "6a2815f6b0d994c39d80d9b92bac85ce55d76dbda2b1d05ea13fb92adc8478cb"
+  }
+}

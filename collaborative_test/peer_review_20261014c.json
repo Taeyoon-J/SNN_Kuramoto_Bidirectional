@@ -1,0 +1,26 @@
+{
+  "review_date": "2026-10-14",
+  "branch": "origin/patch_v2",
+  "commit": "46103535cd24f6eca548fe675ebbad3dca60e49c",
+  "change_since_previous_review": "STATUS.md resume note only; no new model code",
+  "remote_text_sources_read": ["/work/USERS/tkim1/runs/pv2_0092_results.txt", "/work/USERS/tkim1/runs/pv2_0093_results.txt"],
+  "PV2_0092": {
+    "source_status": "DONE",
+    "control_components_fg_ari_fg_iou_obj_iou_pred_fg": [0.5027, 0.5112, 0.3903, 0.1824],
+    "SGN_b025_components_fg_ari_fg_iou_obj_iou_pred_fg": [0.5962, 0.4708, 0.4240, 0.2325],
+    "SGN_b05_components_fg_ari_fg_iou_obj_iou_pred_fg": [0.4949, 0.3370, 0.4187, 0.2869],
+    "SGN_b10_components_fg_ari_fg_iou_obj_iou_pred_fg": [0.5352, 0.2520, 0.4681, 0.4090],
+    "verdict": "All candidates fail peer preregistered extent/foreground-IoU gate despite some FG-ARI gains.",
+    "parameter_caveat": "Labels in text headings differ from final balance labels; retain run names rather than infer exact balance from headings.",
+    "portable_insight": "Mechanism/drive improvement alone does not establish mask improvement; assess partition and foreground coverage together. No additional signed-coupling sweep justified by this outcome."
+  },
+  "PV2_0093": {
+    "source_status": "partial results only",
+    "G32_ORIG_collapse_trajectory": [4.26, 3.75, 3.45, 3.04, 2.85, 2.84, 3.13, 5.69],
+    "source_verdict": "DYING",
+    "remaining_arms": "not present in inspected text; no success or failure inferred"
+  },
+  "incorporation": "Keep SW160 frozen while running. Prioritize SW161 matched partition-objective experiment instead of another signed-drive parameter sweep. Continue checking actual event and gradient health, plus final mask metrics.",
+  "comparison_limit": "Peer renderer/evaluation/temporal settings differ; these numbers are not comparable to our incumbent or Slot reference. Peer resume note only reviews our branch through ce923f1 and does not include our completed SW156-SW159 negative outcomes.",
+  "incumbent_changed": false
+}
