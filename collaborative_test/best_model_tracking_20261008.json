@@ -3098,7 +3098,7 @@
       "incumbent_changed": false
     },
     "SW0161": {
-      "status": "paired_training_terminal_complete_fixed320_predictions_running",
+      "status": "all_predictions_preserved_corrected_rowroot_CPU_score_recovery_running",
       "design": "collaborative_test/SW_0161_supervised_spike_partition/DESIGN_KO.md",
       "intervention": "actual-spike 11-slot binder with balanced coassignment MSE vs Hungarian balanced CE+all-slot Dice",
       "mask_supervised": true,
@@ -3156,7 +3156,14 @@
         3205891,
         3205747
       ],
-      "completed_training_record": "collaborative_test/SW_0161_supervised_spike_partition/results_archive/completed_training_20261014/root_review.json"
+      "completed_training_record": "collaborative_test/SW_0161_supervised_spike_partition/results_archive/completed_training_20261014/root_review.json",
+      "prediction_generation_complete": true,
+      "predictions_per_arm": 320,
+      "prediction_original_validation_failed": true,
+      "original_validation_failure_record": "collaborative_test/SW_0161_supervised_spike_partition/results_archive/prediction_validation_failure_20261014/server_records.json",
+      "score_recovery_pid": 3212732,
+      "recovery_CPU_tests_passed": 3,
+      "recovery_production_failure_evidence_probe": "passed"
     }
   }
 }
