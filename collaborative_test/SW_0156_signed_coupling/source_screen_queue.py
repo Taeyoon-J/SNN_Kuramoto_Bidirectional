@@ -19,7 +19,11 @@ except ImportError:
     fcntl = None
 
 # Parent is a CPU supervisor; CUDA is exposed only to the lease-owning child.
-os.environ["CUDA_VISIBLE_DEVICES"] = ""
+if __name__ == "__main__":
+    # Set this before importing torch-bearing screen modules when this file
+    # itself is the supervisor entrypoint. Library imports must preserve the
+    # caller's assigned device (prediction children import this module too).
+    os.environ["CUDA_VISIBLE_DEVICES"] = ""
 os.environ.setdefault("OMP_NUM_THREADS", "1")
 os.environ.setdefault("MKL_NUM_THREADS", "1")
 HERE = Path(__file__).resolve().parent
@@ -28,7 +32,16 @@ for item in (ROOT, ROOT / "collaborative_test"):
     if str(item) not in sys.path:
         sys.path.insert(0, str(item))
 
+# The frozen owner module sets CUDA_VISIBLE_DEVICES='' at import time. Import
+# it safely for lease helpers, then restore the caller's assignment: this
+# module is also imported by inference children that already own a GPU.
+_VISIBILITY_MISSING = object()
+_caller_cuda_visibility = os.environ.get("CUDA_VISIBLE_DEVICES", _VISIBILITY_MISSING)
 from collaborative_test.SW_0148_checkpointable_boundary_q import stage_queue_v4 as owner
+if _caller_cuda_visibility is _VISIBILITY_MISSING:
+    os.environ.pop("CUDA_VISIBLE_DEVICES", None)
+else:
+    os.environ["CUDA_VISIBLE_DEVICES"] = _caller_cuda_visibility
 from collaborative_test.SW_0143_native32_selective_geodesic import run as sw143
 from collaborative_test.SW_0156_signed_coupling import screen
 
@@ -268,6 +281,9 @@ def _cleanup_child_before_lease_release(proc, lease):
 
 class SourceScreenQueue:
     def __init__(self):
+        # Also keep programmatic supervisor construction CPU-only. This runs
+        # before any child is launched and does not run in inference children.
+        os.environ["CUDA_VISIBLE_DEVICES"] = ""
         if fcntl is None:
             raise RuntimeError("SW0156 GPU reservation requires Linux flock")
         RUNTIME.mkdir(parents=True, exist_ok=True)

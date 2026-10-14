@@ -1,5 +1,7 @@
 import os
 import io
+import subprocess
+import sys
 from pathlib import Path
 from types import SimpleNamespace
 import unittest
@@ -176,6 +178,20 @@ class Fixed320PipelineTests(unittest.TestCase):
 
     def test_cpu_parent_hides_cuda_before_loading_torch_modules(self):
         self.assertEqual(os.environ.get("CUDA_VISIBLE_DEVICES"), "")
+
+    def test_prediction_child_import_preserves_assigned_cuda_without_initializing(self):
+        env = dict(os.environ)
+        env["CUDA_VISIBLE_DEVICES"] = "3"
+        env["PYTHONPATH"] = str(predict.ROOT)
+        code = (
+            "import os, numpy, torch; "
+            "import collaborative_test.SW_0156_signed_coupling.predict; "
+            "print(os.environ.get('CUDA_VISIBLE_DEVICES')); "
+            "print(torch.cuda.is_initialized())"
+        )
+        completed = subprocess.run([sys.executable, "-c", code], cwd=predict.ROOT,
+            env=env, text=True, capture_output=True, timeout=60, check=True)
+        self.assertEqual(completed.stdout.splitlines(), ["3", "False"])
 
     def test_score_all_freezes_all_predictions_before_opening_gt(self):
         ids = np.arange(1320, 1640, dtype=np.int64)

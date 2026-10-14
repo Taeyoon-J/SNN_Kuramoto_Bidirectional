@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/Data0/kevinswk/envs/snn/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/Data0/kevinswk/envs/snn/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0156_signed_coupling/predict.py", line 354, in <module>
+    raise SystemExit(main())
+  File "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0156_signed_coupling/predict.py", line 348, in main
+    print(json.dumps(predict_arm(args.arm, device=args.device,
+  File "/Data0/kevinswk/envs/snn/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+    return func(*args, **kwargs)
+  File "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0156_signed_coupling/predict.py", line 255, in predict_arm
+    raise RuntimeError("SW0156 fixed320 inference requires CUDA")
+RuntimeError: SW0156 fixed320 inference requires CUDA

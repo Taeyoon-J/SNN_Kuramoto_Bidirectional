@@ -35,10 +35,19 @@ Encoder와 core를 함께 학습하는 이전 SW150에서는 같은 seed의 sour
 
 SW154는 실제 **4,096개 node**에서 rollout하는 비교다. 32×32 결과 mask를 확대하는 평가가 아니다. 다만 기존 학습 checkpoint를 해상도에 맞춰 옮기는 추론 실험이며 새 64×64 학습은 아니다. Slot의 native128 mask를 2×2 pixel patch로 직접 변환한 비교 기준은 위 표에 기록했다. 우리 세 seed 최종 점수는 아직 확보하지 못했다.
 
-SW155는 TRAIN mask 2,048장으로 두 가지를 비교한다: residual encoder+graph만 학습하는 경우, 그리고 core까지 함께 학습하는 경우다. 같은 이미지와 128 update를 사용하고, 물체가 같은 patch끼리 실제 spike 관계가 강해지도록 loss를 준다. 마지막 checkpoint의 예측을 모두 저장한 뒤 평가 mask를 읽는다. 최종 점수는 아직 확보하지 못했으므로 supervised 향상 폭을 수치로 말할 수 없다. 짧은 추가 학습이며 supervised 70,000장 학습의 한계 성능을 뜻하지 않는다.
+SW155는 TRAIN mask 2,048장으로 두 가지를 비교했다: residual encoder+graph만 학습하는 경우, 그리고 core까지 함께 학습하는 경우다. 같은 이미지와 128 update를 사용하고, 물체가 같은 patch끼리 실제 spike 관계가 강해지도록 loss를 줬다. 마지막 checkpoint의 예측을 모두 저장한 뒤 평가 mask를 읽었다. 최종 결과는 다음과 같으며, **seed1만의 결과**다.
+
+| 모델 | FG-ARI / foreground IoU / matched-object IoU |
+|---|---|
+| 같은 seed source97 | .7541 / .6069 / .5822 |
+| 같은 seed SW143-T | .7553 / .6150 / .5795 |
+| mask-supervised encoder+graph | .7550 / .6060 / .5815 |
+| mask-supervised joint | .7535 / .6076 / .5819 |
+
+T 대비 FG-ARI 차이는 encoder+graph -.00029, joint -.00174이며 두 paired 95% 신뢰구간 모두 0을 포함한다. 이 설정은 의미 있는 FG 향상을 보이지 않았으므로 등록된 확장 기준에 따라 seed0·2 추가 학습을 하지 않는다. 짧은 추가 학습이며 supervised 70,000장 학습의 한계 성능을 뜻하지 않는다.
 
 기존 unsupervised Slot 점수는 문맥용 기준이다. 동일한 mask supervision을 준 Slot과의 공정한 비교 결과는 아직 없다.
 
-서버 연결 복구 후 확인: SW154 seed1 예측은 완료됐고 seed0·2 child는 실제 실행 중이다. SW155 두 arm 모두 학습 artifact 검증을 통과했으며, 최종 평가 큐는 GPU를 기다린다. 아직 두 실험의 최종 평가 결과는 없다. 기존 작업을 관측 실패만으로 종료하거나 재시작하지 않았다.
+서버 연결 복구 후 확인: SW154 seed0·1 예측은 완료됐고 seed2 child는 실제 실행 중이다. SW155 두 arm의 학습·예측·최종 평가 artifact 검증이 완료됐다. 기존 작업을 관측 실패만으로 종료하거나 재시작하지 않았다.
 
 근거: `comparison.json`, SW153 완료 audit, SW154 Slot64 baseline, SW155 protocol 및 보관된 실행 기록. 새로운 모델 점수로 해석할 수 있는 로컬 CPU 검사 결과는 없다.

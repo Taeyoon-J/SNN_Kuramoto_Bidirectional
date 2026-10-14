@@ -1,0 +1,127 @@
+{
+  "experiment": "SW0156_native32_signed_coupling",
+  "queue_version": 1,
+  "status": "failed",
+  "supervisor_pid": 2926154,
+  "tasks": [
+    {
+      "task_id": "source_T",
+      "kind": "reuse_validated_reference",
+      "gpu": false,
+      "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0156_signed_coupling/results_archive/predictions/source_T/seed1"
+    },
+    {
+      "task_id": "signed_candidate",
+      "kind": "predict",
+      "gpu": true,
+      "depends_on": [
+        "source_T"
+      ],
+      "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0156_signed_coupling/results_archive/predictions/signed_candidate/seed1"
+    },
+    {
+      "task_id": "matched_control",
+      "kind": "predict",
+      "gpu": true,
+      "depends_on": [
+        "source_T"
+      ],
+      "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0156_signed_coupling/results_archive/predictions/matched_control/seed1"
+    },
+    {
+      "task_id": "score_seed1",
+      "kind": "gt_last_score",
+      "gpu": false,
+      "depends_on": [
+        "source_T",
+        "signed_candidate",
+        "matched_control"
+      ],
+      "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0156_signed_coupling/results_archive/evaluation_seed1.json"
+    }
+  ],
+  "implementation": {
+    "collaborative_test/SW_0156_signed_coupling/protocol.json": "39302340e5c0740cec755166530f71cf4ec6b8352060531cc27ec654a971c67f",
+    "collaborative_test/SW_0156_signed_coupling/signed_coupling.py": "129581e54b333650f7a2d2def3c200a7458bca0f3dfabb431d9cb3cb2e60ef55",
+    "collaborative_test/SW_0156_signed_coupling/screen.py": "f6ee8e365474ccf8bf8e6f907fe48ccc817fb858a78ccd559f66aa0f2c6ea9e9",
+    "collaborative_test/SW_0156_signed_coupling/source_screen_queue.py": "8c2a01cb89f217e3c67b885f182aca1c41260330e91c1398fd39c9b1e8d3caf2",
+    "collaborative_test/SW_0156_signed_coupling/predict.py": "29c627798c73d8784a1a122b467e1087da6887a01a31df661f4cfa8806f678ed",
+    "collaborative_test/SW_0156_signed_coupling/evaluate.py": "4e8b2c25d13a84902806e69151b52cc21620d5e1508fea385b806fc5b2d86ecc",
+    "collaborative_test/SW_0156_signed_coupling/prediction_queue.py": "8d079c13db67129b132fef8a40980815421f2112538a9f236bdf31ad63af8146",
+    "collaborative_test/SW_0148_checkpointable_boundary_q/stage_queue_v4.py": "14fae39aeb6e958df60edf25680f412acb50a01126fd7af725c61fdba3794623",
+    "collaborative_test/SW_0126_history_event_binding/pilot_queue.py": "c59cdc39af20c824930d1926c8cec1418ee818577b8cc4240ad6eaae836764f6",
+    "owner_guard_sha256": "c59cdc39af20c824930d1926c8cec1418ee818577b8cc4240ad6eaae836764f6"
+  },
+  "ground_truth_used_for_prediction": false,
+  "updated": 1791948826.1684413,
+  "source_prediction_sha256": "a50a55bc89027f409beb8b91e076f0f41ec3dbcd0c0497a2cb27b764ed0ec6f3",
+  "arm": "signed_candidate",
+  "gpu": 1,
+  "gpu_uuid": "GPU-45604115-c231-56a5-32ea-d3001e8ff243",
+  "stable_seconds": 5.174911438021809,
+  "memory_used_mib": 2,
+  "arm_states": {
+    "matched_control": {
+      "status": "running_prediction",
+      "updated": 1791948789.6114922,
+      "arm": "matched_control",
+      "gpu": 1,
+      "gpu_uuid": "GPU-45604115-c231-56a5-32ea-d3001e8ff243",
+      "stable_seconds": 5.188247644808143,
+      "memory_used_mib": 2,
+      "child_pid": 2945336,
+      "child_argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-m",
+        "collaborative_test.SW_0156_signed_coupling.predict",
+        "--arm",
+        "matched_control",
+        "--device",
+        "cuda:0"
+      ],
+      "physical_gpu": 1,
+      "memory_before_mib": 2,
+      "inherited_lease_fd": true,
+      "log": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0156_signed_coupling/results_archive/prediction_queue_20261013/logs/matched_control.attempt01.log"
+    },
+    "signed_candidate": {
+      "status": "running_prediction",
+      "updated": 1791948810.9420147,
+      "arm": "signed_candidate",
+      "gpu": 1,
+      "gpu_uuid": "GPU-45604115-c231-56a5-32ea-d3001e8ff243",
+      "stable_seconds": 5.174911438021809,
+      "memory_used_mib": 2,
+      "child_pid": 2945614,
+      "child_argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-m",
+        "collaborative_test.SW_0156_signed_coupling.predict",
+        "--arm",
+        "signed_candidate",
+        "--device",
+        "cuda:0"
+      ],
+      "physical_gpu": 1,
+      "memory_before_mib": 2,
+      "inherited_lease_fd": true,
+      "log": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0156_signed_coupling/results_archive/prediction_queue_20261013/logs/signed_candidate.attempt01.log"
+    }
+  },
+  "child_pid": 2945614,
+  "child_argv": [
+    "/Data0/kevinswk/envs/snn/bin/python",
+    "-m",
+    "collaborative_test.SW_0156_signed_coupling.predict",
+    "--arm",
+    "signed_candidate",
+    "--device",
+    "cuda:0"
+  ],
+  "physical_gpu": 1,
+  "memory_before_mib": 2,
+  "inherited_lease_fd": true,
+  "log": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0156_signed_coupling/results_archive/prediction_queue_20261013/logs/signed_candidate.attempt01.log",
+  "error": "RuntimeError('SW0156 signed_candidate predictor exited 1; log preserved at /Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0156_signed_coupling/results_archive/prediction_queue_20261013/logs/signed_candidate.attempt01.log')",
+  "finished": 1791948826.1682105
+}

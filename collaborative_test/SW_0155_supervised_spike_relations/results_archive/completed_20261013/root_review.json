@@ -1,0 +1,82 @@
+{
+  "status": "complete_no_expansion",
+  "seed_scope": [
+    1
+  ],
+  "mask_supervised": true,
+  "unsupervised_leaderboard_eligible": false,
+  "train_unique_images": 2048,
+  "updates": 128,
+  "final_evaluation_valid": true,
+  "both_training_and_predictions_valid": true,
+  "means": {
+    "encoder_graph": {
+      "fg_ari": 0.7549828990884742,
+      "foreground_iou": 0.6059992995987441,
+      "matched_object_iou": 0.5814767086234799
+    },
+    "joint": {
+      "fg_ari": 0.7535331049420723,
+      "foreground_iou": 0.6075720415409047,
+      "matched_object_iou": 0.5818801500224275
+    },
+    "source97": {
+      "fg_ari": 0.7541350949944816,
+      "foreground_iou": 0.606899549668619,
+      "matched_object_iou": 0.582200586329909
+    },
+    "SW0143_T": {
+      "fg_ari": 0.7552730828009764,
+      "foreground_iou": 0.6149934302630647,
+      "matched_object_iou": 0.5795137856780908
+    }
+  },
+  "decisions": {
+    "encoder_graph": {
+      "fg_delta_vs_T": -0.0002901837125022233,
+      "ci95": [
+        -0.006869267556891156,
+        0.006584228092940112
+      ],
+      "registered_gain_at_least_0_02": false,
+      "registered_ci_lower_positive": false,
+      "expand_seed0_2": false
+    },
+    "joint": {
+      "fg_delta_vs_T": -0.0017399778589041182,
+      "ci95": [
+        -0.009486731784717047,
+        0.0059972565824393245
+      ],
+      "registered_gain_at_least_0_02": false,
+      "registered_ci_lower_positive": false,
+      "expand_seed0_2": false
+    }
+  },
+  "recipe_closed": true,
+  "best_unsupervised_not_changed": true,
+  "supervised_capacity_ceiling_established": false,
+  "files": [
+    {
+      "local": "0_supervised_fixed320_evaluation.json",
+      "server_relative": "results_archive/supervised_fixed320_evaluation.json",
+      "sha256": "77b63496e11703c6ec1bbdefdb3c0bc20b7cb94e44b2f4ef39fa8b00b8937833"
+    },
+    {
+      "local": "1_state.json",
+      "server_relative": "results_archive/prediction_queue_20261013/state.json",
+      "sha256": "c156ca90047ac93c278578efcc038db87564a957f7df10f87b8564995ef98bb9"
+    },
+    {
+      "local": "2_history.json",
+      "server_relative": "training/encoder_graph_seed1/history.json",
+      "sha256": "c7ebdb2d0db82a93b22bef8c6db4b35cc904c1f9e1a7b8bc5ab561f604266f22"
+    },
+    {
+      "local": "3_history.json",
+      "server_relative": "training/joint_seed1/history.json",
+      "sha256": "ac677ce3fcdefc0ab11a4203577985c2703ec54c3d1bae638615dc74c35f5e1d"
+    }
+  ],
+  "next_action": "Diagnose multiimage event saturation and separately measured per-layer gradient credit before another supervised recipe."
+}

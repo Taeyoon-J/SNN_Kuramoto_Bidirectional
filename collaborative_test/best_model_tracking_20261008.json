@@ -2752,8 +2752,7 @@
       "record": "collaborative_test/SW_0153_gamma_ordering_audit/results_archive/completed_20261013/root_review.json"
     },
     "SW0154": {
-      "status": "native64_seed1_live_seed02_recovery_reserved",
-      "seed1_child_pid": 2789343,
+      "status": "seed0_seed1_prediction_complete_seed2_live",
       "seed02_recovery_supervisor_pid": 2805178,
       "native64_fresh_training": false,
       "slot64_three_seed_means": [
@@ -2762,11 +2761,11 @@
         0.19520252370132743
       ],
       "own_final_metrics": null,
-      "record": "collaborative_test/SW_0154_native64_resolution_compare/results_archive/seed02_recovery_launch_20261013/root_review.json"
+      "record": "collaborative_test/SW_0154_native64_resolution_compare/results_archive/server_resumed_20261013/results_archive/seed02_recovery_queue_20261013/state.json",
+      "seed2_child_pid": 2893053
     },
     "SW0155": {
-      "status": "joint_training_live_encoder_graph_reserved_automatic_score_reserved",
-      "joint_child_pid": 2795643,
+      "status": "completed_no_meaningful_FG_improvement_recipe_closed",
       "prediction_supervisor_pid": 2831262,
       "mask_supervised": true,
       "unsupervised_leaderboard_eligible": false,
@@ -2774,27 +2773,54 @@
       "seed_scope": [
         1
       ],
-      "final_metrics": null,
-      "record": "collaborative_test/SW_0155_supervised_spike_relations/results_archive/prediction_launch_20261013/root_review.json"
+      "final_metrics": {
+        "encoder_graph": {
+          "fg_ari": 0.7549828990884742,
+          "foreground_iou": 0.6059992995987441,
+          "matched_object_iou": 0.5814767086234799
+        },
+        "joint": {
+          "fg_ari": 0.7535331049420723,
+          "foreground_iou": 0.6075720415409047,
+          "matched_object_iou": 0.5818801500224275
+        },
+        "source97": {
+          "fg_ari": 0.7541350949944816,
+          "foreground_iou": 0.606899549668619,
+          "matched_object_iou": 0.582200586329909
+        },
+        "SW0143_T": {
+          "fg_ari": 0.7552730828009764,
+          "foreground_iou": 0.6149934302630647,
+          "matched_object_iou": 0.5795137856780908
+        }
+      },
+      "record": "collaborative_test/SW_0155_supervised_spike_relations/results_archive/completed_20261013/root_review.json",
+      "expand_seed0_2": false
     },
     "SW0156": {
-      "status": "prospective_opt_in_signed_coupling_implementation",
+      "status": "source_only_GPU_screen_complete_full_prediction_reserved_after_visibility_fix",
       "source": "SW0143T_seed1",
       "beta": 0.5,
       "matched_control": "half unsigned interaction gain with source alpha fixed",
       "core_global_files_changed": false,
-      "gpu_run_started": false,
-      "final_metrics": null
+      "gpu_run_started": true,
+      "final_metrics": null,
+      "source_screen_complete": true,
+      "prediction_supervisor_pid": 2949340,
+      "record": "collaborative_test/SW_0156_signed_coupling/results_archive/visibility_fix_20261013/root_review.json"
     },
     "peer_review": {
       "commit": "7d094e8",
       "record": "collaborative_test/priority_comparison_20261013/peer_alignment_review_20261013.json"
     },
     "publication": {
-      "committed_through": "f8732cd0d6faf06ec1f50a3d1f8514c1345bd769",
-      "github_push_performed": false,
+      "committed_through": "ce923f16cfbfa838d9f6d7d3b6ab7262950dab54",
+      "github_push_performed": true,
       "automatic_review_rejected_exact_payload_scope": true,
-      "exact_manifest_approval_pending": true
+      "exact_manifest_approval_pending": false,
+      "remote_HEAD_verified": true,
+      "previous_auto_review_rejection_resolved_by_exact_user_approval": true
     },
     "goal_achieved": false,
     "fresh_native32_70000_training_verified": false,

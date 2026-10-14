@@ -1,0 +1,42 @@
+{
+  "status": "source_only_mechanism_review_complete",
+  "reviewer": "sol61_gate_review",
+  "scope": "One source seed1 TRAIN image, global ID68304, settled frames512:1024; not a segmentation score or population estimate.",
+  "numerical_source_parity": {
+    "six_actual_trace_fields_exact": true,
+    "actual_spike_Q_exact": true,
+    "QCC_labels_exact": true,
+    "source_model_state_unchanged": true
+  },
+  "signed_interaction": {
+    "candidate_negative_offdiagonal_abs_mass_fraction": 0.14949774742126465,
+    "finite_candidate_and_control": true,
+    "interpretation": "Interaction and gate waveforms change; this does not establish better object masks."
+  },
+  "event_and_gate_findings": {
+    "native_gate_shape": "[B,N], shared across four components by repeat_interleave",
+    "actual_component_state_shape": "[B*4,N] before conversion to [B,4,N,T]",
+    "emission_formula": "S_d=E_d*g, E_d=act_fun_adp(M_d-threshold_d)",
+    "event_on_fraction_when_gate_positive": 1.0,
+    "finding_applies_to": ["source_T", "signed_candidate", "matched_control"],
+    "instrumentation_replication_bug_found": false,
+    "interpretation": "For this image and settled window, positive-gate emitted spikes are dominated by the shared gate because events are always on. Identical per-component gate statistics are expected from the native shared-gate design.",
+    "unobserved": "The conditional statistic does not observe binary events at exactly closed gates. No raw trace tensor was archived."
+  },
+  "causal_claims_not_established": [
+    "Membrane history, reset and event selection improve segmentation.",
+    "Every gate is necessary for object separation.",
+    "The one-image saturation finding holds across all images, seeds or after supervised training.",
+    "A positive combined native_core gradient norm proves separate dendritic and membrane gradient credit."
+  ],
+  "next_diagnosis_if_needed": [
+    "Use a subsequent registered TRAIN forward to reconstruct binary events from membrane margins and verify S_d==E_d*g.",
+    "Measure membrane-margin distribution and surrogate-gradient support separately for source and trained model; do not confuse weighted spike mean with event occupancy.",
+    "Report parameter and gradient credit separately for Kuramoto, dendritic, membrane and integration groups before claiming all-gate learning.",
+    "Only after fixed320 results, compare gate-only versus emitted-spike assignment under the same contract to test the proposed output mechanism."
+  ],
+  "additional_GPU_forward_executed_for_this_review": false,
+  "ground_truth_used": false,
+  "optimizer_updates": 0,
+  "performance_goal_achieved": false
+}
