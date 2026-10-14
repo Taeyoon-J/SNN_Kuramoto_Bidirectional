@@ -3098,7 +3098,7 @@
       "incumbent_changed": false
     },
     "SW0161": {
-      "status": "repaired_real_CPU512_pass_GPU1_source_cache_running_two_training_reservations_live",
+      "status": "actual_GPU_preflight_passed_training_retry_reserved_GPU1_GPU3",
       "design": "collaborative_test/SW_0161_supervised_spike_partition/DESIGN_KO.md",
       "intervention": "actual-spike 11-slot binder with balanced coassignment MSE vs Hungarian balanced CE+all-slot Dice",
       "mask_supervised": true,
@@ -3111,7 +3111,7 @@
       "GPU_source_cache_started": false,
       "GPU_preflight_completed": false,
       "full_training_admitted": false,
-      "full_training_started": false,
+      "full_training_started": true,
       "queue_registered": true,
       "performance_result_available": false,
       "incumbent_changed": false,
@@ -3130,13 +3130,17 @@
       "cache_child_pid": 3172990,
       "cache_gpu": 1,
       "training_reservation_pids": [
-        3173049,
-        3173058
+        3177064,
+        3177069
       ],
       "actual_CPU_prepare_count": 512,
       "repair_CPU_tests_passed": 30,
       "retry_record": "collaborative_test/SW_0161_supervised_spike_partition/results_archive/cache_retry_started_20261014/root_review.json",
-      "evaluation_available": false
+      "evaluation_available": false,
+      "cache_complete": true,
+      "actual_gpu_preflight_pass": true,
+      "first_training_reservations_failed_before_child": true,
+      "training_retry_record": "collaborative_test/SW_0161_supervised_spike_partition/results_archive/training_retry_started_20261014/root_review.json"
     }
   }
 }

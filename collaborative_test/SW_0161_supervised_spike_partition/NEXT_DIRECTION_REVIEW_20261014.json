@@ -1,0 +1,13 @@
+{
+  "status": "design_review_only_not_registered_or_queued",
+  "SW0161_evidence_scope": "Supervised decodability of frozen SourceT actual spike histories and direct mask loss versus balanced pair relation loss; not unsupervised win, data scaling, or gate causal proof",
+  "automatic_unsupervised_temporal_recipe_rejected": true,
+  "reasons": [
+    "Equal marginal slot usage conflicts with variable object count and large background",
+    "Soft slot prototypes can reconstruct rhythms as waveform bases without object partition",
+    "With E almost always ON, S tracks sinusoidal gating and does not independently establish membrane contribution"
+  ],
+  "conditional_next_design": "Only consider a relative-phase information test after positive supervised decodability evidence; preserve amplitude statistics in matched common-offset versus independent-patch-offset controls, avoid uniform occupancy, and prevent self-copy reconstruction. Otherwise choose a different source representation/core training intervention rather than weaker losses on the same failed head.",
+  "no_new_training_started_for_this_design": true,
+  "final_objective_unchanged": "Native32 actual spike/membrane-derived seed0/1/2 means strictly exceed comparable Slot Attention all three fixed metrics; supervised pilot does not meet the unsupervised objective."
+}

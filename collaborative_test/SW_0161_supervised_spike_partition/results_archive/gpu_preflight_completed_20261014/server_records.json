@@ -1,0 +1,492 @@
+﻿[
+  {
+    "source_name": "preflight_20261014/preflight.json",
+    "sha256": "407a7e16668d13c4e2f9aa2bbb8258ab39b660651de2ec5c1351dc4f3b13d094",
+    "record": {
+      "arms": {
+        "mask_supervised_P": {
+          "finite_probabilities": true,
+          "initial_binder_state_sha256": "7742e333a4c1a691005e2cac104353a6c57f320ccb7cca6f8c5e0b97c21168bf",
+          "max_probability_row_sum_error": 1.1920928955078125e-07,
+          "training_admission": true,
+          "updates": [
+            {
+              "finite_loss": true,
+              "finite_probabilities": true,
+              "gradient_finite": true,
+              "gradient_norms": {
+                "gru": 0.12253501020556327,
+                "input_projection": 0.7816971627449159
+              },
+              "max_probability_row_sum_error": 2.384185791015625e-07,
+              "mean_loss": 3.297764241695404,
+              "parameter_changed": {
+                "gru": true,
+                "input_projection": true
+              },
+              "update": 1,
+              "whole_binder_gradient_norm": 0.8258969439822555
+            },
+            {
+              "finite_loss": true,
+              "finite_probabilities": true,
+              "gradient_finite": true,
+              "gradient_norms": {
+                "gru": 0.23933900280102022,
+                "input_projection": 0.8048475858648633
+              },
+              "max_probability_row_sum_error": 2.384185791015625e-07,
+              "mean_loss": 3.225536584854126,
+              "parameter_changed": {
+                "gru": true,
+                "input_projection": true
+              },
+              "update": 2,
+              "whole_binder_gradient_norm": 0.9478280193592622
+            }
+          ],
+          "updates_run": 2
+        },
+        "pair_supervised_P": {
+          "finite_probabilities": true,
+          "initial_binder_state_sha256": "7742e333a4c1a691005e2cac104353a6c57f320ccb7cca6f8c5e0b97c21168bf",
+          "max_probability_row_sum_error": 1.1920928955078125e-07,
+          "training_admission": true,
+          "updates": [
+            {
+              "finite_loss": true,
+              "finite_probabilities": true,
+              "gradient_finite": true,
+              "gradient_norms": {
+                "gru": 0.0010070747926205726,
+                "input_projection": 0.007566408937832021
+              },
+              "max_probability_row_sum_error": 1.7881393432617188e-07,
+              "mean_loss": 0.4172091633081436,
+              "parameter_changed": {
+                "gru": true,
+                "input_projection": true
+              },
+              "update": 1,
+              "whole_binder_gradient_norm": 0.007972857768978317
+            },
+            {
+              "finite_loss": true,
+              "finite_probabilities": true,
+              "gradient_finite": true,
+              "gradient_norms": {
+                "gru": 0.013438327910735025,
+                "input_projection": 0.03748050333308398
+              },
+              "max_probability_row_sum_error": 2.384185791015625e-07,
+              "mean_loss": 0.41519495844841003,
+              "parameter_changed": {
+                "gru": true,
+                "input_projection": true
+              },
+              "update": 2,
+              "whole_binder_gradient_norm": 0.04639697795576488
+            }
+          ],
+          "updates_run": 2
+        }
+      },
+      "cache_bindings_file_sha256": "4e9a767cf5a48a65c210fe049bee8a0acb511322596a14238edb5add12a6d83e",
+      "cache_bindings_file_sha256_after": "4e9a767cf5a48a65c210fe049bee8a0acb511322596a14238edb5add12a6d83e",
+      "cache_bindings_file_sha256_before": "4e9a767cf5a48a65c210fe049bee8a0acb511322596a14238edb5add12a6d83e",
+      "cache_bindings_sha256": "32155f9af88ab27f6eb9ec818df9115efb72527b7014c386cdb6ece42aa55dc6",
+      "cache_count": 512,
+      "cache_implementation_fingerprint": {
+        "collaborative_test/SW_0130_phase_state_integration/run.py": "92ac0032467c6bff2e31a76c66021c5e211f9402d15ff868382d71ecc807e988",
+        "collaborative_test/SW_0134_native_spike_binding/rollout.py": "66c08404af91b50fb4cbfa63fe44650dd6a698ea669cd3d6a672dfc5c78503f3",
+        "collaborative_test/SW_0135_native32_spike_binding/foundation.py": "9c241cacf1479c339fa56376b881672535c8d7ac4966a7ddff3b4b47f24cb867",
+        "collaborative_test/SW_0143_native32_selective_geodesic/geodesic_operator.py": "268ad6ea010b123feaf6a2c41a02e3fd5e716b5a8d96b53e11d4f93098d5da98",
+        "collaborative_test/SW_0143_native32_selective_geodesic/run.py": "c004674618d3a714a3093beafd03b27f12b94cf3e16ce775fc36da954da7aa5d",
+        "collaborative_test/SW_0152_source_preserving_partition_equivariance/training.py": "0c38f71c43a39c8aed284ab62edd25f8a30b27ea2e121db479bea75eff96bff2",
+        "collaborative_test/SW_0155_supervised_spike_relations/objective.py": "07ea07f1fa06c6f2e05e4e98184db487f68549249d997e6991ea26a8e06b40fe",
+        "collaborative_test/SW_0155_supervised_spike_relations/train.py": "68306bc5fa658487302dbcb20d0e95676957dbdbd3b04c471292cbfb4126db69",
+        "collaborative_test/SW_0160_end_to_end_source_encoder/predict_evaluate.py": "61acb0bae1f043cdd2138eecbaa6657117775579cb32ca27b63e41edb3d424ba",
+        "collaborative_test/SW_0160_end_to_end_source_encoder/score_queue.py": "f639d1c29f48dc1a4707b0b19a092f4334ac54de4f5f108c8067f706f204882d",
+        "collaborative_test/SW_0160_end_to_end_source_encoder/train.py": "02b7d1208d0c1c611466c173bc723f541d8d18b6ac8c85e9474a2c8454f309d4",
+        "collaborative_test/SW_0161_supervised_spike_partition/cache.py": "c10e0859368994a820fb9e911295036f1fd7dd52bfd5aa198cc4e28ca1cef8e0",
+        "collaborative_test/SW_0161_supervised_spike_partition/objective.py": "7a2aea977033fc4a44e20a4352270adddf81673105902ba73b0dc5d79e8d51f9",
+        "collaborative_test/SW_0161_supervised_spike_partition/protocol.json": "42b242ff135091fcc054d817b30366686cfb16ae1e385759d5180137c2061a7f"
+      },
+      "cache_implementation_fingerprint_after": {
+        "collaborative_test/SW_0130_phase_state_integration/run.py": "92ac0032467c6bff2e31a76c66021c5e211f9402d15ff868382d71ecc807e988",
+        "collaborative_test/SW_0134_native_spike_binding/rollout.py": "66c08404af91b50fb4cbfa63fe44650dd6a698ea669cd3d6a672dfc5c78503f3",
+        "collaborative_test/SW_0135_native32_spike_binding/foundation.py": "9c241cacf1479c339fa56376b881672535c8d7ac4966a7ddff3b4b47f24cb867",
+        "collaborative_test/SW_0143_native32_selective_geodesic/geodesic_operator.py": "268ad6ea010b123feaf6a2c41a02e3fd5e716b5a8d96b53e11d4f93098d5da98",
+        "collaborative_test/SW_0143_native32_selective_geodesic/run.py": "c004674618d3a714a3093beafd03b27f12b94cf3e16ce775fc36da954da7aa5d",
+        "collaborative_test/SW_0152_source_preserving_partition_equivariance/training.py": "0c38f71c43a39c8aed284ab62edd25f8a30b27ea2e121db479bea75eff96bff2",
+        "collaborative_test/SW_0155_supervised_spike_relations/objective.py": "07ea07f1fa06c6f2e05e4e98184db487f68549249d997e6991ea26a8e06b40fe",
+        "collaborative_test/SW_0155_supervised_spike_relations/train.py": "68306bc5fa658487302dbcb20d0e95676957dbdbd3b04c471292cbfb4126db69",
+        "collaborative_test/SW_0160_end_to_end_source_encoder/predict_evaluate.py": "61acb0bae1f043cdd2138eecbaa6657117775579cb32ca27b63e41edb3d424ba",
+        "collaborative_test/SW_0160_end_to_end_source_encoder/score_queue.py": "f639d1c29f48dc1a4707b0b19a092f4334ac54de4f5f108c8067f706f204882d",
+        "collaborative_test/SW_0160_end_to_end_source_encoder/train.py": "02b7d1208d0c1c611466c173bc723f541d8d18b6ac8c85e9474a2c8454f309d4",
+        "collaborative_test/SW_0161_supervised_spike_partition/cache.py": "c10e0859368994a820fb9e911295036f1fd7dd52bfd5aa198cc4e28ca1cef8e0",
+        "collaborative_test/SW_0161_supervised_spike_partition/objective.py": "7a2aea977033fc4a44e20a4352270adddf81673105902ba73b0dc5d79e8d51f9",
+        "collaborative_test/SW_0161_supervised_spike_partition/protocol.json": "42b242ff135091fcc054d817b30366686cfb16ae1e385759d5180137c2061a7f"
+      },
+      "cache_implementation_fingerprint_before": {
+        "collaborative_test/SW_0130_phase_state_integration/run.py": "92ac0032467c6bff2e31a76c66021c5e211f9402d15ff868382d71ecc807e988",
+        "collaborative_test/SW_0134_native_spike_binding/rollout.py": "66c08404af91b50fb4cbfa63fe44650dd6a698ea669cd3d6a672dfc5c78503f3",
+        "collaborative_test/SW_0135_native32_spike_binding/foundation.py": "9c241cacf1479c339fa56376b881672535c8d7ac4966a7ddff3b4b47f24cb867",
+        "collaborative_test/SW_0143_native32_selective_geodesic/geodesic_operator.py": "268ad6ea010b123feaf6a2c41a02e3fd5e716b5a8d96b53e11d4f93098d5da98",
+        "collaborative_test/SW_0143_native32_selective_geodesic/run.py": "c004674618d3a714a3093beafd03b27f12b94cf3e16ce775fc36da954da7aa5d",
+        "collaborative_test/SW_0152_source_preserving_partition_equivariance/training.py": "0c38f71c43a39c8aed284ab62edd25f8a30b27ea2e121db479bea75eff96bff2",
+        "collaborative_test/SW_0155_supervised_spike_relations/objective.py": "07ea07f1fa06c6f2e05e4e98184db487f68549249d997e6991ea26a8e06b40fe",
+        "collaborative_test/SW_0155_supervised_spike_relations/train.py": "68306bc5fa658487302dbcb20d0e95676957dbdbd3b04c471292cbfb4126db69",
+        "collaborative_test/SW_0160_end_to_end_source_encoder/predict_evaluate.py": "61acb0bae1f043cdd2138eecbaa6657117775579cb32ca27b63e41edb3d424ba",
+        "collaborative_test/SW_0160_end_to_end_source_encoder/score_queue.py": "f639d1c29f48dc1a4707b0b19a092f4334ac54de4f5f108c8067f706f204882d",
+        "collaborative_test/SW_0160_end_to_end_source_encoder/train.py": "02b7d1208d0c1c611466c173bc723f541d8d18b6ac8c85e9474a2c8454f309d4",
+        "collaborative_test/SW_0161_supervised_spike_partition/cache.py": "c10e0859368994a820fb9e911295036f1fd7dd52bfd5aa198cc4e28ca1cef8e0",
+        "collaborative_test/SW_0161_supervised_spike_partition/objective.py": "7a2aea977033fc4a44e20a4352270adddf81673105902ba73b0dc5d79e8d51f9",
+        "collaborative_test/SW_0161_supervised_spike_partition/protocol.json": "42b242ff135091fcc054d817b30366686cfb16ae1e385759d5180137c2061a7f"
+      },
+      "cache_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "cache_ledger_sha256": "52d66763f33c528b19490029b3b925c0483debfd44ee83bdb4cc630655ba3a44",
+      "cache_ledger_sha256_after": "52d66763f33c528b19490029b3b925c0483debfd44ee83bdb4cc630655ba3a44",
+      "cache_ledger_sha256_before": "52d66763f33c528b19490029b3b925c0483debfd44ee83bdb4cc630655ba3a44",
+      "cache_manifest_sha256": "b4125a81012bf46cf38ff512bf251452f511524c42a2d2364c34783de04302b3",
+      "cache_manifest_sha256_after": "b4125a81012bf46cf38ff512bf251452f511524c42a2d2364c34783de04302b3",
+      "cache_manifest_sha256_before": "b4125a81012bf46cf38ff512bf251452f511524c42a2d2364c34783de04302b3",
+      "cache_unchanged": true,
+      "disposable_updates": 2,
+      "experiment": "SW0161_supervised_spike_partition",
+      "ground_truth_scope": "registered 16 TRAIN targets from complete source cache",
+      "ground_truth_used": true,
+      "image_ids": [
+        68304,
+        49032,
+        70041,
+        7829,
+        16499,
+        31675,
+        67612,
+        54671,
+        17331,
+        2330,
+        23312,
+        50490,
+        56080,
+        20867,
+        3891,
+        34682
+      ],
+      "preflight_implementation_fingerprint": {
+        "collaborative_test/SW_0130_phase_state_integration/run.py": "92ac0032467c6bff2e31a76c66021c5e211f9402d15ff868382d71ecc807e988",
+        "collaborative_test/SW_0134_native_spike_binding/rollout.py": "66c08404af91b50fb4cbfa63fe44650dd6a698ea669cd3d6a672dfc5c78503f3",
+        "collaborative_test/SW_0135_native32_spike_binding/binder.py": "38450abd18eb0db390959727b95f88f96633117be20d053870ff28ccf5dae8ac",
+        "collaborative_test/SW_0148_checkpointable_boundary_q/checkpoint.py": "75d5076c051f81a51a39bbafedd363e589aa58ffc41ba4a662a87ffb91601f53",
+        "collaborative_test/SW_0152_source_preserving_partition_equivariance/training.py": "0c38f71c43a39c8aed284ab62edd25f8a30b27ea2e121db479bea75eff96bff2",
+        "collaborative_test/SW_0155_supervised_spike_relations/train.py": "68306bc5fa658487302dbcb20d0e95676957dbdbd3b04c471292cbfb4126db69",
+        "collaborative_test/SW_0161_supervised_spike_partition/cache.py": "c10e0859368994a820fb9e911295036f1fd7dd52bfd5aa198cc4e28ca1cef8e0",
+        "collaborative_test/SW_0161_supervised_spike_partition/objective.py": "7a2aea977033fc4a44e20a4352270adddf81673105902ba73b0dc5d79e8d51f9",
+        "collaborative_test/SW_0161_supervised_spike_partition/preflight.py": "a3fab511f1316d3ef1a0616b023b72c28e5ac45025431ea52145cd995b0d361a",
+        "collaborative_test/SW_0161_supervised_spike_partition/protocol.json": "42b242ff135091fcc054d817b30366686cfb16ae1e385759d5180137c2061a7f",
+        "collaborative_test/SW_0161_supervised_spike_partition/train.py": "66345b64b1b0cb2ac58330770db9d9239c95933477c000d78107435a0d376400"
+      },
+      "source_model_state_sha256": "b205d21a917299089b9b5d373eb94c9eb5eb971471e9428072e0fc0229c70749",
+      "source_model_unchanged": true,
+      "status": "complete",
+      "train_implementation_fingerprint": {
+        "collaborative_test/SW_0130_phase_state_integration/run.py": "92ac0032467c6bff2e31a76c66021c5e211f9402d15ff868382d71ecc807e988",
+        "collaborative_test/SW_0134_native_spike_binding/rollout.py": "66c08404af91b50fb4cbfa63fe44650dd6a698ea669cd3d6a672dfc5c78503f3",
+        "collaborative_test/SW_0135_native32_spike_binding/binder.py": "38450abd18eb0db390959727b95f88f96633117be20d053870ff28ccf5dae8ac",
+        "collaborative_test/SW_0148_checkpointable_boundary_q/checkpoint.py": "75d5076c051f81a51a39bbafedd363e589aa58ffc41ba4a662a87ffb91601f53",
+        "collaborative_test/SW_0152_source_preserving_partition_equivariance/training.py": "0c38f71c43a39c8aed284ab62edd25f8a30b27ea2e121db479bea75eff96bff2",
+        "collaborative_test/SW_0155_supervised_spike_relations/train.py": "68306bc5fa658487302dbcb20d0e95676957dbdbd3b04c471292cbfb4126db69",
+        "collaborative_test/SW_0160_end_to_end_source_encoder/predict_evaluate.py": "61acb0bae1f043cdd2138eecbaa6657117775579cb32ca27b63e41edb3d424ba",
+        "collaborative_test/SW_0160_end_to_end_source_encoder/score_queue.py": "f639d1c29f48dc1a4707b0b19a092f4334ac54de4f5f108c8067f706f204882d",
+        "collaborative_test/SW_0161_supervised_spike_partition/cache.py": "c10e0859368994a820fb9e911295036f1fd7dd52bfd5aa198cc4e28ca1cef8e0",
+        "collaborative_test/SW_0161_supervised_spike_partition/objective.py": "7a2aea977033fc4a44e20a4352270adddf81673105902ba73b0dc5d79e8d51f9",
+        "collaborative_test/SW_0161_supervised_spike_partition/preflight.py": "a3fab511f1316d3ef1a0616b023b72c28e5ac45025431ea52145cd995b0d361a",
+        "collaborative_test/SW_0161_supervised_spike_partition/protocol.json": "42b242ff135091fcc054d817b30366686cfb16ae1e385759d5180137c2061a7f",
+        "collaborative_test/SW_0161_supervised_spike_partition/train.py": "66345b64b1b0cb2ac58330770db9d9239c95933477c000d78107435a0d376400"
+      },
+      "train_implementation_fingerprint_after": {
+        "collaborative_test/SW_0130_phase_state_integration/run.py": "92ac0032467c6bff2e31a76c66021c5e211f9402d15ff868382d71ecc807e988",
+        "collaborative_test/SW_0134_native_spike_binding/rollout.py": "66c08404af91b50fb4cbfa63fe44650dd6a698ea669cd3d6a672dfc5c78503f3",
+        "collaborative_test/SW_0135_native32_spike_binding/binder.py": "38450abd18eb0db390959727b95f88f96633117be20d053870ff28ccf5dae8ac",
+        "collaborative_test/SW_0148_checkpointable_boundary_q/checkpoint.py": "75d5076c051f81a51a39bbafedd363e589aa58ffc41ba4a662a87ffb91601f53",
+        "collaborative_test/SW_0152_source_preserving_partition_equivariance/training.py": "0c38f71c43a39c8aed284ab62edd25f8a30b27ea2e121db479bea75eff96bff2",
+        "collaborative_test/SW_0155_supervised_spike_relations/train.py": "68306bc5fa658487302dbcb20d0e95676957dbdbd3b04c471292cbfb4126db69",
+        "collaborative_test/SW_0160_end_to_end_source_encoder/predict_evaluate.py": "61acb0bae1f043cdd2138eecbaa6657117775579cb32ca27b63e41edb3d424ba",
+        "collaborative_test/SW_0160_end_to_end_source_encoder/score_queue.py": "f639d1c29f48dc1a4707b0b19a092f4334ac54de4f5f108c8067f706f204882d",
+        "collaborative_test/SW_0161_supervised_spike_partition/cache.py": "c10e0859368994a820fb9e911295036f1fd7dd52bfd5aa198cc4e28ca1cef8e0",
+        "collaborative_test/SW_0161_supervised_spike_partition/objective.py": "7a2aea977033fc4a44e20a4352270adddf81673105902ba73b0dc5d79e8d51f9",
+        "collaborative_test/SW_0161_supervised_spike_partition/preflight.py": "a3fab511f1316d3ef1a0616b023b72c28e5ac45025431ea52145cd995b0d361a",
+        "collaborative_test/SW_0161_supervised_spike_partition/protocol.json": "42b242ff135091fcc054d817b30366686cfb16ae1e385759d5180137c2061a7f",
+        "collaborative_test/SW_0161_supervised_spike_partition/train.py": "66345b64b1b0cb2ac58330770db9d9239c95933477c000d78107435a0d376400"
+      },
+      "train_implementation_fingerprint_before": {
+        "collaborative_test/SW_0130_phase_state_integration/run.py": "92ac0032467c6bff2e31a76c66021c5e211f9402d15ff868382d71ecc807e988",
+        "collaborative_test/SW_0134_native_spike_binding/rollout.py": "66c08404af91b50fb4cbfa63fe44650dd6a698ea669cd3d6a672dfc5c78503f3",
+        "collaborative_test/SW_0135_native32_spike_binding/binder.py": "38450abd18eb0db390959727b95f88f96633117be20d053870ff28ccf5dae8ac",
+        "collaborative_test/SW_0148_checkpointable_boundary_q/checkpoint.py": "75d5076c051f81a51a39bbafedd363e589aa58ffc41ba4a662a87ffb91601f53",
+        "collaborative_test/SW_0152_source_preserving_partition_equivariance/training.py": "0c38f71c43a39c8aed284ab62edd25f8a30b27ea2e121db479bea75eff96bff2",
+        "collaborative_test/SW_0155_supervised_spike_relations/train.py": "68306bc5fa658487302dbcb20d0e95676957dbdbd3b04c471292cbfb4126db69",
+        "collaborative_test/SW_0160_end_to_end_source_encoder/predict_evaluate.py": "61acb0bae1f043cdd2138eecbaa6657117775579cb32ca27b63e41edb3d424ba",
+        "collaborative_test/SW_0160_end_to_end_source_encoder/score_queue.py": "f639d1c29f48dc1a4707b0b19a092f4334ac54de4f5f108c8067f706f204882d",
+        "collaborative_test/SW_0161_supervised_spike_partition/cache.py": "c10e0859368994a820fb9e911295036f1fd7dd52bfd5aa198cc4e28ca1cef8e0",
+        "collaborative_test/SW_0161_supervised_spike_partition/objective.py": "7a2aea977033fc4a44e20a4352270adddf81673105902ba73b0dc5d79e8d51f9",
+        "collaborative_test/SW_0161_supervised_spike_partition/preflight.py": "a3fab511f1316d3ef1a0616b023b72c28e5ac45025431ea52145cd995b0d361a",
+        "collaborative_test/SW_0161_supervised_spike_partition/protocol.json": "42b242ff135091fcc054d817b30366686cfb16ae1e385759d5180137c2061a7f",
+        "collaborative_test/SW_0161_supervised_spike_partition/train.py": "66345b64b1b0cb2ac58330770db9d9239c95933477c000d78107435a0d376400"
+      },
+      "training_admission": true
+    }
+  },
+  {
+    "source_name": "cache_preflight_queue_retry_20261014/state.json",
+    "sha256": "22bdf2c718abd2c1f94e45feec63abf3c257cb002231cedf678a4ee56e6c8df7",
+    "record": {
+      "experiment": "SW0161_source_cache_and_head_preflight_queue",
+      "status": "preflight_complete_admitted",
+      "supervisor_pid": 3172947,
+      "queue_fingerprint": {
+        "collaborative_test/SW_0161_supervised_spike_partition/cache_queue.py": "0ee6f193e9ff3e320f01ae7954d5952a53e8c395ced76e015959678493c092a3",
+        "collaborative_test/SW_0161_supervised_spike_partition/cache.py": "c10e0859368994a820fb9e911295036f1fd7dd52bfd5aa198cc4e28ca1cef8e0",
+        "collaborative_test/SW_0161_supervised_spike_partition/preflight.py": "a3fab511f1316d3ef1a0616b023b72c28e5ac45025431ea52145cd995b0d361a",
+        "collaborative_test/SW_0161_supervised_spike_partition/train.py": "66345b64b1b0cb2ac58330770db9d9239c95933477c000d78107435a0d376400",
+        "collaborative_test/SW_0161_supervised_spike_partition/objective.py": "7a2aea977033fc4a44e20a4352270adddf81673105902ba73b0dc5d79e8d51f9",
+        "collaborative_test/SW_0161_supervised_spike_partition/protocol.json": "42b242ff135091fcc054d817b30366686cfb16ae1e385759d5180137c2061a7f",
+        "collaborative_test/SW_0148_checkpointable_boundary_q/stage_queue_v4.py": "14fae39aeb6e958df60edf25680f412acb50a01126fd7af725c61fdba3794623",
+        "collaborative_test/SW_0126_history_event_binding/pilot_queue.py": "c59cdc39af20c824930d1926c8cec1418ee818577b8cc4240ad6eaae836764f6"
+      },
+      "cache_fingerprint": {
+        "collaborative_test/SW_0161_supervised_spike_partition/cache.py": "c10e0859368994a820fb9e911295036f1fd7dd52bfd5aa198cc4e28ca1cef8e0",
+        "collaborative_test/SW_0161_supervised_spike_partition/protocol.json": "42b242ff135091fcc054d817b30366686cfb16ae1e385759d5180137c2061a7f",
+        "collaborative_test/SW_0161_supervised_spike_partition/objective.py": "7a2aea977033fc4a44e20a4352270adddf81673105902ba73b0dc5d79e8d51f9",
+        "collaborative_test/SW_0155_supervised_spike_relations/train.py": "68306bc5fa658487302dbcb20d0e95676957dbdbd3b04c471292cbfb4126db69",
+        "collaborative_test/SW_0155_supervised_spike_relations/objective.py": "07ea07f1fa06c6f2e05e4e98184db487f68549249d997e6991ea26a8e06b40fe",
+        "collaborative_test/SW_0130_phase_state_integration/run.py": "92ac0032467c6bff2e31a76c66021c5e211f9402d15ff868382d71ecc807e988",
+        "collaborative_test/SW_0134_native_spike_binding/rollout.py": "66c08404af91b50fb4cbfa63fe44650dd6a698ea669cd3d6a672dfc5c78503f3",
+        "collaborative_test/SW_0135_native32_spike_binding/foundation.py": "9c241cacf1479c339fa56376b881672535c8d7ac4966a7ddff3b4b47f24cb867",
+        "collaborative_test/SW_0143_native32_selective_geodesic/run.py": "c004674618d3a714a3093beafd03b27f12b94cf3e16ce775fc36da954da7aa5d",
+        "collaborative_test/SW_0143_native32_selective_geodesic/geodesic_operator.py": "268ad6ea010b123feaf6a2c41a02e3fd5e716b5a8d96b53e11d4f93098d5da98",
+        "collaborative_test/SW_0152_source_preserving_partition_equivariance/training.py": "0c38f71c43a39c8aed284ab62edd25f8a30b27ea2e121db479bea75eff96bff2",
+        "collaborative_test/SW_0160_end_to_end_source_encoder/train.py": "02b7d1208d0c1c611466c173bc723f541d8d18b6ac8c85e9474a2c8454f309d4",
+        "collaborative_test/SW_0160_end_to_end_source_encoder/score_queue.py": "f639d1c29f48dc1a4707b0b19a092f4334ac54de4f5f108c8067f706f204882d",
+        "collaborative_test/SW_0160_end_to_end_source_encoder/predict_evaluate.py": "61acb0bae1f043cdd2138eecbaa6657117775579cb32ca27b63e41edb3d424ba"
+      },
+      "preflight_fingerprint": {
+        "collaborative_test/SW_0161_supervised_spike_partition/protocol.json": "42b242ff135091fcc054d817b30366686cfb16ae1e385759d5180137c2061a7f",
+        "collaborative_test/SW_0161_supervised_spike_partition/objective.py": "7a2aea977033fc4a44e20a4352270adddf81673105902ba73b0dc5d79e8d51f9",
+        "collaborative_test/SW_0161_supervised_spike_partition/cache.py": "c10e0859368994a820fb9e911295036f1fd7dd52bfd5aa198cc4e28ca1cef8e0",
+        "collaborative_test/SW_0161_supervised_spike_partition/train.py": "66345b64b1b0cb2ac58330770db9d9239c95933477c000d78107435a0d376400",
+        "collaborative_test/SW_0161_supervised_spike_partition/preflight.py": "a3fab511f1316d3ef1a0616b023b72c28e5ac45025431ea52145cd995b0d361a",
+        "collaborative_test/SW_0130_phase_state_integration/run.py": "92ac0032467c6bff2e31a76c66021c5e211f9402d15ff868382d71ecc807e988",
+        "collaborative_test/SW_0134_native_spike_binding/rollout.py": "66c08404af91b50fb4cbfa63fe44650dd6a698ea669cd3d6a672dfc5c78503f3",
+        "collaborative_test/SW_0135_native32_spike_binding/binder.py": "38450abd18eb0db390959727b95f88f96633117be20d053870ff28ccf5dae8ac",
+        "collaborative_test/SW_0148_checkpointable_boundary_q/checkpoint.py": "75d5076c051f81a51a39bbafedd363e589aa58ffc41ba4a662a87ffb91601f53",
+        "collaborative_test/SW_0152_source_preserving_partition_equivariance/training.py": "0c38f71c43a39c8aed284ab62edd25f8a30b27ea2e121db479bea75eff96bff2",
+        "collaborative_test/SW_0155_supervised_spike_relations/train.py": "68306bc5fa658487302dbcb20d0e95676957dbdbd3b04c471292cbfb4126db69"
+      },
+      "stages": {
+        "cache": {
+          "status": "complete",
+          "updated": 1791978325.1318884,
+          "gpu": 1,
+          "gpu_uuid": "GPU-45604115-c231-56a5-32ea-d3001e8ff243",
+          "stable_seconds": 5.170228522736579,
+          "memory_used_mib": 2,
+          "child_pid": 3172990,
+          "child_pgid": 3172990,
+          "child_argv": [
+            "/Data0/kevinswk/envs/snn/bin/python",
+            "-m",
+            "collaborative_test.SW_0161_supervised_spike_partition.cache",
+            "--device",
+            "cuda:0",
+            "--output",
+            "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0161_supervised_spike_partition/results_archive/sourceT_cache_20261014"
+          ],
+          "physical_gpu": 1,
+          "memory_before_mib": 2,
+          "inherited_lease_fd": true,
+          "log": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0161_supervised_spike_partition/results_archive/cache_preflight_queue_retry_20261014/cache_attempt01.log",
+          "upstream_sha256": "581de54285417557b1746ab75ed27baef62dede48000a52891af74b851be64bf",
+          "child_returncode": 0,
+          "cache_valid": true,
+          "cache_manifest_sha256": "b4125a81012bf46cf38ff512bf251452f511524c42a2d2364c34783de04302b3"
+        },
+        "preflight": {
+          "status": "complete_admitted",
+          "updated": 1791978740.8335705,
+          "gpu": 1,
+          "gpu_uuid": "GPU-45604115-c231-56a5-32ea-d3001e8ff243",
+          "stable_seconds": 5.143512875773013,
+          "memory_used_mib": 2,
+          "child_pid": 3175549,
+          "child_pgid": 3175549,
+          "child_argv": [
+            "/Data0/kevinswk/envs/snn/bin/python",
+            "-m",
+            "collaborative_test.SW_0161_supervised_spike_partition.preflight",
+            "--device",
+            "cuda:0",
+            "--cache-root",
+            "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0161_supervised_spike_partition/results_archive/sourceT_cache_20261014",
+            "--output",
+            "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0161_supervised_spike_partition/results_archive/preflight_20261014/preflight.json"
+          ],
+          "physical_gpu": 1,
+          "memory_before_mib": 2,
+          "inherited_lease_fd": true,
+          "log": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0161_supervised_spike_partition/results_archive/cache_preflight_queue_retry_20261014/preflight_attempt01.log",
+          "upstream_sha256": "4a97a7581ed531c4672322a2bde3303b9ef4a6893cd6d9c5cca4df62f5749ef7",
+          "child_returncode": 0,
+          "report_valid": true,
+          "training_admission": true,
+          "report_sha256": "407a7e16668d13c4e2f9aa2bbb8258ab39b660651de2ec5c1351dc4f3b13d094"
+        }
+      },
+      "task_plan": {
+        "experiment": "SW0161_source_cache_and_head_preflight_queue",
+        "stages": [
+          "cache",
+          "preflight"
+        ],
+        "cache_argv": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "-m",
+          "collaborative_test.SW_0161_supervised_spike_partition.cache",
+          "--device",
+          "cuda:0",
+          "--output",
+          "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0161_supervised_spike_partition/results_archive/sourceT_cache_20261014"
+        ],
+        "preflight_argv": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "-m",
+          "collaborative_test.SW_0161_supervised_spike_partition.preflight",
+          "--device",
+          "cuda:0",
+          "--cache-root",
+          "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0161_supervised_spike_partition/results_archive/sourceT_cache_20261014",
+          "--output",
+          "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0161_supervised_spike_partition/results_archive/preflight_20261014/preflight.json"
+        ],
+        "cache_root": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0161_supervised_spike_partition/results_archive/sourceT_cache_20261014",
+        "preflight_output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0161_supervised_spike_partition/results_archive/preflight_20261014/preflight.json",
+        "runtime": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0161_supervised_spike_partition/results_archive/cache_preflight_queue_retry_20261014",
+        "gpu_candidates": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "max_memory_mib": 512,
+        "stable_seconds": 5.0,
+        "watchdog_seconds": 43200,
+        "queue_fingerprint": {
+          "collaborative_test/SW_0161_supervised_spike_partition/cache_queue.py": "0ee6f193e9ff3e320f01ae7954d5952a53e8c395ced76e015959678493c092a3",
+          "collaborative_test/SW_0161_supervised_spike_partition/cache.py": "c10e0859368994a820fb9e911295036f1fd7dd52bfd5aa198cc4e28ca1cef8e0",
+          "collaborative_test/SW_0161_supervised_spike_partition/preflight.py": "a3fab511f1316d3ef1a0616b023b72c28e5ac45025431ea52145cd995b0d361a",
+          "collaborative_test/SW_0161_supervised_spike_partition/train.py": "66345b64b1b0cb2ac58330770db9d9239c95933477c000d78107435a0d376400",
+          "collaborative_test/SW_0161_supervised_spike_partition/objective.py": "7a2aea977033fc4a44e20a4352270adddf81673105902ba73b0dc5d79e8d51f9",
+          "collaborative_test/SW_0161_supervised_spike_partition/protocol.json": "42b242ff135091fcc054d817b30366686cfb16ae1e385759d5180137c2061a7f",
+          "collaborative_test/SW_0148_checkpointable_boundary_q/stage_queue_v4.py": "14fae39aeb6e958df60edf25680f412acb50a01126fd7af725c61fdba3794623",
+          "collaborative_test/SW_0126_history_event_binding/pilot_queue.py": "c59cdc39af20c824930d1926c8cec1418ee818577b8cc4240ad6eaae836764f6"
+        }
+      },
+      "created": 1791977761.5899556,
+      "updated": 1791978740.8335738,
+      "cache_manifest_sha256": "b4125a81012bf46cf38ff512bf251452f511524c42a2d2364c34783de04302b3",
+      "cache_bindings_sha256": "32155f9af88ab27f6eb9ec818df9115efb72527b7014c386cdb6ece42aa55dc6"
+    }
+  },
+  {
+    "source_name": "training_queue_20261014/pair_supervised_P/state.json",
+    "sha256": "d21dd261247f440f261bc00dccbb4c7a89ac6cf700d51e39c12ee29adeebadd5",
+    "record": {
+      "experiment": "SW0161_supervised_spike_partition",
+      "arm": "pair_supervised_P",
+      "status": "failed",
+      "supervisor_pid": 3173049,
+      "queue_fingerprint": {
+        "collaborative_test/SW_0161_supervised_spike_partition/training_queue.py": "4fd8dc7617ccfa9b7cb3b1f77739ade71634bd3f7b5a78678d4be17c3ea578ef",
+        "collaborative_test/SW_0161_supervised_spike_partition/train.py": "66345b64b1b0cb2ac58330770db9d9239c95933477c000d78107435a0d376400",
+        "collaborative_test/SW_0161_supervised_spike_partition/cache.py": "c10e0859368994a820fb9e911295036f1fd7dd52bfd5aa198cc4e28ca1cef8e0",
+        "collaborative_test/SW_0161_supervised_spike_partition/preflight.py": "a3fab511f1316d3ef1a0616b023b72c28e5ac45025431ea52145cd995b0d361a",
+        "collaborative_test/SW_0161_supervised_spike_partition/objective.py": "7a2aea977033fc4a44e20a4352270adddf81673105902ba73b0dc5d79e8d51f9",
+        "collaborative_test/SW_0161_supervised_spike_partition/protocol.json": "42b242ff135091fcc054d817b30366686cfb16ae1e385759d5180137c2061a7f",
+        "collaborative_test/SW_0161_supervised_spike_partition/cache_queue.py": "0ee6f193e9ff3e320f01ae7954d5952a53e8c395ced76e015959678493c092a3",
+        "collaborative_test/SW_0161_supervised_spike_partition/resume_cache_queue.py": "0326d1a1ef8869e8df4349107c74963e5d5d362012b6a4374ed62066455798d5",
+        "collaborative_test/SW_0148_checkpointable_boundary_q/stage_queue_v4.py": "14fae39aeb6e958df60edf25680f412acb50a01126fd7af725c61fdba3794623",
+        "collaborative_test/SW_0126_history_event_binding/pilot_queue.py": "c59cdc39af20c824930d1926c8cec1418ee818577b8cc4240ad6eaae836764f6"
+      },
+      "task": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-m",
+        "collaborative_test.SW_0161_supervised_spike_partition.train",
+        "--arm",
+        "pair_supervised_P",
+        "--device",
+        "cuda:0"
+      ],
+      "created": 1791977784.7427726,
+      "updated": 1791978376.855164,
+      "wait_reason": "waiting for live registered SW0161 cache/preflight owner",
+      "error": "RuntimeError(\"SW0161 cache/preflight is not admitted (status='cache_validated')\")",
+      "artifacts_preserved": true,
+      "finished": 1791978376.8551126
+    }
+  },
+  {
+    "source_name": "training_queue_20261014/mask_supervised_P/state.json",
+    "sha256": "085e48ae7761c720cc53efa3dad7c9fc6a3edd29c632566bf7b92845c4dde036",
+    "record": {
+      "experiment": "SW0161_supervised_spike_partition",
+      "arm": "mask_supervised_P",
+      "status": "failed",
+      "supervisor_pid": 3173058,
+      "queue_fingerprint": {
+        "collaborative_test/SW_0161_supervised_spike_partition/training_queue.py": "4fd8dc7617ccfa9b7cb3b1f77739ade71634bd3f7b5a78678d4be17c3ea578ef",
+        "collaborative_test/SW_0161_supervised_spike_partition/train.py": "66345b64b1b0cb2ac58330770db9d9239c95933477c000d78107435a0d376400",
+        "collaborative_test/SW_0161_supervised_spike_partition/cache.py": "c10e0859368994a820fb9e911295036f1fd7dd52bfd5aa198cc4e28ca1cef8e0",
+        "collaborative_test/SW_0161_supervised_spike_partition/preflight.py": "a3fab511f1316d3ef1a0616b023b72c28e5ac45025431ea52145cd995b0d361a",
+        "collaborative_test/SW_0161_supervised_spike_partition/objective.py": "7a2aea977033fc4a44e20a4352270adddf81673105902ba73b0dc5d79e8d51f9",
+        "collaborative_test/SW_0161_supervised_spike_partition/protocol.json": "42b242ff135091fcc054d817b30366686cfb16ae1e385759d5180137c2061a7f",
+        "collaborative_test/SW_0161_supervised_spike_partition/cache_queue.py": "0ee6f193e9ff3e320f01ae7954d5952a53e8c395ced76e015959678493c092a3",
+        "collaborative_test/SW_0161_supervised_spike_partition/resume_cache_queue.py": "0326d1a1ef8869e8df4349107c74963e5d5d362012b6a4374ed62066455798d5",
+        "collaborative_test/SW_0148_checkpointable_boundary_q/stage_queue_v4.py": "14fae39aeb6e958df60edf25680f412acb50a01126fd7af725c61fdba3794623",
+        "collaborative_test/SW_0126_history_event_binding/pilot_queue.py": "c59cdc39af20c824930d1926c8cec1418ee818577b8cc4240ad6eaae836764f6"
+      },
+      "task": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-m",
+        "collaborative_test.SW_0161_supervised_spike_partition.train",
+        "--arm",
+        "mask_supervised_P",
+        "--device",
+        "cuda:0"
+      ],
+      "created": 1791977786.744385,
+      "updated": 1791978378.8482087,
+      "wait_reason": "waiting for live registered SW0161 cache/preflight owner",
+      "error": "RuntimeError(\"SW0161 cache/preflight is not admitted (status='cache_validated')\")",
+      "artifacts_preserved": true,
+      "finished": 1791978378.848138
+    }
+  }
+]

@@ -1,0 +1,26 @@
+{
+  "peer_commit": "cab6c676e24a149a45ea960586c04e579f78d384",
+  "reviewed_file": "collaborative_test/PV2_0091_extent_ceiling/README.md",
+  "sha256": "21bcf10552819857290df9fcd250d618dab839a7143dcab538ec6a9a2c13e3ea",
+  "recorded_values": {
+    "spectral_k14": {
+      "fg_ari": 0.7603,
+      "predicted_foreground": 0.556
+    },
+    "spectral_k20": {
+      "fg_ari": 0.7718,
+      "predicted_foreground": 0.808
+    },
+    "aligned_slot_attention": {
+      "fg_ari": 0.8102,
+      "predicted_foreground": 0.8531
+    }
+  },
+  "limitations": [
+    "Collected across different runs/configurations; clean same-checkpoint k sweep unfinished",
+    "Peer contract/renderer differs; values are not our native32 benchmark",
+    "Finite readout results do not prove an information ceiling for every learned head or encoder"
+  ],
+  "incorporated_insight": "Continue measuring extent alongside FG-ARI; avoid another small spectral-k sweep; SW161 tests supervised spike-history decodability before unsupervised rhythm assignment design.",
+  "no_direct_parameter_port": true
+}
