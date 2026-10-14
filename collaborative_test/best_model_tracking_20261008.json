@@ -3098,7 +3098,7 @@
       "incumbent_changed": false
     },
     "SW0161": {
-      "status": "actual_GPU_preflight_passed_training_retry_reserved_GPU1_GPU3",
+      "status": "paired_GPU1_GPU3_training_live_prediction_and_GTlast_score_reservations_live",
       "design": "collaborative_test/SW_0161_supervised_spike_partition/DESIGN_KO.md",
       "intervention": "actual-spike 11-slot binder with balanced coassignment MSE vs Hungarian balanced CE+all-slot Dice",
       "mask_supervised": true,
@@ -3140,7 +3140,14 @@
       "cache_complete": true,
       "actual_gpu_preflight_pass": true,
       "first_training_reservations_failed_before_child": true,
-      "training_retry_record": "collaborative_test/SW_0161_supervised_spike_partition/results_archive/training_retry_started_20261014/root_review.json"
+      "training_retry_record": "collaborative_test/SW_0161_supervised_spike_partition/results_archive/training_retry_started_20261014/root_review.json",
+      "prediction_reservation_pids": [
+        3181663,
+        3181681
+      ],
+      "score_reservation_pid": 3181695,
+      "prediction_CPU_tests_passed": 11,
+      "actual_fixed320_reference_CPU_check": "passed"
     }
   }
 }
