@@ -1,0 +1,60 @@
+{
+  "experiment": "SW0158_membrane_spike_credit",
+  "arm": "detached_membrane_control",
+  "status": "complete",
+  "supervisor_pid": 3021381,
+  "queue_fingerprint": {
+    "collaborative_test/SW_0158_membrane_spike_credit/prediction_queue.py": "a21f6d8fda8455f67180de74d89efafc21ee61ecfa0abff751083d94cc93cf29",
+    "collaborative_test/SW_0158_membrane_spike_credit/predict_evaluate.py": "cc8035d3de5fef23e6fad567da9b0d29fbd47eaaa86ed1a68c86262882fcddbc",
+    "collaborative_test/SW_0158_membrane_spike_credit/train.py": "b07b5fa2a4d37b7e52598432fd2d6740d1d9167e4da4d28aded80a3d4e6ca4aa",
+    "collaborative_test/SW_0158_membrane_spike_credit/spike_credit.py": "7a6c30405a2a42ed081c638179097268e17da2a368044f6abfaf95df8dabc337",
+    "collaborative_test/SW_0158_membrane_spike_credit/protocol.json": "7ca6b90f616b0aa0e680e6d792ac644a825af02ecaa32836357f8a7c9b566e8d",
+    "collaborative_test/SW_0148_checkpointable_boundary_q/stage_queue_v4.py": "14fae39aeb6e958df60edf25680f412acb50a01126fd7af725c61fdba3794623",
+    "collaborative_test/SW_0126_history_event_binding/pilot_queue.py": "c59cdc39af20c824930d1926c8cec1418ee818577b8cc4240ad6eaae836764f6"
+  },
+  "prediction_fingerprint": {
+    "collaborative_test/SW_0158_membrane_spike_credit/predict_evaluate.py": "cc8035d3de5fef23e6fad567da9b0d29fbd47eaaa86ed1a68c86262882fcddbc",
+    "collaborative_test/SW_0158_membrane_spike_credit/protocol.json": "7ca6b90f616b0aa0e680e6d792ac644a825af02ecaa32836357f8a7c9b566e8d",
+    "collaborative_test/SW_0158_membrane_spike_credit/train.py": "b07b5fa2a4d37b7e52598432fd2d6740d1d9167e4da4d28aded80a3d4e6ca4aa",
+    "collaborative_test/SW_0158_membrane_spike_credit/spike_credit.py": "7a6c30405a2a42ed081c638179097268e17da2a368044f6abfaf95df8dabc337",
+    "collaborative_test/SW_0130_phase_state_integration/run.py": "92ac0032467c6bff2e31a76c66021c5e211f9402d15ff868382d71ecc807e988",
+    "collaborative_test/SW_0135_native32_spike_binding/evaluation_contract32.py": "e601280ade9a2b9545f6bbf94df22deca6ebfe123750229f6a7244105c57b1bd",
+    "collaborative_test/SW_0136_native32_transfer/evaluate.py": "1c2846b69fb4bc936bf06723fc9f1b4c12f6632a02aff7e40c1e21a28b7a30ea",
+    "collaborative_test/SW_0137_native32_source_qcc/run.py": "2498629d119d73d7e1ae06d359e99dda87355c8a577951fbf5b1af28570de7d2",
+    "collaborative_test/SW_0143_native32_selective_geodesic/run.py": "c004674618d3a714a3093beafd03b27f12b94cf3e16ce775fc36da954da7aa5d",
+    "collaborative_test/SW_0143_native32_selective_geodesic/geodesic_operator.py": "268ad6ea010b123feaf6a2c41a02e3fd5e716b5a8d96b53e11d4f93098d5da98",
+    "collaborative_test/SW_0155_supervised_spike_relations/train.py": "68306bc5fa658487302dbcb20d0e95676957dbdbd3b04c471292cbfb4126db69",
+    "snn_kuramoto_bidirectional/spike_classifier.py": "2d13c15a928f503bc09239aae2153a5f1a82de77aab4b5a76d0dfe876b755181",
+    "snn_kuramoto_bidirectional/evaluation.py": "4a15980c9aa0248dbe0e837ad1b0b430ce26a7ab367c004d290a1272bb1025d7"
+  },
+  "task": {
+    "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0158_membrane_spike_credit/predictions/detached_membrane_control_seed1",
+    "resume": "validated per-image row commits"
+  },
+  "updated": 1791960629.8798018,
+  "last_validation": "FileNotFoundError(2, 'No such file or directory')",
+  "gpu": 3,
+  "gpu_uuid": "GPU-6801a3dc-cde3-86c6-d665-6d9ecf063a1e",
+  "stable_seconds": 5.17738282494247,
+  "memory_used_mib": 2,
+  "trained_manifest_sha256": "21793b5671b5e376e9b1109ccef1f4c5e24babdcea3fc19a3406044d7aef96b5",
+  "child_argv": [
+    "/Data0/kevinswk/envs/snn/bin/python",
+    "-m",
+    "collaborative_test.SW_0158_membrane_spike_credit.predict_evaluate",
+    "--stage",
+    "predict",
+    "--arm",
+    "detached_membrane_control",
+    "--device",
+    "cuda:0"
+  ],
+  "child_pid": 3045463,
+  "physical_gpu": 3,
+  "inherited_lease_fd": true,
+  "log": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0158_membrane_spike_credit/results_archive/prediction_queues_20261014/detached_membrane_control/attempt01.log",
+  "child_returncode": 0,
+  "prediction_sha256": "4362cdb4b1ce9c6b853b0e3ea953e7eb05689df0ba643bccfa9431f0c2eea86e",
+  "protocol_sha256": "a2b8326e529571558ab80d1c54b4c7200dc917122a59226f1170ca09c414a1da",
+  "finished": 1791960629.8797078
+}

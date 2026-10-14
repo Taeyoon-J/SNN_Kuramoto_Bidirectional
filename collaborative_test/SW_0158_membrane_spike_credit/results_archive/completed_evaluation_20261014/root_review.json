@@ -1,0 +1,41 @@
+{
+  "status": "completed_recipe_closed_no_expansion",
+  "seed_scope": [
+    1
+  ],
+  "means": {
+    "live_membrane_credit": {
+      "fg_ari": 0.7539709771308295,
+      "foreground_iou": 0.6111269686662316,
+      "matched_object_iou": 0.5788469283859294
+    },
+    "detached_membrane_control": {
+      "fg_ari": 0.7538287336420757,
+      "foreground_iou": 0.6154672393224948,
+      "matched_object_iou": 0.5790468583914772
+    },
+    "source97": {
+      "fg_ari": 0.7541350949944816,
+      "foreground_iou": 0.606899549668619,
+      "matched_object_iou": 0.582200586329909
+    },
+    "SW0143_T": {
+      "fg_ari": 0.7552730828009764,
+      "foreground_iou": 0.6149934302630647,
+      "matched_object_iou": 0.5795137856780908
+    }
+  },
+  "promotion_gate": {
+    "live_fg_ari_at_least_0.01_above_SW0143_T": false,
+    "live_fg_ari_at_least_0.01_above_detached": false,
+    "paired_ci_lower_live_minus_T_positive": false,
+    "paired_ci_lower_live_minus_detached_positive": false
+  },
+  "best_model_changed": false,
+  "expand_seed0_2": false,
+  "eta_sweep": false,
+  "final_score_sha256": "3ff04750ab18615fbca49ff44e322259a45d4bdc9fb83bac7dd07ea6b87a13e8",
+  "validation": "Score coordinator recomputed the complete frozen prediction report before accepting completion; digest reverified by root.",
+  "interpretation": "Additional membrane gradient credit was demonstrated, but no FG improvement or membrane necessity was demonstrated.",
+  "next": "SW0159 one-shot threshold/reset regime initialization, not weak amplitude tuning."
+}

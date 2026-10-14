@@ -2869,7 +2869,7 @@
       "record": "collaborative_test/SW_0157_train_gate_credit/results_archive/completed_20261014/0_train_gate_credit_seed1.json"
     },
     "SW0158": {
-      "status": "matched_full_training_children_verified_live",
+      "status": "completed_no_FG_improvement_recipe_closed",
       "source": "SW143_T_seed1",
       "planned_arms": [
         "live_membrane_amplitude",
@@ -2882,7 +2882,7 @@
       "child_pid": null,
       "physical_gpu": 1,
       "full_training_started": true,
-      "record": "collaborative_test/SW_0158_membrane_spike_credit/results_archive/completed_preflight_20261014/0_preflight_seed1.json",
+      "record": "collaborative_test/SW_0158_membrane_spike_credit/results_archive/completed_evaluation_20261014/root_review.json",
       "preflight_complete": true,
       "additional_membrane_gradient_delta_l2": 8.380115783545325e-08,
       "best_model_changed": false,
@@ -2891,18 +2891,7 @@
       "seed_scope": [
         1
       ],
-      "training_children": [
-        {
-          "arm": "live_membrane_credit",
-          "pid": 3008130,
-          "gpu": 1
-        },
-        {
-          "arm": "detached_membrane_control",
-          "pid": 3008140,
-          "gpu": 3
-        }
-      ],
+      "training_children": [],
       "training_start_record": "collaborative_test/SW_0158_membrane_spike_credit/results_archive/training_started_20261014/2_launch.json",
       "followup_prediction_jobs_registered": true,
       "prediction_supervisors": [
@@ -2911,7 +2900,49 @@
       ],
       "score_supervisor": 3021425,
       "followup_queues_actual_processes_live": true,
-      "followup_record": "collaborative_test/SW_0158_membrane_spike_credit/results_archive/prediction_queued_20261014/root_review.json"
+      "followup_record": "collaborative_test/SW_0158_membrane_spike_credit/results_archive/prediction_queued_20261014/root_review.json",
+      "completed_updates_per_arm": 128,
+      "prediction_children": [],
+      "completed_training_record": "collaborative_test/SW_0158_membrane_spike_credit/results_archive/completed_training_20261014/root_review.json",
+      "final_metrics": {
+        "live_membrane_credit": {
+          "fg_ari": 0.7539709771308295,
+          "foreground_iou": 0.6111269686662316,
+          "matched_object_iou": 0.5788469283859294
+        },
+        "detached_membrane_control": {
+          "fg_ari": 0.7538287336420757,
+          "foreground_iou": 0.6154672393224948,
+          "matched_object_iou": 0.5790468583914772
+        },
+        "source97": {
+          "fg_ari": 0.7541350949944816,
+          "foreground_iou": 0.606899549668619,
+          "matched_object_iou": 0.582200586329909
+        },
+        "SW0143_T": {
+          "fg_ari": 0.7552730828009764,
+          "foreground_iou": 0.6149934302630647,
+          "matched_object_iou": 0.5795137856780908
+        }
+      },
+      "promotion_gate": {
+        "live_fg_ari_at_least_0.01_above_SW0143_T": false,
+        "live_fg_ari_at_least_0.01_above_detached": false,
+        "paired_ci_lower_live_minus_T_positive": false,
+        "paired_ci_lower_live_minus_detached_positive": false
+      },
+      "expand_seed0_2": false,
+      "eta_sweep": false
+    },
+    "SW0159": {
+      "status": "implementation_in_progress_no_GPU_run",
+      "source": "SW0143_T_seed1",
+      "one_shot_threshold_init": "0.5*sourceT TRAIN margin RMS",
+      "threshold_changes_event_cutoff_and_reset": true,
+      "mask_supervised": true,
+      "no_threshold_sweep": true,
+      "unsupervised_leaderboard_eligible": false
     }
   }
 }
