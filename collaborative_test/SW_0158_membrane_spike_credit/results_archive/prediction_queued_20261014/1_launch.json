@@ -1,0 +1,34 @@
+{
+  "registered_jobs": [
+    {
+      "arm": "live_membrane_credit",
+      "supervisor_pid": 3021380,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-m",
+        "collaborative_test.SW_0158_membrane_spike_credit.prediction_queue",
+        "--arm",
+        "live_membrane_credit"
+      ]
+    },
+    {
+      "arm": "detached_membrane_control",
+      "supervisor_pid": 3021381,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-m",
+        "collaborative_test.SW_0158_membrane_spike_credit.prediction_queue",
+        "--arm",
+        "detached_membrane_control"
+      ]
+    }
+  ],
+  "score_registered": true,
+  "score_supervisor_pid": 3021425,
+  "score_argv": [
+    "/Data0/kevinswk/envs/snn/bin/python",
+    "-m",
+    "collaborative_test.SW_0158_membrane_spike_credit.score_queue"
+  ],
+  "launch_epoch": 1791957508.039041
+}
