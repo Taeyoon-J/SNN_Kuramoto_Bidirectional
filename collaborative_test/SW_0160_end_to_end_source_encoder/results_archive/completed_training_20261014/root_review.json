@@ -1,0 +1,77 @@
+{
+  "status": "paired_training_complete_CPU_deep_validated",
+  "seed_scope": [
+    1
+  ],
+  "grid": [
+    32,
+    32
+  ],
+  "files": [
+    {
+      "file": "0_frozen_base_joint_manifest.json",
+      "sha256": "a187b850841232193bd8c0de03d5780816e2e59cbc8d2566c0ea1954e938bee7"
+    },
+    {
+      "file": "1_frozen_base_joint_history.json",
+      "sha256": "e9f55a5ec4ac55a3f5cae8f6381a6c29d8ce0f19895f8d165950182a6383444a"
+    },
+    {
+      "file": "2_frozen_base_joint_state.json",
+      "sha256": "bdbb016031b60bdb83eeb373aa4eda906b8fc409c8c759b915bbda034b4dfd19"
+    },
+    {
+      "file": "3_full_encoder_joint_manifest.json",
+      "sha256": "595fec6aa2567d27e08cb9f3efebb97325b7214bc4bd8782df4a402ad7ec3e41"
+    },
+    {
+      "file": "4_full_encoder_joint_history.json",
+      "sha256": "0fbb7d0b0b1f6449324bf512992c23c50327bc7b50f3b9f35829ea27a4dd4d0e"
+    },
+    {
+      "file": "5_full_encoder_joint_state.json",
+      "sha256": "0d65296245788c784bea5ca4dc72c067c99945075e11a571cb9c8711a1ef0cbf"
+    }
+  ],
+  "arms": [
+    {
+      "arm": "frozen_base_joint",
+      "updates": 128,
+      "source_encoder_changed": false,
+      "serialized_optimizer_steps": {
+        "source_base": 0,
+        "spatial_residual": 128,
+        "graph": 128,
+        "native_core": 128,
+        "integration_tensors": 128
+      },
+      "GPU_checkpoint_and_optimizer_SHA_verified_before_transfer": true,
+      "ordered_TRAIN_ids_verified": true,
+      "current_implementation_fingerprint_verified": true
+    },
+    {
+      "arm": "full_encoder_joint",
+      "updates": 128,
+      "source_encoder_changed": true,
+      "serialized_optimizer_steps": {
+        "source_base": 128,
+        "spatial_residual": 128,
+        "graph": 128,
+        "native_core": 128,
+        "integration_tensors": 128
+      },
+      "GPU_checkpoint_and_optimizer_SHA_verified_before_transfer": true,
+      "ordered_TRAIN_ids_verified": true,
+      "current_implementation_fingerprint_verified": true
+    }
+  ],
+  "prediction_child_pids_observed": [
+    3161308,
+    3161389
+  ],
+  "prediction_live_verified": true,
+  "performance_result_available": false,
+  "supervised_track": true,
+  "fresh_70000_training": false,
+  "incumbent_changed": false
+}

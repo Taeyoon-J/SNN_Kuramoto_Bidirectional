@@ -3010,7 +3010,7 @@
       "threshold_sweep": false
     },
     "SW0160": {
-      "status": "paired_training_running_after_operational_guard_repair",
+      "status": "paired_training_and320_predictions_complete_missing_protocol_mirrors_under_CPU_recovery",
       "design": "collaborative_test/SW_0160_end_to_end_source_encoder/DESIGN_KO.md",
       "intervention": "unfreeze actual source RGB encoder vs matched frozen-sourcebase residual/core/graph control",
       "mask_supervised": true,
@@ -3050,7 +3050,39 @@
       ],
       "retry_started_record": "collaborative_test/SW_0160_end_to_end_source_encoder/results_archive/retry_started_20261014/root_review.json",
       "initial_operational_failure_record": "collaborative_test/SW_0160_end_to_end_source_encoder/results_archive/terminal_preGPU_20261014/root_review.json",
-      "no_GPU_training_repeated": true
+      "no_GPU_training_repeated": true,
+      "completed_training_record": "collaborative_test/SW_0160_end_to_end_source_encoder/results_archive/completed_training_20261014/root_review.json",
+      "paired128_updates_complete": true,
+      "training_actual_processes_terminal_verified": true,
+      "prediction_children": [
+        3161308,
+        3161389
+      ],
+      "prediction_actual_processes_terminal_verified": true,
+      "prediction_rows_complete_per_arm": 320,
+      "prediction_validation_error": "source_base_before_sha256 omitted by protocol producer; trained manifest and model hashes already bound",
+      "GPU_training_restart_needed": false,
+      "GPU_prediction_restart_needed": false
+    },
+    "SW0161": {
+      "status": "local_science_and_queue_CPU_verified_awaiting_SW160_score_recovery",
+      "design": "collaborative_test/SW_0161_supervised_spike_partition/DESIGN_KO.md",
+      "intervention": "actual-spike 11-slot binder with balanced coassignment MSE vs Hungarian balanced CE+all-slot Dice",
+      "mask_supervised": true,
+      "unsupervised_leaderboard_eligible": false,
+      "fresh_70000_training": false,
+      "scaling_proven": false,
+      "gating_contribution_proven": false,
+      "local_CPU_tests_passed": 25,
+      "actual_512_TRAIN_RGB_HDF_modal32_alignment_passed": true,
+      "GPU_source_cache_started": false,
+      "GPU_preflight_completed": false,
+      "full_training_admitted": false,
+      "full_training_started": false,
+      "queue_registered": false,
+      "performance_result_available": false,
+      "incumbent_changed": false,
+      "science_prefix_record": "collaborative_test/SW_0161_supervised_spike_partition/LOCAL_SCIENCE_PREFIX_PREFLIGHT_20261014.json"
     }
   }
 }
