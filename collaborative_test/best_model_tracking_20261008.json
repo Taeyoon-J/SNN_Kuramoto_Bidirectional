@@ -2752,7 +2752,7 @@
       "record": "collaborative_test/SW_0153_gamma_ordering_audit/results_archive/completed_20261013/root_review.json"
     },
     "SW0154": {
-      "status": "seed0_seed1_prediction_complete_seed2_live",
+      "status": "completed_three_seed_FG_below_Slot",
       "seed02_recovery_supervisor_pid": 2805178,
       "native64_fresh_training": false,
       "slot64_three_seed_means": [
@@ -2760,9 +2760,14 @@
         0.19820078921198891,
         0.19520252370132743
       ],
-      "own_final_metrics": null,
-      "record": "collaborative_test/SW_0154_native64_resolution_compare/results_archive/server_resumed_20261013/results_archive/seed02_recovery_queue_20261013/state.json",
-      "seed2_child_pid": 2893053
+      "own_final_metrics": {
+        "fg_ari": 0.7844022619622303,
+        "foreground_iou": 0.6202607067044387,
+        "matched_object_iou": 0.563091735205502
+      },
+      "record": "collaborative_test/SW_0154_native64_resolution_compare/results_archive/completed_20261014/2_native64_evaluation.json",
+      "seed2_child_pid": null,
+      "process_live": false
     },
     "SW0155": {
       "status": "completed_no_meaningful_FG_improvement_recipe_closed",
@@ -2799,16 +2804,34 @@
       "expand_seed0_2": false
     },
     "SW0156": {
-      "status": "source_only_GPU_screen_complete_full_prediction_reserved_after_visibility_fix",
+      "status": "completed_FG_degradation_recipe_closed",
       "source": "SW0143T_seed1",
       "beta": 0.5,
       "matched_control": "half unsigned interaction gain with source alpha fixed",
       "core_global_files_changed": false,
       "gpu_run_started": true,
-      "final_metrics": null,
+      "final_metrics": {
+        "source_T": {
+          "fg_ari": 0.7552730828009764,
+          "foreground_iou": 0.6149934302630647,
+          "matched_object_iou": 0.5795137856780908
+        },
+        "signed_candidate": {
+          "fg_ari": 0.642515247122143,
+          "foreground_iou": 0.38739804068313866,
+          "matched_object_iou": 0.5574179482381874
+        },
+        "matched_control": {
+          "fg_ari": 0.670111705964687,
+          "foreground_iou": 0.4252736054565502,
+          "matched_object_iou": 0.5519352831629938
+        }
+      },
       "source_screen_complete": true,
       "prediction_supervisor_pid": 2949340,
-      "record": "collaborative_test/SW_0156_signed_coupling/results_archive/visibility_fix_20261013/root_review.json"
+      "record": "collaborative_test/SW_0156_signed_coupling/results_archive/completed_fixed320_20261014/root_review.json",
+      "expand_seed0_2": false,
+      "beta_sweep": false
     },
     "peer_review": {
       "commit": "7d094e8",
@@ -2825,6 +2848,36 @@
     "goal_achieved": false,
     "fresh_native32_70000_training_verified": false,
     "all_gates_necessity_proven": false,
-    "data_scaling_proven": false
+    "data_scaling_proven": false,
+    "SW0157": {
+      "status": "complete_read_only_TRAIN_diagnostic",
+      "seed_scope": [
+        1
+      ],
+      "image_count": 8,
+      "models": [
+        "source97",
+        "source97_T",
+        "encoder_graph",
+        "joint"
+      ],
+      "settled_event_occupancy_all_components": 1.0,
+      "settled_event_transition_rate": 0.0,
+      "optimizer_updates": 0,
+      "membrane_proxy_is_performance_candidate": false,
+      "interpretation": "Observed all-on binary events and very small actual spike-loss membrane gradients in this eight-image TRAIN scope; membrane proxy loss is worse, not a winning replacement.",
+      "record": "collaborative_test/SW_0157_train_gate_credit/results_archive/completed_20261014/0_train_gate_credit_seed1.json"
+    },
+    "SW0158": {
+      "status": "implementation_in_progress_not_training",
+      "source": "SW143_T_seed1",
+      "planned_arms": [
+        "live_membrane_amplitude",
+        "detached_membrane_amplitude"
+      ],
+      "mask_supervised": true,
+      "unsupervised_leaderboard_eligible": false,
+      "binary_event_desaturation_claim": false
+    }
   }
 }

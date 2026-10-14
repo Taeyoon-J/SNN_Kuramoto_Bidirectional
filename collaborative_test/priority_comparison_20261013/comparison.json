@@ -102,14 +102,43 @@
       "train": "ours",
       "eval": "ours",
       "grid": 64,
-      "ours": null,
+      "ours": {
+        "fg_ari": 0.7844022619622303,
+        "foreground_iou": 0.6202607067044387,
+        "matched_object_iou": 0.563091735205502
+      },
       "slot": {
         "fg_ari": 0.7869016920263502,
         "foreground_iou": 0.19820078921198891,
         "matched_object_iou": 0.19520252370132743
       },
-      "status": "Slot completed; actual native64 own-model resource probe under implementation",
-      "slot_scope": "same three ours70000 checkpoints, native128 labels directly2x2 modal"
+      "status": "completed_three_seed_FG_below_comparable_Slot",
+      "slot_scope": "same three ours70000 checkpoints, native128 labels directly2x2 modal",
+      "ours_source": "SW154 native4096-node inference using native16-trained SW97 source; source graph, not SW143-T; no fresh64 training",
+      "paired_ci": {
+        "fg_ari": {
+          "mean_difference": -0.0024994300641198236,
+          "ci95": [
+            -0.020939339821964425,
+            0.015481954041715535
+          ]
+        },
+        "foreground_iou": {
+          "mean_difference": 0.42205991749244987,
+          "ci95": [
+            0.40334872197428095,
+            0.4408235079287639
+          ]
+        },
+        "matched_object_iou": {
+          "mean_difference": 0.36788921150417464,
+          "ci95": [
+            0.3522677126651694,
+            0.383606096182462
+          ]
+        }
+      },
+      "evidence": "collaborative_test/SW_0154_native64_resolution_compare/results_archive/completed_20261014/2_native64_evaluation.json"
     }
   ],
   "sources": {

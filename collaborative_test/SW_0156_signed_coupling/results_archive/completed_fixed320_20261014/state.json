@@ -1,0 +1,131 @@
+{
+  "experiment": "SW0156_native32_signed_coupling",
+  "queue_version": 1,
+  "status": "complete",
+  "supervisor_pid": 2949340,
+  "tasks": [
+    {
+      "task_id": "source_T",
+      "kind": "reuse_validated_reference",
+      "gpu": false,
+      "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0156_signed_coupling/results_archive/predictions/source_T/seed1"
+    },
+    {
+      "task_id": "signed_candidate",
+      "kind": "predict",
+      "gpu": true,
+      "depends_on": [
+        "source_T"
+      ],
+      "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0156_signed_coupling/results_archive/predictions/signed_candidate/seed1"
+    },
+    {
+      "task_id": "matched_control",
+      "kind": "predict",
+      "gpu": true,
+      "depends_on": [
+        "source_T"
+      ],
+      "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0156_signed_coupling/results_archive/predictions/matched_control/seed1"
+    },
+    {
+      "task_id": "score_seed1",
+      "kind": "gt_last_score",
+      "gpu": false,
+      "depends_on": [
+        "source_T",
+        "signed_candidate",
+        "matched_control"
+      ],
+      "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0156_signed_coupling/results_archive/evaluation_seed1.json"
+    }
+  ],
+  "implementation": {
+    "collaborative_test/SW_0156_signed_coupling/protocol.json": "39302340e5c0740cec755166530f71cf4ec6b8352060531cc27ec654a971c67f",
+    "collaborative_test/SW_0156_signed_coupling/signed_coupling.py": "129581e54b333650f7a2d2def3c200a7458bca0f3dfabb431d9cb3cb2e60ef55",
+    "collaborative_test/SW_0156_signed_coupling/screen.py": "f6ee8e365474ccf8bf8e6f907fe48ccc817fb858a78ccd559f66aa0f2c6ea9e9",
+    "collaborative_test/SW_0156_signed_coupling/source_screen_queue.py": "e163d8960f0e0ffd9ccdd7cf68fbfba37773317e5b64fef4ebb0db41f99233aa",
+    "collaborative_test/SW_0156_signed_coupling/predict.py": "29c627798c73d8784a1a122b467e1087da6887a01a31df661f4cfa8806f678ed",
+    "collaborative_test/SW_0156_signed_coupling/evaluate.py": "4e8b2c25d13a84902806e69151b52cc21620d5e1508fea385b806fc5b2d86ecc",
+    "collaborative_test/SW_0156_signed_coupling/prediction_queue.py": "8d079c13db67129b132fef8a40980815421f2112538a9f236bdf31ad63af8146",
+    "collaborative_test/SW_0148_checkpointable_boundary_q/stage_queue_v4.py": "14fae39aeb6e958df60edf25680f412acb50a01126fd7af725c61fdba3794623",
+    "collaborative_test/SW_0126_history_event_binding/pilot_queue.py": "c59cdc39af20c824930d1926c8cec1418ee818577b8cc4240ad6eaae836764f6",
+    "owner_guard_sha256": "c59cdc39af20c824930d1926c8cec1418ee818577b8cc4240ad6eaae836764f6"
+  },
+  "ground_truth_used_for_prediction": false,
+  "updated": 1791950880.1448224,
+  "source_prediction_sha256": "a50a55bc89027f409beb8b91e076f0f41ec3dbcd0c0497a2cb27b764ed0ec6f3",
+  "arm": "signed_candidate",
+  "gpu": 1,
+  "gpu_uuid": "GPU-45604115-c231-56a5-32ea-d3001e8ff243",
+  "stable_seconds": 5.163211786188185,
+  "memory_used_mib": 2,
+  "arm_states": {
+    "matched_control": {
+      "status": "prediction_complete",
+      "updated": 1791950163.729875,
+      "arm": "matched_control",
+      "gpu": 1,
+      "gpu_uuid": "GPU-45604115-c231-56a5-32ea-d3001e8ff243",
+      "stable_seconds": 5.170352849178016,
+      "memory_used_mib": 2,
+      "child_pid": 2950061,
+      "child_argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-m",
+        "collaborative_test.SW_0156_signed_coupling.predict",
+        "--arm",
+        "matched_control",
+        "--device",
+        "cuda:0"
+      ],
+      "physical_gpu": 1,
+      "memory_before_mib": 2,
+      "inherited_lease_fd": true,
+      "log": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0156_signed_coupling/results_archive/prediction_queue_20261013/logs/matched_control.attempt02.log",
+      "child_returncode": 0,
+      "prediction_sha256": "a14a8b96bef4f744df35cfce9bb9d50e432cde0efd1e174c8705c00e1209f0ec"
+    },
+    "signed_candidate": {
+      "status": "prediction_complete",
+      "updated": 1791950862.1983979,
+      "arm": "signed_candidate",
+      "gpu": 1,
+      "gpu_uuid": "GPU-45604115-c231-56a5-32ea-d3001e8ff243",
+      "stable_seconds": 5.163211786188185,
+      "memory_used_mib": 2,
+      "child_pid": 2957912,
+      "child_argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-m",
+        "collaborative_test.SW_0156_signed_coupling.predict",
+        "--arm",
+        "signed_candidate",
+        "--device",
+        "cuda:0"
+      ],
+      "physical_gpu": 1,
+      "memory_before_mib": 2,
+      "inherited_lease_fd": true,
+      "log": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0156_signed_coupling/results_archive/prediction_queue_20261013/logs/signed_candidate.attempt02.log",
+      "child_returncode": 0,
+      "prediction_sha256": "5d651010c30d14cb0c9d28e0de8f3b65383ea792bd6d0a3f020ffc023ec1949a"
+    }
+  },
+  "child_pid": 2983437,
+  "child_argv": [
+    "/Data0/kevinswk/envs/snn/bin/python",
+    "-m",
+    "collaborative_test.SW_0156_signed_coupling.evaluate"
+  ],
+  "physical_gpu": 1,
+  "memory_before_mib": 2,
+  "inherited_lease_fd": true,
+  "log": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0156_signed_coupling/results_archive/prediction_queue_20261013/logs/score_seed1.log",
+  "child_returncode": 0,
+  "prediction_sha256": "5d651010c30d14cb0c9d28e0de8f3b65383ea792bd6d0a3f020ffc023ec1949a",
+  "cuda_visible_devices": "",
+  "score_sha256": "3e60ad54bfd4c9be7d87e345ae07592ffa78766b4278eea21eb967dec71a65af",
+  "finished": 1791950880.1446915,
+  "ground_truth_used_for_scoring": true
+}

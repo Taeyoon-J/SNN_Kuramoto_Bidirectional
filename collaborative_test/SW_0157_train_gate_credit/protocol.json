@@ -1,0 +1,38 @@
+{
+  "experiment": "SW0157_train_gate_credit_diagnostic",
+  "registration_date": "2026-10-14",
+  "status": "registered_read_only_train_diagnostic",
+  "purpose": "Describe native event-margin occupancy and objective-gradient allocation on eight registered TRAIN images for source97, source97 with SW0143-T inference, and the completed SW0155 encoder_graph and joint checkpoints.",
+  "source": {
+    "seed": 1,
+    "steps": 1024,
+    "settle": 512,
+    "live_tail_steps": 64,
+    "source_order": "SW0155 train.source_contract() immutable 4096 ordered TRAIN IDs",
+    "positions": [0, 1, 2, 3, 2048, 2049, 2050, 2051],
+    "microbatches": [[0, 1, 2, 3], [2048, 2049, 2050, 2051]],
+    "models": ["source97", "source97_T", "SW0155_encoder_graph", "SW0155_joint"],
+    "same_ids_for_all_models": true
+  },
+  "objective": {
+    "actual": "Unmodified SW0155 objective.supervised_relation_loss on actual emitted-spike traces and the production TRAIN modal32 mask labels.",
+    "membrane_proxy": "Same relation objective with only component_spikes replaced by component_membrane; descriptive surrogate, not an emitted-spike loss or alternate training objective.",
+    "optimizer_updates": 0,
+    "ground_truth_scope": "TRAIN masks only",
+    "validation_or_test_masks_read": false
+  },
+  "measurements": {
+    "events": "E=(component_membrane > 0.06*exp(b)); report full-window and settled-window (steps 512..1023) margin quantiles, event occupancy/transitions, gate-positive conditional occupancy, and exact S=E*g / shared-g checks.",
+    "gradients": "Finite status, aggregate norm and unused parameter count by residual, graph, gamma-drive, Kuramoto, dendritic, membrane, integration scalars, and other native core; also input-tensor gradient norms for actual component spikes and membrane proxy.",
+    "paired_seed": 157001,
+    "rng_matched_across_models": true,
+    "watchdog_seconds": 300
+  },
+  "guardrails": [
+    "No optimizer, parameter update, checkpoint write, sweep, validation selection, or model-performance claim.",
+    "Validate actual SW0097 source order/assets, SW0143-T reference, and both completed SW0155 artifacts before GPU reservation.",
+    "Hash all parameters and buffers before/after each model; reject any mutation.",
+    "Immediately before child launch, recheck physical GPU UUID, zero compute owners, and at most 512 MiB use while holding the shared lease; on any query failure or changed admission, release and wait again.",
+    "A short diagnostic is descriptive and does not establish gate necessity, causal mechanism, or generalization."
+  ]
+}
