@@ -2,6 +2,7 @@
 import hashlib
 from pathlib import Path
 import sys
+from types import SimpleNamespace
 import unittest
 from unittest import mock
 import numpy as np
@@ -23,6 +24,26 @@ class FakeRgbCache:
 
 
 class SourceScreenQueueTests(unittest.TestCase):
+    def test_exception_cleanup_stops_owned_child_before_unlock(self):
+        events = []
+
+        class Proc:
+            def poll(self):
+                return None if "stop" not in events else 0
+
+        class Lease:
+            def fileno(self):
+                return 41
+            def close(self):
+                events.append("close")
+
+        with mock.patch.object(queue.owner, "_stop_owned",
+                               side_effect=lambda _proc: events.append("stop")), \
+             mock.patch.object(queue, "fcntl", SimpleNamespace(
+                 LOCK_UN=8, flock=lambda _fd, _mode: events.append("unlock"))):
+            queue._cleanup_child_before_lease_release(Proc(), Lease())
+        self.assertEqual(events, ["stop", "unlock", "close"])
+
     def test_registered_single_task_and_child_visibility(self):
         task = queue.task_plan()
         self.assertEqual(task["seed"], 1)

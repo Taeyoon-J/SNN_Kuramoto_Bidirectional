@@ -253,6 +253,19 @@ def _atomic_json(path, value):
     os.replace(tmp, path)
 
 
+def _cleanup_child_before_lease_release(proc, lease):
+    """Stop only our live child before making its GPU lease available."""
+    try:
+        if proc is not None and proc.poll() is None:
+            owner._stop_owned(proc)
+    finally:
+        if lease is not None:
+            try:
+                fcntl.flock(lease.fileno(), fcntl.LOCK_UN)
+            finally:
+                lease.close()
+
+
 class SourceScreenQueue:
     def __init__(self):
         if fcntl is None:
@@ -371,11 +384,8 @@ class SourceScreenQueue:
                             child_returncode=rc, output_valid=bool(valid), finished=time.time())
                         return 0 if valid else 1
                     finally:
-                        if lease is not None:
-                            try:
-                                fcntl.flock(lease.fileno(), fcntl.LOCK_UN)
-                            finally:
-                                lease.close(); lease = None
+                        _cleanup_child_before_lease_release(proc, lease)
+                        lease = None
             return 1
         except BaseException as exc:
             if proc is not None and proc.poll() is None:
