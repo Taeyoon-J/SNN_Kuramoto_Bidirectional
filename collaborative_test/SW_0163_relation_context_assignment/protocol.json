@@ -1,0 +1,51 @@
+{
+  "experiment": "SW0163_relation_context_assignment",
+  "registration_date": "2026-10-14",
+  "status": "prospective_design_only",
+  "track": "supervised frozen-source learned assignment; not unsupervised leaderboard",
+  "source": {"seed": 1, "core": "same SW0097 native16-to32 source", "operator": "SW0143-T power2/contrast8", "encoder_graph_core_integration_frozen": true, "new_threshold_or_emitter": false, "optimizer_updates": 0},
+  "arms": {"raw_only": {"Q_message": 0, "A_message": 0}, "Q_only": {"Q_message": 1, "A_message": 0}, "A_only": {"Q_message": 0, "A_message": 1}, "Q_A": {"Q_message": 1, "A_message": 1}},
+  "head": {
+    "common_raw_input": "actual float32 component spikes[B,4,1024,512]",
+    "base": "SW135 NativeSpikeSlotBinder raw2048->Linear64->LayerNorm and existing3 shared GRU iterations/11 exchangeable slots",
+    "message_updates": 2,
+    "shared_message": "Linear192->128,ReLU,Linear128->64; same module both updates",
+    "initialization": "final message Linear weight/bias zero; head161001/message163001 private RNG",
+    "row_normalization": "zero diagonal,divide row sum clamped min1e-8;zero rows stayzero",
+    "update": "h=h+F(cat(h,cQ*RQ@h,cA*RA@h))",
+    "same_parameter_shapes_all_arms": true,
+    "inactive_channels": "zeros; gradient0 expected and allowed",
+    "forbidden_direct_inputs": ["RGB", "gamma", "theta", "XY", "GT object count", "scene count", "teacher masks"]
+  },
+  "cache": {
+    "reuse": "SW0161 cache.CACHE_ROOT via validate_final_cache/train.validate_cache/read-only load_row",
+    "source_trace_manifest_sha256": "b4125a81012bf46cf38ff512bf251452f511524c42a2d2364c34783de04302b3",
+    "count": 512,
+    "dtype": "float32 original bytes; no float16 substitute",
+    "Q": "CUDAfloat32 production spike_synchrony_affinity(S.mean(1),S,settle0,spike) in original B4 cache groups; S already settled512; inference uses same production function on CUDAfloat32 B1",
+    "A": "same-source RGB encode+T graph forward+native prepare_coupling tuple[0],including sym/ReLU/epsilon floor",
+    "A_generation": "static setup only per original B4 grouping; not512 fullrollouts",
+    "full_proof": "first4 B4 saved spikes exact replay plus native actual prepare tuple[0] capture equality; B1 receipt is not B4 parity",
+    "write_scope": "new create-only Q/A context cache;originalSW161 cache unchanged",
+    "bindings": ["manifest/ledger/row hashes", "ordered512 image IDs", "RGB/source/operator/stats hashes", "Q/A float32 bytes", "shape/dtype", "static setup method", "source state unchanged"]
+  },
+  "training": {"objective": "unchanged SW161 all-instance mask_hungarian_loss CE+Dice for all4arms", "TRAIN_masks_only": true, "count": 512, "passes": 16, "updates": 512, "logical_batch": 16, "microbatch": 4, "head_seed": 161001, "message_seed": 163001, "shuffle_seed": 161002, "Adam_LR": 0.0003, "global_clip": 1.0, "core_encoder_optimizer": false, "resume": "transactionalweights/Adam/RNG/order/completedupdate"},
+  "preflight": {"CPU_first": true, "disposable_logical_updates": 2, "images": 16, "source_masks": "TRAIN only", "required": ["actualcache/source lineage", "firstB4 replay/coupling capture", "initial4armP equalsfreshrawP", "finiteP,row-sum1/loss/grad", "actualheadupdate", "firstoutput-layer/secondactive-messagecredit", "frozen-sourcehashunchanged", "samecapacityswitchtest", "canonicalBG/min8/matchingtests"], "not_required": ["firststepallhiddengradnonzero", "inactivechannelgradnonzero", "initialFGscore", "fixedslotoccupancy"]},
+  "evaluation": {
+    "count": 320, "IDs": [1320, 1639], "native_grid": [32, 32], "modal_patch": 4,
+    "shared_source": "oneB1/T1024/settle512/live0rollout+prepareAcapture perimage for all4heads",
+    "source_reference": "exactarchivedSW143T QCC labels beforeGTaccess",
+    "P_readout": "unchangedSW161 canonical_hard_labels largestgroup/min8/firstpatchties",
+    "GT_order": "all4head/sourceT/Slotpredictions frozenandvalidated beforeGT",
+    "GT_count_inference": false,
+    "forbidden_reserve": [90640, 90959],
+    "bootstrap": {"replicates": 10000, "seed": 163, "common_paired320imageindices": true},
+    "QA_extension_gate": {"FGmean_vs_sourceT": ">0", "FGpairedCI_lower_vs_sourceT": ">0", "FGmean_vs_raw_only": ">0", "FGpairedCI_lower_vs_raw_only": ">0", "foregroundIoU_mean_vs_sourceT": ">=0", "objectIoU_mean_vs_sourceT": ">=0"},
+    "diagnostic_contrasts": ["QA-Q_only", "QA-A_only", "all4arms-sourceT"],
+    "Q_context_benefit_claim": "requiresQA>A_only positivepairedCI;doesnotprovefullspike/gatecausality",
+    "checkpoint": "final512only;noGTselection",
+    "failure": "closefixedrecipe,noK/channel/temperature/LRsweep"
+  },
+  "conditional_next": ["passedQAseed1 -> reviewseed0/2replication", "then separateencoder/corejointdesign", "thenfreshnative32 70k/64"],
+  "claim_limits": ["notunsupervisedFG.87success", "notall3Slotstrictwinfromseed1", "notpositiveunique-datascaling", "notmembrane/event/gatecausalnecessity", "A_onlystillhasrawactualspikes"]
+}
