@@ -2,6 +2,56 @@
 
 Updated 2026-10-13 15:45. Branch `patch_v2`. Contract v1, split v1.
 
+> ## Resume point, 2026-10-14 — access lost, not compute
+>
+> **The VPN tunnel to the 152.19.x.x subnet died.** Both `raptor` (152.19.10.112) and
+> `frontier` (152.19.10.80) fail with `Can't assign requested address` and lose 100% of
+> pings, while the open internet is fine and the `utun8` route entry is still present.
+> Nothing is wrong on the server; the jobs below are detached with `nohup` and keep
+> running. Reconnect the VPN and the results are one command away.
+>
+> ### What is waiting on the server
+>
+> | job | file to read | state when contact was lost |
+> | --- | --- | --- |
+> | `PV2_0092` signed coupling | `/work/USERS/tkim1/runs/pv2_0092_results.txt` | balance 0.0 and 0.25 done, 0.5 and 1.0 running |
+> | `PV2_0093` grid-32 spike path | `/work/USERS/tkim1/runs/pv2_0093_results.txt` | queued; polls for `signed.sh` to end, then runs three 8-epoch arms |
+>
+> Both append as they go, so nothing is lost. `PV2_0092`'s control is healthy — balance
+> 0.0 trained 23.52 -> 17.00 at `spike_plv_collapse` 2.157, balance 0.25 23.66 -> 17.05 at
+> 2.142 — so the comparison can carry a verdict, unlike `PV2_0085`'s.
+>
+> ### The one command to run on reconnection
+>
+> ```
+> ssh frontier 'cat /work/USERS/tkim1/runs/pv2_0092_results.txt;
+>               cat /work/USERS/tkim1/runs/pv2_0093_results.txt'
+> ```
+>
+> `PV2_0092` prints its own gate verdict at the end. The gate was registered before the
+> run (`PROPOSAL_0.9_v2.md`): the fg_ari gain must appear at predicted foreground at or
+> below 0.20, must not be bought with foreground IoU, and `patch_matched_object_iou` must
+> move too.
+>
+> ### Then
+>
+> 1. If signed coupling passes at seed 0, retrain at seeds 1 and 2, select on validation,
+>    read test once. If it fails, record it as the fifth mechanism-level improvement that
+>    did not convert, and the remaining route is `PV2_0086`'s motion term at seeds 1 and 2
+>    with extent matched.
+> 2. `PV2_0093` decides which knob keeps the 32x32 spike path alive. Hypothesis B — that
+>    `--graph-spatial-decay` is in grid units and 0.35 is twice the intended decay at this
+>    grid — is **untested, not refuted**; `PV2_0089`'s eval-time test of it was a no-op
+>    because `spatial_rate` is an `nn.Parameter` restored by `load_state_dict`.
+> 3. `PV2_0091`, our extent dial against aligned Slot Attention's operating point
+>    (0.8102 fg_ari at predicted foreground 0.8531), was stopped at one row for being too
+>    slow under GPU contention. Redo it cheaply: `--limit 150 --num-time-steps 512`,
+>    spectral k from 6 to 32. It is the measurement that would settle whether the readout
+>    alone can close the gap.
+> 4. Nothing portable is pending from the peer; `REVIEW_0006` covers through `ce923f1`.
+>    Their SW_0156 is signed coupling too, inference-only on a frozen checkpoint, with no
+>    outcome yet. A split verdict between their arm and ours would itself be the finding.
+
 > ## Correction, `PV2_0090`
 >
 > **The claim that we beat Slot Attention on all three metrics does not survive.**
