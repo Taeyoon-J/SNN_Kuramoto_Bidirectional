@@ -1,0 +1,52 @@
+{
+  "terminal_result": "verified_no_promotion",
+  "scope": "seed1 native32 supervised 512-image classifier pilot",
+  "score_sha256": "04eaa00b54d4a0d8ec69b8006d49aa8c938af1f0c4101ea592615f4a15520471",
+  "recovery_validator_explicit": true,
+  "independent_original_score_recomputation_with_corrected_arm_row_lookup": "passed",
+  "original_NPZ_protocol_rows_unchanged": true,
+  "means": {
+    "pair_supervised_P": {
+      "fg_ari": 0.3899614740583417,
+      "foreground_iou": 0.5736547901582155,
+      "matched_object_iou": 0.16738388081942215
+    },
+    "mask_supervised_P": {
+      "fg_ari": 0.6294821801902123,
+      "foreground_iou": 0.49860337221258677,
+      "matched_object_iou": 0.42069394421891254
+    },
+    "source97": {
+      "fg_ari": 0.7541350949944816,
+      "foreground_iou": 0.606899549668619,
+      "matched_object_iou": 0.582200586329909
+    },
+    "SW0143_T": {
+      "fg_ari": 0.7552730828009764,
+      "foreground_iou": 0.6149934302630647,
+      "matched_object_iou": 0.5795137856780908
+    },
+    "Slot70k": {
+      "fg_ari": 0.8418192917733233,
+      "foreground_iou": 0.20341670897019232,
+      "matched_object_iou": 0.2221151564255643
+    }
+  },
+  "registered_seed1_gate": {
+    "primary_metric": "fg_ari",
+    "candidate_exceeds_SW0143_T": false,
+    "candidate_exceeds_matched_pair_control": true,
+    "candidate_minus_SW0143_T_fg_ari_ci95_lower_positive": false,
+    "candidate_minus_control_fg_ari_ci95_lower_positive": true,
+    "registered_seed1_gate_pass": false
+  },
+  "mask_minus_sourceT_fg_ari": {
+    "mean": -0.12579090261076414,
+    "ci95": [
+      -0.1430492773907748,
+      -0.10902782157772162
+    ]
+  },
+  "decision": "close recipe, do not expand seeds or weaker loss variants; retain sourceT incumbent",
+  "no_70k_scaling_or_gate_causal_claim": true
+}

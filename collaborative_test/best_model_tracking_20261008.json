@@ -3098,7 +3098,7 @@
       "incumbent_changed": false
     },
     "SW0161": {
-      "status": "all_predictions_preserved_corrected_rowroot_CPU_score_recovery_running",
+      "status": "complete_verified_negative_close_head_recipe",
       "design": "collaborative_test/SW_0161_supervised_spike_partition/DESIGN_KO.md",
       "intervention": "actual-spike 11-slot binder with balanced coassignment MSE vs Hungarian balanced CE+all-slot Dice",
       "mask_supervised": true,
@@ -3136,7 +3136,7 @@
       "actual_CPU_prepare_count": 512,
       "repair_CPU_tests_passed": 30,
       "retry_record": "collaborative_test/SW_0161_supervised_spike_partition/results_archive/cache_retry_started_20261014/root_review.json",
-      "evaluation_available": false,
+      "evaluation_available": true,
       "cache_complete": true,
       "actual_gpu_preflight_pass": true,
       "first_training_reservations_failed_before_child": true,
@@ -3163,7 +3163,39 @@
       "original_validation_failure_record": "collaborative_test/SW_0161_supervised_spike_partition/results_archive/prediction_validation_failure_20261014/server_records.json",
       "score_recovery_pid": 3212732,
       "recovery_CPU_tests_passed": 3,
-      "recovery_production_failure_evidence_probe": "passed"
+      "recovery_production_failure_evidence_probe": "passed",
+      "score_SHA256": "04eaa00b54d4a0d8ec69b8006d49aa8c938af1f0c4101ea592615f4a15520471",
+      "final_seed1_means": {
+        "pair_supervised_P": {
+          "fg_ari": 0.3899614740583417,
+          "foreground_iou": 0.5736547901582155,
+          "matched_object_iou": 0.16738388081942215
+        },
+        "mask_supervised_P": {
+          "fg_ari": 0.6294821801902123,
+          "foreground_iou": 0.49860337221258677,
+          "matched_object_iou": 0.42069394421891254
+        },
+        "source97": {
+          "fg_ari": 0.7541350949944816,
+          "foreground_iou": 0.606899549668619,
+          "matched_object_iou": 0.582200586329909
+        },
+        "SW0143_T": {
+          "fg_ari": 0.7552730828009764,
+          "foreground_iou": 0.6149934302630647,
+          "matched_object_iou": 0.5795137856780908
+        },
+        "Slot70k": {
+          "fg_ari": 0.8418192917733233,
+          "foreground_iou": 0.20341670897019232,
+          "matched_object_iou": 0.2221151564255643
+        }
+      },
+      "registered_seed1_gate_pass": false,
+      "seed_expansion": false,
+      "unsupervised_incumbent_changed": false,
+      "result": "collaborative_test/SW_0161_supervised_spike_partition/RESULT_KO.md"
     }
   }
 }
