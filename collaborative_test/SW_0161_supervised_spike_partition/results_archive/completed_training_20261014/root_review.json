@@ -1,0 +1,29 @@
+{
+  "root_validation": "passed",
+  "both_queues_terminal_complete": true,
+  "same_initial_head_cache_and_update_order": true,
+  "binary_hashes_verified_on_server": true,
+  "exact_registered_history_order_verified_all_512_updates_both_arms": true,
+  "summary": [
+    {
+      "arm": "pair_supervised_P",
+      "actual_updates": 512,
+      "unique_train_images": 512,
+      "passes": 16,
+      "first_mean_loss": 0.41718224436044693,
+      "last_mean_loss": 0.1634780801832676,
+      "final_training_manifest_sha256": "033945e5192a9ebeaad9457a248fab0a84df9583f65c465adedd3175d7b6b17f"
+    },
+    {
+      "arm": "mask_supervised_P",
+      "actual_updates": 512,
+      "unique_train_images": 512,
+      "passes": 16,
+      "first_mean_loss": 3.3014267683029175,
+      "last_mean_loss": 1.9101994931697845,
+      "final_training_manifest_sha256": "634c97558a14a71205ef29e9870acd301eb1f0f7bbd0341af73f52a07539e12e"
+    }
+  ],
+  "training_loss_not_evaluation_performance": true,
+  "server_records_sha256": "e8423dd13e4cb93530d2c1fa04c71bfca90c5f16ab6f85f96d638821ebf8d226"
+}
