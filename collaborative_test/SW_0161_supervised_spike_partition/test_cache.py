@@ -157,6 +157,36 @@ class ExactTraceCacheTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, r"integer \[1024\]"):
             cache._target_row_array(np.zeros((1024,), dtype=np.float32))
 
+    def test_public_cache_runner_validates_512_targets_before_cuda_without_objective_slots(self):
+        class FakeRGB:
+            dtype = np.dtype(np.uint8)
+            shape = (70000, 128, 128, 3)
+            def __getitem__(self, rows):
+                return np.zeros((len(rows), 128, 128, 3), dtype=np.uint8)
+
+        class FakeTensor:
+            def __init__(self, value): self.value = value
+            def cpu(self): return self
+            def numpy(self): return self.value
+
+        source = {"rows": np.arange(512, dtype=np.int64),
+                  "image_ids": list(range(1000, 1512)), "source_sha256": "a" * 64,
+                  "manifest_path": Path(__file__)}
+        target_rows = torch.ones((512, 1024), dtype=torch.int64)
+        rgb_batch = np.zeros((512, 128, 128, 3), dtype=np.uint8)
+        output = self.root
+        with (mock.patch.object(cache, "_current_score_dependency", return_value={"status": "complete"}),
+              mock.patch.object(cache.sw155, "source_contract", return_value=source),
+              mock.patch.object(cache.sw130, "validate_rgb_assets", return_value={"asset": "valid"}),
+              mock.patch.object(cache.np, "load", return_value=FakeRGB()),
+              mock.patch.object(cache.sw155, "load_aligned_train_rows",
+                                return_value=(FakeTensor(rgb_batch), object())),
+              mock.patch.object(cache.objective, "modal_train_targets32", return_value=FakeTensor(target_rows.numpy())),
+              mock.patch.object(cache, "_source_bindings", return_value=({"bound": True}, ["b" * 64] * 512)),
+              mock.patch.object(cache.torch.cuda, "is_available", return_value=False)):
+            with self.assertRaisesRegex(RuntimeError, "requires its assigned CUDA"):
+                cache.run_cache(device="cuda:0", output=output)
+
     def test_production_final_validator_requires_all_registered_512_rows(self):
         store = cache._AtomicTraceCache(self.root, self.bindings, self.ids, self.rgb)
         for i in range(2):

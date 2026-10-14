@@ -524,6 +524,35 @@ def _require_frozen_source(foundation, src):
         raise ValueError("fresh SW0161 source97 foundation differs from registered source contract")
 
 
+def prepare_cache_cpu():
+    """Validate and materialize the fixed512 source TRAIN inputs before CUDA use."""
+    score_dependency = _current_score_dependency()
+    src = sw155.source_contract()
+    rgb_assets = sw130.validate_rgb_assets()
+    rgb_memmap = np.load(sw130.TRAIN_RGB, mmap_mode="r", allow_pickle=False)
+    if rgb_memmap.dtype != np.uint8 or tuple(rgb_memmap.shape) != (70000, 128, 128, 3):
+        raise ValueError("registered source TRAIN RGB cache schema changed")
+    rows = np.asarray(src["rows"][:COUNT], dtype=np.int64)
+    rgb_rows = np.asarray(rgb_memmap[rows]).copy()
+    if rgb_rows.dtype != np.uint8 or rgb_rows.shape != (COUNT, 128, 128, 3):
+        raise ValueError("SW0161 ordered source RGB batch schema changed")
+    ids = [int(value) for value in src["image_ids"][:COUNT]]
+    aligned_rgb, masks = sw155.load_aligned_train_rows(
+        sw155.HDF5_PATH, ids, rgb_rows, 0, COUNT)
+    if not np.array_equal(aligned_rgb.numpy(), rgb_rows):
+        raise ValueError("SW0161 canonical TRAIN RGB does not match source cache rows")
+    targets = objective.modal_train_targets32(masks).cpu().numpy()
+    if targets.shape != (COUNT, GRID) or targets.dtype != np.int64:
+        raise ValueError("SW0161 TRAIN mask modal32 target schema changed")
+    for row in targets:
+        _target_row_array(row)
+    bindings, rgb_hashes = _source_bindings(src, rgb_rows, rgb_assets, score_dependency)
+    return {"score_dependency": score_dependency, "source_contract": src,
+            "rgb_asset_validation": rgb_assets, "rgb_rows": rgb_rows,
+            "image_ids": ids, "targets32": targets,
+            "bindings": bindings, "rgb_sha256": rgb_hashes}
+
+
 def run_cache(*, device="cuda:0", output=CACHE_ROOT):
     """Build or resume the fixed512 exact float32 source-T trace cache."""
     output = Path(output)
@@ -549,28 +578,15 @@ def run_cache(*, device="cuda:0", output=CACHE_ROOT):
         manifest = validate_final_cache(output, expected_bindings=bindings)
         return manifest
 
-    # Complete upstream score and exact source asset checks before CUDA access.
-    score_dependency = _current_score_dependency()
-    src = sw155.source_contract()
-    rgb_assets = sw130.validate_rgb_assets()
-    rgb_memmap = np.load(sw130.TRAIN_RGB, mmap_mode="r", allow_pickle=False)
-    if rgb_memmap.dtype != np.uint8 or tuple(rgb_memmap.shape) != (70000, 128, 128, 3):
-        raise ValueError("registered source TRAIN RGB cache schema changed")
-    rows = np.asarray(src["rows"][:COUNT], dtype=np.int64)
-    rgb_rows = np.asarray(rgb_memmap[rows]).copy()
-    if rgb_rows.dtype != np.uint8 or rgb_rows.shape != (COUNT, 128, 128, 3):
-        raise ValueError("SW0161 ordered source RGB batch schema changed")
-    ids = [int(value) for value in src["image_ids"][:COUNT]]
-    aligned_rgb, masks = sw155.load_aligned_train_rows(
-        sw155.HDF5_PATH, ids, rgb_rows, 0, COUNT)
-    if not np.array_equal(aligned_rgb.numpy(), rgb_rows):
-        raise ValueError("SW0161 canonical TRAIN RGB does not match source cache rows")
-    targets = objective.modal_train_targets32(masks).cpu().numpy()
-    if targets.shape != (COUNT, GRID) or targets.dtype != np.int64:
-        raise ValueError("SW0161 TRAIN mask modal32 target schema changed")
-    if any(np.unique(row).size > objective.SLOTS for row in targets):
-        raise ValueError("SW0161 TRAIN target exceeds the common 11-slot capacity")
-    bindings, rgb_hashes = _source_bindings(src, rgb_rows, rgb_assets, score_dependency)
+    # Complete upstream score, source/RGB alignment, and all512 target checks
+    # before any CUDA initialization or cache-row publication.
+    prepared = prepare_cache_cpu()
+    src = prepared["source_contract"]
+    rgb_rows = prepared["rgb_rows"]
+    ids = prepared["image_ids"]
+    targets = prepared["targets32"]
+    bindings = prepared["bindings"]
+    rgb_hashes = prepared["rgb_sha256"]
     if output.exists():
         store = _AtomicTraceCache(output, bindings, ids, rgb_hashes)
     else:

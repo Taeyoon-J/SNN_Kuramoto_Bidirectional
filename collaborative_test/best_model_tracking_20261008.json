@@ -3098,7 +3098,7 @@
       "incumbent_changed": false
     },
     "SW0161": {
-      "status": "first_queue_terminal_preCUDA_preparation_constant_error_repair_in_progress",
+      "status": "repaired_real_CPU512_pass_GPU1_source_cache_running_two_training_reservations_live",
       "design": "collaborative_test/SW_0161_supervised_spike_partition/DESIGN_KO.md",
       "intervention": "actual-spike 11-slot binder with balanced coassignment MSE vs Hungarian balanced CE+all-slot Dice",
       "mask_supervised": true,
@@ -3125,7 +3125,18 @@
       "first_cache_child_terminal_verified": true,
       "first_queue_error": "SW0155 objective has no SLOTS: public cache.run_cache capacity guard referenced wrong namespace",
       "GPU_source_model_allocated": false,
-      "source_cache_rows_completed": 0
+      "source_cache_rows_completed": 0,
+      "cache_supervisor_pid": 3172947,
+      "cache_child_pid": 3172990,
+      "cache_gpu": 1,
+      "training_reservation_pids": [
+        3173049,
+        3173058
+      ],
+      "actual_CPU_prepare_count": 512,
+      "repair_CPU_tests_passed": 30,
+      "retry_record": "collaborative_test/SW_0161_supervised_spike_partition/results_archive/cache_retry_started_20261014/root_review.json",
+      "evaluation_available": false
     }
   }
 }
