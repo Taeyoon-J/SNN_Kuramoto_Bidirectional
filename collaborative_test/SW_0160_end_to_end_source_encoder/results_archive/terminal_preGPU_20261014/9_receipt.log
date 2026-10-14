@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/Data0/kevinswk/envs/snn/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/Data0/kevinswk/envs/snn/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0160_end_to_end_source_encoder/score_queue.py", line 198, in <module>
+    raise SystemExit(main())
+  File "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0160_end_to_end_source_encoder/score_queue.py", line 194, in main
+    return ScoreQueue().run()
+  File "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0160_end_to_end_source_encoder/score_queue.py", line 151, in run
+    raise RuntimeError(f"SW0160 {arm} prediction is absent and has no live queue owner")
+RuntimeError: SW0160 frozen_base_joint prediction is absent and has no live queue owner

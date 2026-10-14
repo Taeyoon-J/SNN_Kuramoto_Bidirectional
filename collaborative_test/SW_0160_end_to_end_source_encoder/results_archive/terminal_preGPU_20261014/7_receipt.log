@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/Data0/kevinswk/envs/snn/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/Data0/kevinswk/envs/snn/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0160_end_to_end_source_encoder/prediction_queue.py", line 306, in <module>
+    raise SystemExit(main())
+  File "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0160_end_to_end_source_encoder/prediction_queue.py", line 302, in main
+    return PredictionQueue(args.arm).run()
+  File "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0160_end_to_end_source_encoder/prediction_queue.py", line 204, in run
+    raise RuntimeError("SW0160 training artifact absent and no live arm owner remains")
+RuntimeError: SW0160 training artifact absent and no live arm owner remains

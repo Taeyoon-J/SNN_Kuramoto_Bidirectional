@@ -28,9 +28,9 @@ except ImportError:
 from collaborative_test.SW_0160_end_to_end_source_encoder import predict_evaluate as evaluation
 from collaborative_test.SW_0160_end_to_end_source_encoder import train
 
-RUNTIME = HERE / "results_archive" / "score_queue_20261014"
+RUNTIME = HERE / "results_archive" / "score_queue_retry_20261014"
 STATE, LOCK, LOG = RUNTIME / "state.json", RUNTIME / "queue.lock", RUNTIME / "score.log"
-PREDICTION_QUEUE_ROOT = HERE / "results_archive" / "prediction_queues_20261014"
+PREDICTION_QUEUE_ROOT = HERE / "results_archive" / "prediction_queues_retry_20261014"
 POLL_SECONDS = 5.0
 
 

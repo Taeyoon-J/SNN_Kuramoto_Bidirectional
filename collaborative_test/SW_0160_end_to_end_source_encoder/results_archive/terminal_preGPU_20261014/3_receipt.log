@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "/Data0/kevinswk/envs/snn/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/Data0/kevinswk/envs/snn/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0160_end_to_end_source_encoder/training_queue.py", line 436, in <module>
+    raise SystemExit(main())
+  File "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0160_end_to_end_source_encoder/training_queue.py", line 432, in main
+    return TrainingQueue(args.arm).run()
+  File "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0160_end_to_end_source_encoder/training_queue.py", line 289, in run
+    upstream = _upstream_ready(self.arm)
+  File "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0160_end_to_end_source_encoder/training_queue.py", line 83, in _upstream_ready
+    record = train.validate_preflight_admission(preflight_path)
+  File "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0160_end_to_end_source_encoder/train.py", line 136, in validate_preflight_admission
+    return validate_preflight(path)[0]
+  File "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0160_end_to_end_source_encoder/train.py", line 125, in validate_preflight
+    current_score = _score_dependency()
+  File "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0160_end_to_end_source_encoder/train.py", line 109, in _score_dependency
+    raise ValueError("SW0159 terminal score or its registered provenance is invalid")
+ValueError: SW0159 terminal score or its registered provenance is invalid

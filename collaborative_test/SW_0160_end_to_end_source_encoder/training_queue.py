@@ -39,7 +39,7 @@ from collaborative_test.SW_0160_end_to_end_source_encoder import preflight_queue
 from collaborative_test.SW_0159_one_shot_event_regime import score_queue as upstream_score_queue
 
 EXPERIMENT = train.EXPERIMENT
-RUNTIME_ROOT = HERE / "results_archive" / "training_queues_20261014"
+RUNTIME_ROOT = HERE / "results_archive" / "training_queues_retry_20261014"
 GPU_LEASE_DIR = Path("/tmp/kevinswk_sw0113_gpu_leases")
 MAX_MEMORY_MIB = 512
 STABLE_SECONDS = 5.0

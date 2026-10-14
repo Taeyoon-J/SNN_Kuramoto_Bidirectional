@@ -83,14 +83,23 @@ def _score_dependency():
         predict_evaluate as evaluation, score_queue)
     state_path = score_queue.STATE
     score_path = evaluation.SCORE_PATH
-    if not state_path.is_file() or not score_path.is_file():
-        raise RuntimeError("SW0160 waits for the registered SW0159 terminal score")
+    if not state_path.is_file():
+        raise RuntimeError("SW0160 waits for the registered SW0159 score queue state")
     state = json.loads(state_path.read_text(encoding="utf-8"))
+    if state.get("experiment") != "SW0159_one_shot_event_regime":
+        raise ValueError("unexpected SW0159 score queue state")
+    if state.get("status") != "complete":
+        active_statuses = {"waiting_for_both_predictions", "waiting_for_prediction_owner", "running"}
+        if (state.get("status") in active_statuses
+                and _sw159_score_supervisor_live(state.get("supervisor_pid"))):
+            raise RuntimeError("SW0159 score is published but its live queue has not marked completion")
+        raise ValueError("SW0159 score queue is terminal or has no live owner")
+    if not score_path.is_file():
+        raise ValueError("SW0159 score queue is complete but its score file is missing")
     report = json.loads(score_path.read_text(encoding="utf-8"))
     queue_fp, score_fp = score_queue.implementation_fingerprint(), evaluation.implementation_fingerprint()
     score_sha = sha256_file(score_path)
-    if (state.get("status") != "complete" or state.get("experiment") != "SW0159_one_shot_event_regime"
-            or state.get("score_sha256") != score_sha
+    if (state.get("score_sha256") != score_sha
             or state.get("queue_fingerprint") != queue_fp
             or state.get("score_fingerprint") != score_fp
             or report.get("status") != "complete"
@@ -111,6 +120,21 @@ def _score_dependency():
         "score_queue_fingerprint": queue_fp, "score_implementation_fingerprint": score_fp,
         "status": "complete", "ground_truth_used_for_prediction": False,
         "ground_truth_used_for_scoring": True}
+
+
+def _sw159_score_supervisor_live(pid):
+    """Verify the process that can still publish SW0159's terminal queue state."""
+    if type(pid) is not int or pid <= 0:
+        return False
+    proc = Path(f"/proc/{pid}")
+    try:
+        stat = (proc / "stat").read_text(encoding="ascii")
+        status = stat[stat.rfind(")") + 2:].split()[0]
+        argv = [part.decode("utf-8", errors="replace") for part in
+                (proc / "cmdline").read_bytes().split(b"\0") if part]
+    except (OSError, ValueError):
+        return False
+    return status != "Z" and "collaborative_test.SW_0159_one_shot_event_regime.score_queue" in argv
 
 
 def validate_preflight(path=PREFLIGHT_PATH, *, score_dependency=None):

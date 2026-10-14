@@ -1,0 +1,50 @@
+{
+  "status": "operational_failure_before_GPU_training",
+  "cause": "SW0159 final report was published before its score queue completed independent score validation. The consumer incorrectly treated this live pending state as invalid.",
+  "no_full_training_started": true,
+  "all_original_queue_processes_terminal_verified": true,
+  "old_records_preserved_on_server": true,
+  "repair": "Pending only while actual predecessor score PID/module is alive; complete still requires exact SHA/fingerprints. New retry runtime roots; unchanged model/loss/data/preflight.",
+  "source_receipts": [
+    {
+      "name": "training_queues_20261014_frozen_base_joint_state.json",
+      "sha256": "e1376cb62fe336063f6cf328f4e30d9465c49ace60fc53f9d1f14a5e6666d4ea"
+    },
+    {
+      "name": "training_queues_20261014_frozen_base_joint_supervisor_launch.log",
+      "sha256": "e2c5a85bbfd7deb7718658ed52f10eb14827789e5eb08cd61d5846acb974a95f"
+    },
+    {
+      "name": "training_queues_20261014_full_encoder_joint_state.json",
+      "sha256": "a10a7acf03acf9ce68746fd74d7c7b6edad08b5cbc85a7ffe659be2d40170af4"
+    },
+    {
+      "name": "training_queues_20261014_full_encoder_joint_supervisor_launch.log",
+      "sha256": "e2c5a85bbfd7deb7718658ed52f10eb14827789e5eb08cd61d5846acb974a95f"
+    },
+    {
+      "name": "prediction_queues_20261014_frozen_base_joint_state.json",
+      "sha256": "8f3ee5b264cbfcd87b3cf8b5b03fd88a1f0f532b59e031e85c204d11e543b0ce"
+    },
+    {
+      "name": "prediction_queues_20261014_frozen_base_joint_supervisor_launch.log",
+      "sha256": "bddd1a9f621263dfa444abd0b2d4f678657412fbec4e890c64d7c0bba28221df"
+    },
+    {
+      "name": "prediction_queues_20261014_full_encoder_joint_state.json",
+      "sha256": "33036194b1169429e63f757f4c064bb76dbb0d267eb9a5759d259f405c863844"
+    },
+    {
+      "name": "prediction_queues_20261014_full_encoder_joint_supervisor_launch.log",
+      "sha256": "bddd1a9f621263dfa444abd0b2d4f678657412fbec4e890c64d7c0bba28221df"
+    },
+    {
+      "name": "score_queue_20261014_None_state.json",
+      "sha256": "76a4adecb93c4d10123339596f1ca313eb70f5f8aa760b9487b5e6ac320a9969"
+    },
+    {
+      "name": "score_queue_20261014_None_supervisor_launch.log",
+      "sha256": "19168a5b2635763c4a57c7f9b53c1052726f7bf649a7366d3131abb96d0bacf3"
+    }
+  ]
+}

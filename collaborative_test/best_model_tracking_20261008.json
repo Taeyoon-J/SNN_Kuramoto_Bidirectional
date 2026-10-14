@@ -2936,7 +2936,7 @@
       "eta_sweep": false
     },
     "SW0159": {
-      "status": "paired_training_complete_fixed320_prediction_running",
+      "status": "closed_negative_paired_fixed320_evaluation_complete",
       "source": "SW0143_T_seed1",
       "one_shot_threshold_init": "0.5*sourceT TRAIN margin RMS",
       "threshold_changes_event_cutoff_and_reset": true,
@@ -2975,16 +2975,42 @@
         "logical_batch": 16,
         "microbatch": 4
       },
-      "performance_result_available": false,
+      "performance_result_available": true,
       "incumbent_changed": false,
       "completed_updates_per_arm": 128,
       "prediction_children": {
         "control": 3117077,
         "candidate": 3118112
-      }
+      },
+      "final_metrics": {
+        "control": {
+          "fg_ari": 0.7540489182690584,
+          "foreground_iou": 0.6091587866515111,
+          "matched_object_iou": 0.5802439631633904
+        },
+        "candidate": {
+          "fg_ari": 0.6687675166410976,
+          "foreground_iou": 0.46078340932410666,
+          "matched_object_iou": 0.5415870941668064
+        },
+        "source97": {
+          "fg_ari": 0.7541350949944816,
+          "foreground_iou": 0.606899549668619,
+          "matched_object_iou": 0.582200586329909
+        },
+        "SW0143_T": {
+          "fg_ari": 0.7552730828009764,
+          "foreground_iou": 0.6149934302630647,
+          "matched_object_iou": 0.5795137856780908
+        }
+      },
+      "score_sha256": "abbc35a80124f8898e3e444a4dd38f7c5c9ca01e2454c4c6163a04f4dd7b95b6",
+      "score_record": "collaborative_test/SW_0159_one_shot_event_regime/results_archive/completed_score_20261014/root_review.json",
+      "expand_seed0_2": false,
+      "threshold_sweep": false
     },
     "SW0160": {
-      "status": "GPU_preflight_admitted_full_pipeline_queued_waiting_SW0159_score",
+      "status": "paired_training_running_after_operational_guard_repair",
       "design": "collaborative_test/SW_0160_end_to_end_source_encoder/DESIGN_KO.md",
       "intervention": "unfreeze actual source RGB encoder vs matched frozen-sourcebase residual/core/graph control",
       "mask_supervised": true,
@@ -2998,22 +3024,33 @@
       "actual_process_live_verified": true,
       "registration_record": "collaborative_test/SW_0160_end_to_end_source_encoder/results_archive/registered_20261014/2_state.json",
       "GPU_preflight_result_available": true,
-      "full_128_update_training_started": false,
+      "full_128_update_training_started": true,
       "preflight_sha256": "d503c24f0341b4fe7b76ec70f37345d9fa4e93d2e15e7a42026b6fde0eb219fa",
       "candidate_source_encoder_actual_gradient_and_change_verified": true,
       "control_source_encoder_unchanged": true,
       "active_graph_core_integration_and_residual_hidden_credit_verified": true,
       "full_pipeline_record": "collaborative_test/SW_0160_end_to_end_source_encoder/results_archive/pipeline_queued_20261014/root_review.json",
       "training_supervisors": [
-        3118093,
-        3118103
+        3124482,
+        3124487
       ],
       "prediction_supervisors": [
-        3118126,
-        3118169
+        3124491,
+        3124495
       ],
-      "score_supervisor": 3118204,
-      "performance_result_available": false
+      "score_supervisor": 3124498,
+      "performance_result_available": false,
+      "training_children": [
+        3124604,
+        3124621
+      ],
+      "physical_GPUs": [
+        1,
+        3
+      ],
+      "retry_started_record": "collaborative_test/SW_0160_end_to_end_source_encoder/results_archive/retry_started_20261014/root_review.json",
+      "initial_operational_failure_record": "collaborative_test/SW_0160_end_to_end_source_encoder/results_archive/terminal_preGPU_20261014/root_review.json",
+      "no_GPU_training_repeated": true
     }
   }
 }

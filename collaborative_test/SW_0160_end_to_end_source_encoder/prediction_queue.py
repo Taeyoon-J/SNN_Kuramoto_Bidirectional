@@ -37,8 +37,8 @@ else:
 from collaborative_test.SW_0160_end_to_end_source_encoder import predict_evaluate as evaluation
 from collaborative_test.SW_0160_end_to_end_source_encoder import train
 
-RUNTIME_ROOT = HERE / "results_archive" / "prediction_queues_20261014"
-TRAINING_QUEUE_ROOT = HERE / "results_archive" / "training_queues_20261014"
+RUNTIME_ROOT = HERE / "results_archive" / "prediction_queues_retry_20261014"
+TRAINING_QUEUE_ROOT = HERE / "results_archive" / "training_queues_retry_20261014"
 MAX_MEMORY_MIB, STABLE_SECONDS = 512, 5.0
 SAMPLE_SECONDS, POLL_SECONDS, WATCHDOG_SECONDS = 2.0, 5.0, 7200.0
 DEVICE = "cuda:0"

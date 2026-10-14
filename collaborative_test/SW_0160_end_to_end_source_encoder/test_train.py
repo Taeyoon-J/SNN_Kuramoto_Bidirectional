@@ -43,6 +43,47 @@ class _Wrapped:
 
 
 class SW0160TrainTests(unittest.TestCase):
+    def test_published_score_waits_for_live_sw0159_terminal_state(self):
+        from collaborative_test.SW_0159_one_shot_event_regime import (
+            predict_evaluate as sw159_eval, score_queue as sw159_queue)
+        names = ("control", "candidate", "source97", "SW0143_T")
+        means = {name: {metric: 0.5 for metric in train.score_contract.METRICS} for name in names}
+        score = {name: {metric: {"mean": 0.5, "valid_count": 320,
+                    "per_image": [0.5] * 320} for metric in train.score_contract.METRICS}
+                 for name in names}
+        report = {"experiment": "SW0159_one_shot_event_regime", "status": "complete",
+            "seed_scope": [1], "implementation_fingerprint": sw159_eval.implementation_fingerprint(),
+            "scores": score, "means": means,
+            "ground_truth_opened_after_all_predictions_validated": True,
+            "ground_truth_used_for_prediction": False, "ground_truth_used_for_scoring": True}
+        queue_fp = sw159_queue.implementation_fingerprint()
+        score_fp = sw159_eval.implementation_fingerprint()
+        with _Scratch(train.ROOT) as directory:
+            score_path = Path(directory) / "evaluation_seed1.json"
+            state_path = Path(directory) / "score_state.json"
+            score_path.write_text(json.dumps(report), encoding="utf-8")
+            state = {"experiment": "SW0159_one_shot_event_regime", "status": "running",
+                "supervisor_pid": 123, "score_sha256": train.sha256_file(score_path),
+                "queue_fingerprint": queue_fp, "score_fingerprint": score_fp}
+            state_path.write_text(json.dumps(state), encoding="utf-8")
+            with (mock.patch.object(sw159_queue, "STATE", state_path),
+                  mock.patch.object(sw159_eval, "SCORE_PATH", score_path),
+                  mock.patch.object(train, "_sw159_score_supervisor_live", return_value=True)):
+                with self.assertRaisesRegex(RuntimeError, "published but its live queue"):
+                    train._score_dependency()
+            with (mock.patch.object(sw159_queue, "STATE", state_path),
+                  mock.patch.object(sw159_eval, "SCORE_PATH", score_path),
+                  mock.patch.object(train, "_sw159_score_supervisor_live", return_value=False)):
+                with self.assertRaisesRegex(ValueError, "terminal or has no live owner"):
+                    train._score_dependency()
+            state["status"] = "complete"
+            state_path.write_text(json.dumps(state), encoding="utf-8")
+            with (mock.patch.object(sw159_queue, "STATE", state_path),
+                  mock.patch.object(sw159_eval, "SCORE_PATH", score_path)):
+                bound = train._score_dependency()
+            self.assertEqual(bound["score_sha256"], state["score_sha256"])
+            self.assertEqual(bound["status"], "complete")
+
     def test_serialized_optimizer_steps_match_training_manifest_and_arm_groups(self):
         names = [name for name in train.model.LEARNING_RATES if name != "source_base"]
         groups, state = [], {}
