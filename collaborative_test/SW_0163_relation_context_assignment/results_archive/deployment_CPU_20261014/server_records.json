@@ -1,0 +1,90 @@
+{
+  "receipt": {
+    "actual_cpu_source_prepare": {
+      "context_bindings_sha256": "6a7f4caf5c0e8b6477334f19ad17639b4ab7c72117c3c8eba17b0432ee3201d2",
+      "count": 512,
+      "cuda_initialized": false,
+      "ordered_ids_count": 512,
+      "rgb_rows_shape": [
+        512,
+        128,
+        128,
+        3
+      ],
+      "source_trace_manifest_sha256": "b4125a81012bf46cf38ff512bf251452f511524c42a2d2364c34783de04302b3",
+      "targets_shape": [
+        512,
+        1024
+      ]
+    },
+    "cuda_work_started": false,
+    "files": {
+      "DESIGN_KO.md": "c9c98d1eec7257b35f56db777a70b6d14b1a6ee4cf9d9fc5a8d2393be101d4dd",
+      "context_cache.py": "d7876446ac016b8e6b58fddc849eaa945441c0b158c335262dcb38ab7e2e5164",
+      "context_queue.py": "b7d25ab9dcb6a7996034a001042d8d92e036b142e07f3b8afb27e482e3332d3e",
+      "model.py": "db0b891f47e87766c570caf151ef25ef932a88d6d3b6cc4955816da29951778e",
+      "preflight.py": "c015804802d5da3ef19676a8d916070009209f960acfd69d32e162448cbea86c",
+      "protocol.json": "0b4dc4b620119f8711460390e435ba66e025a078363207b111c9c319d4aa9252",
+      "test_context_cache.py": "db2bad71028e2c9fa844144e27c9ad3413ef27de687dac4194d1b8f84bf09006",
+      "test_context_queue.py": "13fcbaa47eecb3a2fa4bdaf28e3d08fd6340cfa61b96ea7f2cbdf61e99faff77",
+      "test_model.py": "70c9360825c67a65fd8d9c5a56e43cbf275fd760013a14fba58cf5a0d169521e",
+      "test_preflight.py": "c7cc3f8ad01a488cd1c25ea9c165cbdecce0be69b5854f2c7f36981ca5fc6539"
+    },
+    "installed_actions": {
+      "DESIGN_KO.md": "created",
+      "context_cache.py": "created",
+      "context_queue.py": "created",
+      "model.py": "created",
+      "preflight.py": "created",
+      "protocol.json": "created",
+      "test_context_cache.py": "created",
+      "test_context_queue.py": "created",
+      "test_model.py": "created",
+      "test_preflight.py": "created"
+    },
+    "queue_dry_run": {
+      "fingerprint": {
+        "collaborative_test/SW_0126_history_event_binding/pilot_queue.py": "c59cdc39af20c824930d1926c8cec1418ee818577b8cc4240ad6eaae836764f6",
+        "collaborative_test/SW_0148_checkpointable_boundary_q/stage_queue_v4.py": "14fae39aeb6e958df60edf25680f412acb50a01126fd7af725c61fdba3794623",
+        "collaborative_test/SW_0161_supervised_spike_partition/cache.py": "c10e0859368994a820fb9e911295036f1fd7dd52bfd5aa198cc4e28ca1cef8e0",
+        "collaborative_test/SW_0161_supervised_spike_partition/train.py": "66345b64b1b0cb2ac58330770db9d9239c95933477c000d78107435a0d376400",
+        "collaborative_test/SW_0163_relation_context_assignment/DESIGN_KO.md": "c9c98d1eec7257b35f56db777a70b6d14b1a6ee4cf9d9fc5a8d2393be101d4dd",
+        "collaborative_test/SW_0163_relation_context_assignment/context_cache.py": "d7876446ac016b8e6b58fddc849eaa945441c0b158c335262dcb38ab7e2e5164",
+        "collaborative_test/SW_0163_relation_context_assignment/context_queue.py": "b7d25ab9dcb6a7996034a001042d8d92e036b142e07f3b8afb27e482e3332d3e",
+        "collaborative_test/SW_0163_relation_context_assignment/model.py": "db0b891f47e87766c570caf151ef25ef932a88d6d3b6cc4955816da29951778e",
+        "collaborative_test/SW_0163_relation_context_assignment/preflight.py": "c015804802d5da3ef19676a8d916070009209f960acfd69d32e162448cbea86c",
+        "collaborative_test/SW_0163_relation_context_assignment/protocol.json": "0b4dc4b620119f8711460390e435ba66e025a078363207b111c9c319d4aa9252"
+      },
+      "stages": [
+        "context_cache",
+        "preflight"
+      ],
+      "status": "planned"
+    },
+    "status": "cpu_validated_no_gpu_launch",
+    "test_command": [
+      "collaborative_test.SW_0163_relation_context_assignment.test_model",
+      "collaborative_test.SW_0163_relation_context_assignment.test_context_cache",
+      "collaborative_test.SW_0163_relation_context_assignment.test_preflight",
+      "collaborative_test.SW_0163_relation_context_assignment.test_context_queue"
+    ],
+    "test_count": 18,
+    "test_output_tail": "trips_through_actual_validator (collaborative_test.SW_0163_relation_context_assignment.test_context_cache.ContextCacheTests) ... ok\ntest_public_cpu_prepare_uses_actual_cache_contract_and_binds_dependencies (collaborative_test.SW_0163_relation_context_assignment.test_context_cache.ContextCacheTests) ... ok\ntest_wrong_existing_bindings_are_preserved_and_rejected (collaborative_test.SW_0163_relation_context_assignment.test_context_cache.ContextCacheTests) ... ok\ntest_cache_source_or_arm_drift_cannot_be_admitted (collaborative_test.SW_0163_relation_context_assignment.test_preflight.PreflightTests) ... ok\ntest_finite_zero_or_missing_gradient_is_preserved_as_nonadmission (collaborative_test.SW_0163_relation_context_assignment.test_preflight.PreflightTests) ... ok\ntest_gradient_norm_helper_checks_actual_parameter_gradients (collaborative_test.SW_0163_relation_context_assignment.test_preflight.PreflightTests) ... ok\ntest_registered_four_arm_receipt_accepts_and_binds_real_producer_schema (collaborative_test.SW_0163_relation_context_assignment.test_preflight.PreflightTests) ... ok\ntest_child_launch_uses_registered_argv_and_validates_created_artifact (collaborative_test.SW_0163_relation_context_assignment.test_context_queue.ContextQueueTests) ... ok\ntest_failed_stable_check_releases_lease_and_retries (collaborative_test.SW_0163_relation_context_assignment.test_context_queue.ContextQueueTests) ... ok\ntest_final_gpu_admission_rejects_changed_uuid_owners_and_query_errors (collaborative_test.SW_0163_relation_context_assignment.test_context_queue.ContextQueueTests) ... ok\ntest_library_import_preserves_assigned_cuda_visibility (collaborative_test.SW_0163_relation_context_assignment.test_context_queue.ContextQueueTests) ... ok\ntest_registered_children_and_fingerprint_resolve_real_inputs (collaborative_test.SW_0163_relation_context_assignment.test_context_queue.ContextQueueTests) ... ok\n\n----------------------------------------------------------------------\nRan 18 tests in 9.325s\n\nOK\n",
+    "test_skips": 0
+  },
+  "receipt_sha256": "57e154dd9393e745e6e7aaa15877782f85eb1b50b367726271d653ce335a4afb",
+  "launch": {
+    "status": "context_and_disposable_preflight_queue_registered",
+    "supervisor_pid": 3468342,
+    "log": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0163_relation_context_assignment/results_archive/deployment_CPU_20261014/context_supervisor.log",
+    "cpu_receipt_sha256": "57e154dd9393e745e6e7aaa15877782f85eb1b50b367726271d653ce335a4afb"
+  },
+  "queue": {
+    "experiment": "SW0163_context_cache_and_head_preflight_queue",
+    "status": "validating_source_cache",
+    "supervisor_pid": 3468342,
+    "stages": {},
+    "error": null
+  },
+  "supervisor_argv": "/Data0/kevinswk/envs/snn/bin/python -m collaborative_test.SW_0163_relation_context_assignment.context_queue "
+}
