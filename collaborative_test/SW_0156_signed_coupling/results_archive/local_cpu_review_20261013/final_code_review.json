@@ -1,0 +1,36 @@
+{
+  "experiment": "SW0156_native32_signed_coupling",
+  "status": "local_review_pass_server_delivery_blocked",
+  "reviewer": "sol61_gate_review",
+  "checks": {
+    "real_score_producer_to_validator": true,
+    "recognized_partial_ledger_child_launch": true,
+    "own_child_stopped_before_lease_unlock": true,
+    "parallel_two_independent_leases": true,
+    "locked_per_arm_state_updates": true,
+    "bundle_hashes_match": true,
+    "frozen_science_unchanged": true
+  },
+  "root_cpu_tests": {
+    "passed": 25,
+    "record": "local_cpu_review_20261013/root_pipeline_review.json"
+  },
+  "server_deployed": false,
+  "gpu_executed": false,
+  "new_performance_result": false,
+  "remaining_limits": [
+    "Automatic supervisor restart/retry is not implemented.",
+    "Uncommitted NPZ or truncated ledger row fails closed and requires manual review; valid committed rows need not be rerun."
+  ],
+  "next_actions": [
+    "Read current SW154/SW155 process and state evidence without restart.",
+    "Deploy the prepared 12-file bundle create-only and run Linux CPU verification.",
+    "Validate actual SW143-T source/provenance on server.",
+    "Reserve source-only GPU screen; full fixed320 queue remains conditional on successful current screen."
+  ],
+  "observation_failure": {
+    "error": "banner exchange timeout",
+    "job_termination_inferred": false,
+    "jobs_restarted": false
+  }
+}
