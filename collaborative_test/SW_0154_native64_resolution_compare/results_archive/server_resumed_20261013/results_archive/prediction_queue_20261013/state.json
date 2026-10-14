@@ -1,0 +1,141 @@
+{
+  "experiment": "SW0154_native64_resolution_compare",
+  "queue_version": 1,
+  "status": "predictions_failed",
+  "supervisor_pid": 2788921,
+  "queue_fingerprint": {
+    "collaborative_test/SW_0154_native64_resolution_compare/prediction_queue.py": "474274e3d7e8f4f44808b81cebe12a11c6995f85321046aefb2448c7789af50f",
+    "collaborative_test/SW_0154_native64_resolution_compare/predict_native64.py": "4b9f0e45852bc36394e1adadcb5e39417e651c491dd419c1842bdfb569e746a8",
+    "collaborative_test/SW_0154_native64_resolution_compare/evaluate_native64.py": "50c1615038d31b05ea090a898813c16cdf93da432a8c050c6cd3437c4ba2710d",
+    "collaborative_test/SW_0154_native64_resolution_compare/resource_probe.py": "f4f41b2e456cd34a00bb8322abecc5954efaaba3708fb66a81d63b9f65526cfa",
+    "collaborative_test/SW_0154_native64_resolution_compare/resource_queue.py": "53ec824a83dd75241aeebeaae05f1e30d2c4353eea1bba7a1abf2cf2958403c2",
+    "collaborative_test/SW_0154_native64_resolution_compare/native64_model.py": "7b0dad833d675823958ade079afbe51e1843b580780be08baf661d3ae8f95c8a",
+    "collaborative_test/SW_0154_native64_resolution_compare/resolution64.py": "4b879b766bec44b9f6c8b07b55597d7fc4290a81d114a07d1692b6f5a4f3e6aa",
+    "collaborative_test/SW_0154_native64_resolution_compare/score_slot64.py": "50a2ed02002803df81425e15533a3c503f0818721df4eada3836f281bbeff3f1",
+    "collaborative_test/SW_0154_native64_resolution_compare/design.json": "bde2a70cfb8f6fac1cf22ba13bcfca5578139a5e5d38feb155195f9e349a7d44",
+    "collaborative_test/SW_0148_checkpointable_boundary_q/stage_queue_v4.py": "14fae39aeb6e958df60edf25680f412acb50a01126fd7af725c61fdba3794623",
+    "collaborative_test/SW_0126_history_event_binding/pilot_queue.py": "c59cdc39af20c824930d1926c8cec1418ee818577b8cc4240ad6eaae836764f6"
+  },
+  "prediction_fingerprint": {
+    "collaborative_test/SW_0154_native64_resolution_compare/predict_native64.py": "4b9f0e45852bc36394e1adadcb5e39417e651c491dd419c1842bdfb569e746a8",
+    "collaborative_test/SW_0154_native64_resolution_compare/resource_probe.py": "f4f41b2e456cd34a00bb8322abecc5954efaaba3708fb66a81d63b9f65526cfa",
+    "collaborative_test/SW_0154_native64_resolution_compare/native64_model.py": "7b0dad833d675823958ade079afbe51e1843b580780be08baf661d3ae8f95c8a",
+    "collaborative_test/SW_0154_native64_resolution_compare/resolution64.py": "4b879b766bec44b9f6c8b07b55597d7fc4290a81d114a07d1692b6f5a4f3e6aa",
+    "collaborative_test/SW_0154_native64_resolution_compare/score_slot64.py": "50a2ed02002803df81425e15533a3c503f0818721df4eada3836f281bbeff3f1",
+    "collaborative_test/SW_0130_phase_state_integration/run.py": "92ac0032467c6bff2e31a76c66021c5e211f9402d15ff868382d71ecc807e988",
+    "collaborative_test/SW_0135_native32_spike_binding/evaluation_contract32.py": "e601280ade9a2b9545f6bbf94df22deca6ebfe123750229f6a7244105c57b1bd",
+    "collaborative_test/SW_0150_spike_spatial_mixture/preflight.py": "b19791641383e5648d7598b1a5150b3f1940ca2215efb242707189d436454317",
+    "collaborative_test/SW_0134_native_spike_binding/rollout.py": "66c08404af91b50fb4cbfa63fe44650dd6a698ea669cd3d6a672dfc5c78503f3",
+    "snn_kuramoto_bidirectional/evaluation.py": "4a15980c9aa0248dbe0e837ad1b0b430ce26a7ab367c004d290a1272bb1025d7",
+    "snn_kuramoto_bidirectional/spike_classifier.py": "2d13c15a928f503bc09239aae2153a5f1a82de77aab4b5a76d0dfe876b755181"
+  },
+  "resource_probe_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0154_native64_resolution_compare/results_archive/source1_first_train_native64_resource.json",
+  "resource_probe_sha256": "1c335a57bc3fb8556c981495c5e7b8904f9a2389c39b739c691031ce510edd0d",
+  "evaluation_output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0154_native64_resolution_compare/results_archive/native64_evaluation.json",
+  "tasks": {
+    "predict_seed0": {
+      "task": {
+        "task_id": "predict_seed0",
+        "seed": 0,
+        "stage": "native64_fixed320_source_prediction",
+        "device": "cuda:0",
+        "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0154_native64_resolution_compare/predictions_native64/seed0",
+        "work": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0154_native64_resolution_compare/prediction_work_native64/seed0"
+      },
+      "status": "failed_child_or_artifact_validation",
+      "updated": 1791933799.5361822,
+      "gpu": 1,
+      "gpu_uuid": "GPU-45604115-c231-56a5-32ea-d3001e8ff243",
+      "stable_seconds": 5.175638669170439,
+      "memory_used_mib": 2,
+      "child_pid": 2789149,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-m",
+        "collaborative_test.SW_0154_native64_resolution_compare.predict_native64",
+        "--seed",
+        "0",
+        "--device",
+        "cuda:0"
+      ],
+      "physical_gpu": 1,
+      "memory_before_mib": 2,
+      "inherited_lease_fd": true,
+      "log": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0154_native64_resolution_compare/results_archive/prediction_queue_20261013/predict_seed0.attempt01.log",
+      "attempt": 1,
+      "child_returncode": 1,
+      "artifact_valid": false,
+      "finished": 1791933799.5361717
+    },
+    "predict_seed1": {
+      "task": {
+        "task_id": "predict_seed1",
+        "seed": 1,
+        "stage": "native64_fixed320_source_prediction",
+        "device": "cuda:0",
+        "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0154_native64_resolution_compare/predictions_native64/seed1",
+        "work": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0154_native64_resolution_compare/prediction_work_native64/seed1"
+      },
+      "status": "passed",
+      "updated": 1791940980.3677654,
+      "gpu": 1,
+      "gpu_uuid": "GPU-45604115-c231-56a5-32ea-d3001e8ff243",
+      "stable_seconds": 5.226888845209032,
+      "memory_used_mib": 2,
+      "child_pid": 2789343,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-m",
+        "collaborative_test.SW_0154_native64_resolution_compare.predict_native64",
+        "--seed",
+        "1",
+        "--device",
+        "cuda:0"
+      ],
+      "physical_gpu": 1,
+      "memory_before_mib": 2,
+      "inherited_lease_fd": true,
+      "log": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0154_native64_resolution_compare/results_archive/prediction_queue_20261013/predict_seed1.attempt01.log",
+      "attempt": 1,
+      "child_returncode": 0,
+      "artifact_valid": true,
+      "finished": 1791940980.3677495
+    },
+    "predict_seed2": {
+      "task": {
+        "task_id": "predict_seed2",
+        "seed": 2,
+        "stage": "native64_fixed320_source_prediction",
+        "device": "cuda:0",
+        "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0154_native64_resolution_compare/predictions_native64/seed2",
+        "work": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0154_native64_resolution_compare/prediction_work_native64/seed2"
+      },
+      "status": "failed_child_or_artifact_validation",
+      "updated": 1791941022.7078137,
+      "gpu": 1,
+      "gpu_uuid": "GPU-45604115-c231-56a5-32ea-d3001e8ff243",
+      "stable_seconds": 5.195485461037606,
+      "memory_used_mib": 2,
+      "child_pid": 2865400,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-m",
+        "collaborative_test.SW_0154_native64_resolution_compare.predict_native64",
+        "--seed",
+        "2",
+        "--device",
+        "cuda:0"
+      ],
+      "physical_gpu": 1,
+      "memory_before_mib": 2,
+      "inherited_lease_fd": true,
+      "log": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0154_native64_resolution_compare/results_archive/prediction_queue_20261013/predict_seed2.attempt01.log",
+      "attempt": 1,
+      "child_returncode": 1,
+      "artifact_valid": false,
+      "finished": 1791941022.7078023
+    }
+  },
+  "updated": 1791941022.7078097,
+  "finished": 1791941022.714084
+}

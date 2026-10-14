@@ -1,0 +1,149 @@
+{
+  "experiment": "SW0155_supervised_spike_relations",
+  "queue_version": 1,
+  "status": "training_complete",
+  "supervisor_pid": 2795419,
+  "queue_fingerprint": {
+    "collaborative_test/SW_0155_supervised_spike_relations/training_queue.py": "f01e2c495de24bf28cb283eba63527e9dc715120965b806cafe655d79334958e",
+    "collaborative_test/SW_0155_supervised_spike_relations/protocol.json": "ba13ae2900d9bfa393a2bf1d3d7bcb437c89bb6302ac967b16f5926cc2871b96",
+    "collaborative_test/SW_0155_supervised_spike_relations/train.py": "68306bc5fa658487302dbcb20d0e95676957dbdbd3b04c471292cbfb4126db69",
+    "collaborative_test/SW_0155_supervised_spike_relations/preflight.py": "9333460ef5e77604a1b4c8d89fe4b7e0b2fb9ee102d7c27fae6210a3dc6c4353",
+    "collaborative_test/SW_0155_supervised_spike_relations/objective.py": "07ea07f1fa06c6f2e05e4e98184db487f68549249d997e6991ea26a8e06b40fe",
+    "collaborative_test/SW_0155_supervised_spike_relations/artifactvalidator.py": "aae0e1af2412bff3b3d4be089fa8778084236f677bb01fea0dec9efc65f9a20c",
+    "collaborative_test/SW_0155_supervised_spike_relations/preflight_migration.py": "811793451f513732f1fff44ad2a401ccb782f5231eddc8ef5eb03df3bc3a48ea",
+    "collaborative_test/SW_0148_checkpointable_boundary_q/stage_queue_v4.py": "14fae39aeb6e958df60edf25680f412acb50a01126fd7af725c61fdba3794623",
+    "collaborative_test/SW_0126_history_event_binding/pilot_queue.py": "c59cdc39af20c824930d1926c8cec1418ee818577b8cc4240ad6eaae836764f6"
+  },
+  "preflight": {
+    "path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0155_supervised_spike_relations/results_archive/preflight_seed1_serialization_fix.json",
+    "sha256": "9e161fabefa1150d625ba18f8e2feff6078de7cd48c19502c842200708c4efec",
+    "parent_report_sha256": "2bcc9668fab85689ee94c3d24992d5f02e00ad0185cdde0c1236ef1de034967f",
+    "serialization_migration": {
+      "status": "metadata_only_ast_equivalent",
+      "old_train_sha256": "e8e177d37609584af02b1c78f12a443eb55982d32458917a06629d8962d92d8d",
+      "new_train_sha256": "68306bc5fa658487302dbcb20d0e95676957dbdbd3b04c471292cbfb4126db69",
+      "parent_report_canonical_sha256": "918d5d10c472206cfcbe27a40556acfa57f2c7cba452a6f83c033aa15b4a0f63",
+      "ast_proof": {
+        "changed_lines": [
+          361,
+          362,
+          376,
+          377
+        ],
+        "normalized_old_ast_sha256": "57fa128ea4c4da131c763b78530a3fe251d8fde843a37beb371db25bdbf14a0c",
+        "new_ast_sha256": "57fa128ea4c4da131c763b78530a3fe251d8fde843a37beb371db25bdbf14a0c"
+      }
+    },
+    "source_core_sha256": "76f379d5a7e4cd9d12fdf0b701f3dd9dbbf28b5eea270a9cee2d30d87b4dad98",
+    "source_manifest_sha256": "241c9ea96fc3d3d2b168cb49d941e39c6751eca4436192e614760673545da38b",
+    "source_training_ids_sha256": "879658974960d2854a8e4755b2987e401e7f006356317992171d383cfba36dfa",
+    "rgb_asset_validation": {
+      "train_cache_sha256": "22e220f937a4d92b8504df592ae7e956ad792b6874a2bbaa64c2d3030fbcc492",
+      "train_manifest_sha256": "2578e616478798cd0c3ceab696688a937d18c8f0c54be8c4c62bde9ebd80ddd6",
+      "validation_cache_sha256": "9bed98a5bb040b69e1821c687161b1b928495cc80d90d7a5e1fffcd631926d1e",
+      "validation_manifest_sha256": "971b24a1a945a9b9c77177dc012d9ae5e3f12966817236f3ad3f887dfa759908",
+      "encoder_source_sha256": "9b9c9c59725f872084a6c9bfae1ebbd1b89de40d18ef4f8ab6b8ec014c2ab868",
+      "feature_preprocessing_sha256": "a9ec3281b9603021c37f7c346baa6cf62513c5ce7edde867ab7eddf24b18e127"
+    },
+    "canonical_hdf5": {
+      "size": 2188394103,
+      "mtime_ns": 1776053764504468257
+    },
+    "preflight_fingerprint": {
+      "collaborative_test/SW_0155_supervised_spike_relations/protocol.json": "ba13ae2900d9bfa393a2bf1d3d7bcb437c89bb6302ac967b16f5926cc2871b96",
+      "collaborative_test/SW_0155_supervised_spike_relations/objective.py": "07ea07f1fa06c6f2e05e4e98184db487f68549249d997e6991ea26a8e06b40fe",
+      "collaborative_test/SW_0155_supervised_spike_relations/train.py": "68306bc5fa658487302dbcb20d0e95676957dbdbd3b04c471292cbfb4126db69",
+      "collaborative_test/SW_0155_supervised_spike_relations/preflight.py": "9333460ef5e77604a1b4c8d89fe4b7e0b2fb9ee102d7c27fae6210a3dc6c4353",
+      "collaborative_test/SW_0130_phase_state_integration/run.py": "92ac0032467c6bff2e31a76c66021c5e211f9402d15ff868382d71ecc807e988",
+      "collaborative_test/SW_0135_native32_spike_binding/foundation.py": "9c241cacf1479c339fa56376b881672535c8d7ac4966a7ddff3b4b47f24cb867",
+      "collaborative_test/SW_0145_native32_boundary_credit_probe/run.py": "9b3db438992b55260ebdf6bbafe421bdf1b54c5522624f6c66a0b7b363180fbe",
+      "collaborative_test/SW_0148_checkpointable_boundary_q/checkpoint.py": "75d5076c051f81a51a39bbafedd363e589aa58ffc41ba4a662a87ffb91601f53",
+      "collaborative_test/SW_0150_spike_spatial_mixture/integration.py": "fb3f44c5d52e8eccccc60b9a19f9a13f388a91f905c5f8aa9de326dcce58e0ca",
+      "collaborative_test/SW_0150_spike_spatial_mixture/spatial_diffusion.py": "591fa1128b0cbfb6c0f135d28397868704d46fe1140275c67b37790ebdde3d1a",
+      "collaborative_test/SW_0150_spike_spatial_mixture/seed_selection.py": "d2bfd420b4ce7d1fcdc7124b5e0257b892bbb0a3eed362aa35d51a358a10d429",
+      "collaborative_test/SW_0152_source_preserving_partition_equivariance/deep_encoder.py": "228a0f88b594b81c645e935cbbcaba13b524748b8f27d34415e677348109d0ad",
+      "collaborative_test/SW_0152_source_preserving_partition_equivariance/training.py": "0c38f71c43a39c8aed284ab62edd25f8a30b27ea2e121db479bea75eff96bff2",
+      "snn_kuramoto_bidirectional/evaluation.py": "4a15980c9aa0248dbe0e837ad1b0b430ce26a7ab367c004d290a1272bb1025d7",
+      "snn_kuramoto_bidirectional/spike_classifier.py": "2d13c15a928f503bc09239aae2153a5f1a82de77aab4b5a76d0dfe876b755181"
+    }
+  },
+  "ground_truth_scope": "TRAIN masks only",
+  "tasks": {
+    "train_encoder_graph": {
+      "status": "passed",
+      "task": {
+        "task_id": "train_encoder_graph",
+        "stage": "train",
+        "arm": "encoder_graph",
+        "seed": 1,
+        "device": "cuda:0",
+        "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0155_supervised_spike_relations/training/encoder_graph_seed1",
+        "checkpoint_dir": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0155_supervised_spike_relations/work/encoder_graph_seed1/checkpoints"
+      },
+      "updated": 1791944031.469567,
+      "gpu": 3,
+      "gpu_uuid": "GPU-6801a3dc-cde3-86c6-d665-6d9ecf063a1e",
+      "stable_seconds": 5.171249103732407,
+      "memory_used_mib": 2,
+      "child_pid": 2855472,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-m",
+        "collaborative_test.SW_0155_supervised_spike_relations.train",
+        "--arm",
+        "encoder_graph",
+        "--device",
+        "cuda:0",
+        "--preflight",
+        "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0155_supervised_spike_relations/results_archive/preflight_seed1_serialization_fix.json"
+      ],
+      "physical_gpu": 3,
+      "memory_before_mib": 2,
+      "inherited_lease_fd": true,
+      "log": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0155_supervised_spike_relations/results_archive/training_queue_20261013/train_encoder_graph.attempt01.log",
+      "attempt": 1,
+      "child_returncode": 0,
+      "artifact_valid": true,
+      "finished": 1791944031.469541
+    },
+    "train_joint": {
+      "status": "passed",
+      "task": {
+        "task_id": "train_joint",
+        "stage": "train",
+        "arm": "joint",
+        "seed": 1,
+        "device": "cuda:0",
+        "output": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0155_supervised_spike_relations/training/joint_seed1",
+        "checkpoint_dir": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0155_supervised_spike_relations/work/joint_seed1/checkpoints"
+      },
+      "updated": 1791939470.6205068,
+      "gpu": 3,
+      "gpu_uuid": "GPU-6801a3dc-cde3-86c6-d665-6d9ecf063a1e",
+      "stable_seconds": 5.146031219046563,
+      "memory_used_mib": 2,
+      "child_pid": 2795643,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-m",
+        "collaborative_test.SW_0155_supervised_spike_relations.train",
+        "--arm",
+        "joint",
+        "--device",
+        "cuda:0",
+        "--preflight",
+        "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0155_supervised_spike_relations/results_archive/preflight_seed1_serialization_fix.json"
+      ],
+      "physical_gpu": 3,
+      "memory_before_mib": 2,
+      "inherited_lease_fd": true,
+      "log": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0155_supervised_spike_relations/results_archive/training_queue_20261013/train_joint.attempt01.log",
+      "attempt": 1,
+      "child_returncode": 0,
+      "artifact_valid": true,
+      "finished": 1791939470.6204615
+    }
+  },
+  "updated": 1791944031.469564,
+  "finished": 1791944052.960261
+}

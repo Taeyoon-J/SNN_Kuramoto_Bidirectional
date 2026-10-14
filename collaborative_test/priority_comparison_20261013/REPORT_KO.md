@@ -39,6 +39,6 @@ SW155는 TRAIN mask 2,048장으로 두 가지를 비교한다: residual encoder+
 
 기존 unsupervised Slot 점수는 문맥용 기준이다. 동일한 mask supervision을 준 Slot과의 공정한 비교 결과는 아직 없다.
 
-서버 상태 관측은 SSH 응답 실패로 일시적으로 불가능하다. 마지막으로 확인한 작업을 관측 실패만으로 종료하거나 재시작하지 않는다. 새로운 완료 결과가 확보되면 이 표에 반영한다.
+서버 연결 복구 후 확인: SW154 seed1 예측은 완료됐고 seed0·2 child는 실제 실행 중이다. SW155 두 arm 모두 학습 artifact 검증을 통과했으며, 최종 평가 큐는 GPU를 기다린다. 아직 두 실험의 최종 평가 결과는 없다. 기존 작업을 관측 실패만으로 종료하거나 재시작하지 않았다.
 
 근거: `comparison.json`, SW153 완료 audit, SW154 Slot64 baseline, SW155 protocol 및 보관된 실행 기록. 새로운 모델 점수로 해석할 수 있는 로컬 CPU 검사 결과는 없다.
