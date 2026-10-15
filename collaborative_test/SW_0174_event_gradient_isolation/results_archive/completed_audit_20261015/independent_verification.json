@@ -1,0 +1,119 @@
+{
+  "status": "complete_independently_recomputed_registered_primary_failed",
+  "report_sha256": "7583c48c6909e2acdcf141a369c3e6b9f65c7c2681c146fb1e1ed226945e72c3",
+  "source_baselines_and_six_trace_hashes_exact": true,
+  "actual_forward_and_readouts_exact": true,
+  "detached_event_calls": 65536,
+  "source_and_model_state_restored": true,
+  "registered_primary_pass": false,
+  "optimizer_updates": 0,
+  "validation_data_read": false,
+  "reserve_data_read": false,
+  "pilot_64_updates_launched": false,
+  "incumbent_changed": false,
+  "horizon_family_gradient_norms": {
+    "full1024": {
+      "context_encoder": 755906.1489882214,
+      "graph": 505521.7486496568,
+      "integration": 0.0,
+      "native_core": 89837.45390610007
+    },
+    "tail64": {
+      "context_encoder": 0.06288226737976657,
+      "graph": 0.03756106199038927,
+      "integration": 0.0,
+      "native_core": 0.008148479553171455
+    }
+  },
+  "gradient_union_cosine": -0.8988655602434135,
+  "trial_recomputations": [
+    {
+      "horizon": "tail64",
+      "population": "cohort",
+      "scale": 0.0625,
+      "source_loss": 0.2651405340837769,
+      "actual_loss_change": 0.0007352066953703051,
+      "metrics": {
+        "source_F": 0.7779610966243325,
+        "native_QCC": 0.7767872794667953
+      }
+    },
+    {
+      "horizon": "tail64",
+      "population": "cohort",
+      "scale": 1.0,
+      "source_loss": 0.2651405340837769,
+      "actual_loss_change": -0.0005455721214099318,
+      "metrics": {
+        "source_F": 0.7779610966243325,
+        "native_QCC": 0.7784195720971445
+      }
+    },
+    {
+      "horizon": "tail64",
+      "population": "transfer",
+      "scale": 0.0625,
+      "source_loss": 0.35634673869044114,
+      "actual_loss_change": -4.2688795033274385e-05,
+      "metrics": {
+        "source_F": 0.6029270282539283,
+        "native_QCC": 0.6021255968854293
+      }
+    },
+    {
+      "horizon": "tail64",
+      "population": "transfer",
+      "scale": 1.0,
+      "source_loss": 0.35634673869044114,
+      "actual_loss_change": -0.0012538068953198978,
+      "metrics": {
+        "source_F": 0.6024190169153611,
+        "native_QCC": 0.6026725958172993
+      }
+    },
+    {
+      "horizon": "full1024",
+      "population": "cohort",
+      "scale": 0.0625,
+      "source_loss": 0.2651405340837769,
+      "actual_loss_change": 2.609805983344593e-05,
+      "metrics": {
+        "source_F": 0.7779610966243325,
+        "native_QCC": 0.7767872794667953
+      }
+    },
+    {
+      "horizon": "full1024",
+      "population": "cohort",
+      "scale": 1.0,
+      "source_loss": 0.2651405340837769,
+      "actual_loss_change": -0.00015715907156976794,
+      "metrics": {
+        "source_F": 0.7779610966243325,
+        "native_QCC": 0.7773579074669983
+      }
+    },
+    {
+      "horizon": "full1024",
+      "population": "transfer",
+      "scale": 0.0625,
+      "source_loss": 0.35634673869044114,
+      "actual_loss_change": -0.0011213192736935773,
+      "metrics": {
+        "source_F": 0.603803240694472,
+        "native_QCC": 0.6021031050741774
+      }
+    },
+    {
+      "horizon": "full1024",
+      "population": "transfer",
+      "scale": 1.0,
+      "source_loss": 0.35634673869044114,
+      "actual_loss_change": 8.569251806350708e-05,
+      "metrics": {
+        "source_F": 0.60171173904792,
+        "native_QCC": 0.6019711142405432
+      }
+    }
+  ]
+}
