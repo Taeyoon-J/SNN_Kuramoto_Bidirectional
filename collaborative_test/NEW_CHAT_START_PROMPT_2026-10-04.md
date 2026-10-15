@@ -1,5 +1,9 @@
 # 새 대화 시작 프롬프트
 
+2026-10-14 로컬 파일 정리 지시: 배포 준비물·임시 파일·캐시·시각화 산출물은 `patch_v2_sw/collaborative_testing/` 아래에만 생성한다. 현재 private runtime 루트는 `collaborative_testing/collaborative_private_runtime_20261008/`이다. 과거 ACMLab 루트·바탕화면·중첩 ACMLab 경로를 다시 생성하지 않는다. 로컬 테스트는 `collaborative_testing/run_tests.ps1`로 실행하고, pytest 캐시는 `collaborative_testing/cache/pytest`를 사용한다. 이동표와 SHA 검증은 해당 폴더의 organization 기록을 참고한다.
+
+2026-10-14 사용자 운영 지시 추가: goal이 멈추면 실제 상태(pause/blocked), 확인된 원인, 서버 테스트 지속 여부, 재개 조치를 함께 보고한다. 사유가 도구에 없으면 원인 미확인이라고 명시하고 추측하지 않는다. 서버 장애와 goal 상태 전환의 원인을 증거 없이 동일시하지 않는다.
+
 2026-10-14 최신 실험 상태 보완: `collaborative_test/LATEST_STATUS_20261014.md`를 함께 읽고 실제 서버 큐·PID·평가 산출물로 재확인한다. 기존 STATUS/INDEX의 과거 running 문단보다 SW0162–SW0164의 날짜별 기록을 우선한다.
 
 2026-10-14 사용자 운영 지시: 작업 중 SSH 연결 상태와 서버 실험의 실제 PID를 주기적으로 확인한다. SSH에는 `ServerAliveInterval=30`, `ServerAliveCountMax=3`을 적용하고, 정기 확인만을 위한 사용자 메시지는 보내지 않는다. 관찰 명령 종료/시간 초과만으로 학습을 재시작하지 않는다. 연결 유지 설정은 연결 끊김을 완전히 방지하는 보장이 아니며, 실제 접속 오류는 구분해 확인한다.

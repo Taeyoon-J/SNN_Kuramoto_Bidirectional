@@ -3197,5 +3197,130 @@
       "unsupervised_incumbent_changed": false,
       "result": "collaborative_test/SW_0161_supervised_spike_partition/RESULT_KO.md"
     }
+  },
+  "latest_foreground_preserving_readout": {
+    "experiment": "SW0164",
+    "status": "complete_seed1_registered_expansion_gate_passed",
+    "seed_scope": [
+      1
+    ],
+    "grid": [
+      32,
+      32
+    ],
+    "training_updates": 0,
+    "means": {
+      "foreground_induced": {
+        "fg_ari": 0.7709320986336607,
+        "foreground_iou": 0.6149934302630647,
+        "matched_object_iou": 0.6305234820304301
+      },
+      "source_T_control": {
+        "fg_ari": 0.7552730828009764,
+        "foreground_iou": 0.6149934302630647,
+        "matched_object_iou": 0.5795137856780908
+      },
+      "source_T": {
+        "fg_ari": 0.7552730828009764,
+        "foreground_iou": 0.6149934302630647,
+        "matched_object_iou": 0.5795137856780908
+      },
+      "Slot70k": {
+        "fg_ari": 0.8418192917733233,
+        "foreground_iou": 0.20341670897019232,
+        "matched_object_iou": 0.2221151564255643
+      }
+    },
+    "paired_bootstrap": {
+      "foreground_induced_minus_source_T_fg_ari": {
+        "mean": 0.01565901583268429,
+        "ci95": [
+          0.009116281232731574,
+          0.022883207786715272
+        ],
+        "seed": 164,
+        "replicates": 10000
+      },
+      "foreground_induced_minus_source_T_foreground_iou": {
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "seed": 164,
+        "replicates": 10000
+      },
+      "foreground_induced_minus_source_T_matched_object_iou": {
+        "mean": 0.05100969635233923,
+        "ci95": [
+          0.041975514404576024,
+          0.06066377095277924
+        ],
+        "seed": 164,
+        "replicates": 10000
+      },
+      "foreground_induced_minus_Slot70k_fg_ari": {
+        "mean": -0.07088719313966255,
+        "ci95": [
+          -0.09469217640842463,
+          -0.04690251611605208
+        ],
+        "seed": 164,
+        "replicates": 10000
+      },
+      "foreground_induced_minus_Slot70k_foreground_iou": {
+        "mean": 0.4115767212928724,
+        "ci95": [
+          0.38456439647051877,
+          0.4384801138292969
+        ],
+        "seed": 164,
+        "replicates": 10000
+      },
+      "foreground_induced_minus_Slot70k_matched_object_iou": {
+        "mean": 0.40840832560486573,
+        "ci95": [
+          0.3897717161417173,
+          0.42620802692378507
+        ],
+        "seed": 164,
+        "replicates": 10000
+      }
+    },
+    "source_T_foreground_iou_exact": true,
+    "score_sha256": "978a9d97658837eb19f414a7fb7dbb35d86c6135cb1213e12e63e2837fd65df6",
+    "independent_public_validator_passed": true,
+    "three_seed_replacement": false,
+    "slot_fg_ari_surpassed": false,
+    "next_experiment": "SW0165_frozen_recipe_seed0_seed2_replication",
+    "evidence": "SW_0164_foreground_preserving_partition/results_archive/completed_score_20261014/server_records.json"
+  },
+  "latest_relation_context_assignment": {
+    "experiment": "SW0163",
+    "status": "recovery_supervisors_launched",
+    "scientific_type": "supervised_frozen_source_assignment",
+    "adopted_completed_arms": [
+      "Q_only",
+      "A_only"
+    ],
+    "train_only": [
+      "raw_only",
+      "Q_A"
+    ],
+    "server_cpu_tests_passed": 7,
+    "supervisor_pids_at_verified_launch": {
+      "training": 3588458,
+      "prediction": 3588470,
+      "scoring": 3588475
+    },
+    "performance_result_available": false,
+    "evidence": "SW_0163_relation_context_assignment/results_archive/recovery_launch_20261014/server_records.json",
+    "pid_liveness_requires_current_recheck": true
+  },
+  "peer_cycle_check_20261014": {
+    "branch": "origin/patch_v2",
+    "commit": "cab6c676e24a149a45ea960586c04e579f78d384",
+    "new_commit_since_previous_cycle": false,
+    "method": "git fetch origin patch_v2 then git rev-parse FETCH_HEAD"
   }
 }
