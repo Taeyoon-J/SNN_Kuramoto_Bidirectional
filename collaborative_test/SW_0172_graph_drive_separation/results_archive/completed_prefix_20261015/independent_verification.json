@@ -1,0 +1,113 @@
+{
+  "VAL_FG_ARI_measured": false,
+  "all_model_jobs_terminal": true,
+  "arms": {
+    "separated_gamma": {
+      "final": {
+        "instance_loss": 0.6738425865769386,
+        "nonempty": 8,
+        "q_loss": 0.3803930479035573
+      },
+      "first2_credit": [
+        {
+          "family_gradient_norms": {
+            "context_encoder": 1.180656076291607,
+            "graph": 0.6423987387579841,
+            "integration": 1.6571161845363578e-06,
+            "native_core": 0.01941640308402089
+          },
+          "family_parameter_delta_l2": {
+            "context_encoder": 0.0048743705925175995,
+            "graph": 0.0003434022518904162,
+            "integration": 0.003057726217993904,
+            "native_core": 0.0026006463117365436
+          },
+          "q_to_context_gamma_gradient_l2": 1.1886878710985045,
+          "q_to_s_gradient_l2": 0.07459250124659848,
+          "update": 1
+        },
+        {
+          "family_gradient_norms": {
+            "context_encoder": 0.9290442358308723,
+            "graph": 0.4870606023828438,
+            "integration": 2.990148562855008e-05,
+            "native_core": 0.059789508779887764
+          },
+          "family_parameter_delta_l2": {
+            "context_encoder": 0.03707324831826174,
+            "graph": 0.0003271497907223961,
+            "integration": 0.002204517580983581,
+            "native_core": 0.0019291322493020624
+          },
+          "q_to_context_gamma_gradient_l2": 1.2702728072811345,
+          "q_to_s_gradient_l2": 0.19263714149392927,
+          "update": 2
+        }
+      ],
+      "initial": {
+        "instance_loss": 0.6933890450745821,
+        "nonempty": 8,
+        "q_loss": 0.3742439667670128
+      },
+      "source_and_frozen_verified": true
+    },
+    "shared_gamma": {
+      "final": {
+        "instance_loss": 0.6739653218537569,
+        "nonempty": 8,
+        "q_loss": 0.3807996164495954
+      },
+      "first2_credit": [
+        {
+          "family_gradient_norms": {
+            "context_encoder": 1.1701781765312536,
+            "graph": 0.6423987387579841,
+            "integration": 1.6571161845363578e-06,
+            "native_core": 0.01941640308402089
+          },
+          "family_parameter_delta_l2": {
+            "context_encoder": 0.004874364315592451,
+            "graph": 0.0003434022518904162,
+            "integration": 0.0030584106635249252,
+            "native_core": 0.002601430682897114
+          },
+          "q_to_context_gamma_gradient_l2": 1.2951181825343543,
+          "q_to_s_gradient_l2": 0.07459250124659848,
+          "update": 1
+        },
+        {
+          "family_gradient_norms": {
+            "context_encoder": 0.9150650446136599,
+            "graph": 0.47457243327609505,
+            "integration": 1.1641965213803275e-05,
+            "native_core": 0.018731023430582822
+          },
+          "family_parameter_delta_l2": {
+            "context_encoder": 0.037062451333046455,
+            "graph": 0.00032572585179383427,
+            "integration": 0.0024372099637466923,
+            "native_core": 0.00194106022595434
+          },
+          "q_to_context_gamma_gradient_l2": 1.01352274688102,
+          "q_to_s_gradient_l2": 0.1215831900864227,
+          "update": 2
+        }
+      ],
+      "initial": {
+        "instance_loss": 0.6933890450745821,
+        "nonempty": 8,
+        "q_loss": 0.3742439667670128
+      },
+      "source_and_frozen_verified": true
+    }
+  },
+  "continue64": false,
+  "go_checks": {
+    "candidate_Q_below_control": true,
+    "candidate_Q_below_initial": false,
+    "candidate_instance_below_initial": true,
+    "candidate_own_QCC_nonempty_at_least4": true
+  },
+  "incumbent": "SW165",
+  "status": "complete_prefix_rejected"
+}
