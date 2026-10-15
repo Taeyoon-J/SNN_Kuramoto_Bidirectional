@@ -1,0 +1,87 @@
+{
+  "experiment": "SW0166_fixed_support_ari_diagnosis",
+  "registered_utc_date": "2026-10-14",
+  "purpose": "GT-last descriptive decomposition of fixed Source-T foreground-support error for already-completed immutable SW0164/SW0165 predictions",
+  "selection": {
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "rule": "Always include all three seeds, irrespective of the SW0165 replication result or gate; never select only positive seeds",
+    "images": [
+      1320,
+      1639
+    ],
+    "count": 320,
+    "grid": [
+      32,
+      32
+    ]
+  },
+  "prerequisites": {
+    "sw0164_seed1_score_sha256": "978a9d97658837eb19f414a7fb7dbb35d86c6135cb1213e12e63e2837fd65df6",
+    "sw0165_seed0_and_seed2_stage_states": "both must be complete and match their validated immutable score hashes; SW0165 gate pass is not required",
+    "validation_order": "validate all source/candidate/Slot predictions for seeds 0,1,2 before invoking any public score validator; validate all three score reports before this diagnostic opens canonical masks"
+  },
+  "ground_truth": {
+    "dataset": "canonical SW0130 HDF5; exact registered validation RGB/mask rows 1320..1639",
+    "conversion": "SW0135 evaluation_contract32.modal_native32; 4x4 modal/minimum-ID tie rule",
+    "prediction_use": "No GT used for prediction, solver input, support, or seed selection"
+  },
+  "per_image_diagnostics": {
+    "support": "fixed Source-T foreground support (label != 0); candidate foreground membership must exactly match it",
+    "actual_fg_ari": "SW0135 production FG-ARI on candidate labels",
+    "fixed_support_ari_upper_bound": "SW0165 certified relaxation; on target foreground, allow unlimited/disconnected foreground groups on covered patches and one predicted-background group for all missed foreground patches",
+    "missed_foreground": "Count GT-foreground patches outside Source-T support and distinct GT objects with any missed patch",
+    "covered_pair_errors": "Among covered GT-foreground patch pairs: split count is same-GT/different-predicted-label; merge count is different-GT/same-predicted-label; report eligible denominators and rates",
+    "forced_errors": "Separately count different-GT missed/missed pairs forced together in prediction background and same-GT covered/missed pairs forced apart",
+    "support_idealized_attachment": "Keep all covered predicted groups unchanged; assign each missed foreground patch to the covered predicted group with greatest overlap for its GT object (smallest predicted label breaks ties); if no such group exists, create one label for that GT object. This uses GT and is only an unattainable reference, not a prediction.",
+    "sequential_counterfactuals": {
+      "order": [
+        "split each actual positive cluster by GT object, preserving fixed zero membership and all same-GT positive splits",
+        "then merge same-GT positive groups to the certified fixed-support upper bound"
+      ],
+      "merge_correction_delta": "after_split_mixed_positive_fg_ari - actual_fg_ari",
+      "split_correction_delta": "fixed_support_ari_upper_bound - after_split_mixed_positive_fg_ari",
+      "interpretation": "order-dependent descriptive deltas; not independent causal effects"
+    }
+  },
+  "aggregate": {
+    "report": "Per-seed means and fixed three-seed means; paired fixed-320 image bootstrap with common image indices across seeds",
+    "bootstrap_seed": 166,
+    "bootstrap_replicates": 10000,
+    "comparisons": [
+      "actual candidate vs own-seed Source-T",
+      "actual candidate vs own-seed Slot",
+      "support-idealized attachment vs actual candidate",
+      "certified upper bound vs actual candidate",
+      "actual/idealized/ceiling FG-ARI vs 0.87 descriptive goal"
+    ],
+    "validity": "Use production metric valid-count semantics; record any invalid per-image metric rather than silently changing the population",
+    "bootstrap_method": "average seeds at each common image index, then paired-resample image indices across the fixed320 board",
+    "contrasts": [
+      "bound-actual",
+      "bound-0.87",
+      "bound-own-seed Slot",
+      "actual-own-seed Slot",
+      "idealized attachment-actual",
+      "merge correction",
+      "split correction"
+    ]
+  },
+  "interpretation_limits": [
+    "Descriptive GT-conditioned error analysis only; it does not select seeds or change a model, prediction, threshold, or solver.",
+    "The certified upper bound relaxes connectivity and therefore need not be attainable by the registered 4-connected solver.",
+    "The support-idealized attachment uses GT and is not achievable by a GT-free predictor.",
+    "Covered-pair and forced-error counts describe this fixed dataset and do not establish causal mechanisms or generalization."
+  ],
+  "create_only_output": true,
+  "decision": {
+    "fixed320_cannot_reach_0p87": "three-seed fixed320 mean bound < 0.87; independent of bootstrap CI",
+    "fixed320_cannot_strictly_beat_slot": "three-seed fixed320 mean bound <= three-seed own-Slot FG-ARI mean; independent of bootstrap CI",
+    "joint_goal_impossible": "either deterministic flag is true",
+    "generalization": "report each paired bootstrap CI direction separately; CI does not change fixed-board feasibility flags"
+  },
+  "output": "Create-only JSON; no automatic promotion, seed selection, threshold/loss/solver changes"
+}

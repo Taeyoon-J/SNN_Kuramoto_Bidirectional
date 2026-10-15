@@ -3325,7 +3325,7 @@
   },
   "latest_foreground_partition_replication": {
     "experiment": "SW0165",
-    "status": "deployed_and_queued",
+    "status": "complete_independently_verified",
     "seed_scope": [
       0,
       2
@@ -3346,9 +3346,64 @@
       "seed2": 3595219
     },
     "aggregation_waiter_pid_at_launch": 3595222,
-    "performance_result_available": false,
+    "performance_result_available": true,
     "pid_liveness_requires_current_recheck": true,
-    "evidence": "SW_0165_foreground_partition_replication/results_archive/deployed_and_queued_20261014/server_records.json",
-    "incumbent_changed": false
+    "evidence": "SW_0165_foreground_partition_replication/results_archive/completed_all_seeds_20261015/server_records.json",
+    "incumbent_changed": true,
+    "summary_sha256": "72b17ca1a07d312400ab74f6ee7533c89f0e9d9a6c304378dd8e61c16ba379c5"
+  },
+  "current_native32_verified_three_seed_incumbent": {
+    "experiment": "SW0165",
+    "source_lineage": "SW0097 source16 trained 70k lineage -> SW0143T native32 frozen source -> foreground-preserving signed partition",
+    "optimizer_updates_this_experiment": 0,
+    "three_seed_mean": {
+      "fg_ari": 0.8042989149474198,
+      "foreground_iou": 0.6099754484530633,
+      "matched_object_iou": 0.6511489750258587
+    },
+    "slot_three_seed_mean": {
+      "fg_ari": 0.7816519719609135,
+      "foreground_iou": 0.20436012776655546,
+      "matched_object_iou": 0.2031649861884501
+    },
+    "all_three_metric_means_strictly_above_matched_slot": true,
+    "fg_paired_ci_vs_slot": [
+      0.00399733658423188,
+      0.041634037623770936
+    ],
+    "registered_replication_gate": {
+      "candidate_fg_ari_three_seed_mean_above_source_T": true,
+      "three_seed_paired_fg_ari_ci_lower_above_zero": true,
+      "at_least_two_of_three_seed_fg_ari_gains_positive": true,
+      "foreground_iou_exact_to_each_source_T": true,
+      "three_seed_mean_object_iou_not_below_source_T": true,
+      "replication_gate_passed": true
+    },
+    "fg_ari_0p87_reached": false,
+    "fresh_native32_70k_training_proven": false,
+    "all_gate_causality_proven": false,
+    "result": "SW_0165_foreground_partition_replication/RESULT_KO.md"
+  },
+  "latest_fixed_support_diagnosis": {
+    "experiment": "SW0166",
+    "status": "complete_independently_recomputed_exact",
+    "means": {
+      "actual_fg_ari": 0.8042989149474199,
+      "after_split_mixed_positive_fg_ari": 0.8596084065935049,
+      "fixed_support_ari_upper_bound": 0.9151657208516333,
+      "support_idealized_attachment_fg_ari": 0.8726195462928613,
+      "source_T_fg_ari": 0.7830440057720661,
+      "slot_fg_ari": 0.7816519719609136,
+      "merge_correction_delta": 0.05530949164608516,
+      "split_correction_delta": 0.055557314258128446
+    },
+    "deterministic_fixed320_flags": {
+      "fixed320_cannot_reach_0p87": false,
+      "fixed320_cannot_strictly_beat_slot": false,
+      "fixed320_joint_goal_impossible_under_support": false
+    },
+    "diagnosis_sha256": "b3f07d49d710726ca63de73eec59086c31388e542caeac54c7ca7b62729190cf",
+    "gt_assisted_quantities_are_diagnostics_not_predictors": true,
+    "evidence": "SW_0166_fixed_support_ari_diagnosis/results_archive/completed_diagnosis_20261015/server_records.json"
   }
 }

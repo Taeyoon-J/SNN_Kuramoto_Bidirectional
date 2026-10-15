@@ -186,3 +186,10 @@ intermediate ablation to improve all three metrics; see `SELECTION_POLICY.md`.
 | SW0131 | all3 read-only TRAIN diagnostics complete | Native H vs registered row-shuffle vs assignment-independent image-mean content; initial and warmed32 decoder | Warmed32 image-mean RGB MSE differences vs native: +0.9688% s0,+0.1545% s1,-0.2520% s2. Seed2 reconstruction improved while assignment utility inverted. No optimizer updates or segmentation evaluation. Raw evidence: SW_0131_decoder_partition_diagnosis/results_archive/completed_20261009/. |
 
 | SW0132 | relative fullRGB decoder implemented; local5 tests passed; preflight implementation in progress | Live W-derived centroid/footprint variance and pooled gamma; relative pixel coordinates, no separate absoluteXY or alpha; checkpointed1024pixel render+mixture | Source97/SW13012scalar phase-vs-constant and actual-spike QCC retained. New all3TRAIN screens required before paired pilot. No GPU/model metric yet. |
+
+
+## Verified updates: 2026-10-15
+
+- [SW0165](SW_0165_foreground_partition_replication/RESULT_KO.md): frozen native32 readout, three-seed .804299/.609975/.651149; all three metric means exceed matched Slot on fixed320. Independent full recomputation passed.
+- [SW0166](SW_0166_fixed_support_ari_diagnosis/RESULT_KO.md): postscore fixed-support ARI bound and merge/split diagnosis; GT-assisted values are diagnostics. Independent full recomputation passed.
+- [SW0167](SW_0167_structured_relation_energy/DESIGN_KO.md): conditional supervised structured-energy proposal; wait for final SW0163 classifier comparison before selecting the next test. Not running.
