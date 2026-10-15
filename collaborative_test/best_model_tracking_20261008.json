@@ -2,7 +2,7 @@
   "status": "latest_research_incumbents_and_candidates_tracked",
   "latest_native_connectivity_admission": {
     "experiment": "SW0168",
-    "status": "both_64_update_models_complete_recovered_evaluation_running_no_score_yet",
+    "status": "complete_independently_recomputed_registered_gate_failed_no_expansion",
     "seed_scope": [1],
     "report_sha256": "20814ce5dbe4cdb6680cfa69a0c82631c62de0d2a78e923367245f96fb49890a",
     "independent_current_code_report_validation": "passed",
@@ -14,10 +14,21 @@
     "training_artifacts_independently_validated": true,
     "training_recovery_receipt_sha256": "ceb3f2c06386c4b616cbbfd9c158656dfebe21268be29dd7429d8e99d0ad27e3",
     "sampled_train8_initial_and_final_binary_events_always_on": true,
-    "validation_data_read": false,
+    "validation_data_read_at_admission": false,
+    "final_validation_images": 320,
+    "score_sha256": "0a197c6292df1ccd9ebdeff6ea04563bcb7f87f903faa705f5aa75a77072fe70",
+    "independent_full_score_recomputation": "passed",
+    "registered_expansion_gate_passed": false,
+    "metric_order": ["fg_ari", "foreground_iou", "matched_object_iou"],
+    "conditional_maximin_metrics": [0.757128249545444, 0.6149934302630647, 0.6243648648993745],
+    "standalone_maximin_metrics": [0.7514093682064777, 0.618290863344472, 0.6175414012583829],
+    "conditional_local_metrics": [0.7533866695897977, 0.6149934302630647, 0.6221112250488717],
+    "standalone_local_metrics": [0.7454305169208995, 0.6108828810970948, 0.6119578977369896],
+    "matched_SW0164_metrics": [0.7709320986336607, 0.6149934302630647, 0.6305234820304301],
+    "additional_seed_or_70k_expansion": false,
     "incumbent_changed": false,
     "fg_ari_improvement_or_gate_causality_claim": false,
-    "result_path": "collaborative_test/SW_0168_end_to_end_connectivity/ADMISSION_RESULT.md"
+    "result_path": "collaborative_test/SW_0168_end_to_end_connectivity/RESULT_KO.md"
   },
   "latest_structured_relation_energy": {
     "experiment": "SW0167",
