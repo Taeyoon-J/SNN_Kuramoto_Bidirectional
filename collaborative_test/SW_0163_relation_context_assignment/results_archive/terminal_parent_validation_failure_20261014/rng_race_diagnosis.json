@@ -1,0 +1,50 @@
+{
+  "experiment": "SW0163_relation_context_assignment",
+  "status": "local_rng_race_reproduced",
+  "diagnosis": "Concurrent parent-side RelationContextAssignment construction races through process-global PyTorch RNG state despite fork_rng/manual_seed; this can corrupt expected binding hashes during threaded artifact validation.",
+  "local_environment": {
+    "torch_version": "2.12.1+cpu",
+    "platform_scope": "local Windows CPU checkout",
+    "cross_host_sha_equality_claimed": false
+  },
+  "source_files": {
+    "collaborative_test/SW_0163_relation_context_assignment/model.py": "db0b891f47e87766c570caf151ef25ef932a88d6d3b6cc4955816da29951778e",
+    "collaborative_test/SW_0163_relation_context_assignment/train.py": "96109f8fce223407c5a2b6de9cec7d5b4bdd8f11693810dd72a2600ed8640f95"
+  },
+  "reproduction": {
+    "arms": [
+      "raw_only",
+      "Q_only",
+      "A_only",
+      "Q_A"
+    ],
+    "sequential_initial_model_state_sha256": "d090d4d5dd30e4b7a5b88ddfae7392d32469b8f2372f5a48e2baa026c6275d35",
+    "thread_workers": 4,
+    "trials_run": 100,
+    "trials_with_any_hash_mismatch_from_sequential": 100,
+    "trials_without_mismatch": 0,
+    "representative_concurrent_trial": {
+      "raw_only": "f0c4068d28ebfd65e0edeabefeb953104834a0235a8288728030cd8f66dd5ef7",
+      "Q_only": "f84d369fb6349cb3d5d2cb509509a0b7a50570255fd7826c683761b40fe5ad98",
+      "A_only": "664dfc1ada1a13d3e1c25b506f86a5a662cc73a7dda2d778bbb3964f4b7ca730",
+      "Q_A": "76d302efa71a6f852a43b2cfa695ea612a82d4aa347e08c26cefc3cc74b31229"
+    },
+    "hash_scope": "SHA-256 of each locally constructed RelationContextAssignment state_dict using train._model_state_sha; sequential baseline constructed one arm at a time, concurrent trials constructed the four arms in a four-worker ThreadPoolExecutor.",
+    "rerun_for_record_creation": false
+  },
+  "server_sequential_recovery_audit": {
+    "receipt_path": "collaborative_test/SW_0163_relation_context_assignment/results_archive/sequential_recovery_audit_20261014/receipt.json",
+    "receipt_sha256": "c151480cc0f208c8450adc64903f128ebab2efa46959870183310c63f226057e",
+    "status": "sequential_validation_pass",
+    "Q_only": {
+      "completed_updates": 512,
+      "validation": "independently_validated_sequentially"
+    },
+    "A_only": {
+      "completed_updates": 512,
+      "validation": "independently_validated_sequentially"
+    },
+    "cuda_initialized": false
+  },
+  "finding": "The terminal failure was in concurrent parent expected-binding construction/validation, not in Q_only or A_only child training. Both completed 512-update artifacts passed the public validator when checked sequentially on the server."
+}

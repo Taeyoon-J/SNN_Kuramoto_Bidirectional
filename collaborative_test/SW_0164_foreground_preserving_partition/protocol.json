@@ -1,0 +1,33 @@
+{
+  "experiment": "SW0164_foreground_preserving_partition",
+  "registered_date": "2026-10-14",
+  "source": {
+    "checkpoint": "SW0097 seed1 frozen source, evaluated with SW0143 T selective-geodesic operator",
+    "seed": 1,
+    "native_grid": 32,
+    "steps": 1024,
+    "settle_steps": 512,
+    "live_tail_steps": 0,
+    "backend": "factorized",
+    "source_positions": [0, 1, 2, 3, 2048, 2049, 2050, 2051]
+  },
+  "readout": {
+    "energy": "SW0162 full-N signed pair energy from production Q, native A tuple[0], and learned gain",
+    "candidate": "merge only 4-neighbor foreground groups; sum all cross-pair energy including negative evidence; retain every source-T foreground patch; stop when no positive eligible merge remains",
+    "background": "exact source-T QCC background; foreground labels assigned by first row-major patch",
+    "max_candidate_label": 1024,
+    "optimizer_updates": 0,
+    "ground_truth_used_for_prediction": false
+  },
+  "evaluation": {
+    "seed": 1,
+    "image_ids": [1320, 1639],
+    "count": 320,
+    "grid": [32, 32],
+    "ground_truth": "native128 masks converted by the registered modal 4x4 contract, opened only after all candidate/control/Source-T/Slot predictions validate",
+    "metrics": ["fg_ari", "foreground_iou", "matched_object_iou"],
+    "bootstrap": {"replicates": 10000, "seed": 164, "paired_common_image_indices": true},
+    "expansion_gate": "candidate FG-ARI mean > Source-T, paired 95% CI lower > 0, per-image foreground IoU exactly equals Source-T, matched-object-IoU mean >= Source-T"
+  },
+  "operations": {"exclusive_idle_gpu_owner_lease": true, "no_foreign_process_termination": true, "create_only_outputs": true}
+}

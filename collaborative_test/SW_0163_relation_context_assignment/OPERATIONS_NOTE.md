@@ -1,0 +1,9 @@
+# Admission latency observed during the first run
+
+The first two registered trainers eventually entered CUDA and committed real optimizer updates. Do not restart them because of startup latency or an observer timeout. See `results_archive/training_started_20261014/server_records.json` for actual process and source-bound checkpoint evidence.
+
+Before launch, each arm deeply validates its source/context caches. The queue repeats this after GPU stabilization, then the child repeats public admission and cache constructors verify all512 rows again. During this stage parent3476869 had five threads,53338 CPU ticks and about104GB of logical reads reported by `/proc/3476869/io`. These are observations of cumulative work, not a measured standalone benchmark. The elapsed startup does not indicate a model deadlock. GPU2 correctly returned to waiting when a foreign owner appeared before launch; other users' work was untouched.
+
+A future, separately registered operational entrypoint should perform deep CPU admission once, bind an immutable ticket to the current code/preflight/manifests/ledgers/ordered IDs and every row digest, and check small hashes plus file identities immediately under the lease. The child can then verify each row's content once at first consumption, retain that validation for later passes, and require coverage of all512 rows before final publication. This must preserve exact float32 values, four-arm initialization, training order,512 Adam updates, atomic resume and final source/input checks. Merely skipping validation or trusting a status file is insufficient.
+
+This is a prospective optimization only. No deployed163 code, scientific recipe or existing job was changed for it. Validate a future implementation against the existing trainer's updates and serialized endpoints before using it.
