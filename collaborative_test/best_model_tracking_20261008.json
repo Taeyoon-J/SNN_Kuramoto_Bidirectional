@@ -3727,5 +3727,31 @@
     "evidence": "SW_0171_contextual_instance_graph/results_archive/completed_prefix_20261015/server_records.json",
     "local_CPU_tests": 38,
     "server_CPU_tests": 38
+  },
+  "latest_SW0172_admission_and_prefix_start": {
+    "status": "valid_v4_source_admission_passed",
+    "report_file_sha256": "640b89fa93a0613c5a367e611e090a6f491e07164aa31f6b3ba7674b905900cf",
+    "total_steps": 1024,
+    "settle": 512,
+    "live_tail": 64,
+    "optimizer_updates": 0,
+    "source_unchanged": true,
+    "full_source_shared_separated_parity": true,
+    "actual_Q_graph_credit_positive": true,
+    "context_direct_drive_credit_absent": true,
+    "invalid_attempts": {
+      "v1": "nested_CPU_worker_visibility_error_before_CUDA",
+      "v2": "candidate_default64_vs_source1024_invalid_comparison_not_scientific_negative",
+      "v3": "validator_expected_rank3_theta_instead_of_native_rank4_not_scientific_negative"
+    },
+    "local_CPU_tests": 21,
+    "server_CPU_tests": 21,
+    "performance_improvement_proven": false,
+    "incumbent_changed": false,
+    "prefix_GPU_start_verified": true,
+    "training_updates_per_arm_target": 8,
+    "prefix_completion_verified": false,
+    "evidence": "SW_0172_graph_drive_separation/results_archive/completed_admission_20261015/server_records.json",
+    "start_evidence": "SW_0172_graph_drive_separation/results_archive/started_prefix_20261015/actual_start.json"
   }
 }
