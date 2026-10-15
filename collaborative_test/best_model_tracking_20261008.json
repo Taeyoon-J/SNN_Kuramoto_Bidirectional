@@ -3297,7 +3297,7 @@
   },
   "latest_relation_context_assignment": {
     "experiment": "SW0163",
-    "status": "recovery_supervisors_launched",
+    "status": "source_lineage_recovery_actual_gpu_prediction_started",
     "scientific_type": "supervised_frozen_source_assignment",
     "adopted_completed_arms": [
       "Q_only",
@@ -3309,12 +3309,15 @@
     ],
     "server_cpu_tests_passed": 7,
     "supervisor_pids_at_verified_launch": {
-      "training": 3588458,
-      "prediction": 3588470,
-      "scoring": 3588475
+      "prediction": 3615371,
+      "prediction_child": 3616672,
+      "scoring": 3615376
     },
+    "all_four_training_arms_complete": true,
+    "additional_training_updates_in_evaluation_recovery": 0,
+    "source_digest_family_mismatch_verified_and_corrected_in_separate_entrypoint": true,
     "performance_result_available": false,
-    "evidence": "SW_0163_relation_context_assignment/results_archive/recovery_launch_20261014/server_records.json",
+    "evidence": "SW_0163_relation_context_assignment/results_archive/source_lineage_recovery_launch_20261015/actual_gpu_prediction_started.json",
     "pid_liveness_requires_current_recheck": true
   },
   "peer_cycle_check_20261014": {
