@@ -1,0 +1,88 @@
+{
+  "deployment_v3_20261015/server_cpu_tests.json": {
+    "returncode": 0,
+    "stdout": "",
+    "stderr": "test_disconnected_fixed_support_does_not_create_routes (collaborative_test.SW_0168_end_to_end_connectivity.test_connectivity_objective.ConnectivityObjectiveTests) ... ok\ntest_empty_support_has_live_zero_and_bad_geometry_rejects (collaborative_test.SW_0168_end_to_end_connectivity.test_connectivity_objective.ConnectivityObjectiveTests) ... ok\ntest_infeasible_disconnected_target_inside_support_component_is_rejected (collaborative_test.SW_0168_end_to_end_connectivity.test_connectivity_objective.ConnectivityObjectiveTests) ... ok\ntest_infeasible_target_reused_across_disconnected_support_is_rejected (collaborative_test.SW_0168_end_to_end_connectivity.test_connectivity_objective.ConnectivityObjectiveTests) ... ok\ntest_local_control_is_uniform_class_mean_and_gradient (collaborative_test.SW_0168_end_to_end_connectivity.test_connectivity_objective.ConnectivityObjectiveTests) ... ok\ntest_pair_count_weighted_maximin_matches_hand_computation (collaborative_test.SW_0168_end_to_end_connectivity.test_connectivity_objective.ConnectivityObjectiveTests) ... ok\ntest_tie_order_is_canonical_and_background_class_is_supervised (collaborative_test.SW_0168_end_to_end_connectivity.test_connectivity_objective.ConnectivityObjectiveTests) ... ok\ntest_actual_producer_shaped_receipt_roundtrips (collaborative_test.SW_0168_end_to_end_connectivity.test_preflight.PreflightReceiptTests) ... ok\ntest_receipt_rejects_missing_live_tail_credit_and_source_drift (collaborative_test.SW_0168_end_to_end_connectivity.test_preflight.PreflightReceiptTests) ... ok\ntest_receipt_requires_b1_qcc_e0_and_merge_replay (collaborative_test.SW_0168_end_to_end_connectivity.test_preflight.PreflightReceiptTests) ... ok\ntest_source_identity_contains_real_hdf_and_cache_provenance (collaborative_test.SW_0168_end_to_end_connectivity.test_preflight.PreflightReceiptTests) ... ok\ntest_child_deadline_only_stops_owned_child_after_deadline (collaborative_test.SW_0168_end_to_end_connectivity.test_preflight_queue.QueueReceiptTests) ... ok\ntest_queue_validator_binds_both_queue_and_current_preflight_code (collaborative_test.SW_0168_end_to_end_connectivity.test_preflight_queue.QueueReceiptTests) ... ok\ntest_numpy_qcc_output_is_consumed_without_tensor_detach_assumption (collaborative_test.SW_0168_end_to_end_connectivity.test_preflight_v2.B1ReadoutApiTests) ... ok\ntest_numpy_batch_qcc_and_actual_batched_q_a_shapes_reach_solver (collaborative_test.SW_0168_end_to_end_connectivity.test_preflight_api_contract.ProductionB1ApiContractTests) ... ok\ntest_both_cpu_losses_convert_qcc_component_ids_to_foreground_mask (collaborative_test.SW_0168_end_to_end_connectivity.test_preflight_v3.SupportMaskTests) ... ok\ntest_invalid_arm_does_not_silently_select_control (collaborative_test.SW_0168_end_to_end_connectivity.test_preflight_v3.SupportMaskTests) ... ok\n\n----------------------------------------------------------------------\nRan 17 tests in 0.774s\n\nOK\n"
+  },
+  "deployment_v3_20261015/actual_source_cpu_smoke.json": {
+    "returncode": 0,
+    "stdout": "{\"status\": \"actual8_TRAIN_CPU_inputs_passed\", \"source\": {\"selected_ids\": [68304, 49032, 70041, 7829, 16499, 31675, 67612, 54671], \"source_checkpoint_sha256\": \"76f379d5a7e4cd9d12fdf0b701f3dd9dbbf28b5eea270a9cee2d30d87b4dad98\", \"source_manifest_sha256\": \"241c9ea96fc3d3d2b168cb49d941e39c6751eca4436192e614760673545da38b\", \"source_cache_manifest_sha256\": \"b4125a81012bf46cf38ff512bf251452f511524c42a2d2364c34783de04302b3\", \"context_cache_manifest_sha256\": \"01f040eced47d88cdedd88268c02d589cec021a70b77dcb6c25fdaa1fc41254f\", \"source_state_sha256\": \"b205d21a917299089b9b5d373eb94c9eb5eb971471e9428072e0fc0229c70749\", \"hdf5_path\": \"/Data0/kevinswk/datasets/object_centric_data/clevr_10-full.hdf5\", \"hdf5_size_bytes\": 2188394103, \"hdf5_mtime_ns\": 1776053764504468257}, \"objective_cpu_probes\": [{\"arm\": \"constrained_maximin\", \"image_id\": 68304, \"loss\": 0.15071701047851013, \"q_gradient_norm\": 0.16350531578063965}, {\"arm\": \"constrained_maximin\", \"image_id\": 49032, \"loss\": 0.40705676083142506, \"q_gradient_norm\": 0.5068614482879639}, {\"arm\": \"constrained_maximin\", \"image_id\": 70041, \"loss\": 0.14526818299585628, \"q_gradient_norm\": 0.14014576375484467}, {\"arm\": \"constrained_maximin\", \"image_id\": 7829, \"loss\": 0.3573036089662805, \"q_gradient_norm\": 0.39873242378234863}, {\"arm\": \"constrained_maximin\", \"image_id\": 16499, \"loss\": 0.5288708456385577, \"q_gradient_norm\": 0.7057978510856628}, {\"arm\": \"constrained_maximin\", \"image_id\": 31675, \"loss\": 0.5003882246261918, \"q_gradient_norm\": 0.6582413911819458}, {\"arm\": \"constrained_maximin\", \"image_id\": 67612, \"loss\": 0.4630342689593086, \"q_gradient_norm\": 0.4470181167125702}, {\"arm\": \"constrained_maximin\", \"image_id\": 54671, \"loss\": 0.5257740470197532, \"q_gradient_norm\": 0.4754427671432495}, {\"arm\": \"matched_local_edge\", \"image_id\": 68304, \"loss\": 0.1944836974143982, \"q_gradient_norm\": 0.10421732813119888}, {\"arm\": \"matched_local_edge\", \"image_id\": 49032, \"loss\": 0.12808075547218323, \"q_gradient_norm\": 0.06913013011217117}, {\"arm\": \"matched_local_edge\", \"image_id\": 70041, \"loss\": 0.3306841254234314, \"q_gradient_norm\": 0.19699135422706604}, {\"arm\": \"matched_local_edge\", \"image_id\": 7829, \"loss\": 0.3893696069717407, \"q_gradient_norm\": 0.2758843004703522}, {\"arm\": \"matched_local_edge\", \"image_id\": 16499, \"loss\": 0.15316142141819, \"q_gradient_norm\": 0.08984937518835068}, {\"arm\": \"matched_local_edge\", \"image_id\": 31675, \"loss\": 0.26307210326194763, \"q_gradient_norm\": 0.1292755901813507}, {\"arm\": \"matched_local_edge\", \"image_id\": 67612, \"loss\": 0.4349413216114044, \"q_gradient_norm\": 0.252564936876297}, {\"arm\": \"matched_local_edge\", \"image_id\": 54671, \"loss\": 0.18434399366378784, \"q_gradient_norm\": 0.0574532076716423}], \"queue_fingerprint_sha256\": \"bb75b00cde8eed970d8cc95dedfdd97dd430a7d7828c0578a5bd72643bf23a01\", \"elapsed_seconds\": 11.235882043838501, \"validation_data_read\": false}\n",
+    "stderr": ""
+  },
+  "deployment_v3_20261015/preflight_launch.json": {
+    "status": "owner_safe_preflight_supervisor_confirmed_live",
+    "pid": 3668808,
+    "actual_argv": [
+      "/Data0/kevinswk/envs/snn/bin/python",
+      "-u",
+      "-m",
+      "collaborative_test.SW_0168_end_to_end_connectivity.preflight_queue_v3"
+    ],
+    "proc_stat": "3668808 (python) R 3668807 3668808 3668808 0 -1 4194304 61258 106 0 0 168 29 0 0 20 0 1 0 420266499 7157649408 145504 18446744073709551615 94620642947072 94620645426413 140734425886160 0 0 0 0 16781312 16386 0 0 0 17 47 0 0 0 0 0 94620646454160 94620646677344 94620677021696 140734425890032 140734425890144 140734425890144 140734425890772 0\n",
+    "state": {
+      "experiment": "SW0168_actual_spike_preflight_queue_v3",
+      "implementation_fingerprint_sha256": "bb75b00cde8eed970d8cc95dedfdd97dd430a7d7828c0578a5bd72643bf23a01",
+      "status": "validating_source_cpu",
+      "supervisor_pid": 3668808,
+      "updated": 1792050598.1933181
+    }
+  },
+  "source_admission_v3_20261015/state.json": {
+    "child_argv": [
+      "/Data0/kevinswk/envs/snn/bin/python",
+      "-m",
+      "collaborative_test.SW_0168_end_to_end_connectivity.preflight_queue_v3",
+      "--worker",
+      "--physical-gpu",
+      "1",
+      "--output",
+      "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0168_end_to_end_connectivity/results_archive/source_admission_v3_20261015/preflight.json"
+    ],
+    "child_pgid": 3668988,
+    "child_pid": 3668988,
+    "error": "RuntimeError('SW0168 preflight child failed with exit code 1; see /Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0168_end_to_end_connectivity/results_archive/source_admission_v3_20261015/worker.log')",
+    "experiment": "SW0168_actual_spike_preflight_queue_v3",
+    "finished": 1792050771.6965666,
+    "gpu_uuid": "GPU-45604115-c231-56a5-32ea-d3001e8ff243",
+    "ground_truth_scope": "TRAIN first eight only",
+    "implementation_fingerprint_sha256": "bb75b00cde8eed970d8cc95dedfdd97dd430a7d7828c0578a5bd72643bf23a01",
+    "memory_used_before_mib": 2,
+    "memory_used_mib": 1282,
+    "physical_gpu": 1,
+    "source_proof": {
+      "context_cache_manifest_sha256": "01f040eced47d88cdedd88268c02d589cec021a70b77dcb6c25fdaa1fc41254f",
+      "hdf5_mtime_ns": 1776053764504468257,
+      "hdf5_path": "/Data0/kevinswk/datasets/object_centric_data/clevr_10-full.hdf5",
+      "hdf5_size_bytes": 2188394103,
+      "selected_ids": [
+        68304,
+        49032,
+        70041,
+        7829,
+        16499,
+        31675,
+        67612,
+        54671
+      ],
+      "source_cache_manifest_sha256": "b4125a81012bf46cf38ff512bf251452f511524c42a2d2364c34783de04302b3",
+      "source_checkpoint_sha256": "76f379d5a7e4cd9d12fdf0b701f3dd9dbbf28b5eea270a9cee2d30d87b4dad98",
+      "source_manifest_sha256": "241c9ea96fc3d3d2b168cb49d941e39c6751eca4436192e614760673545da38b",
+      "source_state_sha256": "b205d21a917299089b9b5d373eb94c9eb5eb971471e9428072e0fc0229c70749"
+    },
+    "stable_seconds": 5.14489736687392,
+    "status": "failed",
+    "supervisor_pid": 3668808,
+    "updated": 1792050771.6967192
+  },
+  "supervisor_live": {
+    "pid": 3668808,
+    "missing": true
+  },
+  "child_live": {
+    "pid": 3668988,
+    "missing": true
+  },
+  "deployment_v3_20261015/preflight_supervisor.log_tail": "Traceback (most recent call last):\n  File \"/Data0/kevinswk/envs/snn/lib/python3.10/runpy.py\", line 196, in _run_module_as_main\n    return _run_code(code, main_globals, None,\n  File \"/Data0/kevinswk/envs/snn/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0168_end_to_end_connectivity/preflight_queue_v3.py\", line 296, in <module>\n    raise SystemExit(main())\n  File \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0168_end_to_end_connectivity/preflight_queue_v3.py\", line 292, in main\n    return _supervisor()\n  File \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0168_end_to_end_connectivity/preflight_queue_v3.py\", line 248, in _supervisor\n    raise RuntimeError(f\"SW0168 preflight child failed with exit code {rc}; see {LOG}\")\nRuntimeError: SW0168 preflight child failed with exit code 1; see /Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0168_end_to_end_connectivity/results_archive/source_admission_v3_20261015/worker.log\n",
+  "source_admission_v3_20261015/worker.log_tail": "Traceback (most recent call last):\n  File \"/Data0/kevinswk/envs/snn/lib/python3.10/runpy.py\", line 196, in _run_module_as_main\n    return _run_code(code, main_globals, None,\n  File \"/Data0/kevinswk/envs/snn/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0168_end_to_end_connectivity/preflight_queue_v3.py\", line 296, in <module>\n    raise SystemExit(main())\n  File \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0168_end_to_end_connectivity/preflight_queue_v3.py\", line 288, in main\n    report = _worker(args.physical_gpu, args.output)\n  File \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0168_end_to_end_connectivity/preflight_queue_v3.py\", line 142, in _worker\n    _prep_after, after, proof_after = _source_admission()\n  File \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0168_end_to_end_connectivity/preflight_queue_v3.py\", line 82, in _source_admission\n    prepared = prep.prepare_preflight_cpu()\n  File \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0168_end_to_end_connectivity/preflight_v3.py\", line 136, in prepare_preflight_cpu\n    raise RuntimeError(\"CPU preparation unexpectedly initialized CUDA\")\nRuntimeError: CPU preparation unexpectedly initialized CUDA\n",
+  "gpu_processes": "GPU-a0a7d03d-adc1-37ca-4342-328878b3657c, 2653200, 2162 MiB\n"
+}

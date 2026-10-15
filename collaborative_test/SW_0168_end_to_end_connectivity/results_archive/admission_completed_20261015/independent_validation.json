@@ -1,0 +1,111 @@
+{
+  "status": "independent_local_report_validation_passed",
+  "server_report_sha256": "20814ce5dbe4cdb6680cfa69a0c82631c62de0d2a78e923367245f96fb49890a",
+  "source_b4_rows": 8,
+  "source_b1_rows": 8,
+  "arms": {
+    "constrained_maximin": {
+      "initial_b1_readout_exact": true,
+      "initial_model_state_sha256": "b205d21a917299089b9b5d373eb94c9eb5eb971471e9428072e0fc0229c70749",
+      "initial_source_parity_exact": true,
+      "steps": [
+        {
+          "clip_scale": 1.0,
+          "elapsed_seconds": 10.243864951655269,
+          "family_gradient_norms": {
+            "encoder": 0.1940474975536238,
+            "graph": 0.057400315795440804,
+            "integration": 3.698004886706633e-06,
+            "native_core": 0.022055205425166903
+          },
+          "family_parameter_delta_l2": {
+            "encoder": 0.0004490001105832137,
+            "graph": 0.00034339291628227757,
+            "integration": 0.003414475553412872,
+            "native_core": 0.0026361453531087756
+          },
+          "live_tail_component_spike_gradient_norm_mean": 0.0006488194213405591,
+          "mean_loss": 0.38480160319022816,
+          "preclip_global_gradient_norm": 0.20355750946664067,
+          "q_gradient_norm_mean": 0.0546210171677824,
+          "update": 1
+        },
+        {
+          "clip_scale": 1.0,
+          "elapsed_seconds": 10.118777386844158,
+          "family_gradient_norms": {
+            "encoder": 0.16040427777409247,
+            "graph": 0.04232147682391932,
+            "integration": 3.246714277203915e-06,
+            "native_core": 0.021266845942802606
+          },
+          "family_parameter_delta_l2": {
+            "encoder": 0.00039246981727706644,
+            "graph": 0.00029289429419211027,
+            "integration": 0.003363393251770718,
+            "native_core": 0.002458930816871786
+          },
+          "live_tail_component_spike_gradient_norm_mean": 0.0006239779392801535,
+          "mean_loss": 0.38356921722919013,
+          "preclip_global_gradient_norm": 0.1672510641989515,
+          "q_gradient_norm_mean": 0.05462813777562596,
+          "update": 2
+        }
+      ],
+      "updates": 2
+    },
+    "matched_local_edge": {
+      "initial_b1_readout_exact": true,
+      "initial_model_state_sha256": "b205d21a917299089b9b5d373eb94c9eb5eb971471e9428072e0fc0229c70749",
+      "initial_source_parity_exact": true,
+      "steps": [
+        {
+          "clip_scale": 1.0,
+          "elapsed_seconds": 10.029358958825469,
+          "family_gradient_norms": {
+            "encoder": 0.09900457312331803,
+            "graph": 0.033715993283588014,
+            "integration": 1.7140594965529442e-06,
+            "native_core": 0.025188010431820413
+          },
+          "family_parameter_delta_l2": {
+            "encoder": 0.00044899562251443566,
+            "graph": 0.00034339105524909004,
+            "integration": 0.0028027932217485133,
+            "native_core": 0.0026673377026403644
+          },
+          "live_tail_component_spike_gradient_norm_mean": 0.00038197131480068047,
+          "mean_loss": 0.25976712442934513,
+          "preclip_global_gradient_norm": 0.10757838804741814,
+          "q_gradient_norm_mean": 0.018365097740243988,
+          "update": 1
+        },
+        {
+          "clip_scale": 1.0,
+          "elapsed_seconds": 10.008991132490337,
+          "family_gradient_norms": {
+            "encoder": 0.0873791891055831,
+            "graph": 0.01462827481415793,
+            "integration": 1.5364029099869159e-06,
+            "native_core": 0.02339942950748598
+          },
+          "family_parameter_delta_l2": {
+            "encoder": 0.00037730735724896165,
+            "graph": 0.0002650385017414499,
+            "integration": 0.00271214685213126,
+            "native_core": 0.002507135697471882
+          },
+          "live_tail_component_spike_gradient_norm_mean": 0.0003905806231558665,
+          "mean_loss": 0.2591659910976887,
+          "preclip_global_gradient_norm": 0.0916331949482507,
+          "q_gradient_norm_mean": 0.018332177924551198,
+          "update": 2
+        }
+      ],
+      "updates": 2
+    }
+  },
+  "cuda_peak_allocated_bytes": 2773300736,
+  "validation_data_read": false,
+  "source_cache_unchanged": true
+}
