@@ -3297,7 +3297,7 @@
   },
   "latest_relation_context_assignment": {
     "experiment": "SW0163",
-    "status": "source_lineage_recovery_actual_gpu_prediction_started",
+    "status": "complete_registered_gate_failed_no_expansion",
     "scientific_type": "supervised_frozen_source_assignment",
     "adopted_completed_arms": [
       "Q_only",
@@ -3316,8 +3316,20 @@
     "all_four_training_arms_complete": true,
     "additional_training_updates_in_evaluation_recovery": 0,
     "source_digest_family_mismatch_verified_and_corrected_in_separate_entrypoint": true,
-    "performance_result_available": false,
-    "evidence": "SW_0163_relation_context_assignment/results_archive/source_lineage_recovery_launch_20261015/actual_gpu_prediction_started.json",
+    "performance_result_available": true,
+    "seed1_means_metric_order": ["fg_ari", "foreground_iou", "matched_object_iou"],
+    "seed1_means": {
+      "raw_only": [0.6247342532699344, 0.4573512981313842, 0.4007345605487081],
+      "Q_only": [0.6349391292849271, 0.4895910941816758, 0.4101190252311559],
+      "A_only": [0.6631233482943155, 0.4664502111884502, 0.43442300611053436],
+      "Q_A": [0.6606081522508006, 0.49806040183909256, 0.4322833696726489],
+      "source_T_control": [0.7552730828009764, 0.6149934302630647, 0.5795137856780908]
+    },
+    "registered_gate_passed": false,
+    "incumbent_changed": false,
+    "next_scientific_candidate": "SW0167_after_actual_backend_preflight",
+    "score_sha256": "f189d83190e5134b00a76fb81a72202456e437d41af76233b1159c1d5575468a",
+    "evidence": "SW_0163_relation_context_assignment/results_archive/source_lineage_prediction_frozen_20261015/public_validation_complete.json",
     "pid_liveness_requires_current_recheck": true
   },
   "peer_cycle_check_20261014": {
