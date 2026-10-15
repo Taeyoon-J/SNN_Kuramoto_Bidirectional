@@ -3594,5 +3594,71 @@
     "score_supervisor": 3719633,
     "liveness_requires_current_recheck": true,
     "evidence": "SW_0169_normalized_hard_reset/results_archive/training_and_evaluation_registered_20261015/server_records.json"
+  },
+  "latest_SW0169_completed_score": {
+    "status": "root_independent_means_bootstrap_and_source_bindings_verified",
+    "score_sha256": "896562821faa67bb91acdc0612b2cf56a9bd594d63dcf944d002326b06d5875c",
+    "means": {
+      "SW0164": {
+        "fg_ari": 0.7709320986336607,
+        "foreground_iou": 0.6149934302630647,
+        "matched_object_iou": 0.6305234820304301
+      },
+      "Slot": {
+        "fg_ari": 0.8418192917733233,
+        "foreground_iou": 0.20341670897019232,
+        "matched_object_iou": 0.2221151564255643
+      },
+      "Source-T": {
+        "fg_ari": 0.7552730828009764,
+        "foreground_iou": 0.6149934302630647,
+        "matched_object_iou": 0.5795137856780908
+      },
+      "history_detached_conditional": {
+        "fg_ari": 0.038586395165790516,
+        "foreground_iou": 0.6149934302630647,
+        "matched_object_iou": 0.05905822550133213
+      },
+      "history_detached_standalone": {
+        "fg_ari": 7.265037999249985e-05,
+        "foreground_iou": 9.09090909090909e-05,
+        "matched_object_iou": 8.680555555555556e-05
+      },
+      "history_live_conditional": {
+        "fg_ari": 0.038370441526562944,
+        "foreground_iou": 0.6149934302630647,
+        "matched_object_iou": 0.05815510390249227
+      },
+      "history_live_standalone": {
+        "fg_ari": 0.0,
+        "foreground_iou": 0.0,
+        "matched_object_iou": 0.0
+      }
+    },
+    "gate": {
+      "co_primary_gate_passed": false,
+      "conditional_foreground_iou_exact_SW0164": true,
+      "conditional_history_live_ci_lower_above_zero_vs_SW0164": false,
+      "conditional_history_live_ci_lower_above_zero_vs_history_detached": false,
+      "conditional_history_live_fg_mean_above_SW0164": false,
+      "conditional_history_live_fg_mean_above_history_detached": false,
+      "conditional_object_iou_not_below_SW0164": false,
+      "standalone_foreground_iou_not_below_SW0164": false,
+      "standalone_history_live_ci_lower_above_zero_vs_SW0164": false,
+      "standalone_history_live_ci_lower_above_zero_vs_history_detached": false,
+      "standalone_history_live_fg_mean_above_SW0164": false,
+      "standalone_history_live_fg_mean_above_history_detached": false,
+      "standalone_object_iou_not_below_SW0164": false
+    },
+    "incumbent_changed": false,
+    "seed_scope": [
+      1
+    ],
+    "expansion": false,
+    "maximum_cross_platform_float64_reduction_error": 1.1102230246251565e-16,
+    "cross_platform_reduction_check_atol": 1.7763568394002505e-15,
+    "production_metric_and_gate_tolerances_changed": false,
+    "evidence": "SW_0169_normalized_hard_reset/results_archive/completed_score_20261015/server_records.json",
+    "next_candidate": "causal_actual_spike_derived_synaptic_readout_TRAIN_admission_only"
   }
 }
