@@ -3799,5 +3799,31 @@
     "local_CPU_tests": 30,
     "server_CPU_tests": 30,
     "actual_Q_loss_to_context_credit_verified": true
+  },
+  "SW0173_resource_probe_20261015": {
+    "status": "verified_full1024_resource_and_parity_passed",
+    "actual_native_steps": 1024,
+    "live_gradient_steps": 1024,
+    "batch": 1,
+    "train_position": 0,
+    "full_forward_backward_seconds": 6.0559085151180625,
+    "peak_cuda_allocated_bytes": 1041475584,
+    "peak_cuda_allocated_GiB": 0.9699497222900391,
+    "all_six_traces_gamma_actual_coupling_projection_Q_exact": true,
+    "gradient_family_norms": {
+      "context_encoder": 371.8822920282726,
+      "graph": 241.1211158424749,
+      "integration": 1.0710629685659698e-06,
+      "native_core": 120.68493171592783
+    },
+    "source_state_unchanged": true,
+    "optimizer_updates": 0,
+    "validation_data_read": false,
+    "validation_score_available": false,
+    "best_model_changed": false,
+    "worker_and_supervisor_terminal": true,
+    "resource_report_sha256": "83a721329114d5ed948ce5ab210e15b97d17867f14f8517afdf48be7959d7e52",
+    "next_action": "same-source tail64 versus full1024 projected Adam directional-fidelity audit",
+    "directional_fidelity_not_yet_measured": true
   }
 }
