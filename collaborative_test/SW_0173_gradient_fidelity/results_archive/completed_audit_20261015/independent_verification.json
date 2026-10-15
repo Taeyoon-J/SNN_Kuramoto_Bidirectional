@@ -1,0 +1,313 @@
+{
+  "status": "verified_directional_audit_closed_no_training_expansion",
+  "report_sha256": "d3163bf1ef8bf963ed18d72ccfdbc4dbac1655b47348bf1afb4115c89da01657",
+  "worker_and_supervisor_terminal": true,
+  "same_source_horizon_forward_exact": true,
+  "same_state_repeat_jitter_zero": true,
+  "source_state_restored": true,
+  "optimizer_training_updates": 0,
+  "validation_data_read": false,
+  "preregistered_full_horizon_pilot_admitted": false,
+  "incumbent_changed": false,
+  "gradient_union_cosine": -0.8966684044162873,
+  "family_gradient_norms": {
+    "full1024": {
+      "context_encoder": 752550.4106801014,
+      "graph": 503277.3869050271,
+      "integration": 6.541052466716347e-06,
+      "native_core": 89438.59031451256
+    },
+    "tail64": {
+      "context_encoder": 0.06209820394003583,
+      "graph": 0.0368906203286401,
+      "integration": 8.291469388287665e-07,
+      "native_core": 0.008219649058398015
+    }
+  },
+  "family_gradient_cosines": {
+    "context_encoder": -0.907802903289816,
+    "graph": -0.9007160656406024,
+    "integration": 0.6407969323729262,
+    "native_core": -0.2092442580286572
+  },
+  "trial_summary": [
+    {
+      "horizon": "tail64",
+      "population": "cohort",
+      "scale": 0.0625,
+      "source_loss": 0.2651405340837769,
+      "actual_loss_change": 0.0006943735358185266,
+      "fixed_route_loss_change": 0.00048583643075578165,
+      "predicted_cohort_gradient_change": -4.5721943658388e-06,
+      "source_metrics": {
+        "source_F": {
+          "fg_ari": 0.7779610966243325,
+          "foreground_iou": 0.6700839752549663,
+          "matched_object_iou": 0.6548466972482879
+        },
+        "native_QCC": {
+          "fg_ari": 0.7779610966243325,
+          "foreground_iou": 0.6700839752549663,
+          "matched_object_iou": 0.6548466972482879
+        }
+      },
+      "trial_metrics": {
+        "source_F": {
+          "fg_ari": 0.7779610966243325,
+          "foreground_iou": 0.6700839752549663,
+          "matched_object_iou": 0.6548466972482879
+        },
+        "native_QCC": {
+          "fg_ari": 0.7762490617447508,
+          "foreground_iou": 0.667435097017607,
+          "matched_object_iou": 0.6546731504137822
+        }
+      },
+      "common_active_event_flips": 2
+    },
+    {
+      "horizon": "tail64",
+      "population": "cohort",
+      "scale": 1.0,
+      "source_loss": 0.2651405340837769,
+      "actual_loss_change": -0.0005422384003952452,
+      "fixed_route_loss_change": -0.0005496687608333994,
+      "predicted_cohort_gradient_change": -7.31551098534208e-05,
+      "source_metrics": {
+        "source_F": {
+          "fg_ari": 0.7779610966243325,
+          "foreground_iou": 0.6700839752549663,
+          "matched_object_iou": 0.6548466972482879
+        },
+        "native_QCC": {
+          "fg_ari": 0.7779610966243325,
+          "foreground_iou": 0.6700839752549663,
+          "matched_object_iou": 0.6548466972482879
+        }
+      },
+      "trial_metrics": {
+        "source_F": {
+          "fg_ari": 0.7779610966243325,
+          "foreground_iou": 0.6700839752549663,
+          "matched_object_iou": 0.6548466972482879
+        },
+        "native_QCC": {
+          "fg_ari": 0.7778489440969416,
+          "foreground_iou": 0.6744159830125825,
+          "matched_object_iou": 0.6546731504137823
+        }
+      },
+      "common_active_event_flips": 20
+    },
+    {
+      "horizon": "tail64",
+      "population": "transfer",
+      "scale": 0.0625,
+      "source_loss": 0.35634673869044114,
+      "actual_loss_change": -1.7273893123059825e-05,
+      "fixed_route_loss_change": -2.4268568321772488e-05,
+      "predicted_cohort_gradient_change": -4.5721943658388e-06,
+      "source_metrics": {
+        "source_F": {
+          "fg_ari": 0.6037907518824843,
+          "foreground_iou": 0.6204762789349042,
+          "matched_object_iou": 0.5338510152062668
+        },
+        "native_QCC": {
+          "fg_ari": 0.6003810217778642,
+          "foreground_iou": 0.6181177883688664,
+          "matched_object_iou": 0.5338510152062668
+        }
+      },
+      "trial_metrics": {
+        "source_F": {
+          "fg_ari": 0.6029270282539283,
+          "foreground_iou": 0.6204762789349042,
+          "matched_object_iou": 0.5347711540951556
+        },
+        "native_QCC": {
+          "fg_ari": 0.6012392577053203,
+          "foreground_iou": 0.6173359573359574,
+          "matched_object_iou": 0.5352175826665841
+        }
+      },
+      "common_active_event_flips": 0
+    },
+    {
+      "horizon": "tail64",
+      "population": "transfer",
+      "scale": 1.0,
+      "source_loss": 0.35634673869044114,
+      "actual_loss_change": 0.00020728142866194288,
+      "fixed_route_loss_change": 0.0002040606112795884,
+      "predicted_cohort_gradient_change": -7.31551098534208e-05,
+      "source_metrics": {
+        "source_F": {
+          "fg_ari": 0.6037907518824843,
+          "foreground_iou": 0.6204762789349042,
+          "matched_object_iou": 0.5338510152062668
+        },
+        "native_QCC": {
+          "fg_ari": 0.6003810217778642,
+          "foreground_iou": 0.6181177883688664,
+          "matched_object_iou": 0.5338510152062668
+        }
+      },
+      "trial_metrics": {
+        "source_F": {
+          "fg_ari": 0.6034621023254434,
+          "foreground_iou": 0.6204762789349042,
+          "matched_object_iou": 0.5351510488935192
+        },
+        "native_QCC": {
+          "fg_ari": 0.6030236820543399,
+          "foreground_iou": 0.6213811343517872,
+          "matched_object_iou": 0.5519804139728842
+        }
+      },
+      "common_active_event_flips": 4
+    },
+    {
+      "horizon": "full1024",
+      "population": "cohort",
+      "scale": 0.0625,
+      "source_loss": 0.2651405340837769,
+      "actual_loss_change": 2.896020388121201e-05,
+      "fixed_route_loss_change": 0.00010552300011279492,
+      "predicted_cohort_gradient_change": -60.65800555420434,
+      "source_metrics": {
+        "source_F": {
+          "fg_ari": 0.7779610966243325,
+          "foreground_iou": 0.6700839752549663,
+          "matched_object_iou": 0.6548466972482879
+        },
+        "native_QCC": {
+          "fg_ari": 0.7779610966243325,
+          "foreground_iou": 0.6700839752549663,
+          "matched_object_iou": 0.6548466972482879
+        }
+      },
+      "trial_metrics": {
+        "source_F": {
+          "fg_ari": 0.7779610966243325,
+          "foreground_iou": 0.6700839752549663,
+          "matched_object_iou": 0.6548466972482879
+        },
+        "native_QCC": {
+          "fg_ari": 0.7762490617447508,
+          "foreground_iou": 0.6716055535191761,
+          "matched_object_iou": 0.6546731504137823
+        }
+      },
+      "common_active_event_flips": 2
+    },
+    {
+      "horizon": "full1024",
+      "population": "cohort",
+      "scale": 1.0,
+      "source_loss": 0.2651405340837769,
+      "actual_loss_change": -0.0001609427374289485,
+      "fixed_route_loss_change": -0.00016264036161894868,
+      "predicted_cohort_gradient_change": -970.5280888672694,
+      "source_metrics": {
+        "source_F": {
+          "fg_ari": 0.7779610966243325,
+          "foreground_iou": 0.6700839752549663,
+          "matched_object_iou": 0.6548466972482879
+        },
+        "native_QCC": {
+          "fg_ari": 0.7779610966243325,
+          "foreground_iou": 0.6700839752549663,
+          "matched_object_iou": 0.6548466972482879
+        }
+      },
+      "trial_metrics": {
+        "source_F": {
+          "fg_ari": 0.7779610966243325,
+          "foreground_iou": 0.6700839752549663,
+          "matched_object_iou": 0.6548466972482879
+        },
+        "native_QCC": {
+          "fg_ari": 0.7767872794667953,
+          "foreground_iou": 0.6701136889187522,
+          "matched_object_iou": 0.6546731504137822
+        }
+      },
+      "common_active_event_flips": 10
+    },
+    {
+      "horizon": "full1024",
+      "population": "transfer",
+      "scale": 0.0625,
+      "source_loss": 0.35634673869044114,
+      "actual_loss_change": -0.0008353939853322778,
+      "fixed_route_loss_change": -0.0009726252561977344,
+      "predicted_cohort_gradient_change": -60.65800555420434,
+      "source_metrics": {
+        "source_F": {
+          "fg_ari": 0.6037907518824843,
+          "foreground_iou": 0.6204762789349042,
+          "matched_object_iou": 0.5338510152062668
+        },
+        "native_QCC": {
+          "fg_ari": 0.6003810217778642,
+          "foreground_iou": 0.6181177883688664,
+          "matched_object_iou": 0.5338510152062668
+        }
+      },
+      "trial_metrics": {
+        "source_F": {
+          "fg_ari": 0.603803240694472,
+          "foreground_iou": 0.6204762789349042,
+          "matched_object_iou": 0.5342309100046303
+        },
+        "native_QCC": {
+          "fg_ari": 0.6021031050741774,
+          "foreground_iou": 0.6174877677924516,
+          "matched_object_iou": 0.5346773385760588
+        }
+      },
+      "common_active_event_flips": 0
+    },
+    {
+      "horizon": "full1024",
+      "population": "transfer",
+      "scale": 1.0,
+      "source_loss": 0.35634673869044114,
+      "actual_loss_change": 5.762009203175156e-05,
+      "fixed_route_loss_change": -0.00016094330254939893,
+      "predicted_cohort_gradient_change": -970.5280888672694,
+      "source_metrics": {
+        "source_F": {
+          "fg_ari": 0.6037907518824843,
+          "foreground_iou": 0.6204762789349042,
+          "matched_object_iou": 0.5338510152062668
+        },
+        "native_QCC": {
+          "fg_ari": 0.6003810217778642,
+          "foreground_iou": 0.6181177883688664,
+          "matched_object_iou": 0.5338510152062668
+        }
+      },
+      "trial_metrics": {
+        "source_F": {
+          "fg_ari": 0.60171173904792,
+          "foreground_iou": 0.6204762789349042,
+          "matched_object_iou": 0.5245552121392772
+        },
+        "native_QCC": {
+          "fg_ari": 0.5996360784695455,
+          "foreground_iou": 0.6208031459141337,
+          "matched_object_iou": 0.5245552121392772
+        }
+      },
+      "common_active_event_flips": 4
+    }
+  ],
+  "limitations": [
+    "TRAIN diagnostic, not a fixed320 validation score",
+    "Predicted changes use cohort gradients, including transfer rows",
+    "Negative at the registered two scales does not rule out every learning rate",
+    "Both forest routing and activation/finite-step nonlinearity may affect changes"
+  ]
+}
