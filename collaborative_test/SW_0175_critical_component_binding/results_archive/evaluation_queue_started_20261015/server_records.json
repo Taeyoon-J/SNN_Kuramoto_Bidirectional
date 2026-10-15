@@ -1,0 +1,238 @@
+{
+  "manifest": [
+    {
+      "path": "collaborative_test/SW_0175_critical_component_binding/predict_evaluate.py",
+      "sha256": "6e0e4089d4048371039686a274465bf170c65afbf709d8461d19275a32d945e4"
+    },
+    {
+      "path": "collaborative_test/SW_0175_critical_component_binding/prediction_queue.py",
+      "sha256": "2e6318337b848a5d81f24bff7073feb26dcef892113ceacb83a7ec29327e70df"
+    },
+    {
+      "path": "collaborative_test/SW_0175_critical_component_binding/score_queue.py",
+      "sha256": "bfa694a2832789bdd78362bba2fd15b8df545ccb365bdf406edff1dd07e4935f"
+    },
+    {
+      "path": "collaborative_test/SW_0175_critical_component_binding/test_predict_evaluate.py",
+      "sha256": "8aeeda76b8c7c45f6ceecde79e29f6be99fd64925abaabec86e41167e31c2dd8"
+    },
+    {
+      "path": "collaborative_test/SW_0175_critical_component_binding/test_prediction_score_queue.py",
+      "sha256": "7ccf9cf84a793c3380f49741a9685188780fb3ee342e442e45f8d7278d96cb71"
+    }
+  ],
+  "CPU": {
+    "status": "evaluation_CPU_tests_and_actual_references_passed",
+    "returncode": 0,
+    "tests_stderr": "test_fixed_bootstrap_uses_seed175_and_rejects_partial_vectors (collaborative_test.SW_0175_critical_component_binding.test_predict_evaluate.PredictionContractTests) ... ok\ntest_public_predictor_uses_separate_registered_supports_and_accepts_capacity_1024 (collaborative_test.SW_0175_critical_component_binding.test_predict_evaluate.PredictionContractTests) ... ok\ntest_row_writer_reader_roundtrip_and_integrity (collaborative_test.SW_0175_critical_component_binding.test_predict_evaluate.PredictionContractTests) ... ok\ntest_owned_worker_memory_is_not_misclassified_as_foreign (collaborative_test.SW_0175_critical_component_binding.test_prediction_score_queue.QueueHandoffTests) ... ok\ntest_prediction_worker_uses_registered_v2_module (collaborative_test.SW_0175_critical_component_binding.test_prediction_score_queue.QueueHandoffTests) ... ok\ntest_score_wait_consumes_v2_prediction_state_hashes (collaborative_test.SW_0175_critical_component_binding.test_prediction_score_queue.QueueHandoffTests) ... ok\ntest_score_wait_does_not_accept_v1_prediction_supervisor (collaborative_test.SW_0175_critical_component_binding.test_prediction_score_queue.QueueHandoffTests) ... ok\ntest_stable_idle_uses_real_four_argument_owner_contract (collaborative_test.SW_0175_critical_component_binding.test_prediction_score_queue.QueueHandoffTests) ... ok\ntest_training_dependency_consumes_v2_state_and_manifest (collaborative_test.SW_0175_critical_component_binding.test_prediction_score_queue.QueueHandoffTests) ... ok\ntest_training_dependency_waits_only_for_live_v2_supervisor (collaborative_test.SW_0175_critical_component_binding.test_prediction_score_queue.QueueHandoffTests) ... ok\n\n----------------------------------------------------------------------\nRan 10 tests in 4.608s\n\nOK\n",
+    "implementation_fingerprint": {
+      "collaborative_test/SW_0175_critical_component_binding/DESIGN_KO.md": "b3129d016bbd192861f1a43d952c3fbc8b007d1d5a4654a68d2f784cf43a2f11",
+      "collaborative_test/SW_0175_critical_component_binding/critical_component_objective.py": "cf0773112a5a671379b2449365a16799369242039dce2e114093d568e94cbc23",
+      "collaborative_test/SW_0175_critical_component_binding/train_v2.py": "284d6de62c4af5cc335b7b953eca1cc936e50f732e55867e4b804c8ec2215a89",
+      "collaborative_test/SW_0175_critical_component_binding/training_queue_v2.py": "80823b71c525980d38cce4cd1c1bf0e266a7b4bce24d4c43c1f902e43ee486d0",
+      "collaborative_test/SW_0175_critical_component_binding/predict_evaluate.py": "6e0e4089d4048371039686a274465bf170c65afbf709d8461d19275a32d945e4",
+      "collaborative_test/SW_0175_critical_component_binding/prediction_queue.py": "2e6318337b848a5d81f24bff7073feb26dcef892113ceacb83a7ec29327e70df",
+      "collaborative_test/SW_0175_critical_component_binding/score_queue.py": "bfa694a2832789bdd78362bba2fd15b8df545ccb365bdf406edff1dd07e4935f",
+      "collaborative_test/SW_0175_critical_component_binding/test_predict_evaluate.py": "8aeeda76b8c7c45f6ceecde79e29f6be99fd64925abaabec86e41167e31c2dd8",
+      "collaborative_test/SW_0130_phase_state_integration/run.py": "92ac0032467c6bff2e31a76c66021c5e211f9402d15ff868382d71ecc807e988",
+      "collaborative_test/SW_0134_native_spike_binding/rollout.py": "66c08404af91b50fb4cbfa63fe44650dd6a698ea669cd3d6a672dfc5c78503f3",
+      "collaborative_test/SW_0135_native32_spike_binding/foundation.py": "9c241cacf1479c339fa56376b881672535c8d7ac4966a7ddff3b4b47f24cb867",
+      "collaborative_test/SW_0135_native32_spike_binding/evaluation_contract32.py": "e601280ade9a2b9545f6bbf94df22deca6ebfe123750229f6a7244105c57b1bd",
+      "collaborative_test/SW_0136_native32_transfer/evaluate.py": "1c2846b69fb4bc936bf06723fc9f1b4c12f6632a02aff7e40c1e21a28b7a30ea",
+      "collaborative_test/SW_0143_native32_selective_geodesic/run.py": "c004674618d3a714a3093beafd03b27f12b94cf3e16ce775fc36da954da7aa5d",
+      "collaborative_test/SW_0143_native32_selective_geodesic/geodesic_operator.py": "268ad6ea010b123feaf6a2c41a02e3fd5e716b5a8d96b53e11d4f93098d5da98",
+      "collaborative_test/SW_0161_supervised_spike_partition/cache.py": "c10e0859368994a820fb9e911295036f1fd7dd52bfd5aa198cc4e28ca1cef8e0",
+      "collaborative_test/SW_0162_connected_signed_partition/preflight.py": "06350ab58d4ef6d58b07c9bda86a0c6f5c28ac8e9ac38fe9f530b698e07f12f4",
+      "collaborative_test/SW_0164_foreground_preserving_partition/foreground_signed.py": "12267f6d168a3b48b2cd59ebab700bcd909386d1659d9725ba2d83849e607af3",
+      "collaborative_test/SW_0164_foreground_preserving_partition/predict_evaluate.py": "8ed4c8723c37526e414f6c531fecdbd5184cd3068476c0c8d75241bf2da1aa79",
+      "collaborative_test/SW_0171_contextual_instance_graph/contextual_encoder.py": "5a00d5291fbee1308024fe71c2a21920330fdb6df523e5425040e4c863adf142",
+      "collaborative_test/SW_0148_checkpointable_boundary_q/stage_queue_v4.py": "14fae39aeb6e958df60edf25680f412acb50a01126fd7af725c61fdba3794623",
+      "snn_kuramoto_bidirectional/evaluation.py": "4a15980c9aa0248dbe0e837ad1b0b430ce26a7ab367c004d290a1272bb1025d7",
+      "snn_kuramoto_bidirectional/graph_generator.py": "4f4c4d680a60822a5e4645eec3bbceb960846d4fac89e799076f6b4cf1bc6dde",
+      "snn_kuramoto_bidirectional/spike_classifier.py": "2d13c15a928f503bc09239aae2153a5f1a82de77aab4b5a76d0dfe876b755181"
+    },
+    "baseline_score_sha256": "978a9d97658837eb19f414a7fb7dbb35d86c6135cb1213e12e63e2837fd65df6",
+    "reference_prediction_sha256": {
+      "source_T": "a50a55bc89027f409beb8b91e076f0f41ec3dbcd0c0497a2cb27b764ed0ec6f3",
+      "SW0164": "7685b31a6d2cefb92d4aa5c62727eb9dbb989aa36370df935c4425a70cf406a5"
+    },
+    "reference_ids_match_fixed320": true,
+    "actual_training_dependency_validated": true,
+    "both_training_complete": false,
+    "CUDA_initialized": false,
+    "validation_ground_truth_read": false
+  },
+  "launch": {
+    "status": "two_prediction_parents_and_GT_last_scorer_verified_live",
+    "observed_unix": 1792102962.739131,
+    "parents": [
+      {
+        "name": "native_Q",
+        "pid": 61858,
+        "argv": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "-u",
+          "-m",
+          "collaborative_test.SW_0175_critical_component_binding.prediction_queue",
+          "--arm",
+          "native_Q"
+        ]
+      },
+      {
+        "name": "critical_component",
+        "pid": 61866,
+        "argv": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "-u",
+          "-m",
+          "collaborative_test.SW_0175_critical_component_binding.prediction_queue",
+          "--arm",
+          "critical_component"
+        ]
+      },
+      {
+        "name": "score",
+        "pid": 61896,
+        "argv": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "-u",
+          "-m",
+          "collaborative_test.SW_0175_critical_component_binding.score_queue"
+        ]
+      }
+    ],
+    "files": [
+      {
+        "path": "collaborative_test/SW_0175_critical_component_binding/predict_evaluate.py",
+        "sha256": "6e0e4089d4048371039686a274465bf170c65afbf709d8461d19275a32d945e4"
+      },
+      {
+        "path": "collaborative_test/SW_0175_critical_component_binding/prediction_queue.py",
+        "sha256": "2e6318337b848a5d81f24bff7073feb26dcef892113ceacb83a7ec29327e70df"
+      },
+      {
+        "path": "collaborative_test/SW_0175_critical_component_binding/score_queue.py",
+        "sha256": "bfa694a2832789bdd78362bba2fd15b8df545ccb365bdf406edff1dd07e4935f"
+      },
+      {
+        "path": "collaborative_test/SW_0175_critical_component_binding/test_predict_evaluate.py",
+        "sha256": "8aeeda76b8c7c45f6ceecde79e29f6be99fd64925abaabec86e41167e31c2dd8"
+      },
+      {
+        "path": "collaborative_test/SW_0175_critical_component_binding/test_prediction_score_queue.py",
+        "sha256": "7ccf9cf84a793c3380f49741a9685188780fb3ee342e442e45f8d7278d96cb71"
+      }
+    ],
+    "implementation_fingerprint": {
+      "collaborative_test/SW_0175_critical_component_binding/DESIGN_KO.md": "b3129d016bbd192861f1a43d952c3fbc8b007d1d5a4654a68d2f784cf43a2f11",
+      "collaborative_test/SW_0175_critical_component_binding/critical_component_objective.py": "cf0773112a5a671379b2449365a16799369242039dce2e114093d568e94cbc23",
+      "collaborative_test/SW_0175_critical_component_binding/train_v2.py": "284d6de62c4af5cc335b7b953eca1cc936e50f732e55867e4b804c8ec2215a89",
+      "collaborative_test/SW_0175_critical_component_binding/training_queue_v2.py": "80823b71c525980d38cce4cd1c1bf0e266a7b4bce24d4c43c1f902e43ee486d0",
+      "collaborative_test/SW_0175_critical_component_binding/predict_evaluate.py": "6e0e4089d4048371039686a274465bf170c65afbf709d8461d19275a32d945e4",
+      "collaborative_test/SW_0175_critical_component_binding/prediction_queue.py": "2e6318337b848a5d81f24bff7073feb26dcef892113ceacb83a7ec29327e70df",
+      "collaborative_test/SW_0175_critical_component_binding/score_queue.py": "bfa694a2832789bdd78362bba2fd15b8df545ccb365bdf406edff1dd07e4935f",
+      "collaborative_test/SW_0175_critical_component_binding/test_predict_evaluate.py": "8aeeda76b8c7c45f6ceecde79e29f6be99fd64925abaabec86e41167e31c2dd8",
+      "collaborative_test/SW_0130_phase_state_integration/run.py": "92ac0032467c6bff2e31a76c66021c5e211f9402d15ff868382d71ecc807e988",
+      "collaborative_test/SW_0134_native_spike_binding/rollout.py": "66c08404af91b50fb4cbfa63fe44650dd6a698ea669cd3d6a672dfc5c78503f3",
+      "collaborative_test/SW_0135_native32_spike_binding/foundation.py": "9c241cacf1479c339fa56376b881672535c8d7ac4966a7ddff3b4b47f24cb867",
+      "collaborative_test/SW_0135_native32_spike_binding/evaluation_contract32.py": "e601280ade9a2b9545f6bbf94df22deca6ebfe123750229f6a7244105c57b1bd",
+      "collaborative_test/SW_0136_native32_transfer/evaluate.py": "1c2846b69fb4bc936bf06723fc9f1b4c12f6632a02aff7e40c1e21a28b7a30ea",
+      "collaborative_test/SW_0143_native32_selective_geodesic/run.py": "c004674618d3a714a3093beafd03b27f12b94cf3e16ce775fc36da954da7aa5d",
+      "collaborative_test/SW_0143_native32_selective_geodesic/geodesic_operator.py": "268ad6ea010b123feaf6a2c41a02e3fd5e716b5a8d96b53e11d4f93098d5da98",
+      "collaborative_test/SW_0161_supervised_spike_partition/cache.py": "c10e0859368994a820fb9e911295036f1fd7dd52bfd5aa198cc4e28ca1cef8e0",
+      "collaborative_test/SW_0162_connected_signed_partition/preflight.py": "06350ab58d4ef6d58b07c9bda86a0c6f5c28ac8e9ac38fe9f530b698e07f12f4",
+      "collaborative_test/SW_0164_foreground_preserving_partition/foreground_signed.py": "12267f6d168a3b48b2cd59ebab700bcd909386d1659d9725ba2d83849e607af3",
+      "collaborative_test/SW_0164_foreground_preserving_partition/predict_evaluate.py": "8ed4c8723c37526e414f6c531fecdbd5184cd3068476c0c8d75241bf2da1aa79",
+      "collaborative_test/SW_0171_contextual_instance_graph/contextual_encoder.py": "5a00d5291fbee1308024fe71c2a21920330fdb6df523e5425040e4c863adf142",
+      "collaborative_test/SW_0148_checkpointable_boundary_q/stage_queue_v4.py": "14fae39aeb6e958df60edf25680f412acb50a01126fd7af725c61fdba3794623",
+      "snn_kuramoto_bidirectional/evaluation.py": "4a15980c9aa0248dbe0e837ad1b0b430ce26a7ab367c004d290a1272bb1025d7",
+      "snn_kuramoto_bidirectional/graph_generator.py": "4f4c4d680a60822a5e4645eec3bbceb960846d4fac89e799076f6b4cf1bc6dde",
+      "snn_kuramoto_bidirectional/spike_classifier.py": "2d13c15a928f503bc09239aae2153a5f1a82de77aab4b5a76d0dfe876b755181"
+    },
+    "reference_prediction_sha256": {
+      "source_T": "a50a55bc89027f409beb8b91e076f0f41ec3dbcd0c0497a2cb27b764ed0ec6f3",
+      "SW0164": "7685b31a6d2cefb92d4aa5c62727eb9dbb989aa36370df935c4425a70cf406a5"
+    },
+    "validation_ground_truth_read": false,
+    "optimizer_updates": 0
+  },
+  "actual_live_queue_observation": {
+    "observed_unix": 1792103041.6400666,
+    "queues": [
+      {
+        "name": "native_Q",
+        "state": {
+          "arm": "native_Q",
+          "experiment": "SW0175_prediction_queue",
+          "status": "waiting_for_training",
+          "supervisor_pid": 61858,
+          "updated": 1792102961.680788
+        },
+        "parent": {
+          "pid": 61858,
+          "state": "S",
+          "argv": [
+            "/Data0/kevinswk/envs/snn/bin/python",
+            "-u",
+            "-m",
+            "collaborative_test.SW_0175_critical_component_binding.prediction_queue",
+            "--arm",
+            "native_Q"
+          ]
+        },
+        "worker": null,
+        "log_tail": ""
+      },
+      {
+        "name": "critical_component",
+        "state": {
+          "arm": "critical_component",
+          "experiment": "SW0175_prediction_queue",
+          "status": "waiting_for_training",
+          "supervisor_pid": 61866,
+          "updated": 1792102962.1165183
+        },
+        "parent": {
+          "pid": 61866,
+          "state": "S",
+          "argv": [
+            "/Data0/kevinswk/envs/snn/bin/python",
+            "-u",
+            "-m",
+            "collaborative_test.SW_0175_critical_component_binding.prediction_queue",
+            "--arm",
+            "critical_component"
+          ]
+        },
+        "worker": null,
+        "log_tail": ""
+      },
+      {
+        "name": "score",
+        "state": {
+          "experiment": "SW0175_score_queue",
+          "prediction_status": {
+            "critical_component": "waiting",
+            "native_Q": "waiting"
+          },
+          "status": "waiting_for_both_predictions",
+          "supervisor_pid": 61896,
+          "updated": 1792103039.479796
+        },
+        "parent": {
+          "pid": 61896,
+          "state": "S",
+          "argv": [
+            "/Data0/kevinswk/envs/snn/bin/python",
+            "-u",
+            "-m",
+            "collaborative_test.SW_0175_critical_component_binding.score_queue"
+          ]
+        },
+        "worker": null,
+        "log_tail": ""
+      }
+    ],
+    "score_exists": false
+  }
+}
