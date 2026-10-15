@@ -1,0 +1,63 @@
+{
+  "experiment": "SW0165_foreground_partition_replication",
+  "date": "2026-10-14",
+  "status": "conditional_seed0_seed2_replication_of_frozen_SW0164_recipe",
+  "discovery_seed": 1,
+  "replication_seeds": [
+    0,
+    2
+  ],
+  "source": "SW0097 seed-specific source_contract(seed); SW135 strict native32 foundation; SW143 T operator; no training or source mutation",
+  "source_train_positions": [
+    0,
+    1,
+    2,
+    3,
+    2048,
+    2049,
+    2050,
+    2051
+  ],
+  "source_forward": {
+    "batch": 1,
+    "steps": 1024,
+    "settle": 512,
+    "live_tail": 0,
+    "optimizer_updates": 0,
+    "backend": "factorized",
+    "coupling": "actual untouched prepare_coupling tuple[0] captured from the same rollout",
+    "q": "production emitted-spike Q"
+  },
+  "readout": "SW0164 foreground_induced_merge unchanged; full 1024-node signed energy, source-T foreground induced 4-neighbor support, retain all foreground singleton groups, strict positive-gain merges only; no min-size filtering or label cap beyond native 1024 patches",
+  "predictions": {
+    "ids": [
+      1320,
+      1639
+    ],
+    "count": 320,
+    "native_rgb": "source-registered validation RGB 128x128; direct native32 readout",
+    "control": "fresh same-rollout source-T QCC must exactly match the seed-specific archived SW143 T labels",
+    "slot": "same-seed SW0092 Slot Attention own70k epoch10 validated native128 labels converted by production 4x4 modal converter"
+  },
+  "evaluation": {
+    "ground_truth": "canonical HDF5 masks opened only after candidate, fresh source-T control, source references, and Slot references are frozen and validated",
+    "metrics": [
+      "fg_ari",
+      "foreground_iou",
+      "matched_object_iou"
+    ],
+    "bootstrap": {
+      "method": "paired image bootstrap with common indices",
+      "replicates": 10000,
+      "random_state_seed": 165
+    },
+    "requirements": {
+      "foreground_membership_equals_own_source_T": true,
+      "foreground_iou_equals_own_source_T_per_image": true,
+      "report_each_seed_separately": true,
+      "report_seed1_discovery_separately": true
+    }
+  },
+  "replication_interpretation": "Fixed seed0/2 replication tests the exact seed1-discovered readout. It does not establish seed-population generalization, new native32 training, unique-data scaling, or event-gating causality.",
+  "owner_queue": "Exclusive physical GPU leases; per-seed processes; no global SEED mutation; only owned-child termination; durable per-image row ledger; score after all predictions validate."
+}

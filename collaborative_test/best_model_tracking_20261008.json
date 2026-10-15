@@ -3322,5 +3322,33 @@
     "commit": "cab6c676e24a149a45ea960586c04e579f78d384",
     "new_commit_since_previous_cycle": false,
     "method": "git fetch origin patch_v2 then git rev-parse FETCH_HEAD"
+  },
+  "latest_foreground_partition_replication": {
+    "experiment": "SW0165",
+    "status": "deployed_and_queued",
+    "seed_scope": [
+      0,
+      2
+    ],
+    "discovery_seed": 1,
+    "native_grid": [
+      32,
+      32
+    ],
+    "optimizer_updates": 0,
+    "root_cpu_tests_passed": 14,
+    "server_cpu_tests_passed": 14,
+    "server_actual_skips": 0,
+    "server_ground_truth_opened_at_admission": false,
+    "cuda_initialized_at_cpu_admission": false,
+    "verified_supervisor_pids_at_observation": {
+      "seed0": 3595201,
+      "seed2": 3595219
+    },
+    "aggregation_waiter_pid_at_launch": 3595222,
+    "performance_result_available": false,
+    "pid_liveness_requires_current_recheck": true,
+    "evidence": "SW_0165_foreground_partition_replication/results_archive/deployed_and_queued_20261014/server_records.json",
+    "incumbent_changed": false
   }
 }

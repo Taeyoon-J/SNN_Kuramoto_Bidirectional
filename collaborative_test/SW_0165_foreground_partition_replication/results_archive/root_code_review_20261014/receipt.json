@@ -1,0 +1,44 @@
+{
+  "experiment": "SW0165_foreground_partition_replication",
+  "status": "root_local_cpu_and_independent_code_review_passed",
+  "created_utc": "2026-10-15T03:30:03.191312+00:00",
+  "files": {
+    "preflight.py": "aa2ecc93873ce6bc517f76a78d69f3be34f2048d630040186a2debe3cb94f0cf",
+    "predict_evaluate.py": "7f65d5e31705e31a4f88aa7628e8905baac707e9ec78ff35384e9ddc592dd0bc",
+    "stage_queue.py": "f77c3148756e82e99e88be69c7ad5606c1c9f9c9f922c2cd55702f1403220665",
+    "replication_summary.py": "0f89e72902ebe1416a01a7592ba2510316e5a35f31182d9da9541f1457bc426d",
+    "test_foreground_signed.py": "5173a97cbd64d32a040f313208dbd29d97b0ff432b377ee6272a502d8cfdb4fb",
+    "test_preflight.py": "85a179192543ffe7dc0151d41f611951e18d6016746eb7aba9489aecb789a648",
+    "test_predict_evaluate.py": "6c6ba6b1212611b949502e167e42c60d7496a7f56ff38481a5e7a15c5d18fa00",
+    "test_stage_queue.py": "529d979f158b49da5213f720ed3a298fc511856f1203d8b23e9398ddfdc6374b",
+    "test_replication_summary.py": "f046dff6deb41b5a5b0a31cdf83a2a85713e4c5c5e1389e8d7b713463bbd9a58"
+  },
+  "root_unittest_run": {
+    "actual_tests": 14,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "reported_runtime_seconds": 5.028,
+    "modules": [
+      "test_foreground_signed",
+      "test_preflight",
+      "test_predict_evaluate",
+      "test_stage_queue",
+      "test_replication_summary"
+    ]
+  },
+  "independent_read_only_review": {
+    "reviewer": "sol61_gate_review",
+    "result": "pass",
+    "review_scope": [
+      "actual baseline Path read and seeds-dict schema",
+      "cross-seed prepared/source/reference rejection",
+      "registered three-seed mean plus at least two positive gains",
+      "actual SW0165 regression imports",
+      "shared-image bootstrap/discovery versus replication roles"
+    ]
+  },
+  "server_cpu_admission_pending": true,
+  "gpu_launched": false,
+  "ground_truth_used_for_prediction": false
+}
