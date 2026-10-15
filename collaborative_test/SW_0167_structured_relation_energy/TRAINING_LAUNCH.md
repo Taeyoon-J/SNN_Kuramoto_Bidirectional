@@ -11,6 +11,8 @@ Two independent owner-guarded queues are registered, using only exclusively idle
 
 At the archived launch observation the worker processes were alive and preparing their inputs before CUDA allocation; **an optimizer update was not yet verified**. Queue status alone is insufficient to claim GPU training progress. Later durable boundaries and actual GPU ownership provide that evidence. Foreign GPU0 PID2653200 was left running.
 
+Subsequent direct observation confirmed actual CUDA training: structured worker3648536 owned GPU2 (842MiB) with durable update2; local-margin worker3648525 owned GPU1 (838MiB) with durable update4. Both exact registered worker command lines were live, both supervisors remained running, and no error was recorded. These counts are a start receipt, not a final endpoint or a model score. Evidence: `results_archive/actual_gpu_training_started_20261015/server_records.json`.
+
 Both arms use the same 512 TRAIN images, fixed eight-pass order, identical fresh head initialization, 256 logical B16 Adam updates with micro4, learning rate3e-4 and gradient clip1. Only the loss differs. Every completed update has an atomic resumable boundary. Final validation checks exact final head/boundary agreement and all four Adam parameter step counters at256. Neither encoder nor physical source gates are optimized in this head-only supervised pilot.
 
 Both final endpoints must freeze before shared-rollout fixed320 evaluation. Compare the structured candidate against both SW164 seed1 and the matched local control, using the registered paired confidence intervals and exact foreground preservation gate. This launch is not evidence of an improvement, data scaling or gate causality; SW165 remains incumbent.
