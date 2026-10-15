@@ -30,3 +30,8 @@ FG-ARI .87, fresh native32 70k scaling, or causal utility of every gate.
 Evidence: results_archive/training_and_evaluation_registered_20261015/
 server_records.json and independent_verification.json. Generated files physically
 reside under collaborative_testing/generated via the existing archive junction.
+
+Subsequent actual GPU start is confirmed in `actual_GPU_training_started.json`:
+both same worker PIDs are present in NVML (about 4.1 GiB each), and each arm
+has a validated committed boundary with eight completed optimizer updates.
+This supersedes the preparation-only observation above; it is not a final score.
