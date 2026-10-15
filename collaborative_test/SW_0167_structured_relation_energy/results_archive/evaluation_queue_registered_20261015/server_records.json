@@ -1,0 +1,253 @@
+{
+  "launch.json": {
+    "status": "verified_prediction_and_score_queues_registered",
+    "queues": [
+      {
+        "role": "prediction",
+        "pid": 3653194,
+        "actual_argv": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "-u",
+          "-m",
+          "collaborative_test.SW_0167_structured_relation_energy.prediction_queue"
+        ],
+        "initial_status": "waiting_for_training"
+      },
+      {
+        "role": "score",
+        "pid": 3653228,
+        "actual_argv": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "-u",
+          "-m",
+          "collaborative_test.SW_0167_structured_relation_energy.score_queue"
+        ],
+        "initial_status": "waiting_for_predictions"
+      }
+    ],
+    "files": [
+      {
+        "path": "collaborative_test/SW_0167_structured_relation_energy/predict_evaluate.py",
+        "sha256": "03ca661fc89b2d4eb9435e447da38ca297b71bf9c86385a358310fd2c5db494f"
+      },
+      {
+        "path": "collaborative_test/SW_0167_structured_relation_energy/prediction_queue.py",
+        "sha256": "a358f74f86fce15a6f098d2f3eab853247b066a5cb7085e0965db042d8ef1e7c"
+      },
+      {
+        "path": "collaborative_test/SW_0167_structured_relation_energy/score_queue.py",
+        "sha256": "f9d9ce55a3ecf0ebf7a74e25200b9e2074f3ed17a9f6a1f5224fa903f1f4a46b"
+      },
+      {
+        "path": "collaborative_test/SW_0167_structured_relation_energy/test_predict_evaluate.py",
+        "sha256": "f4c2096c56c63df4e5a4a09a1e4fe09e24b5785c8d7c461e64f6b96ac9d85910"
+      },
+      {
+        "path": "collaborative_test/SW_0167_structured_relation_energy/test_prediction_queue.py",
+        "sha256": "fbda0422c668fa665afd6c008c00c8ff5d2f09145f5984502e22d554ae681235"
+      },
+      {
+        "path": "collaborative_test/SW_0167_structured_relation_energy/DESIGN_KO.md",
+        "sha256": "43c01261963edb7c0f2427b46e35ddf4341d18c0e1f908ed426b66558ff2493a"
+      },
+      {
+        "path": "collaborative_test/SW_0167_structured_relation_energy/feature_modes.py",
+        "sha256": "bf40bde9d54844f74e78e2ee2ed75305a4f5d853c2834ebcdf1c4cf9ad5f03f3"
+      },
+      {
+        "path": "collaborative_test/SW_0167_structured_relation_energy/structured_energy.py",
+        "sha256": "2a4ddddda692b660e8c9c2f3cf8900b7032e2c471f0ed619d737851719872e7e"
+      },
+      {
+        "path": "collaborative_test/SW_0167_structured_relation_energy/training_objective.py",
+        "sha256": "186be7d4e7eb4d6cbafe1f737afdee2865e3058d1c4e00ea54a8ef66f9374bf2"
+      },
+      {
+        "path": "collaborative_test/SW_0167_structured_relation_energy/train.py",
+        "sha256": "3c69d9acb505bf635f72309505c1bf9fe3d951791ddeafaa22e813cda6789642"
+      },
+      {
+        "path": "collaborative_test/SW_0161_supervised_spike_partition/cache.py",
+        "sha256": "c10e0859368994a820fb9e911295036f1fd7dd52bfd5aa198cc4e28ca1cef8e0"
+      },
+      {
+        "path": "collaborative_test/SW_0155_supervised_spike_relations/train.py",
+        "sha256": "68306bc5fa658487302dbcb20d0e95676957dbdbd3b04c471292cbfb4126db69"
+      },
+      {
+        "path": "collaborative_test/SW_0130_phase_state_integration/run.py",
+        "sha256": "92ac0032467c6bff2e31a76c66021c5e211f9402d15ff868382d71ecc807e988"
+      },
+      {
+        "path": "collaborative_test/SW_0134_native_spike_binding/rollout.py",
+        "sha256": "66c08404af91b50fb4cbfa63fe44650dd6a698ea669cd3d6a672dfc5c78503f3"
+      },
+      {
+        "path": "collaborative_test/SW_0135_native32_spike_binding/evaluation_contract32.py",
+        "sha256": "e601280ade9a2b9545f6bbf94df22deca6ebfe123750229f6a7244105c57b1bd"
+      },
+      {
+        "path": "collaborative_test/SW_0136_native32_transfer/evaluate.py",
+        "sha256": "1c2846b69fb4bc936bf06723fc9f1b4c12f6632a02aff7e40c1e21a28b7a30ea"
+      },
+      {
+        "path": "collaborative_test/SW_0137_native32_source_qcc/run.py",
+        "sha256": "2498629d119d73d7e1ae06d359e99dda87355c8a577951fbf5b1af28570de7d2"
+      },
+      {
+        "path": "collaborative_test/SW_0143_native32_selective_geodesic/run.py",
+        "sha256": "c004674618d3a714a3093beafd03b27f12b94cf3e16ce775fc36da954da7aa5d"
+      },
+      {
+        "path": "collaborative_test/SW_0143_native32_selective_geodesic/geodesic_operator.py",
+        "sha256": "268ad6ea010b123feaf6a2c41a02e3fd5e716b5a8d96b53e11d4f93098d5da98"
+      },
+      {
+        "path": "collaborative_test/SW_0162_connected_signed_partition/preflight.py",
+        "sha256": "06350ab58d4ef6d58b07c9bda86a0c6f5c28ac8e9ac38fe9f530b698e07f12f4"
+      },
+      {
+        "path": "collaborative_test/SW_0164_foreground_preserving_partition/foreground_signed.py",
+        "sha256": "12267f6d168a3b48b2cd59ebab700bcd909386d1659d9725ba2d83849e607af3"
+      },
+      {
+        "path": "collaborative_test/SW_0164_foreground_preserving_partition/predict_evaluate.py",
+        "sha256": "8ed4c8723c37526e414f6c531fecdbd5184cd3068476c0c8d75241bf2da1aa79"
+      },
+      {
+        "path": "collaborative_test/SW_0167_structured_relation_energy/audit_train_cache.py",
+        "sha256": "64c2c306013b19ebe7c47b5dd2a3f45460a17341098f033b22307781a63c951f"
+      },
+      {
+        "path": "collaborative_test/SW_0167_structured_relation_energy/qcc_readout.py",
+        "sha256": "b0e0b5536f5c24b49f15a7ef842469a99e19ad63f89983cb8579a9f987fc0ea8"
+      },
+      {
+        "path": "collaborative_test/SW_0167_structured_relation_energy/preflight_v2.py",
+        "sha256": "d77186f5b65ccaddeaed44e40c588ac587b4f566d05499f641b672814a31ba9c"
+      },
+      {
+        "path": "collaborative_test/SW_0167_structured_relation_energy/preflight_queue_v2.py",
+        "sha256": "1bfe0d3ebb45885ade44ae756b56b27e83183b66a396abf958d9e2c35c30f5a8"
+      },
+      {
+        "path": "collaborative_test/SW_0163_relation_context_assignment/context_cache.py",
+        "sha256": "d7876446ac016b8e6b58fddc849eaa945441c0b158c335262dcb38ab7e2e5164"
+      },
+      {
+        "path": "collaborative_test/SW_0155_supervised_spike_relations/objective.py",
+        "sha256": "07ea07f1fa06c6f2e05e4e98184db487f68549249d997e6991ea26a8e06b40fe"
+      },
+      {
+        "path": "collaborative_test/SW_0148_checkpointable_boundary_q/checkpoint.py",
+        "sha256": "75d5076c051f81a51a39bbafedd363e589aa58ffc41ba4a662a87ffb91601f53"
+      },
+      {
+        "path": "collaborative_test/SW_0148_checkpointable_boundary_q/stage_queue_v4.py",
+        "sha256": "14fae39aeb6e958df60edf25680f412acb50a01126fd7af725c61fdba3794623"
+      },
+      {
+        "path": "collaborative_test/SW_0126_history_event_binding/pilot_queue.py",
+        "sha256": "c59cdc39af20c824930d1926c8cec1418ee818577b8cc4240ad6eaae836764f6"
+      },
+      {
+        "path": "collaborative_test/SW_0167_structured_relation_energy/training_queue.py",
+        "sha256": "0359d2ff800157dd2313f604b9fdf908cd31a89e5559199669b12a049f14126a"
+      }
+    ]
+  },
+  "server_cpu_tests.json": {
+    "returncode": 0,
+    "stdout": "{\"runtime\": \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0167_structured_relation_energy/results_archive/score_queue_20261015\", \"score_path\": \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0167_structured_relation_energy/results_archive/evaluation_seed1_20261015.json\", \"cuda_visible_devices\": \"\"}\n",
+    "stderr": "test_comparison_builder_uses_source_control_local_arm_and_seed164 (collaborative_test.SW_0167_structured_relation_energy.test_predict_evaluate.PredictionEvaluationTests) ... ok\ntest_prediction_import_preserves_assigned_gpu_without_cuda_init (collaborative_test.SW_0167_structured_relation_energy.test_predict_evaluate.PredictionEvaluationTests) ... ok\ntest_predictor_uses_numpy_qcc_and_one_shared_actual_rollout (collaborative_test.SW_0167_structured_relation_energy.test_predict_evaluate.PredictionEvaluationTests) ... ok\ntest_public_gt_last_score_and_independent_validator (collaborative_test.SW_0167_structured_relation_energy.test_predict_evaluate.PredictionEvaluationTests) ... ok\ntest_row_reader_accepts_native_variable_k_through_1024 (collaborative_test.SW_0167_structured_relation_energy.test_predict_evaluate.PredictionEvaluationTests) ... ok\ntest_row_reader_rejects_candidate_overflow_and_control_overflow (collaborative_test.SW_0167_structured_relation_energy.test_predict_evaluate.PredictionEvaluationTests) ... ok\ntest_nonterminal_training_requires_real_supervisor_liveness (collaborative_test.SW_0167_structured_relation_energy.test_prediction_queue.EvaluationQueueTests) ... ok\ntest_proc_liveness_matches_exact_stage_module (collaborative_test.SW_0167_structured_relation_energy.test_prediction_queue.EvaluationQueueTests) ... ok\ntest_queue_commands_and_dry_runs_do_not_expose_gpu_in_parent (collaborative_test.SW_0167_structured_relation_energy.test_prediction_queue.EvaluationQueueTests) ... ok\ntest_score_dependency_checks_prediction_fingerprint_and_owner (collaborative_test.SW_0167_structured_relation_energy.test_prediction_queue.EvaluationQueueTests) ... ok\ntest_training_dependency_requires_both_complete_bound_manifests (collaborative_test.SW_0167_structured_relation_energy.test_prediction_queue.EvaluationQueueTests) ... ok\n\n----------------------------------------------------------------------\nRan 11 tests in 2.549s\n\nOK\n"
+  },
+  "dependency_cpu_smoke.json": {
+    "returncode": 0,
+    "stdout": "{\"status\": \"actual_training_dependency_checked_CPU_only\", \"both_training_complete\": false, \"validation_data_read\": false}\n",
+    "stderr": ""
+  },
+  "prediction": {
+    "state": {
+      "experiment": "SW0167_prediction_queue",
+      "queue_fingerprint": {
+        "collaborative_test/SW_0126_history_event_binding/pilot_queue.py": "c59cdc39af20c824930d1926c8cec1418ee818577b8cc4240ad6eaae836764f6",
+        "collaborative_test/SW_0148_checkpointable_boundary_q/stage_queue_v4.py": "14fae39aeb6e958df60edf25680f412acb50a01126fd7af725c61fdba3794623",
+        "collaborative_test/SW_0167_structured_relation_energy/DESIGN_KO.md": "43c01261963edb7c0f2427b46e35ddf4341d18c0e1f908ed426b66558ff2493a",
+        "collaborative_test/SW_0167_structured_relation_energy/feature_modes.py": "bf40bde9d54844f74e78e2ee2ed75305a4f5d853c2834ebcdf1c4cf9ad5f03f3",
+        "collaborative_test/SW_0167_structured_relation_energy/predict_evaluate.py": "03ca661fc89b2d4eb9435e447da38ca297b71bf9c86385a358310fd2c5db494f",
+        "collaborative_test/SW_0167_structured_relation_energy/prediction_queue.py": "a358f74f86fce15a6f098d2f3eab853247b066a5cb7085e0965db042d8ef1e7c",
+        "collaborative_test/SW_0167_structured_relation_energy/structured_energy.py": "2a4ddddda692b660e8c9c2f3cf8900b7032e2c471f0ed619d737851719872e7e",
+        "collaborative_test/SW_0167_structured_relation_energy/train.py": "3c69d9acb505bf635f72309505c1bf9fe3d951791ddeafaa22e813cda6789642",
+        "collaborative_test/SW_0167_structured_relation_energy/training_queue.py": "0359d2ff800157dd2313f604b9fdf908cd31a89e5559199669b12a049f14126a"
+      },
+      "status": "waiting_for_training",
+      "supervisor_pid": 3653194,
+      "updated": 1792045721.3978736
+    },
+    "supervisor_live": {
+      "pid": 3653194,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0167_structured_relation_energy.prediction_queue"
+      ],
+      "stat": "3653194 (python) S 1 3653194 3653194 0 -1 1077936128 60820 104 0 0 161 27 0 0 20 0 1 0 419773300 3713507328 144209 18446744073709551615 94699305795584 94699308274925 140722152460608 0 0 0 0 16781312 16386 0 0 0 17 6 0 0 1 0 0 94699309302672 94699309525856 94699324375040 140722152467695 140722152467808 140722152467808 140722152468436 0\n"
+    },
+    "prediction_supervisor.log_tail": ""
+  },
+  "score": {
+    "state": {
+      "experiment": "SW0167_score_queue",
+      "queue_fingerprint": {
+        "collaborative_test/SW_0126_history_event_binding/pilot_queue.py": "c59cdc39af20c824930d1926c8cec1418ee818577b8cc4240ad6eaae836764f6",
+        "collaborative_test/SW_0148_checkpointable_boundary_q/stage_queue_v4.py": "14fae39aeb6e958df60edf25680f412acb50a01126fd7af725c61fdba3794623",
+        "collaborative_test/SW_0167_structured_relation_energy/DESIGN_KO.md": "43c01261963edb7c0f2427b46e35ddf4341d18c0e1f908ed426b66558ff2493a",
+        "collaborative_test/SW_0167_structured_relation_energy/predict_evaluate.py": "03ca661fc89b2d4eb9435e447da38ca297b71bf9c86385a358310fd2c5db494f",
+        "collaborative_test/SW_0167_structured_relation_energy/prediction_queue.py": "a358f74f86fce15a6f098d2f3eab853247b066a5cb7085e0965db042d8ef1e7c",
+        "collaborative_test/SW_0167_structured_relation_energy/score_queue.py": "f9d9ce55a3ecf0ebf7a74e25200b9e2074f3ed17a9f6a1f5224fa903f1f4a46b",
+        "collaborative_test/SW_0167_structured_relation_energy/train.py": "3c69d9acb505bf635f72309505c1bf9fe3d951791ddeafaa22e813cda6789642",
+        "collaborative_test/SW_0167_structured_relation_energy/training_queue.py": "0359d2ff800157dd2313f604b9fdf908cd31a89e5559199669b12a049f14126a"
+      },
+      "status": "waiting_for_predictions",
+      "supervisor_pid": 3653228,
+      "updated": 1792045720.7757432
+    },
+    "supervisor_live": {
+      "pid": 3653228,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0167_structured_relation_energy.score_queue"
+      ],
+      "stat": "3653228 (python) S 1 3653228 3653228 0 -1 1077936128 60704 104 0 0 161 27 0 0 20 0 1 0 419773739 3713503232 143351 18446744073709551615 93957340766208 93957343245549 140735767866480 0 0 0 0 16781312 2 0 0 0 17 6 0 0 1 0 0 93957344273296 93957344496480 93957365841920 140735767874804 140735767874912 140735767874912 140735767875540 0\n"
+    },
+    "score_supervisor.log_tail": ""
+  },
+  "structured_hinge_training_state": {
+    "arm": "structured_hinge",
+    "child_pid": 3648536,
+    "experiment": "SW0167_training_queue",
+    "gpu_uuid": "GPU-50cc59a2-8312-ff02-5889-1becf63c7cd4",
+    "memory_used_mib": 848,
+    "physical_gpu": 2,
+    "preflight_report_sha256": "31757d610b799fef70a28a9096ca71f69cc49f5abf1627cfb4f27732e98e3217",
+    "status": "running_training",
+    "supervisor_pid": 3648428,
+    "updated": 1792045718.5728478
+  },
+  "local_margin_training_state": {
+    "arm": "local_margin",
+    "child_pid": 3648525,
+    "experiment": "SW0167_training_queue",
+    "gpu_uuid": "GPU-45604115-c231-56a5-32ea-d3001e8ff243",
+    "memory_used_mib": 844,
+    "physical_gpu": 1,
+    "preflight_report_sha256": "31757d610b799fef70a28a9096ca71f69cc49f5abf1627cfb4f27732e98e3217",
+    "status": "running_training",
+    "supervisor_pid": 3648429,
+    "updated": 1792045718.600558
+  },
+  "gpu_processes": "GPU-a0a7d03d-adc1-37ca-4342-328878b3657c, 2653200, 2162 MiB\nGPU-45604115-c231-56a5-32ea-d3001e8ff243, 3648525, 840 MiB\nGPU-50cc59a2-8312-ff02-5889-1becf63c7cd4, 3648536, 844 MiB\n"
+}
