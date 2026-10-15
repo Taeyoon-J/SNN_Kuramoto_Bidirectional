@@ -1,0 +1,115 @@
+{
+  "launch.json": {
+    "status": "source_deployed_CPU_tests_passed_preflight_queue_live",
+    "pid": 3646814,
+    "actual_argv": [
+      "/Data0/kevinswk/envs/snn/bin/python",
+      "-u",
+      "-m",
+      "collaborative_test.SW_0167_structured_relation_energy.preflight_queue"
+    ],
+    "cpu_test_returncode": 0,
+    "files": [
+      {
+        "path": "collaborative_test/SW_0167_structured_relation_energy/feature_modes.py",
+        "sha256": "bf40bde9d54844f74e78e2ee2ed75305a4f5d853c2834ebcdf1c4cf9ad5f03f3"
+      },
+      {
+        "path": "collaborative_test/SW_0167_structured_relation_energy/training_objective.py",
+        "sha256": "186be7d4e7eb4d6cbafe1f737afdee2865e3058d1c4e00ea54a8ef66f9374bf2"
+      },
+      {
+        "path": "collaborative_test/SW_0167_structured_relation_energy/preflight.py",
+        "sha256": "2c83a17a6d29e030718f2643550982dcfbacba38d493c021f7ef0b5f287379f9"
+      },
+      {
+        "path": "collaborative_test/SW_0167_structured_relation_energy/preflight_queue.py",
+        "sha256": "5a1566d0d4e62c87ed9bbd5de5dcf06c4fdcc9b92e1d27b56c991cc2a9e76aac"
+      },
+      {
+        "path": "collaborative_test/SW_0167_structured_relation_energy/test_feature_modes.py",
+        "sha256": "45994244404992648ada85c4ea929f74d36a272ab8fd684f1616c8eb1b2c4d41"
+      },
+      {
+        "path": "collaborative_test/SW_0167_structured_relation_energy/test_training_objective.py",
+        "sha256": "4ff3a0dacdb67127c71ddcd005400036404bafa65a3c97e178e18860c262cf97"
+      },
+      {
+        "path": "collaborative_test/SW_0167_structured_relation_energy/test_preflight_queue.py",
+        "sha256": "8608190c8bbc51702b53bc5d79d9a86aa791f170f5865e3aa3c3a9fcd0c9e890"
+      },
+      {
+        "path": "collaborative_test/SW_0167_structured_relation_energy/DESIGN_KO.md",
+        "sha256": "43c01261963edb7c0f2427b46e35ddf4341d18c0e1f908ed426b66558ff2493a"
+      },
+      {
+        "path": "collaborative_test/SW_0167_structured_relation_energy/structured_energy.py",
+        "sha256": "2a4ddddda692b660e8c9c2f3cf8900b7032e2c471f0ed619d737851719872e7e"
+      },
+      {
+        "path": "collaborative_test/SW_0167_structured_relation_energy/audit_train_cache.py",
+        "sha256": "64c2c306013b19ebe7c47b5dd2a3f45460a17341098f033b22307781a63c951f"
+      },
+      {
+        "path": "collaborative_test/SW_0167_structured_relation_energy/qcc_readout.py",
+        "sha256": "b0e0b5536f5c24b49f15a7ef842469a99e19ad63f89983cb8579a9f987fc0ea8"
+      },
+      {
+        "path": "collaborative_test/SW_0161_supervised_spike_partition/cache.py",
+        "sha256": "c10e0859368994a820fb9e911295036f1fd7dd52bfd5aa198cc4e28ca1cef8e0"
+      },
+      {
+        "path": "collaborative_test/SW_0155_supervised_spike_relations/train.py",
+        "sha256": "68306bc5fa658487302dbcb20d0e95676957dbdbd3b04c471292cbfb4126db69"
+      },
+      {
+        "path": "collaborative_test/SW_0155_supervised_spike_relations/objective.py",
+        "sha256": "07ea07f1fa06c6f2e05e4e98184db487f68549249d997e6991ea26a8e06b40fe"
+      },
+      {
+        "path": "collaborative_test/SW_0130_phase_state_integration/run.py",
+        "sha256": "92ac0032467c6bff2e31a76c66021c5e211f9402d15ff868382d71ecc807e988"
+      },
+      {
+        "path": "collaborative_test/SW_0164_foreground_preserving_partition/foreground_signed.py",
+        "sha256": "12267f6d168a3b48b2cd59ebab700bcd909386d1659d9725ba2d83849e607af3"
+      },
+      {
+        "path": "collaborative_test/SW_0162_connected_signed_partition/connected_signed.py",
+        "sha256": "fd3c760b523b724a864c807e64a7b2d208f2e426b7980c8f4a944f7edd643af5"
+      },
+      {
+        "path": "snn_kuramoto_bidirectional/evaluation.py",
+        "sha256": "4a15980c9aa0248dbe0e837ad1b0b430ce26a7ab367c004d290a1272bb1025d7"
+      },
+      {
+        "path": "snn_kuramoto_bidirectional/spike_classifier.py",
+        "sha256": "2d13c15a928f503bc09239aae2153a5f1a82de77aab4b5a76d0dfe876b755181"
+      },
+      {
+        "path": "collaborative_test/SW_0148_checkpointable_boundary_q/stage_queue_v4.py",
+        "sha256": "14fae39aeb6e958df60edf25680f412acb50a01126fd7af725c61fdba3794623"
+      }
+    ]
+  },
+  "state.json": {
+    "error": "TypeError('expected np.ndarray (got Tensor)')",
+    "experiment": "SW0167_split_feature_preflight_queue",
+    "finished": 1792043765.3229547,
+    "implementation_fingerprint_sha256": "4a4e1a2e5a392539568144dfbe53503efe5c39b7d29895cbe267789bdda056e0",
+    "status": "failed",
+    "supervisor_pid": 3646814,
+    "updated": 1792043765.3232007
+  },
+  "server_cpu_tests.json": {
+    "returncode": 0,
+    "stdout": "",
+    "stderr": "test_b4_context_q_is_explicitly_accepted_without_cross_mode_claim (collaborative_test.SW_0167_structured_relation_energy.test_feature_modes.SplitFeatureModeTests) ... ok\ntest_same_mode_is_exactly_the_existing_strict_wrapper (collaborative_test.SW_0167_structured_relation_energy.test_feature_modes.SplitFeatureModeTests) ... ok\ntest_split_builder_rejects_bad_dtype_shape_and_symmetry (collaborative_test.SW_0167_structured_relation_energy.test_feature_modes.SplitFeatureModeTests) ... ok\ntest_exact_augmented_score_tie_selects_gold_with_live_zero_gradient (collaborative_test.SW_0167_structured_relation_energy.test_training_objective.GoldTieTests) ... ok\ntest_malformed_energy_and_target_geometry_rejected (collaborative_test.SW_0167_structured_relation_energy.test_training_objective.GoldTieTests) ... ok\ntest_positive_hinge_keeps_candidate_gradient (collaborative_test.SW_0167_structured_relation_energy.test_training_objective.GoldTieTests) ... ok\ntest_implementation_fingerprint_resolves_all_registered_dependencies (collaborative_test.SW_0167_structured_relation_energy.test_preflight_queue.PreflightQueueTests) ... ok\ntest_report_validator_binds_source_fingerprint_and_both_arm_updates (collaborative_test.SW_0167_structured_relation_energy.test_preflight_queue.PreflightQueueTests) ... ok\ntest_source_proof_maps_actual_selected_ids_and_every_row_identity (collaborative_test.SW_0167_structured_relation_energy.test_preflight_queue.PreflightQueueTests) ... ok\ntest_worker_command_is_the_registered_module_and_fixed_report (collaborative_test.SW_0167_structured_relation_energy.test_preflight_queue.PreflightQueueTests) ... ok\n\n----------------------------------------------------------------------\nRan 10 tests in 0.426s\n\nOK\n"
+  },
+  "supervisor_live": {
+    "pid": 3646814,
+    "missing": true
+  },
+  "supervisor.log_tail": "Traceback (most recent call last):\n  File \"/Data0/kevinswk/envs/snn/lib/python3.10/runpy.py\", line 196, in _run_module_as_main\n    return _run_code(code, main_globals, None,\n  File \"/Data0/kevinswk/envs/snn/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0167_structured_relation_energy/preflight_queue.py\", line 358, in <module>\n    raise SystemExit(main())\n  File \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0167_structured_relation_energy/preflight_queue.py\", line 354, in main\n    return _supervisor()\n  File \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0167_structured_relation_energy/preflight_queue.py\", line 246, in _supervisor\n    audit, prep, prepared, supports, targets, proof = _source_admission()\n  File \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0167_structured_relation_energy/preflight_queue.py\", line 100, in _source_admission\n    supports, targets = prep.prepare_train_targets(prepared)\n  File \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0167_structured_relation_energy/preflight.py\", line 106, in prepare_train_targets\n    gt32 = sw155_objective.modal_train_targets32(torch.from_numpy(masks)).cpu().numpy()\nTypeError: expected np.ndarray (got Tensor)\n",
+  "gpu_processes": "GPU-a0a7d03d-adc1-37ca-4342-328878b3657c, 2653200, 2162 MiB\n"
+}
