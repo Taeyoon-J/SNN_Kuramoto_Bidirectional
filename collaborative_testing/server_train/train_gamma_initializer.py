@@ -6,10 +6,11 @@ import json
 import random
 from pathlib import Path
 
+import numpy  # Load NumPy before PyTorch for the local Windows runtime.
 import torch
 from torch.utils.data import DataLoader
 
-from server_train.train_input_layer import build_dataset
+from collaborative_testing.server_train.train_input_layer import build_dataset
 from snn_kuramoto_bidirectional.input_layer_generator import CNNFeatureEncoder
 from snn_kuramoto_bidirectional.training.train_gamma_initializer import (
     train_gamma_initializer,

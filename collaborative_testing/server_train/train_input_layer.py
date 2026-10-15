@@ -6,6 +6,7 @@ import json
 import random
 from pathlib import Path
 
+import numpy  # Load NumPy before PyTorch for the local Windows runtime.
 import torch
 import torch.nn.functional as F
 import h5py
@@ -90,7 +91,7 @@ def parse_args():
         help="Image directory or an HDF5 file containing images.",
     )
     parser.add_argument("--hdf5-key", default="image")
-    parser.add_argument("--output-dir", type=Path, default=Path("server_train/outputs"))
+    parser.add_argument("--output-dir", type=Path, default=Path(__file__).resolve().parent / "outputs")
     parser.add_argument("--num-images", type=int, default=500)
     parser.add_argument("--image-size", type=int, default=224)
     parser.add_argument("--num-kernels", type=int, default=8)

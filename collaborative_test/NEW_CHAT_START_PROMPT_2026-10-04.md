@@ -1,5 +1,7 @@
 # 새 대화 시작 프롬프트
 
+2026-10-15 사용자 정리 범위 확정: **실험 소스는 기존 `collaborative_test`에 유지하고 생성 파일만 이동한다.** 로컬 결과·로그·캐시 실체는 `collaborative_testing/generated/collaborative_test/` 아래에 둔다. 기존 결과 디렉터리는 junction, 개별 결과 파일은 NTFS hard link로 기존 경로와 Git 기록을 보존했다. 새 실험은 로컬 결과를 쓰기 전에 `collaborative_testing/prepare_output.ps1 -Experiment <실험폴더명>`으로 결과 경로를 준비한다. 새 결과는 그 실험의 `results_archive/` 아래에 기록하고 소스 옆에 새 결과 파일을 흩어놓지 않는다. 서버 경로와 실행 중인 서버 작업은 이 로컬 정리로 변경하지 않는다.
+
 2026-10-14 로컬 파일 정리 지시: 배포 준비물·임시 파일·캐시·시각화 산출물은 `patch_v2_sw/collaborative_testing/` 아래에만 생성한다. 현재 private runtime 루트는 `collaborative_testing/collaborative_private_runtime_20261008/`이다. 과거 ACMLab 루트·바탕화면·중첩 ACMLab 경로를 다시 생성하지 않는다. 로컬 테스트는 `collaborative_testing/run_tests.ps1`로 실행하고, pytest 캐시는 `collaborative_testing/cache/pytest`를 사용한다. 이동표와 SHA 검증은 해당 폴더의 organization 기록을 참고한다.
 
 2026-10-14 사용자 운영 지시 추가: goal이 멈추면 실제 상태(pause/blocked), 확인된 원인, 서버 테스트 지속 여부, 재개 조치를 함께 보고한다. 사유가 도구에 없으면 원인 미확인이라고 명시하고 추측하지 않는다. 서버 장애와 goal 상태 전환의 원인을 증거 없이 동일시하지 않는다.

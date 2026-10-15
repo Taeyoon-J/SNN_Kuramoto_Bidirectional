@@ -55,7 +55,7 @@ of clusters is taken from ground truth (oracle k), and the colour-derived masks
 capture only 78% of the scene objects, so objects the model does find can still
 be scored as wrong.
 
-`results/result_overview.png` shows images, ground truth, and both readouts side
+`collaborative_testing/results/result_overview.png` shows images, ground truth, and both readouts side
 by side.
 
 ---
@@ -538,7 +538,7 @@ so the input encoder and patch-gamma stages do not need rerunning. If you do
 need them:
 
 ~~~bash
-python -m server_train.train_input_layer \
+python -m collaborative_testing.server_train.train_input_layer \
   --dataset-path <dataset.h5> --hdf5-key image \
   --output-dir "$RUN/input_encoder" --num-images 1000 --image-size 128 \
   --num-kernels 8 --kernel-size 3 --epochs 100 --batch-size 32 --device cuda
@@ -687,7 +687,7 @@ parameters create none at their default, so old checkpoints load with
 | `training/diagnose_image_specificity.py` | **is the core responding to the image at all** |
 | `training/train_s2net_core.py` | core training entry point |
 | `training/visualize_s2net_objects.py` | visual reports and diagnostics |
-| `results/` | figures |
+| `collaborative_testing/results/` | figures |
 
 ---
 
