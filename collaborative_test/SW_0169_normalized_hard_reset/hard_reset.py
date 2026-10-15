@@ -172,8 +172,7 @@ def rollout(wrapped, gamma: Tensor, calibration_r: Tensor, *, total_steps=None,
     boundary = steps - tail
     batch, fold = gamma.shape[0], COMPONENTS
     feedback = core.graph_generator is not None and core.graph_generator.uses_feedback
-    grad_requested = bool(tail and torch.is_grad_enabled())
-    setup_context = torch.enable_grad() if grad_requested else torch.no_grad()
+    setup_context = torch.enable_grad() if tail else torch.no_grad()
     with setup_context:
         graph = (core.graph_generator(gamma) if core.graph_generator is not None
                  else core.sc.to(gamma.device).unsqueeze(0).expand(batch, -1, -1))
@@ -204,7 +203,7 @@ def rollout(wrapped, gamma: Tensor, calibration_r: Tensor, *, total_steps=None,
             # E history is stored separately below and detached at the same boundary.
             event_history = event_history.detach()
 
-        with torch.set_grad_enabled(grad_requested and t >= boundary):
+        with torch.set_grad_enabled(t >= boundary):
             theta = core.kuramoto(theta, drive, A=graph, spike=None, coupling=coupling)
             theta_history.append(theta)
             carrier, gate = sinusoidal_gating(

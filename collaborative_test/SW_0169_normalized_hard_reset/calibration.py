@@ -198,12 +198,12 @@ def run_source_calibration_gpu(prepared, *, device="cuda:0"):
         trace_native, a_native = capture_source_coupling(
             found.wrapped.core.kuramoto,
             lambda: late_rollout(found.wrapped, gamma, total_steps=STEPS,
-                                 live_tail_steps=0))
+                                 live_tail_steps=TAIL))
         trace_copy, a_copy = capture_source_coupling(
             found.wrapped.core.kuramoto,
             lambda: hard_reset.rollout(found.wrapped, gamma,
                                        torch.ones(4, device=device),
-                                       total_steps=STEPS, live_tail_steps=0,
+                                       total_steps=STEPS, live_tail_steps=TAIL,
                                        source_mode=True))
         for field in TRACE_FIELDS:
             if not torch.equal(trace_native[field], trace_copy[field]):
