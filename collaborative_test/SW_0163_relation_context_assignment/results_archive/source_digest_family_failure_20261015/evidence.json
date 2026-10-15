@@ -1,0 +1,566 @@
+﻿{
+    "experiment":  "SW0163_source_digest_family_audit",
+    "cuda_initialized":  false,
+    "source":  {
+                   "checkpoint_path":  "/Data0/kevinswk/patch_v2_sw/trained_models/SW0097_graph_adaptation/seed1_positive_frozen/core.pt",
+                   "checkpoint_sha256":  "76f379d5a7e4cd9d12fdf0b701f3dd9dbbf28b5eea270a9cee2d30d87b4dad98",
+                   "foundation_loader":  "SW0135 load_native32_foundation(seed=1, device=cpu, verify_rgb_assets=False); SW0155 wrapper calls this loader under forked seeded RNG",
+                   "manifest_path":  "/Data0/kevinswk/patch_v2_sw/trained_models/SW0097_graph_adaptation/seed1_positive_frozen/manifest.json",
+                   "manifest_sha256":  "241c9ea96fc3d3d2b168cb49d941e39c6751eca4436192e614760673545da38b",
+                   "provenance":  {
+                                      "encoder_sha256":  "9b9c9c59725f872084a6c9bfae1ebbd1b89de40d18ef4f8ab6b8ec014c2ab868",
+                                      "experiment":  "SW0135_native32_spike_binding",
+                                      "feature_preprocessing_sha256":  "a9ec3281b9603021c37f7c346baa6cf62513c5ce7edde867ab7eddf24b18e127",
+                                      "ground_truth_used":  false,
+                                      "implementation_fingerprint":  {
+                                                                         "collaborative_test/SW_0094_aligned_joint_pilot/run.py":  "9f4e9046a2960e7aa53bf16d7e0663bee162b3f56a11f11d45554d79889536a3",
+                                                                         "collaborative_test/SW_0110_xy_graph_route/run.py":  "b7d4b90cbf74c8085d2a5cfc8b78a5772f77bc086240939a332f429c1ca344fd",
+                                                                         "collaborative_test/SW_0130_phase_state_integration/model.py":  "2ba6bbe44dbbf2a5a444e724db71caafc1b9915570bfd7ab31343b86915cbd0b",
+                                                                         "collaborative_test/SW_0130_phase_state_integration/run.py":  "92ac0032467c6bff2e31a76c66021c5e211f9402d15ff868382d71ecc807e988",
+                                                                         "collaborative_test/SW_0134_native_spike_binding/rollout.py":  "66c08404af91b50fb4cbfa63fe44650dd6a698ea669cd3d6a672dfc5c78503f3",
+                                                                         "collaborative_test/SW_0135_native32_spike_binding/binder.py":  "38450abd18eb0db390959727b95f88f96633117be20d053870ff28ccf5dae8ac",
+                                                                         "collaborative_test/SW_0135_native32_spike_binding/foundation.py":  "9c241cacf1479c339fa56376b881672535c8d7ac4966a7ddff3b4b47f24cb867",
+                                                                         "collaborative_test/SW_0135_native32_spike_binding/protocol.json":  "bcea5cb37b7279c7db7e505127b7ca01a70d3a5b39b725ae6e37b6565cf29ea9",
+                                                                         "collaborative_test/SW_0135_native32_spike_binding/resolution.py":  "dd98e62c48e6260e4bd1ba36f0f9a8ff2c6ecf7ade53e0f5780849d3bae49264",
+                                                                         "snn_kuramoto_bidirectional/dendric_layer.py":  "69d960809ff1ad73a91a7067f87f605ae69ef612be9b936e4b486cc29511dd1a",
+                                                                         "snn_kuramoto_bidirectional/evaluation.py":  "4a15980c9aa0248dbe0e837ad1b0b430ce26a7ab367c004d290a1272bb1025d7",
+                                                                         "snn_kuramoto_bidirectional/gamma_initializer.py":  "9b5f3e077c755738b1636b97ac9640321a5b7abf5ec85b9a12557209cf5ad50b",
+                                                                         "snn_kuramoto_bidirectional/graph_generator.py":  "4f4c4d680a60822a5e4645eec3bbceb960846d4fac89e799076f6b4cf1bc6dde",
+                                                                         "snn_kuramoto_bidirectional/hyperparameter.py":  "bceea67a10a4533eae48ce682b23ce81330c981d687fa928cca7b9f3b97fc73e",
+                                                                         "snn_kuramoto_bidirectional/kuramoto_layer.py":  "76e61785fb19228fe4ecf6bbdfd4dc72519b9d6bd34d5f4fd9165e29c76d263e",
+                                                                         "snn_kuramoto_bidirectional/loss_function.py":  "6542d084f66c07101b75869709df9302db45e0dde87b6b5945d1790daa316543",
+                                                                         "snn_kuramoto_bidirectional/membrane_layer.py":  "680ad89277b60206f192123165d13eca916e5183dc71eaa443a8eeb5f4b8fac8",
+                                                                         "snn_kuramoto_bidirectional/s2net_cls.py":  "18313e5ee7358146703256e7e29d9846bfa60394feedba3237f2f7eac8791288",
+                                                                         "snn_kuramoto_bidirectional/sinusoidal_gating.py":  "e323a3b6472f51def23d63628fe25cc83088822ae73b5e0fcd1789884739f6c4",
+                                                                         "snn_kuramoto_bidirectional/spike_classifier.py":  "2d13c15a928f503bc09239aae2153a5f1a82de77aab4b5a76d0dfe876b755181",
+                                                                         "snn_kuramoto_bidirectional/training/train_gamma_initializer.py":  "845f91d3255d1d72d2a69c432c7b559a9d29d90a4186a4821e75864af9e47d20",
+                                                                         "snn_kuramoto_bidirectional/training/train_input_layer_generator.py":  "df45612ad4e069bc645c8cf335da1ebf1dd73d73ae0b9a40de96cefa9025f38d"
+                                                                     },
+                                      "native32":  {
+                                                       "gamma_shape":  [
+                                                                           null,
+                                                                           8,
+                                                                           1024
+                                                                       ],
+                                                       "grid":  [
+                                                                    32,
+                                                                    32
+                                                                ],
+                                                       "patches":  1024,
+                                                       "source_mapping":  "SW0135 strict spatial2x2 map from same-seed SW0097"
+                                                   },
+                                      "optimizer_updates":  0,
+                                      "rgb_asset_validation":  null,
+                                      "seed":  1,
+                                      "source_core_path":  "/Data0/kevinswk/patch_v2_sw/trained_models/SW0097_graph_adaptation/seed1_positive_frozen/core.pt",
+                                      "source_core_sha256":  "76f379d5a7e4cd9d12fdf0b701f3dd9dbbf28b5eea270a9cee2d30d87b4dad98",
+                                      "source_manifest_path":  "/Data0/kevinswk/patch_v2_sw/trained_models/SW0097_graph_adaptation/seed1_positive_frozen/manifest.json",
+                                      "source_manifest_sha256":  "241c9ea96fc3d3d2b168cb49d941e39c6751eca4436192e614760673545da38b",
+                                      "source_steps":  256,
+                                      "source_training_ids_sha256":  "879658974960d2854a8e4755b2987e401e7f006356317992171d383cfba36dfa",
+                                      "status":  "foundation_loaded_no_optimizer_updates"
+                                  }
+               },
+    "implementation_sha256":  {
+                                  "SW0135.foundation.py":  "9c241cacf1479c339fa56376b881672535c8d7ac4966a7ddff3b4b47f24cb867",
+                                  "SW0143.geodesic_operator.py":  "268ad6ea010b123feaf6a2c41a02e3fd5e716b5a8d96b53e11d4f93098d5da98",
+                                  "SW0155.train.py":  "68306bc5fa658487302dbcb20d0e95676957dbdbd3b04c471292cbfb4126db69",
+                                  "SW0161.cache.py":  "c10e0859368994a820fb9e911295036f1fd7dd52bfd5aa198cc4e28ca1cef8e0",
+                                  "SW0163.context_cache.py":  "d7876446ac016b8e6b58fddc849eaa945441c0b158c335262dcb38ab7e2e5164",
+                                  "SW0163.predict_evaluate.py":  "5b4f42fca9fa9b7cde61152a0ae352a921ed49f16a580c3bde98602d560edfcb",
+                                  "SW0163.preflight.py":  "c015804802d5da3ef19676a8d916070009209f960acfd69d32e162448cbea86c",
+                                  "SW0163.train.py":  "96109f8fce223407c5a2b6de9cec7d5b4bdd8f11693810dd72a2600ed8640f95"
+                              },
+    "expected_digests":  {
+                             "SW0161.source_cache.after":  "b205d21a917299089b9b5d373eb94c9eb5eb971471e9428072e0fc0229c70749",
+                             "SW0161.source_cache.before":  "b205d21a917299089b9b5d373eb94c9eb5eb971471e9428072e0fc0229c70749",
+                             "SW0163.context_cache.after":  "b205d21a917299089b9b5d373eb94c9eb5eb971471e9428072e0fc0229c70749",
+                             "SW0163.context_cache.before":  "b205d21a917299089b9b5d373eb94c9eb5eb971471e9428072e0fc0229c70749",
+                             "SW0163.preflight":  "b205d21a917299089b9b5d373eb94c9eb5eb971471e9428072e0fc0229c70749",
+                             "SW0163.training.A_only":  "b205d21a917299089b9b5d373eb94c9eb5eb971471e9428072e0fc0229c70749",
+                             "SW0163.training.Q_A":  "b205d21a917299089b9b5d373eb94c9eb5eb971471e9428072e0fc0229c70749",
+                             "SW0163.training.Q_only":  "b205d21a917299089b9b5d373eb94c9eb5eb971471e9428072e0fc0229c70749",
+                             "SW0163.training.raw_only":  "b205d21a917299089b9b5d373eb94c9eb5eb971471e9428072e0fc0229c70749"
+                         },
+    "loaded_foundation":  {
+                              "after_T_install":  {
+                                                      "SW0162_digest_family_sha256":  "bb9a98e07efa1fb0f8357da913d87813e4dc0e67b87534e750b5b112178745e9",
+                                                      "aggregate_sha256":  "b205d21a917299089b9b5d373eb94c9eb5eb971471e9428072e0fc0229c70749",
+                                                      "feature_clip":  3.0,
+                                                      "feature_mean_sha256":  "0ddaaa3bef053092a7871fb17c4192f068550707f23eb5a44f3092364ffadaa4",
+                                                      "feature_std_sha256":  "269b7330cc8ef3cdcb23a817f4040540fc95ec00d6930963c2716217eea05ba0",
+                                                      "module_sha256":  {
+                                                                            "encoder":  "338ca7d65bc3d6a42a88757feedad2145b9a1eb71f8d3bcc5454db1fba003c6f",
+                                                                            "patcher":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                                                                            "wrapped":  "b903abf5772901443dc40e81db1fa11034d1a21929350412d46455da82aaffc9"
+                                                                        }
+                                                  },
+                              "after_eval_modes":  {
+                                                       "SW0162_digest_family_sha256":  "bb9a98e07efa1fb0f8357da913d87813e4dc0e67b87534e750b5b112178745e9",
+                                                       "aggregate_sha256":  "b205d21a917299089b9b5d373eb94c9eb5eb971471e9428072e0fc0229c70749",
+                                                       "feature_clip":  3.0,
+                                                       "feature_mean_sha256":  "0ddaaa3bef053092a7871fb17c4192f068550707f23eb5a44f3092364ffadaa4",
+                                                       "feature_std_sha256":  "269b7330cc8ef3cdcb23a817f4040540fc95ec00d6930963c2716217eea05ba0",
+                                                       "module_sha256":  {
+                                                                             "encoder":  "338ca7d65bc3d6a42a88757feedad2145b9a1eb71f8d3bcc5454db1fba003c6f",
+                                                                             "patcher":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                                                                             "wrapped":  "b903abf5772901443dc40e81db1fa11034d1a21929350412d46455da82aaffc9"
+                                                                         }
+                                                   },
+                              "before_T_install":  {
+                                                       "SW0162_digest_family_sha256":  "bb9a98e07efa1fb0f8357da913d87813e4dc0e67b87534e750b5b112178745e9",
+                                                       "aggregate_sha256":  "b205d21a917299089b9b5d373eb94c9eb5eb971471e9428072e0fc0229c70749",
+                                                       "feature_clip":  3.0,
+                                                       "feature_mean_sha256":  "0ddaaa3bef053092a7871fb17c4192f068550707f23eb5a44f3092364ffadaa4",
+                                                       "feature_std_sha256":  "269b7330cc8ef3cdcb23a817f4040540fc95ec00d6930963c2716217eea05ba0",
+                                                       "module_sha256":  {
+                                                                             "encoder":  "338ca7d65bc3d6a42a88757feedad2145b9a1eb71f8d3bcc5454db1fba003c6f",
+                                                                             "patcher":  "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                                                                             "wrapped":  "b903abf5772901443dc40e81db1fa11034d1a21929350412d46455da82aaffc9"
+                                                                         }
+                                                   }
+                          },
+    "comparisons":  {
+                        "eval_mode_changes_tensor_digest":  false,
+                        "install_T_changes_tensor_digest":  false,
+                        "loaded_T_matches_all_expected":  true,
+                        "loaded_T_matches_each_expected":  {
+                                                               "SW0161.source_cache.after":  true,
+                                                               "SW0161.source_cache.before":  true,
+                                                               "SW0163.context_cache.after":  true,
+                                                               "SW0163.context_cache.before":  true,
+                                                               "SW0163.preflight":  true,
+                                                               "SW0163.training.A_only":  true,
+                                                               "SW0163.training.Q_A":  true,
+                                                               "SW0163.training.Q_only":  true,
+                                                               "SW0163.training.raw_only":  true
+                                                           }
+                    },
+    "terminal":  {
+                     "recovery_training_queue_20261014":  {
+                                                              "state":  {
+                                                                            "experiment":  "SW0163_relation_context_assignment_training_queue",
+                                                                            "status":  "complete",
+                                                                            "supervisor_pid":  3588458,
+                                                                            "queue_fingerprint":  {
+                                                                                                      "collaborative_test/SW_0163_relation_context_assignment/training_queue.py":  "202f23c91ddda46148096a38d6a9d8973bff7fed5d01ab583b18bcdcf4cdb852",
+                                                                                                      "collaborative_test/SW_0163_relation_context_assignment/train.py":  "96109f8fce223407c5a2b6de9cec7d5b4bdd8f11693810dd72a2600ed8640f95",
+                                                                                                      "collaborative_test/SW_0163_relation_context_assignment/model.py":  "db0b891f47e87766c570caf151ef25ef932a88d6d3b6cc4955816da29951778e",
+                                                                                                      "collaborative_test/SW_0163_relation_context_assignment/context_cache.py":  "d7876446ac016b8e6b58fddc849eaa945441c0b158c335262dcb38ab7e2e5164",
+                                                                                                      "collaborative_test/SW_0163_relation_context_assignment/preflight.py":  "c015804802d5da3ef19676a8d916070009209f960acfd69d32e162448cbea86c",
+                                                                                                      "collaborative_test/SW_0163_relation_context_assignment/protocol.json":  "0b4dc4b620119f8711460390e435ba66e025a078363207b111c9c319d4aa9252",
+                                                                                                      "collaborative_test/SW_0163_relation_context_assignment/DESIGN_KO.md":  "c9c98d1eec7257b35f56db777a70b6d14b1a6ee4cf9d9fc5a8d2393be101d4dd",
+                                                                                                      "collaborative_test/SW_0148_checkpointable_boundary_q/checkpoint.py":  "75d5076c051f81a51a39bbafedd363e589aa58ffc41ba4a662a87ffb91601f53",
+                                                                                                      "collaborative_test/SW_0161_supervised_spike_partition/cache.py":  "c10e0859368994a820fb9e911295036f1fd7dd52bfd5aa198cc4e28ca1cef8e0",
+                                                                                                      "collaborative_test/SW_0161_supervised_spike_partition/objective.py":  "7a2aea977033fc4a44e20a4352270adddf81673105902ba73b0dc5d79e8d51f9",
+                                                                                                      "collaborative_test/SW_0161_supervised_spike_partition/train.py":  "66345b64b1b0cb2ac58330770db9d9239c95933477c000d78107435a0d376400",
+                                                                                                      "collaborative_test/SW_0148_checkpointable_boundary_q/stage_queue_v4.py":  "14fae39aeb6e958df60edf25680f412acb50a01126fd7af725c61fdba3794623",
+                                                                                                      "collaborative_test/SW_0126_history_event_binding/pilot_queue.py":  "c59cdc39af20c824930d1926c8cec1418ee818577b8cc4240ad6eaae836764f6"
+                                                                                                  },
+                                                                            "task_plan":  {
+                                                                                              "experiment":  "SW0163_relation_context_assignment_training_queue",
+                                                                                              "arms":  [
+                                                                                                           "raw_only",
+                                                                                                           "Q_only",
+                                                                                                           "A_only",
+                                                                                                           "Q_A"
+                                                                                                       ],
+                                                                                              "commands":  {
+                                                                                                               "raw_only":  [
+                                                                                                                                "/Data0/kevinswk/envs/snn/bin/python",
+                                                                                                                                "-m",
+                                                                                                                                "collaborative_test.SW_0163_relation_context_assignment.train",
+                                                                                                                                "--arm",
+                                                                                                                                "raw_only",
+                                                                                                                                "--device",
+                                                                                                                                "cuda:0"
+                                                                                                                            ],
+                                                                                                               "Q_only":  [
+                                                                                                                              "/Data0/kevinswk/envs/snn/bin/python",
+                                                                                                                              "-m",
+                                                                                                                              "collaborative_test.SW_0163_relation_context_assignment.train",
+                                                                                                                              "--arm",
+                                                                                                                              "Q_only",
+                                                                                                                              "--device",
+                                                                                                                              "cuda:0"
+                                                                                                                          ],
+                                                                                                               "A_only":  [
+                                                                                                                              "/Data0/kevinswk/envs/snn/bin/python",
+                                                                                                                              "-m",
+                                                                                                                              "collaborative_test.SW_0163_relation_context_assignment.train",
+                                                                                                                              "--arm",
+                                                                                                                              "A_only",
+                                                                                                                              "--device",
+                                                                                                                              "cuda:0"
+                                                                                                                          ],
+                                                                                                               "Q_A":  [
+                                                                                                                           "/Data0/kevinswk/envs/snn/bin/python",
+                                                                                                                           "-m",
+                                                                                                                           "collaborative_test.SW_0163_relation_context_assignment.train",
+                                                                                                                           "--arm",
+                                                                                                                           "Q_A",
+                                                                                                                           "--device",
+                                                                                                                           "cuda:0"
+                                                                                                                       ]
+                                                                                                           },
+                                                                                              "max_parallel":  4,
+                                                                                              "runtime":  "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0163_relation_context_assignment/results_archive/training_queue_20261014",
+                                                                                              "gpu_candidates":  [
+                                                                                                                     0,
+                                                                                                                     1,
+                                                                                                                     2,
+                                                                                                                     3
+                                                                                                                 ],
+                                                                                              "max_memory_mib":  512,
+                                                                                              "stable_seconds":  5.0,
+                                                                                              "watchdog_seconds":  172800,
+                                                                                              "preflight_receipt":  "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0163_relation_context_assignment/results_archive/preflight_20261014/head_seed1.json",
+                                                                                              "queue_fingerprint":  {
+                                                                                                                        "collaborative_test/SW_0163_relation_context_assignment/training_queue.py":  "202f23c91ddda46148096a38d6a9d8973bff7fed5d01ab583b18bcdcf4cdb852",
+                                                                                                                        "collaborative_test/SW_0163_relation_context_assignment/train.py":  "96109f8fce223407c5a2b6de9cec7d5b4bdd8f11693810dd72a2600ed8640f95",
+                                                                                                                        "collaborative_test/SW_0163_relation_context_assignment/model.py":  "db0b891f47e87766c570caf151ef25ef932a88d6d3b6cc4955816da29951778e",
+                                                                                                                        "collaborative_test/SW_0163_relation_context_assignment/context_cache.py":  "d7876446ac016b8e6b58fddc849eaa945441c0b158c335262dcb38ab7e2e5164",
+                                                                                                                        "collaborative_test/SW_0163_relation_context_assignment/preflight.py":  "c015804802d5da3ef19676a8d916070009209f960acfd69d32e162448cbea86c",
+                                                                                                                        "collaborative_test/SW_0163_relation_context_assignment/protocol.json":  "0b4dc4b620119f8711460390e435ba66e025a078363207b111c9c319d4aa9252",
+                                                                                                                        "collaborative_test/SW_0163_relation_context_assignment/DESIGN_KO.md":  "c9c98d1eec7257b35f56db777a70b6d14b1a6ee4cf9d9fc5a8d2393be101d4dd",
+                                                                                                                        "collaborative_test/SW_0148_checkpointable_boundary_q/checkpoint.py":  "75d5076c051f81a51a39bbafedd363e589aa58ffc41ba4a662a87ffb91601f53",
+                                                                                                                        "collaborative_test/SW_0161_supervised_spike_partition/cache.py":  "c10e0859368994a820fb9e911295036f1fd7dd52bfd5aa198cc4e28ca1cef8e0",
+                                                                                                                        "collaborative_test/SW_0161_supervised_spike_partition/objective.py":  "7a2aea977033fc4a44e20a4352270adddf81673105902ba73b0dc5d79e8d51f9",
+                                                                                                                        "collaborative_test/SW_0161_supervised_spike_partition/train.py":  "66345b64b1b0cb2ac58330770db9d9239c95933477c000d78107435a0d376400",
+                                                                                                                        "collaborative_test/SW_0148_checkpointable_boundary_q/stage_queue_v4.py":  "14fae39aeb6e958df60edf25680f412acb50a01126fd7af725c61fdba3794623",
+                                                                                                                        "collaborative_test/SW_0126_history_event_binding/pilot_queue.py":  "c59cdc39af20c824930d1926c8cec1418ee818577b8cc4240ad6eaae836764f6"
+                                                                                                                    }
+                                                                                          },
+                                                                            "arms":  {
+                                                                                         "Q_only":  {
+                                                                                                        "status":  "adopted_complete",
+                                                                                                        "updated":  1792033715.522018,
+                                                                                                        "manifest_sha256":  "5784f30b65046336b6c60b5351ea4261718cf6290c2de8f55772d9cbb8f12e68",
+                                                                                                        "completed_updates":  512,
+                                                                                                        "recovery_source":  "pinned_terminal_run"
+                                                                                                    },
+                                                                                         "A_only":  {
+                                                                                                        "status":  "adopted_complete",
+                                                                                                        "updated":  1792033715.6410332,
+                                                                                                        "manifest_sha256":  "8dc2fdcb7b5cfecfe46e4d0df4bacbae313d213fd6172ef72e43ae4462a8affb",
+                                                                                                        "completed_updates":  512,
+                                                                                                        "recovery_source":  "pinned_terminal_run"
+                                                                                                    },
+                                                                                         "raw_only":  {
+                                                                                                          "status":  "complete",
+                                                                                                          "updated":  1792036253.1023874,
+                                                                                                          "gpu":  1,
+                                                                                                          "gpu_uuid":  "GPU-45604115-c231-56a5-32ea-d3001e8ff243",
+                                                                                                          "stable_seconds":  5.156125863082707,
+                                                                                                          "memory_used_mib":  2,
+                                                                                                          "child_pid":  3589160,
+                                                                                                          "child_pgid":  3589160,
+                                                                                                          "child_argv":  [
+                                                                                                                             "/Data0/kevinswk/envs/snn/bin/python",
+                                                                                                                             "-m",
+                                                                                                                             "collaborative_test.SW_0163_relation_context_assignment.train",
+                                                                                                                             "--arm",
+                                                                                                                             "raw_only",
+                                                                                                                             "--device",
+                                                                                                                             "cuda:0"
+                                                                                                                         ],
+                                                                                                          "initial_memory_mib":  2,
+                                                                                                          "preflight_report_sha256":  "85cba07f31011c0f65e35c2e00a57df4420c01c886a1780cf90bfea968603237",
+                                                                                                          "log":  "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0163_relation_context_assignment/results_archive/recovery_training_queue_20261014/raw_only_attempt01.log",
+                                                                                                          "inherited_lease_fd":  true,
+                                                                                                          "child_returncode":  0,
+                                                                                                          "manifest_sha256":  "275af18e42bdd72994ef19b9a64336480cfb018d90ba56f9a1e09a1d2308d64f",
+                                                                                                          "completed_updates":  512
+                                                                                                      },
+                                                                                         "Q_A":  {
+                                                                                                     "status":  "complete",
+                                                                                                     "updated":  1792036375.1332426,
+                                                                                                     "gpu":  2,
+                                                                                                     "gpu_uuid":  "GPU-50cc59a2-8312-ff02-5889-1becf63c7cd4",
+                                                                                                     "stable_seconds":  5.139829542953521,
+                                                                                                     "memory_used_mib":  2,
+                                                                                                     "child_pid":  3589432,
+                                                                                                     "child_pgid":  3589432,
+                                                                                                     "child_argv":  [
+                                                                                                                        "/Data0/kevinswk/envs/snn/bin/python",
+                                                                                                                        "-m",
+                                                                                                                        "collaborative_test.SW_0163_relation_context_assignment.train",
+                                                                                                                        "--arm",
+                                                                                                                        "Q_A",
+                                                                                                                        "--device",
+                                                                                                                        "cuda:0"
+                                                                                                                    ],
+                                                                                                     "initial_memory_mib":  2,
+                                                                                                     "preflight_report_sha256":  "85cba07f31011c0f65e35c2e00a57df4420c01c886a1780cf90bfea968603237",
+                                                                                                     "log":  "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0163_relation_context_assignment/results_archive/recovery_training_queue_20261014/Q_A_attempt01.log",
+                                                                                                     "inherited_lease_fd":  true,
+                                                                                                     "child_returncode":  0,
+                                                                                                     "manifest_sha256":  "a1cc0a6698fe0a96ea7ca5f70837cea08a47116a308dafdb6703166d9c1458a5",
+                                                                                                     "completed_updates":  512
+                                                                                                 }
+                                                                                     },
+                                                                            "created":  1792033595.2199297,
+                                                                            "updated":  1792036375.3257515,
+                                                                            "recovery_fingerprint":  {
+                                                                                                         "recovery_training_queue.py":  "3d2fd1e932b5b73d2e1f74f3f86f869095cbd5613db3777b10c3cf8e852dbbc4",
+                                                                                                         "base_training_queue.py":  "202f23c91ddda46148096a38d6a9d8973bff7fed5d01ab583b18bcdcf4cdb852",
+                                                                                                         "train.py":  "96109f8fce223407c5a2b6de9cec7d5b4bdd8f11693810dd72a2600ed8640f95",
+                                                                                                         "model.py":  "db0b891f47e87766c570caf151ef25ef932a88d6d3b6cc4955816da29951778e",
+                                                                                                         "protocol.json":  "0b4dc4b620119f8711460390e435ba66e025a078363207b111c9c319d4aa9252",
+                                                                                                         "failure_snapshot_sha256":  "70d73268155e021234d63a28218f5f0eab98cd81d72955c3cc19ffd8eba55976",
+                                                                                                         "old_training_state_sha256":  "719c4d763c4625d295099a0381eda0d296a04f1bff14f526ab0922431885f03d",
+                                                                                                         "old_prediction_state_sha256":  "8bc78099fd5dbd4cbe2f20ad37380204984fb0b847c981cb7517e85da58ff746",
+                                                                                                         "old_score_state_sha256":  "f5e4e06235a3895e24662c4a3e896f26d2a3acaf099b011bbc4ae892adf215d6",
+                                                                                                         "adopted_manifests":  {
+                                                                                                                                   "Q_only":  "5784f30b65046336b6c60b5351ea4261718cf6290c2de8f55772d9cbb8f12e68",
+                                                                                                                                   "A_only":  "8dc2fdcb7b5cfecfe46e4d0df4bacbae313d213fd6172ef72e43ae4462a8affb"
+                                                                                                                               }
+                                                                                                     },
+                                                                            "original_failure_snapshot_sha256":  "70d73268155e021234d63a28218f5f0eab98cd81d72955c3cc19ffd8eba55976",
+                                                                            "adopted_arms_expected":  [
+                                                                                                          "Q_only",
+                                                                                                          "A_only"
+                                                                                                      ],
+                                                                            "arms_to_train":  [
+                                                                                                  "raw_only",
+                                                                                                  "Q_A"
+                                                                                              ],
+                                                                            "original_failure_snapshot":  {
+                                                                                                              "snapshot_sha256":  "70d73268155e021234d63a28218f5f0eab98cd81d72955c3cc19ffd8eba55976",
+                                                                                                              "old_training_state_sha256":  "719c4d763c4625d295099a0381eda0d296a04f1bff14f526ab0922431885f03d",
+                                                                                                              "old_prediction_state_sha256":  "8bc78099fd5dbd4cbe2f20ad37380204984fb0b847c981cb7517e85da58ff746",
+                                                                                                              "old_score_state_sha256":  "f5e4e06235a3895e24662c4a3e896f26d2a3acaf099b011bbc4ae892adf215d6",
+                                                                                                              "dead_pids":  [
+                                                                                                                                3476869,
+                                                                                                                                3482170,
+                                                                                                                                3482182,
+                                                                                                                                3483196,
+                                                                                                                                3483197
+                                                                                                                            ],
+                                                                                                              "old_log_sha256":  {
+                                                                                                                                     "training_queue_20261014":  {
+                                                                                                                                                                     "A_only_attempt01.log":  "945e844a970158e682ab9377364b08429238766ac7d9c67f08cd370a2dd3000f",
+                                                                                                                                                                     "Q_only_attempt01.log":  "7f787df7211a275424ced9308015a61cf5b371c177640bd89451ade9fe61fc41"
+                                                                                                                                                                 },
+                                                                                                                                     "prediction_queue_20261014":  {
+
+                                                                                                                                                                   },
+                                                                                                                                     "score_queue_20261014":  {
+
+                                                                                                                                                              }
+                                                                                                                                 },
+                                                                                                              "captured_failure_statuses":  {
+                                                                                                                                                "training_queue_20261014":  "failed_training",
+                                                                                                                                                "prediction_queue_20261014":  "failed",
+                                                                                                                                                "score_queue_20261014":  "failed"
+                                                                                                                                            }
+                                                                                                          },
+                                                                            "adopted_arms":  {
+                                                                                                 "Q_only":  {
+                                                                                                                "manifest_sha256":  "5784f30b65046336b6c60b5351ea4261718cf6290c2de8f55772d9cbb8f12e68",
+                                                                                                                "checkpoint_sha256":  "6c45e99d05947db145ba8100d40a56616d2fb747f50e79f947e9012d92658ef8",
+                                                                                                                "completed_updates":  512,
+                                                                                                                "initial_model_state_sha256":  "c9baacaa239b9ae41d913adc5ed5bee8f505df213c8b4580b24dd89ff9d15470"
+                                                                                                            },
+                                                                                                 "A_only":  {
+                                                                                                                "manifest_sha256":  "8dc2fdcb7b5cfecfe46e4d0df4bacbae313d213fd6172ef72e43ae4462a8affb",
+                                                                                                                "checkpoint_sha256":  "b76f6982c3e4eb7daa7e28187486818ca7674c5a57e37a8c6226b2cffa1a0c31",
+                                                                                                                "completed_updates":  512,
+                                                                                                                "initial_model_state_sha256":  "c9baacaa239b9ae41d913adc5ed5bee8f505df213c8b4580b24dd89ff9d15470"
+                                                                                                            }
+                                                                                             },
+                                                                            "preflight_report_sha256":  "85cba07f31011c0f65e35c2e00a57df4420c01c886a1780cf90bfea968603237",
+                                                                            "recovery_train_arms":  [
+                                                                                                        "raw_only",
+                                                                                                        "Q_A"
+                                                                                                    ],
+                                                                            "recovery_status":  "complete_recovered",
+                                                                            "results":  {
+                                                                                            "Q_only":  true,
+                                                                                            "A_only":  true,
+                                                                                            "raw_only":  true,
+                                                                                            "Q_A":  true
+                                                                                        },
+                                                                            "recovery_evidence":  {
+                                                                                                      "snapshot_sha256":  "70d73268155e021234d63a28218f5f0eab98cd81d72955c3cc19ffd8eba55976",
+                                                                                                      "old_training_state_sha256":  "719c4d763c4625d295099a0381eda0d296a04f1bff14f526ab0922431885f03d",
+                                                                                                      "old_prediction_state_sha256":  "8bc78099fd5dbd4cbe2f20ad37380204984fb0b847c981cb7517e85da58ff746",
+                                                                                                      "old_score_state_sha256":  "f5e4e06235a3895e24662c4a3e896f26d2a3acaf099b011bbc4ae892adf215d6",
+                                                                                                      "dead_pids":  [
+                                                                                                                        3476869,
+                                                                                                                        3482170,
+                                                                                                                        3482182,
+                                                                                                                        3483196,
+                                                                                                                        3483197
+                                                                                                                    ],
+                                                                                                      "old_log_sha256":  {
+                                                                                                                             "training_queue_20261014":  {
+                                                                                                                                                             "A_only_attempt01.log":  "945e844a970158e682ab9377364b08429238766ac7d9c67f08cd370a2dd3000f",
+                                                                                                                                                             "Q_only_attempt01.log":  "7f787df7211a275424ced9308015a61cf5b371c177640bd89451ade9fe61fc41"
+                                                                                                                                                         },
+                                                                                                                             "prediction_queue_20261014":  {
+
+                                                                                                                                                           },
+                                                                                                                             "score_queue_20261014":  {
+
+                                                                                                                                                      }
+                                                                                                                         },
+                                                                                                      "captured_failure_statuses":  {
+                                                                                                                                        "training_queue_20261014":  "failed_training",
+                                                                                                                                        "prediction_queue_20261014":  "failed",
+                                                                                                                                        "score_queue_20261014":  "failed"
+                                                                                                                                    }
+                                                                                                  },
+                                                                            "final_arms":  {
+                                                                                               "raw_only":  {
+                                                                                                                "manifest_sha256":  "275af18e42bdd72994ef19b9a64336480cfb018d90ba56f9a1e09a1d2308d64f",
+                                                                                                                "completed_updates":  512,
+                                                                                                                "initial_model_state_sha256":  "c9baacaa239b9ae41d913adc5ed5bee8f505df213c8b4580b24dd89ff9d15470"
+                                                                                                            },
+                                                                                               "Q_only":  {
+                                                                                                              "manifest_sha256":  "5784f30b65046336b6c60b5351ea4261718cf6290c2de8f55772d9cbb8f12e68",
+                                                                                                              "completed_updates":  512,
+                                                                                                              "initial_model_state_sha256":  "c9baacaa239b9ae41d913adc5ed5bee8f505df213c8b4580b24dd89ff9d15470"
+                                                                                                          },
+                                                                                               "A_only":  {
+                                                                                                              "manifest_sha256":  "8dc2fdcb7b5cfecfe46e4d0df4bacbae313d213fd6172ef72e43ae4462a8affb",
+                                                                                                              "completed_updates":  512,
+                                                                                                              "initial_model_state_sha256":  "c9baacaa239b9ae41d913adc5ed5bee8f505df213c8b4580b24dd89ff9d15470"
+                                                                                                          },
+                                                                                               "Q_A":  {
+                                                                                                           "manifest_sha256":  "a1cc0a6698fe0a96ea7ca5f70837cea08a47116a308dafdb6703166d9c1458a5",
+                                                                                                           "completed_updates":  512,
+                                                                                                           "initial_model_state_sha256":  "c9baacaa239b9ae41d913adc5ed5bee8f505df213c8b4580b24dd89ff9d15470"
+                                                                                                       }
+                                                                                           },
+                                                                            "finished":  1792036375.3256128,
+                                                                            "artifacts_preserved":  true
+                                                                        },
+                                                              "live_process_cmdline":  null
+                                                          },
+                     "recovery_prediction_queue_20261014":  {
+                                                                "state":  {
+                                                                              "experiment":  "SW0163_relation_context_assignment_prediction_queue",
+                                                                              "status":  "failed",
+                                                                              "updated":  1792037867.917164,
+                                                                              "supervisor_pid":  3588470,
+                                                                              "queue_fingerprint":  {
+                                                                                                        "collaborative_test/SW_0163_relation_context_assignment/prediction_queue.py":  "3158ccbd9ee4114e53b38c9544b15736def0a117ecca062f47c973512e26163c",
+                                                                                                        "collaborative_test/SW_0163_relation_context_assignment/predict_evaluate.py":  "5b4f42fca9fa9b7cde61152a0ae352a921ed49f16a580c3bde98602d560edfcb",
+                                                                                                        "collaborative_test/SW_0163_relation_context_assignment/training_queue.py":  "202f23c91ddda46148096a38d6a9d8973bff7fed5d01ab583b18bcdcf4cdb852",
+                                                                                                        "collaborative_test/SW_0163_relation_context_assignment/train.py":  "96109f8fce223407c5a2b6de9cec7d5b4bdd8f11693810dd72a2600ed8640f95",
+                                                                                                        "collaborative_test/SW_0163_relation_context_assignment/model.py":  "db0b891f47e87766c570caf151ef25ef932a88d6d3b6cc4955816da29951778e",
+                                                                                                        "collaborative_test/SW_0163_relation_context_assignment/protocol.json":  "0b4dc4b620119f8711460390e435ba66e025a078363207b111c9c319d4aa9252",
+                                                                                                        "collaborative_test/SW_0163_relation_context_assignment/DESIGN_KO.md":  "c9c98d1eec7257b35f56db777a70b6d14b1a6ee4cf9d9fc5a8d2393be101d4dd",
+                                                                                                        "collaborative_test/SW_0163_relation_context_assignment/context_cache.py":  "d7876446ac016b8e6b58fddc849eaa945441c0b158c335262dcb38ab7e2e5164",
+                                                                                                        "collaborative_test/SW_0163_relation_context_assignment/preflight.py":  "c015804802d5da3ef19676a8d916070009209f960acfd69d32e162448cbea86c",
+                                                                                                        "collaborative_test/SW_0148_checkpointable_boundary_q/stage_queue_v4.py":  "14fae39aeb6e958df60edf25680f412acb50a01126fd7af725c61fdba3794623",
+                                                                                                        "collaborative_test/SW_0126_history_event_binding/pilot_queue.py":  "c59cdc39af20c824930d1926c8cec1418ee818577b8cc4240ad6eaae836764f6",
+                                                                                                        "recovery_prediction_queue.py":  "138c2ba88f0767c8f88343e036aa6a86f88e33ca1cafea5902e3a905360dae97",
+                                                                                                        "recovery_training_queue.py":  "3d2fd1e932b5b73d2e1f74f3f86f869095cbd5613db3777b10c3cf8e852dbbc4",
+                                                                                                        "recovery_packet_sha256":  "70d73268155e021234d63a28218f5f0eab98cd81d72955c3cc19ffd8eba55976",
+                                                                                                        "recovery_protocol.json":  "0b4dc4b620119f8711460390e435ba66e025a078363207b111c9c319d4aa9252"
+                                                                                                    },
+                                                                              "error":  "RuntimeError(\u0027prediction child exited 1; preserving rows/log\u0027)",
+                                                                              "finished":  1792037867.9168081,
+                                                                              "artifacts_preserved":  true,
+                                                                              "training_recovery_fingerprint":  {
+                                                                                                                    "recovery_training_queue.py":  "3d2fd1e932b5b73d2e1f74f3f86f869095cbd5613db3777b10c3cf8e852dbbc4",
+                                                                                                                    "base_training_queue.py":  "202f23c91ddda46148096a38d6a9d8973bff7fed5d01ab583b18bcdcf4cdb852",
+                                                                                                                    "train.py":  "96109f8fce223407c5a2b6de9cec7d5b4bdd8f11693810dd72a2600ed8640f95",
+                                                                                                                    "model.py":  "db0b891f47e87766c570caf151ef25ef932a88d6d3b6cc4955816da29951778e",
+                                                                                                                    "protocol.json":  "0b4dc4b620119f8711460390e435ba66e025a078363207b111c9c319d4aa9252",
+                                                                                                                    "failure_snapshot_sha256":  "70d73268155e021234d63a28218f5f0eab98cd81d72955c3cc19ffd8eba55976",
+                                                                                                                    "old_training_state_sha256":  "719c4d763c4625d295099a0381eda0d296a04f1bff14f526ab0922431885f03d",
+                                                                                                                    "old_prediction_state_sha256":  "8bc78099fd5dbd4cbe2f20ad37380204984fb0b847c981cb7517e85da58ff746",
+                                                                                                                    "old_score_state_sha256":  "f5e4e06235a3895e24662c4a3e896f26d2a3acaf099b011bbc4ae892adf215d6",
+                                                                                                                    "adopted_manifests":  {
+                                                                                                                                              "Q_only":  "5784f30b65046336b6c60b5351ea4261718cf6290c2de8f55772d9cbb8f12e68",
+                                                                                                                                              "A_only":  "8dc2fdcb7b5cfecfe46e4d0df4bacbae313d213fd6172ef72e43ae4462a8affb"
+                                                                                                                                          }
+                                                                                                                }
+                                                                          },
+                                                                "live_process_cmdline":  null,
+                                                                "log_tail":  [
+                                                                                 "Traceback (most recent call last):",
+                                                                                 "  File \"/Data0/kevinswk/envs/snn/lib/python3.10/runpy.py\", line 196, in _run_module_as_main",
+                                                                                 "    return _run_code(code, main_globals, None,",
+                                                                                 "  File \"/Data0/kevinswk/envs/snn/lib/python3.10/runpy.py\", line 86, in _run_code",
+                                                                                 "    exec(code, run_globals)",
+                                                                                 "  File \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0163_relation_context_assignment/predict_evaluate.py\", line 421, in \u003cmodule\u003e",
+                                                                                 "    if __name__==\"__main__\": raise SystemExit(main())",
+                                                                                 "  File \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0163_relation_context_assignment/predict_evaluate.py\", line 417, in main",
+                                                                                 "    if a.stage==\"predict\": print(json.dumps(predict_all(device=a.device),allow_nan=False))",
+                                                                                 "  File \"/Data0/kevinswk/envs/snn/lib/python3.10/site-packages/torch/utils/_contextlib.py\", line 124, in decorate_context",
+                                                                                 "    return func(*args, **kwargs)",
+                                                                                 "  File \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0163_relation_context_assignment/predict_evaluate.py\", line 257, in predict_all",
+                                                                                 "    if before!=prepared[\"training\"][ARMS[0]][\"bindings\"][\"source_model_state_sha256\"]: raise ValueError(\"source foundation lineage changed\")",
+                                                                                 "ValueError: source foundation lineage changed"
+                                                                             ]
+                                                            },
+                     "recovery_score_queue_20261014":  {
+                                                           "state":  {
+                                                                         "experiment":  "SW0163_relation_context_assignment_score_queue",
+                                                                         "status":  "failed",
+                                                                         "updated":  1792037868.156818,
+                                                                         "supervisor_pid":  3588475,
+                                                                         "queue_fingerprint":  {
+                                                                                                   "collaborative_test/SW_0163_relation_context_assignment/score_queue.py":  "372afc4fa56cb40eb437757e41313eab06967ccb94ce69a6b282a17ed75637d3",
+                                                                                                   "collaborative_test/SW_0163_relation_context_assignment/prediction_queue.py":  "3158ccbd9ee4114e53b38c9544b15736def0a117ecca062f47c973512e26163c",
+                                                                                                   "collaborative_test/SW_0163_relation_context_assignment/predict_evaluate.py":  "5b4f42fca9fa9b7cde61152a0ae352a921ed49f16a580c3bde98602d560edfcb",
+                                                                                                   "collaborative_test/SW_0163_relation_context_assignment/train.py":  "96109f8fce223407c5a2b6de9cec7d5b4bdd8f11693810dd72a2600ed8640f95",
+                                                                                                   "collaborative_test/SW_0163_relation_context_assignment/model.py":  "db0b891f47e87766c570caf151ef25ef932a88d6d3b6cc4955816da29951778e",
+                                                                                                   "collaborative_test/SW_0163_relation_context_assignment/context_cache.py":  "d7876446ac016b8e6b58fddc849eaa945441c0b158c335262dcb38ab7e2e5164",
+                                                                                                   "collaborative_test/SW_0163_relation_context_assignment/preflight.py":  "c015804802d5da3ef19676a8d916070009209f960acfd69d32e162448cbea86c",
+                                                                                                   "collaborative_test/SW_0163_relation_context_assignment/protocol.json":  "0b4dc4b620119f8711460390e435ba66e025a078363207b111c9c319d4aa9252",
+                                                                                                   "collaborative_test/SW_0163_relation_context_assignment/DESIGN_KO.md":  "c9c98d1eec7257b35f56db777a70b6d14b1a6ee4cf9d9fc5a8d2393be101d4dd",
+                                                                                                   "collaborative_test/SW_0148_checkpointable_boundary_q/stage_queue_v4.py":  "14fae39aeb6e958df60edf25680f412acb50a01126fd7af725c61fdba3794623",
+                                                                                                   "collaborative_test/SW_0126_history_event_binding/pilot_queue.py":  "c59cdc39af20c824930d1926c8cec1418ee818577b8cc4240ad6eaae836764f6",
+                                                                                                   "recovery_score_queue.py":  "b7fc42acce2129e6133e520cd9ca6c5402353abf082109b967317e54e1ecbbda",
+                                                                                                   "recovery_prediction_queue.py":  "138c2ba88f0767c8f88343e036aa6a86f88e33ca1cafea5902e3a905360dae97",
+                                                                                                   "recovery_training_queue.py":  "3d2fd1e932b5b73d2e1f74f3f86f869095cbd5613db3777b10c3cf8e852dbbc4",
+                                                                                                   "recovery_packet_sha256":  "70d73268155e021234d63a28218f5f0eab98cd81d72955c3cc19ffd8eba55976",
+                                                                                                   "recovery_protocol.json":  "0b4dc4b620119f8711460390e435ba66e025a078363207b111c9c319d4aa9252"
+                                                                                               },
+                                                                         "error":  "ValueError(\u0027SW0163 recovered prediction is terminal: failed\u0027)",
+                                                                         "finished":  1792037868.1565707,
+                                                                         "artifacts_preserved":  true,
+                                                                         "training_recovery_fingerprint":  {
+                                                                                                               "recovery_training_queue.py":  "3d2fd1e932b5b73d2e1f74f3f86f869095cbd5613db3777b10c3cf8e852dbbc4",
+                                                                                                               "base_training_queue.py":  "202f23c91ddda46148096a38d6a9d8973bff7fed5d01ab583b18bcdcf4cdb852",
+                                                                                                               "train.py":  "96109f8fce223407c5a2b6de9cec7d5b4bdd8f11693810dd72a2600ed8640f95",
+                                                                                                               "model.py":  "db0b891f47e87766c570caf151ef25ef932a88d6d3b6cc4955816da29951778e",
+                                                                                                               "protocol.json":  "0b4dc4b620119f8711460390e435ba66e025a078363207b111c9c319d4aa9252",
+                                                                                                               "failure_snapshot_sha256":  "70d73268155e021234d63a28218f5f0eab98cd81d72955c3cc19ffd8eba55976",
+                                                                                                               "old_training_state_sha256":  "719c4d763c4625d295099a0381eda0d296a04f1bff14f526ab0922431885f03d",
+                                                                                                               "old_prediction_state_sha256":  "8bc78099fd5dbd4cbe2f20ad37380204984fb0b847c981cb7517e85da58ff746",
+                                                                                                               "old_score_state_sha256":  "f5e4e06235a3895e24662c4a3e896f26d2a3acaf099b011bbc4ae892adf215d6",
+                                                                                                               "adopted_manifests":  {
+                                                                                                                                         "Q_only":  "5784f30b65046336b6c60b5351ea4261718cf6290c2de8f55772d9cbb8f12e68",
+                                                                                                                                         "A_only":  "8dc2fdcb7b5cfecfe46e4d0df4bacbae313d213fd6172ef72e43ae4462a8affb"
+                                                                                                                                     }
+                                                                                                           },
+                                                                         "prediction_recovery_fingerprint":  {
+                                                                                                                 "collaborative_test/SW_0163_relation_context_assignment/prediction_queue.py":  "3158ccbd9ee4114e53b38c9544b15736def0a117ecca062f47c973512e26163c",
+                                                                                                                 "collaborative_test/SW_0163_relation_context_assignment/predict_evaluate.py":  "5b4f42fca9fa9b7cde61152a0ae352a921ed49f16a580c3bde98602d560edfcb",
+                                                                                                                 "collaborative_test/SW_0163_relation_context_assignment/training_queue.py":  "202f23c91ddda46148096a38d6a9d8973bff7fed5d01ab583b18bcdcf4cdb852",
+                                                                                                                 "collaborative_test/SW_0163_relation_context_assignment/train.py":  "96109f8fce223407c5a2b6de9cec7d5b4bdd8f11693810dd72a2600ed8640f95",
+                                                                                                                 "collaborative_test/SW_0163_relation_context_assignment/model.py":  "db0b891f47e87766c570caf151ef25ef932a88d6d3b6cc4955816da29951778e",
+                                                                                                                 "collaborative_test/SW_0163_relation_context_assignment/protocol.json":  "0b4dc4b620119f8711460390e435ba66e025a078363207b111c9c319d4aa9252",
+                                                                                                                 "collaborative_test/SW_0163_relation_context_assignment/DESIGN_KO.md":  "c9c98d1eec7257b35f56db777a70b6d14b1a6ee4cf9d9fc5a8d2393be101d4dd",
+                                                                                                                 "collaborative_test/SW_0163_relation_context_assignment/context_cache.py":  "d7876446ac016b8e6b58fddc849eaa945441c0b158c335262dcb38ab7e2e5164",
+                                                                                                                 "collaborative_test/SW_0163_relation_context_assignment/preflight.py":  "c015804802d5da3ef19676a8d916070009209f960acfd69d32e162448cbea86c",
+                                                                                                                 "collaborative_test/SW_0148_checkpointable_boundary_q/stage_queue_v4.py":  "14fae39aeb6e958df60edf25680f412acb50a01126fd7af725c61fdba3794623",
+                                                                                                                 "collaborative_test/SW_0126_history_event_binding/pilot_queue.py":  "c59cdc39af20c824930d1926c8cec1418ee818577b8cc4240ad6eaae836764f6",
+                                                                                                                 "recovery_prediction_queue.py":  "138c2ba88f0767c8f88343e036aa6a86f88e33ca1cafea5902e3a905360dae97",
+                                                                                                                 "recovery_training_queue.py":  "3d2fd1e932b5b73d2e1f74f3f86f869095cbd5613db3777b10c3cf8e852dbbc4",
+                                                                                                                 "recovery_packet_sha256":  "70d73268155e021234d63a28218f5f0eab98cd81d72955c3cc19ffd8eba55976",
+                                                                                                                 "recovery_protocol.json":  "0b4dc4b620119f8711460390e435ba66e025a078363207b111c9c319d4aa9252"
+                                                                                                             }
+                                                                     },
+                                                           "live_process_cmdline":  null
+                                                       },
+                     "gpu_snapshot":  "0, 2181 MiB, 0 %\n1, 2 MiB, 0 %\n2, 2 MiB, 0 %\n3, 2 MiB, 0 %\n"
+                 },
+    "diagnosis":  "Identical loaded source matches all nine training/cache/preflight SW0161-family hashes. Predictor compared an incompatible SW0162-family hash. Failure precedes predictions; no scientific performance conclusion and no retraining is warranted."
+}
