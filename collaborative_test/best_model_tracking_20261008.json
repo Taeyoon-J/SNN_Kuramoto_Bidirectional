@@ -4175,7 +4175,7 @@
     ]
   },
   "SW0174_event_gradient_started_20261015": {
-    "status": "verified_live_event_gradient_isolation",
+    "status": "first_attempt_terminal_CUDA_file_IO_error_recovered_in_separate_runtime",
     "local_CPU_tests": 30,
     "server_CPU_tests": 30,
     "actual_CPU_reference_bound": true,
@@ -4191,5 +4191,28 @@
     "validation_data_read": false,
     "incumbent_changed": false,
     "final_result_pending": true
+  },
+  "SW0174_cache_bypass_recovery_20261015": {
+    "status": "operational_recovery_verified_not_scientific_result",
+    "source_sha256_unchanged": {
+      "audit.py": "54a9703999a32b29edc154c76dc9023cd0106ee790aeb0ae663ea36311113f92",
+      "event_gradient.py": "581107c0381bea5457ba156dda007ddb0eaed69cca62e705a30cc97150171876",
+      "queue.py": "60d1a461cebb1f075d85e1350f3b4687bdb59105b5922941c4d50b01d2f012e4"
+    },
+    "kernel_cache_default_and_disabled_outputs_and_gradients_exact": true,
+    "cache_files_unchanged": true,
+    "initial_error_not_reproduced": true,
+    "corrupted_cache_proven": false,
+    "worker_cache_override_verified_from_proc": true,
+    "old_attempt_terminal": true,
+    "new_runtime_separate": true,
+    "optimizer_updates": 0,
+    "new_performance_result": false,
+    "incumbent_changed": false,
+    "physical_gpu": 1,
+    "worker_pid": 3787993,
+    "supervisor_pid": 3787943,
+    "runtime": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0174_event_gradient_isolation/results_archive/event_gradient_audit_v2_20261015",
+    "result": "SW_0174_event_gradient_isolation/RECOVERY_KO.md"
   }
 }
