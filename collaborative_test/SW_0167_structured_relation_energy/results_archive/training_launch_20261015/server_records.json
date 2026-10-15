@@ -1,0 +1,228 @@
+{
+  "launch.json": {
+    "status": "actual512_CPU_passed_two_training_queues_registered",
+    "queues": [
+      {
+        "arm": "structured_hinge",
+        "pid": 3648428,
+        "actual_argv": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "-u",
+          "-m",
+          "collaborative_test.SW_0167_structured_relation_energy.training_queue",
+          "--arm",
+          "structured_hinge"
+        ]
+      },
+      {
+        "arm": "local_margin",
+        "pid": 3648429,
+        "actual_argv": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "-u",
+          "-m",
+          "collaborative_test.SW_0167_structured_relation_energy.training_queue",
+          "--arm",
+          "local_margin"
+        ]
+      }
+    ],
+    "files": [
+      {
+        "path": "collaborative_test/SW_0167_structured_relation_energy/train.py",
+        "sha256": "3c69d9acb505bf635f72309505c1bf9fe3d951791ddeafaa22e813cda6789642"
+      },
+      {
+        "path": "collaborative_test/SW_0167_structured_relation_energy/training_queue.py",
+        "sha256": "0359d2ff800157dd2313f604b9fdf908cd31a89e5559199669b12a049f14126a"
+      },
+      {
+        "path": "collaborative_test/SW_0167_structured_relation_energy/test_train.py",
+        "sha256": "952e92ed7b86a723ee85d3a4be2689333cdbbc9009f62eca678ab71b3467ac9c"
+      },
+      {
+        "path": "collaborative_test/SW_0167_structured_relation_energy/test_training_queue.py",
+        "sha256": "c22c616d78d7ae5b9a9ec22f6189f721fa4cef350d4b4122adac8ea7e69dc465"
+      },
+      {
+        "path": "collaborative_test/SW_0167_structured_relation_energy/DESIGN_KO.md",
+        "sha256": "43c01261963edb7c0f2427b46e35ddf4341d18c0e1f908ed426b66558ff2493a"
+      },
+      {
+        "path": "collaborative_test/SW_0167_structured_relation_energy/feature_modes.py",
+        "sha256": "bf40bde9d54844f74e78e2ee2ed75305a4f5d853c2834ebcdf1c4cf9ad5f03f3"
+      },
+      {
+        "path": "collaborative_test/SW_0167_structured_relation_energy/structured_energy.py",
+        "sha256": "2a4ddddda692b660e8c9c2f3cf8900b7032e2c471f0ed619d737851719872e7e"
+      },
+      {
+        "path": "collaborative_test/SW_0167_structured_relation_energy/training_objective.py",
+        "sha256": "186be7d4e7eb4d6cbafe1f737afdee2865e3058d1c4e00ea54a8ef66f9374bf2"
+      },
+      {
+        "path": "collaborative_test/SW_0167_structured_relation_energy/audit_train_cache.py",
+        "sha256": "64c2c306013b19ebe7c47b5dd2a3f45460a17341098f033b22307781a63c951f"
+      },
+      {
+        "path": "collaborative_test/SW_0167_structured_relation_energy/qcc_readout.py",
+        "sha256": "b0e0b5536f5c24b49f15a7ef842469a99e19ad63f89983cb8579a9f987fc0ea8"
+      },
+      {
+        "path": "collaborative_test/SW_0167_structured_relation_energy/preflight_v2.py",
+        "sha256": "d77186f5b65ccaddeaed44e40c588ac587b4f566d05499f641b672814a31ba9c"
+      },
+      {
+        "path": "collaborative_test/SW_0167_structured_relation_energy/preflight_queue_v2.py",
+        "sha256": "1bfe0d3ebb45885ade44ae756b56b27e83183b66a396abf958d9e2c35c30f5a8"
+      },
+      {
+        "path": "collaborative_test/SW_0161_supervised_spike_partition/cache.py",
+        "sha256": "c10e0859368994a820fb9e911295036f1fd7dd52bfd5aa198cc4e28ca1cef8e0"
+      },
+      {
+        "path": "collaborative_test/SW_0163_relation_context_assignment/context_cache.py",
+        "sha256": "d7876446ac016b8e6b58fddc849eaa945441c0b158c335262dcb38ab7e2e5164"
+      },
+      {
+        "path": "collaborative_test/SW_0155_supervised_spike_relations/train.py",
+        "sha256": "68306bc5fa658487302dbcb20d0e95676957dbdbd3b04c471292cbfb4126db69"
+      },
+      {
+        "path": "collaborative_test/SW_0155_supervised_spike_relations/objective.py",
+        "sha256": "07ea07f1fa06c6f2e05e4e98184db487f68549249d997e6991ea26a8e06b40fe"
+      },
+      {
+        "path": "collaborative_test/SW_0130_phase_state_integration/run.py",
+        "sha256": "92ac0032467c6bff2e31a76c66021c5e211f9402d15ff868382d71ecc807e988"
+      },
+      {
+        "path": "collaborative_test/SW_0164_foreground_preserving_partition/foreground_signed.py",
+        "sha256": "12267f6d168a3b48b2cd59ebab700bcd909386d1659d9725ba2d83849e607af3"
+      },
+      {
+        "path": "collaborative_test/SW_0148_checkpointable_boundary_q/checkpoint.py",
+        "sha256": "75d5076c051f81a51a39bbafedd363e589aa58ffc41ba4a662a87ffb91601f53"
+      },
+      {
+        "path": "collaborative_test/SW_0148_checkpointable_boundary_q/stage_queue_v4.py",
+        "sha256": "14fae39aeb6e958df60edf25680f412acb50a01126fd7af725c61fdba3794623"
+      }
+    ]
+  },
+  "server_cpu_tests.json": {
+    "returncode": 0,
+    "stdout": "",
+    "stderr": "test_artifact_validator_rejects_wrong_arm_and_partial_history (collaborative_test.SW_0167_structured_relation_energy.test_train.TrainTests) ... ok\ntest_fixed_exposure_schedule_is_eight_full_permutations (collaborative_test.SW_0167_structured_relation_energy.test_train.TrainTests) ... ok\ntest_one_logical_update_runs_both_registered_losses_on_shared_features (collaborative_test.SW_0167_structured_relation_energy.test_train.TrainTests) ... ok\ntest_exact_worker_module_and_arm_command (collaborative_test.SW_0167_structured_relation_energy.test_training_queue.TrainingQueueTests) ... ok\ntest_parent_queue_import_hides_cuda_and_arm_status_paths_are_disjoint (collaborative_test.SW_0167_structured_relation_energy.test_training_queue.TrainingQueueTests) ... ok\n\n----------------------------------------------------------------------\nRan 5 tests in 1.504s\n\nOK\n"
+  },
+  "actual_train_cpu_smoke.json": {
+    "returncode": 0,
+    "stdout": "{\"status\": \"actual512_TRAIN_CPU_inputs_passed\", \"elapsed_seconds\": 301.7799699306488, \"bindings\": {\"experiment\": \"SW0167_structured_relation_energy_training\", \"seed\": 1, \"arms\": [\"structured_hinge\", \"local_margin\"], \"source_checkpoint_sha256\": \"76f379d5a7e4cd9d12fdf0b701f3dd9dbbf28b5eea270a9cee2d30d87b4dad98\", \"source_manifest_sha256\": \"241c9ea96fc3d3d2b168cb49d941e39c6751eca4436192e614760673545da38b\", \"source_cache_manifest_sha256\": \"b4125a81012bf46cf38ff512bf251452f511524c42a2d2364c34783de04302b3\", \"context_cache_manifest_sha256\": \"01f040eced47d88cdedd88268c02d589cec021a70b77dcb6c25fdaa1fc41254f\", \"source_state_sha256\": \"b205d21a917299089b9b5d373eb94c9eb5eb971471e9428072e0fc0229c70749\", \"ordered_train_ids\": [68304, 49032, 70041, 7829, 16499, 31675, 67612, 54671, 17331, 2330, 23312, 50490, 56080, 20867, 3891, 34682, 5746, 38390, 7809, 50726, 4399, 52411, 29823, 21285, 47112, 67877, 21002, 41777, 64222, 59885, 43545, 21030, 31483, 45842, 53351, 20671, 14491, 36271, 40780, 7730, 5602, 34315, 70355, 45835, 20381, 51668, 20039, 63282, 37032, 7827, 28066, 63060, 47558, 49035, 34477, 62328, 29686, 14722, 42204, 67199, 35885, 23583, 15281, 50611, 64976, 47761, 25482, 7496, 63331, 32202, 43768, 33703, 31269, 29740, 51247, 37946, 59243, 15587, 54226, 16510, 11590, 30214, 38065, 43843, 35001, 22986, 54210, 38446, 21124, 14765, 53618, 7402, 23797, 5193, 47867, 56686, 13173, 34730, 31467, 65224, 17814, 24620, 55942, 29662, 49015, 35071, 43683, 68006, 32210, 67022, 938, 50413, 23276, 53494, 10345, 8358, 11565, 22037, 18080, 18318, 15764, 11892, 55418, 43396, 19151, 47255, 33099, 49351, 35240, 2926, 45553, 3952, 49801, 19696, 17559, 36237, 63143, 56999, 41674, 67078, 12611, 37876, 58684, 35301, 53628, 50754, 6950, 45660, 3237, 66784, 9622, 67646, 13421, 39167, 63693, 68963, 49305, 54565, 56230, 49224, 32003, 51577, 64447, 39758, 9534, 456, 20629, 45579, 30301, 8701, 68617, 56144, 39642, 55977, 55009, 16643, 28634, 27216, 61235, 59986, 38025, 50137, 7200, 17343, 831, 67400, 57216, 28186, 39803, 60923, 62355, 42905, 39980, 68689, 10765, 61111, 28893, 46626, 33524, 48546, 20102, 9207, 12315, 7875, 53768, 31264, 29388, 47056, 10419, 8032, 14386, 43994, 58828, 32904, 38100, 12463, 17085, 58812, 34545, 64614, 17936, 10170, 64402, 69334, 37940, 13746, 39623, 17465, 4223, 31428, 67215, 56662, 6540, 19833, 17291, 41000, 48501, 60501, 36949, 53417, 33039, 43662, 26800, 34357, 47574, 65936, 30580, 50622, 18125, 20079, 54095, 48474, 65399, 27919, 56177, 5993, 36065, 50715, 37058, 560, 28039, 55614, 59697, 51866, 26048, 10470, 8030, 2096, 21427, 19253, 46912, 37714, 20583, 25149, 53333, 59518, 32722, 44686, 51293, 8714, 5144, 50016, 5811, 54409, 62186, 6939, 48679, 18288, 63642, 70425, 18609, 67112, 18366, 14379, 19022, 49965, 32026, 69869, 10046, 17196, 21247, 34925, 7074, 65742, 18897, 4602, 18654, 56491, 19525, 58720, 57940, 63635, 19079, 40196, 32928, 59019, 3950, 57471, 64410, 28681, 65772, 1759, 16288, 37077, 60682, 63414, 64581, 13486, 60108, 622, 41965, 56841, 13437, 20213, 55359, 15093, 34435, 29132, 40593, 67594, 44932, 49023, 56820, 52242, 14145, 65137, 2658, 29335, 32115, 2849, 34634, 20378, 30147, 22098, 29282, 31934, 59112, 52285, 51329, 23440, 10461, 31426, 59835, 24687, 26745, 47705, 34494, 14819, 29522, 10443, 46576, 13895, 24599, 66428, 23102, 60632, 36517, 22394, 7760, 69994, 42877, 68224, 25438, 12925, 27104, 40991, 25668, 5182, 38443, 46914, 20676, 7544, 20023, 7470, 18121, 3253, 17637, 33110, 6931, 59847, 1799, 28244, 41924, 51085, 32375, 10212, 30643, 23794, 29368, 38470, 7714, 49495, 60061, 69149, 9606, 16555, 49062, 32842, 2542, 61187, 10705, 10432, 14056, 29838, 50926, 30205, 14517, 45220, 32516, 59655, 8726, 53455, 2360, 34600, 49347, 47626, 147, 36858, 7186, 52029, 35450, 63200, 16175, 5359, 53473, 33525, 34411, 8679, 61553, 19168, 49548, 9453, 21450, 66020, 52067, 64712, 3474, 50841, 44325, 16726, 8166, 59497, 2592, 62805, 44081, 57594, 23694, 18492, 12604, 54097, 42383, 37847, 17535, 42903, 41921, 9553, 20000, 33874, 44281, 61544, 2057, 30646, 68038, 27929, 36922, 36644, 43136, 24015, 32855, 35486, 12149, 37405, 29208, 25206, 6915, 22171, 61316, 19208, 36537, 33261, 49147, 14557, 69784, 42459, 45921, 9819, 58594, 21659, 65588, 62904, 27847, 16424], \"ordered_train_ids_sha256\": \"3d69c183b2044a1c3ef59d28d73b3f739e8d5cee79aa2dd645fc14c30844ca77\", \"source_F_sha256\": \"f1aa47530dda741c8be4a12ed9b253df940c611965fc42c8fea609af021cd669\", \"feasible_train_targets_sha256\": \"5c2c7e26aa81307c9a2e44a9bfb370348193a7fa804019296d6cb601779f234b\", \"gain\": 7.623262882232666, \"preflight_report_sha256\": \"31757d610b799fef70a28a9096ca71f69cc49f5abf1627cfb4f27732e98e3217\", \"preflight_fingerprint_sha256\": \"7917c0c81797088244c8b4814d9937396e0b1cb61e0b78bd791213fdaceaf617\", \"feature_mode\": \"rho_from_cached_S_B1; context_Q_and_A_from_registered_original_B4\", \"source_F_mode\": \"production CPU float32 Q on original TRAIN B4 groups, then production QCC readout\", \"updates\": 256, \"epochs\": 8, \"logical_batch\": 16, \"microbatch\": 4, \"shuffle_seed\": 167001, \"head_seed\": 167001, \"optimizer\": \"Adam\", \"learning_rate\": 0.0003, \"shuffle_algorithm\": \"Python random.Random(seed).sample(range(512),512), sequentially for each epoch\", \"gradient_clip_norm\": 1.0, \"ground_truth_scope\": \"512 registered TRAIN modal32 cache targets only\"}, \"validation_data_read\": false}\n",
+    "stderr": ""
+  },
+  "structured_hinge": {
+    "state": {
+      "arm": "structured_hinge",
+      "child_argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-m",
+        "collaborative_test.SW_0167_structured_relation_energy.training_queue",
+        "--worker",
+        "--arm",
+        "structured_hinge",
+        "--physical-gpu",
+        "2"
+      ],
+      "child_pgid": 3648536,
+      "child_pid": 3648536,
+      "experiment": "SW0167_training_queue",
+      "gpu_uuid": "GPU-50cc59a2-8312-ff02-5889-1becf63c7cd4",
+      "physical_gpu": 2,
+      "preflight_report_sha256": "31757d610b799fef70a28a9096ca71f69cc49f5abf1627cfb4f27732e98e3217",
+      "status": "running_training",
+      "supervisor_pid": 3648428,
+      "updated": 1792044813.0815752
+    },
+    "supervisor_live": {
+      "pid": 3648428,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0167_structured_relation_energy.training_queue",
+        "--arm",
+        "structured_hinge"
+      ],
+      "stat": "3648428 (python) S 1 3648428 3648428 0 -1 4194304 108006 22299 227 0 1968 90 9 37 20 0 1 0 419685516 3934523392 201014 18446744073709551615 94419765981184 94419768460525 140736975472336 0 0 0 0 16781312 16386 0 0 0 17 40 0 0 0 0 0 94419769488272 94419769711456 94419798454272 140736975473882 140736975474016 140736975474016 140736975474644 0\n"
+    },
+    "child_live": {
+      "pid": 3648536,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-m",
+        "collaborative_test.SW_0167_structured_relation_energy.training_queue",
+        "--worker",
+        "--arm",
+        "structured_hinge",
+        "--physical-gpu",
+        "2"
+      ],
+      "stat": "3648536 (python) R 3648428 3648536 3648536 0 -1 4194304 1186 0 0 0 1 0 0 0 20 0 1 0 419688166 241262592 2207 18446744073709551615 93858691571712 93858694051053 140730993974176 0 0 0 0 16781312 2 0 0 0 17 18 0 0 0 0 0 93858695078800 93858695301984 93858705780736 140730993978562 140730993978719 140730993978719 140730993979348 0\n"
+    },
+    "_supervisor.log_tail": "",
+    "_worker.log_tail": ""
+  },
+  "local_margin": {
+    "state": {
+      "arm": "local_margin",
+      "child_argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-m",
+        "collaborative_test.SW_0167_structured_relation_energy.training_queue",
+        "--worker",
+        "--arm",
+        "local_margin",
+        "--physical-gpu",
+        "1"
+      ],
+      "child_pgid": 3648525,
+      "child_pid": 3648525,
+      "experiment": "SW0167_training_queue",
+      "gpu_uuid": "GPU-45604115-c231-56a5-32ea-d3001e8ff243",
+      "physical_gpu": 1,
+      "preflight_report_sha256": "31757d610b799fef70a28a9096ca71f69cc49f5abf1627cfb4f27732e98e3217",
+      "status": "running_training",
+      "supervisor_pid": 3648429,
+      "updated": 1792044812.9926934
+    },
+    "supervisor_live": {
+      "pid": 3648429,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0167_structured_relation_energy.training_queue",
+        "--arm",
+        "local_margin"
+      ],
+      "stat": "3648429 (python) S 1 3648429 3648429 0 -1 4194304 99175 18764 154 0 1970 94 9 35 20 0 1 0 419685516 3941859328 203751 18446744073709551615 94345026973696 94345029453037 140720674099984 0 0 0 0 16781312 16386 0 0 0 17 47 0 0 0 0 0 94345030480784 94345030703968 94345062850560 140720674102494 140720674102624 140720674102624 140720674103252 0\n"
+    },
+    "child_live": {
+      "pid": 3648525,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-m",
+        "collaborative_test.SW_0167_structured_relation_energy.training_queue",
+        "--worker",
+        "--arm",
+        "local_margin",
+        "--physical-gpu",
+        "1"
+      ],
+      "stat": "3648525 (python) R 3648429 3648525 3648525 0 -1 4194304 4375 0 0 0 9 1 0 0 20 0 1 0 419688158 338718720 7957 18446744073709551615 94432759128064 94432761607405 140723360655424 0 0 0 0 16781312 2 0 0 0 17 36 0 0 0 0 0 94432762635152 94432762858336 94432789266432 140723360656582 140723360656735 140723360656735 140723360657364 0\n"
+    },
+    "_supervisor.log_tail": "",
+    "_worker.log_tail": ""
+  },
+  "gpu_processes": "GPU-a0a7d03d-adc1-37ca-4342-328878b3657c, 2653200, 2162 MiB\n"
+}
