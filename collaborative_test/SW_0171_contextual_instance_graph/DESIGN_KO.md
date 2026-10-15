@@ -55,7 +55,7 @@ Norm은 동일 live gamma tensor 전체의 L2이며 finite-positive 두 sums를 
 
 ## Source parity·시간 경로·최소 credit 확인
 
-Original SourceT와 zero-final context model을 실제 같은 RGB/RNG/B4에서 비교한다. Gamma/base maps/graph와 actual A, all-six source traces/Q 및 원래 SW165 energy/merge-log/labels가 같아야 한다. B1 reference replay도 actual archived SourceT/SW165 경로로 확인한다. 단순 frozen encoder state 비교로 forward parity를 대신하지 않는다. 기존 CPU-support vs GPU-energy Q/cache-layout 모드 구분은 유지한다.
+Original SourceT와 zero-final context model을 실제 같은 TRAIN RGB/RNG/B4에서 비교한다. Gamma/base maps/graph와 actual A, all-six source traces/Q 및 원래 SW165 energy/merge-log/labels가 같아야 한다. B1도 같은 TRAIN RGB에서 SourceT/SW165의 실제 forward/readout 경로를 비교하며, archived SourceT/SW164 protocol·source fingerprint는 별도로 대조한다. TRAIN trace가 다른 VAL image의 archived bytes와 같다고 주장하지 않는다. 이 진입 검증에서 VAL RGB/GT는 읽지 않는다. 단순 frozen encoder state 비교로 forward parity를 대신하지 않는다. 기존 CPU-support vs GPU-energy Q/cache-layout 모드 구분은 유지한다.
 
 `SW0134_native_spike_binding.rollout.late_rollout`의 full1024/settle512/live-tail64를 사용한다. Actual gamma drive/graph/coupling과 aux z는 grad enabled 상태에서 burn-in 전에 준비한다. Boundary960의 recurrent state만 기존처럼 detach한다. Aux z가 no_grad burn-in에 휩쓸리거나 record용 detach가 되지 않아야 한다. Whole512 actual S로 native Q를 계산한다. Existing `SW0168/train.py`의 RGB data path, native family/checkpoint/batch evaluator 골격을 재사용하고 sealed source는 변경하지 않는다.
 
