@@ -1,0 +1,317 @@
+{
+  "status": "both_64_update_endpoints_independently_checked",
+  "arms": {
+    "history_live": {
+      "manifest_sha256": "678886c1f18602608a08dcdc144d9a2c42b3f11e3710a15967240ae51e2f64bb",
+      "phases": {
+        "initial": {
+          "event_on_fraction": {
+            "min": 0.05731344223022461,
+            "mean": 0.061435580253601074,
+            "max": 0.0669093132019043
+          },
+          "event_transition_fraction": {
+            "min": 0.11151780188083649,
+            "mean": 0.11791974119842052,
+            "max": 0.12555325031280518
+          },
+          "q_mean": {
+            "min": 0.0015000514686107635,
+            "mean": 0.001785293352440931,
+            "max": 0.00208131386898458
+          },
+          "qcc_foreground_patches": {
+            "min": 0,
+            "mean": 2,
+            "max": 8
+          },
+          "standalone_foreground_patches": {
+            "min": 0,
+            "mean": 2,
+            "max": 8
+          },
+          "constrained_maximin_loss": {
+            "min": 0.4856743853492957,
+            "mean": 0.49625620437402573,
+            "max": 0.499263786925285
+          }
+        },
+        "final": {
+          "event_on_fraction": {
+            "min": 0.05667543411254883,
+            "mean": 0.05846726894378662,
+            "max": 0.061682701110839844
+          },
+          "event_transition_fraction": {
+            "min": 0.10828281939029694,
+            "mean": 0.11286349967122078,
+            "max": 0.12039907276630402
+          },
+          "q_mean": {
+            "min": 0.0014709018869325519,
+            "mean": 0.0018559298623586074,
+            "max": 0.00237481202930212
+          },
+          "qcc_foreground_patches": {
+            "min": 0,
+            "mean": 5,
+            "max": 16
+          },
+          "standalone_foreground_patches": {
+            "min": 0,
+            "mean": 5,
+            "max": 16
+          },
+          "constrained_maximin_loss": {
+            "min": 0.48923553980374734,
+            "mean": 0.49695631698858417,
+            "max": 0.4992425950268286
+          }
+        }
+      },
+      "first8_update_loss": 0.5062170843411455,
+      "last8_update_loss": 0.5054801751492888,
+      "optimizer_step_summary": {
+        "encoder": {
+          "max_step": 64,
+          "parameter_count": 2,
+          "steps": [
+            64,
+            64
+          ],
+          "unused_parameter_count": 0,
+          "unused_parameter_names": [],
+          "updated_parameter_count": 2,
+          "updated_parameter_names": [
+            "kernels",
+            "bias"
+          ]
+        },
+        "graph": {
+          "max_step": 64,
+          "parameter_count": 4,
+          "steps": [
+            64,
+            64,
+            64,
+            64
+          ],
+          "unused_parameter_count": 0,
+          "unused_parameter_names": [],
+          "updated_parameter_count": 4,
+          "updated_parameter_names": [
+            "log_temperature",
+            "log_coupling_gain",
+            "spatial_rate",
+            "projection.weight"
+          ]
+        },
+        "integration": {
+          "max_step": 64,
+          "parameter_count": 3,
+          "steps": [
+            64,
+            64,
+            64
+          ],
+          "unused_parameter_count": 0,
+          "unused_parameter_names": [],
+          "updated_parameter_count": 3,
+          "updated_parameter_names": [
+            "a_d",
+            "a_m",
+            "b"
+          ]
+        },
+        "native_core": {
+          "max_step": 64,
+          "parameter_count": 10,
+          "steps": [
+            64,
+            64,
+            64,
+            64,
+            64,
+            64,
+            64,
+            64,
+            64,
+            64
+          ],
+          "unused_parameter_count": 0,
+          "unused_parameter_names": [],
+          "updated_parameter_count": 10,
+          "updated_parameter_names": [
+            "gamma_phase_gain",
+            "gamma_channel_proj.weight",
+            "kuramoto.freq_gain",
+            "kuramoto.omega",
+            "kuramoto.kappa",
+            "kuramoto.direction_learner",
+            "dendric_layer.tau_n",
+            "dendric_layer.oscillator_dense.weight",
+            "dendric_layer.oscillator_dense.bias",
+            "membrane_layer.tau_m"
+          ]
+        }
+      }
+    },
+    "history_detached": {
+      "manifest_sha256": "7856158558ea0a062701c89663d0f95bb3e886afbdcd9ff6a758883060d585e2",
+      "phases": {
+        "initial": {
+          "event_on_fraction": {
+            "min": 0.05731344223022461,
+            "mean": 0.061435580253601074,
+            "max": 0.0669093132019043
+          },
+          "event_transition_fraction": {
+            "min": 0.11151780188083649,
+            "mean": 0.11791974119842052,
+            "max": 0.12555325031280518
+          },
+          "q_mean": {
+            "min": 0.0015000514686107635,
+            "mean": 0.001785293352440931,
+            "max": 0.00208131386898458
+          },
+          "qcc_foreground_patches": {
+            "min": 0,
+            "mean": 2,
+            "max": 8
+          },
+          "standalone_foreground_patches": {
+            "min": 0,
+            "mean": 2,
+            "max": 8
+          },
+          "constrained_maximin_loss": {
+            "min": 0.4856743853492957,
+            "mean": 0.49625620437402573,
+            "max": 0.499263786925285
+          }
+        },
+        "final": {
+          "event_on_fraction": {
+            "min": 0.05447578430175781,
+            "mean": 0.057853519916534424,
+            "max": 0.061717987060546875
+          },
+          "event_transition_fraction": {
+            "min": 0.10663546621799469,
+            "mean": 0.11211519036442041,
+            "max": 0.1199246421456337
+          },
+          "q_mean": {
+            "min": 0.0013860114850103855,
+            "mean": 0.0017172669322462752,
+            "max": 0.002154390560463071
+          },
+          "qcc_foreground_patches": {
+            "min": 0,
+            "mean": 4,
+            "max": 16
+          },
+          "standalone_foreground_patches": {
+            "min": 0,
+            "mean": 4,
+            "max": 16
+          },
+          "constrained_maximin_loss": {
+            "min": 0.4886965050612596,
+            "mean": 0.49814903196989513,
+            "max": 0.5084396308394062
+          }
+        }
+      },
+      "first8_update_loss": 0.5065294363428358,
+      "last8_update_loss": 0.5037361324455217,
+      "optimizer_step_summary": {
+        "encoder": {
+          "max_step": 64,
+          "parameter_count": 2,
+          "steps": [
+            64,
+            64
+          ],
+          "unused_parameter_count": 0,
+          "unused_parameter_names": [],
+          "updated_parameter_count": 2,
+          "updated_parameter_names": [
+            "kernels",
+            "bias"
+          ]
+        },
+        "graph": {
+          "max_step": 64,
+          "parameter_count": 4,
+          "steps": [
+            64,
+            64,
+            64,
+            64
+          ],
+          "unused_parameter_count": 0,
+          "unused_parameter_names": [],
+          "updated_parameter_count": 4,
+          "updated_parameter_names": [
+            "log_temperature",
+            "log_coupling_gain",
+            "spatial_rate",
+            "projection.weight"
+          ]
+        },
+        "integration": {
+          "max_step": 64,
+          "parameter_count": 3,
+          "steps": [
+            64,
+            64,
+            64
+          ],
+          "unused_parameter_count": 0,
+          "unused_parameter_names": [],
+          "updated_parameter_count": 3,
+          "updated_parameter_names": [
+            "a_d",
+            "a_m",
+            "b"
+          ]
+        },
+        "native_core": {
+          "max_step": 64,
+          "parameter_count": 10,
+          "steps": [
+            64,
+            64,
+            64,
+            64,
+            64,
+            64,
+            64,
+            64,
+            64,
+            64
+          ],
+          "unused_parameter_count": 0,
+          "unused_parameter_names": [],
+          "updated_parameter_count": 10,
+          "updated_parameter_names": [
+            "gamma_phase_gain",
+            "gamma_channel_proj.weight",
+            "kuramoto.freq_gain",
+            "kuramoto.omega",
+            "kuramoto.kappa",
+            "kuramoto.direction_learner",
+            "dendric_layer.tau_n",
+            "dendric_layer.oscillator_dense.weight",
+            "dendric_layer.oscillator_dense.bias",
+            "membrane_layer.tau_m"
+          ]
+        }
+      }
+    }
+  },
+  "validation_score_available": false,
+  "incumbent_changed": false
+}
