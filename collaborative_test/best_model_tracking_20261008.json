@@ -3682,5 +3682,50 @@
       "filtered_forest_separation_not_higher"
     ],
     "recipe_closed": true
+  },
+  "latest_SW0171_completed_prefix": {
+    "status": "complete_prefix_rejected",
+    "optimizer_updates_per_arm": 8,
+    "train_unique_images": 64,
+    "train_exposures_per_arm": 128,
+    "go_checks": {
+      "candidate_Q_below_control": false,
+      "candidate_Q_below_initial": false,
+      "candidate_instance_below_initial": true,
+      "candidate_own_QCC_nonempty_at_least4": true
+    },
+    "continue64": false,
+    "validation_score_available": false,
+    "incumbent_changed": false,
+    "recipe_closed": true,
+    "arms": {
+      "Q_only": {
+        "initial": {
+          "instance_loss": 0.6933890450745821,
+          "nonempty": 8,
+          "q_loss": 0.3742439667670128
+        },
+        "final": {
+          "instance_loss": 0.6973294503986835,
+          "nonempty": 8,
+          "q_loss": 0.37659796567524717
+        }
+      },
+      "Q_plus_instance": {
+        "initial": {
+          "instance_loss": 0.6933890450745821,
+          "nonempty": 8,
+          "q_loss": 0.3742439667670128
+        },
+        "final": {
+          "instance_loss": 0.673849742859602,
+          "nonempty": 8,
+          "q_loss": 0.3807556476463149
+        }
+      }
+    },
+    "evidence": "SW_0171_contextual_instance_graph/results_archive/completed_prefix_20261015/server_records.json",
+    "local_CPU_tests": 38,
+    "server_CPU_tests": 38
   }
 }
