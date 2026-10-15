@@ -1,0 +1,11 @@
+{
+  "changes": "lineage verification and output namespace only; no model, checkpoint, training, readout, thresholds, metrics, or GT policy changes",
+  "experiment": "SW0163_source_lineage_digest_recovery",
+  "frozen_forward": "same SW0163 source-T shared rollout, SW0143-T operator, 1024 steps, settle512, live_tail0; same trained four heads, exact fresh source-T QCC control, same metrics/bootstrap/gates",
+  "ground_truth_policy": "validate all source references, trained endpoints, and all five prediction artifacts before opening canonical fixed320 masks; independently recompute score metrics",
+  "outputs": "SW0163_relation_context_assignment/results_archive/source_lineage_recovery_20261015 (centralized results path)",
+  "parent_experiment": "SW0163_relation_context_assignment",
+  "provenance": "every recovery artifact records lineage_recovery.id, parent predictor SHA256, and digest family",
+  "purpose": "Recover fixed320 prediction and GT-last evaluation for the four completed SW0163 heads after discovering the original predictor validates source state using a different digest serialization than the frozen SW0161 cache and SW0163 training bindings.",
+  "source_state_digest_family": "SW0161_supervised_spike_partition.cache._state_digest"
+}
