@@ -53,6 +53,21 @@ equals the archived control's proposal-2 start digest:
 The source archive records the original private module layout and is evidence;
 its embedded module path points to the private deployment location.
 
-No replay result is available yet. The probe reads no evaluation masks and
-commits no optimizer updates. SW0181 remains unchanged. This is supervised
-fine-tuning from a pretrained source, not fresh native32/70k training.
+The four replays completed. All current Q/Z hashes, pre/post-clip gradient
+tensors and proposed model/Adam tensors match exactly across both input
+containers and both repetitions. All four reject proposal 2. The archived
+control has the same recorded runtime and Q/Z but its proposed state digest
+differs. Its context-weight gradient norm differs by about 1.45e-13 and its
+parameter-delta norm by about 3.64e-12; the historical rejection decision agrees.
+The full archived proposal-2 tensor snapshot is unavailable, so the exact origin
+of the historical mismatch remains unresolved:
+[replay result](results_archive/diagnostic_v1/proposal2_replay_seed1_attempt01.json),
+[archived-control comparison](results_archive/diagnostic_v1/proposal2_control_comparison.json),
+[comparison source](results_archive/diagnostic_v1/control_comparison_source.py).
+
+SW0182 closes as a technical reproduction stop with no fixed320/scaling result.
+The probe read no evaluation masks and committed no updates. The successor
+[SW0183](../SW_0183_shared_prefix_unique_scaling/DESIGN_KO.md) compares two current
+arms forked from one exact common prefix, preserving this failed test and its
+registered checks. SW0181 remains unchanged. This is supervised fine-tuning
+from a pretrained source, not fresh native32/70k training.

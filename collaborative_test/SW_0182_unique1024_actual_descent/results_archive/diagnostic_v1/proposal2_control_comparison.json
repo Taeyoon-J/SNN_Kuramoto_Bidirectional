@@ -1,0 +1,69 @@
+{
+  "status": "SW0182_current_replay_vs_archived_control_comparison_complete",
+  "report_sha256": "021e8b99becb6768b30f683b8d44b50fd9ff2241dda13a750c848681e9a92b58",
+  "control_history_sha256": "4d831d29caead4ad780e1417e902dab40015df87d490eaf054e49763ec9f4c88",
+  "runtime_differences": {},
+  "microbatch_q_z_hashes_exact": true,
+  "gradient_norm_differences": [
+    {
+      "name": "context_encoder/context.8.weight",
+      "archived": 0.01960536540174888,
+      "current": 0.019605365401604378,
+      "difference": -1.4450246554886803e-13
+    },
+    {
+      "name": "graph/projection.weight",
+      "archived": 0.0741321580832162,
+      "current": 0.07413215808321619,
+      "difference": -1.3877787807814457e-17
+    },
+    {
+      "name": "native_core/kuramoto.omega",
+      "archived": 0.004639837286645838,
+      "current": 0.0046398372866458416,
+      "difference": 3.469446951953614e-18
+    },
+    {
+      "name": "native_core/kuramoto.kappa",
+      "archived": 0.0021065410209462117,
+      "current": 0.002106541020946213,
+      "difference": 1.3010426069826053e-18
+    },
+    {
+      "name": "native_core/kuramoto.direction_learner",
+      "archived": 1.0541819529847514e-07,
+      "current": 1.0541819529847898e-07,
+      "difference": 3.8381180422460484e-21
+    },
+    {
+      "name": "native_core/dendric_layer.tau_n",
+      "archived": 1.66492377158695e-06,
+      "current": 1.664923771586951e-06,
+      "difference": 8.470329472543003e-22
+    },
+    {
+      "name": "native_core/membrane_layer.tau_m",
+      "archived": 2.8051000883532355e-06,
+      "current": 2.8051000883532364e-06,
+      "difference": 8.470329472543003e-22
+    }
+  ],
+  "parameter_delta_norm_differences": [
+    {
+      "name": "context_encoder/context.8.weight",
+      "archived": 0.004799649434606225,
+      "current": 0.004799649430968167,
+      "difference": -3.63805773700987e-12
+    }
+  ],
+  "archived_before_loss": 0.5871395180001855,
+  "archived_after_loss": 0.5883674118667841,
+  "archived_accepted": false,
+  "current_before_loss": 0.5871395068243146,
+  "current_after_loss": 0.5883673997595906,
+  "current_accepted": false,
+  "archived_proposal_sha256": "f5f595c3a2770cb903a50fe29ba2319e924009ea6e38526be1692899c4b55180",
+  "current_proposal_sha256": "2827a01d3c34e7275b5430eedce1d3d633d45e0adf881abeec371c55494ee30a",
+  "validation_data_read": false,
+  "optimizer_updates": 0
+}

@@ -5972,7 +5972,7 @@
   },
   "latest_unique1024_scaling_20261016": {
     "experiment": "SW0182",
-    "status": "proposal2_same_state_four_replay_diagnostic_launched",
+    "status": "closed_technical_archived_control_reproduction_mismatch_current_four_replays_exact",
     "cache_manifest_sha256": "c83ee9cdb98ff1a3d84a99d9d003d45c1beb29d8ea83b5f59c1fdcb490172892",
     "cache_arrays_sha256": "988ecd2a566e08a7e37a5ddb86c6af86f5f8a941c6de9af92dd35b6eda0e5030",
     "canonical_reference_array_hashes": {
@@ -6000,7 +6000,7 @@
     "server_admission_terminal_observed": true,
     "server_admission_ssh_exit_code": 1,
     "remote_training_execution_confirmed": false,
-    "next_action": "await_same_state_four_replay_diagnostic_before_contract_or_model_changes",
+    "next_action": "SW0183_contemporaneous_shared_prefix_fork_comparison",
     "GPU_training_currently_running": false,
     "first_proposal_all_three_seeds_verified": true,
     "first_two_GPU_admission_passed": false,
@@ -6028,6 +6028,36 @@
     "diagnostic_seed": 1,
     "diagnostic_parent_pid": 904408,
     "diagnostic_required_physical_gpu": 2,
-    "diagnostic_result_available": false
+    "diagnostic_result_available": true,
+    "diagnostic_current_arms_tensor_exact": true,
+    "archived_control_q_z_exact": true,
+    "archived_control_recorded_runtime_exact": true,
+    "archived_control_proposal_state_exact": false,
+    "diagnostic_artifact_sha256": {
+      "proposal2_replay_seed1_attempt01.json": "021e8b99becb6768b30f683b8d44b50fd9ff2241dda13a750c848681e9a92b58",
+      "proposal2_control_comparison.json": "743c7b799b3d08777af40dfcf2f83e9d6dec439243d13235729658aec2475fce"
+    }
+  },
+  "latest_shared_prefix_scaling_20261016": {
+    "experiment": "SW0183",
+    "status": "preregistered_implementation_in_progress",
+    "design_sha256": "0c91eef908bc7e4129a6b0f068fb8b0cf9013c16a91da0490532619f128e5b8c",
+    "source_seeds": [
+      0,
+      1,
+      2
+    ],
+    "arms": [
+      "control512",
+      "candidate1024"
+    ],
+    "common_prefix_proposals": 32,
+    "logical_proposals_per_arm": 64,
+    "actual_proposals_per_seed": 96,
+    "mask_supervised": true,
+    "unsupervised_leaderboard_eligible": false,
+    "GPU_training_started": false,
+    "fixed320_result_available": false,
+    "incumbent_changed": false
   }
 }
