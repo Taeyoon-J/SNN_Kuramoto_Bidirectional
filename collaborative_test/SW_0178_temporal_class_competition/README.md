@@ -47,3 +47,20 @@ finite-positive임을 저장 경계로 확인했습니다. 실제 모델 tensor�
 원문은 `results_archive/gpu_v1/first_two.json`, 독립 검증 코드는 `verify.py`,
 실제 PID/GPU 관찰은 `observed.json`입니다. 검증에서는 validation GT를
 읽거나 optimizer를 실행하지 않았습니다.
+
+## 자동 평가 큐 등록
+
+학습·평가 서버 검증 31개와 실제 중간 저장 모델 두 개의 CPU strict-load
+검사를 통과했습니다. 모델 검사는 39-update 경계를 사용한 private fixture이며,
+64-update 완료 artifact의 검증으로 간주하지 않습니다. 최종 artifact는 실제
+학습 완료 뒤 다시 검증합니다. 이 준비 단계에서는 validation GT를 읽지 않았고
+optimizer update나 GPU 추론을 실행하지 않았습니다.
+
+예측 부모 두 개와 점수 부모 한 개를 서버에 등록하고 실제 PID/argv를
+확인했습니다. 두 학습이 완료되면 실제 S/native Q로 conditional·standalone
+예측을 각각 생성합니다. 성공한 arm의 fixed320 예측이 모두 고정되고 hash가
+검증된 뒤 GT를 열어 세 지표와 paired bootstrap을 계산합니다. 한 arm이
+학습 단계에서 거절돼도 다른 성공 arm은 독립 평가하며, 둘 다 거절되면
+GT를 열지 않습니다. 현재 평가 점수는 없습니다.
+
+CPU 검증과 큐 등록 원문: `results_archive/eval_v1/cpu.json`, `launch.json`.
