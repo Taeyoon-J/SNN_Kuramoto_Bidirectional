@@ -1,0 +1,55 @@
+{
+  "status": "actual_TRAIN8_cache_CPU_admission_passed",
+  "tests": 7,
+  "selected_ids": [
+    68304,
+    49032,
+    70041,
+    7829,
+    16499,
+    31675,
+    67612,
+    54671
+  ],
+  "manifest_sha256": "b4125a81012bf46cf38ff512bf251452f511524c42a2d2364c34783de04302b3",
+  "source_bindings_match": true,
+  "arms": [
+    {
+      "arm": "mean_rho_ce",
+      "loss": 0.7397632002830505,
+      "cached_spike_leaf_gradient_l2": 0.008853214725424717,
+      "seconds": 902.9165087472647
+    },
+    {
+      "arm": "product_q_ce",
+      "loss": 0.482499361038208,
+      "cached_spike_leaf_gradient_l2": 0.005035059713805624,
+      "seconds": 1538.095467385836
+    }
+  ],
+  "actual_model_gradient_verified": false,
+  "optimizer_updates": 0,
+  "cuda_initialized": false,
+  "files": [
+    {
+      "path": "collaborative_test/SW_0178_temporal_class_competition/DESIGN_KO.md",
+      "sha256": "acbda72c31e568ff19fdb1a314f7af3a360bcb0edb922b99e927c80f8e5d1507"
+    },
+    {
+      "path": "collaborative_test/SW_0178_temporal_class_competition/class_competition.py",
+      "sha256": "b0de2868097585b99e3112c4f68c72ce67de0c8c616c4270149746632e5aed68"
+    },
+    {
+      "path": "collaborative_test/SW_0178_temporal_class_competition/test_class_competition.py",
+      "sha256": "38ebc2eb24004e8670d105722831fc2228241250e2db0ad46c2b40bf37bdd1d1"
+    },
+    {
+      "path": "collaborative_test/SW_0178_temporal_class_competition/preflight.py",
+      "sha256": "e225bc509dddeacbbae946822f9b54c97c4b5a1f59d11e23fab4117a4cb60b4b"
+    },
+    {
+      "path": "collaborative_test/SW_0178_temporal_class_competition/test_preflight.py",
+      "sha256": "cc35a3c0b1da4de9750acfd47535e180d1dd832dbb69b743774ee4975a55593d"
+    }
+  ]
+}

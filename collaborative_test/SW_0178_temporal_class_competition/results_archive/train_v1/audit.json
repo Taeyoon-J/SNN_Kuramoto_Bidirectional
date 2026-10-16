@@ -1,0 +1,37 @@
+{
+  "observed_unix": 1792133594.5766315,
+  "status": "both_training_artifacts_verified",
+  "arms": [
+    {
+      "arm": "mean_rho_ce",
+      "status": "actual_64_update_artifact_verified",
+      "manifest_sha256": "f0b8c301a825eafaa23d09b42ba042baad1c31d8bb0855d818d90f666d4eab9d",
+      "model_state_sha256": "d74c044581d7bdb1571ad553751f9f05c65387312666bf2a095e8e64807e2137",
+      "unique_train_images": 512,
+      "exposures": 1024,
+      "Adam_step_range": [
+        64,
+        64
+      ],
+      "initial_first_batch_loss": 0.6381102818995714,
+      "last_batch_loss": 0.6530888765119016
+    },
+    {
+      "arm": "product_q_ce",
+      "status": "actual_64_update_artifact_verified",
+      "manifest_sha256": "9ee049b8d156557c4f0cbd927794286f3774887ec5f320660f246e7a6deccd76",
+      "model_state_sha256": "a3352080445a42d9422aa44f6488b65f3768d9c2583afa9d0a07828b398b78b8",
+      "unique_train_images": 512,
+      "exposures": 1024,
+      "Adam_step_range": [
+        64,
+        64
+      ],
+      "initial_first_batch_loss": 0.4440026795491576,
+      "last_batch_loss": 0.4352599671110511
+    }
+  ],
+  "cuda_initialized": false,
+  "validation_ground_truth_read": false,
+  "optimizer_updates": 0
+}

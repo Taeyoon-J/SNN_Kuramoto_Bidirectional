@@ -20,7 +20,7 @@ readout으로 동일하며 정답 object 개수나 mask를 입력하지 않습�
 
 학습에 사용하는 vectorized loss는 원래 explicit loss와 값 및 affinity
 gradient가 일치하는 fixture를 통과했습니다. 원래 explicit 구현의 실제 TRAIN8
-CPU 검사는 계산량이 많아 별도 실행 중이며 학습용 구현은 vectorized 버전입니다.
+CPU 검사도 완료됐으며 학습에는 vectorized 구현을 사용했습니다.
 
 평가 조건과 사전 판정은 [DESIGN_KO.md](DESIGN_KO.md)에 있습니다. 두 arm은
 각각 독립적으로 두 readout endpoint에서 SW0164 seed1 대비 FG-ARI 개선과
@@ -64,3 +64,20 @@ optimizer update나 GPU 추론을 실행하지 않았습니다.
 GT를 열지 않습니다. 현재 평가 점수는 없습니다.
 
 CPU 검증과 큐 등록 원문: `results_archive/eval_v1/cpu.json`, `launch.json`.
+
+## 학습 완료, 평가 대기
+
+두 arm 모두 64 logical updates를 완료했습니다. 각각 고유 TRAIN512장을
+두 번 사용한 1024 exposures, 실제 Adam step 64, 최종 모델 tensor digest,
+최종 checkpoint와 atomic boundary의 tensor 일치 및 frozen source 유지가
+검증됐습니다. 이 시점의 성능 점수는 없으며 최고 모델은 변경하지 않습니다.
+두 예측 부모와 score 부모는 학습 뒤의 실제 artifact 검증·평가를 위해
+계속 실행 중입니다. 학습은 재시작하지 않았습니다.
+
+`results_archive/train_v1/audit.json`에 독립 완료 검증을 기록했고, `rho.json`과
+`qce.json`은 각 최종 manifest입니다. `verify.py`는 검증 코드입니다.
+느린 explicit loss의 실제 TRAIN8 CPU 검사도 완료됐습니다. Vectorized
+구현과 loss 차이는 1e-6 미만, S leaf gradient norm 차이는 1e-8 미만입니다.
+이는 실제 데이터의 loss·gradient norm 비교이며 전체 gradient vector의
+동일성 주장은 아닙니다. 작은 fixture에서는 전체 affinity gradient를 비교했습니다.
+참조 검사는 `reference.json`, 수치 비교는 `loss_check.json`에 보관했습니다.
