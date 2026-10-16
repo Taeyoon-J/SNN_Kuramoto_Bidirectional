@@ -1,0 +1,78 @@
+{
+  "status": "SW0179_two_training_parents_verified_live",
+  "parents": [
+    {
+      "seed": 0,
+      "pid": 407446,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0179_qce_seed_replication.training_queue",
+        "--arm",
+        "product_q_ce",
+        "--source-seed",
+        "0"
+      ],
+      "state": {
+        "arm": "product_q_ce",
+        "experiment": "SW0179_training_queue",
+        "seed": 0,
+        "status": "validating_train_inputs",
+        "supervisor_pid": 407446,
+        "updated_unix": 1792136601.9193766
+      },
+      "observed_unix": 1792136602.1225052
+    },
+    {
+      "seed": 2,
+      "pid": 407462,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0179_qce_seed_replication.training_queue",
+        "--arm",
+        "product_q_ce",
+        "--source-seed",
+        "2"
+      ],
+      "state": {
+        "arm": "product_q_ce",
+        "experiment": "SW0179_training_queue",
+        "seed": 2,
+        "status": "validating_train_inputs",
+        "supervisor_pid": 407462,
+        "updated_unix": 1792136603.9845417
+      },
+      "observed_unix": 1792136604.126756
+    }
+  ],
+  "CPU_receipt_sha256": "0223b24291db1d11cf2f49844a0f99da4c3e3a244348f6515c4694866abad3a7",
+  "tests": 11,
+  "files": [
+    {
+      "path": "collaborative_test/SW_0179_qce_seed_replication/DESIGN_KO.md",
+      "sha256": "bcb1a6317abd0b92a3d17e2e1f99f86c0c7ee5d864ec6dc02639a581f282d255"
+    },
+    {
+      "path": "collaborative_test/SW_0179_qce_seed_replication/train.py",
+      "sha256": "8b5b2da6e08c780a7e2446afb67a92b9278903720d661b6ba59753358ee125fc"
+    },
+    {
+      "path": "collaborative_test/SW_0179_qce_seed_replication/test_train.py",
+      "sha256": "ef9a9bc0c25570b5a3d7a12ae3c79240e2da445cc7d4ace7c3c2b8a6a0e65546"
+    },
+    {
+      "path": "collaborative_test/SW_0179_qce_seed_replication/training_queue.py",
+      "sha256": "a6375db3e8df5e9405e35a1c62fde3eedbbf24bbb51e97b37c54eabef77e6e5a"
+    },
+    {
+      "path": "collaborative_test/SW_0179_qce_seed_replication/test_training_queue.py",
+      "sha256": "fe190cc7538826a1831b338fdbd410eb456cf5e1abb14752f6725ac94fe8f783"
+    }
+  ],
+  "mask_supervised": true,
+  "unsupervised_leaderboard_eligible": false,
+  "observed_unix": 1792136604.1270604
+}
