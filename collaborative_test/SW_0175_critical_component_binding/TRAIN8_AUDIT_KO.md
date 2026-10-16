@@ -9,3 +9,15 @@
 로컬 CPU 검사 12개가 통과했다. 성공 경로의 실제 supervisor 호출을 mock으로 끝까지 실행해 score에 묶인 worker command가 Popen까지 전달되는지 확인했고, launch 전 오류의 terminal 기록과 기존 상태 보존도 확인했다. **이는 서버 실행이나 실제 GPU 진단 완료의 증거가 아니다.**
 
 현재 새 파일의 서버 전송 시도는 SSH banner timeout으로 실행되지 않았으며, 실제 서버 CPU 입력 준비 및 큐 등록은 아직 확인되지 않았다. 연결 복구 후 실제 완료 모델과 TRAIN 캐시로 CPU admission부터 검증하고 등록한다. 실행 중인 고정320 평가와 학습 산출물은 건드리지 않는다.
+
+## 후속 완료 (2026-10-16 UTC)
+
+연결 복구 후 네 파일의 실제 배포와 서버 CPU 12개 검사, 실제 캐시 입력 준비를 확인했다. 고정320 채점이 완료되고 공개 validator로 재확인된 뒤 GPU1에서 TRAIN8 진단을 실행했다. 부모·worker 모두 정상 종료했고 immutable 보고서 SHA가 terminal 상태와 일치한다. 각 행에서 평균을 독립 재계산했다. 위의 서버 미실행 기록은 당시 상태이며 현재 완료 증거는 `results_archive/completed_train8_audit_20261016/`에 있다.
+
+| 모델 | TRAIN8 conditional FG | TRAIN8 standalone FG | standalone foreground IoU | 양성 pair mass의 zero-partial 비율 |
+|---|---:|---:|---:|---:|
+| critical_component | 0.604887 | 0.606784 | 0.385742 | 0.113366 |
+| native_Q | 0.561564 | 0.581960 | 0.564056 | 0.051811 |
+| source_T_zero_context | 0.645323 | 0.643618 | 0.597822 | 0.044274 |
+
+이 표는 학습에 사용된 8장의 설명용 진단이며 일반화 성능이 아니다. 최종 판정은 RESULT_KO.md의 고정320 음성 결과를 따른다. 두 loss와 event/rho 원자료는 함께 보존했으며, 이 결과만으로 gating의 인과적 필요성을 입증하지 않는다.
