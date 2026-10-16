@@ -1,0 +1,361 @@
+{
+  "accepted_updates": {
+    "candidate1024": 31,
+    "control512": 35
+  },
+  "arm_manifests": {
+    "candidate1024": "3ff4aaaae442ef6bd0ce471fbe65df1b3483760412140b0ddd36f84f0c10bf53",
+    "control512": "c534ade61f97ed518034d9e5420a88b449715f1c1beee96baa03f04a1e2af06b"
+  },
+  "attempt": 1,
+  "child_argv": [
+    "/Data0/kevinswk/envs/snn/bin/python",
+    "-m",
+    "collaborative_test.SW_0183_shared_prefix_unique_scaling.training_queue",
+    "--worker",
+    "--source-seed",
+    "0",
+    "--physical-gpu",
+    "1"
+  ],
+  "child_pgid": 908171,
+  "child_pid": 908171,
+  "experiment": "SW0183_training_queue",
+  "gpu_uuid": "GPU-45604115-c231-56a5-32ea-d3001e8ff243",
+  "input_identity": {
+    "control_history_sha256": "a1a4a6738d35e7918ad7a142803f3087eca409447484542188fb5af197ef0b41",
+    "control_manifest_sha256": "da5ed3758c3fcb000ebda1720edd9f85b535914a9958f57b88f3e06674972c48",
+    "dataset_arrays_sha256": "988ecd2a566e08a7e37a5ddb86c6af86f5f8a941c6de9af92dd35b6eda0e5030",
+    "dataset_manifest_sha256": "c83ee9cdb98ff1a3d84a99d9d003d45c1beb29d8ea83b5f59c1fdcb490172892",
+    "fresh_source_proof": {
+      "accept_reject_protocol": "one proposal per fixed batch; no retries",
+      "adam_state_entries": 0,
+      "base_encoder_sha256": "85085bec46639858f9199550a00b487f303e848a0add914345a16d2794bd53ee",
+      "context_seed": 171000,
+      "cuda_initialized": false,
+      "dataset_arrays_sha256": "988ecd2a566e08a7e37a5ddb86c6af86f5f8a941c6de9af92dd35b6eda0e5030",
+      "dataset_manifest_sha256": "c83ee9cdb98ff1a3d84a99d9d003d45c1beb29d8ea83b5f59c1fdcb490172892",
+      "experiment": "SW0182_unique1024_actual_descent",
+      "family_names": [
+        "context_encoder",
+        "graph",
+        "native_core",
+        "integration"
+      ],
+      "ground_truth_scope": "TRAIN modal labels only",
+      "initial_model_state_sha256": "ea4d5e91e58b0229ddcdfeaebf30dab4ab992155b5278898b03ec8fbcdf6f7c4",
+      "optimizer_groups": [
+        {
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "eps": 1e-08,
+          "lr": 0.0003,
+          "name": "context_encoder",
+          "parameter_names": [
+            "context.0.weight",
+            "context.0.bias",
+            "context.2.weight",
+            "context.2.bias",
+            "context.4.weight",
+            "context.4.bias",
+            "context.6.weight",
+            "context.6.bias",
+            "context.8.weight",
+            "context.8.bias"
+          ],
+          "weight_decay": 0.0
+        },
+        {
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "eps": 1e-08,
+          "lr": 3e-05,
+          "name": "graph",
+          "parameter_names": [
+            "log_temperature",
+            "log_coupling_gain",
+            "spatial_rate",
+            "projection.weight"
+          ],
+          "weight_decay": 0.0
+        },
+        {
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "eps": 1e-08,
+          "lr": 3e-05,
+          "name": "native_core",
+          "parameter_names": [
+            "gamma_phase_gain",
+            "gamma_channel_proj.weight",
+            "kuramoto.freq_gain",
+            "kuramoto.omega",
+            "kuramoto.kappa",
+            "kuramoto.direction_learner",
+            "dendric_layer.tau_n",
+            "dendric_layer.oscillator_dense.weight",
+            "dendric_layer.oscillator_dense.bias",
+            "membrane_layer.tau_m"
+          ],
+          "weight_decay": 0.0
+        },
+        {
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "eps": 1e-08,
+          "lr": 0.001,
+          "name": "integration",
+          "parameter_names": [
+            "a_d",
+            "a_m",
+            "b"
+          ],
+          "weight_decay": 0.0
+        }
+      ],
+      "ordered_train_ids_sha256": "954e85049343c289e3bbcb4d197978a910d9c829b5bdc5ebcbbff485786a9b7e",
+      "parameter_count": 27,
+      "seed": 0,
+      "source_binding": {
+        "encoder_sha256": "9b9c9c59725f872084a6c9bfae1ebbd1b89de40d18ef4f8ab6b8ec014c2ab868",
+        "feature_preprocessing_sha256": "a9ec3281b9603021c37f7c346baa6cf62513c5ce7edde867ab7eddf24b18e127",
+        "seed": 0,
+        "source_checkpoint_sha256": "36f2481dd1fa51fa29bd4dc34275a876b71d8b76fbee13ac47a0a1bfe6766fbf",
+        "source_core_path": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0097_graph_adaptation/seed0_positive_frozen/core.pt",
+        "source_manifest_path": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0097_graph_adaptation/seed0_positive_frozen/manifest.json",
+        "source_manifest_sha256": "b57c0e5a83440dc81582d2ea9433505008041e5182c9e680c5524feff8b10ff9",
+        "source_state_sha256": "2610525dcccc914264092ea48d9db999768995a415cca9b1faeec0990fa119c0",
+        "source_steps": 256
+      },
+      "source_state_sha256": "2610525dcccc914264092ea48d9db999768995a415cca9b1faeec0990fa119c0",
+      "training_fingerprint": {
+        "acceptance": "finite post < before - max(1e-7,1e-6*abs(before))",
+        "batch_schedule_sha256": "a6653fec2fb1dd14c5a518cf4d2178bbdd7cad831e8c2273d65de12cfeafe6fe",
+        "dataset_size": 1024,
+        "experiment": "SW0182_unique1024_actual_descent",
+        "files": {
+          "collaborative_test/SW_0130_phase_state_integration/run.py": "92ac0032467c6bff2e31a76c66021c5e211f9402d15ff868382d71ecc807e988",
+          "collaborative_test/SW_0148_checkpointable_boundary_q/checkpoint.py": "75d5076c051f81a51a39bbafedd363e589aa58ffc41ba4a662a87ffb91601f53",
+          "collaborative_test/SW_0155_supervised_spike_relations/objective.py": "07ea07f1fa06c6f2e05e4e98184db487f68549249d997e6991ea26a8e06b40fe",
+          "collaborative_test/SW_0155_supervised_spike_relations/train.py": "68306bc5fa658487302dbcb20d0e95676957dbdbd3b04c471292cbfb4126db69",
+          "collaborative_test/SW_0171_contextual_instance_graph/preflight.py": "bcab86543c0f50cd772d5a024ac83ab3f48f09ff975f0e9719a07129aee35113",
+          "collaborative_test/SW_0175_critical_component_binding/train_v2.py": "284d6de62c4af5cc335b7b953eca1cc936e50f732e55867e4b804c8ec2215a89",
+          "collaborative_test/SW_0179_qce_seed_replication/DESIGN_KO.md": "bcb1a6317abd0b92a3d17e2e1f99f86c0c7ee5d864ec6dc02639a581f282d255",
+          "collaborative_test/SW_0179_qce_seed_replication/train.py": "8b5b2da6e08c780a7e2446afb67a92b9278903720d661b6ba59753358ee125fc",
+          "collaborative_test/SW_0181_actual_descent_qce/DESIGN_KO.md": "001d7b723ffbcaef5a1d2fc30f0f196a6425027cd0a58efe911388331cb208a6",
+          "collaborative_test/SW_0181_actual_descent_qce/state_transaction.py": "aeb628aac8735869637f0fec824c35cd4174f6d5d92988d818b248bfd7bb0c79",
+          "collaborative_test/SW_0181_actual_descent_qce/train.py": "085449ab0f9ced6a82ddc040e079e9375a2f3b9f5e50d629fe3960976eab5e67",
+          "collaborative_test/SW_0181_actual_descent_qce/training_queue.py": "f5a8aa6dbe3b66125d97c68ec5dd14b7cb93b7cb930dc8ae3608197c36852c2c",
+          "collaborative_test/SW_0182_unique1024_actual_descent/DESIGN_KO.md": "cd753b87e227897b64b2788e7112fff4075823206aba4a58162a15ec1f786591",
+          "collaborative_test/SW_0182_unique1024_actual_descent/data.py": "620082294fcaf8f8d1c7e61e38dfb6ff3e8dd07843d2259057faa33312aabc18",
+          "collaborative_test/SW_0182_unique1024_actual_descent/schedule.py": "bb1188427f1283fbd169e05ff249edfb821f3aa943c99888be22b100598964ad",
+          "collaborative_test/SW_0182_unique1024_actual_descent/test_data.py": "137f1c876d2f261d561a47ba618ab35d6f81f99a681da898b3663a678110d759",
+          "collaborative_test/SW_0182_unique1024_actual_descent/test_train.py": "eabfdb8ace972456ae1a36a01bc27206985eb7ddcdbe16932d8a80e9049774f9",
+          "collaborative_test/SW_0182_unique1024_actual_descent/test_training_queue.py": "ec0084cff11b23c3e19f2076a4f83356f71dc401affa64a698f947923d6555bb",
+          "collaborative_test/SW_0182_unique1024_actual_descent/train.py": "b8087b5753086c72f7389ba1f0f0c44763658de7730cc4bc6b5c83eadebb7154",
+          "collaborative_test/SW_0182_unique1024_actual_descent/training_queue.py": "f4c57a02575fd44009d7ca658e6bf57aea43b6b6dfdf7e53742b2e694d526e83"
+        },
+        "gradient_mode": "original SW0179 full-1024 forward; settle512; live-tail64 backward",
+        "mask_supervised": true,
+        "parent_training_fingerprint": "9dea51bf4b588b2499788bcf1d08e4ddd0b0f5cdd5e2eb5198205321cfaef79e",
+        "proposal_budget": 64,
+        "seeds": [
+          0,
+          1,
+          2
+        ],
+        "source_factory": "fresh seed-specific SW0179 SourceT + zero-context; no trained checkpoint reuse",
+        "unsupervised_leaderboard_eligible": false
+      },
+      "validation_data_read": false
+    },
+    "ordered_train_ids_sha256": "954e85049343c289e3bbcb4d197978a910d9c829b5bdc5ebcbbff485786a9b7e",
+    "validation_data_read": false
+  },
+  "memory_used_mib": 4332,
+  "physical_gpu": 1,
+  "prefix_manifest_sha256": "a7f190b03e860da3828ec9e53953220c631a53f04e11f91e89a536ef84aad1fb",
+  "prefix_state_sha256": "87e91f7d31ad6d317c6aebbcda4a0971b574da742c0e1d4476e1355cfe045fe9",
+  "proposal_count": 96,
+  "queue_fingerprint": {
+    "cache_mode": "USE_PYTORCH_KERNEL_CACHE=0",
+    "experiment": "SW0183_training_queue",
+    "input_identity": {
+      "control_history_sha256": "a1a4a6738d35e7918ad7a142803f3087eca409447484542188fb5af197ef0b41",
+      "control_manifest_sha256": "da5ed3758c3fcb000ebda1720edd9f85b535914a9958f57b88f3e06674972c48",
+      "dataset_arrays_sha256": "988ecd2a566e08a7e37a5ddb86c6af86f5f8a941c6de9af92dd35b6eda0e5030",
+      "dataset_manifest_sha256": "c83ee9cdb98ff1a3d84a99d9d003d45c1beb29d8ea83b5f59c1fdcb490172892",
+      "fresh_source_proof": {
+        "accept_reject_protocol": "one proposal per fixed batch; no retries",
+        "adam_state_entries": 0,
+        "base_encoder_sha256": "85085bec46639858f9199550a00b487f303e848a0add914345a16d2794bd53ee",
+        "context_seed": 171000,
+        "cuda_initialized": false,
+        "dataset_arrays_sha256": "988ecd2a566e08a7e37a5ddb86c6af86f5f8a941c6de9af92dd35b6eda0e5030",
+        "dataset_manifest_sha256": "c83ee9cdb98ff1a3d84a99d9d003d45c1beb29d8ea83b5f59c1fdcb490172892",
+        "experiment": "SW0182_unique1024_actual_descent",
+        "family_names": [
+          "context_encoder",
+          "graph",
+          "native_core",
+          "integration"
+        ],
+        "ground_truth_scope": "TRAIN modal labels only",
+        "initial_model_state_sha256": "ea4d5e91e58b0229ddcdfeaebf30dab4ab992155b5278898b03ec8fbcdf6f7c4",
+        "optimizer_groups": [
+          {
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-08,
+            "lr": 0.0003,
+            "name": "context_encoder",
+            "parameter_names": [
+              "context.0.weight",
+              "context.0.bias",
+              "context.2.weight",
+              "context.2.bias",
+              "context.4.weight",
+              "context.4.bias",
+              "context.6.weight",
+              "context.6.bias",
+              "context.8.weight",
+              "context.8.bias"
+            ],
+            "weight_decay": 0.0
+          },
+          {
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-08,
+            "lr": 3e-05,
+            "name": "graph",
+            "parameter_names": [
+              "log_temperature",
+              "log_coupling_gain",
+              "spatial_rate",
+              "projection.weight"
+            ],
+            "weight_decay": 0.0
+          },
+          {
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-08,
+            "lr": 3e-05,
+            "name": "native_core",
+            "parameter_names": [
+              "gamma_phase_gain",
+              "gamma_channel_proj.weight",
+              "kuramoto.freq_gain",
+              "kuramoto.omega",
+              "kuramoto.kappa",
+              "kuramoto.direction_learner",
+              "dendric_layer.tau_n",
+              "dendric_layer.oscillator_dense.weight",
+              "dendric_layer.oscillator_dense.bias",
+              "membrane_layer.tau_m"
+            ],
+            "weight_decay": 0.0
+          },
+          {
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-08,
+            "lr": 0.001,
+            "name": "integration",
+            "parameter_names": [
+              "a_d",
+              "a_m",
+              "b"
+            ],
+            "weight_decay": 0.0
+          }
+        ],
+        "ordered_train_ids_sha256": "954e85049343c289e3bbcb4d197978a910d9c829b5bdc5ebcbbff485786a9b7e",
+        "parameter_count": 27,
+        "seed": 0,
+        "source_binding": {
+          "encoder_sha256": "9b9c9c59725f872084a6c9bfae1ebbd1b89de40d18ef4f8ab6b8ec014c2ab868",
+          "feature_preprocessing_sha256": "a9ec3281b9603021c37f7c346baa6cf62513c5ce7edde867ab7eddf24b18e127",
+          "seed": 0,
+          "source_checkpoint_sha256": "36f2481dd1fa51fa29bd4dc34275a876b71d8b76fbee13ac47a0a1bfe6766fbf",
+          "source_core_path": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0097_graph_adaptation/seed0_positive_frozen/core.pt",
+          "source_manifest_path": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0097_graph_adaptation/seed0_positive_frozen/manifest.json",
+          "source_manifest_sha256": "b57c0e5a83440dc81582d2ea9433505008041e5182c9e680c5524feff8b10ff9",
+          "source_state_sha256": "2610525dcccc914264092ea48d9db999768995a415cca9b1faeec0990fa119c0",
+          "source_steps": 256
+        },
+        "source_state_sha256": "2610525dcccc914264092ea48d9db999768995a415cca9b1faeec0990fa119c0",
+        "training_fingerprint": {
+          "acceptance": "finite post < before - max(1e-7,1e-6*abs(before))",
+          "batch_schedule_sha256": "a6653fec2fb1dd14c5a518cf4d2178bbdd7cad831e8c2273d65de12cfeafe6fe",
+          "dataset_size": 1024,
+          "experiment": "SW0182_unique1024_actual_descent",
+          "files": {
+            "collaborative_test/SW_0130_phase_state_integration/run.py": "92ac0032467c6bff2e31a76c66021c5e211f9402d15ff868382d71ecc807e988",
+            "collaborative_test/SW_0148_checkpointable_boundary_q/checkpoint.py": "75d5076c051f81a51a39bbafedd363e589aa58ffc41ba4a662a87ffb91601f53",
+            "collaborative_test/SW_0155_supervised_spike_relations/objective.py": "07ea07f1fa06c6f2e05e4e98184db487f68549249d997e6991ea26a8e06b40fe",
+            "collaborative_test/SW_0155_supervised_spike_relations/train.py": "68306bc5fa658487302dbcb20d0e95676957dbdbd3b04c471292cbfb4126db69",
+            "collaborative_test/SW_0171_contextual_instance_graph/preflight.py": "bcab86543c0f50cd772d5a024ac83ab3f48f09ff975f0e9719a07129aee35113",
+            "collaborative_test/SW_0175_critical_component_binding/train_v2.py": "284d6de62c4af5cc335b7b953eca1cc936e50f732e55867e4b804c8ec2215a89",
+            "collaborative_test/SW_0179_qce_seed_replication/DESIGN_KO.md": "bcb1a6317abd0b92a3d17e2e1f99f86c0c7ee5d864ec6dc02639a581f282d255",
+            "collaborative_test/SW_0179_qce_seed_replication/train.py": "8b5b2da6e08c780a7e2446afb67a92b9278903720d661b6ba59753358ee125fc",
+            "collaborative_test/SW_0181_actual_descent_qce/DESIGN_KO.md": "001d7b723ffbcaef5a1d2fc30f0f196a6425027cd0a58efe911388331cb208a6",
+            "collaborative_test/SW_0181_actual_descent_qce/state_transaction.py": "aeb628aac8735869637f0fec824c35cd4174f6d5d92988d818b248bfd7bb0c79",
+            "collaborative_test/SW_0181_actual_descent_qce/train.py": "085449ab0f9ced6a82ddc040e079e9375a2f3b9f5e50d629fe3960976eab5e67",
+            "collaborative_test/SW_0181_actual_descent_qce/training_queue.py": "f5a8aa6dbe3b66125d97c68ec5dd14b7cb93b7cb930dc8ae3608197c36852c2c",
+            "collaborative_test/SW_0182_unique1024_actual_descent/DESIGN_KO.md": "cd753b87e227897b64b2788e7112fff4075823206aba4a58162a15ec1f786591",
+            "collaborative_test/SW_0182_unique1024_actual_descent/data.py": "620082294fcaf8f8d1c7e61e38dfb6ff3e8dd07843d2259057faa33312aabc18",
+            "collaborative_test/SW_0182_unique1024_actual_descent/schedule.py": "bb1188427f1283fbd169e05ff249edfb821f3aa943c99888be22b100598964ad",
+            "collaborative_test/SW_0182_unique1024_actual_descent/test_data.py": "137f1c876d2f261d561a47ba618ab35d6f81f99a681da898b3663a678110d759",
+            "collaborative_test/SW_0182_unique1024_actual_descent/test_train.py": "eabfdb8ace972456ae1a36a01bc27206985eb7ddcdbe16932d8a80e9049774f9",
+            "collaborative_test/SW_0182_unique1024_actual_descent/test_training_queue.py": "ec0084cff11b23c3e19f2076a4f83356f71dc401affa64a698f947923d6555bb",
+            "collaborative_test/SW_0182_unique1024_actual_descent/train.py": "b8087b5753086c72f7389ba1f0f0c44763658de7730cc4bc6b5c83eadebb7154",
+            "collaborative_test/SW_0182_unique1024_actual_descent/training_queue.py": "f4c57a02575fd44009d7ca658e6bf57aea43b6b6dfdf7e53742b2e694d526e83"
+          },
+          "gradient_mode": "original SW0179 full-1024 forward; settle512; live-tail64 backward",
+          "mask_supervised": true,
+          "parent_training_fingerprint": "9dea51bf4b588b2499788bcf1d08e4ddd0b0f5cdd5e2eb5198205321cfaef79e",
+          "proposal_budget": 64,
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "source_factory": "fresh seed-specific SW0179 SourceT + zero-context; no trained checkpoint reuse",
+          "unsupervised_leaderboard_eligible": false
+        },
+        "validation_data_read": false
+      },
+      "ordered_train_ids_sha256": "954e85049343c289e3bbcb4d197978a910d9c829b5bdc5ebcbbff485786a9b7e",
+      "validation_data_read": false
+    },
+    "queue_sha256": "49b09d0cfc78392c2065e12bfc2cc700c1f3a025c23de15f66795d57d65cab20",
+    "seed": 0,
+    "trainer_sha256": "c1fab203a7581cf341b70f64d0973ddf77ae796496dad43c599c125a72d0d0f5",
+    "training_fingerprint": "53c1e4d2cea308db79fdc0a9f70544b71136d9828a026f6f4358d98a01faf5a3"
+  },
+  "queue_fingerprint_sha256": "e247bf5650a671975aee8cc021d26751527746ffe631abc060c3c6f777343ce2",
+  "seed": 0,
+  "stable_seconds": 5.207459920085967,
+  "status": "complete",
+  "supervisor_pid": 908040,
+  "updated_unix": 1792191541.0197706,
+  "validation_data_read": false
+}
