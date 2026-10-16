@@ -1,0 +1,37 @@
+{
+  "status": "validated_source_exact_finite_gradient_pilot_admission",
+  "report_sha256": "69762a70b99f4b4615edab5a9fcb3ff33438642c9da908320e6dc12c272d2e24",
+  "local_CPU_tests": 18,
+  "server_CPU_tests": 18,
+  "TRAIN_images": 1,
+  "selected_TRAIN_image_id": 68304,
+  "forward_parity": {
+    "actual_A_exact": true,
+    "conditional_mask_exact": true,
+    "conditional_readout_exact": true,
+    "gamma_exact": true,
+    "production_Q_exact": true,
+    "projection_exact": true,
+    "six_traces_exact": true,
+    "standalone_mask_exact": true,
+    "standalone_readout_exact": true
+  },
+  "gradient_family_l2": {
+    "context_encoder": 0.01849636433766144,
+    "dendrite": 4.486319237753395e-05,
+    "graph": 0.002445028586914528,
+    "integration": 3.918622109476526e-06,
+    "kuramoto": 0.0018908926341613464,
+    "live_context_encoder": 0.01849636433766144,
+    "membrane": 2.5562730688008046e-06,
+    "native_core": 0.011699110446903064
+  },
+  "peak_allocated_bytes": 1097939968,
+  "elapsed_seconds": 11.859786716289818,
+  "optimizer_updates": 0,
+  "validation_data_read": false,
+  "segmentation_improvement_proven": false,
+  "all_gate_usefulness_proven": false,
+  "incumbent_changed": false,
+  "next_action": "registered_fresh_64_update_pilot_against_reused_SW0175_critical_tail64_control"
+}

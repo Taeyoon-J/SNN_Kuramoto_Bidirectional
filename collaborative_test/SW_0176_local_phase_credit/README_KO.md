@@ -2,7 +2,7 @@
 
 긴 Kuramoto 재귀를 통한 학습 신호 전달만 바꾸는 실험이다. 자세한 변경·대조·확대 조건은 DESIGN_KO.md에 사전 기록했다. 모델의 forward 연산, native component spike, Q/A, threshold와 mask readout은 바꾸지 않는다. D/M/event/reset의 장기 gradient는 여전히 남아 있다.
 
-현재 실행 경로는 `python -m collaborative_test.SW_0176_local_phase_credit.resource_queue_v3`이다. 이 단계는 TRAIN 위치0의 이미지 한 장에서 no-update source 검증 및 full1024 gradient를 측정하는 실험이다. 64-update 학습이나 검증 성능 결과가 아니다.
+최종 source 검증 실행 경로는 `python -m collaborative_test.SW_0176_local_phase_credit.resource_queue_v4`이다. 이 단계는 TRAIN 위치0의 이미지 한 장에서 no-update source 검증 및 full1024 gradient를 측정하는 실험이다. 64-update 학습이나 검증 성능 결과가 아니다.
 
 로컬·서버 각 15개 CPU 검사와 실제 TRAIN 캐시 준비, fresh source+context 모델 생성을 통과했다. 생성한 초기 state SHA `f372b3a450ebeaf0d49e20d019d3c0676d4998cc1c49586e4c4e4c89e969d7f5`가 완료 SW175 critical-component 대조군의 초기 state SHA와 정확히 일치했다. 이후 GPU1 worker의 실제 PID를 확인했다. 결과 대기 중이며 기존 최고 모델은 유지한다.
 
@@ -23,3 +23,20 @@ CPU 준비와 uninitialized-CUDA guard를 통과한 뒤 `torch.cuda.set_device`�
 v3는 forward 동일성·Q와 emitted spike gradient 검사를 지나 family 검증에서 종료됐다. 그러나 실제 `_grad_stats` 생산자는 `numpy.bool_(True)`를 반환하고 validator는 Python `True`와의 identity를 요구해 정상 값도 거절한다. 실제 유한한 parameter gradient를 producer에 넣어 validator가 잘못 거절하는 것을 CPU에서 재현했다. 따라서 현재 로그로 모델 gradient가 비유한하다거나 학습 정책이 실패했다고 판단할 수 없다. parameter gradient의 실제 수치는 보고서가 쓰이기 전 종료돼 미확정이다. 원소 발산과 float32 norm overflow도 구분되지 않았다.
 
 가설 변경 SW177은 보류한다. 검증기 타입을 수정하고 실제 producer→validator 회귀를 추가한 뒤, 동일176 정책의 bounded 실험으로 수치를 확보한다. 원본 실패 로그와 CPU 증거는 `results_archive/invalid_family_guard_v3_20261016/`에 보존했다. optimizer update는 0이며 최고 모델은 유지한다.
+
+## v4 실제 GPU source 검증 통과
+
+동일 정책을 유지하고 검증기 bool 타입만 바로잡은 v4에서 원본과 후보의 six traces, gamma, Q, A, graph projection 및 conditional/standalone partition이 모두 정확히 일치했다. 원본 source state와 fresh 초기 state도 보존됐다. 실제 gradient 원소와 FP32/FP64 norm은 유한하며, 보고서의 각 parameter norm에서 family norm을 독립 재계산했다. 로컬·서버 CPU 각18개 검사와 실제 GPU 보고서 SHA를 검증했다. 이전 v3 거절은 모델의 과학적 실패로 분류하지 않는다.
+
+| family | 실제 gradient L2 |
+|---|---:|
+| context_encoder | 0.01849636434 |
+| dendrite | 4.486319238e-05 |
+| graph | 0.002445028587 |
+| integration | 3.918622109e-06 |
+| kuramoto | 0.001890892634 |
+| live_context_encoder | 0.01849636434 |
+| membrane | 2.556273069e-06 |
+| native_core | 0.01169911045 |
+
+고정 TRAIN 한 장, 추가 optimizer update 0, 소요 11.86초, peak allocated 1.023 GiB이다. 이 검증은 학습 신호가 전달됨을 확인한 것이며 FG-ARI 향상이나 각 gate의 인과적 유용성을 입증한 결과가 아니다. 다음 단계는 DESIGN의 fresh64-update pilot이다. 기존 최고 모델은 유지한다. 전체 증거는 `results_archive/completed_source_preflight_v4_20261016/`에 있다.
