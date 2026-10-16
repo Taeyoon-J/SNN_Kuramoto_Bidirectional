@@ -10,6 +10,11 @@ alignment, exact preservation of the old 512 RGB/modal rows, and no validation
 or reserve reads. It recorded the expected full-array hashes before the candidate
 cache was generated: [data reference proof](results_archive/cpu_v1/reference_data_proof.json).
 
-Candidate cache/trainer validation is in progress. GPU training and fixed320
-evaluation have not started. SW0181 remains unchanged. This is supervised
+The actual candidate cache was built on Frontier and matched the independent
+RGB/modal reference hashes exactly. Its second load reused identical immutable
+files. Five data/schedule tests passed locally and on the server:
+[cache admission receipt](results_archive/cpu_v1/data_cpu_receipt.json).
+
+Trainer validation is in progress. GPU training and fixed320 evaluation have
+not started. SW0181 remains unchanged. This is supervised
 fine-tuning from a pretrained source, not fresh native32/70k training.
