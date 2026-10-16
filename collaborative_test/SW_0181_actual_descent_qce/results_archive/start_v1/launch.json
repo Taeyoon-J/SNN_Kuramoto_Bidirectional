@@ -1,0 +1,72 @@
+{
+  "status": "SW0181_three_training_supervisors_verified_live",
+  "parents": [
+    {
+      "seed": 0,
+      "pid": 479928,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0181_actual_descent_qce.training_queue",
+        "--source-seed",
+        "0"
+      ],
+      "state": {
+        "arm": "product_q_ce",
+        "experiment": "SW0181_training_queue",
+        "seed": 0,
+        "status": "waiting_for_successful_source_preflight",
+        "supervisor_pid": 479928,
+        "updated_unix": 1792142508.7496655,
+        "validation_data_read": false
+      }
+    },
+    {
+      "seed": 1,
+      "pid": 479951,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0181_actual_descent_qce.training_queue",
+        "--source-seed",
+        "1"
+      ],
+      "state": {
+        "arm": "product_q_ce",
+        "experiment": "SW0181_training_queue",
+        "seed": 1,
+        "status": "waiting_for_successful_source_preflight",
+        "supervisor_pid": 479951,
+        "updated_unix": 1792142510.8290942,
+        "validation_data_read": false
+      }
+    },
+    {
+      "seed": 2,
+      "pid": 479970,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0181_actual_descent_qce.training_queue",
+        "--source-seed",
+        "2"
+      ],
+      "state": {
+        "arm": "product_q_ce",
+        "experiment": "SW0181_training_queue",
+        "seed": 2,
+        "status": "waiting_for_successful_source_preflight",
+        "supervisor_pid": 479970,
+        "updated_unix": 1792142512.862508,
+        "validation_data_read": false
+      }
+    }
+  ],
+  "training_cpu_receipt_sha256": "d5b9123c89e5e676fade48df4e67d705611a6edecb63d2dcd98acd657867646d",
+  "observed_unix": 1792142512.9273171,
+  "training_updates_observed": 0,
+  "validation_data_read": false
+}

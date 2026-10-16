@@ -1,0 +1,108 @@
+{
+  "observed_unix": 1792142592.623127,
+  "rows": [
+    {
+      "seed": 0,
+      "queue_exists": true,
+      "status": "running_worker",
+      "gpu": 1,
+      "parent": {
+        "pid": 479928,
+        "state": "S",
+        "argv": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "-u",
+          "-m",
+          "collaborative_test.SW_0181_actual_descent_qce.training_queue",
+          "--source-seed",
+          "0"
+        ]
+      },
+      "worker": {
+        "pid": 480196,
+        "state": "R",
+        "argv": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "-m",
+          "collaborative_test.SW_0181_actual_descent_qce.training_queue",
+          "--worker",
+          "--source-seed",
+          "0",
+          "--physical-gpu",
+          "1"
+        ]
+      },
+      "committed_cursor": 1,
+      "accepted_updates": 1
+    },
+    {
+      "seed": 1,
+      "queue_exists": true,
+      "status": "running_worker",
+      "gpu": 2,
+      "parent": {
+        "pid": 479951,
+        "state": "S",
+        "argv": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "-u",
+          "-m",
+          "collaborative_test.SW_0181_actual_descent_qce.training_queue",
+          "--source-seed",
+          "1"
+        ]
+      },
+      "worker": {
+        "pid": 480241,
+        "state": "R",
+        "argv": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "-m",
+          "collaborative_test.SW_0181_actual_descent_qce.training_queue",
+          "--worker",
+          "--source-seed",
+          "1",
+          "--physical-gpu",
+          "2"
+        ]
+      },
+      "committed_cursor": 1,
+      "accepted_updates": 0
+    },
+    {
+      "seed": 2,
+      "queue_exists": true,
+      "status": "running_worker",
+      "gpu": 3,
+      "parent": {
+        "pid": 479970,
+        "state": "S",
+        "argv": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "-u",
+          "-m",
+          "collaborative_test.SW_0181_actual_descent_qce.training_queue",
+          "--source-seed",
+          "2"
+        ]
+      },
+      "worker": {
+        "pid": 480274,
+        "state": "R",
+        "argv": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "-m",
+          "collaborative_test.SW_0181_actual_descent_qce.training_queue",
+          "--worker",
+          "--source-seed",
+          "2",
+          "--physical-gpu",
+          "3"
+        ]
+      },
+      "committed_cursor": 0,
+      "accepted_updates": 0
+    }
+  ],
+  "gpu": "GPU-a0a7d03d-adc1-37ca-4342-328878b3657c, 2653200, /work/USERS/zhuoyu73/venvs/vllm/bin/python, 2162 MiB\nGPU-45604115-c231-56a5-32ea-d3001e8ff243, 480196, /Data0/kevinswk/envs/snn/bin/python, 4328 MiB\nGPU-50cc59a2-8312-ff02-5889-1becf63c7cd4, 480241, /Data0/kevinswk/envs/snn/bin/python, 4328 MiB\nGPU-6801a3dc-cde3-86c6-d665-6d9ecf063a1e, 480274, /Data0/kevinswk/envs/snn/bin/python, 4328 MiB\n"
+}

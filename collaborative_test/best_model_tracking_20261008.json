@@ -5570,5 +5570,141 @@
       "scope": "Completed queue/report hashes, fixed TRAIN8 IDs, no-update scope, CPU-proven fresh/final model hashes, model immutability, and report arithmetic; masks were not independently rerun."
     },
     "interpretation": "Seed2 QCE and both TRAIN readouts deteriorated from its own fresh source; optimization/representation instability is supported on this small cohort, not proven globally. No new fixed320 model score."
+  },
+  "latest_actual_descent_qce_20261016": {
+    "experiment": "SW0181",
+    "status": "three_seed_GPU_training_started_no_evaluation_result",
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "mask_supervised": true,
+    "unsupervised_leaderboard_eligible": false,
+    "proposal_budget_per_seed": 64,
+    "native32_fresh_70000_training": false,
+    "policy": "commit only finite same-batch same-RNG actual-loss descent; restore otherwise; no retry",
+    "local_and_server_tests_passed": 16,
+    "actual_GPU_observation": {
+      "observed_unix": 1792142592.623127,
+      "rows": [
+        {
+          "seed": 0,
+          "queue_exists": true,
+          "status": "running_worker",
+          "gpu": 1,
+          "parent": {
+            "pid": 479928,
+            "state": "S",
+            "argv": [
+              "/Data0/kevinswk/envs/snn/bin/python",
+              "-u",
+              "-m",
+              "collaborative_test.SW_0181_actual_descent_qce.training_queue",
+              "--source-seed",
+              "0"
+            ]
+          },
+          "worker": {
+            "pid": 480196,
+            "state": "R",
+            "argv": [
+              "/Data0/kevinswk/envs/snn/bin/python",
+              "-m",
+              "collaborative_test.SW_0181_actual_descent_qce.training_queue",
+              "--worker",
+              "--source-seed",
+              "0",
+              "--physical-gpu",
+              "1"
+            ]
+          },
+          "committed_cursor": 1,
+          "accepted_updates": 1
+        },
+        {
+          "seed": 1,
+          "queue_exists": true,
+          "status": "running_worker",
+          "gpu": 2,
+          "parent": {
+            "pid": 479951,
+            "state": "S",
+            "argv": [
+              "/Data0/kevinswk/envs/snn/bin/python",
+              "-u",
+              "-m",
+              "collaborative_test.SW_0181_actual_descent_qce.training_queue",
+              "--source-seed",
+              "1"
+            ]
+          },
+          "worker": {
+            "pid": 480241,
+            "state": "R",
+            "argv": [
+              "/Data0/kevinswk/envs/snn/bin/python",
+              "-m",
+              "collaborative_test.SW_0181_actual_descent_qce.training_queue",
+              "--worker",
+              "--source-seed",
+              "1",
+              "--physical-gpu",
+              "2"
+            ]
+          },
+          "committed_cursor": 1,
+          "accepted_updates": 0
+        },
+        {
+          "seed": 2,
+          "queue_exists": true,
+          "status": "running_worker",
+          "gpu": 3,
+          "parent": {
+            "pid": 479970,
+            "state": "S",
+            "argv": [
+              "/Data0/kevinswk/envs/snn/bin/python",
+              "-u",
+              "-m",
+              "collaborative_test.SW_0181_actual_descent_qce.training_queue",
+              "--source-seed",
+              "2"
+            ]
+          },
+          "worker": {
+            "pid": 480274,
+            "state": "R",
+            "argv": [
+              "/Data0/kevinswk/envs/snn/bin/python",
+              "-m",
+              "collaborative_test.SW_0181_actual_descent_qce.training_queue",
+              "--worker",
+              "--source-seed",
+              "2",
+              "--physical-gpu",
+              "3"
+            ]
+          },
+          "committed_cursor": 0,
+          "accepted_updates": 0
+        }
+      ],
+      "gpu": "GPU-a0a7d03d-adc1-37ca-4342-328878b3657c, 2653200, /work/USERS/zhuoyu73/venvs/vllm/bin/python, 2162 MiB\nGPU-45604115-c231-56a5-32ea-d3001e8ff243, 480196, /Data0/kevinswk/envs/snn/bin/python, 4328 MiB\nGPU-50cc59a2-8312-ff02-5889-1becf63c7cd4, 480241, /Data0/kevinswk/envs/snn/bin/python, 4328 MiB\nGPU-6801a3dc-cde3-86c6-d665-6d9ecf063a1e, 480274, /Data0/kevinswk/envs/snn/bin/python, 4328 MiB\n"
+    },
+    "archive_sha256": {
+      "collaborative_test/SW_0181_actual_descent_qce/results_archive/cpu_v2/training_cpu_receipt.json": "59f6b958e89f1f69c7ef9ebd254b6ffd485b6fc471ad570934a35827215abae7",
+      "collaborative_test/SW_0181_actual_descent_qce/results_archive/start_v1/launch.json": "57e5ab21038f7a1c7945c9b56d653e8717d698dfa9bb961168bf3c0ea08ed8d2",
+      "collaborative_test/SW_0181_actual_descent_qce/results_archive/start_v1/actual_GPU_observation.json": "06cd2ea26ba9e2744c97e692d5b1c015c0c6a2f87dd60d29be427352bbe92245"
+    },
+    "incumbent_changed": false,
+    "fixed320_result_available": false,
+    "technical_startup_error_resolved_before_training": true,
+    "first_two_GPU_proposals_verified": true,
+    "first_two_GPU_receipt_sha256": "3245538bbf2d363ecd2c8004c565718fa97d91858cfbe70b14636beeea5d3733",
+    "actual_Adam_steps_match_accepted_count": true,
+    "actual_spike_and_four_family_proposed_gradients_positive": true,
+    "full_nograd_before_parity_max_abs": 4.6566128730773926e-09
   }
 }
