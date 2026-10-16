@@ -1,0 +1,161 @@
+{
+  "status": "SW0182_private_probe_actual_CPU_and_CLI_admission_passed",
+  "probe_sha256": "01da5c5de030ef0d6b4ce73272147c36def9e276f84b24d1594ec207d7fe042c",
+  "seed": 1,
+  "proposal": 2,
+  "physical_gpu_required": 2,
+  "boundary_sha256": "6d31ff55cfca2f592c4c84c71f980b3ed3670d3b7c96be1c9fa286ab400d9c9c",
+  "source_factory_proof": {
+    "experiment": "SW0182_unique1024_actual_descent",
+    "seed": 1,
+    "context_seed": 171001,
+    "source_binding": {
+      "seed": 1,
+      "source_state_sha256": "b205d21a917299089b9b5d373eb94c9eb5eb971471e9428072e0fc0229c70749",
+      "source_checkpoint_sha256": "76f379d5a7e4cd9d12fdf0b701f3dd9dbbf28b5eea270a9cee2d30d87b4dad98",
+      "source_manifest_sha256": "241c9ea96fc3d3d2b168cb49d941e39c6751eca4436192e614760673545da38b",
+      "source_manifest_path": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0097_graph_adaptation/seed1_positive_frozen/manifest.json",
+      "source_steps": 256,
+      "source_core_path": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0097_graph_adaptation/seed1_positive_frozen/core.pt",
+      "encoder_sha256": "9b9c9c59725f872084a6c9bfae1ebbd1b89de40d18ef4f8ab6b8ec014c2ab868",
+      "feature_preprocessing_sha256": "a9ec3281b9603021c37f7c346baa6cf62513c5ce7edde867ab7eddf24b18e127"
+    },
+    "source_state_sha256": "b205d21a917299089b9b5d373eb94c9eb5eb971471e9428072e0fc0229c70749",
+    "base_encoder_sha256": "85085bec46639858f9199550a00b487f303e848a0add914345a16d2794bd53ee",
+    "initial_model_state_sha256": "f372b3a450ebeaf0d49e20d019d3c0676d4998cc1c49586e4c4e4c89e969d7f5",
+    "optimizer_groups": [
+      {
+        "name": "context_encoder",
+        "parameter_names": [
+          "context.0.weight",
+          "context.0.bias",
+          "context.2.weight",
+          "context.2.bias",
+          "context.4.weight",
+          "context.4.bias",
+          "context.6.weight",
+          "context.6.bias",
+          "context.8.weight",
+          "context.8.bias"
+        ],
+        "lr": 0.0003,
+        "betas": [
+          0.9,
+          0.999
+        ],
+        "eps": 1e-08,
+        "weight_decay": 0.0
+      },
+      {
+        "name": "graph",
+        "parameter_names": [
+          "log_temperature",
+          "log_coupling_gain",
+          "spatial_rate",
+          "projection.weight"
+        ],
+        "lr": 3e-05,
+        "betas": [
+          0.9,
+          0.999
+        ],
+        "eps": 1e-08,
+        "weight_decay": 0.0
+      },
+      {
+        "name": "native_core",
+        "parameter_names": [
+          "gamma_phase_gain",
+          "gamma_channel_proj.weight",
+          "kuramoto.freq_gain",
+          "kuramoto.omega",
+          "kuramoto.kappa",
+          "kuramoto.direction_learner",
+          "dendric_layer.tau_n",
+          "dendric_layer.oscillator_dense.weight",
+          "dendric_layer.oscillator_dense.bias",
+          "membrane_layer.tau_m"
+        ],
+        "lr": 3e-05,
+        "betas": [
+          0.9,
+          0.999
+        ],
+        "eps": 1e-08,
+        "weight_decay": 0.0
+      },
+      {
+        "name": "integration",
+        "parameter_names": [
+          "a_d",
+          "a_m",
+          "b"
+        ],
+        "lr": 0.001,
+        "betas": [
+          0.9,
+          0.999
+        ],
+        "eps": 1e-08,
+        "weight_decay": 0.0
+      }
+    ],
+    "family_names": [
+      "context_encoder",
+      "graph",
+      "native_core",
+      "integration"
+    ],
+    "parameter_count": 27,
+    "adam_state_entries": 0,
+    "dataset_manifest_sha256": "c83ee9cdb98ff1a3d84a99d9d003d45c1beb29d8ea83b5f59c1fdcb490172892",
+    "dataset_arrays_sha256": "988ecd2a566e08a7e37a5ddb86c6af86f5f8a941c6de9af92dd35b6eda0e5030",
+    "ordered_train_ids_sha256": "954e85049343c289e3bbcb4d197978a910d9c829b5bdc5ebcbbff485786a9b7e",
+    "validation_data_read": false,
+    "ground_truth_scope": "TRAIN modal labels only",
+    "cuda_initialized": false,
+    "training_fingerprint": {
+      "experiment": "SW0182_unique1024_actual_descent",
+      "files": {
+        "collaborative_test/SW_0182_unique1024_actual_descent/DESIGN_KO.md": "cd753b87e227897b64b2788e7112fff4075823206aba4a58162a15ec1f786591",
+        "collaborative_test/SW_0182_unique1024_actual_descent/data.py": "620082294fcaf8f8d1c7e61e38dfb6ff3e8dd07843d2259057faa33312aabc18",
+        "collaborative_test/SW_0182_unique1024_actual_descent/schedule.py": "bb1188427f1283fbd169e05ff249edfb821f3aa943c99888be22b100598964ad",
+        "collaborative_test/SW_0182_unique1024_actual_descent/train.py": "b8087b5753086c72f7389ba1f0f0c44763658de7730cc4bc6b5c83eadebb7154",
+        "collaborative_test/SW_0182_unique1024_actual_descent/test_data.py": "137f1c876d2f261d561a47ba618ab35d6f81f99a681da898b3663a678110d759",
+        "collaborative_test/SW_0182_unique1024_actual_descent/test_train.py": "eabfdb8ace972456ae1a36a01bc27206985eb7ddcdbe16932d8a80e9049774f9",
+        "collaborative_test/SW_0182_unique1024_actual_descent/training_queue.py": "f4c57a02575fd44009d7ca658e6bf57aea43b6b6dfdf7e53742b2e694d526e83",
+        "collaborative_test/SW_0182_unique1024_actual_descent/test_training_queue.py": "ec0084cff11b23c3e19f2076a4f83356f71dc401affa64a698f947923d6555bb",
+        "collaborative_test/SW_0181_actual_descent_qce/DESIGN_KO.md": "001d7b723ffbcaef5a1d2fc30f0f196a6425027cd0a58efe911388331cb208a6",
+        "collaborative_test/SW_0181_actual_descent_qce/state_transaction.py": "aeb628aac8735869637f0fec824c35cd4174f6d5d92988d818b248bfd7bb0c79",
+        "collaborative_test/SW_0181_actual_descent_qce/train.py": "085449ab0f9ced6a82ddc040e079e9375a2f3b9f5e50d629fe3960976eab5e67",
+        "collaborative_test/SW_0181_actual_descent_qce/training_queue.py": "f5a8aa6dbe3b66125d97c68ec5dd14b7cb93b7cb930dc8ae3608197c36852c2c",
+        "collaborative_test/SW_0179_qce_seed_replication/train.py": "8b5b2da6e08c780a7e2446afb67a92b9278903720d661b6ba59753358ee125fc",
+        "collaborative_test/SW_0179_qce_seed_replication/DESIGN_KO.md": "bcb1a6317abd0b92a3d17e2e1f99f86c0c7ee5d864ec6dc02639a581f282d255",
+        "collaborative_test/SW_0175_critical_component_binding/train_v2.py": "284d6de62c4af5cc335b7b953eca1cc936e50f732e55867e4b804c8ec2215a89",
+        "collaborative_test/SW_0148_checkpointable_boundary_q/checkpoint.py": "75d5076c051f81a51a39bbafedd363e589aa58ffc41ba4a662a87ffb91601f53",
+        "collaborative_test/SW_0171_contextual_instance_graph/preflight.py": "bcab86543c0f50cd772d5a024ac83ab3f48f09ff975f0e9719a07129aee35113",
+        "collaborative_test/SW_0155_supervised_spike_relations/objective.py": "07ea07f1fa06c6f2e05e4e98184db487f68549249d997e6991ea26a8e06b40fe",
+        "collaborative_test/SW_0155_supervised_spike_relations/train.py": "68306bc5fa658487302dbcb20d0e95676957dbdbd3b04c471292cbfb4126db69",
+        "collaborative_test/SW_0130_phase_state_integration/run.py": "92ac0032467c6bff2e31a76c66021c5e211f9402d15ff868382d71ecc807e988"
+      },
+      "parent_training_fingerprint": "9dea51bf4b588b2499788bcf1d08e4ddd0b0f5cdd5e2eb5198205321cfaef79e",
+      "source_factory": "fresh seed-specific SW0179 SourceT + zero-context; no trained checkpoint reuse",
+      "dataset_size": 1024,
+      "batch_schedule_sha256": "a6653fec2fb1dd14c5a518cf4d2178bbdd7cad831e8c2273d65de12cfeafe6fe",
+      "seeds": [
+        0,
+        1,
+        2
+      ],
+      "proposal_budget": 64,
+      "acceptance": "finite post < before - max(1e-7,1e-6*abs(before))",
+      "gradient_mode": "original SW0179 full-1024 forward; settle512; live-tail64 backward",
+      "mask_supervised": true,
+      "unsupervised_leaderboard_eligible": false
+    },
+    "accept_reject_protocol": "one proposal per fixed batch; no retries"
+  },
+  "cuda_initialized": false,
+  "validation_data_read": false,
+  "optimizer_updates": 0
+}

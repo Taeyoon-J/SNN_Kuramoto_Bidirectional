@@ -41,9 +41,18 @@ unique-data benefit:
 [terminal observation](results_archive/technical_failure_v1/terminal_observation.json),
 [committed-prefix audit](results_archive/technical_failure_v1/committed_prefix_audit.json).
 
-The registered hash check and failed artifacts remain intact. The next probe
-replays proposal 2 from the same saved boundary on one GPU, twice with each
-TRAIN512/TRAIN1024 input container, to distinguish execution variability from
-a real input/path difference. It reads no evaluation masks. SW0181 remains
-unchanged. This is supervised fine-tuning from a pretrained source, not fresh
-native32/70k training.
+The registered hash check and failed artifacts remain intact. A private probe
+has now started replaying proposal 2 from the same saved seed1 boundary on its
+original GPU2, twice with each TRAIN512/TRAIN1024 input container, to distinguish
+execution variability from a real input/path difference. It passed actual CPU
+admission and CLI inspection before launch and asserts that the restored state
+equals the archived control's proposal-2 start digest:
+[CPU proof](results_archive/diagnostic_v1/probe_cpu_admission.json),
+[launch proof](results_archive/diagnostic_v1/probe_launch.json),
+[exact deployed source](results_archive/diagnostic_v1/probe_source.py).
+The source archive records the original private module layout and is evidence;
+its embedded module path points to the private deployment location.
+
+No replay result is available yet. The probe reads no evaluation masks and
+commits no optimizer updates. SW0181 remains unchanged. This is supervised
+fine-tuning from a pretrained source, not fresh native32/70k training.
