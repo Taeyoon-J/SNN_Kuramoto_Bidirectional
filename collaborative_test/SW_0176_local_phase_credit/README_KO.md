@@ -9,3 +9,7 @@
 최초 v1의 실제 CPU 모델 생성 검증은 context 초기화 SHA를 잘못된 메타데이터 계층에서 읽는 오류를 발견했다. 실제 SW175 producer는 `admission_report.context_zero_init_sha256`에 기록하며 `initialization` 아래가 아니다. GPU 시작 전에 발견했으며 v1의 GPU·optimizer update는 0이었다. 원본 일곱 파일을 그대로 보존하고, 네 v2 파일에 올바른 계층 검증과 producer-shaped 회귀 검사를 추가했다. 검증을 생략하거나 모델 초기화를 변경하지 않았다. v1은 실패 증거 보존용이며 실행에는 위 v2 경로를 사용한다.
 
 파일 SHA, 원본 CPU 거절 증거, 실제 모델 생성 CPU 결과, 시작 PID 관측은 `results_archive/started_source_preflight_20261016/`에 있다. 동료 브랜치 `patch_v2`도 이번 사이클에 fetch했고 `cab6c676e24a149a45ea960586c04e579f78d384` 이후 변경은 없었다. 데이터셋·checkpoint는 Git에 포함하지 않는다.
+
+## v2 시작 후 확인된 초기화 오류
+
+v2 부모/worker가 종료됐고 실제 source forward 이전 `reset_peak_memory_stats`에서 `Invalid device argument`가 발생했다. CPU 준비와 fresh 초기 state 검증은 통과했지만, 메모리 계측 API 호출 전에 CUDA device를 명시적으로 초기화해야 했다. optimizer update와 성능 결과는 없다. 원본 v2 코드·로그는 `results_archive/terminal_gpu_initialization_failure_20261016/`에 보존했다. CPU admission guard 뒤에서 device를 초기화하도록 새 버전을 검증하며, 이 기록을 모델 가설의 실패로 해석하지 않는다.

@@ -1,0 +1,16 @@
+{
+  "observed_unix": 1792117099.1018,
+  "parent": null,
+  "worker": null,
+  "state": {
+    "error": "RuntimeError('SW0176 worker exited 1; inspect immutable log')",
+    "experiment": "SW0176_local_phase_credit_source_preflight",
+    "observed_unix": 1792117010.9951088,
+    "status": "failed",
+    "supervisor_pid": 198301
+  },
+  "report_sha256": null,
+  "supervisor_log_tail": "Traceback (most recent call last):\n  File \"/Data0/kevinswk/envs/snn/lib/python3.10/runpy.py\", line 196, in _run_module_as_main\n    return _run_code(code, main_globals, None,\n  File \"/Data0/kevinswk/envs/snn/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0176_local_phase_credit/resource_queue_v2.py\", line 206, in <module>\n    main()\n  File \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0176_local_phase_credit/resource_queue_v2.py\", line 202, in main\n    supervise()\n  File \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0176_local_phase_credit/resource_queue_v2.py\", line 162, in supervise\n    raise RuntimeError(f\"SW0176 worker exited {child.returncode}; inspect immutable log\")\nRuntimeError: SW0176 worker exited 1; inspect immutable log\n",
+  "worker_log_tail": "Traceback (most recent call last):\n  File \"/Data0/kevinswk/envs/snn/lib/python3.10/runpy.py\", line 196, in _run_module_as_main\n    return _run_code(code, main_globals, None,\n  File \"/Data0/kevinswk/envs/snn/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0176_local_phase_credit/resource_queue_v2.py\", line 206, in <module>\n    main()\n  File \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0176_local_phase_credit/resource_queue_v2.py\", line 200, in main\n    run_worker(args.physical_gpu, args.output)\n  File \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0176_local_phase_credit/resource_queue_v2.py\", line 84, in run_worker\n    return prep.run_preflight(device=\"cuda:0\", prepared=prepared, output=output)\n  File \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0176_local_phase_credit/preflight_v2.py\", line 283, in run_preflight\n    torch.cuda.reset_peak_memory_stats(torch.device(device))\n  File \"/Data0/kevinswk/envs/snn/lib/python3.10/site-packages/torch/cuda/memory.py\", line 396, in reset_peak_memory_stats\n    return torch._C._cuda_resetPeakMemoryStats(device)\nRuntimeError: Invalid device argument \n",
+  "report": null
+}
