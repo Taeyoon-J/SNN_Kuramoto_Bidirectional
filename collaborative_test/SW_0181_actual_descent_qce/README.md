@@ -1,5 +1,10 @@
 # SW0181 — actual-loss acceptance for QCE training
 
+**Completed and independently audited:** standalone seed0/1/2 mean
+**0.814836 / 0.589302 / 0.671681**. The registered primary gate passed; all three
+metrics exceed the matched Slot baseline. This is mask-supervised TRAIN512
+fine-tuning. See [the final result and limitations](RESULT_KO.md).
+
 SW0180 found that seed 2 deteriorated on the same eight TRAIN images after
 unconditional QCE updates: CE 0.526248 → 0.936206 and standalone FG-ARI
 0.784225 → 0.636125. Seeds 0 and 1 improved on that replay. This small diagnostic
@@ -43,14 +48,16 @@ Each run additionally performed 64 post checks and two pre checks, for 130
 logical B16 full forwards (2,080 image forwards) before any prediction.
 See [training records](results_archive/train_v1/seed0_training_record.json).
 
-Fixed320 prediction and evaluation results are not yet available.
-Three prediction supervisors and the GT-last score coordinator are now queued;
-all four processes were observed live. Each prediction waits for its own completed
-training artifact, and scoring waits for all three immutable predictions.
+Fixed320 prediction and evaluation completed for all three seeds. The final
+independent audit recomputed both endpoints, per-image metrics, means, paired
+bootstrap and gates, and verified immutable artifact hashes.
+Three prediction supervisors and the GT-last score coordinator were queued and
+all completed. Each prediction waited for its own completed training artifact,
+and scoring waited for all three immutable predictions.
 The deployed evaluation suite passed 32 tests and four actual subprocess CLI checks.
 The supplemental unconditional-QCE comparator passed two additional tests and
 validated the actual pinned SW0179 score archive without reading validation masks.
-Its matched-seed comparison will be run after the SW0181 score is frozen.
+Its matched-seed comparison also completed after the SW0181 score was frozen.
 
 See [evaluation deployment verification](results_archive/eval_v1/cpu_receipt.json)
 and [queue launch record](results_archive/eval_v1/launch.json).

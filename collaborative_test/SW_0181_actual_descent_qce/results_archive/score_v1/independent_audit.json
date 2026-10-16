@@ -1,0 +1,58 @@
+{
+  "status": "SW0181_independent_fixed320_score_audit_passed",
+  "score_sha256": "3f69a74a5729341b5fd11f2bd74f2d51ff245c0839f76053b8733af9523ddd54",
+  "metric_vectors_recomputed": true,
+  "all_three_seeds": true,
+  "both_endpoints": true,
+  "paired_bootstrap_recomputed": true,
+  "gate_recomputed": true,
+  "artifact_hashes_unchanged": true,
+  "ground_truth_scope": "validation IDs1320..1639 only; no reserve data",
+  "training_updates": 0,
+  "metrics": {
+    "candidate_conditional": {
+      "fg_ari": 0.8022593453427527,
+      "foreground_iou": 0.6099754484530632,
+      "matched_object_iou": 0.6552174495045815
+    },
+    "candidate_standalone": {
+      "fg_ari": 0.8148362490119876,
+      "foreground_iou": 0.5893021267072601,
+      "matched_object_iou": 0.6716810693605446
+    },
+    "SW0165_foreground_induced_conditional": {
+      "fg_ari": 0.8042989149474199,
+      "foreground_iou": 0.6099754484530632,
+      "matched_object_iou": 0.6511489750258587
+    },
+    "SW0165_foreground_induced_standalone": {
+      "fg_ari": 0.8042989149474199,
+      "foreground_iou": 0.6099754484530632,
+      "matched_object_iou": 0.6511489750258587
+    },
+    "Slot70k_conditional": {
+      "fg_ari": 0.7816519719609136,
+      "foreground_iou": 0.20436012776655543,
+      "matched_object_iou": 0.20316498618845008
+    },
+    "Slot70k_standalone": {
+      "fg_ari": 0.7816519719609136,
+      "foreground_iou": 0.20436012776655543,
+      "matched_object_iou": 0.20316498618845008
+    }
+  },
+  "gate": {
+    "fg_ari_at_least_0_87_goal": false,
+    "fg_paired_ci95_lower_above_zero_vs_slot": true,
+    "fg_paired_ci95_lower_above_zero_vs_sw0165": true,
+    "fg_strictly_above_slot_three_seed_mean": true,
+    "fg_strictly_above_sw0165_three_seed_mean": true,
+    "foreground_iou_strictly_above_slot_three_seed_mean": true,
+    "mask_supervised": true,
+    "matched_object_iou_strictly_above_slot_three_seed_mean": true,
+    "primary_endpoint": "standalone",
+    "primary_gate_passed": true,
+    "unsupervised_leaderboard_eligible": false
+  },
+  "observed_unix": 1792145726.9100065
+}

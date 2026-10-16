@@ -5573,7 +5573,7 @@
   },
   "latest_actual_descent_qce_20261016": {
     "experiment": "SW0181",
-    "status": "three_seed_training_complete_fixed320_predictions_running",
+    "status": "completed_independently_audited_supervised_three_seed_primary_gate_passed",
     "seeds": [
       0,
       1,
@@ -5699,7 +5699,7 @@
       "collaborative_test/SW_0181_actual_descent_qce/results_archive/start_v1/actual_GPU_observation.json": "06cd2ea26ba9e2744c97e692d5b1c015c0c6a2f87dd60d29be427352bbe92245"
     },
     "incumbent_changed": false,
-    "fixed320_result_available": false,
+    "fixed320_result_available": true,
     "technical_startup_error_resolved_before_training": true,
     "first_two_GPU_proposals_verified": true,
     "first_two_GPU_receipt_sha256": "3245538bbf2d363ecd2c8004c565718fa97d91858cfbe70b14636beeea5d3733",
@@ -5831,6 +5831,143 @@
         "total_logical_full_forward_batches_without_restart": 130,
         "total_image_forwards_without_restart": 2080
       }
-    ]
+    ],
+    "independent_score_audit_passed": true,
+    "final_score_sha256": "3f69a74a5729341b5fd11f2bd74f2d51ff245c0839f76053b8733af9523ddd54",
+    "final_archive_sha256": {
+      "evaluation.json": "3f69a74a5729341b5fd11f2bd74f2d51ff245c0839f76053b8733af9523ddd54",
+      "unconditional_comparison.json": "1cbe0b3abd41630841fc40284c1ea464639fa2a86fdd463f69bb55060477782f",
+      "independent_audit.json": "852fd5b1bf0de2d76101ad077d381caf4da4fcf724de4522cb42c8a6f2567b0e",
+      "score_queue_state.json": "e65ab5040a951e0e88bb51e80241fc6a5bc9b3fd631f33cb3cc2ba165e6e9b0e",
+      "seed0_prediction_protocol.json": "065b4f1737221e247cee6b4738b0b31825430d37761d5a2e5012b8d18d37c42a",
+      "seed0_prediction_state.json": "8988e75e5797eb473ef34627ae230433ea68c90dc09b65da05d233d2db692e50",
+      "seed0_model_unchanged.json": "edf5f6dbb18cab466cbf27d57db021d59eebd87cd1f5747d5342e91124d315a5",
+      "seed1_prediction_protocol.json": "344d5069c82044dda02f26b876579341a7922026e2556a8842471429073af9ff",
+      "seed1_prediction_state.json": "8abcb1228dfd1bc22734b0fe145c009f4027009eef26d037f86e56839a40dfb4",
+      "seed1_model_unchanged.json": "43c0cfbc882bf1d01dacb74ac586dcd8767714ca55aff1e0e628f7b35bbeb459",
+      "seed2_prediction_protocol.json": "21f20dc7f7333ba260f558268cd99afb7c671abf1c7fe82bb6c7624135a130a3",
+      "seed2_prediction_state.json": "1a541e3b042afe7b15254849fd06c98be8e2af7f5ab8c9739ad62e2ff8bdcd97",
+      "seed2_model_unchanged.json": "296dee13b08fbd5e48e9bb1c56b6ff79ca054d82a9d40fab0213f0f62a202c52"
+    },
+    "standalone_three_seed_mean": {
+      "fg_ari": 0.8148362490119876,
+      "foreground_iou": 0.5893021267072601,
+      "matched_object_iou": 0.6716810693605446
+    },
+    "conditional_three_seed_mean": {
+      "fg_ari": 0.8022593453427527,
+      "foreground_iou": 0.6099754484530632,
+      "matched_object_iou": 0.6552174495045815
+    },
+    "standalone_per_seed": {
+      "0": {
+        "fg_ari": 0.8485958582608113,
+        "foreground_iou": 0.7240466650783779,
+        "matched_object_iou": 0.6999763961564173
+      },
+      "1": {
+        "fg_ari": 0.7966503181954858,
+        "foreground_iou": 0.5920350031957569,
+        "matched_object_iou": 0.6784303031144558
+      },
+      "2": {
+        "fg_ari": 0.7992625705796657,
+        "foreground_iou": 0.4518247118476461,
+        "matched_object_iou": 0.6366365088107605
+      }
+    },
+    "gate": {
+      "fg_ari_at_least_0_87_goal": false,
+      "fg_paired_ci95_lower_above_zero_vs_slot": true,
+      "fg_paired_ci95_lower_above_zero_vs_sw0165": true,
+      "fg_strictly_above_slot_three_seed_mean": true,
+      "fg_strictly_above_sw0165_three_seed_mean": true,
+      "foreground_iou_strictly_above_slot_three_seed_mean": true,
+      "mask_supervised": true,
+      "matched_object_iou_strictly_above_slot_three_seed_mean": true,
+      "primary_endpoint": "standalone",
+      "primary_gate_passed": true,
+      "unsupervised_leaderboard_eligible": false
+    },
+    "same_seed_unconditional_comparison": {
+      "conditional": {
+        "fg_ari": {
+          "bootstrap_seed": 178,
+          "candidate_mean": 0.8022593453427527,
+          "ci95": [
+            0.026830076522750997,
+            0.04226734078535905
+          ],
+          "control_mean": 0.7678476739734689,
+          "mean": 0.03441167136928398,
+          "replicates": 10000,
+          "resampling_unit": "paired image after per-image mean across three seeds"
+        },
+        "foreground_iou": {
+          "bootstrap_seed": 178,
+          "candidate_mean": 0.6099754484530632,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "control_mean": 0.6099754484530632,
+          "mean": 0.0,
+          "replicates": 10000,
+          "resampling_unit": "paired image after per-image mean across three seeds"
+        },
+        "matched_object_iou": {
+          "bootstrap_seed": 178,
+          "candidate_mean": 0.6552174495045815,
+          "ci95": [
+            0.05096954320489844,
+            0.0631908278780962
+          ],
+          "control_mean": 0.5981116023501643,
+          "mean": 0.0571058471544172,
+          "replicates": 10000,
+          "resampling_unit": "paired image after per-image mean across three seeds"
+        }
+      },
+      "standalone": {
+        "fg_ari": {
+          "bootstrap_seed": 178,
+          "candidate_mean": 0.8148362490119876,
+          "ci95": [
+            0.04436219611360027,
+            0.06233708270091505
+          ],
+          "control_mean": 0.7616199706279559,
+          "mean": 0.053216278384031715,
+          "replicates": 10000,
+          "resampling_unit": "paired image after per-image mean across three seeds"
+        },
+        "foreground_iou": {
+          "bootstrap_seed": 178,
+          "candidate_mean": 0.5893021267072601,
+          "ci95": [
+            0.10411746323659316,
+            0.13655864449508984
+          ],
+          "control_mean": 0.46930783165864576,
+          "mean": 0.1199942950486145,
+          "replicates": 10000,
+          "resampling_unit": "paired image after per-image mean across three seeds"
+        },
+        "matched_object_iou": {
+          "bootstrap_seed": 178,
+          "candidate_mean": 0.6716810693605446,
+          "ci95": [
+            0.07898839586175604,
+            0.09550158900761341
+          ],
+          "control_mean": 0.5846562346373391,
+          "mean": 0.08702483472320544,
+          "replicates": 10000,
+          "resampling_unit": "paired image after per-image mean across three seeds"
+        }
+      }
+    },
+    "unsupervised_incumbent_changed": false,
+    "gate_necessity_or_training_contribution_proven": false
   }
 }
