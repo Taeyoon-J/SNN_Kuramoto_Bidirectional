@@ -1,0 +1,16 @@
+{
+  "observed_unix": 1792117625.9493968,
+  "parent": null,
+  "worker": null,
+  "state": {
+    "error": "RuntimeError('SW0176 worker exited 1; inspect immutable log')",
+    "experiment": "SW0176_local_phase_credit_source_preflight",
+    "observed_unix": 1792117557.0331748,
+    "status": "failed",
+    "supervisor_pid": 202412
+  },
+  "report_sha256": null,
+  "supervisor_log_tail": "Traceback (most recent call last):\n  File \"/Data0/kevinswk/envs/snn/lib/python3.10/runpy.py\", line 196, in _run_module_as_main\n    return _run_code(code, main_globals, None,\n  File \"/Data0/kevinswk/envs/snn/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0176_local_phase_credit/resource_queue_v3.py\", line 206, in <module>\n    main()\n  File \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0176_local_phase_credit/resource_queue_v3.py\", line 202, in main\n    supervise()\n  File \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0176_local_phase_credit/resource_queue_v3.py\", line 162, in supervise\n    raise RuntimeError(f\"SW0176 worker exited {child.returncode}; inspect immutable log\")\nRuntimeError: SW0176 worker exited 1; inspect immutable log\n",
+  "worker_log_tail": "Traceback (most recent call last):\n  File \"/Data0/kevinswk/envs/snn/lib/python3.10/runpy.py\", line 196, in _run_module_as_main\n    return _run_code(code, main_globals, None,\n  File \"/Data0/kevinswk/envs/snn/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0176_local_phase_credit/resource_queue_v3.py\", line 206, in <module>\n    main()\n  File \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0176_local_phase_credit/resource_queue_v3.py\", line 200, in main\n    run_worker(args.physical_gpu, args.output)\n  File \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0176_local_phase_credit/resource_queue_v3.py\", line 84, in run_worker\n    return prep.run_preflight(device=\"cuda:0\", prepared=prepared, output=output)\n  File \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0176_local_phase_credit/preflight_v3.py\", line 365, in run_preflight\n    _validate_gradient_evidence(gradient_families, q_gradient_l2, emitted_gradient_l2)\n  File \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0176_local_phase_credit/preflight_v3.py\", line 250, in _validate_gradient_evidence\n    raise FloatingPointError(\"SW0176 full-window parameter-family gradient is nonfinite\")\nFloatingPointError: SW0176 full-window parameter-family gradient is nonfinite\n",
+  "report": null
+}

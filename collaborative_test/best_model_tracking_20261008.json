@@ -4628,7 +4628,7 @@
     "incumbent_changed": false
   },
   "SW0176_cuda_recovery_v3_20261016": {
-    "status": "v3_GPU_preflight_verified_running",
+    "status": "invalid_measurement_guard_scientific_result_unresolved",
     "parent_PID": 202412,
     "worker_PID": 203150,
     "physical_GPU": 1,
@@ -4637,7 +4637,20 @@
     "initial_model_state_matches_control": true,
     "optimizer_updates": 0,
     "validation_data_read": false,
-    "final_result_pending": true,
+    "final_result_pending": false,
+    "incumbent_changed": false
+  },
+  "SW0176_invalid_family_guard_v3_20261016": {
+    "status": "invalid_measurement_guard_scientific_result_unresolved",
+    "real_finite_parameter_gradient": true,
+    "producer_finite_type": "numpy.bool",
+    "producer_finite_value": true,
+    "producer_finite_identity_with_python_True": false,
+    "finite_producer_rejected": true,
+    "error": "SW0176 full-window parameter-family gradient is nonfinite",
+    "scientific_rejection_proven": false,
+    "optimizer_updates": 0,
+    "actual_GPU_gradient_finiteness_unresolved": true,
     "incumbent_changed": false
   }
 }

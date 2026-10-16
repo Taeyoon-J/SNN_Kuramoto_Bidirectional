@@ -17,3 +17,9 @@ v2 부모/worker가 종료됐고 실제 source forward 이전 `reset_peak_memory
 ## CUDA 초기화 v3 복구 시작
 
 CPU 준비와 uninitialized-CUDA guard를 통과한 뒤 `torch.cuda.set_device`를 호출하고, 그 다음에 peak memory를 초기화하도록 수정했다. public run_preflight 경로의 호출 순서를 검증하는 회귀 검사를 추가했다. 로컬·서버 각 16개 검사와 실제 fresh 모델·초기 state 동일성을 다시 통과했다. 새 v3 source와 별도 runtime을 사용하며 기존 v2 오류 로그를 보존했다. GPU1의 실제 부모202412·worker203150 실행을 확인했다. 결과는 아직 대기 중이며 초기화 수정이 모델 성능 개선의 증거는 아니다. 증거는 `results_archive/started_cuda_recovery_v3_20261016/`에 있다.
+
+## v3 검증기 실패: 과학적 음성 판정 아님
+
+v3는 forward 동일성·Q와 emitted spike gradient 검사를 지나 family 검증에서 종료됐다. 그러나 실제 `_grad_stats` 생산자는 `numpy.bool_(True)`를 반환하고 validator는 Python `True`와의 identity를 요구해 정상 값도 거절한다. 실제 유한한 parameter gradient를 producer에 넣어 validator가 잘못 거절하는 것을 CPU에서 재현했다. 따라서 현재 로그로 모델 gradient가 비유한하다거나 학습 정책이 실패했다고 판단할 수 없다. parameter gradient의 실제 수치는 보고서가 쓰이기 전 종료돼 미확정이다. 원소 발산과 float32 norm overflow도 구분되지 않았다.
+
+가설 변경 SW177은 보류한다. 검증기 타입을 수정하고 실제 producer→validator 회귀를 추가한 뒤, 동일176 정책의 bounded 실험으로 수치를 확보한다. 원본 실패 로그와 CPU 증거는 `results_archive/invalid_family_guard_v3_20261016/`에 보존했다. optimizer update는 0이며 최고 모델은 유지한다.
