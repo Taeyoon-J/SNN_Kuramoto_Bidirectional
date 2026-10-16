@@ -1,0 +1,107 @@
+{
+  "experiment": "SW0182_unique1024_actual_descent",
+  "gpu_processes": "GPU-a0a7d03d-adc1-37ca-4342-328878b3657c, 767110, /work/USERS/zhuoyu73/venvs/vllm/bin/python, 818 MiB\nGPU-45604115-c231-56a5-32ea-d3001e8ff243, 903060, /ram/USERS/pysun/venvs/trachoma/bin/python, 1354 MiB\nGPU-45604115-c231-56a5-32ea-d3001e8ff243, 903074, /ram/USERS/pysun/venvs/trachoma/bin/python, 1354 MiB\nGPU-45604115-c231-56a5-32ea-d3001e8ff243, 903183, /ram/USERS/pysun/venvs/trachoma/bin/python, 1354 MiB\nGPU-45604115-c231-56a5-32ea-d3001e8ff243, 903247, /ram/USERS/pysun/venvs/trachoma/bin/python, 1354 MiB\n",
+  "observed_unix": 1792186850.0779707,
+  "score": {
+    "error": null,
+    "parent": null,
+    "score_sha256": null,
+    "status": "waiting_for_predictions",
+    "worker": null
+  },
+  "training": [
+    {
+      "artifact_exists": false,
+      "boundary": {
+        "accepted_updates": 1,
+        "completed_updates": 1,
+        "proposal_cursor": 1,
+        "sha256": "a43be3f3ec0dc6857932468cc6645356c28f99db8e66bb7b4df82e197738adbe"
+      },
+      "prediction": {
+        "error": "RuntimeError('SW0182 seed0 training state is not live or terminal-complete')",
+        "gpu": null,
+        "parent": null,
+        "prediction_sha256": null,
+        "protocol_sha256": null,
+        "status": "failed",
+        "worker": null
+      },
+      "prediction_state_exists": true,
+      "seed": 0,
+      "training": {
+        "accepted_updates": null,
+        "error": "RuntimeError('SW0182 worker exited 1; inspect /Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0182_unique1024_actual_descent/results_archive/training_queue_20261016/product_q_ce_seed0_attempt01.log')",
+        "gpu": 1,
+        "parent": null,
+        "proposal_cursor": null,
+        "status": "failed",
+        "worker": null
+      },
+      "training_state_exists": true,
+      "work_exists": true
+    },
+    {
+      "artifact_exists": false,
+      "boundary": {
+        "accepted_updates": 0,
+        "completed_updates": 1,
+        "proposal_cursor": 1,
+        "sha256": "6d31ff55cfca2f592c4c84c71f980b3ed3670d3b7c96be1c9fa286ab400d9c9c"
+      },
+      "prediction": {
+        "error": "RuntimeError('SW0182 seed1 training state is not live or terminal-complete')",
+        "gpu": null,
+        "parent": null,
+        "prediction_sha256": null,
+        "protocol_sha256": null,
+        "status": "failed",
+        "worker": null
+      },
+      "prediction_state_exists": true,
+      "seed": 1,
+      "training": {
+        "accepted_updates": null,
+        "error": "RuntimeError('SW0182 worker exited 1; inspect /Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0182_unique1024_actual_descent/results_archive/training_queue_20261016/product_q_ce_seed1_attempt01.log')",
+        "gpu": 2,
+        "parent": null,
+        "proposal_cursor": null,
+        "status": "failed",
+        "worker": null
+      },
+      "training_state_exists": true,
+      "work_exists": true
+    },
+    {
+      "artifact_exists": false,
+      "boundary": {
+        "accepted_updates": 1,
+        "completed_updates": 1,
+        "proposal_cursor": 1,
+        "sha256": "bd605ce12a0510efbd31d5c13250108bc9ab79548dd1592a826f593d0ae8f573"
+      },
+      "prediction": {
+        "error": "RuntimeError('SW0182 seed2 training state is not live or terminal-complete')",
+        "gpu": null,
+        "parent": null,
+        "prediction_sha256": null,
+        "protocol_sha256": null,
+        "status": "failed",
+        "worker": null
+      },
+      "prediction_state_exists": true,
+      "seed": 2,
+      "training": {
+        "accepted_updates": null,
+        "error": "RuntimeError('SW0182 worker exited 1; inspect /Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0182_unique1024_actual_descent/results_archive/training_queue_20261016/product_q_ce_seed2_attempt01.log')",
+        "gpu": 3,
+        "parent": null,
+        "proposal_cursor": null,
+        "status": "failed",
+        "worker": null
+      },
+      "training_state_exists": true,
+      "work_exists": true
+    }
+  ]
+}

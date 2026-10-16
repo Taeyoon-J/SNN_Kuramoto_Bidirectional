@@ -22,16 +22,28 @@ owner/memory check immediately before prediction launch. Four separate module
 `--help` subprocesses also passed:
 [local CLI admission](results_archive/cpu_v2/local_evaluation_admission.json).
 
-Server CPU training admission was submitted, but the SSH observer eventually
-exited 1 with `Broken pipe` and `banner exchange timeout`. The previously live
-local master also disappeared. This establishes a terminal observation failure,
-not the state of the submitted remote command or a scientific trial failure:
-[transport record](results_archive/cpu_v2/ssh_transport_terminal.json).
-Inspect existing server receipts/processes through a restored connection before
-retrying deployment or launching anything. No GPU training or fixed320 result
-has been confirmed.
+After SSH recovery, read-only inspection confirmed that the timed-out transfer
+had not deployed the trainer or launched a queue. The server then passed actual
+three-seed CPU admission, all 32 tests, and four module CLI subprocesses:
+[training admission](results_archive/cpu_v3/training_cpu_receipt.json),
+[evaluation admission](results_archive/cpu_v3/evaluation_cpu_receipt.json).
+Three training parents, three dependent prediction parents and a GT-last score
+coordinator were registered. Actual workers started on GPUs 1/2/3.
 
-After actual server admission, the prepared queues run seeds 0/1/2, predict
-each completed checkpoint, then score only after all three prediction archives
-and protocols freeze. SW0181 remains unchanged. This is supervised fine-tuning
-from a pretrained source, not fresh native32/70k training.
+All seeds passed the first proposal's exact control-state check, then stopped
+at proposal 2 because the proposed model/Adam digest differed from the archived
+SW0181 control. The start-state check at proposal 2 had already passed. Boundaries
+retain exactly one committed proposal (accepted counts 1/0/1); predictions and
+fixed320 scores were not produced. All owned training/prediction/score processes
+are terminal. This is a technical reproduction failure, not a finding about
+unique-data benefit:
+[failure](results_archive/technical_failure_v1/proposal2_failure.json),
+[terminal observation](results_archive/technical_failure_v1/terminal_observation.json),
+[committed-prefix audit](results_archive/technical_failure_v1/committed_prefix_audit.json).
+
+The registered hash check and failed artifacts remain intact. The next probe
+replays proposal 2 from the same saved boundary on one GPU, twice with each
+TRAIN512/TRAIN1024 input container, to distinguish execution variability from
+a real input/path difference. It reads no evaluation masks. SW0181 remains
+unchanged. This is supervised fine-tuning from a pretrained source, not fresh
+native32/70k training.

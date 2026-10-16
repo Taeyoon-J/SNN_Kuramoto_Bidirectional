@@ -1,0 +1,48 @@
+{
+  "observed_unix": 1792186743.7965634,
+  "rows": [
+    {
+      "seed": 0,
+      "queue_exists": true,
+      "status": "failed",
+      "gpu": 1,
+      "parent": null,
+      "worker": null,
+      "error": "RuntimeError('SW0182 worker exited 1; inspect /Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0182_unique1024_actual_descent/results_archive/training_queue_20261016/product_q_ce_seed0_attempt01.log')",
+      "logs": {
+        "product_q_ce_seed0_attempt01.log": "Traceback (most recent call last):\n  File \"/Data0/kevinswk/envs/snn/lib/python3.10/runpy.py\", line 196, in _run_module_as_main\n    return _run_code(code, main_globals, None,\n  File \"/Data0/kevinswk/envs/snn/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0182_unique1024_actual_descent/training_queue.py\", line 325, in <module>\n    raise SystemExit(main())\n  File \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0182_unique1024_actual_descent/training_queue.py\", line 315, in main\n    _worker(args.source_seed, args.physical_gpu)\n  File \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0182_unique1024_actual_descent/training_queue.py\", line 164, in _worker\n    result = trainer.train(\"product_q_ce\", seed=int(seed), physical_gpu=int(physical_gpu))\n  File \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0182_unique1024_actual_descent/train.py\", line 528, in train\n    _validate_prefix_control_row(row, control[\"history\"][proposal_index],\n  File \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0182_unique1024_actual_descent/train.py\", line 342, in _validate_prefix_control_row\n    raise ValueError(f\"SW0182 first32 control mismatch at proposal {index + 1}: {key}\")\nValueError: SW0182 first32 control mismatch at proposal 2: proposal_transaction_sha256\n"
+      },
+      "committed_cursor": 1,
+      "accepted_updates": 1
+    },
+    {
+      "seed": 1,
+      "queue_exists": true,
+      "status": "failed",
+      "gpu": 2,
+      "parent": null,
+      "worker": null,
+      "error": "RuntimeError('SW0182 worker exited 1; inspect /Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0182_unique1024_actual_descent/results_archive/training_queue_20261016/product_q_ce_seed1_attempt01.log')",
+      "logs": {
+        "product_q_ce_seed1_attempt01.log": "Traceback (most recent call last):\n  File \"/Data0/kevinswk/envs/snn/lib/python3.10/runpy.py\", line 196, in _run_module_as_main\n    return _run_code(code, main_globals, None,\n  File \"/Data0/kevinswk/envs/snn/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0182_unique1024_actual_descent/training_queue.py\", line 325, in <module>\n    raise SystemExit(main())\n  File \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0182_unique1024_actual_descent/training_queue.py\", line 315, in main\n    _worker(args.source_seed, args.physical_gpu)\n  File \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0182_unique1024_actual_descent/training_queue.py\", line 164, in _worker\n    result = trainer.train(\"product_q_ce\", seed=int(seed), physical_gpu=int(physical_gpu))\n  File \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0182_unique1024_actual_descent/train.py\", line 528, in train\n    _validate_prefix_control_row(row, control[\"history\"][proposal_index],\n  File \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0182_unique1024_actual_descent/train.py\", line 342, in _validate_prefix_control_row\n    raise ValueError(f\"SW0182 first32 control mismatch at proposal {index + 1}: {key}\")\nValueError: SW0182 first32 control mismatch at proposal 2: proposal_transaction_sha256\n"
+      },
+      "committed_cursor": 1,
+      "accepted_updates": 0
+    },
+    {
+      "seed": 2,
+      "queue_exists": true,
+      "status": "failed",
+      "gpu": 3,
+      "parent": null,
+      "worker": null,
+      "error": "RuntimeError('SW0182 worker exited 1; inspect /Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0182_unique1024_actual_descent/results_archive/training_queue_20261016/product_q_ce_seed2_attempt01.log')",
+      "logs": {
+        "product_q_ce_seed2_attempt01.log": "Traceback (most recent call last):\n  File \"/Data0/kevinswk/envs/snn/lib/python3.10/runpy.py\", line 196, in _run_module_as_main\n    return _run_code(code, main_globals, None,\n  File \"/Data0/kevinswk/envs/snn/lib/python3.10/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0182_unique1024_actual_descent/training_queue.py\", line 325, in <module>\n    raise SystemExit(main())\n  File \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0182_unique1024_actual_descent/training_queue.py\", line 315, in main\n    _worker(args.source_seed, args.physical_gpu)\n  File \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0182_unique1024_actual_descent/training_queue.py\", line 164, in _worker\n    result = trainer.train(\"product_q_ce\", seed=int(seed), physical_gpu=int(physical_gpu))\n  File \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0182_unique1024_actual_descent/train.py\", line 528, in train\n    _validate_prefix_control_row(row, control[\"history\"][proposal_index],\n  File \"/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0182_unique1024_actual_descent/train.py\", line 342, in _validate_prefix_control_row\n    raise ValueError(f\"SW0182 first32 control mismatch at proposal {index + 1}: {key}\")\nValueError: SW0182 first32 control mismatch at proposal 2: proposal_transaction_sha256\n"
+      },
+      "committed_cursor": 1,
+      "accepted_updates": 1
+    }
+  ],
+  "gpu": "GPU-a0a7d03d-adc1-37ca-4342-328878b3657c, 767110, /work/USERS/zhuoyu73/venvs/vllm/bin/python, 818 MiB\nGPU-45604115-c231-56a5-32ea-d3001e8ff243, 903060, /ram/USERS/pysun/venvs/trachoma/bin/python, 1354 MiB\nGPU-45604115-c231-56a5-32ea-d3001e8ff243, 903074, /ram/USERS/pysun/venvs/trachoma/bin/python, 1354 MiB\nGPU-45604115-c231-56a5-32ea-d3001e8ff243, 903183, /ram/USERS/pysun/venvs/trachoma/bin/python, 1354 MiB\nGPU-45604115-c231-56a5-32ea-d3001e8ff243, 903247, /ram/USERS/pysun/venvs/trachoma/bin/python, 1354 MiB\n"
+}

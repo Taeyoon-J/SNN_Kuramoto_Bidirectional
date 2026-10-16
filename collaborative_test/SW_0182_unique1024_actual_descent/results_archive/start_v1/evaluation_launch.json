@@ -1,0 +1,102 @@
+{
+  "status": "SW0182_three_prediction_parents_and_GT_last_score_verified_live",
+  "records": [
+    {
+      "label": "prediction_seed0",
+      "pid": 902435,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0182_unique1024_actual_descent.prediction_queue",
+        "--source-seed",
+        "0"
+      ],
+      "state_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0182_unique1024_actual_descent/results_archive/prediction_queue_20261016/product_q_ce_seed0_state.json",
+      "state": {
+        "arm": "product_q_ce",
+        "experiment": "SW0182_prediction_queue",
+        "seed": 0,
+        "status": "waiting_for_training",
+        "supervisor_pid": 902435,
+        "updated_unix": 1792186611.2008293,
+        "validation_data_read": false
+      }
+    },
+    {
+      "label": "prediction_seed1",
+      "pid": 902446,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0182_unique1024_actual_descent.prediction_queue",
+        "--source-seed",
+        "1"
+      ],
+      "state_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0182_unique1024_actual_descent/results_archive/prediction_queue_20261016/product_q_ce_seed1_state.json",
+      "state": {
+        "arm": "product_q_ce",
+        "experiment": "SW0182_prediction_queue",
+        "seed": 1,
+        "status": "waiting_for_training",
+        "supervisor_pid": 902446,
+        "updated_unix": 1792186613.247477,
+        "validation_data_read": false
+      }
+    },
+    {
+      "label": "prediction_seed2",
+      "pid": 902467,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0182_unique1024_actual_descent.prediction_queue",
+        "--source-seed",
+        "2"
+      ],
+      "state_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0182_unique1024_actual_descent/results_archive/prediction_queue_20261016/product_q_ce_seed2_state.json",
+      "state": {
+        "arm": "product_q_ce",
+        "experiment": "SW0182_prediction_queue",
+        "seed": 2,
+        "status": "waiting_for_training",
+        "supervisor_pid": 902467,
+        "updated_unix": 1792186615.2268338,
+        "validation_data_read": false
+      }
+    },
+    {
+      "label": "score",
+      "pid": 902484,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0182_unique1024_actual_descent.score_queue",
+        "--worker"
+      ],
+      "state_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0182_unique1024_actual_descent/results_archive/score_queue_20261016/state.json",
+      "state": {
+        "experiment": "SW0182_score_queue",
+        "pending_seeds": [
+          0,
+          1,
+          2
+        ],
+        "prediction_state_sha256": {
+          "0": "301a4e5d22f97f0a10f0bfffe65041861fd96a73e379d11c8a8a46c0762f157c",
+          "1": "751b41d54df7b3db696b36ff1465cc7a66823a7e615edd62043c7267d022fc4f",
+          "2": "59363b430721a4369df17a2ac2eaf582b3112a300589815776a8f215491b9d3b"
+        },
+        "status": "waiting_for_predictions",
+        "supervisor_pid": 902484,
+        "updated_unix": 1792186617.2654061
+      }
+    }
+  ],
+  "observed_unix": 1792186617.3440173,
+  "validation_data_read": false,
+  "evaluation_cpu_receipt_sha256": "0d5e8e16cd6d1fe009310d90ab24960bc97d24865691824099697ca683ad0ecd"
+}
