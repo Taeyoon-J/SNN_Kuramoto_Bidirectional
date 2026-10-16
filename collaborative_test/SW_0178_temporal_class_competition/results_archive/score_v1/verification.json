@@ -1,0 +1,122 @@
+{
+  "bootstrap_replicates": 10000,
+  "bootstrap_seed": 178,
+  "dataset": {
+    "dataset_path": "/Data0/kevinswk/datasets/object_centric_data/clevr_10-full.hdf5",
+    "ids": [
+      1320,
+      1639
+    ],
+    "mtime_ns": 1776053764504468257,
+    "size_bytes": 2188394103
+  },
+  "gate": {
+    "arm_eligibility": {
+      "mean_rho_ce": {
+        "eligible": false,
+        "endpoints": {
+          "conditional": {
+            "fg_mean_strictly_above_SW0164": false,
+            "foreground_iou_at_least_SW0164": true,
+            "matched_object_iou_at_least_SW0164": true,
+            "paired_fg_ci95_lower_above_zero_vs_SW0164": false
+          },
+          "standalone": {
+            "fg_mean_strictly_above_SW0164": true,
+            "foreground_iou_at_least_SW0164": false,
+            "matched_object_iou_at_least_SW0164": true,
+            "paired_fg_ci95_lower_above_zero_vs_SW0164": true
+          }
+        }
+      },
+      "product_q_ce": {
+        "eligible": false,
+        "endpoints": {
+          "conditional": {
+            "fg_mean_strictly_above_SW0164": true,
+            "foreground_iou_at_least_SW0164": true,
+            "matched_object_iou_at_least_SW0164": true,
+            "paired_fg_ci95_lower_above_zero_vs_SW0164": false
+          },
+          "standalone": {
+            "fg_mean_strictly_above_SW0164": true,
+            "foreground_iou_at_least_SW0164": false,
+            "matched_object_iou_at_least_SW0164": true,
+            "paired_fg_ci95_lower_above_zero_vs_SW0164": true
+          }
+        }
+      }
+    },
+    "co_primary_any_arm_eligible": false,
+    "endpoint_foreground_contracts": {
+      "mean_rho_ce": {
+        "conditional_exact_SourceT": true,
+        "standalone_exact_native_QCC": true
+      },
+      "product_q_ce": {
+        "conditional_exact_SourceT": true,
+        "standalone_exact_native_QCC": true
+      }
+    },
+    "mean_rho_advantage": {
+      "conditional": {
+        "fg_mean_strictly_above_product_q_ce": false,
+        "foreground_iou_at_least_product_q_ce": true,
+        "matched_object_iou_at_least_product_q_ce": false,
+        "paired_fg_ci95_lower_above_zero_vs_product_q_ce": false
+      },
+      "standalone": {
+        "fg_mean_strictly_above_product_q_ce": false,
+        "foreground_iou_at_least_product_q_ce": true,
+        "matched_object_iou_at_least_product_q_ce": false,
+        "paired_fg_ci95_lower_above_zero_vs_product_q_ce": false
+      }
+    },
+    "mean_rho_mechanism_promoted": false
+  },
+  "prediction_sha256": {
+    "mean_rho_ce": "fe93e4f59831170bbf5503d942ab17f057a9e75bedaf0ddfcfffcad211783cd3",
+    "product_q_ce": "f00a4749a0070560acca0d2f5c272714147ca19668570b74d9e2ce655c6d62ed"
+  },
+  "score_queue_state_sha256": "e0379d69b4d42b52f15c9d8eb6a9297439d0f8aac508643bc15d41d25c262035",
+  "score_report_sha256": "f7c404615edef11c57ac6e1d71dd450ededab7f2e9307b54996d6365a51106df",
+  "scores": {
+    "SW0164_foreground_induced": {
+      "fg_ari": 0.7709320986336607,
+      "foreground_iou": 0.6149934302630647,
+      "matched_object_iou": 0.6305234820304301
+    },
+    "SourceT": {
+      "fg_ari": 0.7552730828009764,
+      "foreground_iou": 0.6149934302630647,
+      "matched_object_iou": 0.5795137856780908
+    },
+    "mean_rho_ce_conditional": {
+      "fg_ari": 0.7658068963248583,
+      "foreground_iou": 0.6149934302630647,
+      "matched_object_iou": 0.6340292121190659
+    },
+    "mean_rho_ce_standalone": {
+      "fg_ari": 0.7818442674706274,
+      "foreground_iou": 0.6097251374375215,
+      "matched_object_iou": 0.6533966533238125
+    },
+    "product_q_ce_conditional": {
+      "fg_ari": 0.777384139491886,
+      "foreground_iou": 0.6149934302630647,
+      "matched_object_iou": 0.640321322339909
+    },
+    "product_q_ce_standalone": {
+      "fg_ari": 0.8180291082072187,
+      "foreground_iou": 0.4375000754377643,
+      "matched_object_iou": 0.6863642533386946
+    }
+  },
+  "source_fingerprint_sha256": "feda1677a2f6bf6cfa7e999344f138e60b1ce7d571008855be03024186673f51",
+  "status": "verified",
+  "training_manifest_sha256": {
+    "mean_rho_ce": "f0b8c301a825eafaa23d09b42ba042baad1c31d8bb0855d818d90f666d4eab9d",
+    "product_q_ce": "9ee049b8d156557c4f0cbd927794286f3774887ec5f320660f246e7a6deccd76"
+  },
+  "validation_scope": "fixed320 IDs 1320..1639 only; reserve unread"
+}

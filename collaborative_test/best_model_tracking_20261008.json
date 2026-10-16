@@ -5194,7 +5194,7 @@
     "record": "collaborative_test/SW_0177_learned_coupling_polarity/results_archive/completed_score_20261016/evaluation.json"
   },
   "SW0178_started_20261016": {
-    "status": "actual_fixed320_predictions_running_final_audit_queued",
+    "status": "completed_original_gate_failed_useful_supervised_QCE_FG_candidate_preserved",
     "mask_supervised": true,
     "unsupervised_leaderboard_eligible": false,
     "incumbent_changed": false,
@@ -5222,7 +5222,7 @@
       "mean_rho_ce": 64,
       "product_q_ce": 64
     },
-    "evaluation_status": "actual_prediction_workers_live_score_and_audit_waiting",
+    "evaluation_status": "all_predictions_score_and_independent_audit_complete",
     "server_training_and_evaluation_tests_passed": 31,
     "evaluation_CPU_receipt_sha256": "a3f8fa2928e17c9d5e3954e6aab578fb44af9cdddea76ea51de03a1d8af13fd6",
     "evaluation_actual_loader_scope": "actual_39_update_partial_checkpoints_CPU_only_not_final_artifact_admission",
@@ -5236,10 +5236,76 @@
       "mean_rho_ce": "f0b8c301a825eafaa23d09b42ba042baad1c31d8bb0855d818d90f666d4eab9d",
       "product_q_ce": "9ee049b8d156557c4f0cbd927794286f3774887ec5f320660f246e7a6deccd76"
     },
-    "fixed320_score_available": false,
+    "fixed320_score_available": true,
     "initial_prediction_rows_receipt_sha256": "b736e1a52191a6f7636a7dd3cde3e88912ce56d30ee72ad8e6e5aeafc004b343",
     "final_audit_supervisor_pid": 387734,
     "final_score_verifier_sha256": "1129f364693ef210127b408d336c462026f282f294dc9343bbe0a741654d31c8",
-    "final_score_verified": false
+    "final_score_verified": true,
+    "score_sha256": "f7c404615edef11c57ac6e1d71dd450ededab7f2e9307b54996d6365a51106df"
+  },
+  "SW0178_completed_20261016": {
+    "status": "completed_original_gate_failed_no_preregistered_promotion",
+    "mask_supervised": true,
+    "unsupervised_leaderboard_eligible": false,
+    "seed_scope": [
+      1
+    ],
+    "score_sha256": "f7c404615edef11c57ac6e1d71dd450ededab7f2e9307b54996d6365a51106df",
+    "independent_verification_sha256": "155e36db8f90905cae6a6546e8b71d87571636af9ad518543802c1810b19277b",
+    "incumbent_changed": false,
+    "original_gate_passed": false,
+    "mean_rho_mechanism_promoted": false,
+    "scores": {
+      "SW0164_foreground_induced": {
+        "fg_ari": 0.7709320986336607,
+        "foreground_iou": 0.6149934302630647,
+        "matched_object_iou": 0.6305234820304301
+      },
+      "SourceT": {
+        "fg_ari": 0.7552730828009764,
+        "foreground_iou": 0.6149934302630647,
+        "matched_object_iou": 0.5795137856780908
+      },
+      "mean_rho_ce_conditional": {
+        "fg_ari": 0.7658068963248583,
+        "foreground_iou": 0.6149934302630647,
+        "matched_object_iou": 0.6340292121190659
+      },
+      "mean_rho_ce_standalone": {
+        "fg_ari": 0.7818442674706274,
+        "foreground_iou": 0.6097251374375215,
+        "matched_object_iou": 0.6533966533238125
+      },
+      "product_q_ce_conditional": {
+        "fg_ari": 0.777384139491886,
+        "foreground_iou": 0.6149934302630647,
+        "matched_object_iou": 0.640321322339909
+      },
+      "product_q_ce_standalone": {
+        "fg_ari": 0.8180291082072187,
+        "foreground_iou": 0.4375000754377643,
+        "matched_object_iou": 0.6863642533386946
+      }
+    },
+    "product_q_standalone_fg_delta_vs_SW0164": {
+      "ci95": [
+        0.03479056581651502,
+        0.05974786762155136
+      ],
+      "mean": 0.047097009573557974,
+      "replicates": 10000,
+      "seed": 178
+    },
+    "foreground_diagnosis": {
+      "baseline_precision": 0.6885704067076744,
+      "candidate_precision": 0.4575350132223808,
+      "baseline_recall": 0.8696371405812195,
+      "candidate_recall": 0.9192012804319397,
+      "baseline_FP": 46060,
+      "candidate_FP": 88461,
+      "scope": "frozen_predictions_after_final_score_audit_no_policy_tuning"
+    },
+    "next_step": "SW0179 posthoc supervised QCE standalone seed0/2 unchanged replication; no claim of SW0178 gate pass",
+    "record": "collaborative_test/SW_0178_temporal_class_competition/RESULT_KO.md"
   }
 }
