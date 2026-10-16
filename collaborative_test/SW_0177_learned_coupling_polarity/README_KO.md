@@ -19,3 +19,13 @@ v1 부모252661은 장치를 확보한 뒤 외부 PID 진입을 감지해 자기
 원본 source/preflight 7개 파일은 유지하고 resource_queue_v2.py와 그 검사만 추가했다. 외부 owner 진입 시 자기 child만 중지하고 lease를 해제한 뒤 새 idle GPU를 기다린다. 각 시도의 로그·report는 별도로 보존한다. GPU 대기 시간은 worker 실행 제한시간에 포함하지 않으며 대기 자체에는 자동 종료시간을 두지 않는다.
 
 새 큐 검사 3개가 로컬·서버에서 통과했다. 긴 GPU 대기, 외부 owner 진입, owned child만 중지, lease 해제·재확보 및 결과 보존을 한 경로로 검사했다. 실제 source fingerprint와 이전 CPU source 초기 상태 검증도 보존됐음을 서버에서 확인했다. 새 부모258907의 실제 명령행과 waiting_for_exclusive_gpu 상태를 확인했다. 아직 사전 GPU 결과·학습 업데이트는 없으며 기존 최고 모델은 유지한다. 이력은 results_archive/queue_recovered_v2_20261016/에 있다.
+
+## 두 학습 큐 사전 등록
+
+Signed 부모272532와 nonnegative 부모272541의 실제 명령행 및 waiting_for_v2_source_preflight 상태를 확인했다. 성공한 사전 검사 report와 source/code/큐 fingerprint가 확인돼야 CPU training admission이 성립하고 GPU lease를 요청한다. 사전 검사 또는 GPU 대기 시간은 worker 실행 제한시간에서 제외한다. 외부 GPU 진입 시 own worker만 중지하고 마지막 committed update에서 재개하며, GPU runtime binding이 있는 boundary는 같은 장치를 다시 확보한다.
+
+새 학습 코드의 focused CPU 검사는 로컬·서버 각각 11개가 통과했고 로컬 combined suite는 31개가 통과했다. 서버에서 실제 fresh source를 두 번 CPU에 로드하여 signed/control combined initial state가 b2b59d00641935b9deb5ecd13200da020d096641acd46867f9108705144e805b로 같은지 확인했다. 실제 5개 optimizer family의 parameter 순서/설정도 같고 Adam state는 비어 있다. 실제 context 및 head 가중치를 변경한 후 boundary0에서 복원해 두 상태와 빈 Adam이 정확히 돌아오는지 검증했다. 이 CPU 점검을 GPU 사전 검사 성공 receipt로 대체하지 않았다.
+
+계획은 seed1, TRAIN512×2, B16/micro4, 각64updates의 supervised paired pilot이다. 기존 native tail64를 쓰며 SW176 local-phase credit은 설치하지 않는다. 실제 head multiplier는 sparse A_graph 입력의 해당 forward에서 capture하고, floor가 포함된 dense A0로 head를 재계산하지 않는다. 음수 kernel 기여는 실제 Kuramoto의 네 항에서 측정하며 TRAIN8 진단의 수치는 settled512-1023/B4 batch aggregate로 기록한다. 최종 checkpoint tensor SHA와 Adam step summary는 저장된 실제 값으로 다시 검증한다.
+
+아직 성공한 GPU 사전 검사 결과와 학습 업데이트·최종 평가 점수는 없다. GPU2 사전 시도 두 번은 외부 PID 진입으로 중지되어 재대기 중이며 부모258907은 정상이다. 최고 모델은 유지한다. CPU factory·모든 부모의 실행 증거는 results_archive/paired_training_queued_20261016/에 보존했다.
