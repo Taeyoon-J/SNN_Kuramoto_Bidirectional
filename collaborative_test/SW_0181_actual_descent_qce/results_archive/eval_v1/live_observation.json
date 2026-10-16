@@ -1,0 +1,60 @@
+{
+  "observed_unix": 1792143018.869612,
+  "processes": [
+    {
+      "task": "prediction_seed0",
+      "pid": 486434,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0181_actual_descent_qce.prediction_queue",
+        "--source-seed",
+        "0"
+      ],
+      "process_state": "S",
+      "queue_status": "waiting_for_training"
+    },
+    {
+      "task": "prediction_seed1",
+      "pid": 486457,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0181_actual_descent_qce.prediction_queue",
+        "--source-seed",
+        "1"
+      ],
+      "process_state": "S",
+      "queue_status": "waiting_for_training"
+    },
+    {
+      "task": "prediction_seed2",
+      "pid": 486490,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0181_actual_descent_qce.prediction_queue",
+        "--source-seed",
+        "2"
+      ],
+      "process_state": "S",
+      "queue_status": "waiting_for_training"
+    },
+    {
+      "task": "score",
+      "pid": 486519,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0181_actual_descent_qce.score_queue",
+        "--worker"
+      ],
+      "process_state": "S",
+      "queue_status": "waiting_for_predictions"
+    }
+  ]
+}

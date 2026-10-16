@@ -35,6 +35,17 @@ serialized Adam steps matched the accepted count independently of the proposal
 cursor. This proves that the policy is executing, not that segmentation improved.
 
 Training completion, prediction, and fixed320 evaluation results are not yet available.
+Three prediction supervisors and the GT-last score coordinator are now queued;
+all four processes were observed live. Each prediction waits for its own completed
+training artifact, and scoring waits for all three immutable predictions.
+The deployed evaluation suite passed 32 tests and four actual subprocess CLI checks.
+The supplemental unconditional-QCE comparator passed two additional tests and
+validated the actual pinned SW0179 score archive without reading validation masks.
+Its matched-seed comparison will be run after the SW0181 score is frozen.
+
+See [evaluation deployment verification](results_archive/eval_v1/cpu_receipt.json)
+and [queue launch record](results_archive/eval_v1/launch.json).
+
 This is a mask-supervised experiment, not an unsupervised leaderboard update,
 fresh native32/70k training, or evidence that individual gates are necessary.
 SW0165 remains the unsupervised incumbent.

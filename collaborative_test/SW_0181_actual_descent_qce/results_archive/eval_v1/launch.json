@@ -1,0 +1,103 @@
+{
+  "status": "SW0181_three_prediction_supervisors_and_score_coordinator_verified_live",
+  "parents": [
+    {
+      "task": "prediction_seed0",
+      "pid": 486434,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0181_actual_descent_qce.prediction_queue",
+        "--source-seed",
+        "0"
+      ],
+      "state_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0181_actual_descent_qce/results_archive/prediction_queue_20261016/product_q_ce_seed0_state.json",
+      "state": {
+        "arm": "product_q_ce",
+        "experiment": "SW0181_prediction_queue",
+        "seed": 0,
+        "status": "waiting_for_training",
+        "supervisor_pid": 486434,
+        "updated_unix": 1792142974.106656,
+        "validation_data_read": false
+      }
+    },
+    {
+      "task": "prediction_seed1",
+      "pid": 486457,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0181_actual_descent_qce.prediction_queue",
+        "--source-seed",
+        "1"
+      ],
+      "state_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0181_actual_descent_qce/results_archive/prediction_queue_20261016/product_q_ce_seed1_state.json",
+      "state": {
+        "arm": "product_q_ce",
+        "experiment": "SW0181_prediction_queue",
+        "seed": 1,
+        "status": "waiting_for_training",
+        "supervisor_pid": 486457,
+        "updated_unix": 1792142976.3797061,
+        "validation_data_read": false
+      }
+    },
+    {
+      "task": "prediction_seed2",
+      "pid": 486490,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0181_actual_descent_qce.prediction_queue",
+        "--source-seed",
+        "2"
+      ],
+      "state_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0181_actual_descent_qce/results_archive/prediction_queue_20261016/product_q_ce_seed2_state.json",
+      "state": {
+        "arm": "product_q_ce",
+        "experiment": "SW0181_prediction_queue",
+        "seed": 2,
+        "status": "waiting_for_training",
+        "supervisor_pid": 486490,
+        "updated_unix": 1792142978.6093273,
+        "validation_data_read": false
+      }
+    },
+    {
+      "task": "score",
+      "pid": 486519,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0181_actual_descent_qce.score_queue",
+        "--worker"
+      ],
+      "state_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0181_actual_descent_qce/results_archive/score_queue_20261016/state.json",
+      "state": {
+        "experiment": "SW0181_score_queue",
+        "pending_seeds": [
+          0,
+          1,
+          2
+        ],
+        "prediction_state_sha256": {
+          "0": "b62bd3d2629f61c0fbc3b0c31a79de9f6bf151033648d09fb85efd710118c3e7",
+          "1": "356f7c64059229b9f6fd33aebe66873fe31de168981f8d8de59db01e6ad15df7",
+          "2": "7cc3992f9f6373d107fe2cda0d593ec00d932c508933a910534550728305eaa0"
+        },
+        "status": "waiting_for_predictions",
+        "supervisor_pid": 486519,
+        "updated_unix": 1792142980.8979447
+      }
+    }
+  ],
+  "evaluation_cpu_receipt_sha256": "05fbbe7ae0e7491c7978bbd3db6e65e56c839af15da5cd6d2e2660589d89f5bb",
+  "observed_unix": 1792142981.0983515,
+  "validation_masks_opened": false,
+  "training_restarted": false
+}

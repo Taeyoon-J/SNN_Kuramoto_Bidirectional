@@ -5705,6 +5705,81 @@
     "first_two_GPU_receipt_sha256": "3245538bbf2d363ecd2c8004c565718fa97d91858cfbe70b14636beeea5d3733",
     "actual_Adam_steps_match_accepted_count": true,
     "actual_spike_and_four_family_proposed_gradients_positive": true,
-    "full_nograd_before_parity_max_abs": 4.6566128730773926e-09
+    "full_nograd_before_parity_max_abs": 4.6566128730773926e-09,
+    "evaluation_source_tests_passed": 32,
+    "actual_evaluation_CLI_checks_passed": 4,
+    "prediction_supervisors_queued": 3,
+    "score_coordinator_queued": true,
+    "evaluation_start_live_processes": {
+      "observed_unix": 1792143018.869612,
+      "processes": [
+        {
+          "task": "prediction_seed0",
+          "pid": 486434,
+          "argv": [
+            "/Data0/kevinswk/envs/snn/bin/python",
+            "-u",
+            "-m",
+            "collaborative_test.SW_0181_actual_descent_qce.prediction_queue",
+            "--source-seed",
+            "0"
+          ],
+          "process_state": "S",
+          "queue_status": "waiting_for_training"
+        },
+        {
+          "task": "prediction_seed1",
+          "pid": 486457,
+          "argv": [
+            "/Data0/kevinswk/envs/snn/bin/python",
+            "-u",
+            "-m",
+            "collaborative_test.SW_0181_actual_descent_qce.prediction_queue",
+            "--source-seed",
+            "1"
+          ],
+          "process_state": "S",
+          "queue_status": "waiting_for_training"
+        },
+        {
+          "task": "prediction_seed2",
+          "pid": 486490,
+          "argv": [
+            "/Data0/kevinswk/envs/snn/bin/python",
+            "-u",
+            "-m",
+            "collaborative_test.SW_0181_actual_descent_qce.prediction_queue",
+            "--source-seed",
+            "2"
+          ],
+          "process_state": "S",
+          "queue_status": "waiting_for_training"
+        },
+        {
+          "task": "score",
+          "pid": 486519,
+          "argv": [
+            "/Data0/kevinswk/envs/snn/bin/python",
+            "-u",
+            "-m",
+            "collaborative_test.SW_0181_actual_descent_qce.score_queue",
+            "--worker"
+          ],
+          "process_state": "S",
+          "queue_status": "waiting_for_predictions"
+        }
+      ]
+    },
+    "evaluation_start_archive_sha256": {
+      "cpu_receipt.json": "62de7c64f526b1e454497761c64fb86eb5f3935c6af5de5c0c6a3d489de985df",
+      "launch.json": "65360c17731eb4442b6b332d6147949d102ea300e727169a7a49bdc17935e379",
+      "live_observation.json": "3cfe4810695431a10cb54326117ddeff3ef9b18e72598d056a2577614de91787"
+    },
+    "validation_masks_opened_for_this_candidate": false,
+    "unconditional_QCE_comparison_code_verified": true,
+    "unconditional_QCE_comparison_tests_passed": 2,
+    "unconditional_control_report_sha256": "758e48f83b44dc31efeae73154c13dbcd8ffa6132a85c7055279a0f4b2649c3d",
+    "comparison_cpu_receipt_sha256": "ca685f328a1c063ec0489830467aaa344352653e4d73de2d2d92fa0c08b700d4",
+    "candidate_vs_unconditional_comparison_result_available": false
   }
 }
