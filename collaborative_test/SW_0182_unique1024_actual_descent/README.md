@@ -22,11 +22,14 @@ owner/memory check immediately before prediction launch. Four separate module
 `--help` subprocesses also passed:
 [local CLI admission](results_archive/cpu_v2/local_evaluation_admission.json).
 
-Server CPU training admission has been submitted, but its SSH channel has not
-responded. A separate bounded remote echo also failed to respond despite a live
-local SSH master. This does not establish that the submitted command terminated.
-Inspect the existing server receipt/processes before retrying deployment or
-launching anything. No GPU training or fixed320 result has been confirmed.
+Server CPU training admission was submitted, but the SSH observer eventually
+exited 1 with `Broken pipe` and `banner exchange timeout`. The previously live
+local master also disappeared. This establishes a terminal observation failure,
+not the state of the submitted remote command or a scientific trial failure:
+[transport record](results_archive/cpu_v2/ssh_transport_terminal.json).
+Inspect existing server receipts/processes through a restored connection before
+retrying deployment or launching anything. No GPU training or fixed320 result
+has been confirmed.
 
 After actual server admission, the prepared queues run seeds 0/1/2, predict
 each completed checkpoint, then score only after all three prediction archives
