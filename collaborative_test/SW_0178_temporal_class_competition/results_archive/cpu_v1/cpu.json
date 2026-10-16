@@ -1,0 +1,208 @@
+{
+  "status": "SW0178_actual_CPU_models_restore_and_tests_passed",
+  "tests": 18,
+  "arms": [
+    {
+      "arm": "mean_rho_ce",
+      "initial_model_state_sha256": "f372b3a450ebeaf0d49e20d019d3c0676d4998cc1c49586e4c4e4c89e969d7f5",
+      "optimizer_groups": [
+        {
+          "name": "context_encoder",
+          "parameter_names": [
+            "context.0.weight",
+            "context.0.bias",
+            "context.2.weight",
+            "context.2.bias",
+            "context.4.weight",
+            "context.4.bias",
+            "context.6.weight",
+            "context.6.bias",
+            "context.8.weight",
+            "context.8.bias"
+          ],
+          "lr": 0.0003,
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "eps": 1e-08,
+          "weight_decay": 0.0
+        },
+        {
+          "name": "graph",
+          "parameter_names": [
+            "log_temperature",
+            "log_coupling_gain",
+            "spatial_rate",
+            "projection.weight"
+          ],
+          "lr": 3e-05,
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "eps": 1e-08,
+          "weight_decay": 0.0
+        },
+        {
+          "name": "native_core",
+          "parameter_names": [
+            "gamma_phase_gain",
+            "gamma_channel_proj.weight",
+            "kuramoto.freq_gain",
+            "kuramoto.omega",
+            "kuramoto.kappa",
+            "kuramoto.direction_learner",
+            "dendric_layer.tau_n",
+            "dendric_layer.oscillator_dense.weight",
+            "dendric_layer.oscillator_dense.bias",
+            "membrane_layer.tau_m"
+          ],
+          "lr": 3e-05,
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "eps": 1e-08,
+          "weight_decay": 0.0
+        },
+        {
+          "name": "integration",
+          "parameter_names": [
+            "a_d",
+            "a_m",
+            "b"
+          ],
+          "lr": 0.001,
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "eps": 1e-08,
+          "weight_decay": 0.0
+        }
+      ],
+      "actual_source_checkpoint_restore": true,
+      "optimizer_updates": 0
+    },
+    {
+      "arm": "product_q_ce",
+      "initial_model_state_sha256": "f372b3a450ebeaf0d49e20d019d3c0676d4998cc1c49586e4c4e4c89e969d7f5",
+      "optimizer_groups": [
+        {
+          "name": "context_encoder",
+          "parameter_names": [
+            "context.0.weight",
+            "context.0.bias",
+            "context.2.weight",
+            "context.2.bias",
+            "context.4.weight",
+            "context.4.bias",
+            "context.6.weight",
+            "context.6.bias",
+            "context.8.weight",
+            "context.8.bias"
+          ],
+          "lr": 0.0003,
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "eps": 1e-08,
+          "weight_decay": 0.0
+        },
+        {
+          "name": "graph",
+          "parameter_names": [
+            "log_temperature",
+            "log_coupling_gain",
+            "spatial_rate",
+            "projection.weight"
+          ],
+          "lr": 3e-05,
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "eps": 1e-08,
+          "weight_decay": 0.0
+        },
+        {
+          "name": "native_core",
+          "parameter_names": [
+            "gamma_phase_gain",
+            "gamma_channel_proj.weight",
+            "kuramoto.freq_gain",
+            "kuramoto.omega",
+            "kuramoto.kappa",
+            "kuramoto.direction_learner",
+            "dendric_layer.tau_n",
+            "dendric_layer.oscillator_dense.weight",
+            "dendric_layer.oscillator_dense.bias",
+            "membrane_layer.tau_m"
+          ],
+          "lr": 3e-05,
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "eps": 1e-08,
+          "weight_decay": 0.0
+        },
+        {
+          "name": "integration",
+          "parameter_names": [
+            "a_d",
+            "a_m",
+            "b"
+          ],
+          "lr": 0.001,
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "eps": 1e-08,
+          "weight_decay": 0.0
+        }
+      ],
+      "actual_source_checkpoint_restore": true,
+      "optimizer_updates": 0
+    }
+  ],
+  "actual_TRAIN8_leaf_gradients": [
+    {
+      "arm": "mean_rho_ce",
+      "loss": 0.7397632598876953,
+      "cached_actual_spike_leaf_gradient_l2": 0.008853214652835471,
+      "seconds": 5.249845860525966
+    },
+    {
+      "arm": "product_q_ce",
+      "loss": 0.482499361038208,
+      "cached_actual_spike_leaf_gradient_l2": 0.005035059795330792,
+      "seconds": 5.747789488174021
+    }
+  ],
+  "actual_model_gradient_verified": false,
+  "cuda_initialized": false,
+  "optimizer_updates": 0,
+  "training_fingerprint_sha256": "4564c14987df14ad99ae8af3dec1158151e4141376f4d0b2681d5080337435b0",
+  "files": [
+    {
+      "path": "collaborative_test/SW_0178_temporal_class_competition/train.py",
+      "sha256": "292f90d3e8212a0dc97bdc71ecd31d01cd6c48252cbf948353a824d07e763bcd"
+    },
+    {
+      "path": "collaborative_test/SW_0178_temporal_class_competition/test_train.py",
+      "sha256": "fc63fa95b5fc426cba7ef138483c62c7efc2eb6b8ae1d6a9a821d94fcd72b0e5"
+    },
+    {
+      "path": "collaborative_test/SW_0178_temporal_class_competition/training_queue.py",
+      "sha256": "7c8dea7e57b11c64ac9e7a6e1b73c1294a71a7e5a7b962c8192a7728ad5f6264"
+    },
+    {
+      "path": "collaborative_test/SW_0178_temporal_class_competition/test_training_queue.py",
+      "sha256": "dbc0a63525ee95cc3c40d0c81a59ed5570796b40122e241f1977be23d9389686"
+    }
+  ]
+}

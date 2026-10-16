@@ -1,0 +1,87 @@
+{
+  "status": "SW0178_two_training_parents_verified_live",
+  "parents": [
+    {
+      "arm": "mean_rho_ce",
+      "pid": 362058,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0178_temporal_class_competition.training_queue",
+        "--arm",
+        "mean_rho_ce"
+      ],
+      "state": {
+        "arm": "mean_rho_ce",
+        "experiment": "SW0178_training_queue",
+        "status": "validating_train_cache",
+        "supervisor_pid": 362058,
+        "updated_unix": 1792131868.0325232
+      },
+      "observed_unix": 1792131868.094622
+    },
+    {
+      "arm": "product_q_ce",
+      "pid": 362073,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0178_temporal_class_competition.training_queue",
+        "--arm",
+        "product_q_ce"
+      ],
+      "state": {
+        "arm": "product_q_ce",
+        "experiment": "SW0178_training_queue",
+        "status": "validating_train_cache",
+        "supervisor_pid": 362073,
+        "updated_unix": 1792131869.9870644
+      },
+      "observed_unix": 1792131870.0993378
+    }
+  ],
+  "CPU_receipt_sha256": "9441f2eb32f04369bc22a18f817435e7a58da99abe55b9a1e1dbac3bad939672",
+  "files": [
+    {
+      "path": "collaborative_test/SW_0178_temporal_class_competition/DESIGN_KO.md",
+      "sha256": "acbda72c31e568ff19fdb1a314f7af3a360bcb0edb922b99e927c80f8e5d1507"
+    },
+    {
+      "path": "collaborative_test/SW_0178_temporal_class_competition/class_competition.py",
+      "sha256": "b0de2868097585b99e3112c4f68c72ce67de0c8c616c4270149746632e5aed68"
+    },
+    {
+      "path": "collaborative_test/SW_0178_temporal_class_competition/test_class_competition.py",
+      "sha256": "38ebc2eb24004e8670d105722831fc2228241250e2db0ad46c2b40bf37bdd1d1"
+    },
+    {
+      "path": "collaborative_test/SW_0178_temporal_class_competition/preflight.py",
+      "sha256": "e225bc509dddeacbbae946822f9b54c97c4b5a1f59d11e23fab4117a4cb60b4b"
+    },
+    {
+      "path": "collaborative_test/SW_0178_temporal_class_competition/test_preflight.py",
+      "sha256": "cc35a3c0b1da4de9750acfd47535e180d1dd832dbb69b743774ee4975a55593d"
+    },
+    {
+      "path": "collaborative_test/SW_0178_temporal_class_competition/train.py",
+      "sha256": "292f90d3e8212a0dc97bdc71ecd31d01cd6c48252cbf948353a824d07e763bcd"
+    },
+    {
+      "path": "collaborative_test/SW_0178_temporal_class_competition/test_train.py",
+      "sha256": "fc63fa95b5fc426cba7ef138483c62c7efc2eb6b8ae1d6a9a821d94fcd72b0e5"
+    },
+    {
+      "path": "collaborative_test/SW_0178_temporal_class_competition/training_queue.py",
+      "sha256": "7c8dea7e57b11c64ac9e7a6e1b73c1294a71a7e5a7b962c8192a7728ad5f6264"
+    },
+    {
+      "path": "collaborative_test/SW_0178_temporal_class_competition/test_training_queue.py",
+      "sha256": "dbc0a63525ee95cc3c40d0c81a59ed5570796b40122e241f1977be23d9389686"
+    }
+  ],
+  "mask_supervised": true,
+  "unsupervised_leaderboard_eligible": false,
+  "observed_unix": 1792131870.0995915
+}

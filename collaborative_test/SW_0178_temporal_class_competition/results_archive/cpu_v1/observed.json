@@ -1,0 +1,41 @@
+{
+  "observed_unix": 1792131920.5008967,
+  "arms": [
+    {
+      "arm": "mean_rho_ce",
+      "status": "validating_train_cache",
+      "physical_gpu": null,
+      "supervisor_pid": {
+        "pid": 362058,
+        "live": true,
+        "argv": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "-u",
+          "-m",
+          "collaborative_test.SW_0178_temporal_class_competition.training_queue",
+          "--arm",
+          "mean_rho_ce"
+        ]
+      }
+    },
+    {
+      "arm": "product_q_ce",
+      "status": "validating_train_cache",
+      "physical_gpu": null,
+      "supervisor_pid": {
+        "pid": 362073,
+        "live": true,
+        "argv": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "-u",
+          "-m",
+          "collaborative_test.SW_0178_temporal_class_competition.training_queue",
+          "--arm",
+          "product_q_ce"
+        ]
+      }
+    }
+  ],
+  "gpu": "0, 2181 MiB, 0 %\n1, 2 MiB, 0 %\n2, 2 MiB, 0 %\n3, 2 MiB, 0 %\n",
+  "gpu_processes": "GPU-a0a7d03d-adc1-37ca-4342-328878b3657c, 2653200, /work/USERS/zhuoyu73/venvs/vllm/bin/python, 2162 MiB\n"
+}
