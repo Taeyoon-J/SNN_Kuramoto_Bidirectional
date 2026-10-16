@@ -1,0 +1,85 @@
+{
+  "observed_unix": 1792194463.5055268,
+  "records": [
+    {
+      "seed": 0,
+      "status": "running_worker",
+      "physical_gpu": 2,
+      "parent": {
+        "pid": 948898,
+        "state": "S",
+        "ppid": 1,
+        "pgid": 948898,
+        "start_ticks": 434649013,
+        "argv": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "-u",
+          "-m",
+          "collaborative_test.SW_0184_train_readout_alignment.queue",
+          "--seed",
+          "0"
+        ]
+      },
+      "worker": {
+        "pid": 949057,
+        "state": "R",
+        "ppid": 948898,
+        "pgid": 949057,
+        "start_ticks": 434651935,
+        "argv": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "-u",
+          "-m",
+          "collaborative_test.SW_0184_train_readout_alignment.queue",
+          "--worker",
+          "--seed",
+          "0",
+          "--physical-gpu",
+          "2"
+        ]
+      }
+    },
+    {
+      "seed": 1,
+      "status": "waiting_for_exclusive_gpu",
+      "physical_gpu": null,
+      "parent": {
+        "pid": 948901,
+        "state": "S",
+        "ppid": 1,
+        "pgid": 948901,
+        "start_ticks": 434649238,
+        "argv": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "-u",
+          "-m",
+          "collaborative_test.SW_0184_train_readout_alignment.queue",
+          "--seed",
+          "1"
+        ]
+      },
+      "worker": null
+    },
+    {
+      "seed": 2,
+      "status": "waiting_for_exclusive_gpu",
+      "physical_gpu": null,
+      "parent": {
+        "pid": 948929,
+        "state": "S",
+        "ppid": 1,
+        "pgid": 948929,
+        "start_ticks": 434649464,
+        "argv": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "-u",
+          "-m",
+          "collaborative_test.SW_0184_train_readout_alignment.queue",
+          "--seed",
+          "2"
+        ]
+      },
+      "worker": null
+    }
+  ]
+}
