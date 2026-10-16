@@ -2,7 +2,7 @@
 
 긴 Kuramoto 재귀를 통한 학습 신호 전달만 바꾸는 실험이다. 자세한 변경·대조·확대 조건은 DESIGN_KO.md에 사전 기록했다. 모델의 forward 연산, native component spike, Q/A, threshold와 mask readout은 바꾸지 않는다. D/M/event/reset의 장기 gradient는 여전히 남아 있다.
 
-현재 실행 경로는 `python -m collaborative_test.SW_0176_local_phase_credit.resource_queue_v2`이다. 이 단계는 TRAIN 위치0의 이미지 한 장에서 no-update source 검증 및 full1024 gradient를 측정하는 실험이다. 64-update 학습이나 검증 성능 결과가 아니다.
+현재 실행 경로는 `python -m collaborative_test.SW_0176_local_phase_credit.resource_queue_v3`이다. 이 단계는 TRAIN 위치0의 이미지 한 장에서 no-update source 검증 및 full1024 gradient를 측정하는 실험이다. 64-update 학습이나 검증 성능 결과가 아니다.
 
 로컬·서버 각 15개 CPU 검사와 실제 TRAIN 캐시 준비, fresh source+context 모델 생성을 통과했다. 생성한 초기 state SHA `f372b3a450ebeaf0d49e20d019d3c0676d4998cc1c49586e4c4e4c89e969d7f5`가 완료 SW175 critical-component 대조군의 초기 state SHA와 정확히 일치했다. 이후 GPU1 worker의 실제 PID를 확인했다. 결과 대기 중이며 기존 최고 모델은 유지한다.
 
@@ -13,3 +13,7 @@
 ## v2 시작 후 확인된 초기화 오류
 
 v2 부모/worker가 종료됐고 실제 source forward 이전 `reset_peak_memory_stats`에서 `Invalid device argument`가 발생했다. CPU 준비와 fresh 초기 state 검증은 통과했지만, 메모리 계측 API 호출 전에 CUDA device를 명시적으로 초기화해야 했다. optimizer update와 성능 결과는 없다. 원본 v2 코드·로그는 `results_archive/terminal_gpu_initialization_failure_20261016/`에 보존했다. CPU admission guard 뒤에서 device를 초기화하도록 새 버전을 검증하며, 이 기록을 모델 가설의 실패로 해석하지 않는다.
+
+## CUDA 초기화 v3 복구 시작
+
+CPU 준비와 uninitialized-CUDA guard를 통과한 뒤 `torch.cuda.set_device`를 호출하고, 그 다음에 peak memory를 초기화하도록 수정했다. public run_preflight 경로의 호출 순서를 검증하는 회귀 검사를 추가했다. 로컬·서버 각 16개 검사와 실제 fresh 모델·초기 state 동일성을 다시 통과했다. 새 v3 source와 별도 runtime을 사용하며 기존 v2 오류 로그를 보존했다. GPU1의 실제 부모202412·worker203150 실행을 확인했다. 결과는 아직 대기 중이며 초기화 수정이 모델 성능 개선의 증거는 아니다. 증거는 `results_archive/started_cuda_recovery_v3_20261016/`에 있다.
