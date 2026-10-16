@@ -5008,5 +5008,73 @@
     "final_task_score_pending": true,
     "incumbent_changed": false,
     "record": "collaborative_test/SW_0177_learned_coupling_polarity/results_archive/evaluation_recovered_20261016/launch.json"
+  },
+  "SW0177_training_completed_20261016": {
+    "status": "both_training_artifacts_independently_validated",
+    "arms": {
+      "signed": {
+        "manifest_sha256": "547beef232852ea7b52c333e42b263b0775a509230a48d587b56c713c3cc4aee",
+        "final_model_state_sha256": "08d2ff7415d44b02da10e86236cb5d86259bf721f522527eb4bd22fac184dc0b",
+        "completed_updates": 64,
+        "exposures": 1024,
+        "initial_TRAIN8_loss": 0.38699648413762266,
+        "final_TRAIN8_loss": 0.3674587768301193,
+        "final_TRAIN8_negative_edge_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "final_TRAIN8_negative_kernel_RMS": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "frozen_source_components_unchanged": true
+      },
+      "nonnegative": {
+        "manifest_sha256": "d7cc112d7b538fa23d51a2cdf854ae12fe4f48c869d9639166f2f817d5d63a43",
+        "final_model_state_sha256": "ae820d2625a4c96e53bb88342babdeb428713257058d27a06227b3b905c2fa24",
+        "completed_updates": 64,
+        "exposures": 1024,
+        "initial_TRAIN8_loss": 0.38699648413762266,
+        "final_TRAIN8_loss": 0.3204177670984385,
+        "final_TRAIN8_negative_edge_fraction": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "final_TRAIN8_negative_kernel_RMS": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "frozen_source_components_unchanged": true
+      }
+    },
+    "negative_mechanism_observation_scope": "registered TRAIN8 only; no negative kernel use observed there",
+    "repulsion_mechanism_proven": false,
+    "validation_task_score_pending": true,
+    "incumbent_changed": false,
+    "record": "collaborative_test/SW_0177_learned_coupling_polarity/results_archive/training_complete_20261016/summary.json"
   }
 }

@@ -1,5 +1,11 @@
 # SW177: 이미지별 연결 polarity 학습
 
+## 두 학습 완료·fixed320 예측 시작 (2026-10-16)
+
+두 arm 모두 등록된64 updates/1024 exposures를 완료했고 checkpoint tensor SHA·Adam·학습 순서·terminal manifest receipt 검증을 통과했다. Signed manifest SHA는 `547beef232852ea7b52c333e42b263b0775a509230a48d587b56c713c3cc4aee`, nonnegative는 `d7cc112d7b538fa23d51a2cdf854ae12fe4f48c869d9639166f2f817d5d63a43`이다. 실제 완료 checkpoint의 CPU strict-load도 prediction 큐의 GPU 확보 이전 절차를 통과하여 signed GPU2 worker332139가 시작됐다. Nonnegative 예측과 GT-last score 큐는 기존 등록을 유지한다.
+
+고정 TRAIN8 진단 loss는 초기0.3869964841에서 signed0.3674587768, nonnegative0.3204177671로 내려갔다. **Signed의 최종 TRAIN8 전부에서 실제 negative edge fraction과 negative-kernel contribution RMS는0**이었다. 이는8장 관측이며 전체 이미지에 대한 단정은 아니지만, 현재 repulsion 기여를 입증하지 못했다. 최종 FG-ARI/IoU 개선도 아직 미확인이다. 판정 조건이나 LR/bias/passes를 사후 변경하지 않는다. 검증 기록은 `results_archive/training_complete_20261016/`에 보존했고 기존 최고 모델은 유지한다.
+
 ## GPU 재확보 대기 판정 복구 (2026-10-16)
 
 Nonnegative 비교 모델은64 updates를 완료했으며 실제 checkpoint tensor SHA·optimizer·학습 순서·terminal manifest receipt를 독립 검증했다(manifest SHA `d7cc112d7b538fa23d51a2cdf854ae12fe4f48c869d9639166f2f817d5d63a43`). Signed 모델은 기존 boundary에서 GPU2 학습을 재개했다. 아직 두 모델의 최종 task 점수는 없다.
