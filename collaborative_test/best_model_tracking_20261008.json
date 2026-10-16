@@ -5307,5 +5307,37 @@
     },
     "next_step": "SW0179 posthoc supervised QCE standalone seed0/2 unchanged replication; no claim of SW0178 gate pass",
     "record": "collaborative_test/SW_0178_temporal_class_competition/RESULT_KO.md"
+  },
+  "SW0179_started_20261016": {
+    "status": "both_training_complete_actual_artifacts_verified_prediction_queued",
+    "experiment": "SW_0179_qce_seed_replication",
+    "mask_supervised": true,
+    "unsupervised_leaderboard_eligible": false,
+    "source_seeds": [
+      0,
+      2
+    ],
+    "seed1_role": "reuse exact audited SW0178 product_q_ce candidate",
+    "grid": [
+      32,
+      32
+    ],
+    "validation_image_ids": [
+      1320,
+      1639
+    ],
+    "count": 320,
+    "unique_additional_training_images_per_seed": 512,
+    "passes": 2,
+    "exposures_per_seed": 1024,
+    "updates_per_seed": 64,
+    "final_training_manifests": {
+      "0": "f4052ef22d9fb17d79c7e52c5b592f2bb8afce25738dd0c9059f301b501c92cf",
+      "2": "a465a7e8ddf5a19439e82f6155cb6dfe447a5200dfc9ede2951e83ed2bcc9c29"
+    },
+    "completed_training_audit_sha256": "4919de4b86b8ae75f1b18ee711960faa82b4016e254ec5783086b4dc33a0ec78",
+    "fixed320_score_available": false,
+    "incumbent_changed": false,
+    "scope": "Fresh same-seed pretrained SW0097 source followed by supervised TRAIN512x2 QCE; not fresh native32/70000 training"
   }
 }

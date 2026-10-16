@@ -1,7 +1,8 @@
 # SW0179: QCE의 seed 0·2 재현성 검증
 
-서버 학습 시작을 실제 프로세스와 GPU 점유로 확인했습니다. seed 0은 GPU 1,
-seed 2는 GPU 2에서 실행 중입니다. 결과는 아직 없습니다.
+seed 0·2 학습이 모두 완료됐습니다. 실제 최종 checkpoint와 atomic boundary의
+모델 tensor 일치, 두 pass의 고유 512장 노출, Adam step 64를 독립 검증했습니다.
+최종 평가 점수는 아직 없으며 예측 큐가 후속 작업을 진행합니다.
 
 SW0178 seed 1에서 standalone FG-ARI 0.8180 / Foreground IoU 0.4375 /
 Object IoU 0.6864였던 product-QCE 설정을 변경 없이 반복합니다. 각 seed의
@@ -26,3 +27,4 @@ FG-ARI 향상이 특정 seed에만 나타나는지와 두 IoU의 tradeoff를 함
 사전 기준과 한계는 [DESIGN_KO.md](DESIGN_KO.md), 실제 시작 근거는
 `results_archive/start_v1/`, 평가 준비와 큐 등록 근거는
 `results_archive/eval_v1/`에 기록했습니다.
+학습 완료 검증과 각 최종 manifest는 `results_archive/train_v1/`에 있습니다.

@@ -1,0 +1,39 @@
+{
+  "observed_unix": 1792137990.9479623,
+  "status": "both_training_artifacts_verified",
+  "arms": [
+    {
+      "seed": 0,
+      "arm": "product_q_ce",
+      "status": "actual_64_update_artifact_verified",
+      "manifest_sha256": "f4052ef22d9fb17d79c7e52c5b592f2bb8afce25738dd0c9059f301b501c92cf",
+      "model_state_sha256": "17f0d0abfd4108276b9436491b34c5ae8d2b6592ca33751cabc33485fbc31362",
+      "unique_train_images": 512,
+      "exposures": 1024,
+      "Adam_step_range": [
+        64,
+        64
+      ],
+      "initial_first_batch_loss": 0.28112906916067004,
+      "last_batch_loss": 0.4212738238275051
+    },
+    {
+      "seed": 2,
+      "arm": "product_q_ce",
+      "status": "actual_64_update_artifact_verified",
+      "manifest_sha256": "a465a7e8ddf5a19439e82f6155cb6dfe447a5200dfc9ede2951e83ed2bcc9c29",
+      "model_state_sha256": "877a1b2e1888203f39ad231fda7bf03154ee276af497ee1fc468ea4c919ec0bf",
+      "unique_train_images": 512,
+      "exposures": 1024,
+      "Adam_step_range": [
+        64,
+        64
+      ],
+      "initial_first_batch_loss": 0.42491099052131176,
+      "last_batch_loss": 0.9734917087480426
+    }
+  ],
+  "cuda_initialized": false,
+  "validation_ground_truth_read": false,
+  "optimizer_updates": 0
+}
