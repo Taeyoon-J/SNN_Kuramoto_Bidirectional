@@ -1,5 +1,13 @@
 # SW177: 이미지별 연결 polarity 학습
 
+## 학습 후 자동 평가 큐 등록 (2026-10-16)
+
+두 prediction 부모316052/316067과 score 부모316085의 실제 명령줄 및 대기 상태를 확인했다. 두64-update 학습 산출물의 manifest/실제 tensor SHA/optimizer와 각 queue receipt를 검증한 뒤 같은320 RGB(IDs1320–1639)로 conditional 및 standalone 출력을 만든다. Conditional만 SourceT foreground를 유지하며 standalone은 해당 모델의 실제 native-QCC foreground를 유지한다. Signed/nonnegative 모든 예측과 protocol/row ledger를 확정한 후에만 VAL GT를 읽어 세 지표와 등록된 paired bootstrap을 계산한다. Prediction GPU도 exclusive idle 장치만 사용하고 외부 PID가 진입하면 own worker만 양보한다.
+
+평가 관련 focused CPU tests는 로컬·서버 각각14개가 통과했다. 서버에서는 실제 SourceT factory와 실제 polarity head를 생성하고, 학습 없이 의도적으로 변경한 head를 임시 checkpoint에 저장한 뒤 production loader로 strict 복원하여 tensor SHA/가중치 일치를 확인했다. 이 CPU 검사는 완료된 학습 모델의 평가나 GPU prediction admission이 아니다. 실제 완료 checkpoint의 CPU strict-load는 큐에서 GPU 확보 전에 다시 수행한다. 검증·배포 파일 SHA·부모 실행 근거는 `results_archive/evaluation_queued_20261016/`에 있다.
+
+실제 첫 두 committed 학습 update의 checkpoint envelope/payload 무결성·학습 순서·spike→head credit도 두 arm에서 확인했다. 둘째 update에서 hidden head gradient가 양수였고5개 optimizer family의 가중치가 실제 바뀌었다. 해당 읽기 전용 관측은 `results_archive/first_committed_credit_20261016/audit.json`에 보존한다. 학습 작동 증거이며 성능 향상의 증거는 아니다. 최종 fixed320 점수는 아직 없다.
+
 ## 실제 GPU preflight 통과 (2026-10-16)
 
 GPU2 attempt04에서 SourceT와 signed zero-head의 gamma, 여섯 traces, positive A0, projection, production Q, conditional/standalone mask가 모두 exact parity를 통과했다. 실제 emitted S gradient L2는 0.005588407173510742, head final-layer combined gradient L2는 0.01953709491430246이며 모두 유한하다. Zero-final 초기 hidden gradient0은 예상한 값이다. Optimizer update0, VAL GT 미사용, source state 변경 없음이다. 이 결과는 성능 향상이나 학습 후 음수 연결 기여의 증거가 아니다.
