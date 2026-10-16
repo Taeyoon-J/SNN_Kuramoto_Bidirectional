@@ -33,3 +33,17 @@ paired CI 양수, 두 IoU 유지 조건을 만족해야 확장합니다. 검증 
 
 동료 브랜치 `origin/patch_v2`를 이번 사이클에 다시 확인했습니다.
 `cab6c676e24a149a45ea960586c04e579f78d384`로 이전 확인 이후 변경이 없습니다.
+
+## 실제 GPU 학습 확인
+
+GPU 1·2에서 두 학습 작업자가 실행됐습니다. 각 arm의 첫 두 committed
+updates에서 실제 emitted S로의 loss gradient와 context encoder/graph/native
+core/integration 네 optimizer family의 gradient 및 parameter 변화가 모두
+finite-positive임을 저장 경계로 확인했습니다. 실제 모델 tensor가 초기 상태와
+달라졌고 Adam step과 committed update 수도 일치했습니다. 검증 당시 두 arm
+모두 5 updates가 저장됐습니다. 이는 전체 학습 완료나 성능 향상의 증거가
+아니며 gating 제거에 따른 인과 기여를 증명하지 않습니다.
+
+원문은 `results_archive/gpu_v1/first_two.json`, 독립 검증 코드는 `verify.py`,
+실제 PID/GPU 관찰은 `observed.json`입니다. 검증에서는 validation GT를
+읽거나 optimizer를 실행하지 않았습니다.

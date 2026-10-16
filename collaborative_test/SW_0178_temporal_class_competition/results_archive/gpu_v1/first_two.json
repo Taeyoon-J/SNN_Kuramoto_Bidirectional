@@ -1,0 +1,247 @@
+{
+  "status": "SW0178_both_actual_first_two_commits_verified",
+  "arms": [
+    {
+      "arm": "mean_rho_ce",
+      "completed_updates": 5,
+      "checkpoint_sha256": "76c47d92ad73a710bf03661aec7551fe2c958b1303de0d9152cb06e0927e86fc",
+      "model_state_sha256": "99ca08465e1b608b20c3c1379519ed84bbc6369486d023ac52930e4469b9885d",
+      "first_two": [
+        {
+          "update": 1,
+          "image_indices": [
+            19,
+            99,
+            56,
+            379,
+            340,
+            212,
+            29,
+            104,
+            287,
+            211,
+            303,
+            410,
+            146,
+            373,
+            420,
+            240
+          ],
+          "image_ids": [
+            50726,
+            65224,
+            29686,
+            69994,
+            44932,
+            58828,
+            59885,
+            49015,
+            18288,
+            43994,
+            65742,
+            7714,
+            6950,
+            66428,
+            10705,
+            33039
+          ],
+          "mean_registered_loss": 0.6381102818995714,
+          "mean_q_loss": 0.4440026762895286,
+          "loss_to_emitted_component_spikes_gradient_l2": 0.0933699587720677,
+          "family_gradient_norms": {
+            "context_encoder": 0.4184594213713212,
+            "graph": 0.10930652360025475,
+            "native_core": 0.2218414106369176,
+            "integration": 7.603406841380346e-06
+          },
+          "family_parameter_delta_l2": {
+            "context_encoder": 0.004874237304098457,
+            "graph": 0.0003433812949676491,
+            "native_core": 0.0028703563511507384,
+            "integration": 0.003439173544693777
+          }
+        },
+        {
+          "update": 2,
+          "image_indices": [
+            74,
+            494,
+            445,
+            349,
+            136,
+            283,
+            288,
+            241,
+            61,
+            332,
+            119,
+            267,
+            169,
+            435,
+            377,
+            330
+          ],
+          "image_ids": [
+            51247,
+            6915,
+            33525,
+            2849,
+            63143,
+            54409,
+            63642,
+            43662,
+            23583,
+            13437,
+            18318,
+            2096,
+            8701,
+            47626,
+            22394,
+            41965
+          ],
+          "mean_registered_loss": 0.8221152890473604,
+          "mean_q_loss": 0.5851118788123131,
+          "loss_to_emitted_component_spikes_gradient_l2": 0.08035264703012479,
+          "family_gradient_norms": {
+            "context_encoder": 0.5287980247193933,
+            "graph": 0.11253628075189469,
+            "native_core": 0.334134742694288,
+            "integration": 6.4848541994695925e-06
+          },
+          "family_parameter_delta_l2": {
+            "context_encoder": 0.03641034528054812,
+            "graph": 0.00024760704262227664,
+            "native_core": 0.002147707526879237,
+            "integration": 0.002879157986964503
+          }
+        }
+      ],
+      "Adam_step_range": [
+        5,
+        5
+      ]
+    },
+    {
+      "arm": "product_q_ce",
+      "completed_updates": 5,
+      "checkpoint_sha256": "1589c6557dcc7fdf6607bc35b6602e10d7f1cdab313e4743d05a9d5ce649b74f",
+      "model_state_sha256": "cf65c6fcfc5d1effbc1567e1c893261f4573e8417b651b00312f0f3a3b5236f9",
+      "first_two": [
+        {
+          "update": 1,
+          "image_indices": [
+            19,
+            99,
+            56,
+            379,
+            340,
+            212,
+            29,
+            104,
+            287,
+            211,
+            303,
+            410,
+            146,
+            373,
+            420,
+            240
+          ],
+          "image_ids": [
+            50726,
+            65224,
+            29686,
+            69994,
+            44932,
+            58828,
+            59885,
+            49015,
+            18288,
+            43994,
+            65742,
+            7714,
+            6950,
+            66428,
+            10705,
+            33039
+          ],
+          "mean_registered_loss": 0.4440026795491576,
+          "mean_q_loss": 0.4440026762895286,
+          "loss_to_emitted_component_spikes_gradient_l2": 0.07787462654986525,
+          "family_gradient_norms": {
+            "context_encoder": 0.10425289511509253,
+            "graph": 0.049993809047128336,
+            "native_core": 0.07708848084216503,
+            "integration": 1.0680893364668057e-05
+          },
+          "family_parameter_delta_l2": {
+            "context_encoder": 0.004873472878906609,
+            "graph": 0.00034339862116900075,
+            "native_core": 0.002823583409456547,
+            "integration": 0.0031426797655901484
+          }
+        },
+        {
+          "update": 2,
+          "image_indices": [
+            74,
+            494,
+            445,
+            349,
+            136,
+            283,
+            288,
+            241,
+            61,
+            332,
+            119,
+            267,
+            169,
+            435,
+            377,
+            330
+          ],
+          "image_ids": [
+            51247,
+            6915,
+            33525,
+            2849,
+            63143,
+            54409,
+            63642,
+            43662,
+            23583,
+            13437,
+            18318,
+            2096,
+            8701,
+            47626,
+            22394,
+            41965
+          ],
+          "mean_registered_loss": 0.579537270590663,
+          "mean_q_loss": 0.5795372501015663,
+          "loss_to_emitted_component_spikes_gradient_l2": 0.06401449638979302,
+          "family_gradient_norms": {
+            "context_encoder": 0.14431721896529232,
+            "graph": 0.11460983156042748,
+            "native_core": 0.15857448478792582,
+            "integration": 7.009271838135036e-06
+          },
+          "family_parameter_delta_l2": {
+            "context_encoder": 0.03433090266072084,
+            "graph": 0.00022858629840533397,
+            "native_core": 0.0021052734842722967,
+            "integration": 0.0023816793458138457
+          }
+        }
+      ],
+      "Adam_step_range": [
+        5,
+        5
+      ]
+    }
+  ],
+  "cuda_initialized": false,
+  "validation_data_read": false
+}

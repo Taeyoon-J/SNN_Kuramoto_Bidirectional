@@ -1,0 +1,73 @@
+{
+  "observed_unix": 1792132247.7821686,
+  "arms": [
+    {
+      "arm": "mean_rho_ce",
+      "status": "running_worker",
+      "physical_gpu": 1,
+      "supervisor_pid": {
+        "pid": 362058,
+        "live": true,
+        "argv": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "-u",
+          "-m",
+          "collaborative_test.SW_0178_temporal_class_competition.training_queue",
+          "--arm",
+          "mean_rho_ce"
+        ]
+      },
+      "child_pid": {
+        "pid": 364256,
+        "live": true,
+        "argv": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "-m",
+          "collaborative_test.SW_0178_temporal_class_competition.training_queue",
+          "--worker",
+          "--arm",
+          "mean_rho_ce",
+          "--physical-gpu",
+          "1"
+        ]
+      },
+      "completed_updates": 1,
+      "latest_worker_log_tail": ""
+    },
+    {
+      "arm": "product_q_ce",
+      "status": "running_worker",
+      "physical_gpu": 2,
+      "supervisor_pid": {
+        "pid": 362073,
+        "live": true,
+        "argv": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "-u",
+          "-m",
+          "collaborative_test.SW_0178_temporal_class_competition.training_queue",
+          "--arm",
+          "product_q_ce"
+        ]
+      },
+      "child_pid": {
+        "pid": 364277,
+        "live": true,
+        "argv": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "-m",
+          "collaborative_test.SW_0178_temporal_class_competition.training_queue",
+          "--worker",
+          "--arm",
+          "product_q_ce",
+          "--physical-gpu",
+          "2"
+        ]
+      },
+      "completed_updates": 1,
+      "latest_worker_log_tail": ""
+    }
+  ],
+  "gpu": "0, 2181 MiB, 0 %\n1, 4456 MiB, 86 %\n2, 3944 MiB, 85 %\n3, 2 MiB, 0 %\n",
+  "gpu_processes": "GPU-a0a7d03d-adc1-37ca-4342-328878b3657c, 2653200, /work/USERS/zhuoyu73/venvs/vllm/bin/python, 2162 MiB\nGPU-45604115-c231-56a5-32ea-d3001e8ff243, 364256, /Data0/kevinswk/envs/snn/bin/python, 4452 MiB\nGPU-50cc59a2-8312-ff02-5889-1becf63c7cd4, 364277, /Data0/kevinswk/envs/snn/bin/python, 3940 MiB\n"
+}
