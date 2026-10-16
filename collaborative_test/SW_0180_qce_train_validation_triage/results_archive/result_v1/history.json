@@ -1,0 +1,138 @@
+{
+  "status": "three_seed_training_history_metadata_verified",
+  "seeds": [
+    {
+      "seed": 0,
+      "history_sha256": "3c0f223591ac742f4d53b918517498d38912faa520c467022a7fa22e3ce9ade5",
+      "passes": [
+        {
+          "pass_index": 1,
+          "loss_mean": 0.40080431281239726,
+          "loss_min": 0.28112906916067004,
+          "loss_max": 0.5064341523684561,
+          "global_gradient_norm_mean": 40.036257124742136,
+          "family_gradient_norm_mean": {
+            "context_encoder": 24.624643053656417,
+            "graph": 12.978140629283471,
+            "integration": 0.042249350165697135,
+            "native_core": 24.97389121147169
+          },
+          "family_parameter_delta_mean": {
+            "context_encoder": 0.02066335318462689,
+            "graph": 0.00012250929276827564,
+            "integration": 0.0010481002720400894,
+            "native_core": 0.0011434886358383679
+          }
+        },
+        {
+          "pass_index": 2,
+          "loss_mean": 0.37827526130240585,
+          "loss_min": 0.2675202984828502,
+          "loss_max": 0.4842446958646178,
+          "global_gradient_norm_mean": 0.43109270005838063,
+          "family_gradient_norm_mean": {
+            "context_encoder": 0.36075493814695686,
+            "graph": 0.08237500195792395,
+            "integration": 0.00020386751691563786,
+            "native_core": 0.20199027226383104
+          },
+          "family_parameter_delta_mean": {
+            "context_encoder": 0.02187444463260699,
+            "graph": 7.992370138369574e-05,
+            "integration": 0.0012018591598282776,
+            "native_core": 0.0008835466142268544
+          }
+        }
+      ]
+    },
+    {
+      "seed": 1,
+      "history_sha256": "87df4216a98bc660cd743a5eed5217fad65e24fb2982fbe980a8beadbd4fa661",
+      "passes": [
+        {
+          "pass_index": 1,
+          "loss_mean": 0.517803540762543,
+          "loss_min": 0.3954304330982268,
+          "loss_max": 0.6152263162657619,
+          "global_gradient_norm_mean": 0.6260475756771919,
+          "family_gradient_norm_mean": {
+            "context_encoder": 0.5324692145068464,
+            "graph": 0.23393749249576837,
+            "integration": 6.538000579355866e-06,
+            "native_core": 0.19793680864233137
+          },
+          "family_parameter_delta_mean": {
+            "context_encoder": 0.022514427314462147,
+            "graph": 0.00011451784620346592,
+            "integration": 0.0014188112938401086,
+            "native_core": 0.0009698532698901079
+          }
+        },
+        {
+          "pass_index": 2,
+          "loss_mean": 0.4355129490395484,
+          "loss_min": 0.2443908480927348,
+          "loss_max": 0.5393668450415134,
+          "global_gradient_norm_mean": 0.2822410526610318,
+          "family_gradient_norm_mean": {
+            "context_encoder": 0.24382819034153785,
+            "graph": 0.09608519857301909,
+            "integration": 5.116569545494648e-06,
+            "native_core": 0.09286476773001287
+          },
+          "family_parameter_delta_mean": {
+            "context_encoder": 0.022330174292410066,
+            "graph": 6.0790487586809645e-05,
+            "integration": 0.0008864909199864261,
+            "native_core": 0.0007120387878836479
+          }
+        }
+      ]
+    },
+    {
+      "seed": 2,
+      "history_sha256": "ee75ccde6e031c047807ddc1661866612ba28b68d0dd76356ca0eef5f5b457f9",
+      "passes": [
+        {
+          "pass_index": 1,
+          "loss_mean": 0.4730188547364378,
+          "loss_min": 0.38452453492209315,
+          "loss_max": 0.5902962042018771,
+          "global_gradient_norm_mean": 0.1469698811228751,
+          "family_gradient_norm_mean": {
+            "context_encoder": 0.11919856897507777,
+            "graph": 0.07669757019842977,
+            "integration": 8.150337977604546e-05,
+            "native_core": 0.030713092667654315
+          },
+          "family_parameter_delta_mean": {
+            "context_encoder": 0.024765943903392366,
+            "graph": 0.00014957788562459102,
+            "integration": 0.0014112587660545445,
+            "native_core": 0.0011389049749939318
+          }
+        },
+        {
+          "pass_index": 2,
+          "loss_mean": 0.5378808432287769,
+          "loss_min": 0.320636086165905,
+          "loss_max": 0.9734917087480426,
+          "global_gradient_norm_mean": 0.2647730948849021,
+          "family_gradient_norm_mean": {
+            "context_encoder": 0.24298793668679042,
+            "graph": 0.08031826217886438,
+            "integration": 0.0001151660954822554,
+            "native_core": 0.04461159722575875
+          },
+          "family_parameter_delta_mean": {
+            "context_encoder": 0.030237420144318,
+            "graph": 0.00010185349376683376,
+            "integration": 0.0013249849473917752,
+            "native_core": 0.0009600744800773021
+          }
+        }
+      ]
+    }
+  ],
+  "interpretation": "Online losses across passes have different minibatch orders and changing models; they are supporting metadata, not a paired final-model loss comparison."
+}
