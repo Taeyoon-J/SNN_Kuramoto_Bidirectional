@@ -6040,7 +6040,7 @@
   },
   "latest_shared_prefix_scaling_20261016": {
     "experiment": "SW0183",
-    "status": "three_seed_shared_prefix_GPU_training_started",
+    "status": "training_live_three_prediction_queues_and_GT_last_score_registered",
     "design_sha256": "0c91eef908bc7e4129a6b0f068fb8b0cf9013c16a91da0490532619f128e5b8c",
     "source_seeds": [
       0,
@@ -6077,6 +6077,15 @@
       "0": 908171,
       "1": 908188,
       "2": 908202
+    },
+    "first_two_GPU_admission_passed": true,
+    "first_two_GPU_admission_sha256": "c4d40317c85565d26f09458cbee2e9d0fd64578a64362d7a4aa26473fda57617",
+    "evaluation_cpu_tests_passed": 29,
+    "evaluation_queue_pids": {
+      "prediction_seed0": 914264,
+      "prediction_seed1": 914292,
+      "prediction_seed2": 914297,
+      "score": 914319
     }
   }
 }

@@ -1,0 +1,95 @@
+{
+  "status": "SW0183_three_prediction_parents_and_GT_last_score_verified_live",
+  "records": [
+    {
+      "label": "prediction_seed0",
+      "pid": 914264,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0183_shared_prefix_unique_scaling.prediction_queue",
+        "--source-seed",
+        "0"
+      ],
+      "state_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0183_shared_prefix_unique_scaling/results_archive/prediction_queue_20261016/seed0_state.json",
+      "state": {
+        "experiment": "SW0183_prediction_queue",
+        "seed": 0,
+        "status": "waiting_for_training",
+        "supervisor_pid": 914264,
+        "updated_unix": 1792189321.9586496,
+        "validation_data_read": false
+      }
+    },
+    {
+      "label": "prediction_seed1",
+      "pid": 914292,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0183_shared_prefix_unique_scaling.prediction_queue",
+        "--source-seed",
+        "1"
+      ],
+      "state_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0183_shared_prefix_unique_scaling/results_archive/prediction_queue_20261016/seed1_state.json",
+      "state": {
+        "experiment": "SW0183_prediction_queue",
+        "seed": 1,
+        "status": "waiting_for_training",
+        "supervisor_pid": 914292,
+        "updated_unix": 1792189323.8893814,
+        "validation_data_read": false
+      }
+    },
+    {
+      "label": "prediction_seed2",
+      "pid": 914297,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0183_shared_prefix_unique_scaling.prediction_queue",
+        "--source-seed",
+        "2"
+      ],
+      "state_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0183_shared_prefix_unique_scaling/results_archive/prediction_queue_20261016/seed2_state.json",
+      "state": {
+        "experiment": "SW0183_prediction_queue",
+        "seed": 2,
+        "status": "waiting_for_training",
+        "supervisor_pid": 914297,
+        "updated_unix": 1792189325.9131968,
+        "validation_data_read": false
+      }
+    },
+    {
+      "label": "score",
+      "pid": 914319,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0183_shared_prefix_unique_scaling.score_queue",
+        "--worker"
+      ],
+      "state_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0183_shared_prefix_unique_scaling/results_archive/score_queue_20261016/state.json",
+      "state": {
+        "experiment": "SW0183_score_queue",
+        "pending_seeds": [
+          0,
+          1,
+          2
+        ],
+        "status": "waiting_for_predictions",
+        "supervisor_pid": 914319,
+        "updated_unix": 1792189327.955822,
+        "validation_data_read": false
+      }
+    }
+  ],
+  "observed_unix": 1792189327.9979703,
+  "validation_data_read": false,
+  "evaluation_cpu_receipt_sha256": "abdfa7dee7e15f8a122a0c77864038e2313c81487106a639d61d642727475e86"
+}
