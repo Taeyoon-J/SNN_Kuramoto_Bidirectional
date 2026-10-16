@@ -34,7 +34,16 @@ the fixed acceptance guard. Both acceptance and rejection occurred, and actual
 serialized Adam steps matched the accepted count independently of the proposal
 cursor. This proves that the policy is executing, not that segmentation improved.
 
-Training completion, prediction, and fixed320 evaluation results are not yet available.
+All three training runs completed and their model/optimizer/history artifacts
+passed validation. Each seed consumed the registered 64 proposals, with 32/38/34
+accepted updates for seeds 0/1/2 respectively. The remaining proposals were
+rejected without replacement. This is fewer committed Adam steps than the
+unconditional control, with the same proposal budget and unique TRAIN512 images.
+Each run additionally performed 64 post checks and two pre checks, for 130
+logical B16 full forwards (2,080 image forwards) before any prediction.
+See [training records](results_archive/train_v1/seed0_training_record.json).
+
+Fixed320 prediction and evaluation results are not yet available.
 Three prediction supervisors and the GT-last score coordinator are now queued;
 all four processes were observed live. Each prediction waits for its own completed
 training artifact, and scoring waits for all three immutable predictions.
