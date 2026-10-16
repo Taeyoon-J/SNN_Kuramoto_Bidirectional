@@ -1,5 +1,13 @@
 # SW177: 이미지별 연결 polarity 학습
 
+## 실제 GPU preflight 통과 (2026-10-16)
+
+GPU2 attempt04에서 SourceT와 signed zero-head의 gamma, 여섯 traces, positive A0, projection, production Q, conditional/standalone mask가 모두 exact parity를 통과했다. 실제 emitted S gradient L2는 0.005588407173510742, head final-layer combined gradient L2는 0.01953709491430246이며 모두 유한하다. Zero-final 초기 hidden gradient0은 예상한 값이다. Optimizer update0, VAL GT 미사용, source state 변경 없음이다. 이 결과는 성능 향상이나 학습 후 음수 연결 기여의 증거가 아니다.
+
+원본 report byte SHA는 `be9f9c5e62efb3f87b2f43a4372f3842adf72f020d6d8d8d8772f0dc71810c38`이다. Queue/code/source fingerprint를 실제 서버 모듈로 다시 검증했고, 초기 model SHA도 기존 CPU factory와 일치했다. 원본 report/state와 검증 receipt는 `results_archive/source_preflight_completed_20261016/`에 보존했다. 독립 nonnegative GPU rollout은 수행하지 않았으며 초기 동등성의 정확한 검증 범위는 `VERIFICATION_SCOPE_ADDENDUM_KO.md`에 따른다.
+
+등록된 signed 학습이 GPU2에서 이어 시작됐고 nonnegative 학습은 exclusive GPU를 기다린다. 아래 등록 이력의 “GPU 결과 없음”은 등록 당시 상태이며 이 절의 사전 테스트 통과로 갱신된다. 아직 최종 학습·fixed320 성능 점수는 없다.
+
 Native SourceT의 실제 normalized projection으로 각 admitted edge의 multiplier를 학습한다. Signed와 동일 magnitude의 nonnegative control을 같은 초기 상태에서 비교한다. 두 arm 모두 원래 tail64 gradient, 동일 critical-component loss와 데이터를 사용한다. Forward SNN/gating 구조와 native32 mask 평가 계약은 유지한다. 자세한 등록 조건은 DESIGN_KO.md에 있다.
 
 ## 서버 등록 상태

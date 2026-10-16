@@ -4914,5 +4914,53 @@
     "validation_data_read": false,
     "score_pending": true,
     "incumbent_changed": false
+  },
+  "SW0177_source_preflight_completed_20261016": {
+    "status": "actual_signed_GPU_preflight_passed_training_queued",
+    "record": "collaborative_test/SW_0177_learned_coupling_polarity/results_archive/source_preflight_completed_20261016/preflight.json",
+    "report_sha256": "be9f9c5e62efb3f87b2f43a4372f3842adf72f020d6d8d8d8772f0dc71810c38",
+    "queue_fingerprint_sha256": "e1ed3b02e7f33b63a8b54b85b37ab13cdc612bd67da3cf51585e7e60223823eb",
+    "forward_parity": {
+      "actual_A0_exact": true,
+      "conditional_foreground_exact": true,
+      "conditional_labels_exact": true,
+      "gamma_exact": true,
+      "production_Q_exact": true,
+      "projection_z_exact": true,
+      "six_traces_exact": true,
+      "standalone_labels_exact": true,
+      "standalone_qcc_exact": true,
+      "standalone_qcc_nonempty": true
+    },
+    "gradient_evidence": {
+      "emitted_component_spikes": {
+        "finite": true,
+        "l2": 0.005588407173510742,
+        "present": true
+      },
+      "head_final_bias": {
+        "finite": true,
+        "l2": 0.016565218567848206,
+        "present": true
+      },
+      "head_final_layer_combined_l2": 0.01953709491430246,
+      "head_final_weight": {
+        "finite": true,
+        "l2": 0.010358166415436671,
+        "present": true
+      },
+      "hidden_layer_initial_gradient": {
+        "all_finite": true,
+        "expected_zero_at_zero_final_layer": true,
+        "l2": 0.0
+      }
+    },
+    "selected_TRAIN_image_id": 68304,
+    "optimizer_updates_in_preflight": 0,
+    "validation_data_read": false,
+    "independent_nonnegative_GPU_rollout_performed": false,
+    "verification_scope": "VERIFICATION_SCOPE_ADDENDUM_KO.md",
+    "final_task_score_pending": true,
+    "incumbent_changed": false
   }
 }
