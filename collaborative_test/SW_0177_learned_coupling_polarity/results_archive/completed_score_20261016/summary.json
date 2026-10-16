@@ -1,0 +1,115 @@
+{
+  "status": "completed_no_performance_promotion_recipe_closed",
+  "seed_scope": [
+    1
+  ],
+  "grid": [
+    32,
+    32
+  ],
+  "validation_images": 320,
+  "supervised_TRAIN_unique_images": 512,
+  "passes": 2,
+  "updates_per_arm": 64,
+  "score_report_sha256": "860a5d893b2b6e098cf7d5ebaf5718ee124a396319ea357dbad9d77e9c19e3eb",
+  "scores": {
+    "SW0164_foreground_induced": {
+      "fg_ari": 0.7709320986336607,
+      "foreground_iou": 0.6149934302630647,
+      "matched_object_iou": 0.6305234820304301
+    },
+    "SourceT": {
+      "fg_ari": 0.7552730828009764,
+      "foreground_iou": 0.6149934302630647,
+      "matched_object_iou": 0.5795137856780908
+    },
+    "nonnegative_conditional": {
+      "fg_ari": 0.6930043266552312,
+      "foreground_iou": 0.6149934302630647,
+      "matched_object_iou": 0.6026184146517256
+    },
+    "nonnegative_standalone": {
+      "fg_ari": 0.6804243704651014,
+      "foreground_iou": 0.47176894741142944,
+      "matched_object_iou": 0.5905237608978919
+    },
+    "signed_conditional": {
+      "fg_ari": 0.7251664777165641,
+      "foreground_iou": 0.6149934302630647,
+      "matched_object_iou": 0.6136331815395609
+    },
+    "signed_standalone": {
+      "fg_ari": 0.7183813559859739,
+      "foreground_iou": 0.38867914332188863,
+      "matched_object_iou": 0.6003792871348826
+    }
+  },
+  "paired_bootstrap": {
+    "conditional_signed_minus_SW0164_foreground_induced_fg_ari": {
+      "ci95": [
+        -0.05465323914911403,
+        -0.037457465157839785
+      ],
+      "mean": -0.04576562091709678,
+      "replicates": 10000,
+      "seed": 177
+    },
+    "conditional_signed_minus_nonnegative_conditional_fg_ari": {
+      "ci95": [
+        0.024879628606574177,
+        0.04002214849494036
+      ],
+      "mean": 0.032162151061332835,
+      "replicates": 10000,
+      "seed": 177
+    },
+    "standalone_signed_minus_SW0164_foreground_induced_fg_ari": {
+      "ci95": [
+        -0.06363635135846298,
+        -0.041754392683612064
+      ],
+      "mean": -0.052550742647686874,
+      "replicates": 10000,
+      "seed": 177
+    },
+    "standalone_signed_minus_nonnegative_standalone_fg_ari": {
+      "ci95": [
+        0.026660189336873343,
+        0.04922678980026858
+      ],
+      "mean": 0.03795698552087247,
+      "replicates": 10000,
+      "seed": 177
+    }
+  },
+  "gate": {
+    "co_primary_gate_passed": false,
+    "conditional_vs_SW0164_foreground_induced_fg_mean_above": false,
+    "conditional_vs_SW0164_foreground_induced_foreground_iou_not_below": true,
+    "conditional_vs_SW0164_foreground_induced_matched_object_iou_not_below": false,
+    "conditional_vs_SW0164_foreground_induced_paired_fg_ci95_lower_above_zero": false,
+    "conditional_vs_nonnegative_conditional_fg_mean_above": true,
+    "conditional_vs_nonnegative_conditional_foreground_iou_not_below": true,
+    "conditional_vs_nonnegative_conditional_matched_object_iou_not_below": true,
+    "conditional_vs_nonnegative_conditional_paired_fg_ci95_lower_above_zero": true,
+    "nonnegative_conditional_foreground_exact_SourceT": true,
+    "nonnegative_standalone_foreground_exact_native_QCC": true,
+    "signed_conditional_foreground_exact_SourceT": true,
+    "signed_standalone_foreground_exact_native_QCC": true,
+    "standalone_vs_SW0164_foreground_induced_fg_mean_above": false,
+    "standalone_vs_SW0164_foreground_induced_foreground_iou_not_below": false,
+    "standalone_vs_SW0164_foreground_induced_matched_object_iou_not_below": false,
+    "standalone_vs_SW0164_foreground_induced_paired_fg_ci95_lower_above_zero": false,
+    "standalone_vs_nonnegative_standalone_fg_mean_above": true,
+    "standalone_vs_nonnegative_standalone_foreground_iou_not_below": false,
+    "standalone_vs_nonnegative_standalone_matched_object_iou_not_below": true,
+    "standalone_vs_nonnegative_standalone_paired_fg_ci95_lower_above_zero": true
+  },
+  "signed_TRAIN8_negative_interaction_observed": false,
+  "negative_interaction_observation_scope": "registered TRAIN8; not an all-image claim",
+  "repulsion_mechanism_proven": false,
+  "incumbent_changed": false,
+  "expand_seed0_2": false,
+  "expand_70k": false,
+  "next_hypothesis": "relative object-class competition on actual temporal spike code"
+}

@@ -1,5 +1,9 @@
 # SW177: 이미지별 연결 polarity 학습
 
+## 최종 판정 (2026-10-16)
+
+**완료: 기존 모델보다 FG와 Object IoU가 낮아 recipe를 닫았다.** Seed1 signed conditional은0.725166/0.614993/0.613633, standalone은0.718381/0.388679/0.600379였다. 기존 SW164 seed1은0.770932/0.614993/0.630523이다. 최고 모델과 세 seed 평균은 갱신하지 않으며 seed0/2·70k로 확대하지 않는다. 최종 점수·해석·bootstrap 및 SHA 근거는 [RESULT_KO.md](RESULT_KO.md)에 있다. 아래 학습/예측/점수 대기 문구는 당시 실행 이력이다.
+
 ## 두 학습 완료·fixed320 예측 시작 (2026-10-16)
 
 두 arm 모두 등록된64 updates/1024 exposures를 완료했고 checkpoint tensor SHA·Adam·학습 순서·terminal manifest receipt 검증을 통과했다. Signed manifest SHA는 `547beef232852ea7b52c333e42b263b0775a509230a48d587b56c713c3cc4aee`, nonnegative는 `d7cc112d7b538fa23d51a2cdf854ae12fe4f48c869d9639166f2f817d5d63a43`이다. 실제 완료 checkpoint의 CPU strict-load도 prediction 큐의 GPU 확보 이전 절차를 통과하여 signed GPU2 worker332139가 시작됐다. Nonnegative 예측과 GT-last score 큐는 기존 등록을 유지한다.
