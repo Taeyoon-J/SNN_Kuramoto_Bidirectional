@@ -1,0 +1,92 @@
+﻿{
+  "status": "SW0180_three_diagnostic_parents_verified_live",
+  "tests": 10,
+  "parents": [
+    {
+      "seed": 0,
+      "pid": 454021,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0180_qce_train_validation_triage.queue",
+        "--seed",
+        "0"
+      ],
+      "state": {
+        "experiment": "SW0180_train8_queue",
+        "seed": 0,
+        "status": "waiting_for_training",
+        "supervisor_pid": 454021,
+        "updated_unix": 1792140319.3314,
+        "validation_data_read": false
+      }
+    },
+    {
+      "seed": 1,
+      "pid": 454067,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0180_qce_train_validation_triage.queue",
+        "--seed",
+        "1"
+      ],
+      "state": {
+        "experiment": "SW0180_train8_queue",
+        "seed": 1,
+        "status": "waiting_for_training",
+        "supervisor_pid": 454067,
+        "updated_unix": 1792140321.464585,
+        "validation_data_read": false
+      }
+    },
+    {
+      "seed": 2,
+      "pid": 454328,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0180_qce_train_validation_triage.queue",
+        "--seed",
+        "2"
+      ],
+      "state": {
+        "experiment": "SW0180_train8_queue",
+        "seed": 2,
+        "status": "waiting_for_training",
+        "supervisor_pid": 454328,
+        "updated_unix": 1792140323.7607517,
+        "validation_data_read": false
+      }
+    }
+  ],
+  "cpu_worker_receipt_sha256": "5efe43738524903906883589e49116f482719e8d7cddf9103401d7c21f34c592",
+  "files": [
+    {
+      "path": "collaborative_test/SW_0180_qce_train_validation_triage/DESIGN_KO.md",
+      "sha256": "0ef61e9a0dbbf865d18f1fcb7369557045028676442ecc648a3e9077aa51428e"
+    },
+    {
+      "path": "collaborative_test/SW_0180_qce_train_validation_triage/run.py",
+      "sha256": "7afd104d42d3ffc66efbdd21b4b56ea78cccac516a42ecdf8d021dad733ce1ea"
+    },
+    {
+      "path": "collaborative_test/SW_0180_qce_train_validation_triage/test_run.py",
+      "sha256": "3275276c16eb182a665a4e7ef6f6cdce6f2675ff616ab164448533f2b66b810b"
+    },
+    {
+      "path": "collaborative_test/SW_0180_qce_train_validation_triage/queue.py",
+      "sha256": "4c0952ec2935950803f26ae1f5cfcfb47d22be581439a4ba0716e7d1fe456410"
+    },
+    {
+      "path": "collaborative_test/SW_0180_qce_train_validation_triage/test_queue.py",
+      "sha256": "5debfe75a6262b08fba4fb96df76675cc5b80740e3dcbf903667b9f3f4e5554a"
+    }
+  ],
+  "observed_unix": 1792140323.962781,
+  "optimizer_updates": 0,
+  "validation_images_or_ground_truth_read": false
+}

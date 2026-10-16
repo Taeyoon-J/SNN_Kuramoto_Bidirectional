@@ -1,0 +1,94 @@
+﻿{
+  "status": "SW0180_server_tests_and_actual_CPU_worker_admission_passed",
+  "tests": 5,
+  "image_ids": [
+    36065,
+    50715,
+    37058,
+    560,
+    28039,
+    55614,
+    59697,
+    51866
+  ],
+  "positions": [
+    256,
+    257,
+    258,
+    259,
+    260,
+    261,
+    262,
+    263
+  ],
+  "fresh_state_sha256": {
+    "0": "ea4d5e91e58b0229ddcdfeaebf30dab4ab992155b5278898b03ec8fbcdf6f7c4",
+    "1": "f372b3a450ebeaf0d49e20d019d3c0676d4998cc1c49586e4c4e4c89e969d7f5",
+    "2": "f312332b34b5458af1cae8155775932fb7d76e729804f22875ba9b08f63e2b40"
+  },
+  "final_cpu_state_sha256": {
+    "0": "17f0d0abfd4108276b9436491b34c5ae8d2b6592ca33751cabc33485fbc31362",
+    "1": "a3352080445a42d9422aa44f6488b65f3768d9c2583afa9d0a07828b398b78b8",
+    "2": "877a1b2e1888203f39ad231fda7bf03154ee276af497ee1fc468ea4c919ec0bf"
+  },
+  "implementation_fingerprint": {
+    "experiment": "SW0180_qce_train_validation_triage",
+    "files": {
+      "collaborative_test/SW_0180_qce_train_validation_triage/DESIGN_KO.md": "0ef61e9a0dbbf865d18f1fcb7369557045028676442ecc648a3e9077aa51428e",
+      "collaborative_test/SW_0180_qce_train_validation_triage/run.py": "7afd104d42d3ffc66efbdd21b4b56ea78cccac516a42ecdf8d021dad733ce1ea",
+      "collaborative_test/SW_0179_qce_seed_replication/train.py": "8b5b2da6e08c780a7e2446afb67a92b9278903720d661b6ba59753358ee125fc",
+      "collaborative_test/SW_0179_qce_seed_replication/training_queue.py": "a6375db3e8df5e9405e35a1c62fde3eedbbf24bbb51e97b37c54eabef77e6e5a",
+      "collaborative_test/SW_0179_qce_seed_replication/predict_evaluate.py": "b10503d1f6103a83adc6dc68db8dcfe785bfd7896e39f9f41a59ba2713f54f9a",
+      "collaborative_test/SW_0178_temporal_class_competition/train.py": "292f90d3e8212a0dc97bdc71ecd31d01cd6c48252cbf948353a824d07e763bcd",
+      "collaborative_test/SW_0178_temporal_class_competition/training_queue.py": "7c8dea7e57b11c64ac9e7a6e1b73c1294a71a7e5a7b962c8192a7728ad5f6264",
+      "collaborative_test/SW_0178_temporal_class_competition/predict_evaluate.py": "cb4222a85f92ea84158fe720354fbf1fa6edc7d03b1d0b556a115c7010e375c0",
+      "collaborative_test/SW_0171_contextual_instance_graph/preflight.py": "bcab86543c0f50cd772d5a024ac83ab3f48f09ff975f0e9719a07129aee35113",
+      "collaborative_test/SW_0175_critical_component_binding/train_v2.py": "284d6de62c4af5cc335b7b953eca1cc936e50f732e55867e4b804c8ec2215a89",
+      "collaborative_test/SW_0162_connected_signed_partition/preflight.py": "06350ab58d4ef6d58b07c9bda86a0c6f5c28ac8e9ac38fe9f530b698e07f12f4",
+      "collaborative_test/SW_0136_native32_transfer/evaluate.py": "1c2846b69fb4bc936bf06723fc9f1b4c12f6632a02aff7e40c1e21a28b7a30ea",
+      "collaborative_test/SW_0164_foreground_preserving_partition/foreground_signed.py": "12267f6d168a3b48b2cd59ebab700bcd909386d1659d9725ba2d83849e607af3",
+      "collaborative_test/SW_0135_native32_spike_binding/evaluation_contract32.py": "e601280ade9a2b9545f6bbf94df22deca6ebfe123750229f6a7244105c57b1bd",
+      "snn_kuramoto_bidirectional/evaluation.py": "4a15980c9aa0248dbe0e837ad1b0b430ce26a7ab367c004d290a1272bb1025d7"
+    },
+    "positions": [
+      256,
+      257,
+      258,
+      259,
+      260,
+      261,
+      262,
+      263
+    ],
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "steps": 1024,
+    "settle": 512,
+    "batch": 4,
+    "temperature": 0.1,
+    "optimizer_updates": 0,
+    "ground_truth_scope": "common_SW0171_TRAIN512_modal_gt_only"
+  },
+  "cuda_initialized": false,
+  "optimizer_updates": 0,
+  "actual_spike_forward_verified": false,
+  "validation_images_or_ground_truth_read": false,
+  "observed_unix": 1792140264.5014353,
+  "files": [
+    {
+      "path": "collaborative_test/SW_0180_qce_train_validation_triage/DESIGN_KO.md",
+      "sha256": "0ef61e9a0dbbf865d18f1fcb7369557045028676442ecc648a3e9077aa51428e"
+    },
+    {
+      "path": "collaborative_test/SW_0180_qce_train_validation_triage/run.py",
+      "sha256": "7afd104d42d3ffc66efbdd21b4b56ea78cccac516a42ecdf8d021dad733ce1ea"
+    },
+    {
+      "path": "collaborative_test/SW_0180_qce_train_validation_triage/test_run.py",
+      "sha256": "3275276c16eb182a665a4e7ef6f6cdce6f2675ff616ab164448533f2b66b810b"
+    }
+  ]
+}
