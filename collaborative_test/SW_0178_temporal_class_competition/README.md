@@ -81,3 +81,19 @@ CPU 검증과 큐 등록 원문: `results_archive/eval_v1/cpu.json`, `launch.jso
 이는 실제 데이터의 loss·gradient norm 비교이며 전체 gradient vector의
 동일성 주장은 아닙니다. 작은 fixture에서는 전체 affinity gradient를 비교했습니다.
 참조 검사는 `reference.json`, 수치 비교는 `loss_check.json`에 보관했습니다.
+
+## 실제 예측과 최종 audit 예약
+
+GPU 1·2에서 실제 예측 작업자가 실행돼 fixed320 예측을 저장하기 시작했습니다.
+초기 관찰에서 각 arm의 처음/마지막 committed row의 image ID/RGB hash,
+archive hash, trace/native Q/actual A digest 형식, conditional SourceT foreground
+일치 및 standalone native QCC foreground 일치를 GT 없이 검증했습니다.
+이 기록은 초기 snapshot이며 현재 처리 이미지 수를 나타내지 않습니다.
+
+`results_archive/pred_v1/rows.json`과 `inspect_prediction_rows.py`에 기록했습니다.
+최종 점수 검증기는 missing-score guard와 bootstrap 검사를 통과했습니다
+(`readiness.json`). 점수 큐가 완료된 뒤에만 원문 prediction/training/score
+hash를 고정하고 production 검증 및 독립 지표·bootstrap·gate 계산을 수행합니다.
+해당 audit 부모도 실제 PID/argv로 확인했습니다 (`audit_launch.json`).
+최종 점수와 최종 audit 결과는 아직 없습니다. `verify_score.py`와
+`audit_queue.py`는 예약된 검증 코드의 사본입니다.
