@@ -5309,7 +5309,7 @@
     "record": "collaborative_test/SW_0178_temporal_class_competition/RESULT_KO.md"
   },
   "SW0179_started_20261016": {
-    "status": "both_training_complete_actual_artifacts_verified_prediction_queued",
+    "status": "completed_independently_verified_primary_gate_failed",
     "experiment": "SW_0179_qce_seed_replication",
     "mask_supervised": true,
     "unsupervised_leaderboard_eligible": false,
@@ -5336,8 +5336,73 @@
       "2": "a465a7e8ddf5a19439e82f6155cb6dfe447a5200dfc9ede2951e83ed2bcc9c29"
     },
     "completed_training_audit_sha256": "4919de4b86b8ae75f1b18ee711960faa82b4016e254ec5783086b4dc33a0ec78",
-    "fixed320_score_available": false,
+    "fixed320_score_available": true,
     "incumbent_changed": false,
-    "scope": "Fresh same-seed pretrained SW0097 source followed by supervised TRAIN512x2 QCE; not fresh native32/70000 training"
+    "scope": "Fresh same-seed pretrained SW0097 source followed by supervised TRAIN512x2 QCE; not fresh native32/70000 training",
+    "score_sha256": "758e48f83b44dc31efeae73154c13dbcd8ffa6132a85c7055279a0f4b2649c3d",
+    "audit_sha256": "8ca32ced83ffc0c8fe9dee1f46d05a4498e48c88b122e384276349cf9149b3fb",
+    "three_seed_means": {
+      "SW0165_foreground_induced_conditional": {
+        "fg_ari": 0.8042989149474199,
+        "foreground_iou": 0.6099754484530632,
+        "matched_object_iou": 0.6511489750258587
+      },
+      "SW0165_foreground_induced_standalone": {
+        "fg_ari": 0.8042989149474199,
+        "foreground_iou": 0.6099754484530632,
+        "matched_object_iou": 0.6511489750258587
+      },
+      "Slot70k_conditional": {
+        "fg_ari": 0.7816519719609136,
+        "foreground_iou": 0.20436012776655543,
+        "matched_object_iou": 0.20316498618845008
+      },
+      "Slot70k_standalone": {
+        "fg_ari": 0.7816519719609136,
+        "foreground_iou": 0.20436012776655543,
+        "matched_object_iou": 0.20316498618845008
+      },
+      "candidate_conditional": {
+        "fg_ari": 0.7678476739734689,
+        "foreground_iou": 0.6099754484530632,
+        "matched_object_iou": 0.5981116023501643
+      },
+      "candidate_standalone": {
+        "fg_ari": 0.7616199706279559,
+        "foreground_iou": 0.46930783165864576,
+        "matched_object_iou": 0.5846562346373391
+      }
+    },
+    "standalone_per_seed": {
+      "fg_ari": {
+        "0": 0.8499884672551875,
+        "1": 0.8180291082072187,
+        "2": 0.6168423364214612
+      },
+      "foreground_iou": {
+        "0": 0.642330274008437,
+        "1": 0.4375000754377643,
+        "2": 0.3280931455297359
+      },
+      "matched_object_iou": {
+        "0": 0.6929036868891467,
+        "1": 0.6863642533386946,
+        "2": 0.37470076368417604
+      }
+    },
+    "gate": {
+      "fg_ari_at_least_0_87_goal": false,
+      "fg_paired_ci95_lower_above_zero_vs_slot": false,
+      "fg_paired_ci95_lower_above_zero_vs_sw0165": false,
+      "fg_strictly_above_slot_three_seed_mean": false,
+      "fg_strictly_above_sw0165_three_seed_mean": false,
+      "foreground_iou_strictly_above_slot_three_seed_mean": true,
+      "mask_supervised": true,
+      "matched_object_iou_strictly_above_slot_three_seed_mean": true,
+      "primary_endpoint": "standalone",
+      "primary_gate_passed": false,
+      "unsupervised_leaderboard_eligible": false
+    },
+    "interpretation": "QCE FG gain did not reproduce across all sources; seed2 failed. Keep SW0165 unsupervised incumbent; do not expand this unchanged recipe to 70000."
   }
 }

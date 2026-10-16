@@ -1,0 +1,60 @@
+{
+  "experiment": "SW0179_score_queue",
+  "finished_unix": 1792138908.1138813,
+  "gate": {
+    "fg_ari_at_least_0_87_goal": false,
+    "fg_paired_ci95_lower_above_zero_vs_slot": false,
+    "fg_paired_ci95_lower_above_zero_vs_sw0165": false,
+    "fg_strictly_above_slot_three_seed_mean": false,
+    "fg_strictly_above_sw0165_three_seed_mean": false,
+    "foreground_iou_strictly_above_slot_three_seed_mean": true,
+    "mask_supervised": true,
+    "matched_object_iou_strictly_above_slot_three_seed_mean": true,
+    "primary_endpoint": "standalone",
+    "primary_gate_passed": false,
+    "unsupervised_leaderboard_eligible": false
+  },
+  "ground_truth_used_for_prediction": false,
+  "ground_truth_used_for_scoring": true,
+  "queue_fingerprint": {
+    "baseline_summary_sha256": "72b17ca1a07d312400ab74f6ee7533c89f0e9d9a6c304378dd8e61c16ba379c5",
+    "cache_mode": "USE_PYTORCH_KERNEL_CACHE=0",
+    "experiment": "SW0179_score_queue",
+    "frozen_candidate_predictions": {
+      "0": {
+        "prediction_sha256": "58203bd8f991a11378dc6be9b4213e04fb90f453d9ae400be74c8ada2e16bdb5",
+        "protocol_sha256": "e2112f455090c6c718b5175e57c1280d005cf31a95048729ac040b960d9049ab",
+        "state_sha256": "30ec652f244cfbe4f3272e776b00fb7f29f5f8f7a8e8b3ab81079d78d856f31d"
+      },
+      "1": {
+        "prediction_sha256": "f00a4749a0070560acca0d2f5c272714147ca19668570b74d9e2ce655c6d62ed",
+        "protocol_sha256": "55ca5513bdf96919ded26b9b2d340c19180ec89e9469f3a63b5b57e1d7fa692d",
+        "state_sha256": "45230d903789fc85eb542438926eac2fe7080cf62b8b5cb5a4374307d252ab93"
+      },
+      "2": {
+        "prediction_sha256": "017096dbc94b1fdb5ef05adf010c860ffa4b326e9a4e78b375c6167f26794840",
+        "protocol_sha256": "6985d1bf7d1a8320e7b3faf47c92a7784ca5dce3955e23045649db3b8da512f1",
+        "state_sha256": "235c5430aa078fc3d5f0dca75d9b56dbc61d1a81d615e217ac56040d2cebd287"
+      }
+    },
+    "score_implementation_fingerprint": {
+      "collaborative_test/SW_0135_native32_spike_binding/evaluation_contract32.py": "e601280ade9a2b9545f6bbf94df22deca6ebfe123750229f6a7244105c57b1bd",
+      "collaborative_test/SW_0164_foreground_preserving_partition/predict_evaluate.py": "8ed4c8723c37526e414f6c531fecdbd5184cd3068476c0c8d75241bf2da1aa79",
+      "collaborative_test/SW_0165_foreground_partition_replication/predict_evaluate.py": "7f65d5e31705e31a4f88aa7628e8905baac707e9ec78ff35384e9ddc592dd0bc",
+      "collaborative_test/SW_0165_foreground_partition_replication/replication_summary.py": "0f89e72902ebe1416a01a7592ba2510316e5a35f31182d9da9541f1457bc426d",
+      "collaborative_test/SW_0178_temporal_class_competition/predict_evaluate.py": "cb4222a85f92ea84158fe720354fbf1fa6edc7d03b1d0b556a115c7010e375c0",
+      "collaborative_test/SW_0179_qce_seed_replication/DESIGN_KO.md": "bcb1a6317abd0b92a3d17e2e1f99f86c0c7ee5d864ec6dc02639a581f282d255",
+      "collaborative_test/SW_0179_qce_seed_replication/predict_evaluate.py": "b10503d1f6103a83adc6dc68db8dcfe785bfd7896e39f9f41a59ba2713f54f9a",
+      "collaborative_test/SW_0179_qce_seed_replication/prediction_queue.py": "eb4c2e103c56c919eac858bfab88c75d6297ea435e3267d667b6dbdd07f28749",
+      "collaborative_test/SW_0179_qce_seed_replication/score.py": "7fbc1eb746fcee61bec413d1f7540d024c876f626b3f993e9d1849c4323f2f92",
+      "collaborative_test/SW_0179_qce_seed_replication/train.py": "8b5b2da6e08c780a7e2446afb67a92b9278903720d661b6ba59753358ee125fc",
+      "collaborative_test/SW_0179_qce_seed_replication/training_queue.py": "a6375db3e8df5e9405e35a1c62fde3eedbbf24bbb51e97b37c54eabef77e6e5a"
+    },
+    "score_queue_sha256": "a32d640cd872944869cbdfb6a2b68fc2f846badbf6553da44b76888f393eb7bc"
+  },
+  "score_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0179_qce_seed_replication/results_archive/evaluation_seedmean_20261016.json",
+  "score_sha256": "758e48f83b44dc31efeae73154c13dbcd8ffa6132a85c7055279a0f4b2649c3d",
+  "status": "complete",
+  "supervisor_pid": 429212,
+  "updated_unix": 1792138908.1139002
+}

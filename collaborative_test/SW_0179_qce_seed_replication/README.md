@@ -1,8 +1,13 @@
 # SW0179: QCE의 seed 0·2 재현성 검증
 
-seed 0·2 학습이 모두 완료됐습니다. 실제 최종 checkpoint와 atomic boundary의
-모델 tensor 일치, 두 pass의 고유 512장 노출, Adam step 64를 독립 검증했습니다.
-최종 평가 점수는 아직 없으며 예측 큐가 후속 작업을 진행합니다.
+완료·독립 검산된 standalone 세 seed 평균은 **FG-ARI 0.761620 /
+Foreground IoU 0.469308 / Object IoU 0.584656**입니다. seed 0·1의 FG는
+높았지만 seed 2가 0.616842로 낮아져 등록한 primary gate에 실패했습니다.
+기존 최고 unsupervised SW0165를 유지합니다.
+
+전체 비교·신뢰구간·한계는 [RESULT_KO.md](RESULT_KO.md)에 있습니다.
+이하 학습·큐 등록 근거에 기록된 실행 단계는 모두 완료됐고 재시작하지
+않았습니다. 최종 점수·독립 검산·예측 protocol은 `results_archive/score_v1/`입니다.
 
 SW0178 seed 1에서 standalone FG-ARI 0.8180 / Foreground IoU 0.4375 /
 Object IoU 0.6864였던 product-QCE 설정을 변경 없이 반복합니다. 각 seed의
@@ -17,14 +22,14 @@ zero-context gamma, 빈 optimizer, checkpoint 저장·복원도 확인했습니�
 학습·예측·점수 계산과 각 큐의 테스트 23개가 서버에서 통과했습니다.
 
 seed 0·2의 예측 큐도 서버에 등록했고 실제 부모 프로세스가 학습 완료를
-기다리는 것을 확인했습니다. 각 학습이 완료되면 빈 GPU에서 자동으로
-예측하며 다른 사용자의 GPU 작업과 겹치면 양보합니다. 예측 코드와
+기다리는 것을 확인한 뒤, 학습 완료 후 빈 GPU에서 자동 예측을 마쳤습니다.
+다른 사용자의 GPU 작업과 겹치면 양보하도록 구성했습니다. 예측 코드와
 동일 seed의 실제 SourceT 기준 파일도 CPU에서 검증했습니다.
 
 CPU 점수 계산 큐도 실제 프로세스로 등록했습니다. 새 seed 0·2와 기존
 SW0178 seed 1의 예측이 모두 확정된 후에만 평가 정답을 읽습니다.
 비교할 SW0165·Slot Attention의 세 seed 기준 파일과 평균도 실제 서버에서
-검증했습니다. 아직 새로운 성능 점수는 없습니다.
+검증했습니다. 최종 성능 점수와 별도 검산까지 완료됐습니다.
 
 고정 32×32 patch·320장 평가에서 세 seed 평균을 SW0165와 같은 조건의
 Slot Attention에 비교합니다. 예측을 모두 확정한 뒤 평가 정답을 읽습니다.

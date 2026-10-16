@@ -1,0 +1,68 @@
+{
+  "status": "verified",
+  "score_sha256": "758e48f83b44dc31efeae73154c13dbcd8ffa6132a85c7055279a0f4b2649c3d",
+  "queue_state_sha256": "8b936d53849fefefc80cf96803e27b5b45189df0e312a1566b8b844ac8578d1d",
+  "prediction_sha256": {
+    "0": "58203bd8f991a11378dc6be9b4213e04fb90f453d9ae400be74c8ada2e16bdb5",
+    "1": "f00a4749a0070560acca0d2f5c272714147ca19668570b74d9e2ce655c6d62ed",
+    "2": "017096dbc94b1fdb5ef05adf010c860ffa4b326e9a4e78b375c6167f26794840"
+  },
+  "protocol_sha256": {
+    "0": "e2112f455090c6c718b5175e57c1280d005cf31a95048729ac040b960d9049ab",
+    "1": "55ca5513bdf96919ded26b9b2d340c19180ec89e9469f3a63b5b57e1d7fa692d",
+    "2": "6985d1bf7d1a8320e7b3faf47c92a7784ca5dce3955e23045649db3b8da512f1"
+  },
+  "training_manifest_sha256": {
+    "0": "f4052ef22d9fb17d79c7e52c5b592f2bb8afce25738dd0c9059f301b501c92cf",
+    "1": "9ee049b8d156557c4f0cbd927794286f3774887ec5f320660f246e7a6deccd76",
+    "2": "a465a7e8ddf5a19439e82f6155cb6dfe447a5200dfc9ede2951e83ed2bcc9c29"
+  },
+  "scores": {
+    "candidate_conditional": {
+      "fg_ari": 0.7678476739734689,
+      "foreground_iou": 0.6099754484530632,
+      "matched_object_iou": 0.5981116023501643
+    },
+    "candidate_standalone": {
+      "fg_ari": 0.7616199706279559,
+      "foreground_iou": 0.46930783165864576,
+      "matched_object_iou": 0.5846562346373391
+    },
+    "SW0165_foreground_induced_conditional": {
+      "fg_ari": 0.8042989149474199,
+      "foreground_iou": 0.6099754484530632,
+      "matched_object_iou": 0.6511489750258587
+    },
+    "SW0165_foreground_induced_standalone": {
+      "fg_ari": 0.8042989149474199,
+      "foreground_iou": 0.6099754484530632,
+      "matched_object_iou": 0.6511489750258587
+    },
+    "Slot70k_conditional": {
+      "fg_ari": 0.7816519719609136,
+      "foreground_iou": 0.20436012776655543,
+      "matched_object_iou": 0.20316498618845008
+    },
+    "Slot70k_standalone": {
+      "fg_ari": 0.7816519719609136,
+      "foreground_iou": 0.20436012776655543,
+      "matched_object_iou": 0.20316498618845008
+    }
+  },
+  "gate": {
+    "primary_endpoint": "standalone",
+    "fg_strictly_above_sw0165_three_seed_mean": false,
+    "fg_paired_ci95_lower_above_zero_vs_sw0165": false,
+    "fg_strictly_above_slot_three_seed_mean": false,
+    "fg_paired_ci95_lower_above_zero_vs_slot": false,
+    "foreground_iou_strictly_above_slot_three_seed_mean": true,
+    "matched_object_iou_strictly_above_slot_three_seed_mean": true,
+    "fg_ari_at_least_0_87_goal": false,
+    "primary_gate_passed": false,
+    "mask_supervised": true,
+    "unsupervised_leaderboard_eligible": false
+  },
+  "bootstrap_seed": 178,
+  "bootstrap_replicates": 10000,
+  "validation_scope": "canonical fixed320 IDs 1320..1639 only; reserve unread"
+}
