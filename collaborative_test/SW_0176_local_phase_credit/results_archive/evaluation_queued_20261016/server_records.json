@@ -1,0 +1,111 @@
+{
+  "status": "SW0176_prediction_and_score_parents_verified_live",
+  "parents": [
+    {
+      "pid": 228242,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0176_local_phase_credit.prediction_queue"
+      ],
+      "state": {
+        "experiment": "SW0176_prediction_queue_v1",
+        "status": "waiting_for_training",
+        "supervisor_pid": 228242,
+        "updated_unix": 1792120231.8689091
+      },
+      "observed_unix": 1792120232.0005858
+    },
+    {
+      "pid": 228264,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0176_local_phase_credit.score_queue"
+      ],
+      "state": {
+        "experiment": "SW0176_score_queue_v1",
+        "prediction_status": "running",
+        "status": "waiting_for_prediction",
+        "supervisor_pid": 228264,
+        "updated_unix": 1792120233.9473047
+      },
+      "observed_unix": 1792120234.0046318
+    }
+  ],
+  "files": [
+    {
+      "path": "collaborative_test/SW_0176_local_phase_credit/predict_evaluate.py",
+      "sha256": "d648289d2946619c88f3f68d7b76865abc5d4b8699a81a5b56225c9ee8b18cef"
+    },
+    {
+      "path": "collaborative_test/SW_0176_local_phase_credit/prediction_queue.py",
+      "sha256": "a34a371ec7eaad0cfcce327e1afe8fc273424e585ede8bac540f95976a6b52a1"
+    },
+    {
+      "path": "collaborative_test/SW_0176_local_phase_credit/score_queue.py",
+      "sha256": "dd16e0561d9a9c32d12344069ad08af8cc472d509af84fae21da113da2313bd0"
+    },
+    {
+      "path": "collaborative_test/SW_0176_local_phase_credit/test_predict_evaluate.py",
+      "sha256": "78757bee8455362ba93c4e92845da891d530861d69046f96eeb9e0b5088d23ef"
+    },
+    {
+      "path": "collaborative_test/SW_0176_local_phase_credit/test_prediction_score_queue.py",
+      "sha256": "557bd6659cb083363d4c53a401ace9ce5e92b02fb0badf941f840443b7b3d79b"
+    }
+  ],
+  "CPU": {
+    "status": "evaluation_CPU_tests_and_actual_references_passed",
+    "tests_stderr": "test_bootstrap_is_fixed_seed_176_and_requires_exact_paired_count (collaborative_test.SW_0176_local_phase_credit.test_predict_evaluate.PredictionEvaluationContracts) ... ok\ntest_cache_binding_uses_actual_nested_train_producer_schema (collaborative_test.SW_0176_local_phase_credit.test_predict_evaluate.PredictionEvaluationContracts) ... ok\ntest_fingerprint_covers_all_new_producer_consumer_files (collaborative_test.SW_0176_local_phase_credit.test_predict_evaluate.PredictionEvaluationContracts) ... ok\ntest_production_metric_recomputation_handles_full_native32_batch (collaborative_test.SW_0176_local_phase_credit.test_predict_evaluate.PredictionEvaluationContracts) ... ok\ntest_parent_loads_real_checkpoint_on_cpu_before_lease (collaborative_test.SW_0176_local_phase_credit.test_prediction_score_queue.PredictionScoreQueueContracts) ... ok\ntest_prediction_queue_active_state_requires_live_exact_module (collaborative_test.SW_0176_local_phase_credit.test_prediction_score_queue.PredictionScoreQueueContracts) ... ok\ntest_prediction_queue_real_state_producer_handoff_validates_hashes (collaborative_test.SW_0176_local_phase_credit.test_prediction_score_queue.PredictionScoreQueueContracts) ... ok\ntest_score_callback_cannot_read_gt_until_predictions_validate (collaborative_test.SW_0176_local_phase_credit.test_prediction_score_queue.PredictionScoreQueueContracts) ... ok\ntest_training_queue_handoff_requires_exact_live_module_or_completed_artifact (collaborative_test.SW_0176_local_phase_credit.test_prediction_score_queue.PredictionScoreQueueContracts) ... ok\ntest_training_queue_real_state_producer_handoff_complete (collaborative_test.SW_0176_local_phase_credit.test_prediction_score_queue.PredictionScoreQueueContracts) ... ok\n\n----------------------------------------------------------------------\nRan 10 tests in 3.154s\n\nOK\n",
+    "tests_count": 10,
+    "implementation_fingerprint": {
+      "collaborative_test/SW_0176_local_phase_credit/DESIGN_KO.md": "e8888b283313dabb92b0814d3ad58ed2fad007cb690aa15b42c2a3477f7f0a0f",
+      "collaborative_test/SW_0176_local_phase_credit/policy.py": "d1e460264103d777b8730c7e39e065fd3eb8006650aae0833cad4ae5cab26dad",
+      "collaborative_test/SW_0176_local_phase_credit/train.py": "50131a2114409314e86c7c4b92766b5f2f47f54e7f70feeeb9c4689653349cf3",
+      "collaborative_test/SW_0176_local_phase_credit/training_queue.py": "14b91715550e9aa3d8c3b99190b711cc8d201de3e62574c337d7759fbd31b51f",
+      "collaborative_test/SW_0176_local_phase_credit/preflight_v4.py": "117360998a2bbd229a855942ac135b8a8ca41ec89aecc425b595d6a2330d5c42",
+      "collaborative_test/SW_0176_local_phase_credit/predict_evaluate.py": "d648289d2946619c88f3f68d7b76865abc5d4b8699a81a5b56225c9ee8b18cef",
+      "collaborative_test/SW_0176_local_phase_credit/prediction_queue.py": "a34a371ec7eaad0cfcce327e1afe8fc273424e585ede8bac540f95976a6b52a1",
+      "collaborative_test/SW_0176_local_phase_credit/score_queue.py": "dd16e0561d9a9c32d12344069ad08af8cc472d509af84fae21da113da2313bd0",
+      "collaborative_test/SW_0176_local_phase_credit/test_predict_evaluate.py": "78757bee8455362ba93c4e92845da891d530861d69046f96eeb9e0b5088d23ef",
+      "collaborative_test/SW_0176_local_phase_credit/test_prediction_score_queue.py": "557bd6659cb083363d4c53a401ace9ce5e92b02fb0badf941f840443b7b3d79b",
+      "collaborative_test/SW_0175_critical_component_binding/DESIGN_KO.md": "b3129d016bbd192861f1a43d952c3fbc8b007d1d5a4654a68d2f784cf43a2f11",
+      "collaborative_test/SW_0175_critical_component_binding/critical_component_objective.py": "cf0773112a5a671379b2449365a16799369242039dce2e114093d568e94cbc23",
+      "collaborative_test/SW_0175_critical_component_binding/train_v2.py": "284d6de62c4af5cc335b7b953eca1cc936e50f732e55867e4b804c8ec2215a89",
+      "collaborative_test/SW_0175_critical_component_binding/predict_evaluate_v2.py": "f5749180020483bb7315d0d92c134e17c303502b6a5501c62730af7cf2b4c526",
+      "collaborative_test/SW_0175_critical_component_binding/prediction_queue_v3.py": "76a55828d6fbeed9ba648d64b57006dbca8d3b784194f323f507df4045f9df94",
+      "collaborative_test/SW_0175_critical_component_binding/score_queue_v3.py": "de1ddd73b46e71f729824615469bb23fd4f592c53cbd91052e4b806db9e642f5",
+      "collaborative_test/SW_0130_phase_state_integration/run.py": "92ac0032467c6bff2e31a76c66021c5e211f9402d15ff868382d71ecc807e988",
+      "collaborative_test/SW_0134_native_spike_binding/rollout.py": "66c08404af91b50fb4cbfa63fe44650dd6a698ea669cd3d6a672dfc5c78503f3",
+      "collaborative_test/SW_0135_native32_spike_binding/foundation.py": "9c241cacf1479c339fa56376b881672535c8d7ac4966a7ddff3b4b47f24cb867",
+      "collaborative_test/SW_0135_native32_spike_binding/evaluation_contract32.py": "e601280ade9a2b9545f6bbf94df22deca6ebfe123750229f6a7244105c57b1bd",
+      "collaborative_test/SW_0136_native32_transfer/evaluate.py": "1c2846b69fb4bc936bf06723fc9f1b4c12f6632a02aff7e40c1e21a28b7a30ea",
+      "collaborative_test/SW_0143_native32_selective_geodesic/run.py": "c004674618d3a714a3093beafd03b27f12b94cf3e16ce775fc36da954da7aa5d",
+      "collaborative_test/SW_0143_native32_selective_geodesic/geodesic_operator.py": "268ad6ea010b123feaf6a2c41a02e3fd5e716b5a8d96b53e11d4f93098d5da98",
+      "collaborative_test/SW_0161_supervised_spike_partition/cache.py": "c10e0859368994a820fb9e911295036f1fd7dd52bfd5aa198cc4e28ca1cef8e0",
+      "collaborative_test/SW_0162_connected_signed_partition/preflight.py": "06350ab58d4ef6d58b07c9bda86a0c6f5c28ac8e9ac38fe9f530b698e07f12f4",
+      "collaborative_test/SW_0164_foreground_preserving_partition/foreground_signed.py": "12267f6d168a3b48b2cd59ebab700bcd909386d1659d9725ba2d83849e607af3",
+      "collaborative_test/SW_0164_foreground_preserving_partition/predict_evaluate.py": "8ed4c8723c37526e414f6c531fecdbd5184cd3068476c0c8d75241bf2da1aa79",
+      "collaborative_test/SW_0171_contextual_instance_graph/contextual_encoder.py": "5a00d5291fbee1308024fe71c2a21920330fdb6df523e5425040e4c863adf142",
+      "collaborative_test/SW_0148_checkpointable_boundary_q/stage_queue_v4.py": "14fae39aeb6e958df60edf25680f412acb50a01126fd7af725c61fdba3794623",
+      "snn_kuramoto_bidirectional/evaluation.py": "4a15980c9aa0248dbe0e837ad1b0b430ce26a7ab367c004d290a1272bb1025d7",
+      "snn_kuramoto_bidirectional/graph_generator.py": "4f4c4d680a60822a5e4645eec3bbceb960846d4fac89e799076f6b4cf1bc6dde",
+      "snn_kuramoto_bidirectional/spike_classifier.py": "2d13c15a928f503bc09239aae2153a5f1a82de77aab4b5a76d0dfe876b755181"
+    },
+    "actual_training_complete": false,
+    "actual_completed_model_CPU_load": null,
+    "reference_prediction_sha256": {
+      "source_T": "a50a55bc89027f409beb8b91e076f0f41ec3dbcd0c0497a2cb27b764ed0ec6f3",
+      "SW0164": "7685b31a6d2cefb92d4aa5c62727eb9dbb989aa36370df935c4425a70cf406a5",
+      "SW0175_control": "07b9e89d8f3eda8d5f315864d61b3307c4dcaccc914480e55203818b5135fa78"
+    },
+    "matched_control_score_sha256": "7311ee86f0ad30a3670edf8bf798f379f200fcd0372cd199e5b0af95fbe5fd02",
+    "source_score_sha256": "978a9d97658837eb19f414a7fb7dbb35d86c6135cb1213e12e63e2837fd65df6",
+    "actual_training_dependency_verified": true,
+    "CUDA_initialized": false,
+    "validation_ground_truth_read": false
+  }
+}
