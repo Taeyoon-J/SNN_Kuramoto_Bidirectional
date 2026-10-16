@@ -1,0 +1,59 @@
+{
+  "status": "SW0181_transaction_tests_and_actual_CPU_model_restore_passed",
+  "tests": 4,
+  "records": [
+    {
+      "seed": 0,
+      "initial_model_state_sha256": "ea4d5e91e58b0229ddcdfeaebf30dab4ab992155b5278898b03ec8fbcdf6f7c4",
+      "empty_Adam_restore_exact": true,
+      "populated_Adam_restore_exact": true,
+      "warm_Adam_step_after_restore": 1,
+      "final_state_restored_to_original": true,
+      "source_checkpoint_unchanged": true,
+      "synthetic_gradient_only": true,
+      "actual_spike_gradient_verified": false
+    },
+    {
+      "seed": 1,
+      "initial_model_state_sha256": "f372b3a450ebeaf0d49e20d019d3c0676d4998cc1c49586e4c4e4c89e969d7f5",
+      "empty_Adam_restore_exact": true,
+      "populated_Adam_restore_exact": true,
+      "warm_Adam_step_after_restore": 1,
+      "final_state_restored_to_original": true,
+      "source_checkpoint_unchanged": true,
+      "synthetic_gradient_only": true,
+      "actual_spike_gradient_verified": false
+    },
+    {
+      "seed": 2,
+      "initial_model_state_sha256": "f312332b34b5458af1cae8155775932fb7d76e729804f22875ba9b08f63e2b40",
+      "empty_Adam_restore_exact": true,
+      "populated_Adam_restore_exact": true,
+      "warm_Adam_step_after_restore": 1,
+      "final_state_restored_to_original": true,
+      "source_checkpoint_unchanged": true,
+      "synthetic_gradient_only": true,
+      "actual_spike_gradient_verified": false
+    }
+  ],
+  "cuda_initialized": false,
+  "training_updates_committed": 0,
+  "actual_spike_forward_or_gradient_verified": false,
+  "validation_images_or_ground_truth_read": false,
+  "scope": "Synthetic ones-gradient Adam perturbations on real model copies test rollback only; no learning or candidate promotion.",
+  "observed_unix": 1792141629.8905895,
+  "files": [
+    {
+      "path": "collaborative_test/SW_0181_actual_descent_qce/DESIGN_KO.md",
+      "sha256": "001d7b723ffbcaef5a1d2fc30f0f196a6425027cd0a58efe911388331cb208a6"
+    },
+    {
+      "path": "collaborative_test/SW_0181_actual_descent_qce/state_transaction.py",
+      "sha256": "aeb628aac8735869637f0fec824c35cd4174f6d5d92988d818b248bfd7bb0c79"
+    },
+    {
+      "path": "collaborative_test/SW_0181_actual_descent_qce/test_state_transaction.py",
+      "sha256": "a0a53e38cd83fbeed44e174d08fdb2bac2fc2bbd0f86d72ee56e7ef68f712a0a"
+    }
+  ]
+}
