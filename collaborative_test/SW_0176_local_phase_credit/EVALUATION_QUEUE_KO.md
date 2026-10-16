@@ -7,3 +7,7 @@
 후보의 conditional 및 standalone 예측을 모두 확정한 뒤 정답 mask를 읽고 세 지표를 계산한다. SW164 원본과 SW175 critical-component 대조군은 보존된 같은 320장의 예측을 사용하며 다시 학습하지 않는다. 각 지표와 bootstrap 비교를 재계산해 검증한다.
 
 이 실험은 TRAIN512 두 번 노출, seed1의 짧은 supervised 비교다. 70,000장 새 학습 또는 세 seed 최종 성과로 해석하지 않는다. 최종 성능은 아직 미정이며 최고 모델은 변경하지 않았다.
+
+## 실제 평가 시작 확인
+
+64-update 학습이 완료됐고, 최종 checkpoint를 CPU에서 실제 로드하여 manifest와 state SHA가 일치함을 확인했다. 서버 CPU 검사 10개도 통과했다. GPU1의 실제 prediction worker PID 237914가 부모 228242 아래 실행 중이며 scorer 228264는 예측 확정을 기다린다. 최종 점수는 아직 없고 최고 모델은 유지한다. 증거는 `results_archive/training_complete_evaluation_started_20261016/`에 보존했다.
