@@ -1,6 +1,8 @@
 """Queue contracts for SW0177 producer identity, module identity, and CPU admission."""
+import json
 import sys
 import unittest
+import uuid
 from pathlib import Path
 from unittest import mock
 
@@ -54,6 +56,38 @@ class PredictionQueueContracts(unittest.TestCase):
             [sys.executable, "-m", prediction_queue.TRAIN_MODULE, "--arm", "signed",
              "--worker", "--physical-gpu", "2"]), {
                  "status": "running_worker", "supervisor_pid": 1234}, "signed"))
+
+    def test_actual_waiting_for_stable_gpu_producer_state_is_pending(self):
+        # This is an emitted producer state, not a value enumerated from the consumer set.
+        producer_active = {"waiting_for_v2_source_preflight", "waiting_for_exclusive_gpu",
+            "waiting_for_stable_gpu", "running_worker", "yielding_foreign_owner"}
+        self.assertTrue(producer_active.issubset(prediction_queue.ACTIVE_TRAIN))
+        central = Path(__file__).resolve().parents[2] / "collaborative_testing" / "temporary"
+        central.mkdir(parents=True, exist_ok=True)
+        state_path = central / f"sw177_waiting_{uuid.uuid4().hex}.json"
+        state = {"experiment": "SW0177_learned_coupling_polarity_training_queue",
+            "arm": "signed", "status": "waiting_for_stable_gpu", "supervisor_pid": 1234}
+        state_path.write_text(json.dumps(state), encoding="utf-8")
+        owner = FakeOwner([sys.executable, "-u", "-m", prediction_queue.TRAIN_MODULE,
+                           "--arm", "signed"])
+        try:
+            self.assertIn("waiting_for_stable_gpu", prediction_queue.ACTIVE_TRAIN)
+            self.assertTrue(prediction_queue._training_is_pending(owner, state, "signed"))
+            queue = type("Queue", (), {"_state_path": staticmethod(lambda _arm: state_path)})
+            with mock.patch.object(prediction_queue, "_load", return_value=queue), \
+                 mock.patch.object(train, "ARMS", ("signed",)):
+                self.assertIs(prediction_queue._training_states(owner), False)
+
+            completed = {**state, "status": "complete", "completed_updates": train.UPDATES,
+                         "validation_data_read": False}
+            self.assertFalse(prediction_queue._training_is_pending(owner, completed, "signed"))
+            self.assertFalse(prediction_queue._training_is_pending(owner, state, "nonnegative"))
+            self.assertFalse(prediction_queue._training_is_pending(FakeOwner(
+                [sys.executable, "-m", prediction_queue.TRAIN_MODULE, "--arm", "signed",
+                 "--worker"]), state, "signed"))
+        finally:
+            self.assertEqual(state_path.resolve().parent, central.resolve())
+            state_path.unlink(missing_ok=True)
 
     def test_live_prediction_supervisor_consumed_by_score_queue_exactly(self):
         owner = FakeOwner([sys.executable, "-u", "-m", prediction_queue.MODULE,

@@ -40,6 +40,7 @@ OWNER_MODULE = "collaborative_test.SW_0148_checkpointable_boundary_q.stage_queue
 RUNTIME = HERE / "results_archive" / "prediction_queue_v1_20261016"
 STOP = threading.Event()
 ACTIVE_TRAIN = {"waiting_for_v2_source_preflight", "waiting_for_exclusive_gpu",
+                "waiting_for_stable_gpu",
                 "running_worker", "yielding_foreign_owner"}
 
 

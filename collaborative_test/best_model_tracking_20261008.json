@@ -4987,5 +4987,26 @@
     ],
     "score_pending": true,
     "incumbent_changed": false
+  },
+  "SW0177_evaluation_recovered_20261016": {
+    "status": "normal_GPU_stable_wait_transition_fixed_evaluation_parents_requeued",
+    "failure": "consumer omitted waiting_for_stable_gpu; all three prior evaluation parents terminal",
+    "parents": {
+      "signed": 323207,
+      "nonnegative": 323225,
+      "score": 323245
+    },
+    "source_fix": "one operational active-state entry; independent literal producer-state regression",
+    "local_CPU_tests": 15,
+    "server_CPU_tests": 15,
+    "training_restarted": false,
+    "prior_prediction_started": false,
+    "prior_validation_GT_read": false,
+    "failed_runtime_and_initial_source_revision_preserved": true,
+    "nonnegative_training_manifest_sha256": "d7cc112d7b538fa23d51a2cdf854ae12fe4f48c869d9639166f2f817d5d63a43",
+    "nonnegative_training_artifact_independently_validated": true,
+    "final_task_score_pending": true,
+    "incumbent_changed": false,
+    "record": "collaborative_test/SW_0177_learned_coupling_polarity/results_archive/evaluation_recovered_20261016/launch.json"
   }
 }

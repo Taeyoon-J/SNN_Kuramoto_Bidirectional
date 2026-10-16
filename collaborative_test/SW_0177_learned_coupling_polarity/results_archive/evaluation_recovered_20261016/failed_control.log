@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/Data0/kevinswk/envs/snn/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/Data0/kevinswk/envs/snn/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0177_learned_coupling_polarity/prediction_queue.py", line 322, in <module>
+    main()
+  File "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0177_learned_coupling_polarity/prediction_queue.py", line 318, in main
+    run(args.arm)
+  File "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0177_learned_coupling_polarity/prediction_queue.py", line 180, in run
+    terminal = _training_states(owner)
+  File "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0177_learned_coupling_polarity/prediction_queue.py", line 118, in _training_states
+    raise RuntimeError(f"SW0177 {arm} training is not complete: {state.get('status')}")
+RuntimeError: SW0177 signed training is not complete: waiting_for_stable_gpu

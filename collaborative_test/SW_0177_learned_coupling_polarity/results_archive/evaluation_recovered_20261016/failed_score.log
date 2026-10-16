@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/Data0/kevinswk/envs/snn/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/Data0/kevinswk/envs/snn/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0177_learned_coupling_polarity/score_queue.py", line 201, in <module>
+    raise SystemExit(main())
+  File "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0177_learned_coupling_polarity/score_queue.py", line 196, in main
+    print(json.dumps(run(), sort_keys=True), flush=True)
+  File "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0177_learned_coupling_polarity/score_queue.py", line 147, in run
+    deps = _prediction_dependency(owner)
+  File "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0177_learned_coupling_polarity/score_queue.py", line 117, in _prediction_dependency
+    raise RuntimeError(f"SW0177 {arm} prediction failed or is orphaned: {state.get('status')}")
+RuntimeError: SW0177 signed prediction failed or is orphaned: failed

@@ -1,5 +1,13 @@
 # SW177: 이미지별 연결 polarity 학습
 
+## GPU 재확보 대기 판정 복구 (2026-10-16)
+
+Nonnegative 비교 모델은64 updates를 완료했으며 실제 checkpoint tensor SHA·optimizer·학습 순서·terminal manifest receipt를 독립 검증했다(manifest SHA `d7cc112d7b538fa23d51a2cdf854ae12fe4f48c869d9639166f2f817d5d63a43`). Signed 모델은 기존 boundary에서 GPU2 학습을 재개했다. 아직 두 모델의 최종 task 점수는 없다.
+
+Signed 부모가 정상적인 `waiting_for_stable_gpu`로 전환할 때 첫 평가 큐의 consumer active-state 목록에 해당 상태가 빠져 prediction 두 부모와 score 부모가 종료됐다. 앞선 검사는 consumer 자신의 enum을 순회했기 때문에 producer 상태 누락을 잡지 못했다. 오류는 예측·VAL GT 접근 전에 발생했다. 실제 종료 PID 부재를 확인하고 원래 state/log 및 초기 source revision을 보존한 뒤, active-state 항목1개와 독립적인 producer 다섯 상태·정확한 matching-arm 부모를 사용하는 회귀 검사를 추가했다. 모델·loss·학습 checkpoint는 변경하지 않았다.
+
+수정 후 로컬·서버 focused CPU 검사15개가 통과했다. 예측 부모323207/323225와 score 부모323245의 실제 명령줄·대기 상태를 확인했다. 실패한 runtime은 서버의 기존 폴더명 뒤 `_failed_stable_wait`를 붙여 보존했고, 복구 기록은 `results_archive/evaluation_recovered_20261016/`에 있다. 아래316052/316067/316085 등록 기록은 복구 이전 이력이다. 기존 학습을 처음부터 다시 실행하지 않았다.
+
 ## 학습 후 자동 평가 큐 등록 (2026-10-16)
 
 두 prediction 부모316052/316067과 score 부모316085의 실제 명령줄 및 대기 상태를 확인했다. 두64-update 학습 산출물의 manifest/실제 tensor SHA/optimizer와 각 queue receipt를 검증한 뒤 같은320 RGB(IDs1320–1639)로 conditional 및 standalone 출력을 만든다. Conditional만 SourceT foreground를 유지하며 standalone은 해당 모델의 실제 native-QCC foreground를 유지한다. Signed/nonnegative 모든 예측과 protocol/row ledger를 확정한 후에만 VAL GT를 읽어 세 지표와 등록된 paired bootstrap을 계산한다. Prediction GPU도 exclusive idle 장치만 사용하고 외부 PID가 진입하면 own worker만 양보한다.
