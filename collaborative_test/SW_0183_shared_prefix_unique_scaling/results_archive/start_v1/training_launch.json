@@ -1,0 +1,69 @@
+{
+  "status": "SW0183_three_training_supervisors_verified_live",
+  "parents": [
+    {
+      "seed": 0,
+      "pid": 908040,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0183_shared_prefix_unique_scaling.training_queue",
+        "--source-seed",
+        "0"
+      ],
+      "state": {
+        "experiment": "SW0183_training_queue",
+        "seed": 0,
+        "status": "validating_train_inputs",
+        "supervisor_pid": 908040,
+        "updated_unix": 1792188486.7336044,
+        "validation_data_read": false
+      }
+    },
+    {
+      "seed": 1,
+      "pid": 908043,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0183_shared_prefix_unique_scaling.training_queue",
+        "--source-seed",
+        "1"
+      ],
+      "state": {
+        "experiment": "SW0183_training_queue",
+        "seed": 1,
+        "status": "validating_train_inputs",
+        "supervisor_pid": 908043,
+        "updated_unix": 1792188488.8375278,
+        "validation_data_read": false
+      }
+    },
+    {
+      "seed": 2,
+      "pid": 908048,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0183_shared_prefix_unique_scaling.training_queue",
+        "--source-seed",
+        "2"
+      ],
+      "state": {
+        "experiment": "SW0183_training_queue",
+        "seed": 2,
+        "status": "validating_train_inputs",
+        "supervisor_pid": 908048,
+        "updated_unix": 1792188490.821489,
+        "validation_data_read": false
+      }
+    }
+  ],
+  "training_cpu_receipt_sha256": "12a4b1a6e9a24fefee69f25591b104841a6fe170a42b6d85406f2081c3ea33d9",
+  "observed_unix": 1792188490.926484,
+  "training_updates_observed": 0,
+  "validation_data_read": false
+}

@@ -6040,7 +6040,7 @@
   },
   "latest_shared_prefix_scaling_20261016": {
     "experiment": "SW0183",
-    "status": "preregistered_implementation_in_progress",
+    "status": "three_seed_shared_prefix_GPU_training_started",
     "design_sha256": "0c91eef908bc7e4129a6b0f068fb8b0cf9013c16a91da0490532619f128e5b8c",
     "source_seeds": [
       0,
@@ -6056,8 +6056,27 @@
     "actual_proposals_per_seed": 96,
     "mask_supervised": true,
     "unsupervised_leaderboard_eligible": false,
-    "GPU_training_started": false,
+    "GPU_training_started": true,
     "fixed320_result_available": false,
-    "incumbent_changed": false
+    "incumbent_changed": false,
+    "server_tests_passed": 12,
+    "server_actual_cli_help_passed": 1,
+    "source_factory_seeds_verified": [
+      0,
+      1,
+      2
+    ],
+    "training_cpu_receipt_sha256": "12a4b1a6e9a24fefee69f25591b104841a6fe170a42b6d85406f2081c3ea33d9",
+    "gpu_start_observation_sha256": "6c035d5913481fd896ee34eb964a9f2a56b9be76ebf90215ae617b090ae5d73e",
+    "physical_gpus": {
+      "0": 1,
+      "1": 2,
+      "2": 3
+    },
+    "worker_pids": {
+      "0": 908171,
+      "1": 908188,
+      "2": 908202
+    }
   }
 }

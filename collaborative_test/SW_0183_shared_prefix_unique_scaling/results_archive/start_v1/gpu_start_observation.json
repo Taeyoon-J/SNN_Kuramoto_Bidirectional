@@ -1,0 +1,141 @@
+{
+  "observed_unix": 1792188605.1512582,
+  "records": [
+    {
+      "seed": 0,
+      "state_exists": true,
+      "stages": {
+        "shared_prefix": {
+          "artifact_exists": false,
+          "cursor": 1,
+          "accepted_updates": 1
+        },
+        "control512": {
+          "artifact_exists": false
+        },
+        "candidate1024": {
+          "artifact_exists": false
+        }
+      },
+      "status": "running_worker",
+      "gpu": 1,
+      "parent": {
+        "pid": 908040,
+        "state": "S",
+        "argv": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "-u",
+          "-m",
+          "collaborative_test.SW_0183_shared_prefix_unique_scaling.training_queue",
+          "--source-seed",
+          "0"
+        ]
+      },
+      "worker": {
+        "pid": 908171,
+        "state": "S",
+        "argv": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "-m",
+          "collaborative_test.SW_0183_shared_prefix_unique_scaling.training_queue",
+          "--worker",
+          "--source-seed",
+          "0",
+          "--physical-gpu",
+          "1"
+        ]
+      }
+    },
+    {
+      "seed": 1,
+      "state_exists": true,
+      "stages": {
+        "shared_prefix": {
+          "artifact_exists": false,
+          "cursor": 1,
+          "accepted_updates": 0
+        },
+        "control512": {
+          "artifact_exists": false
+        },
+        "candidate1024": {
+          "artifact_exists": false
+        }
+      },
+      "status": "running_worker",
+      "gpu": 2,
+      "parent": {
+        "pid": 908043,
+        "state": "S",
+        "argv": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "-u",
+          "-m",
+          "collaborative_test.SW_0183_shared_prefix_unique_scaling.training_queue",
+          "--source-seed",
+          "1"
+        ]
+      },
+      "worker": {
+        "pid": 908188,
+        "state": "S",
+        "argv": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "-m",
+          "collaborative_test.SW_0183_shared_prefix_unique_scaling.training_queue",
+          "--worker",
+          "--source-seed",
+          "1",
+          "--physical-gpu",
+          "2"
+        ]
+      }
+    },
+    {
+      "seed": 2,
+      "state_exists": true,
+      "stages": {
+        "shared_prefix": {
+          "artifact_exists": false,
+          "cursor": 1,
+          "accepted_updates": 1
+        },
+        "control512": {
+          "artifact_exists": false
+        },
+        "candidate1024": {
+          "artifact_exists": false
+        }
+      },
+      "status": "running_worker",
+      "gpu": 3,
+      "parent": {
+        "pid": 908048,
+        "state": "S",
+        "argv": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "-u",
+          "-m",
+          "collaborative_test.SW_0183_shared_prefix_unique_scaling.training_queue",
+          "--source-seed",
+          "2"
+        ]
+      },
+      "worker": {
+        "pid": 908202,
+        "state": "R",
+        "argv": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "-m",
+          "collaborative_test.SW_0183_shared_prefix_unique_scaling.training_queue",
+          "--worker",
+          "--source-seed",
+          "2",
+          "--physical-gpu",
+          "3"
+        ]
+      }
+    }
+  ],
+  "gpu": "GPU-a0a7d03d-adc1-37ca-4342-328878b3657c, 767110, /work/USERS/zhuoyu73/venvs/vllm/bin/python, 818 MiB\nGPU-45604115-c231-56a5-32ea-d3001e8ff243, 908171, /Data0/kevinswk/envs/snn/bin/python, 4328 MiB\nGPU-50cc59a2-8312-ff02-5889-1becf63c7cd4, 908188, /Data0/kevinswk/envs/snn/bin/python, 4328 MiB\nGPU-6801a3dc-cde3-86c6-d665-6d9ecf063a1e, 908202, /Data0/kevinswk/envs/snn/bin/python, 4328 MiB\n"
+}
