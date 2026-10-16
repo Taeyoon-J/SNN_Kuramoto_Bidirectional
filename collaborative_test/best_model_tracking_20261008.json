@@ -4779,5 +4779,75 @@
     "final_score_path": "evaluation_seed1_v2_20261016.json",
     "final_score_pending": true,
     "incumbent_changed": false
+  },
+  "SW0176_completed_score_v2_20261016": {
+    "status": "complete_negative_recipe_closed",
+    "score_sha256": "7a4c4a3fcc0b00dd210703133bea6f687aef72b82fc3937cf5d4603eaaba4ab6",
+    "scores": {
+      "SW0164": {
+        "fg_ari": 0.7709320986336607,
+        "foreground_iou": 0.6149934302630647,
+        "matched_object_iou": 0.6305234820304301
+      },
+      "SW0175_critical_component_conditional": {
+        "fg_ari": 0.7250440500246838,
+        "foreground_iou": 0.6149934302630647,
+        "matched_object_iou": 0.5792139360399506
+      },
+      "SW0175_critical_component_standalone": {
+        "fg_ari": 0.6749152194971122,
+        "foreground_iou": 0.39985555529798206,
+        "matched_object_iou": 0.5097905752736077
+      },
+      "Source-T": {
+        "fg_ari": 0.7552730828009764,
+        "foreground_iou": 0.6149934302630647,
+        "matched_object_iou": 0.5795137856780908
+      },
+      "local_phase_conditional": {
+        "fg_ari": 0.7166741456790879,
+        "foreground_iou": 0.6149934302630647,
+        "matched_object_iou": 0.5975549777047797
+      },
+      "local_phase_standalone": {
+        "fg_ari": 0.709089649174891,
+        "foreground_iou": 0.42432213015970655,
+        "matched_object_iou": 0.5904842790896152
+      }
+    },
+    "registered_co_primary_gate_passed": false,
+    "seed_scope": [
+      1
+    ],
+    "patch_grid": [
+      32,
+      32
+    ],
+    "evaluation_images": 320,
+    "training_unique_images": 512,
+    "training_updates": 64,
+    "conditional_fg_delta_vs_SW0164": {
+      "ci95": [
+        -0.06473897469384297,
+        -0.043978526385662055
+      ],
+      "mean": -0.05425795295457283,
+      "replicates": 10000,
+      "seed": 176
+    },
+    "standalone_fg_delta_vs_SW0164": {
+      "ci95": [
+        -0.0755108362373941,
+        -0.04837597515371656
+      ],
+      "mean": -0.06184244945876971,
+      "replicates": 10000,
+      "seed": 176
+    },
+    "training_and_prediction_not_rerun_for_scorer_fix": true,
+    "final_score_pending": false,
+    "incumbent_changed": false,
+    "expand_seed0_2": false,
+    "expand_70k": false
   }
 }
