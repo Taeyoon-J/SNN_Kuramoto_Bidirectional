@@ -1,0 +1,93 @@
+﻿{
+    "status":  "SW0179_prediction_parents_verified_live",
+    "tests":  18,
+    "parents":  [
+                    {
+                        "seed":  0,
+                        "pid":  421664,
+                        "argv":  [
+                                     "/Data0/kevinswk/envs/snn/bin/python",
+                                     "-u",
+                                     "-m",
+                                     "collaborative_test.SW_0179_qce_seed_replication.prediction_queue",
+                                     "--arm",
+                                     "product_q_ce",
+                                     "--source-seed",
+                                     "0"
+                                 ],
+                        "state":  {
+                                      "arm":  "product_q_ce",
+                                      "experiment":  "SW0179_prediction_queue",
+                                      "seed":  0,
+                                      "status":  "waiting_for_training",
+                                      "supervisor_pid":  421664,
+                                      "updated_unix":  1792137828.955713,
+                                      "validation_data_read":  false
+                                  }
+                    },
+                    {
+                        "seed":  2,
+                        "pid":  421681,
+                        "argv":  [
+                                     "/Data0/kevinswk/envs/snn/bin/python",
+                                     "-u",
+                                     "-m",
+                                     "collaborative_test.SW_0179_qce_seed_replication.prediction_queue",
+                                     "--arm",
+                                     "product_q_ce",
+                                     "--source-seed",
+                                     "2"
+                                 ],
+                        "state":  {
+                                      "arm":  "product_q_ce",
+                                      "experiment":  "SW0179_prediction_queue",
+                                      "seed":  2,
+                                      "status":  "waiting_for_training",
+                                      "supervisor_pid":  421681,
+                                      "updated_unix":  1792137831.084075,
+                                      "validation_data_read":  false
+                                  }
+                    }
+                ],
+    "validation_ground_truth_read":  false,
+    "cuda_initialized":  false,
+    "observed_unix":  1792137831.2963161,
+    "files":  [
+                  {
+                      "path":  "collaborative_test/SW_0179_qce_seed_replication/DESIGN_KO.md",
+                      "sha256":  "bcb1a6317abd0b92a3d17e2e1f99f86c0c7ee5d864ec6dc02639a581f282d255"
+                  },
+                  {
+                      "path":  "collaborative_test/SW_0179_qce_seed_replication/train.py",
+                      "sha256":  "8b5b2da6e08c780a7e2446afb67a92b9278903720d661b6ba59753358ee125fc"
+                  },
+                  {
+                      "path":  "collaborative_test/SW_0179_qce_seed_replication/test_train.py",
+                      "sha256":  "ef9a9bc0c25570b5a3d7a12ae3c79240e2da445cc7d4ace7c3c2b8a6a0e65546"
+                  },
+                  {
+                      "path":  "collaborative_test/SW_0179_qce_seed_replication/training_queue.py",
+                      "sha256":  "a6375db3e8df5e9405e35a1c62fde3eedbbf24bbb51e97b37c54eabef77e6e5a"
+                  },
+                  {
+                      "path":  "collaborative_test/SW_0179_qce_seed_replication/test_training_queue.py",
+                      "sha256":  "fe190cc7538826a1831b338fdbd410eb456cf5e1abb14752f6725ac94fe8f783"
+                  },
+                  {
+                      "path":  "collaborative_test/SW_0179_qce_seed_replication/predict_evaluate.py",
+                      "sha256":  "b10503d1f6103a83adc6dc68db8dcfe785bfd7896e39f9f41a59ba2713f54f9a"
+                  },
+                  {
+                      "path":  "collaborative_test/SW_0179_qce_seed_replication/test_predict_evaluate.py",
+                      "sha256":  "fe53dcfbb283c5aa8b1dd182c3de3e38a982df037d7d78cd1502b8acd8232eea"
+                  },
+                  {
+                      "path":  "collaborative_test/SW_0179_qce_seed_replication/prediction_queue.py",
+                      "sha256":  "eb4c2e103c56c919eac858bfab88c75d6297ea435e3267d667b6dbdd07f28749"
+                  },
+                  {
+                      "path":  "collaborative_test/SW_0179_qce_seed_replication/test_prediction_queue.py",
+                      "sha256":  "20a9978d5b6092f4ceef9e263b6da14bf4fd8c1c828c88ff85824a8be278a9c7"
+                  }
+              ]
+}

@@ -13,10 +13,16 @@ SW0178 결과를 사용합니다.
 실제 서버 CPU 검증에서 세 seed의 checkpoint가 서로 다름을 확인했고,
 seed 1 초기 모델 상태는 SW0178과 정확히 일치했습니다. 각 seed의
 zero-context gamma, 빈 optimizer, checkpoint 저장·복원도 확인했습니다.
-trainer/queue 테스트 11개가 서버에서 통과했습니다.
+trainer/학습 큐/예측/예측 큐 테스트 18개가 서버에서 통과했습니다.
+
+seed 0·2의 예측 큐도 서버에 등록했고 실제 부모 프로세스가 학습 완료를
+기다리는 것을 확인했습니다. 각 학습이 완료되면 빈 GPU에서 자동으로
+예측하며 다른 사용자의 GPU 작업과 겹치면 양보합니다. 예측 코드와
+동일 seed의 실제 SourceT 기준 파일도 CPU에서 검증했습니다.
 
 고정 32×32 patch·320장 평가에서 세 seed 평균을 SW0165와 같은 조건의
 Slot Attention에 비교합니다. 예측을 모두 확정한 뒤 평가 정답을 읽습니다.
 FG-ARI 향상이 특정 seed에만 나타나는지와 두 IoU의 tradeoff를 함께 보고합니다.
 사전 기준과 한계는 [DESIGN_KO.md](DESIGN_KO.md), 실제 시작 근거는
-`results_archive/start_v1/`에 기록했습니다.
+`results_archive/start_v1/`, 평가 준비와 큐 등록 근거는
+`results_archive/eval_v1/`에 기록했습니다.
