@@ -33,3 +33,7 @@ See [the registered design](DESIGN_KO.md), `results_archive/cpu_v1` and
 Seed2 actual GPU credit/parity, accepted Adam steps and changed original CNN
 were independently inspected; see `results_archive/start_v1/seed2_first_two_GPU_admission.json`.
 This admission does not establish improved masks or a completed scaling result.
+
+Seed0 actual GPU credit/parity, accepted Adam steps and changed original CNN
+were independently inspected; see `results_archive/start_v1/seed0_first_two_GPU_admission.json`.
+This admission does not establish improved masks or a completed scaling result.
