@@ -7896,7 +7896,7 @@
   },
   "latest_native64_probe_screen_20261017": {
     "experiment": "SW0193",
-    "status": "prediction_pair_running_after_preserved_import_failure_and_fix",
+    "status": "complete_independently_audited_mini_FG_gain_below_registered_minimum",
     "seed_scope": [
       0
     ],
@@ -7910,9 +7910,58 @@
     "GPU": 2,
     "training_repeated": false,
     "raw_imagewise_score_public": false,
-    "new_performance_result_available": false,
+    "new_performance_result_available": true,
     "full320_three_seed_promotion": false,
     "goal_native64_fg_ari": 0.9,
-    "result_path": "collaborative_test/SW_0193_native64_probe_screen/README.md"
+    "result_path": "collaborative_test/SW_0193_native64_probe_screen/RESULT_KO.md",
+    "metrics": {
+      "fg_ari": 0.9185864261030625,
+      "foreground_iou": 0.8328674431048759,
+      "matched_object_iou": 0.7336862632179615
+    },
+    "baseline_metrics": {
+      "fg_ari": 0.9095369755094325,
+      "foreground_iou": 0.8271468754064398,
+      "matched_object_iou": 0.7344419699559647
+    },
+    "Slot_seed0": {
+      "fg_ari": 0.6890624563773476,
+      "foreground_iou": 0.18097880161875599,
+      "matched_object_iou": 0.20936955276139002
+    },
+    "Slot_three_seed_mean_on_same_subset": {
+      "fg_ari": 0.8215711846429222,
+      "foreground_iou": 0.17331530733982128,
+      "matched_object_iou": 0.2039881566250391
+    },
+    "paired_candidate_minus_baseline": {
+      "fg_ari": {
+        "mean": 0.009049450593630215,
+        "ci95": [
+          0.001647096812822938,
+          0.019472376983940366
+        ]
+      },
+      "foreground_iou": {
+        "mean": 0.005720567698436105,
+        "ci95": [
+          -0.0040425435730859225,
+          0.018491764186455293
+        ]
+      },
+      "matched_object_iou": {
+        "mean": -0.0007557067380031604,
+        "ci95": [
+          -0.0184510173544425,
+          0.013969103187797845
+        ]
+      }
+    },
+    "screen_gate_passed": false,
+    "final_native64_FG090_goal_achieved": false,
+    "incumbent_changed": false,
+    "summary_sha256": "6e8e036718c520eec04226fc75e6356644de73bcea74e338bb7c174be9cbd4eb",
+    "audit_sha256": "8f01755816645468f38531a7d6812b5616803970a9a6450cd104af44afd40412",
+    "independent_maximum_metric_abs_error": 2.220446049250313e-16
   }
 }

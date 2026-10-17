@@ -6,11 +6,16 @@ images. Same inference RNG and production spike-derived readout. Score only
 after both masks are frozen; independently verify actual metrics and publish
 aggregates only. This is a seed0 mini screen, not a three-seed FG.90 result.
 
-The screen is running on GPU2 after SW0192 successfully completed. Local/server
+Completed and independently audited: baseline FG .909537 -> candidate .918586
+on32 development images/seed0. The registered +.01 minimum gain was not met;
+screen_gate_passed=false. This is not final full320/three-seed FG.90 achievement.
+See RESULT_KO.md and results_archive/score_v1/summary.json.
+
+The screen ran on GPU2 after SW0192 successfully completed. Local/server
 seven tests include real native64 mask conversion and foreground merge, paired
 prediction resume/hash checks, actual production/independent metric parity and
 GT-access ordering. Exact parent checkpoint/model/Adam and baseline CPU admission
-passed before GPU leasing. Current parent PID1836851, worker PID1837070.
+passed before GPU leasing. Completed parent PID1836851, worker PID1837070.
 
 The original inference attempt failed because the mask conversion function was
 imported from spike_classifier instead of evaluation. Original state/log/source
