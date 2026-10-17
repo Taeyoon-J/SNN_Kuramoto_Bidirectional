@@ -16,5 +16,8 @@ the exact trained SW0186 seed0 weights, preserved learned CNN, native64 mapping
 and empty five-family Adam before CUDA. The exclusive-GPU probe supervisor is
 registered and verified live (PID1828532). Its actual worker PID1831863 started
 on physical GPU2 and saved the initial native64 boundary. GPU process and actual
-argv evidence are in results_archive/start_v1/actual_GPU_start.json. First-proposal
-credit and model quality improvement remain unproven.
+argv evidence are in results_archive/start_v1/actual_GPU_start.json. Both proposals
+subsequently passed actual-spike/five-family gradient credit, full-forward parity,
+strict descent, CNN and Adam checks. Mean B4 proposal time was444.77 seconds;
+peak allocated memory5.01GiB. See RESULT_KO.md and results_archive/completed_probe_v1.
+Mask quality remains unproven here; SW0193 runs the32-image before/after screen.

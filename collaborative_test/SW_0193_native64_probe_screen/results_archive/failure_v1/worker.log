@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/Data0/kevinswk/envs/snn/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/Data0/kevinswk/envs/snn/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0193_native64_probe_screen/queue.py", line 109, in <module>
+    if __name__=='__main__':main()
+  File "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0193_native64_probe_screen/queue.py", line 106, in main
+    api.predict_pair(prepared)
+  File "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0193_native64_probe_screen/run.py", line 117, in predict_pair
+    labels=prediction_from_trace(found,trace,adj,q)
+  File "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0193_native64_probe_screen/run.py", line 73, in prediction_from_trace
+    from snn_kuramoto_bidirectional.spike_classifier import spike_synchrony_components,spatial_components_to_patch_labels
+ImportError: cannot import name 'spatial_components_to_patch_labels' from 'snn_kuramoto_bidirectional.spike_classifier' (/Data0/kevinswk/patch_v2_sw/snn_kuramoto_bidirectional/spike_classifier.py)

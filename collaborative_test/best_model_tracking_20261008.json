@@ -7857,7 +7857,7 @@
   },
   "latest_native64_incumbent_mini_20261017": {
     "experiment": "SW0192",
-    "status": "actual_native64_training_probe_started",
+    "status": "two_actual_native64_proposals_complete_all_credit_and_committed_learning_verified",
     "seed_scope": [
       0
     ],
@@ -7879,7 +7879,7 @@
     "validation_data_read": false,
     "new_performance_result_available": false,
     "full_mini_comparison_implemented": false,
-    "result_path": "collaborative_test/SW_0192_native64_incumbent_mini/README.md",
+    "result_path": "collaborative_test/SW_0192_native64_incumbent_mini/RESULT_KO.md",
     "peer_cycle_check": {
       "branch": "patch_v2",
       "commit": "cab6c676e24a149a45ea960586c04e579f78d384",
@@ -7887,6 +7887,32 @@
     },
     "actual_GPU": 2,
     "actual_worker_pid": 1831863,
-    "actual_GPU_start_proof_sha256": "b9768ebc40d1f1ff26496e95de1807e115e345b9d6755681045fe4b75eafc9bc"
+    "actual_GPU_start_proof_sha256": "b9768ebc40d1f1ff26496e95de1807e115e345b9d6755681045fe4b75eafc9bc",
+    "accepted_updates": 2,
+    "mean_B4_proposal_seconds": 444.77437765942886,
+    "peak_allocated_bytes": 5374827008,
+    "final_model_state_sha256": "2dd2b0d64602b85d4082bcaddcd21dfe8c60d34af1ea78a2ed29bf03c8ba4b6e",
+    "boundary_sha256": "14d0386db64d3890163574ac2421b1e80d3100536ec25c9940434e0689327e82"
+  },
+  "latest_native64_probe_screen_20261017": {
+    "experiment": "SW0193",
+    "status": "prediction_pair_running_after_preserved_import_failure_and_fix",
+    "seed_scope": [
+      0
+    ],
+    "development_image_count": 32,
+    "training_images_inherited": 8,
+    "training_proposals_inherited": 2,
+    "local_tests": 7,
+    "server_tests": 7,
+    "supervisor_pid": 1836851,
+    "worker_pid": 1837070,
+    "GPU": 2,
+    "training_repeated": false,
+    "raw_imagewise_score_public": false,
+    "new_performance_result_available": false,
+    "full320_three_seed_promotion": false,
+    "goal_native64_fg_ari": 0.9,
+    "result_path": "collaborative_test/SW_0193_native64_probe_screen/README.md"
   }
 }
