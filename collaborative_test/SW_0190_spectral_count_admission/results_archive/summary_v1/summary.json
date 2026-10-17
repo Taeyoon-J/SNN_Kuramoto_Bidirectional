@@ -1,0 +1,181 @@
+{
+  "status": "SW0190_three_seed_TRAIN_only_oracle_count_admission_complete",
+  "summary": {
+    "baseline": {
+      "fg_ari": {
+        "mean": 0.8720162186006636,
+        "per_seed_mean": {
+          "0": 0.8802594242756625,
+          "1": 0.8433512817431357,
+          "2": 0.8924379497831929
+        }
+      },
+      "foreground_iou": {
+        "mean": 0.561423453213965,
+        "per_seed_mean": {
+          "0": 0.7900411778840277,
+          "1": 0.4618805770293866,
+          "2": 0.43234860472848086
+        }
+      },
+      "matched_object_iou": {
+        "mean": 0.7513555610000816,
+        "per_seed_mean": {
+          "0": 0.7356224636325521,
+          "1": 0.7404428646756206,
+          "2": 0.7780013546920721
+        }
+      },
+      "foreground_precision": {
+        "mean": 0.5895606609857799,
+        "per_seed_mean": {
+          "0": 0.8510443639415222,
+          "1": 0.47897001016258556,
+          "2": 0.43866760885323164
+        }
+      },
+      "foreground_recall": {
+        "mean": 0.9320553045704273,
+        "per_seed_mean": {
+          "0": 0.9232040959230567,
+          "1": 0.9107862330204766,
+          "2": 0.9621755847677487
+        }
+      }
+    },
+    "spectral_existing_support": {
+      "fg_ari": {
+        "mean": 0.7820371428095937,
+        "per_seed_mean": {
+          "0": 0.7580347547639108,
+          "1": 0.7824378085612311,
+          "2": 0.8056388651036389
+        }
+      },
+      "foreground_iou": {
+        "mean": 0.561423453213965,
+        "per_seed_mean": {
+          "0": 0.7900411778840277,
+          "1": 0.4618805770293866,
+          "2": 0.43234860472848086
+        }
+      },
+      "matched_object_iou": {
+        "mean": 0.5814569902789047,
+        "per_seed_mean": {
+          "0": 0.6235173820858118,
+          "1": 0.544973303390162,
+          "2": 0.5758802853607403
+        }
+      },
+      "foreground_precision": {
+        "mean": 0.5895606609857799,
+        "per_seed_mean": {
+          "0": 0.8510443639415222,
+          "1": 0.47897001016258556,
+          "2": 0.43866760885323164
+        }
+      },
+      "foreground_recall": {
+        "mean": 0.9320553045704273,
+        "per_seed_mean": {
+          "0": 0.9232040959230567,
+          "1": 0.9107862330204766,
+          "2": 0.9621755847677487
+        }
+      }
+    },
+    "spectral_all_patch": {
+      "fg_ari": {
+        "mean": 0.7710399747068504,
+        "per_seed_mean": {
+          "0": 0.8001786496925682,
+          "1": 0.7409581473542914,
+          "2": 0.7719831270736914
+        }
+      },
+      "foreground_iou": {
+        "mean": 0.5515372968154998,
+        "per_seed_mean": {
+          "0": 0.7214353913187997,
+          "1": 0.46814333765429206,
+          "2": 0.46503316147340756
+        }
+      },
+      "matched_object_iou": {
+        "mean": 0.5338900928217941,
+        "per_seed_mean": {
+          "0": 0.5824600290144861,
+          "1": 0.48209921405580586,
+          "2": 0.5371110353950903
+        }
+      },
+      "foreground_precision": {
+        "mean": 0.5726769444025434,
+        "per_seed_mean": {
+          "0": 0.7596098466873857,
+          "1": 0.4905156124812441,
+          "2": 0.4679053740390002
+        }
+      },
+      "foreground_recall": {
+        "mean": 0.9381100579864309,
+        "per_seed_mean": {
+          "0": 0.9364455488531787,
+          "1": 0.8942728222927883,
+          "2": 0.9836118028133258
+        }
+      }
+    }
+  },
+  "gates": {
+    "spectral_existing_support": {
+      "mean_TRAIN_fg_gain": -0.0899790757910699,
+      "mean_TRAIN_foreground_iou_gain": 0.0,
+      "positive_seed_count": 0,
+      "admission_passed": false
+    },
+    "spectral_all_patch": {
+      "mean_TRAIN_fg_gain": -0.10097624389381321,
+      "mean_TRAIN_foreground_iou_gain": -0.00988615639846524,
+      "positive_seed_count": 0,
+      "admission_passed": false
+    }
+  },
+  "sources": {
+    "0": {
+      "report_sha256": "543d8be10c0192f3cca3216e5eb38fa87733782f516d08dd3f9164ffdd5c66f0",
+      "model_state_sha256": "edd716717b8e6c5b47b0e8cfa6c02660fbcfea3d7b8cac3964be4f9ee0e1e34a",
+      "state_sha256": "e557e985cad5d2607dcb9e0ce4a5c6632aed2610d34602b4e70ae4257e491eb9",
+      "physical_gpu": 2
+    },
+    "1": {
+      "report_sha256": "843570e59780f4e5a4d6c1be82bd8a25c72ed41e4cae81844e27b6e222bc08bd",
+      "model_state_sha256": "c06f0dbb2a01a69156b2eb208b1af8055c89ac8c68b048725181e76cb7a2dd49",
+      "state_sha256": "05d05e949e798a03471d0267720a420b84a2f64db5694c577533091b35ec8931",
+      "physical_gpu": 3
+    },
+    "2": {
+      "report_sha256": "b253a639750ee41da1faefaae0240b074a88c541a7e1919bd366fceed94ff3db",
+      "model_state_sha256": "1f2e691c3e4214a6e89a13bf78dbc2d487499e7bb1e6b914b21f832fe943d7dc",
+      "state_sha256": "e06640612314b990b9eebf34931783094bbda5d02c35ce8f79170b573a191f9d",
+      "physical_gpu": 2
+    }
+  },
+  "admitted_variants": [],
+  "image_count": 16,
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "oracle_count": true,
+  "learned_count_classifier": false,
+  "optimizer_updates": 0,
+  "validation_data_read": false,
+  "incumbent_changed": false,
+  "new_validation_performance_result": false,
+  "metric_audit_scope": "producer metric vectors and arithmetic only; no independent stored-mask replay",
+  "scope": "count-conditioned feasibility diagnostic, not a mathematical upper bound on all possible assignments",
+  "observed_unix": 1792262644.1649716
+}
