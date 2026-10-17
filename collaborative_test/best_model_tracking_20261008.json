@@ -6719,7 +6719,7 @@
   },
   "latest_joint_encoder_unique_scaling_20261017": {
     "experiment": "SW0187_joint_encoder_unique_scaling",
-    "status": "seed0_both_branches_training_validated_remaining_runs_and_evaluation_live",
+    "status": "seed0_seed2_paired_training_complete_seed1_fresh_resource_requeue_verified_live",
     "seed_scope": [
       0,
       1,
@@ -6753,7 +6753,7 @@
     "incumbent_changed": false,
     "live_parent_pids": {
       "training_seed0": 1295829,
-      "training_seed1": 1295845,
+      "training_seed1": 1563407,
       "training_seed2": 1295856,
       "prediction_seed0": 1295864,
       "prediction_seed1": 1295928,
@@ -6783,20 +6783,54 @@
       "0": "0078b7ebc2fc3ac14df9d6ebe9b74bf597278aec54248b258fe1234fc8f12b0f"
     },
     "completed_training_seed_scope": [
-      0
+      0,
+      2
     ],
     "exact_actual_model_Adam_fork_verified_seed_scope": [
-      0
+      0,
+      2
     ],
     "prefix_rng_binding_and_runtime_guard_verified_seed_scope": [
-      0
+      0,
+      2
     ],
     "accepted_updates_by_seed": {
       "0": {
         "control512": 37,
         "candidate1024": 39
+      },
+      "2": {
+        "control512": 47,
+        "candidate1024": 45
       }
     },
-    "data_scaling_result_available": false
+    "data_scaling_result_available": false,
+    "current_run_actual_GPU_admission_seed_scope": [
+      0,
+      2
+    ],
+    "current_run_source_CNN_change_verified_seed_scope": [
+      0,
+      2
+    ],
+    "resource_requeue_seed1": {
+      "status": "SW0187_resource_requeue_same_fingerprint_preserved_partial_files_and_live_replacement_verified",
+      "source1_old_pid": 1295845,
+      "source1_new_pid": 1563407,
+      "new_state": "waiting_for_exclusive_gpu",
+      "new_gpu": null,
+      "prediction_pid": 1295928,
+      "prediction_resumed": true,
+      "preserved_partial_proposals": 15,
+      "extra_completed_proposals_excluded_from_delivered_models": 15,
+      "original_partial_files_SHA_verified": 1,
+      "queue_fingerprint_sha256": "3f0bb0483e209fca5449fa3d8b8caf915775951e864f07146815b8773f6f2c9b",
+      "validation_data_read": false,
+      "model_data_loss_code_changed": false,
+      "selection_uses_validation_metrics": false,
+      "previous_parent_stop_was_operator_initiated": true,
+      "observed_unix": 1792246234.8447223
+    },
+    "additional_preserved_partial_prefix_proposals": 15
   }
 }

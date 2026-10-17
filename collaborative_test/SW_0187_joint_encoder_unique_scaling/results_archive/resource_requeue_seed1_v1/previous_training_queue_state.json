@@ -1,0 +1,636 @@
+{
+  "attempt": 2,
+  "child_argv": [
+    "/Data0/kevinswk/envs/snn/bin/python",
+    "-m",
+    "collaborative_test.SW_0187_joint_encoder_unique_scaling.training_queue",
+    "--worker",
+    "--source-seed",
+    "1",
+    "--physical-gpu",
+    "1"
+  ],
+  "child_pgid": 1501244,
+  "child_pid": 1501244,
+  "error": "RuntimeError('queue stopped while waiting for an exclusive GPU')",
+  "experiment": "SW0187_training_queue",
+  "finished_unix": 1792246029.8161492,
+  "gpu_uuid": "GPU-45604115-c231-56a5-32ea-d3001e8ff243",
+  "input_identity": {
+    "control_history_sha256": "a7d9c141fcb1d8ba70bd712ecae00a89a3685810e8031a7b37d5dd22584b8d59",
+    "control_manifest_sha256": "546d817ecba65e04f443f61c44db6949010312aafffcf1ecd6bc47d6e68db130",
+    "dataset_arrays_sha256": "988ecd2a566e08a7e37a5ddb86c6af86f5f8a941c6de9af92dd35b6eda0e5030",
+    "dataset_manifest_sha256": "c83ee9cdb98ff1a3d84a99d9d003d45c1beb29d8ea83b5f59c1fdcb490172892",
+    "fresh_source_proof": {
+      "adam_state_entries": 0,
+      "base_encoder_sha256": "85085bec46639858f9199550a00b487f303e848a0add914345a16d2794bd53ee",
+      "context_seed": 171001,
+      "cuda_initialized": false,
+      "dataset_arrays_sha256": "988ecd2a566e08a7e37a5ddb86c6af86f5f8a941c6de9af92dd35b6eda0e5030",
+      "dataset_manifest_sha256": "c83ee9cdb98ff1a3d84a99d9d003d45c1beb29d8ea83b5f59c1fdcb490172892",
+      "experiment": "SW0186_full_encoder_qce_factory",
+      "family_names": [
+        "context_encoder",
+        "graph",
+        "native_core",
+        "integration",
+        "source_base"
+      ],
+      "initial_model_state_sha256": "f372b3a450ebeaf0d49e20d019d3c0676d4998cc1c49586e4c4e4c89e969d7f5",
+      "optimizer_groups": [
+        {
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "eps": 1e-08,
+          "lr": 0.0003,
+          "name": "context_encoder",
+          "parameter_names": [
+            "context.0.weight",
+            "context.0.bias",
+            "context.2.weight",
+            "context.2.bias",
+            "context.4.weight",
+            "context.4.bias",
+            "context.6.weight",
+            "context.6.bias",
+            "context.8.weight",
+            "context.8.bias"
+          ],
+          "weight_decay": 0.0
+        },
+        {
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "eps": 1e-08,
+          "lr": 3e-05,
+          "name": "graph",
+          "parameter_names": [
+            "log_temperature",
+            "log_coupling_gain",
+            "spatial_rate",
+            "projection.weight"
+          ],
+          "weight_decay": 0.0
+        },
+        {
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "eps": 1e-08,
+          "lr": 3e-05,
+          "name": "native_core",
+          "parameter_names": [
+            "gamma_phase_gain",
+            "gamma_channel_proj.weight",
+            "kuramoto.freq_gain",
+            "kuramoto.omega",
+            "kuramoto.kappa",
+            "kuramoto.direction_learner",
+            "dendric_layer.tau_n",
+            "dendric_layer.oscillator_dense.weight",
+            "dendric_layer.oscillator_dense.bias",
+            "membrane_layer.tau_m"
+          ],
+          "weight_decay": 0.0
+        },
+        {
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "eps": 1e-08,
+          "lr": 0.001,
+          "name": "integration",
+          "parameter_names": [
+            "a_d",
+            "a_m",
+            "b"
+          ],
+          "weight_decay": 0.0
+        },
+        {
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "eps": 1e-08,
+          "lr": 3e-05,
+          "name": "source_base",
+          "parameter_names": [
+            "base_encoder.kernels",
+            "base_encoder.bias"
+          ],
+          "weight_decay": 0.0
+        }
+      ],
+      "ordered_train_ids_sha256": "954e85049343c289e3bbcb4d197978a910d9c829b5bdc5ebcbbff485786a9b7e",
+      "parameter_count": 29,
+      "seed": 1,
+      "source_base_trainable": true,
+      "source_binding": {
+        "encoder_sha256": "9b9c9c59725f872084a6c9bfae1ebbd1b89de40d18ef4f8ab6b8ec014c2ab868",
+        "feature_preprocessing_sha256": "a9ec3281b9603021c37f7c346baa6cf62513c5ce7edde867ab7eddf24b18e127",
+        "seed": 1,
+        "source_checkpoint_sha256": "76f379d5a7e4cd9d12fdf0b701f3dd9dbbf28b5eea270a9cee2d30d87b4dad98",
+        "source_core_path": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0097_graph_adaptation/seed1_positive_frozen/core.pt",
+        "source_manifest_path": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0097_graph_adaptation/seed1_positive_frozen/manifest.json",
+        "source_manifest_sha256": "241c9ea96fc3d3d2b168cb49d941e39c6751eca4436192e614760673545da38b",
+        "source_state_sha256": "b205d21a917299089b9b5d373eb94c9eb5eb971471e9428072e0fc0229c70749",
+        "source_steps": 256
+      },
+      "source_state_sha256": "b205d21a917299089b9b5d373eb94c9eb5eb971471e9428072e0fc0229c70749",
+      "training_fingerprint": {
+        "experiment": "SW0186_full_encoder_qce_factory",
+        "files": {
+          "collaborative_test/SW_0186_full_encoder_qce/DESIGN_KO.md": "dca432c264afbf79dbdd1f94a01cacbc55ccb799b26f9615bc3a5dbcc5bdfe03",
+          "collaborative_test/SW_0186_full_encoder_qce/source.py": "fb74ee455d3f13934de0e4f3f9d68e174a03cf8fcaef8f562fc9f6a1ccb5c59b",
+          "collaborative_test/SW_0186_full_encoder_qce/test_source.py": "341e7d3c63b5ddc4786523bbbcd8bfdb329a0241c97f4917df39ae5724276f16"
+        },
+        "loss": "product_q_ce",
+        "parent": {
+          "batch": 16,
+          "clip_norm": 1.0,
+          "context_seed_base": 171000,
+          "count": 512,
+          "encoder_lr": 0.0003,
+          "experiment": "SW0179_qce_seed_replication",
+          "files": {
+            "collaborative_test/SW_0134_native_spike_binding/rollout.py": "66c08404af91b50fb4cbfa63fe44650dd6a698ea669cd3d6a672dfc5c78503f3",
+            "collaborative_test/SW_0135_native32_spike_binding/foundation.py": "9c241cacf1479c339fa56376b881672535c8d7ac4966a7ddff3b4b47f24cb867",
+            "collaborative_test/SW_0136_native32_transfer/evaluate.py": "1c2846b69fb4bc936bf06723fc9f1b4c12f6632a02aff7e40c1e21a28b7a30ea",
+            "collaborative_test/SW_0148_checkpointable_boundary_q/checkpoint.py": "75d5076c051f81a51a39bbafedd363e589aa58ffc41ba4a662a87ffb91601f53",
+            "collaborative_test/SW_0162_connected_signed_partition/preflight.py": "06350ab58d4ef6d58b07c9bda86a0c6f5c28ac8e9ac38fe9f530b698e07f12f4",
+            "collaborative_test/SW_0168_end_to_end_connectivity/connectivity_objective.py": "545d0b7b96fc8480d4a5ff311c80ad88355c8d3234a15b135803f8462532ff6e",
+            "collaborative_test/SW_0169_normalized_hard_reset/calibration_v2.py": "7f0d20366bfa158a51fdcc4816db9434a4a419fff466a116b3a8b070ffe76ab3",
+            "collaborative_test/SW_0171_contextual_instance_graph/contextual_encoder.py": "5a00d5291fbee1308024fe71c2a21920330fdb6df523e5425040e4c863adf142",
+            "collaborative_test/SW_0171_contextual_instance_graph/preflight.py": "bcab86543c0f50cd772d5a024ac83ab3f48f09ff975f0e9719a07129aee35113",
+            "collaborative_test/SW_0171_contextual_instance_graph/train_prefix.py": "f65df575cdfbb47419b99a64f749ce614221c676769fe2e353ed18d6029461e6",
+            "collaborative_test/SW_0175_critical_component_binding/critical_component_objective.py": "cf0773112a5a671379b2449365a16799369242039dce2e114093d568e94cbc23",
+            "collaborative_test/SW_0175_critical_component_binding/train_v2.py": "284d6de62c4af5cc335b7b953eca1cc936e50f732e55867e4b804c8ec2215a89",
+            "collaborative_test/SW_0178_temporal_class_competition/class_competition.py": "b0de2868097585b99e3112c4f68c72ce67de0c8c616c4270149746632e5aed68",
+            "collaborative_test/SW_0178_temporal_class_competition/preflight.py": "e225bc509dddeacbbae946822f9b54c97c4b5a1f59d11e23fab4117a4cb60b4b",
+            "collaborative_test/SW_0179_qce_seed_replication/DESIGN_KO.md": "bcb1a6317abd0b92a3d17e2e1f99f86c0c7ee5d864ec6dc02639a581f282d255",
+            "collaborative_test/SW_0179_qce_seed_replication/train.py": "8b5b2da6e08c780a7e2446afb67a92b9278903720d661b6ba59753358ee125fc",
+            "snn_kuramoto_bidirectional/graph_generator.py": "4f4c4d680a60822a5e4645eec3bbceb960846d4fac89e799076f6b4cf1bc6dde",
+            "snn_kuramoto_bidirectional/spike_classifier.py": "2d13c15a928f503bc09239aae2153a5f1a82de77aab4b5a76d0dfe876b755181"
+          },
+          "graph_core_lr": 3e-05,
+          "integration_lr": 0.001,
+          "mask_supervised": true,
+          "micro": 4,
+          "objectives": [
+            "product_q_ce"
+          ],
+          "passes": 2,
+          "shuffle_seed": 171001,
+          "source_seeds": [
+            0,
+            2
+          ],
+          "source_trainer_dependency": {
+            "context_seed": 171001,
+            "encoder_lr": 0.0003,
+            "experiment": "SW0175_critical_component_binding_training",
+            "files": {
+              "collaborative_test/SW_0134_native_spike_binding/rollout.py": "66c08404af91b50fb4cbfa63fe44650dd6a698ea669cd3d6a672dfc5c78503f3",
+              "collaborative_test/SW_0135_native32_spike_binding/foundation.py": "9c241cacf1479c339fa56376b881672535c8d7ac4966a7ddff3b4b47f24cb867",
+              "collaborative_test/SW_0136_native32_transfer/evaluate.py": "1c2846b69fb4bc936bf06723fc9f1b4c12f6632a02aff7e40c1e21a28b7a30ea",
+              "collaborative_test/SW_0148_checkpointable_boundary_q/checkpoint.py": "75d5076c051f81a51a39bbafedd363e589aa58ffc41ba4a662a87ffb91601f53",
+              "collaborative_test/SW_0162_connected_signed_partition/preflight.py": "06350ab58d4ef6d58b07c9bda86a0c6f5c28ac8e9ac38fe9f530b698e07f12f4",
+              "collaborative_test/SW_0168_end_to_end_connectivity/connectivity_objective.py": "545d0b7b96fc8480d4a5ff311c80ad88355c8d3234a15b135803f8462532ff6e",
+              "collaborative_test/SW_0169_normalized_hard_reset/calibration_v2.py": "7f0d20366bfa158a51fdcc4816db9434a4a419fff466a116b3a8b070ffe76ab3",
+              "collaborative_test/SW_0171_contextual_instance_graph/DESIGN_KO.md": "6c936e87ac7f42c026ef16c0cf091c0f9be6aa33e27876d2521f28af8f2f04f3",
+              "collaborative_test/SW_0171_contextual_instance_graph/admission_queue.py": "6efdd0121a8a30a13165185cb2f517e1a6d1e735e11d5bd0c57bdde41a0ed029",
+              "collaborative_test/SW_0171_contextual_instance_graph/contextual_encoder.py": "5a00d5291fbee1308024fe71c2a21920330fdb6df523e5425040e4c863adf142",
+              "collaborative_test/SW_0171_contextual_instance_graph/instance_objective.py": "cc30c0148950d9e608db7420a8d7df624584f8311a6ef86a38812b40189fb0e7",
+              "collaborative_test/SW_0171_contextual_instance_graph/preflight.py": "bcab86543c0f50cd772d5a024ac83ab3f48f09ff975f0e9719a07129aee35113",
+              "collaborative_test/SW_0171_contextual_instance_graph/train_prefix.py": "f65df575cdfbb47419b99a64f749ce614221c676769fe2e353ed18d6029461e6",
+              "collaborative_test/SW_0175_critical_component_binding/DESIGN_KO.md": "b3129d016bbd192861f1a43d952c3fbc8b007d1d5a4654a68d2f784cf43a2f11",
+              "collaborative_test/SW_0175_critical_component_binding/critical_component_objective.py": "cf0773112a5a671379b2449365a16799369242039dce2e114093d568e94cbc23",
+              "collaborative_test/SW_0175_critical_component_binding/train_v2.py": "284d6de62c4af5cc335b7b953eca1cc936e50f732e55867e4b804c8ec2215a89",
+              "snn_kuramoto_bidirectional/graph_generator.py": "4f4c4d680a60822a5e4645eec3bbceb960846d4fac89e799076f6b4cf1bc6dde",
+              "snn_kuramoto_bidirectional/spike_classifier.py": "2d13c15a928f503bc09239aae2153a5f1a82de77aab4b5a76d0dfe876b755181"
+            },
+            "global_clip_norm": 1.0,
+            "graph_core_lr": 3e-05,
+            "integration_lr": 0.001,
+            "logical_batch": 16,
+            "microbatch": 4,
+            "passes": 2,
+            "preflight_fingerprint": {
+              "calibration_positions": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9,
+                10,
+                11,
+                12,
+                13,
+                14,
+                15
+              ],
+              "context_seed": 171001,
+              "experiment": "SW0171_contextual_instance_graph_preflight",
+              "files": {
+                "collaborative_test/SW_0134_native_spike_binding/rollout.py": "66c08404af91b50fb4cbfa63fe44650dd6a698ea669cd3d6a672dfc5c78503f3",
+                "collaborative_test/SW_0135_native32_spike_binding/foundation.py": "9c241cacf1479c339fa56376b881672535c8d7ac4966a7ddff3b4b47f24cb867",
+                "collaborative_test/SW_0136_native32_transfer/evaluate.py": "1c2846b69fb4bc936bf06723fc9f1b4c12f6632a02aff7e40c1e21a28b7a30ea",
+                "collaborative_test/SW_0143_native32_selective_geodesic/geodesic_operator.py": "268ad6ea010b123feaf6a2c41a02e3fd5e716b5a8d96b53e11d4f93098d5da98",
+                "collaborative_test/SW_0155_supervised_spike_relations/objective.py": "07ea07f1fa06c6f2e05e4e98184db487f68549249d997e6991ea26a8e06b40fe",
+                "collaborative_test/SW_0162_connected_signed_partition/preflight.py": "06350ab58d4ef6d58b07c9bda86a0c6f5c28ac8e9ac38fe9f530b698e07f12f4",
+                "collaborative_test/SW_0164_foreground_preserving_partition/foreground_signed.py": "12267f6d168a3b48b2cd59ebab700bcd909386d1659d9725ba2d83849e607af3",
+                "collaborative_test/SW_0164_foreground_preserving_partition/predict_evaluate.py": "8ed4c8723c37526e414f6c531fecdbd5184cd3068476c0c8d75241bf2da1aa79",
+                "collaborative_test/SW_0164_foreground_preserving_partition/protocol.json": "cb3909a118a71a30fd441493b5cd1746b23b61a72630100ff03aaca9e6b5e796",
+                "collaborative_test/SW_0168_end_to_end_connectivity/connectivity_objective.py": "545d0b7b96fc8480d4a5ff311c80ad88355c8d3234a15b135803f8462532ff6e",
+                "collaborative_test/SW_0169_normalized_hard_reset/train.py": "51214e979e3d2627ec86df16c1960b4b8a03cbdb74e3aca7aef21d5d1c6ebd3e",
+                "collaborative_test/SW_0171_contextual_instance_graph/DESIGN_KO.md": "6c936e87ac7f42c026ef16c0cf091c0f9be6aa33e27876d2521f28af8f2f04f3",
+                "collaborative_test/SW_0171_contextual_instance_graph/contextual_encoder.py": "5a00d5291fbee1308024fe71c2a21920330fdb6df523e5425040e4c863adf142",
+                "collaborative_test/SW_0171_contextual_instance_graph/instance_objective.py": "cc30c0148950d9e608db7420a8d7df624584f8311a6ef86a38812b40189fb0e7",
+                "collaborative_test/SW_0171_contextual_instance_graph/preflight.py": "bcab86543c0f50cd772d5a024ac83ab3f48f09ff975f0e9719a07129aee35113",
+                "snn_kuramoto_bidirectional/graph_generator.py": "4f4c4d680a60822a5e4645eec3bbceb960846d4fac89e799076f6b4cf1bc6dde",
+                "snn_kuramoto_bidirectional/spike_classifier.py": "2d13c15a928f503bc09239aae2153a5f1a82de77aab4b5a76d0dfe876b755181"
+              },
+              "gate_positions": [
+                256,
+                257,
+                258,
+                259,
+                260,
+                261,
+                262,
+                263
+              ],
+              "live_tail": 64,
+              "seed": 1,
+              "settle": 512,
+              "source_calibration_dependencies": {
+                "collaborative_test/SW_0130_phase_state_integration/model.py": "2ba6bbe44dbbf2a5a444e724db71caafc1b9915570bfd7ab31343b86915cbd0b",
+                "collaborative_test/SW_0130_phase_state_integration/run.py": "92ac0032467c6bff2e31a76c66021c5e211f9402d15ff868382d71ecc807e988",
+                "collaborative_test/SW_0134_native_spike_binding/rollout.py": "66c08404af91b50fb4cbfa63fe44650dd6a698ea669cd3d6a672dfc5c78503f3",
+                "collaborative_test/SW_0135_native32_spike_binding/foundation.py": "9c241cacf1479c339fa56376b881672535c8d7ac4966a7ddff3b4b47f24cb867",
+                "collaborative_test/SW_0143_native32_selective_geodesic/geodesic_operator.py": "268ad6ea010b123feaf6a2c41a02e3fd5e716b5a8d96b53e11d4f93098d5da98",
+                "collaborative_test/SW_0161_supervised_spike_partition/cache.py": "c10e0859368994a820fb9e911295036f1fd7dd52bfd5aa198cc4e28ca1cef8e0",
+                "collaborative_test/SW_0162_connected_signed_partition/preflight.py": "06350ab58d4ef6d58b07c9bda86a0c6f5c28ac8e9ac38fe9f530b698e07f12f4",
+                "collaborative_test/SW_0163_relation_context_assignment/context_cache.py": "d7876446ac016b8e6b58fddc849eaa945441c0b158c335262dcb38ab7e2e5164",
+                "collaborative_test/SW_0167_structured_relation_energy/audit_train_cache.py": "64c2c306013b19ebe7c47b5dd2a3f45460a17341098f033b22307781a63c951f",
+                "collaborative_test/SW_0167_structured_relation_energy/qcc_readout.py": "b0e0b5536f5c24b49f15a7ef842469a99e19ad63f89983cb8579a9f987fc0ea8",
+                "collaborative_test/SW_0169_normalized_hard_reset/DESIGN_KO.md": "30809417207f043cbd843409072ad00d14eff0e1fab62a9fe49abf60f71408c9",
+                "collaborative_test/SW_0169_normalized_hard_reset/calibration_v2.py": "7f0d20366bfa158a51fdcc4816db9434a4a419fff466a116b3a8b070ffe76ab3",
+                "collaborative_test/SW_0169_normalized_hard_reset/hard_reset.py": "98e9e95a98bba23b80f4c425c2bebc95d26ae995e5f366ec4c47714c68ad8fed",
+                "snn_kuramoto_bidirectional/dendric_layer.py": "69d960809ff1ad73a91a7067f87f605ae69ef612be9b936e4b486cc29511dd1a",
+                "snn_kuramoto_bidirectional/membrane_layer.py": "680ad89277b60206f192123165d13eca916e5183dc71eaa443a8eeb5f4b8fac8",
+                "snn_kuramoto_bidirectional/sinusoidal_gating.py": "e323a3b6472f51def23d63628fe25cc83088822ae73b5e0fcd1789884739f6c4",
+                "snn_kuramoto_bidirectional/spike_classifier.py": "2d13c15a928f503bc09239aae2153a5f1a82de77aab4b5a76d0dfe876b755181"
+              },
+              "steps": 1024
+            },
+            "seed": 1,
+            "shuffle_seed": 171001,
+            "training_images_per_pass": 512,
+            "updates": 64
+          },
+          "temperature": 0.1,
+          "unsupervised_leaderboard_eligible": false,
+          "updates": 64
+        },
+        "source_base_lr": 3e-05,
+        "source_base_trainable": true
+      },
+      "validation_data_read": false
+    },
+    "ordered_train_ids_sha256": "954e85049343c289e3bbcb4d197978a910d9c829b5bdc5ebcbbff485786a9b7e",
+    "validation_data_read": false
+  },
+  "memory_used_mib": 3944,
+  "observed_gpu_uuid": "GPU-45604115-c231-56a5-32ea-d3001e8ff243",
+  "owners": [
+    1501169,
+    1501244
+  ],
+  "physical_gpu": 1,
+  "queue_fingerprint": {
+    "cache_mode": "USE_PYTORCH_KERNEL_CACHE=0",
+    "experiment": "SW0187_training_queue",
+    "input_identity": {
+      "control_history_sha256": "a7d9c141fcb1d8ba70bd712ecae00a89a3685810e8031a7b37d5dd22584b8d59",
+      "control_manifest_sha256": "546d817ecba65e04f443f61c44db6949010312aafffcf1ecd6bc47d6e68db130",
+      "dataset_arrays_sha256": "988ecd2a566e08a7e37a5ddb86c6af86f5f8a941c6de9af92dd35b6eda0e5030",
+      "dataset_manifest_sha256": "c83ee9cdb98ff1a3d84a99d9d003d45c1beb29d8ea83b5f59c1fdcb490172892",
+      "fresh_source_proof": {
+        "adam_state_entries": 0,
+        "base_encoder_sha256": "85085bec46639858f9199550a00b487f303e848a0add914345a16d2794bd53ee",
+        "context_seed": 171001,
+        "cuda_initialized": false,
+        "dataset_arrays_sha256": "988ecd2a566e08a7e37a5ddb86c6af86f5f8a941c6de9af92dd35b6eda0e5030",
+        "dataset_manifest_sha256": "c83ee9cdb98ff1a3d84a99d9d003d45c1beb29d8ea83b5f59c1fdcb490172892",
+        "experiment": "SW0186_full_encoder_qce_factory",
+        "family_names": [
+          "context_encoder",
+          "graph",
+          "native_core",
+          "integration",
+          "source_base"
+        ],
+        "initial_model_state_sha256": "f372b3a450ebeaf0d49e20d019d3c0676d4998cc1c49586e4c4e4c89e969d7f5",
+        "optimizer_groups": [
+          {
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-08,
+            "lr": 0.0003,
+            "name": "context_encoder",
+            "parameter_names": [
+              "context.0.weight",
+              "context.0.bias",
+              "context.2.weight",
+              "context.2.bias",
+              "context.4.weight",
+              "context.4.bias",
+              "context.6.weight",
+              "context.6.bias",
+              "context.8.weight",
+              "context.8.bias"
+            ],
+            "weight_decay": 0.0
+          },
+          {
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-08,
+            "lr": 3e-05,
+            "name": "graph",
+            "parameter_names": [
+              "log_temperature",
+              "log_coupling_gain",
+              "spatial_rate",
+              "projection.weight"
+            ],
+            "weight_decay": 0.0
+          },
+          {
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-08,
+            "lr": 3e-05,
+            "name": "native_core",
+            "parameter_names": [
+              "gamma_phase_gain",
+              "gamma_channel_proj.weight",
+              "kuramoto.freq_gain",
+              "kuramoto.omega",
+              "kuramoto.kappa",
+              "kuramoto.direction_learner",
+              "dendric_layer.tau_n",
+              "dendric_layer.oscillator_dense.weight",
+              "dendric_layer.oscillator_dense.bias",
+              "membrane_layer.tau_m"
+            ],
+            "weight_decay": 0.0
+          },
+          {
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-08,
+            "lr": 0.001,
+            "name": "integration",
+            "parameter_names": [
+              "a_d",
+              "a_m",
+              "b"
+            ],
+            "weight_decay": 0.0
+          },
+          {
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-08,
+            "lr": 3e-05,
+            "name": "source_base",
+            "parameter_names": [
+              "base_encoder.kernels",
+              "base_encoder.bias"
+            ],
+            "weight_decay": 0.0
+          }
+        ],
+        "ordered_train_ids_sha256": "954e85049343c289e3bbcb4d197978a910d9c829b5bdc5ebcbbff485786a9b7e",
+        "parameter_count": 29,
+        "seed": 1,
+        "source_base_trainable": true,
+        "source_binding": {
+          "encoder_sha256": "9b9c9c59725f872084a6c9bfae1ebbd1b89de40d18ef4f8ab6b8ec014c2ab868",
+          "feature_preprocessing_sha256": "a9ec3281b9603021c37f7c346baa6cf62513c5ce7edde867ab7eddf24b18e127",
+          "seed": 1,
+          "source_checkpoint_sha256": "76f379d5a7e4cd9d12fdf0b701f3dd9dbbf28b5eea270a9cee2d30d87b4dad98",
+          "source_core_path": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0097_graph_adaptation/seed1_positive_frozen/core.pt",
+          "source_manifest_path": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0097_graph_adaptation/seed1_positive_frozen/manifest.json",
+          "source_manifest_sha256": "241c9ea96fc3d3d2b168cb49d941e39c6751eca4436192e614760673545da38b",
+          "source_state_sha256": "b205d21a917299089b9b5d373eb94c9eb5eb971471e9428072e0fc0229c70749",
+          "source_steps": 256
+        },
+        "source_state_sha256": "b205d21a917299089b9b5d373eb94c9eb5eb971471e9428072e0fc0229c70749",
+        "training_fingerprint": {
+          "experiment": "SW0186_full_encoder_qce_factory",
+          "files": {
+            "collaborative_test/SW_0186_full_encoder_qce/DESIGN_KO.md": "dca432c264afbf79dbdd1f94a01cacbc55ccb799b26f9615bc3a5dbcc5bdfe03",
+            "collaborative_test/SW_0186_full_encoder_qce/source.py": "fb74ee455d3f13934de0e4f3f9d68e174a03cf8fcaef8f562fc9f6a1ccb5c59b",
+            "collaborative_test/SW_0186_full_encoder_qce/test_source.py": "341e7d3c63b5ddc4786523bbbcd8bfdb329a0241c97f4917df39ae5724276f16"
+          },
+          "loss": "product_q_ce",
+          "parent": {
+            "batch": 16,
+            "clip_norm": 1.0,
+            "context_seed_base": 171000,
+            "count": 512,
+            "encoder_lr": 0.0003,
+            "experiment": "SW0179_qce_seed_replication",
+            "files": {
+              "collaborative_test/SW_0134_native_spike_binding/rollout.py": "66c08404af91b50fb4cbfa63fe44650dd6a698ea669cd3d6a672dfc5c78503f3",
+              "collaborative_test/SW_0135_native32_spike_binding/foundation.py": "9c241cacf1479c339fa56376b881672535c8d7ac4966a7ddff3b4b47f24cb867",
+              "collaborative_test/SW_0136_native32_transfer/evaluate.py": "1c2846b69fb4bc936bf06723fc9f1b4c12f6632a02aff7e40c1e21a28b7a30ea",
+              "collaborative_test/SW_0148_checkpointable_boundary_q/checkpoint.py": "75d5076c051f81a51a39bbafedd363e589aa58ffc41ba4a662a87ffb91601f53",
+              "collaborative_test/SW_0162_connected_signed_partition/preflight.py": "06350ab58d4ef6d58b07c9bda86a0c6f5c28ac8e9ac38fe9f530b698e07f12f4",
+              "collaborative_test/SW_0168_end_to_end_connectivity/connectivity_objective.py": "545d0b7b96fc8480d4a5ff311c80ad88355c8d3234a15b135803f8462532ff6e",
+              "collaborative_test/SW_0169_normalized_hard_reset/calibration_v2.py": "7f0d20366bfa158a51fdcc4816db9434a4a419fff466a116b3a8b070ffe76ab3",
+              "collaborative_test/SW_0171_contextual_instance_graph/contextual_encoder.py": "5a00d5291fbee1308024fe71c2a21920330fdb6df523e5425040e4c863adf142",
+              "collaborative_test/SW_0171_contextual_instance_graph/preflight.py": "bcab86543c0f50cd772d5a024ac83ab3f48f09ff975f0e9719a07129aee35113",
+              "collaborative_test/SW_0171_contextual_instance_graph/train_prefix.py": "f65df575cdfbb47419b99a64f749ce614221c676769fe2e353ed18d6029461e6",
+              "collaborative_test/SW_0175_critical_component_binding/critical_component_objective.py": "cf0773112a5a671379b2449365a16799369242039dce2e114093d568e94cbc23",
+              "collaborative_test/SW_0175_critical_component_binding/train_v2.py": "284d6de62c4af5cc335b7b953eca1cc936e50f732e55867e4b804c8ec2215a89",
+              "collaborative_test/SW_0178_temporal_class_competition/class_competition.py": "b0de2868097585b99e3112c4f68c72ce67de0c8c616c4270149746632e5aed68",
+              "collaborative_test/SW_0178_temporal_class_competition/preflight.py": "e225bc509dddeacbbae946822f9b54c97c4b5a1f59d11e23fab4117a4cb60b4b",
+              "collaborative_test/SW_0179_qce_seed_replication/DESIGN_KO.md": "bcb1a6317abd0b92a3d17e2e1f99f86c0c7ee5d864ec6dc02639a581f282d255",
+              "collaborative_test/SW_0179_qce_seed_replication/train.py": "8b5b2da6e08c780a7e2446afb67a92b9278903720d661b6ba59753358ee125fc",
+              "snn_kuramoto_bidirectional/graph_generator.py": "4f4c4d680a60822a5e4645eec3bbceb960846d4fac89e799076f6b4cf1bc6dde",
+              "snn_kuramoto_bidirectional/spike_classifier.py": "2d13c15a928f503bc09239aae2153a5f1a82de77aab4b5a76d0dfe876b755181"
+            },
+            "graph_core_lr": 3e-05,
+            "integration_lr": 0.001,
+            "mask_supervised": true,
+            "micro": 4,
+            "objectives": [
+              "product_q_ce"
+            ],
+            "passes": 2,
+            "shuffle_seed": 171001,
+            "source_seeds": [
+              0,
+              2
+            ],
+            "source_trainer_dependency": {
+              "context_seed": 171001,
+              "encoder_lr": 0.0003,
+              "experiment": "SW0175_critical_component_binding_training",
+              "files": {
+                "collaborative_test/SW_0134_native_spike_binding/rollout.py": "66c08404af91b50fb4cbfa63fe44650dd6a698ea669cd3d6a672dfc5c78503f3",
+                "collaborative_test/SW_0135_native32_spike_binding/foundation.py": "9c241cacf1479c339fa56376b881672535c8d7ac4966a7ddff3b4b47f24cb867",
+                "collaborative_test/SW_0136_native32_transfer/evaluate.py": "1c2846b69fb4bc936bf06723fc9f1b4c12f6632a02aff7e40c1e21a28b7a30ea",
+                "collaborative_test/SW_0148_checkpointable_boundary_q/checkpoint.py": "75d5076c051f81a51a39bbafedd363e589aa58ffc41ba4a662a87ffb91601f53",
+                "collaborative_test/SW_0162_connected_signed_partition/preflight.py": "06350ab58d4ef6d58b07c9bda86a0c6f5c28ac8e9ac38fe9f530b698e07f12f4",
+                "collaborative_test/SW_0168_end_to_end_connectivity/connectivity_objective.py": "545d0b7b96fc8480d4a5ff311c80ad88355c8d3234a15b135803f8462532ff6e",
+                "collaborative_test/SW_0169_normalized_hard_reset/calibration_v2.py": "7f0d20366bfa158a51fdcc4816db9434a4a419fff466a116b3a8b070ffe76ab3",
+                "collaborative_test/SW_0171_contextual_instance_graph/DESIGN_KO.md": "6c936e87ac7f42c026ef16c0cf091c0f9be6aa33e27876d2521f28af8f2f04f3",
+                "collaborative_test/SW_0171_contextual_instance_graph/admission_queue.py": "6efdd0121a8a30a13165185cb2f517e1a6d1e735e11d5bd0c57bdde41a0ed029",
+                "collaborative_test/SW_0171_contextual_instance_graph/contextual_encoder.py": "5a00d5291fbee1308024fe71c2a21920330fdb6df523e5425040e4c863adf142",
+                "collaborative_test/SW_0171_contextual_instance_graph/instance_objective.py": "cc30c0148950d9e608db7420a8d7df624584f8311a6ef86a38812b40189fb0e7",
+                "collaborative_test/SW_0171_contextual_instance_graph/preflight.py": "bcab86543c0f50cd772d5a024ac83ab3f48f09ff975f0e9719a07129aee35113",
+                "collaborative_test/SW_0171_contextual_instance_graph/train_prefix.py": "f65df575cdfbb47419b99a64f749ce614221c676769fe2e353ed18d6029461e6",
+                "collaborative_test/SW_0175_critical_component_binding/DESIGN_KO.md": "b3129d016bbd192861f1a43d952c3fbc8b007d1d5a4654a68d2f784cf43a2f11",
+                "collaborative_test/SW_0175_critical_component_binding/critical_component_objective.py": "cf0773112a5a671379b2449365a16799369242039dce2e114093d568e94cbc23",
+                "collaborative_test/SW_0175_critical_component_binding/train_v2.py": "284d6de62c4af5cc335b7b953eca1cc936e50f732e55867e4b804c8ec2215a89",
+                "snn_kuramoto_bidirectional/graph_generator.py": "4f4c4d680a60822a5e4645eec3bbceb960846d4fac89e799076f6b4cf1bc6dde",
+                "snn_kuramoto_bidirectional/spike_classifier.py": "2d13c15a928f503bc09239aae2153a5f1a82de77aab4b5a76d0dfe876b755181"
+              },
+              "global_clip_norm": 1.0,
+              "graph_core_lr": 3e-05,
+              "integration_lr": 0.001,
+              "logical_batch": 16,
+              "microbatch": 4,
+              "passes": 2,
+              "preflight_fingerprint": {
+                "calibration_positions": [
+                  0,
+                  1,
+                  2,
+                  3,
+                  4,
+                  5,
+                  6,
+                  7,
+                  8,
+                  9,
+                  10,
+                  11,
+                  12,
+                  13,
+                  14,
+                  15
+                ],
+                "context_seed": 171001,
+                "experiment": "SW0171_contextual_instance_graph_preflight",
+                "files": {
+                  "collaborative_test/SW_0134_native_spike_binding/rollout.py": "66c08404af91b50fb4cbfa63fe44650dd6a698ea669cd3d6a672dfc5c78503f3",
+                  "collaborative_test/SW_0135_native32_spike_binding/foundation.py": "9c241cacf1479c339fa56376b881672535c8d7ac4966a7ddff3b4b47f24cb867",
+                  "collaborative_test/SW_0136_native32_transfer/evaluate.py": "1c2846b69fb4bc936bf06723fc9f1b4c12f6632a02aff7e40c1e21a28b7a30ea",
+                  "collaborative_test/SW_0143_native32_selective_geodesic/geodesic_operator.py": "268ad6ea010b123feaf6a2c41a02e3fd5e716b5a8d96b53e11d4f93098d5da98",
+                  "collaborative_test/SW_0155_supervised_spike_relations/objective.py": "07ea07f1fa06c6f2e05e4e98184db487f68549249d997e6991ea26a8e06b40fe",
+                  "collaborative_test/SW_0162_connected_signed_partition/preflight.py": "06350ab58d4ef6d58b07c9bda86a0c6f5c28ac8e9ac38fe9f530b698e07f12f4",
+                  "collaborative_test/SW_0164_foreground_preserving_partition/foreground_signed.py": "12267f6d168a3b48b2cd59ebab700bcd909386d1659d9725ba2d83849e607af3",
+                  "collaborative_test/SW_0164_foreground_preserving_partition/predict_evaluate.py": "8ed4c8723c37526e414f6c531fecdbd5184cd3068476c0c8d75241bf2da1aa79",
+                  "collaborative_test/SW_0164_foreground_preserving_partition/protocol.json": "cb3909a118a71a30fd441493b5cd1746b23b61a72630100ff03aaca9e6b5e796",
+                  "collaborative_test/SW_0168_end_to_end_connectivity/connectivity_objective.py": "545d0b7b96fc8480d4a5ff311c80ad88355c8d3234a15b135803f8462532ff6e",
+                  "collaborative_test/SW_0169_normalized_hard_reset/train.py": "51214e979e3d2627ec86df16c1960b4b8a03cbdb74e3aca7aef21d5d1c6ebd3e",
+                  "collaborative_test/SW_0171_contextual_instance_graph/DESIGN_KO.md": "6c936e87ac7f42c026ef16c0cf091c0f9be6aa33e27876d2521f28af8f2f04f3",
+                  "collaborative_test/SW_0171_contextual_instance_graph/contextual_encoder.py": "5a00d5291fbee1308024fe71c2a21920330fdb6df523e5425040e4c863adf142",
+                  "collaborative_test/SW_0171_contextual_instance_graph/instance_objective.py": "cc30c0148950d9e608db7420a8d7df624584f8311a6ef86a38812b40189fb0e7",
+                  "collaborative_test/SW_0171_contextual_instance_graph/preflight.py": "bcab86543c0f50cd772d5a024ac83ab3f48f09ff975f0e9719a07129aee35113",
+                  "snn_kuramoto_bidirectional/graph_generator.py": "4f4c4d680a60822a5e4645eec3bbceb960846d4fac89e799076f6b4cf1bc6dde",
+                  "snn_kuramoto_bidirectional/spike_classifier.py": "2d13c15a928f503bc09239aae2153a5f1a82de77aab4b5a76d0dfe876b755181"
+                },
+                "gate_positions": [
+                  256,
+                  257,
+                  258,
+                  259,
+                  260,
+                  261,
+                  262,
+                  263
+                ],
+                "live_tail": 64,
+                "seed": 1,
+                "settle": 512,
+                "source_calibration_dependencies": {
+                  "collaborative_test/SW_0130_phase_state_integration/model.py": "2ba6bbe44dbbf2a5a444e724db71caafc1b9915570bfd7ab31343b86915cbd0b",
+                  "collaborative_test/SW_0130_phase_state_integration/run.py": "92ac0032467c6bff2e31a76c66021c5e211f9402d15ff868382d71ecc807e988",
+                  "collaborative_test/SW_0134_native_spike_binding/rollout.py": "66c08404af91b50fb4cbfa63fe44650dd6a698ea669cd3d6a672dfc5c78503f3",
+                  "collaborative_test/SW_0135_native32_spike_binding/foundation.py": "9c241cacf1479c339fa56376b881672535c8d7ac4966a7ddff3b4b47f24cb867",
+                  "collaborative_test/SW_0143_native32_selective_geodesic/geodesic_operator.py": "268ad6ea010b123feaf6a2c41a02e3fd5e716b5a8d96b53e11d4f93098d5da98",
+                  "collaborative_test/SW_0161_supervised_spike_partition/cache.py": "c10e0859368994a820fb9e911295036f1fd7dd52bfd5aa198cc4e28ca1cef8e0",
+                  "collaborative_test/SW_0162_connected_signed_partition/preflight.py": "06350ab58d4ef6d58b07c9bda86a0c6f5c28ac8e9ac38fe9f530b698e07f12f4",
+                  "collaborative_test/SW_0163_relation_context_assignment/context_cache.py": "d7876446ac016b8e6b58fddc849eaa945441c0b158c335262dcb38ab7e2e5164",
+                  "collaborative_test/SW_0167_structured_relation_energy/audit_train_cache.py": "64c2c306013b19ebe7c47b5dd2a3f45460a17341098f033b22307781a63c951f",
+                  "collaborative_test/SW_0167_structured_relation_energy/qcc_readout.py": "b0e0b5536f5c24b49f15a7ef842469a99e19ad63f89983cb8579a9f987fc0ea8",
+                  "collaborative_test/SW_0169_normalized_hard_reset/DESIGN_KO.md": "30809417207f043cbd843409072ad00d14eff0e1fab62a9fe49abf60f71408c9",
+                  "collaborative_test/SW_0169_normalized_hard_reset/calibration_v2.py": "7f0d20366bfa158a51fdcc4816db9434a4a419fff466a116b3a8b070ffe76ab3",
+                  "collaborative_test/SW_0169_normalized_hard_reset/hard_reset.py": "98e9e95a98bba23b80f4c425c2bebc95d26ae995e5f366ec4c47714c68ad8fed",
+                  "snn_kuramoto_bidirectional/dendric_layer.py": "69d960809ff1ad73a91a7067f87f605ae69ef612be9b936e4b486cc29511dd1a",
+                  "snn_kuramoto_bidirectional/membrane_layer.py": "680ad89277b60206f192123165d13eca916e5183dc71eaa443a8eeb5f4b8fac8",
+                  "snn_kuramoto_bidirectional/sinusoidal_gating.py": "e323a3b6472f51def23d63628fe25cc83088822ae73b5e0fcd1789884739f6c4",
+                  "snn_kuramoto_bidirectional/spike_classifier.py": "2d13c15a928f503bc09239aae2153a5f1a82de77aab4b5a76d0dfe876b755181"
+                },
+                "steps": 1024
+              },
+              "seed": 1,
+              "shuffle_seed": 171001,
+              "training_images_per_pass": 512,
+              "updates": 64
+            },
+            "temperature": 0.1,
+            "unsupervised_leaderboard_eligible": false,
+            "updates": 64
+          },
+          "source_base_lr": 3e-05,
+          "source_base_trainable": true
+        },
+        "validation_data_read": false
+      },
+      "ordered_train_ids_sha256": "954e85049343c289e3bbcb4d197978a910d9c829b5bdc5ebcbbff485786a9b7e",
+      "validation_data_read": false
+    },
+    "queue_sha256": "345d54e0728d7c50640c4345de3f5585254bdf66481eed042e1a3a43ae65ff10",
+    "seed": 1,
+    "trainer_sha256": "1efd2ac57f2757b4d8f47d98aafa9bc1c7cc76aabebedb03e7f327a5b8d4e855",
+    "training_fingerprint": "c18c37aea8f4ab5c059d8ba7e64f93b835bbc9397e1442beefd080c8cf107153"
+  },
+  "queue_fingerprint_sha256": "3f0bb0483e209fca5449fa3d8b8caf915775951e864f07146815b8773f6f2c9b",
+  "seed": 1,
+  "stable_seconds": 5.168189235962927,
+  "status": "failed",
+  "supervisor_pid": 1295845,
+  "updated_unix": 1792246029.8166666,
+  "validation_data_read": false,
+  "yielded_attempt": 2
+}

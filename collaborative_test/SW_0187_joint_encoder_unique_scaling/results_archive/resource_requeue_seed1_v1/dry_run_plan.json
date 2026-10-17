@@ -1,0 +1,31 @@
+{
+  "status": "resource_only_fresh_requeue_plan",
+  "seed": 1,
+  "reason": "GPU1-bound partial prefix cannot use other idle GPUs",
+  "train_pid": 1295845,
+  "prediction_pid": 1295928,
+  "train_start_ticks": 438613264,
+  "prediction_start_ticks": 438614016,
+  "discarded_prefix_proposals": 15,
+  "original_gpu_uuid": "GPU-45604115-c231-56a5-32ea-d3001e8ff243",
+  "original_gpu_foreign_pids": [
+    1501169
+  ],
+  "old_work": "/Data0/kevinswk/patch_v2_sw/collaborative_testing/generated/collaborative_test/SW_0187_joint_encoder_unique_scaling/results_archive/training_20261017/work/shared_prefix_seed1",
+  "archive": "/Data0/kevinswk/patch_v2_sw/collaborative_testing/collaborative_private_runtime_20261008/SW0187_delivery_20261017/resource_requeue_seed1_v1",
+  "old_work_inventory": {
+    "boundary.ptx": {
+      "sha256": "250106a5eeea178260f0daf6309681766cc9d1d68c5d6ee0241a5427ee17c484",
+      "bytes": 29007213
+    }
+  },
+  "queue_fingerprint_sha256": "3f0bb0483e209fca5449fa3d8b8caf915775951e864f07146815b8773f6f2c9b",
+  "model_data_loss_code_changed": false,
+  "validation_data_read": false,
+  "selection_uses_validation_metrics": false,
+  "old_partial_run_preserved": true,
+  "delivered_models_logical_proposals_per_arm": 64,
+  "new_actual_proposals": 96,
+  "extra_discarded_proposals": 15,
+  "observed_unix": 1792245910.0678031
+}

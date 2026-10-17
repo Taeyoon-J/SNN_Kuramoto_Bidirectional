@@ -45,3 +45,14 @@ and candidate indices were exactly control+512. Prefix RNG bindings agree and
 the frozen runtime fork-RNG guard executed; the transaction hash itself excludes
 RNG. Records are in `results_archive/completed_seed0_v1`. No GT score is available;
 all six prediction freezes are still required before scoring.
+
+Seed2 has also completed both trained branches and actual artifact validation
+(control/candidate accepted47/45). Seed0/2 trained artifacts are preserved.
+Seed1 was fresh-requeued once to release its GPU1 resume restriction. Its15
+partial proposals and checkpoint are preserved on the server; those15 proposals
+are reported as extra compute excluded from the delivered models. The same
+model/data/loss/factory fingerprint is verified. The replacement parent is live
+and its original prediction parent resumed. Current-run GPU admission for the
+replacement seed1 must be checked again. See [the resource amendment](RESOURCE_REQUEUE_KO.md)
+and `results_archive/resource_requeue_seed1_v1`. No validation score selected this
+resubmission. All model source files remain frozen; no new performance is claimed.
