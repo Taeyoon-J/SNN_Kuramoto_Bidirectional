@@ -2,14 +2,14 @@
 
 Three training supervisors, three prediction supervisors, GT-last scoring and
 an independent final auditor are registered. All three seeds have actually trained
-on GPU. Seeds0/2 have completed all64 proposals with34/43 accepted updates; their
-actual checkpoints, optimizers and histories passed validation, including the
-original CNN's changed weights. Metadata is preserved in
-`results_archive/completed_seed0_v1` and `results_archive/completed_seed2_v1`.
+on GPU. All three seeds have completed all64 proposals with34/36/43 accepted
+updates (seed0/1/2). Their actual checkpoints, optimizers and histories passed
+validation, including the original CNN's changed weights. Metadata is preserved
+in `results_archive/completed_seed0_v1`, `completed_seed1_v1` and `completed_seed2_v1`.
 Seed0's fixed320 conditional/standalone native32 predictions are now frozen and
 validated against their row ledger and unchanged model; receipts are preserved in
-`results_archive/frozen_seed0_v1`. GT has not been scored. Seed1 training and seed2
-prediction stay queued on exclusive idle devices. Foreign owners are preserved.
+`results_archive/frozen_seed0_v1`. GT has not been scored. Seed1/2 prediction
+supervisors remain registered on exclusive idle devices. Foreign owners are preserved.
 No fixed320 evaluation score is available.
 
 Only the original source CNN's trainability changes relative to the QCE setup:
