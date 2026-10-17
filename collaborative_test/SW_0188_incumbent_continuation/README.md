@@ -11,3 +11,11 @@ three-seed results directly with SW0186 and comparable Slot70k. No .87,
 unsupervised, full native32 joint70k or gate-causality claim is made.
 
 Registered and running: all eight supervisors verified live; seed0/1 actual GPU workers started, seed2 is queued. Local/server39 tests, six actual CLIs, all three exact incumbent tensor digests, trained CNN hashes, five-family empty Adam and Slot archive admission passed. The first seed0 actual GPU update has already passed full-forward parity and changed the trained CNN. First-two admission and full320 scores remain pending. Peer patch_v2 was checked this cycle and remains cab6c676. Receipts: results_archive/cpu_v1 and start_v1.
+
+Seed0 actual GPU credit/parity, accepted Adam steps and changed original CNN
+were independently inspected; see `results_archive/start_v1/seed0_first_two_GPU_admission.json`.
+This admission does not establish improved masks or a completed performance result.
+
+Seed1 actual GPU credit/parity, accepted Adam steps and changed original CNN
+were independently inspected; see `results_archive/start_v1/seed1_first_two_GPU_admission.json`.
+This admission does not establish improved masks or a completed performance result.

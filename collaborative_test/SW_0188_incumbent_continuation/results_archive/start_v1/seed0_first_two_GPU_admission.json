@@ -1,0 +1,84 @@
+{
+  "status": "SW0188_first_two_real_GPU_proposals_verified",
+  "records": [
+    {
+      "seed": 0,
+      "incumbent_lineage": {
+        "experiment": "SW0186_full_encoder_qce",
+        "seed": 0,
+        "manifest_sha256": "05cd7f690eee72e1303225d79385d3e04c840e7c28991854676036c584b39de1",
+        "checkpoint_sha256": "73f290e54fa7f7dd9b3ee1605523b0d0e7ed4dabdeaa90ba13bd059d2df420df",
+        "final_model_state_sha256": "edd716717b8e6c5b47b0e8cfa6c02660fbcfea3d7b8cac3964be4f9ee0e1e34a",
+        "artifact": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0186_full_encoder_qce/results_archive/training_20261016/product_q_ce_seed0",
+        "optimizer_policy": "reset_empty_Adam_all_five_groups"
+      },
+      "source_CNN_changed": true,
+      "source_CNN_current_sha256": "a91e042b0f63742959d7c50cf3b899d42a04a58172cc7aebcc42db7edb3aacf2",
+      "source_CNN_initial_sha256": "8e1cbe9c1fff1234776fef04eeccfc516b49b24631b5ff561eeca20cd5aada65",
+      "cursor": 6,
+      "accepted_updates": 4,
+      "actual_Adam_steps": [
+        4
+      ],
+      "boundary_sha256": "f3063225cb8b1e06a47e2015e483718f2e89d13c2315a533bf85c95a1b1bacc0",
+      "first_two": [
+        {
+          "proposal": 1,
+          "accepted": true,
+          "before": 0.22791177360340953,
+          "after": 0.22720767790451646,
+          "parity_error": 1.3969838619232178e-09,
+          "guard": 2.2791177360340952e-07,
+          "emitted_S_gradient": 0.05024485053673715,
+          "family_gradient_norms": {
+            "context_encoder": 1.595255834467103,
+            "graph": 0.2754294567353169,
+            "native_core": 0.49326124005985755,
+            "integration": 5.426956225393966e-05,
+            "source_base": 2.3066652684406854
+          },
+          "proposed_family_delta_l2": {
+            "context_encoder": 0.050862220542019505,
+            "graph": 0.00034339325188404265,
+            "native_core": 0.002790723203300818,
+            "integration": 0.0028859050727449817,
+            "source_base": 0.00044900086119853156
+          },
+          "start_transaction_sha256": "2e7f2dbc852ba3c7b661e208aae982749f19a1a408936a694217809d03c3eb76",
+          "proposal_transaction_sha256": "92e10feee5a42e93a0f2a8bcc6545ad2b550ebc53e57fbc841757a535e964771"
+        },
+        {
+          "proposal": 2,
+          "accepted": false,
+          "before": 0.3900749388849363,
+          "after": 0.39216570468852296,
+          "parity_error": 3.725290298461914e-09,
+          "guard": 3.9007493888493626e-07,
+          "emitted_S_gradient": 0.058102287744261766,
+          "family_gradient_norms": {
+            "context_encoder": 0.1008703855489814,
+            "graph": 0.03458632326138101,
+            "native_core": 0.100792262085957,
+            "integration": 5.258959277934541e-05,
+            "source_base": 0.3676212192679769
+          },
+          "proposed_family_delta_l2": {
+            "context_encoder": 0.031750154789573985,
+            "graph": 0.00021398901113855716,
+            "native_core": 0.0022307910959618823,
+            "integration": 0.001712695132310681,
+            "source_base": 0.0003535891237349475
+          },
+          "start_transaction_sha256": "8eaeb864285e9b7d424ce36b55cc3bd230def0c0b751cb12b11ef326be9c5c30",
+          "proposal_transaction_sha256": "1474cc61e7683516eac965fda29954c866fa622719405ec9bd6d462a133668a6"
+        }
+      ]
+    }
+  ],
+  "seed_scope": [
+    0
+  ],
+  "observed_unix": 1792253806.9253027,
+  "validation_data_read": false,
+  "optimizer_updates_by_this_script": 0
+}
