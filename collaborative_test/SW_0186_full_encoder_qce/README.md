@@ -1,8 +1,12 @@
 # SW0186 — full source RGB encoder plus unchanged QCE
 
 Three training supervisors, three prediction supervisors, GT-last scoring and
-an independent final auditor are registered. Seed2 has actually started on GPU3;
-the other seeds wait for exclusive idle devices. Foreign owners are preserved.
+an independent final auditor are registered. All three seeds have actually trained
+on GPU. Seed0 has completed all64 proposals with34 accepted updates; its actual
+checkpoint, optimizer and history passed validation, including the original CNN's
+changed weights. Its metadata is preserved in `results_archive/completed_seed0_v1`.
+Seed0 prediction and the remaining training runs stay queued on exclusive idle
+devices. Foreign owners are preserved. No fixed320 evaluation score is available.
 
 Only the original source CNN's trainability changes relative to the QCE setup:
 source_base is a fifth Adam family at LR3e-5. Existing four rates, tensor
