@@ -7617,7 +7617,7 @@
     }
   },
   "next_objective_alignment_direction_20261017": {
-    "status": "design_direction_not_yet_implemented_or_queued",
+    "status": "implemented_and_queued_as_SW0191_first_seed_actual_GPU_credit_verified",
     "evidence": [
       "SW0187_unique1024_failed_to_improve",
       "SW0188_incumbent_continuation_failed_to_improve",
@@ -7625,6 +7625,78 @@
     ],
     "direction": "retain_successful_production_graph_geodesic_QCC_partition_and_test_loss_feedback_from_actual_partition_errors",
     "small_failed_recipe_sweep_planned": false,
-    "FG_0_87_and_native32_joint70k_and_gate_causality_remain_outstanding": true
+    "FG_0_87_and_native32_joint70k_and_gate_causality_remain_outstanding": true,
+    "experiment": "SW0191_partition_error_feedback"
+  },
+  "latest_partition_error_feedback_20261017": {
+    "experiment": "SW0191_partition_error_feedback",
+    "status": "training_started_seed0_actual_feedback_credit_and_full_forward_parity_verified",
+    "seed_scope": [
+      0,
+      1,
+      2
+    ],
+    "initialization": "exact_completed_SW0186_same_seed_weights_with_empty_five_group_Adam",
+    "loss": "QCE_temperature0.1_plus_class_balanced_actual_partition_error_signed_rho_Q_square_feedback_weight1",
+    "feedback_targets": "mined_once_per_proposal_from_actual_production_mask_then_frozen_for_gradient_and_post_loss",
+    "additional_training": "TRAIN512_twice_64_proposals_B16_micro4_T1024_settle512_live_tail64",
+    "mask_supervised": true,
+    "unsupervised_leaderboard_eligible": false,
+    "fresh_native32_joint70k": false,
+    "local_tests": 47,
+    "server_tests": 47,
+    "actual_CLI_modules": 6,
+    "exact_incumbent_CPU_initialization_verified_seed_scope": [
+      0,
+      1,
+      2
+    ],
+    "actual_GPU_started_seed_scope": [
+      0
+    ],
+    "actual_GPU_feedback_admission_seed_scope": [
+      0
+    ],
+    "feedback_to_emitted_spikes_verified_seed_scope": [
+      0
+    ],
+    "feedback_to_trainable_parameters_verified_seed_scope": [
+      0
+    ],
+    "source_CNN_actual_change_verified_seed_scope": [
+      0
+    ],
+    "first_two_GPU_admission_sha256_by_seed": {
+      "0": "1134044edbd1580b5d372d422f349d3acd1085b52379b662925a874e06f6a461"
+    },
+    "live_parent_pids": {
+      "training_seed0": 1712447,
+      "training_seed1": 1712498,
+      "training_seed2": 1712503,
+      "prediction_seed0": 1712508,
+      "prediction_seed1": 1712513,
+      "prediction_seed2": 1712517,
+      "score": 1712521,
+      "audit": 1712526
+    },
+    "resume_policy": "same_software_hardware_math_flags_and_logical_cuda0_physical_index_may_change",
+    "actual_physical_GPU_UUIDs_recorded_per_attempt": true,
+    "homogeneous_four_GPU_hardware": [
+      "NVIDIA TITAN RTX, 7.5, 24576 MiB",
+      "NVIDIA TITAN RTX, 7.5, 24576 MiB",
+      "NVIDIA TITAN RTX, 7.5, 24576 MiB",
+      "NVIDIA TITAN RTX, 7.5, 24576 MiB"
+    ],
+    "cross_physical_GPU_bitwise_trajectory_equivalence_claim": false,
+    "fixed320_result_available": false,
+    "incumbent_changed": false,
+    "gate_causality_proven": false,
+    "peer_cycle_check": {
+      "branch": "patch_v2",
+      "commit": "cab6c676e24a149a45ea960586c04e579f78d384",
+      "changed": false
+    },
+    "result_path": "collaborative_test/SW_0191_partition_error_feedback/README.md",
+    "observed_unix": 1792264637.5963025
   }
 }

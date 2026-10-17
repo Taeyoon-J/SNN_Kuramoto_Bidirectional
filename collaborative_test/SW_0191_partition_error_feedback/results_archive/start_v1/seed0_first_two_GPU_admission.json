@@ -1,0 +1,107 @@
+{
+  "resume_policy": "same_software_hardware_math_flags_and_logical_cuda0_physical_index_may_change",
+  "status": "SW0191_first_two_real_GPU_proposals_verified",
+  "records": [
+    {
+      "seed": 0,
+      "incumbent_lineage": {
+        "experiment": "SW0186_full_encoder_qce",
+        "seed": 0,
+        "manifest_sha256": "05cd7f690eee72e1303225d79385d3e04c840e7c28991854676036c584b39de1",
+        "checkpoint_sha256": "73f290e54fa7f7dd9b3ee1605523b0d0e7ed4dabdeaa90ba13bd059d2df420df",
+        "final_model_state_sha256": "edd716717b8e6c5b47b0e8cfa6c02660fbcfea3d7b8cac3964be4f9ee0e1e34a",
+        "artifact": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0186_full_encoder_qce/results_archive/training_20261016/product_q_ce_seed0",
+        "optimizer_policy": "reset_empty_Adam_all_five_groups"
+      },
+      "source_CNN_changed": true,
+      "source_CNN_current_sha256": "ee85acb0c7e9e557490064878eaa06b0b630301d9f7314b83a745bda75965529",
+      "source_CNN_initial_sha256": "8e1cbe9c1fff1234776fef04eeccfc516b49b24631b5ff561eeca20cd5aada65",
+      "cursor": 3,
+      "accepted_updates": 3,
+      "actual_Adam_steps": [
+        3
+      ],
+      "boundary_sha256": "4da6fd126f490123276324fde8b3ab65db8c2ab5a4f1dc37eca242183b7e644e",
+      "first_two": [
+        {
+          "proposal": 1,
+          "accepted": true,
+          "before": 0.8687373418360949,
+          "after": 0.8508862797170877,
+          "parity_error": 0.0,
+          "guard": 8.687373418360949e-07,
+          "feedback_loss": 0.6408255696296692,
+          "feedback_S_gradient": 0.17705221080110853,
+          "feedback_parameter_gradient_rss": 1.526462740285408,
+          "feedback_family_gradient_rss": {
+            "context_encoder": 0.7071764713485167,
+            "graph": 0.21222500761832816,
+            "native_core": 0.2807895678500487,
+            "integration": 0.00014051660839927698,
+            "source_base": 1.3061805697658206
+          },
+          "feedback_context_sha256": "ca3379bec1717dfb816cfa2447d894ff4fc672baa1271cbd4567b2bfa31dfb49",
+          "emitted_S_gradient": 0.1858100428131432,
+          "family_gradient_norms": {
+            "context_encoder": 0.9363545360138849,
+            "graph": 0.2078314486907142,
+            "native_core": 0.3725641156672276,
+            "integration": 0.0001856642737785957,
+            "source_base": 1.480525850108571
+          },
+          "proposed_family_delta_l2": {
+            "context_encoder": 0.05061166481755447,
+            "graph": 0.0003434011027439623,
+            "native_core": 0.0030974663044742476,
+            "integration": 0.0034606756144503806,
+            "source_base": 0.0004489998655839679
+          },
+          "start_transaction_sha256": "2e7f2dbc852ba3c7b661e208aae982749f19a1a408936a694217809d03c3eb76",
+          "proposal_transaction_sha256": "a43126985319431ee75d5e1977275b74574dbf859ce742709130a2a6a7533c99"
+        },
+        {
+          "proposal": 2,
+          "accepted": true,
+          "before": 1.0752955861389637,
+          "after": 1.072510439902544,
+          "parity_error": 0.0,
+          "guard": 1.0752955861389636e-06,
+          "feedback_loss": 0.6795735862106085,
+          "feedback_S_gradient": 0.0888794098704417,
+          "feedback_parameter_gradient_rss": 0.8115461762752174,
+          "feedback_family_gradient_rss": {
+            "context_encoder": 0.3348579435945689,
+            "graph": 0.20725600966549845,
+            "native_core": 0.11594675132281605,
+            "integration": 0.0001197071353835148,
+            "source_base": 0.7000561669066022
+          },
+          "feedback_context_sha256": "76ad4d7bc3fea7298ce08e27fa4282722f345404dff3fa8bb373ae5a22ce6a91",
+          "emitted_S_gradient": 0.11930932834152147,
+          "family_gradient_norms": {
+            "context_encoder": 0.7745460574967465,
+            "graph": 0.37683869247678214,
+            "native_core": 0.07807874740939737,
+            "integration": 0.00017789164727346641,
+            "source_base": 1.3127576560050862
+          },
+          "proposed_family_delta_l2": {
+            "context_encoder": 0.03370797494477232,
+            "graph": 0.00020456668408475617,
+            "native_core": 0.002240001383719452,
+            "integration": 0.001362455058550321,
+            "source_base": 0.0002830367562662749
+          },
+          "start_transaction_sha256": "f0d91a701b6d47a7c9424611a8081912abeb5ad4c1ac737b826aad55c35d7c7e",
+          "proposal_transaction_sha256": "2623fc0bdcc0b5074fa1c0502927e7fe7c38f93c2b33e46c9117a83095f7d7c9"
+        }
+      ]
+    }
+  ],
+  "seed_scope": [
+    0
+  ],
+  "observed_unix": 1792264551.7750962,
+  "validation_data_read": false,
+  "optimizer_updates_by_this_script": 0
+}

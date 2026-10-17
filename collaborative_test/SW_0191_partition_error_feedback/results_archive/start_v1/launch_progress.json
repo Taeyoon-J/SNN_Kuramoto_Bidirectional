@@ -1,0 +1,200 @@
+{
+  "status": "launching",
+  "records": [
+    {
+      "label": "training_seed0",
+      "pid": 1712447,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0191_partition_error_feedback.training_queue",
+        "--source-seed",
+        "0"
+      ],
+      "log_path": "/Data0/kevinswk/patch_v2_sw/collaborative_testing/collaborative_private_runtime_20261008/SW0191_delivery_20261017/training_seed0_supervisor.log",
+      "state_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0191_partition_error_feedback/results_archive/training_queue_20261017/product_q_ce_seed0_state.json",
+      "verified": true,
+      "state": {
+        "arm": "product_q_ce",
+        "experiment": "SW0191_training_queue",
+        "seed": 0,
+        "status": "waiting_for_successful_source_preflight",
+        "supervisor_pid": 1712447,
+        "updated_unix": 1792264291.0557444,
+        "validation_data_read": false
+      }
+    },
+    {
+      "label": "training_seed1",
+      "pid": 1712498,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0191_partition_error_feedback.training_queue",
+        "--source-seed",
+        "1"
+      ],
+      "log_path": "/Data0/kevinswk/patch_v2_sw/collaborative_testing/collaborative_private_runtime_20261008/SW0191_delivery_20261017/training_seed1_supervisor.log",
+      "state_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0191_partition_error_feedback/results_archive/training_queue_20261017/product_q_ce_seed1_state.json",
+      "verified": true,
+      "state": {
+        "arm": "product_q_ce",
+        "experiment": "SW0191_training_queue",
+        "seed": 1,
+        "status": "waiting_for_successful_source_preflight",
+        "supervisor_pid": 1712498,
+        "updated_unix": 1792264293.2559836,
+        "validation_data_read": false
+      }
+    },
+    {
+      "label": "training_seed2",
+      "pid": 1712503,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0191_partition_error_feedback.training_queue",
+        "--source-seed",
+        "2"
+      ],
+      "log_path": "/Data0/kevinswk/patch_v2_sw/collaborative_testing/collaborative_private_runtime_20261008/SW0191_delivery_20261017/training_seed2_supervisor.log",
+      "state_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0191_partition_error_feedback/results_archive/training_queue_20261017/product_q_ce_seed2_state.json",
+      "verified": true,
+      "state": {
+        "arm": "product_q_ce",
+        "experiment": "SW0191_training_queue",
+        "seed": 2,
+        "status": "waiting_for_successful_source_preflight",
+        "supervisor_pid": 1712503,
+        "updated_unix": 1792264295.5762396,
+        "validation_data_read": false
+      }
+    },
+    {
+      "label": "prediction_seed0",
+      "pid": 1712508,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0191_partition_error_feedback.prediction_queue",
+        "--source-seed",
+        "0"
+      ],
+      "log_path": "/Data0/kevinswk/patch_v2_sw/collaborative_testing/collaborative_private_runtime_20261008/SW0191_delivery_20261017/prediction_seed0_supervisor.log",
+      "state_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0191_partition_error_feedback/results_archive/prediction_queue_20261017/product_q_ce_seed0_state.json",
+      "verified": true,
+      "state": {
+        "arm": "product_q_ce",
+        "experiment": "SW0191_prediction_queue",
+        "seed": 0,
+        "status": "waiting_for_training",
+        "supervisor_pid": 1712508,
+        "updated_unix": 1792264297.9116626,
+        "validation_data_read": false
+      }
+    },
+    {
+      "label": "prediction_seed1",
+      "pid": 1712513,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0191_partition_error_feedback.prediction_queue",
+        "--source-seed",
+        "1"
+      ],
+      "log_path": "/Data0/kevinswk/patch_v2_sw/collaborative_testing/collaborative_private_runtime_20261008/SW0191_delivery_20261017/prediction_seed1_supervisor.log",
+      "state_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0191_partition_error_feedback/results_archive/prediction_queue_20261017/product_q_ce_seed1_state.json",
+      "verified": true,
+      "state": {
+        "arm": "product_q_ce",
+        "experiment": "SW0191_prediction_queue",
+        "seed": 1,
+        "status": "waiting_for_training",
+        "supervisor_pid": 1712513,
+        "updated_unix": 1792264300.09538,
+        "validation_data_read": false
+      }
+    },
+    {
+      "label": "prediction_seed2",
+      "pid": 1712517,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0191_partition_error_feedback.prediction_queue",
+        "--source-seed",
+        "2"
+      ],
+      "log_path": "/Data0/kevinswk/patch_v2_sw/collaborative_testing/collaborative_private_runtime_20261008/SW0191_delivery_20261017/prediction_seed2_supervisor.log",
+      "state_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0191_partition_error_feedback/results_archive/prediction_queue_20261017/product_q_ce_seed2_state.json",
+      "verified": true,
+      "state": {
+        "arm": "product_q_ce",
+        "experiment": "SW0191_prediction_queue",
+        "seed": 2,
+        "status": "waiting_for_training",
+        "supervisor_pid": 1712517,
+        "updated_unix": 1792264302.3756113,
+        "validation_data_read": false
+      }
+    },
+    {
+      "label": "score",
+      "pid": 1712521,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0191_partition_error_feedback.score_queue",
+        "--worker"
+      ],
+      "log_path": "/Data0/kevinswk/patch_v2_sw/collaborative_testing/collaborative_private_runtime_20261008/SW0191_delivery_20261017/score_supervisor.log",
+      "state_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0191_partition_error_feedback/results_archive/score_queue_20261017/state.json",
+      "verified": true,
+      "state": {
+        "experiment": "SW0191_score_queue",
+        "pending_seeds": [
+          0,
+          1,
+          2
+        ],
+        "prediction_state_sha256": {
+          "0": "b0f1e2f1d624f3e97a52076db0c675ad23bec6f72db118fdadf942812a82f9e0",
+          "1": "04043a856f44e60444d9abccae609f1029952d2dc1b154f0a55c70194f3501a6",
+          "2": "722d1916ab16c296e2f5955cb990a43e8834823834681129a7a7a58bb88ca4a9"
+        },
+        "status": "waiting_for_predictions",
+        "supervisor_pid": 1712521,
+        "updated_unix": 1792264304.8171504
+      }
+    },
+    {
+      "label": "audit",
+      "pid": 1712526,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0191_partition_error_feedback.audit_queue",
+        "--worker"
+      ],
+      "log_path": "/Data0/kevinswk/patch_v2_sw/collaborative_testing/collaborative_private_runtime_20261008/SW0191_delivery_20261017/audit_supervisor.log",
+      "state_path": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0191_partition_error_feedback/results_archive/audit_queue_20261017/started.json",
+      "verified": true,
+      "state": {
+        "experiment": "SW0191_audit_queue",
+        "status": "waiting_for_score",
+        "supervisor_pid": 1712526,
+        "observed_unix": 1792264307.221424,
+        "validation_data_read": false
+      }
+    }
+  ]
+}
