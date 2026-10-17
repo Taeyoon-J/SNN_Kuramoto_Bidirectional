@@ -2,8 +2,11 @@
 
 Registered: three training supervisors, three prediction supervisors, GT-last
 scoring and an independent final auditor. All eight parents were verified live.
-At that observation all training runs were waiting for exclusive idle GPUs;
-no actual GPU training or new performance score is claimed yet.
+Seed1 has subsequently actually started on GPU1. Its first two real proposals
+verified emitted-S/five-family credit and full-forward parity; a committed update
+changed the original CNN and populated its Adam state. The scoped proof is in
+`results_archive/start_v1/seed1_first_two_GPU_admission.json`. This is a working
+learning path, not a new performance result. Other seeds remain registered.
 
 The improved SW0186 recipe keeps its original RGB CNN trainable. Both arms share
 one contemporaneous32-proposal prefix, then fork exact model/Adam/RNG state.
