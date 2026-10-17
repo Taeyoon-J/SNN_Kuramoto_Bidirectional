@@ -6719,7 +6719,7 @@
   },
   "latest_joint_encoder_unique_scaling_20261017": {
     "experiment": "SW0187_joint_encoder_unique_scaling",
-    "status": "all_three_seed_paired_training_validated_waiting_for_remaining_prediction_freezes",
+    "status": "complete_independently_audited_scaling_gate_failed",
     "seed_scope": [
       0,
       1,
@@ -6749,24 +6749,14 @@
     ],
     "actual_GPU_training_started": true,
     "source_CNN_learning_result_available": true,
-    "fixed320_result_available": false,
+    "fixed320_result_available": true,
     "incumbent_changed": false,
-    "live_parent_pids": {
-      "training_seed0": 1295829,
-      "training_seed1": 1563407,
-      "training_seed2": 1295856,
-      "prediction_seed0": 1295864,
-      "prediction_seed1": 1295928,
-      "prediction_seed2": 1295932,
-      "score": 1295938,
-      "audit": 1295942
-    },
     "peer_cycle_check": {
       "branch": "patch_v2",
       "commit": "cab6c676e24a149a45ea960586c04e579f78d384",
       "changed": false
     },
-    "result_path": "collaborative_test/SW_0187_joint_encoder_unique_scaling/README.md",
+    "result_path": "collaborative_test/SW_0187_joint_encoder_unique_scaling/RESULT_KO.md",
     "actual_GPU_admission_seed_scope": [
       0,
       1,
@@ -6811,7 +6801,7 @@
         "candidate1024": 45
       }
     },
-    "data_scaling_result_available": false,
+    "data_scaling_result_available": true,
     "current_run_actual_GPU_admission_seed_scope": [
       0,
       1,
@@ -6843,8 +6833,124 @@
     },
     "additional_preserved_partial_prefix_proposals": 15,
     "frozen_prediction_seed_scope": [
-      0
+      0,
+      1,
+      2
     ],
-    "resource_requeue_seed1_fresh_GPU_admission_sha256": "408ce66bc979439339a6f3e0b1f8dc8ef62c240ab113a153381f8c0f4a2bc52c"
+    "resource_requeue_seed1_fresh_GPU_admission_sha256": "408ce66bc979439339a6f3e0b1f8dc8ef62c240ab113a153381f8c0f4a2bc52c",
+    "historical_parent_pids": {
+      "training_seed0": 1295829,
+      "training_seed1": 1563407,
+      "training_seed2": 1295856,
+      "prediction_seed0": 1295864,
+      "prediction_seed1": 1295928,
+      "prediction_seed2": 1295932,
+      "score": 1295938,
+      "audit": 1295942
+    },
+    "gates": {
+      "fg_0_87_goal": false,
+      "mask_supervised": true,
+      "primary_endpoint": "standalone",
+      "slot_benchmark_passed": true,
+      "slot_fg_mean_strictly_exceeded": true,
+      "slot_fg_paired_ci95_lower_above_zero": true,
+      "slot_foreground_iou_mean_strictly_exceeded": true,
+      "slot_matched_object_iou_mean_strictly_exceeded": true,
+      "sw0165_fg_mean_strictly_exceeded": true,
+      "sw0165_fg_paired_ci95_lower_above_zero": true,
+      "sw0181_fg_mean_strictly_exceeded": true,
+      "sw0181_fg_paired_ci95_lower_above_zero": true,
+      "sw0186_fg_mean_strictly_exceeded": false,
+      "sw0186_fg_paired_ci95_lower_above_zero": false,
+      "unique_data_fg_mean_above_control": false,
+      "unique_data_fg_paired_ci95_lower_above_zero": false,
+      "unique_data_gate_passed": false,
+      "unsupervised_leaderboard_eligible": false
+    },
+    "score_sha256": "31bcb373a41fe533d0f2218c5861e6c7022996396536c79f9e8279d0a8716b11",
+    "audit_version": 2,
+    "maximum_metric_abs_error": 3.3306690738754696e-16,
+    "means": {
+      "SW0165_foreground_induced_conditional": {
+        "fg_ari": 0.8042989149474199,
+        "foreground_iou": 0.6099754484530632,
+        "matched_object_iou": 0.6511489750258587
+      },
+      "SW0165_foreground_induced_standalone": {
+        "fg_ari": 0.8042989149474199,
+        "foreground_iou": 0.6099754484530632,
+        "matched_object_iou": 0.6511489750258587
+      },
+      "SW0181_conditional": {
+        "fg_ari": 0.8022593453427527,
+        "foreground_iou": 0.6099754484530632,
+        "matched_object_iou": 0.6552174495045815
+      },
+      "SW0181_standalone": {
+        "fg_ari": 0.8148362490119876,
+        "foreground_iou": 0.5893021267072601,
+        "matched_object_iou": 0.6716810693605446
+      },
+      "SW0186_conditional": {
+        "fg_ari": 0.8084225339763049,
+        "foreground_iou": 0.6099754484530632,
+        "matched_object_iou": 0.6620826539771415
+      },
+      "SW0186_standalone": {
+        "fg_ari": 0.8346805012913832,
+        "foreground_iou": 0.5690396164955844,
+        "matched_object_iou": 0.6898022207059149
+      },
+      "Slot70k_conditional": {
+        "fg_ari": 0.7816519719609136,
+        "foreground_iou": 0.20436012776655543,
+        "matched_object_iou": 0.20316498618845008
+      },
+      "Slot70k_standalone": {
+        "fg_ari": 0.7816519719609136,
+        "foreground_iou": 0.20436012776655543,
+        "matched_object_iou": 0.20316498618845008
+      },
+      "candidate1024_conditional": {
+        "fg_ari": 0.8059888118705014,
+        "foreground_iou": 0.6099754484530632,
+        "matched_object_iou": 0.6582878375228793
+      },
+      "candidate1024_standalone": {
+        "fg_ari": 0.8265560485567015,
+        "foreground_iou": 0.5776522320433939,
+        "matched_object_iou": 0.6793377011702125
+      },
+      "control512_conditional": {
+        "fg_ari": 0.807434345058635,
+        "foreground_iou": 0.6099754484530632,
+        "matched_object_iou": 0.6556686382415051
+      },
+      "control512_standalone": {
+        "fg_ari": 0.8294789785161145,
+        "foreground_iou": 0.6088716122369762,
+        "matched_object_iou": 0.6805834520201846
+      }
+    },
+    "primary_scaling_paired": {
+      "ci95": [
+        -0.007999216402639897,
+        0.0022561844392166483
+      ],
+      "mean": -0.0029229299594129596,
+      "replicates": 10000,
+      "resampling_unit": "paired_image_after_three_seed_average",
+      "seed": 178
+    },
+    "foundation_has_inherited_full70k_RGB_training": true,
+    "recipe_closed_without_small_hyperparameter_rescue": true
+  },
+  "foundation_budget_clarification_20261017": {
+    "source097_inherits_full70k_RGB_training": true,
+    "source097_last_additional_stage_images": 4096,
+    "SW0186_SW0187_data_counts": "additional_supervised_native32_adaptation_only",
+    "new_native32_joint_encoder70k_pass_complete": false,
+    "receipt": "collaborative_test/SW_0187_joint_encoder_unique_scaling/results_archive/foundation_provenance_v1/foundation_provenance_receipt.json"
   }
 }

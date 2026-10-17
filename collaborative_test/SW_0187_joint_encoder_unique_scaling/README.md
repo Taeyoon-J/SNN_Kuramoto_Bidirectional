@@ -72,3 +72,5 @@ proposals remain preserved separately. Masks for the remaining seeds are queued;
 no new FG-ARI or unique-data benefit is claimed before the full six-archive score.
 
 Training-budget clarification: Source097 already inherits full70k RGB training; 4,096 is its final additional stage. The 512/1024 counts describe additional supervised adaptation only. See [verified foundation provenance](FOUNDATION_PROVENANCE.md).
+
+Completed: three-seed candidate .826556/.577652/.679338 versus contemporaneous control .829479/.608872/.680583. Unique-data FG gate fails; SW0186 remains the supervised FG incumbent. Independent audit v2 passed; original audit identifier failure is preserved. See [completed results](RESULT_KO.md).
