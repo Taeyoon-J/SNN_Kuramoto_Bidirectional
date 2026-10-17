@@ -1,0 +1,87 @@
+{
+  "observed_unix": 1792195352.0594456,
+  "records": [
+    {
+      "seed": 0,
+      "status": "running_worker",
+      "gpu": 2,
+      "parent": {
+        "pid": 953125,
+        "state": "S",
+        "ppid": 1,
+        "pgid": 953125,
+        "start_ticks": 434732369,
+        "argv": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "-u",
+          "-m",
+          "collaborative_test.SW_0185_qce_spatial_connectivity.training_queue",
+          "--source-seed",
+          "0"
+        ]
+      },
+      "worker": {
+        "pid": 953274,
+        "state": "R",
+        "ppid": 953125,
+        "pgid": 953274,
+        "start_ticks": 434735354,
+        "argv": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "-m",
+          "collaborative_test.SW_0185_qce_spatial_connectivity.training_queue",
+          "--worker",
+          "--source-seed",
+          "0",
+          "--physical-gpu",
+          "2"
+        ]
+      },
+      "cursor": 1,
+      "accepted_updates": 1
+    },
+    {
+      "seed": 1,
+      "status": "waiting_for_exclusive_gpu",
+      "gpu": null,
+      "parent": {
+        "pid": 953128,
+        "state": "S",
+        "ppid": 1,
+        "pgid": 953128,
+        "start_ticks": 434732595,
+        "argv": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "-u",
+          "-m",
+          "collaborative_test.SW_0185_qce_spatial_connectivity.training_queue",
+          "--source-seed",
+          "1"
+        ]
+      },
+      "worker": null
+    },
+    {
+      "seed": 2,
+      "status": "waiting_for_exclusive_gpu",
+      "gpu": null,
+      "parent": {
+        "pid": 953138,
+        "state": "S",
+        "ppid": 1,
+        "pgid": 953138,
+        "start_ticks": 434732820,
+        "argv": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "-u",
+          "-m",
+          "collaborative_test.SW_0185_qce_spatial_connectivity.training_queue",
+          "--source-seed",
+          "2"
+        ]
+      },
+      "worker": null
+    }
+  ],
+  "gpu": "GPU-a0a7d03d-adc1-37ca-4342-328878b3657c, 767110, /work/USERS/zhuoyu73/venvs/vllm/bin/python, 818 MiB\nGPU-45604115-c231-56a5-32ea-d3001e8ff243, 947853, /ram/USERS/ziquanw/softwares/miniconda3/envs/py310/bin/python, 8956 MiB\nGPU-50cc59a2-8312-ff02-5889-1becf63c7cd4, 953274, /Data0/kevinswk/envs/snn/bin/python, 4330 MiB\nGPU-6801a3dc-cde3-86c6-d665-6d9ecf063a1e, 947976, /ram/USERS/ziquanw/softwares/miniconda3/envs/py310/bin/python, 9076 MiB\n"
+}

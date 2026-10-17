@@ -1,0 +1,71 @@
+{
+  "status": "SW0185_three_training_supervisors_verified_live",
+  "records": [
+    {
+      "seed": 0,
+      "pid": 953125,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0185_qce_spatial_connectivity.training_queue",
+        "--source-seed",
+        "0"
+      ],
+      "state": {
+        "arm": "qce_spatial_connectivity",
+        "experiment": "SW0185_training_queue",
+        "seed": 0,
+        "status": "waiting_for_successful_source_preflight",
+        "supervisor_pid": 953125,
+        "updated_unix": 1792195257.3603117,
+        "validation_data_read": false
+      }
+    },
+    {
+      "seed": 1,
+      "pid": 953128,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0185_qce_spatial_connectivity.training_queue",
+        "--source-seed",
+        "1"
+      ],
+      "state": {
+        "arm": "qce_spatial_connectivity",
+        "experiment": "SW0185_training_queue",
+        "seed": 1,
+        "status": "waiting_for_successful_source_preflight",
+        "supervisor_pid": 953128,
+        "updated_unix": 1792195259.3846264,
+        "validation_data_read": false
+      }
+    },
+    {
+      "seed": 2,
+      "pid": 953138,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0185_qce_spatial_connectivity.training_queue",
+        "--source-seed",
+        "2"
+      ],
+      "state": {
+        "arm": "qce_spatial_connectivity",
+        "experiment": "SW0185_training_queue",
+        "seed": 2,
+        "status": "waiting_for_successful_source_preflight",
+        "supervisor_pid": 953138,
+        "updated_unix": 1792195261.899737,
+        "validation_data_read": false
+      }
+    }
+  ],
+  "cpu_receipt_sha256": "563d1e072c9263d18b8eda28d78dcb8f4afe5387abea4f1060c703efaf8ce7d0",
+  "validation_data_read": false,
+  "observed_unix": 1792195262.1231544
+}

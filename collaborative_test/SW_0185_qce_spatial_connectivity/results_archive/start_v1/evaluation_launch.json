@@ -1,0 +1,98 @@
+{
+  "status": "SW0185_three_prediction_parents_and_GT_last_score_verified_live",
+  "records": [
+    {
+      "label": "prediction_seed0",
+      "pid": 957347,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0185_qce_spatial_connectivity.prediction_queue",
+        "--source-seed",
+        "0"
+      ],
+      "state": {
+        "arm": "qce_spatial_connectivity",
+        "experiment": "SW0185_prediction_queue",
+        "seed": 0,
+        "status": "waiting_for_training",
+        "supervisor_pid": 957347,
+        "updated_unix": 1792195641.3040252,
+        "validation_data_read": false
+      }
+    },
+    {
+      "label": "prediction_seed1",
+      "pid": 957371,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0185_qce_spatial_connectivity.prediction_queue",
+        "--source-seed",
+        "1"
+      ],
+      "state": {
+        "arm": "qce_spatial_connectivity",
+        "experiment": "SW0185_prediction_queue",
+        "seed": 1,
+        "status": "waiting_for_training",
+        "supervisor_pid": 957371,
+        "updated_unix": 1792195643.5918558,
+        "validation_data_read": false
+      }
+    },
+    {
+      "label": "prediction_seed2",
+      "pid": 957380,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0185_qce_spatial_connectivity.prediction_queue",
+        "--source-seed",
+        "2"
+      ],
+      "state": {
+        "arm": "qce_spatial_connectivity",
+        "experiment": "SW0185_prediction_queue",
+        "seed": 2,
+        "status": "waiting_for_training",
+        "supervisor_pid": 957380,
+        "updated_unix": 1792195645.8674412,
+        "validation_data_read": false
+      }
+    },
+    {
+      "label": "score",
+      "pid": 957426,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0185_qce_spatial_connectivity.score_queue",
+        "--worker"
+      ],
+      "state": {
+        "experiment": "SW0185_score_queue",
+        "pending_seeds": [
+          0,
+          1,
+          2
+        ],
+        "prediction_state_sha256": {
+          "0": "db6acaade947f445147dae12bb1ee63a1805ee8714b5abcb7057ea8f304754ae",
+          "1": "cbb75582e1cca0de794a1de94f3665c4796d2670e26a4457fa5339178c232b53",
+          "2": "9846a0a04fbf7372550d1ea681959c3d343f5a60ea760712c866a019b39b5dd4"
+        },
+        "status": "waiting_for_predictions",
+        "supervisor_pid": 957426,
+        "updated_unix": 1792195648.1874077
+      }
+    }
+  ],
+  "evaluation_cpu_receipt_sha256": "c2d73141d074db876d0d466ffe38dcf3054dad1a6da0a7f664777a10aa28deaf",
+  "validation_data_read": false,
+  "observed_unix": 1792195648.3234577
+}

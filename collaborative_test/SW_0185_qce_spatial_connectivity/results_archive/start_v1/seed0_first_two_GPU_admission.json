@@ -1,0 +1,68 @@
+{
+  "status": "SW0185_first_two_real_GPU_proposals_verified",
+  "records": [
+    {
+      "seed": 0,
+      "cursor": 11,
+      "accepted_updates": 6,
+      "actual_Adam_steps": [
+        6
+      ],
+      "boundary_sha256": "c792dd1c60b3f00da7acc8cdf48b7a61571caa1bbaebeab1a44a7bcd6276f097",
+      "first_two": [
+        {
+          "proposal": 1,
+          "accepted": true,
+          "before": 0.32705719769001007,
+          "after": 0.31914905551820993,
+          "parity_error": 1.862645149230957e-09,
+          "guard": 3.2705719769001005e-07,
+          "emitted_S_gradient": 0.052736299370291936,
+          "family_gradient_norms": {
+            "context_encoder": 0.32513628190048005,
+            "graph": 0.18826535881270962,
+            "native_core": 0.10603512816591254,
+            "integration": 7.158009396123144e-05
+          },
+          "proposed_family_delta_l2": {
+            "context_encoder": 0.004874038013385465,
+            "graph": 0.00034339720812995403,
+            "native_core": 0.002970205351042444,
+            "integration": 0.0027662654572745272
+          },
+          "start_transaction_sha256": "4139ba4573822cf182e098b6d49e6778fc6dc5c86a3b4fc646dc3dbe264ddcb4",
+          "proposal_transaction_sha256": "301b3853356c04cfb28b9f3fc2efa61c0e7080b2796bb92338f974a321857dff"
+        },
+        {
+          "proposal": 2,
+          "accepted": false,
+          "before": 0.5181841276353225,
+          "after": 0.5331531781703234,
+          "parity_error": 1.1641532182693481e-10,
+          "guard": 5.181841276353224e-07,
+          "emitted_S_gradient": 0.07898707557419478,
+          "family_gradient_norms": {
+            "context_encoder": 0.18838308578348176,
+            "graph": 0.058739464549462064,
+            "native_core": 0.24786874798185377,
+            "integration": 0.0002736141614455804
+          },
+          "proposed_family_delta_l2": {
+            "context_encoder": 0.03451877509423468,
+            "graph": 0.00023905591674284687,
+            "native_core": 0.002296109041108067,
+            "integration": 0.002253611323361259
+          },
+          "start_transaction_sha256": "9d5ce114d35c6c5eaa3a488460119cbd57c32af79f674888509edc426583807b",
+          "proposal_transaction_sha256": "bd0d685631f26ffb481d97f6e4419b9d383e0afbfd112b73f92ff57506cd54b8"
+        }
+      ]
+    }
+  ],
+  "seed_scope": [
+    0
+  ],
+  "observed_unix": 1792195684.3878012,
+  "validation_data_read": false,
+  "optimizer_updates_by_this_script": 0
+}
