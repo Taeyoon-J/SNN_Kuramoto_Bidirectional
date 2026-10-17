@@ -6955,7 +6955,7 @@
   },
   "latest_incumbent_continuation_20261017": {
     "experiment": "SW0188_incumbent_continuation",
-    "status": "seed0_seed2_training_validated_seed1_resource_fresh_requeued",
+    "status": "seed0_seed2_predictions_frozen_replacement_seed1_actual_GPU_credit_verified",
     "seed_scope": [
       0,
       1,
@@ -7039,27 +7039,25 @@
     },
     "currently_verified_live_parent_labels": [
       "training_seed1",
-      "prediction_seed0",
       "prediction_seed1",
-      "prediction_seed2",
       "score",
       "audit"
     ],
     "latest_runtime_observation": {
-      "seed0": "training_complete_64_proposals_33_accepted",
-      "seed2": "training_complete_64_proposals_25_accepted",
-      "seed1": "new_parent1663660_unbound_GPU_waiting",
-      "prediction_seed0": "actual_GPU2_worker_started",
-      "foreign_processes_signalled": false,
+      "seed0": "prediction_complete_frozen_320x32x32_both_endpoints",
+      "seed2": "prediction_complete_frozen_320x32x32_both_endpoints",
+      "seed1": "replacement_parent1663660_actual_GPU2_training",
       "model_sources_changed": false,
-      "observed_unix": 1792258275.7464447
+      "observed_unix": 1792259675.048506
     },
     "current_run_GPU_admission_seed_scope": [
       0,
+      1,
       2
     ],
     "current_run_source_CNN_change_verified_seed_scope": [
       0,
+      1,
       2
     ],
     "resource_requeue_seed1": {
@@ -7093,11 +7091,19 @@
     ],
     "current_parent_pids": {
       "training_seed1": 1663660,
-      "prediction_seed0": 1614108,
       "prediction_seed1": 1614111,
-      "prediction_seed2": 1614118,
       "score": 1614121,
       "audit": 1614125
+    },
+    "frozen_prediction_seed_scope": [
+      0,
+      2
+    ],
+    "resource_requeue_seed1_fresh_GPU_admission_sha256": "11f31fb9d11d33afed369beb53d861baef375aa0ac35a2fd58a2be10a48ca27d",
+    "replacement_seed1_actual_GPU_started": true,
+    "frozen_prediction_hashes": {
+      "0": "e93959cfc9c88dd92a0cb96bfd20b50ae6fad1803c0197721c33f46caa737189",
+      "2": "6948d17ec9f8fb00bf73748f01ba38884c984e4c8457cdbce5901eca12b0dd18"
     }
   },
   "latest_frozen_error_attribution_20261017": {

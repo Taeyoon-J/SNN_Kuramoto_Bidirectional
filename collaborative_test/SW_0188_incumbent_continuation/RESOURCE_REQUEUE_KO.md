@@ -36,3 +36,5 @@ first-two-GPU admission. Never signal or share the foreign process.
 Models0/2 and all other queues remain unchanged. A fresh queue may use any
 exclusively idle GPU under the existing admission policy. If an observation
 times out, inspect the same replacement PID and journal; do not launch again.
+
+The replacement actually started on GPU2 and passed its own first-two admission. Identical starting tensor and proposal RNG hashes do not guarantee bitwise-identical optimizer/rollout trajectories across physical GPUs; no such equivalence is claimed. Selection remains resource-only and precedes SW0188 GT scoring.

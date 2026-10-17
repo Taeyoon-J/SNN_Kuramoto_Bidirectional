@@ -1,0 +1,86 @@
+{
+  "run_instance": "resource_requeue_seed1_v1",
+  "supervisor_pid": 1663660,
+  "status": "SW0188_first_two_real_GPU_proposals_verified",
+  "records": [
+    {
+      "seed": 1,
+      "incumbent_lineage": {
+        "experiment": "SW0186_full_encoder_qce",
+        "seed": 1,
+        "manifest_sha256": "546d817ecba65e04f443f61c44db6949010312aafffcf1ecd6bc47d6e68db130",
+        "checkpoint_sha256": "2788cc5ffb8e653a9b98d78c2dca3296b10ae9a993a392edf046ba9917e76468",
+        "final_model_state_sha256": "c06f0dbb2a01a69156b2eb208b1af8055c89ac8c68b048725181e76cb7a2dd49",
+        "artifact": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0186_full_encoder_qce/results_archive/training_20261016/product_q_ce_seed1",
+        "optimizer_policy": "reset_empty_Adam_all_five_groups"
+      },
+      "source_CNN_changed": true,
+      "source_CNN_current_sha256": "3adeedb5a0c4e5b46296b100f5fff8dd293ddc53fd729b5d0909ed2c5e454148",
+      "source_CNN_initial_sha256": "6820d9dae7b88b1f9a17f66776d20af51af52fe1d75f64ab8a50b3112b0e4a9e",
+      "cursor": 6,
+      "accepted_updates": 3,
+      "actual_Adam_steps": [
+        3
+      ],
+      "boundary_sha256": "87ebfe6222481740f133c2bcf21c205a448ba5a696a576d5fa0e7d46092a548e",
+      "first_two": [
+        {
+          "proposal": 1,
+          "accepted": false,
+          "before": 0.2845842791721225,
+          "after": 0.30101249483413994,
+          "parity_error": 1.862645149230957e-09,
+          "guard": 2.845842791721225e-07,
+          "emitted_S_gradient": 0.034291501058756065,
+          "family_gradient_norms": {
+            "context_encoder": 0.28724067187504265,
+            "graph": 0.10292219126731697,
+            "native_core": 0.05040390569717957,
+            "integration": 2.947833893632368e-06,
+            "source_base": 0.4455198929544577
+          },
+          "proposed_family_delta_l2": {
+            "context_encoder": 0.050977600678842445,
+            "graph": 0.00034340078740939176,
+            "native_core": 0.002752520441599883,
+            "integration": 0.003197839052574202,
+            "source_base": 0.0004489983721579831
+          },
+          "start_transaction_sha256": "c337a6d69ebdb3ae0d2103b274b9133e0084dc58caddcaef03e27262febebcbc",
+          "proposal_transaction_sha256": "364ac854040216a62b8b6c0d23b4c6ebd5b18e66cd7abccaa0cd389a92a730ea"
+        },
+        {
+          "proposal": 2,
+          "accepted": true,
+          "before": 0.4446012703701854,
+          "after": 0.41633545234799385,
+          "parity_error": 4.656612873077393e-10,
+          "guard": 4.4460127037018537e-07,
+          "emitted_S_gradient": 0.06942174199490021,
+          "family_gradient_norms": {
+            "context_encoder": 0.25981112160809416,
+            "graph": 0.06656584727069127,
+            "native_core": 0.1268632237755081,
+            "integration": 6.409810899470417e-06,
+            "source_base": 0.6680185462552077
+          },
+          "proposed_family_delta_l2": {
+            "context_encoder": 0.05098842468429091,
+            "graph": 0.00034338723421798904,
+            "native_core": 0.002792330687143912,
+            "integration": 0.003340327483406128,
+            "source_base": 0.0004489998908634722
+          },
+          "start_transaction_sha256": "c337a6d69ebdb3ae0d2103b274b9133e0084dc58caddcaef03e27262febebcbc",
+          "proposal_transaction_sha256": "0b1c6c80f138914681f60412f76ac56a2c8e1ae728fee74d0fdefa41740924a9"
+        }
+      ]
+    }
+  ],
+  "seed_scope": [
+    1
+  ],
+  "observed_unix": 1792259609.1463034,
+  "validation_data_read": false,
+  "optimizer_updates_by_this_script": 0
+}
