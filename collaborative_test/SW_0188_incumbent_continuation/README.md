@@ -19,3 +19,5 @@ This admission does not establish improved masks or a completed performance resu
 Seed1 actual GPU credit/parity, accepted Adam steps and changed original CNN
 were independently inspected; see `results_archive/start_v1/seed1_first_two_GPU_admission.json`.
 This admission does not establish improved masks or a completed performance result.
+
+Seed0 training completed and its actual checkpoint/Adam/CNN and matching SW0186 start were validated:64 proposals,33 accepted; metadata are in results_archive/completed_seed0_v1. Seed2 has started on GPU2. Seed1 yielded GPU3 to a foreign process with its11-proposal/6-accepted checkpoint preserved and the same supervisor waiting to resume. Predictions/scoring remain queued. No completed fixed320 score or incumbent change is claimed. Model sources are unchanged.

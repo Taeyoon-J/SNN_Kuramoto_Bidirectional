@@ -6955,7 +6955,7 @@
   },
   "latest_incumbent_continuation_20261017": {
     "experiment": "SW0188_incumbent_continuation",
-    "status": "actual_GPU_credit_and_CNN_learning_verified_partial_seed_scope_all_queues_registered",
+    "status": "seed0_training_validated_seed2_running_seed1_waiting_after_foreign_GPU_arrival",
     "seed_scope": [
       0,
       1,
@@ -6977,19 +6977,10 @@
     ],
     "cpu_tests": 39,
     "actual_CLI_checks": 6,
-    "live_parent_pids": {
-      "training_seed0": 1614093,
-      "training_seed1": 1614100,
-      "training_seed2": 1614104,
-      "prediction_seed0": 1614108,
-      "prediction_seed1": 1614111,
-      "prediction_seed2": 1614118,
-      "score": 1614121,
-      "audit": 1614125
-    },
     "GPU_started_seed_scope": [
       0,
-      1
+      1,
+      2
     ],
     "first_two_GPU_admission_seed_scope": [
       0,
@@ -7019,6 +7010,42 @@
     "first_two_GPU_admission_sha256_by_seed": {
       "0": "2864fdfeac591d2d85206ade9f2a489024fa69e0333b1748ab01bb2d9096bb60",
       "1": "a06efdcbaaded5be40f78c56eef860dc8a7b8eb1571eb602793be082f5cc72cc"
+    },
+    "completed_training_seed_scope": [
+      0
+    ],
+    "completed_training_accepted_updates": {
+      "0": 33
+    },
+    "source_CNN_change_verified_on_completed_training_seed_scope": [
+      0
+    ],
+    "historical_parent_pids": {
+      "training_seed0": 1614093,
+      "training_seed1": 1614100,
+      "training_seed2": 1614104,
+      "prediction_seed0": 1614108,
+      "prediction_seed1": 1614111,
+      "prediction_seed2": 1614118,
+      "score": 1614121,
+      "audit": 1614125
+    },
+    "currently_verified_live_parent_labels": [
+      "training_seed1",
+      "training_seed2",
+      "prediction_seed0",
+      "prediction_seed1",
+      "prediction_seed2",
+      "score",
+      "audit"
+    ],
+    "latest_runtime_observation": {
+      "seed0": "training_complete_64_proposals_33_accepted",
+      "seed1": "checkpoint11_6accepted_preserved_waiting_for_exclusive_GPU3",
+      "seed2": "actual_GPU2_worker_started",
+      "foreign_processes_signalled": false,
+      "model_sources_changed": false,
+      "observed_unix": 1792255835.2231271
     }
   }
 }
