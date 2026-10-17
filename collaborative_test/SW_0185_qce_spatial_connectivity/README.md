@@ -19,3 +19,11 @@ the same as a committed update, and does not establish gate usefulness.
 No new fixed320 score is available. SW181 remains the supervised FG incumbent.
 CPU, launch and first-GPU evidence is under `results_archive/cpu_v1`, `cpu_v2`,
 and `start_v1`. Source fingerprints are frozen while training is live.
+
+An additional CPU-only completion auditor is registered after scoring. Eight
+additional server tests and its actual CLI passed, including arithmetic/gate
+verification on pinned actual SW183 vectors. It independently recomputes modal
+GT, all three metrics for 1,920 candidate endpoint/image rows and 960 Slot rows,
+seed means, paired confidence intervals and registered gates. It waits on the
+verified live score producer and never updates the best-model tracker itself.
+[Audit launch evidence](results_archive/audit_start_v1/).

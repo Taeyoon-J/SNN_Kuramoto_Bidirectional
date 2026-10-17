@@ -1,0 +1,79 @@
+{
+  "status": "SW0185_eight_independent_audit_tests_actual_CLI_and_live_score_producer_passed",
+  "tests": 8,
+  "files": [
+    {
+      "path": "collaborative_test/SW_0185_qce_spatial_connectivity/completion_audit.py",
+      "sha256": "d81762ea5def3557c65c897fd16432403e4bf27b3ea1f590195f555d07b3440f"
+    },
+    {
+      "path": "collaborative_test/SW_0185_qce_spatial_connectivity/audit_queue.py",
+      "sha256": "105aadecdb79aaacb82eea72a1c6b4225346334f429216d1c8e918889bf48d07"
+    },
+    {
+      "path": "collaborative_test/SW_0185_qce_spatial_connectivity/test_completion_audit.py",
+      "sha256": "b2e6b8d899c6527fb7fc028092f71139c3877c9faddefcfac33096ccc7211dab"
+    }
+  ],
+  "training_fingerprint": {
+    "experiment": "SW0185_qce_spatial_connectivity",
+    "files": {
+      "collaborative_test/SW_0185_qce_spatial_connectivity/DESIGN_KO.md": "ab741f29a94f6995064019384df5575d5ba5dd3d5427228add0020e1f2e46c3d",
+      "collaborative_test/SW_0185_qce_spatial_connectivity/objective.py": "ea94252f6f63a0ea56c596074b96542c2f7814a725a727d3ec57f48f286e1f5f",
+      "collaborative_test/SW_0185_qce_spatial_connectivity/updates.py": "a701a6beef83968bb9dcb772627c5d2bb83356a093bb52bf091d44528e497003",
+      "collaborative_test/SW_0185_qce_spatial_connectivity/test_objective.py": "6821c0dcbd9d2dbe5dd9a5ebfbf3bf18424736082826b1ddcf47723c5bd98d2c",
+      "collaborative_test/SW_0185_qce_spatial_connectivity/test_updates.py": "4064ada718c71c2e6b25575a09a6525d644e3a20fa15a10ea17108966c73fe8a",
+      "collaborative_test/SW_0181_actual_descent_qce/state_transaction.py": "aeb628aac8735869637f0fec824c35cd4174f6d5d92988d818b248bfd7bb0c79",
+      "collaborative_test/SW_0181_actual_descent_qce/test_state_transaction.py": "a0a53e38cd83fbeed44e174d08fdb2bac2fc2bbd0f86d72ee56e7ef68f712a0a",
+      "collaborative_test/SW_0185_qce_spatial_connectivity/train.py": "e6acc5d2a4ea8c91c507418f0cb2262ee91325a4e3101eba43b7ce0e4f690bb3",
+      "collaborative_test/SW_0185_qce_spatial_connectivity/test_train.py": "88ca0e1444055aec43f368842ae2f9c7c00137e8eb38c2f976ddd9fa4066527d",
+      "collaborative_test/SW_0185_qce_spatial_connectivity/training_queue.py": "ab6eb8c62cc1d2d258c909247b3f34d705a8f02eba1d21c1e0b0b9aa912caa1e",
+      "collaborative_test/SW_0185_qce_spatial_connectivity/test_training_queue.py": "8b3856b826ac68e8142f0ee8073acc9f0fd7085a315686988651d2615ff4bf20",
+      "collaborative_test/SW_0177_learned_coupling_polarity/DESIGN_KO.md": "293fa158f9dd165b6114a9acd8c54b5c673c8b9175c91665c2e7176396030f50",
+      "collaborative_test/SW_0177_learned_coupling_polarity/preflight.py": "31160b3accd94f72ccc1486b248c2da199fd71bb456852343b4d9113c19160e8",
+      "collaborative_test/SW_0177_learned_coupling_polarity/resource_queue_v2.py": "fe446aa50bbc9ee8d30ff7ec030c446e9440de1cd29ce1f94b839867e1df808a",
+      "collaborative_test/SW_0179_qce_seed_replication/train.py": "8b5b2da6e08c780a7e2446afb67a92b9278903720d661b6ba59753358ee125fc",
+      "collaborative_test/SW_0179_qce_seed_replication/DESIGN_KO.md": "bcb1a6317abd0b92a3d17e2e1f99f86c0c7ee5d864ec6dc02639a581f282d255",
+      "collaborative_test/SW_0178_temporal_class_competition/class_competition.py": "b0de2868097585b99e3112c4f68c72ce67de0c8c616c4270149746632e5aed68",
+      "collaborative_test/SW_0175_critical_component_binding/train_v2.py": "284d6de62c4af5cc335b7b953eca1cc936e50f732e55867e4b804c8ec2215a89",
+      "collaborative_test/SW_0148_checkpointable_boundary_q/checkpoint.py": "75d5076c051f81a51a39bbafedd363e589aa58ffc41ba4a662a87ffb91601f53",
+      "collaborative_test/SW_0171_contextual_instance_graph/preflight.py": "bcab86543c0f50cd772d5a024ac83ab3f48f09ff975f0e9719a07129aee35113"
+    },
+    "parent_training_fingerprint": "9dea51bf4b588b2499788bcf1d08e4ddd0b0f5cdd5e2eb5198205321cfaef79e",
+    "source_preflight_module": "collaborative_test.SW_0177_learned_coupling_polarity.preflight",
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "proposal_budget": 64,
+    "acceptance": "finite post < before - max(1e-7,1e-6*abs(before))",
+    "gradient_mode": "original SW0179 full-1024 forward; live-tail64 backward",
+    "mask_supervised": true,
+    "unsupervised_leaderboard_eligible": false
+  },
+  "score_fingerprint": {
+    "collaborative_test/SW_0185_qce_spatial_connectivity/DESIGN_KO.md": "ab741f29a94f6995064019384df5575d5ba5dd3d5427228add0020e1f2e46c3d",
+    "collaborative_test/SW_0185_qce_spatial_connectivity/train.py": "e6acc5d2a4ea8c91c507418f0cb2262ee91325a4e3101eba43b7ce0e4f690bb3",
+    "collaborative_test/SW_0185_qce_spatial_connectivity/training_queue.py": "ab6eb8c62cc1d2d258c909247b3f34d705a8f02eba1d21c1e0b0b9aa912caa1e",
+    "collaborative_test/SW_0185_qce_spatial_connectivity/predict_evaluate.py": "7cd9ef3035f78012b8a9c83f30a8645061e6c34e1c4102680550f26e5e4d597c",
+    "collaborative_test/SW_0185_qce_spatial_connectivity/prediction_queue.py": "4d919c9dfe6ce235dbf515c39442be6c1b7c4363eb731ba37796339f8c8ec2c0",
+    "collaborative_test/SW_0185_qce_spatial_connectivity/score.py": "54fd10cf8acff6d892de79456294670f73f7703265a70151a52955cf23231fcc",
+    "collaborative_test/SW_0185_qce_spatial_connectivity/test_predict_evaluate.py": "814b3f5eb664228b821d1e0bc3de7a0081394b27d16aaa72e3cabfccca86f936",
+    "collaborative_test/SW_0185_qce_spatial_connectivity/test_prediction_queue.py": "567ec2df7e805d62406bc1a3c47f58178c3eda062e867eac3febc6acb928d0cf",
+    "collaborative_test/SW_0185_qce_spatial_connectivity/test_score.py": "a02da6c2c2f071fe2d4c3be7c446be17a8a654dd99d65006baa3a5b0fa5f1a60",
+    "collaborative_test/SW_0185_qce_spatial_connectivity/score_queue.py": "fe0b84c2cdebb14515bd4709751ed189d60d14ce282322e5ce36fd88cac280d9",
+    "collaborative_test/SW_0185_qce_spatial_connectivity/test_score_queue.py": "ef75af498a3497cd14d39184ac846d9575747ec24c0add61413a93a15022a481",
+    "collaborative_test/SW_0181_actual_descent_qce/score.py": "84ba9fa01e2145e3c96ff32237b050209215bf5a78d509af6e374d8957d8b96d",
+    "collaborative_test/SW_0179_qce_seed_replication/predict_evaluate.py": "b10503d1f6103a83adc6dc68db8dcfe785bfd7896e39f9f41a59ba2713f54f9a",
+    "collaborative_test/SW_0179_qce_seed_replication/score.py": "7fbc1eb746fcee61bec413d1f7540d024c876f626b3f993e9d1849c4323f2f92",
+    "collaborative_test/SW_0165_foreground_partition_replication/replication_summary.py": "0f89e72902ebe1416a01a7592ba2510316e5a35f31182d9da9541f1457bc426d",
+    "collaborative_test/SW_0135_native32_spike_binding/evaluation_contract32.py": "e601280ade9a2b9545f6bbf94df22deca6ebfe123750229f6a7244105c57b1bd",
+    "sw0181_control_score_sha256": "3f69a74a5729341b5fd11f2bd74f2d51ff245c0839f76053b8733af9523ddd54"
+  },
+  "score_producer_pid": 957426,
+  "score_already_complete": false,
+  "cuda_initialized": false,
+  "validation_data_read": false,
+  "observed_unix": 1792196105.404
+}
