@@ -7963,5 +7963,52 @@
     "summary_sha256": "6e8e036718c520eec04226fc75e6356644de73bcea74e338bb7c174be9cbd4eb",
     "audit_sha256": "8f01755816645468f38531a7d6812b5616803970a9a6450cd104af44afd40412",
     "independent_maximum_metric_abs_error": 2.220446049250313e-16
+  },
+  "latest_native64_TRAIN64_20261017": {
+    "experiment": "SW0194",
+    "status": "actual_GPU_training_continuation_started_exact_model_Adam_RNG_verified",
+    "grid": [
+      64,
+      64
+    ],
+    "seed_scope": [
+      0
+    ],
+    "parent_model_sha256": "2dd2b0d64602b85d4082bcaddcd21dfe8c60d34af1ea78a2ed29bf03c8ba4b6e",
+    "parent_boundary_sha256": "14d0386db64d3890163574ac2421b1e80d3100536ec25c9940434e0689327e82",
+    "initial_continuation_boundary_sha256": "bd605d32aec0a5f85ce2baedbefe78be11904b9c87fea728420677d01c23c596",
+    "source_unique_TRAIN": 8,
+    "total_planned_unique_TRAIN": 64,
+    "additional_unique_TRAIN": 56,
+    "inherited_proposals": 2,
+    "new_planned_proposals": 14,
+    "total_planned_proposals": 16,
+    "batch": 4,
+    "micro": 1,
+    "loss": "unchanged product QCE temperature0.1",
+    "local_tests": 18,
+    "server_tests": 18,
+    "actual_CLI_modules": 2,
+    "supervisor_pid": 1849671,
+    "worker_pid": 1849711,
+    "GPU": 2,
+    "actual_inherited_Adam_steps": [
+      2
+    ],
+    "actual_model_Adam_and_CPU_CUDA_RNG_content_equal_parent": true,
+    "training_repeated": false,
+    "prior_SW0193_gain_gate_remains_false": true,
+    "development_images": 32,
+    "reuse_frozen_controls": true,
+    "isolated_causal_data_scaling_claim": false,
+    "fresh_joint70k": false,
+    "new_performance_result_available": false,
+    "goal_full320_three_seed_fg090_achieved": false,
+    "peer_cycle_check": {
+      "branch": "patch_v2",
+      "commit": "cab6c676e24a149a45ea960586c04e579f78d384",
+      "changed": false
+    },
+    "result_path": "collaborative_test/SW_0194_native64_train64/README.md"
   }
 }
