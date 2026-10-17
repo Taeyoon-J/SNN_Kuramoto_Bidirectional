@@ -6952,5 +6952,56 @@
     "SW0186_SW0187_data_counts": "additional_supervised_native32_adaptation_only",
     "new_native32_joint_encoder70k_pass_complete": false,
     "receipt": "collaborative_test/SW_0187_joint_encoder_unique_scaling/results_archive/foundation_provenance_v1/foundation_provenance_receipt.json"
+  },
+  "latest_incumbent_continuation_20261017": {
+    "experiment": "SW0188_incumbent_continuation",
+    "status": "three_seed_training_and_full_evaluation_queued_two_GPU_workers_started",
+    "seed_scope": [
+      0,
+      1,
+      2
+    ],
+    "source": "exact_matching_seed_completed_SW0186_all_model_tensors_including_original_RGB_CNN",
+    "optimizer_policy": "explicit_reset_empty_Adam_all_five_groups",
+    "additional_data": "same_TRAIN512_twice",
+    "proposal_budget": 64,
+    "additional_proposal_exposures": 1024,
+    "mask_supervised": true,
+    "unsupervised_leaderboard_eligible": false,
+    "fresh70k_training": false,
+    "foundation_has_inherited_full70k_RGB_training": true,
+    "source_factory_exact_incumbent_verified_seed_scope": [
+      0,
+      1,
+      2
+    ],
+    "cpu_tests": 39,
+    "actual_CLI_checks": 6,
+    "live_parent_pids": {
+      "training_seed0": 1614093,
+      "training_seed1": 1614100,
+      "training_seed2": 1614104,
+      "prediction_seed0": 1614108,
+      "prediction_seed1": 1614111,
+      "prediction_seed2": 1614118,
+      "score": 1614121,
+      "audit": 1614125
+    },
+    "GPU_started_seed_scope": [
+      0,
+      1
+    ],
+    "first_two_GPU_admission_seed_scope": [],
+    "fixed320_result_available": false,
+    "incumbent_changed": false,
+    "primary_control": "SW0186",
+    "primary_gate": "standalone_FG_mean_above_SW0186_and_paired_image_CI_lower_positive_plus_all3_means_above_comparable_Slot",
+    "peer_cycle_check": {
+      "branch": "patch_v2",
+      "commit": "cab6c676e24a149a45ea960586c04e579f78d384",
+      "changed": false
+    },
+    "result_path": "collaborative_test/SW_0188_incumbent_continuation/README.md",
+    "observed_unix": 1792253674.426472
   }
 }
