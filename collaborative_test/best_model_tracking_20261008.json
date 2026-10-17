@@ -7144,5 +7144,53 @@
     "result_path": "collaborative_test/SW_0189_frozen_error_attribution/RESULT_KO.md",
     "observed_unix": 1792256493.8367145,
     "publication_scope": "code_and_cohort_aggregates_only_image_level_report_excluded"
+  },
+  "latest_spectral_count_admission_20261017": {
+    "experiment": "SW0190_spectral_count_admission",
+    "status": "three_seed_TRAIN_only_oracle_count_pilots_queued",
+    "seed_scope": [
+      0,
+      1,
+      2
+    ],
+    "source": "completed_SW0186_incumbent_exact_frozen_weights",
+    "cohort": "16_fixed_TRAIN512_positions_0_32_through480",
+    "oracle_count": true,
+    "learned_count_classifier": false,
+    "variants": [
+      "baseline",
+      "spectral_existing_support",
+      "spectral_all_patch"
+    ],
+    "optimizer_updates": 0,
+    "validation_data_read": false,
+    "incumbent_changed": false,
+    "full320_result_available": false,
+    "actual_GPU_started": false,
+    "cpu_tests": 8,
+    "actual_CLI_checks": 1,
+    "actual_frozen_model_CPU_load_verified_seed_scope": [
+      0,
+      1,
+      2
+    ],
+    "live_parent_pids": {
+      "0": 1688076,
+      "1": 1688085,
+      "2": 1688094
+    },
+    "admission_gate": {
+      "minimum_TRAIN_fg_gain": 0.01,
+      "mean_foreground_iou_must_not_decrease": true,
+      "minimum_positive_seed_fg_gains": 2
+    },
+    "publication_scope": "code_and_cohort_aggregates_only_TRAIN_imagewise_reports_private",
+    "peer_cycle_check": {
+      "branch": "patch_v2",
+      "commit": "cab6c676e24a149a45ea960586c04e579f78d384",
+      "changed": false
+    },
+    "result_path": "collaborative_test/SW_0190_spectral_count_admission/README.md",
+    "observed_unix": 1792260537.709461
   }
 }
