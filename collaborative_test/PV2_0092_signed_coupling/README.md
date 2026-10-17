@@ -84,3 +84,67 @@ is a single global scalar, so it cannot express "repel across an object boundary
 within one" — a learned or per-edge sign would be the next step if the global version
 moves anything. Four of this project's routes improved a mechanism-level statistic without
 moving the score, and that remains the most likely outcome here.
+
+---
+
+# Result — the gate is not passed, and the control is not the published model
+
+## What came back
+
+Seed 0, contract v1, validation 300, four arms identical but for `coupling_balance`.
+The contract-v1 regression row passed first: 0.7239 / 0.7251 / 0.4951.
+
+| arm | training loss | collapse | fg_ari | fg_iou | obj_iou | pred_fg |
+| --- | --- | --- | --- | --- | --- | --- |
+| balance 0.0 (control) | 23.52 -> 17.00 | 2.157 | 0.5027 | 0.5112 | 0.3903 | 0.1824 |
+| balance 0.25 | 23.66 -> 17.05 | 2.142 | 0.5962 | 0.4708 | 0.4240 | 0.2325 |
+| balance 0.5 | 24.04 -> 17.12 | 2.182 | 0.4949 | 0.3370 | 0.4187 | 0.2869 |
+| balance 1.0 | 25.22 -> 17.22 | 2.172 | 0.5352 | 0.2520 | 0.4681 | 0.4090 |
+
+Against the gate registered in `PROPOSAL_0.9_v2.md`:
+
+| balance | d fg_ari | d fg_iou | d obj_iou | extent <= 0.20 | iou kept | obj moved |
+| --- | --- | --- | --- | --- | --- | --- |
+| 0.25 | +0.0935 | -0.0404 | +0.0337 | **no** (0.2325) | **no** | yes |
+| 0.5 | -0.0078 | -0.1742 | +0.0284 | **no** (0.2869) | **no** | yes |
+| 1.0 | +0.0325 | -0.2592 | +0.0778 | **no** (0.4090) | **no** | yes |
+
+**Signed coupling does not pass.** Every arm widens predicted foreground and sells
+foreground IoU to do it — exactly the failure mode the gate exists to catch.
+
+## The error in this experiment, stated plainly
+
+**The control is not the published model.** Retrained at seed 0 it scores **0.5027**
+where the published contract-v1 configuration scores **0.7239** on the same images
+through the same readout — a gap of 0.22. The regression row reproduces 0.7239 exactly
+from the existing checkpoint, so the evaluation is right and the **training command is
+wrong**. The most likely omission is `PV2_0044`'s graph freeze: the published three seeds
+are the FZG (frozen-graph) line and these arms trained the graph from scratch.
+
+So this experiment answers a narrower question than it was built to answer:
+
+- **Valid:** the arm-to-arm comparison. All four share one base and differ in one scalar,
+  so what signed coupling *does* is measured.
+- **Not tested:** whether signed coupling helps the published model. Its platform is 0.22
+  below it.
+
+This is the failure `PV2_0085` was corrected for, repeated. The check performed was
+`spike_plv_collapse` (2.157, healthy) and the check **not** performed was the control's
+own score against the published number. A healthy collapse value is not a healthy
+platform.
+
+## The one signal worth keeping
+
+`patch_matched_object_iou` rises in **every** arm — +0.0337, +0.0284, +0.0778 — and grows
+with the balance. That metric is not helped by over-prediction, which is what makes it
+the honest witness in this project's own gate. So the mechanism does something real to
+per-object grouping while damaging figure/ground. The direction is informative even
+though the gate failed: repulsion separates objects and simultaneously pushes patches out
+of the background cluster.
+
+## Next
+
+Re-run the control with the published configuration — `PV2_0044`'s freeze included —
+before any further claim about signed coupling. Until then this stands as a negative on
+its own platform and as a note that the mechanism moves `obj_iou` in a way no other
+tested route has.
