@@ -70,3 +70,5 @@ All three delivered cohorts have now completed their shared prefix and both
 shared model/Adam fork/data-ID checks passed. The resource-only excluded15
 proposals remain preserved separately. Masks for the remaining seeds are queued;
 no new FG-ARI or unique-data benefit is claimed before the full six-archive score.
+
+Training-budget clarification: Source097 already inherits full70k RGB training; 4,096 is its final additional stage. The 512/1024 counts describe additional supervised adaptation only. See [verified foundation provenance](FOUNDATION_PROVENANCE.md).

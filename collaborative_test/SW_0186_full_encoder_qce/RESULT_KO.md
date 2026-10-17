@@ -27,3 +27,5 @@ Conditional ??? 0.808423 / 0.609975 / 0.662083??. Primary endpoint? ??? ?? stand
 ?? ?? SHA256: `bf4e0964d4683687f4e15302eb0ef1e9283ca380aa38b1d2f4061ea1f03daded`
 
 [?? ??](results_archive/score_v1/evaluation.json), [?? ??](results_archive/score_v1/completion_audit.json), [archive receipt](results_archive/score_v1/archive_receipt.json).
+
+Training-budget clarification: Source097 already inherits full70k RGB training; 4,096 is its final additional stage. The 512/1024 counts describe additional supervised adaptation only. See [verified foundation provenance](../SW_0187_joint_encoder_unique_scaling/FOUNDATION_PROVENANCE.md).
