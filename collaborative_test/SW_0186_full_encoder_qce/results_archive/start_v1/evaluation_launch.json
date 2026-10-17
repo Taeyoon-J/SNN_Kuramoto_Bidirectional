@@ -1,0 +1,98 @@
+{
+  "status": "SW0186_three_prediction_parents_and_GT_last_score_verified_live",
+  "records": [
+    {
+      "label": "prediction_seed0",
+      "pid": 1027397,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0186_full_encoder_qce.prediction_queue",
+        "--source-seed",
+        "0"
+      ],
+      "state": {
+        "arm": "product_q_ce",
+        "experiment": "SW0186_prediction_queue",
+        "seed": 0,
+        "status": "waiting_for_training",
+        "supervisor_pid": 1027397,
+        "updated_unix": 1792202687.093806,
+        "validation_data_read": false
+      }
+    },
+    {
+      "label": "prediction_seed1",
+      "pid": 1027420,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0186_full_encoder_qce.prediction_queue",
+        "--source-seed",
+        "1"
+      ],
+      "state": {
+        "arm": "product_q_ce",
+        "experiment": "SW0186_prediction_queue",
+        "seed": 1,
+        "status": "waiting_for_training",
+        "supervisor_pid": 1027420,
+        "updated_unix": 1792202689.4072423,
+        "validation_data_read": false
+      }
+    },
+    {
+      "label": "prediction_seed2",
+      "pid": 1027469,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0186_full_encoder_qce.prediction_queue",
+        "--source-seed",
+        "2"
+      ],
+      "state": {
+        "arm": "product_q_ce",
+        "experiment": "SW0186_prediction_queue",
+        "seed": 2,
+        "status": "waiting_for_training",
+        "supervisor_pid": 1027469,
+        "updated_unix": 1792202691.6499765,
+        "validation_data_read": false
+      }
+    },
+    {
+      "label": "score",
+      "pid": 1027472,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0186_full_encoder_qce.score_queue",
+        "--worker"
+      ],
+      "state": {
+        "experiment": "SW0186_score_queue",
+        "pending_seeds": [
+          0,
+          1,
+          2
+        ],
+        "prediction_state_sha256": {
+          "0": "a0ce54e078a3ab6fecc44e502c70c97831160c22a4fa6a9883ebc62ef1bbf551",
+          "1": "d041c5ea728f6a265441e2fc3408616bb259b3b1717b8234b3a4285c7e30492b",
+          "2": "06fa89c5e921e20c8e79ddd36b6bf91b59ff6e61efdd7af99a24a63d1ce6f2df"
+        },
+        "status": "waiting_for_predictions",
+        "supervisor_pid": 1027472,
+        "updated_unix": 1792202693.9070048
+      }
+    }
+  ],
+  "evaluation_cpu_receipt_sha256": "ca23311ad9c16e77ea59a72d34cf3a51aa91abf696db15d50d67f74a37750633",
+  "validation_data_read": false,
+  "observed_unix": 1792202694.1126971
+}
