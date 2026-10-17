@@ -56,3 +56,10 @@ and its original prediction parent resumed. Current-run GPU admission for the
 replacement seed1 must be checked again. See [the resource amendment](RESOURCE_REQUEUE_KO.md)
 and `results_archive/resource_requeue_seed1_v1`. No validation score selected this
 resubmission. All model source files remain frozen; no new performance is claimed.
+
+The replacement seed1 has actually started on GPU2. Its fresh-run first two
+proposals passed five-family/emitted-S credit and full-forward parity; committed
+updates changed the original CNN. The new-run receipt is in start_v1 with the
+resource_requeue filename, separately from the retained original admission.
+Seed0 both-arm fixed320 predictions are also frozen and validated in
+`results_archive/frozen_seed0_v1`. GT has not yet been scored.

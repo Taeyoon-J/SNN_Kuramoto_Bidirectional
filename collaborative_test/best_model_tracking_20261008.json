@@ -6719,7 +6719,7 @@
   },
   "latest_joint_encoder_unique_scaling_20261017": {
     "experiment": "SW0187_joint_encoder_unique_scaling",
-    "status": "seed0_seed2_paired_training_complete_seed1_fresh_resource_requeue_verified_live",
+    "status": "seed0_seed2_training_complete_replacement_seed1_actual_GPU_learning_verified",
     "seed_scope": [
       0,
       1,
@@ -6807,10 +6807,12 @@
     "data_scaling_result_available": false,
     "current_run_actual_GPU_admission_seed_scope": [
       0,
+      1,
       2
     ],
     "current_run_source_CNN_change_verified_seed_scope": [
       0,
+      1,
       2
     ],
     "resource_requeue_seed1": {
@@ -6829,8 +6831,13 @@
       "model_data_loss_code_changed": false,
       "selection_uses_validation_metrics": false,
       "previous_parent_stop_was_operator_initiated": true,
-      "observed_unix": 1792246234.8447223
+      "observed_unix": 1792246234.8447223,
+      "fresh_GPU_admission_verified": true
     },
-    "additional_preserved_partial_prefix_proposals": 15
+    "additional_preserved_partial_prefix_proposals": 15,
+    "frozen_prediction_seed_scope": [
+      0
+    ],
+    "resource_requeue_seed1_fresh_GPU_admission_sha256": "408ce66bc979439339a6f3e0b1f8dc8ef62c240ab113a153381f8c0f4a2bc52c"
   }
 }
