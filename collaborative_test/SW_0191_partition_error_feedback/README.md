@@ -1,6 +1,9 @@
 # SW0191 — production-partition error feedback
 
-All three seeds finished training and passed artifact validation. No validation score yet.
+Completed and independently audited. Standalone three-seed means:
+FG-ARI .799773 / foreground IoU .478037 / object IoU .659912.
+All three decreased versus SW0186; this recipe is closed without a small sweep.
+See RESULT_KO.md and results_archive/score_v1/summary.json. SW0186 remains best.
 Keep the SW0186 incumbent and production masks, adding a class-balanced loss
 on actual split/merged TRAIN patch pairs. Mined labels stay fixed across each
 proposal's gradient and acceptance measurements. Separately check that this
@@ -15,7 +18,7 @@ actual GPU ledger passed artifact validation; text receipts are in
 results_archive/completed_seed0_v1. Seed2 also completed all64 proposals, with38
 accepted updates and the same completed-artifact checks. Seed0 fixed320 masks
 are frozen and validated without GT; receipts are in results_archive/frozen_seed0_v1.
-Other predictions and the three-seed score remain pending.
+All three fixed320 predictions and the independent score audit are now complete.
 
 Seed1 completed all64 proposals with50 accepted updates. Its actual worker ledger
 records GPU1, GPU1, then GPU2; the final history preserves the original first-two

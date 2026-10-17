@@ -14,5 +14,7 @@ chunks, real Adam acceptance/rollback transactions and nested recurrent-device
 allocation. Both actual CLI entrypoints passed. Server CPU admission verified
 the exact trained SW0186 seed0 weights, preserved learned CNN, native64 mapping
 and empty five-family Adam before CUDA. The exclusive-GPU probe supervisor is
-registered and verified live (PID1828532); it waits for a free GPU. No native64
-worker start or quality improvement is claimed yet.
+registered and verified live (PID1828532). Its actual worker PID1831863 started
+on physical GPU2 and saved the initial native64 boundary. GPU process and actual
+argv evidence are in results_archive/start_v1/actual_GPU_start.json. First-proposal
+credit and model quality improvement remain unproven.

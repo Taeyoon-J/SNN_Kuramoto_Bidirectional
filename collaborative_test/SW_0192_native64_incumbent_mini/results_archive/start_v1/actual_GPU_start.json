@@ -1,0 +1,52 @@
+{
+  "status": "SW0192_actual_native64_worker_on_assigned_GPU_verified",
+  "queue_state": {
+    "status": "running_worker",
+    "supervisor_pid": 1828532,
+    "updated_unix": 1792275543.0968487,
+    "validation_data_read": false,
+    "child_pid": 1831863,
+    "child_argv": [
+      "/Data0/kevinswk/envs/snn/bin/python",
+      "-u",
+      "-m",
+      "collaborative_test.SW_0192_native64_incumbent_mini.queue",
+      "--worker",
+      "--physical-gpu",
+      "2"
+    ],
+    "physical_gpu": 2,
+    "gpu_uuid": "GPU-50cc59a2-8312-ff02-5889-1becf63c7cd4"
+  },
+  "processes": {
+    "parent": {
+      "pid": 1828532,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0192_native64_incumbent_mini.queue"
+      ],
+      "proc_state": "S"
+    },
+    "worker": {
+      "pid": 1831863,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0192_native64_incumbent_mini.queue",
+        "--worker",
+        "--physical-gpu",
+        "2"
+      ],
+      "proc_state": "R"
+    }
+  },
+  "actual_GPU_process": "GPU-50cc59a2-8312-ff02-5889-1becf63c7cd4, 1831863, 5716 MiB",
+  "initial_boundary_exists": true,
+  "initial_boundary_sha256": "a77b4edfdef356d6c0656cfc99c8aed21cf94c3449ff0ecf91d2bc2689c3a95a",
+  "performance_claim": false,
+  "first_proposal_credit_claim": false,
+  "observed_unix": 1792275809.0977767
+}
