@@ -37,3 +37,11 @@ This admission does not establish improved masks or a completed scaling result.
 Seed0 actual GPU credit/parity, accepted Adam steps and changed original CNN
 were independently inspected; see `results_archive/start_v1/seed0_first_two_GPU_admission.json`.
 This admission does not establish improved masks or a completed scaling result.
+
+Seed0 has completed its shared prefix and both64-proposal branches. Actual
+model/Adam artifacts and CNN learning passed validation (37/39 accepted updates
+for control/candidate). The first branch model/Adam transaction was identical
+and candidate indices were exactly control+512. Prefix RNG bindings agree and
+the frozen runtime fork-RNG guard executed; the transaction hash itself excludes
+RNG. Records are in `results_archive/completed_seed0_v1`. No GT score is available;
+all six prediction freezes are still required before scoring.
