@@ -7736,5 +7736,47 @@
     ],
     "original_first_two_transaction_prefix_preserved_all_seeds": true,
     "all_training_completion_summary_sha256": "6cc99436a8e8c6d57ae8ed476bf9a417fe8911effca8f493bcfcc69bb23cda59"
+  },
+  "active_research_direction_20261017": {
+    "grid": [
+      64,
+      64
+    ],
+    "target_fg_ari": 0.9,
+    "preserve_successful_model_and_loss_direction": true,
+    "routine_training": "mini comparisons",
+    "joint70000_policy": "only after a large replicated improvement justifies full training",
+    "previous_SW0191_evaluation": "continues unchanged"
+  },
+  "latest_native64_incumbent_mini_20261017": {
+    "experiment": "SW0192",
+    "status": "two_proposal_training_admission_queued",
+    "seed_scope": [
+      0
+    ],
+    "initialization": {
+      "experiment": "SW0186_full_encoder_qce",
+      "seed": 0,
+      "manifest_sha256": "05cd7f690eee72e1303225d79385d3e04c840e7c28991854676036c584b39de1",
+      "checkpoint_sha256": "73f290e54fa7f7dd9b3ee1605523b0d0e7ed4dabdeaa90ba13bd059d2df420df",
+      "final_model_state_sha256": "edd716717b8e6c5b47b0e8cfa6c02660fbcfea3d7b8cac3964be4f9ee0e1e34a",
+      "artifact": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0186_full_encoder_qce/results_archive/training_20261016/product_q_ce_seed0",
+      "optimizer_policy": "reset_empty_Adam_all_five_groups"
+    },
+    "native64_initial_model_state_sha256": "d6bc7622ef14f9fab3275623b1b809d453b2c1a9eded7d4259a112826f860ff7",
+    "loss": "same product QCE temperature0.1",
+    "local_tests": 9,
+    "server_tests": 9,
+    "actual_CLI_modules": 2,
+    "supervisor_pid": 1828532,
+    "validation_data_read": false,
+    "new_performance_result_available": false,
+    "full_mini_comparison_implemented": false,
+    "result_path": "collaborative_test/SW_0192_native64_incumbent_mini/README.md",
+    "peer_cycle_check": {
+      "branch": "patch_v2",
+      "commit": "cab6c676e24a149a45ea960586c04e579f78d384",
+      "changed": false
+    }
   }
 }
