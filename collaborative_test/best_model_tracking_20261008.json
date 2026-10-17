@@ -7051,5 +7051,44 @@
       "model_sources_changed": false,
       "observed_unix": 1792255835.2231271
     }
+  },
+  "latest_frozen_error_attribution_20261017": {
+    "experiment": "SW0189_frozen_error_attribution",
+    "status": "complete",
+    "scope": "posthoc_fixed320_native32_frozen_masks_only",
+    "seed_scope": [
+      0,
+      1,
+      2
+    ],
+    "group_count": 7,
+    "endpoint_seed_image_rows": 6720,
+    "tests": 6,
+    "maximum_registered_metric_abs_error": 3.3306690738754696e-16,
+    "optimizer_updates": 0,
+    "new_model_forward_passes": 0,
+    "incumbent_changed": false,
+    "causal_claim": false,
+    "report_sha256": "6636d76f8613597fce918a018914c1107f1f87c591572373c268add27960ca1e",
+    "incumbent_errors": {
+      "true_object_count": 6.3125,
+      "predicted_positive_label_count": 9.901041666666666,
+      "raw_count_exact": 0.15833333333333333,
+      "foreground_miss_rate": 0.07208229510694952,
+      "background_false_positive_rate": 0.26283485588051453,
+      "foreground_precision": 0.6018034143010127,
+      "pair_split_rate": 0.116997121655347,
+      "pair_merge_rate": 0.04545611212744528,
+      "pair_merge_via_predicted_background_rate": 0.0076071761362148885,
+      "object_balanced_split_rate": 0.12261590707153198,
+      "object_pair_balanced_merge_rate": 0.05167519256074693,
+      "fg_ari": 0.8346805012913833,
+      "foreground_iou": 0.5690396164955845,
+      "matched_object_iou": 0.6898022207059147
+    },
+    "count_scope": "raw_positive_mask_label_count_not_trained_count_classifier",
+    "result_path": "collaborative_test/SW_0189_frozen_error_attribution/RESULT_KO.md",
+    "observed_unix": 1792256493.8367145,
+    "publication_scope": "code_and_cohort_aggregates_only_image_level_report_excluded"
   }
 }
