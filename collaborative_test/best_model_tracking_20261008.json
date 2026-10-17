@@ -6716,5 +6716,56 @@
     "data_scaling_established": false,
     "next_step": "equal_exposure_unique1024_vs_repeat512_with_joint_encoder_and_contemporaneous_common_prefix",
     "result_path": "collaborative_test/SW_0186_full_encoder_qce/RESULT_KO.md"
+  },
+  "latest_joint_encoder_unique_scaling_20261017": {
+    "experiment": "SW0187_joint_encoder_unique_scaling",
+    "status": "three_training_three_prediction_score_and_independent_audit_parents_verified_live_waiting_for_idle_GPU",
+    "seed_scope": [
+      0,
+      1,
+      2
+    ],
+    "arms": [
+      "control512",
+      "candidate1024"
+    ],
+    "source_recipe": "SW0186_joint_original_RGB_encoder_with_unchanged_QCE",
+    "initialization": "fresh_pretrained_Source097_plus_zero_context_not_continued_final_SW0186_weights",
+    "mask_supervised": true,
+    "unsupervised_leaderboard_eligible": false,
+    "fresh70k_training": false,
+    "unique_data_scope": "additional_training_stage_not_unseen_by_pretrained_foundation",
+    "logical_proposals_per_arm": 64,
+    "actual_proposals_per_seed": 96,
+    "logical_image_exposures_per_arm": 1024,
+    "shared_prefix_proposals": 32,
+    "local_tests": 41,
+    "server_tests": 45,
+    "actual_CLI_modules": 6,
+    "original_gamma_forward_parity_seed_scope": [
+      0,
+      1,
+      2
+    ],
+    "actual_GPU_training_started": false,
+    "source_CNN_learning_result_available": false,
+    "fixed320_result_available": false,
+    "incumbent_changed": false,
+    "live_parent_pids": {
+      "training_seed0": 1295829,
+      "training_seed1": 1295845,
+      "training_seed2": 1295856,
+      "prediction_seed0": 1295864,
+      "prediction_seed1": 1295928,
+      "prediction_seed2": 1295932,
+      "score": 1295938,
+      "audit": 1295942
+    },
+    "peer_cycle_check": {
+      "branch": "patch_v2",
+      "commit": "cab6c676e24a149a45ea960586c04e579f78d384",
+      "changed": false
+    },
+    "result_path": "collaborative_test/SW_0187_joint_encoder_unique_scaling/README.md"
   }
 }
