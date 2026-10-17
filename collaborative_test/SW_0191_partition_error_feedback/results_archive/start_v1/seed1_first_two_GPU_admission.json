@@ -1,0 +1,107 @@
+{
+  "resume_policy": "same_software_hardware_math_flags_and_logical_cuda0_physical_index_may_change",
+  "status": "SW0191_first_two_real_GPU_proposals_verified",
+  "records": [
+    {
+      "seed": 1,
+      "incumbent_lineage": {
+        "experiment": "SW0186_full_encoder_qce",
+        "seed": 1,
+        "manifest_sha256": "546d817ecba65e04f443f61c44db6949010312aafffcf1ecd6bc47d6e68db130",
+        "checkpoint_sha256": "2788cc5ffb8e653a9b98d78c2dca3296b10ae9a993a392edf046ba9917e76468",
+        "final_model_state_sha256": "c06f0dbb2a01a69156b2eb208b1af8055c89ac8c68b048725181e76cb7a2dd49",
+        "artifact": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0186_full_encoder_qce/results_archive/training_20261016/product_q_ce_seed1",
+        "optimizer_policy": "reset_empty_Adam_all_five_groups"
+      },
+      "source_CNN_changed": true,
+      "source_CNN_current_sha256": "5782e89ee3fec9ca12328ff1f50b43ef1cb82e5c11adabe9bfd57c6c4cc876bf",
+      "source_CNN_initial_sha256": "6820d9dae7b88b1f9a17f66776d20af51af52fe1d75f64ab8a50b3112b0e4a9e",
+      "cursor": 2,
+      "accepted_updates": 2,
+      "actual_Adam_steps": [
+        2
+      ],
+      "boundary_sha256": "afb4dbee6280a1e2fcd19ee558eee8849db94927c70379c1947c2519f92a8dbd",
+      "first_two": [
+        {
+          "proposal": 1,
+          "accepted": true,
+          "before": 1.0398952849209309,
+          "after": 0.9895301014184952,
+          "parity_error": 0.0,
+          "guard": 1.0398952849209309e-06,
+          "feedback_loss": 0.7553110122680664,
+          "feedback_S_gradient": 0.10190430003382499,
+          "feedback_parameter_gradient_rss": 5.256110622440244,
+          "feedback_family_gradient_rss": {
+            "context_encoder": 2.5092836945395076,
+            "graph": 1.48351231221774,
+            "native_core": 0.23905213935310735,
+            "integration": 7.479171836394669e-06,
+            "source_base": 4.367177522125758
+          },
+          "feedback_context_sha256": "13df8e1ab8dff007ce2bf54b7d95714d9607eb74ddc66ebab105f695760771da",
+          "emitted_S_gradient": 0.10972580051078759,
+          "family_gradient_norms": {
+            "context_encoder": 1.9779049082811808,
+            "graph": 1.2562082968847743,
+            "native_core": 0.2282474692697477,
+            "integration": 7.634962997383469e-06,
+            "source_base": 3.5966054903838023
+          },
+          "proposed_family_delta_l2": {
+            "context_encoder": 0.05098861843630271,
+            "graph": 0.0003434014382973536,
+            "native_core": 0.0027485502531907663,
+            "integration": 0.0033858062057078495,
+            "source_base": 0.00044900086119853156
+          },
+          "start_transaction_sha256": "c337a6d69ebdb3ae0d2103b274b9133e0084dc58caddcaef03e27262febebcbc",
+          "proposal_transaction_sha256": "ec9b3e8ece2154a6484214b3af7d85c36f23d95c09bb01731027dda3e03d4b2e"
+        },
+        {
+          "proposal": 2,
+          "accepted": true,
+          "before": 1.1966477036476135,
+          "after": 1.1579651832580566,
+          "parity_error": 7.450580596923828e-09,
+          "guard": 1.1966477036476135e-06,
+          "feedback_loss": 0.7768654078245163,
+          "feedback_S_gradient": 0.0860321255605335,
+          "feedback_parameter_gradient_rss": 2.183976820812569,
+          "feedback_family_gradient_rss": {
+            "context_encoder": 1.1281011934752336,
+            "graph": 0.3364866948570941,
+            "native_core": 0.27618357982818187,
+            "integration": 1.7067533945025094e-05,
+            "source_base": 1.8186923283646599
+          },
+          "feedback_context_sha256": "307f19d68e08aa3a8464361ac5a3c33feb7a2551ea06a147a311549b7f37642c",
+          "emitted_S_gradient": 0.09846144814492411,
+          "family_gradient_norms": {
+            "context_encoder": 0.5239808890241905,
+            "graph": 0.17938247489093936,
+            "native_core": 0.29228847423342924,
+            "integration": 2.4025390727718285e-05,
+            "source_base": 1.3207569188860866
+          },
+          "proposed_family_delta_l2": {
+            "context_encoder": 0.023281813381839257,
+            "graph": 0.0002200971199218221,
+            "native_core": 0.002010624511989155,
+            "integration": 0.002858556272007755,
+            "source_base": 0.0003401882807277621
+          },
+          "start_transaction_sha256": "8f5ac5ec1e0089a277d17baa6bc7b08657e9bdfa73ff5df971b88721f42577c3",
+          "proposal_transaction_sha256": "bbb13d4f0c8c10be963a4cc8a76f59ccb2995c991bb0098d4367af8729de4f8e"
+        }
+      ]
+    }
+  ],
+  "seed_scope": [
+    1
+  ],
+  "observed_unix": 1792265729.810934,
+  "validation_data_read": false,
+  "optimizer_updates_by_this_script": 0
+}
