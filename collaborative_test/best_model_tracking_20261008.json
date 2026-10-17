@@ -6343,7 +6343,7 @@
   },
   "latest_spatial_connectivity_20261016": {
     "experiment": "SW0185_qce_spatial_connectivity",
-    "status": "seed0_training_and_GT_free_fixed320_prediction_complete_other_seeds_training",
+    "status": "complete_independently_audited_primary_FG_improvement_gate_failed",
     "seed_scope": [
       0,
       1,
@@ -6354,7 +6354,7 @@
     "mask_supervised": true,
     "unsupervised_leaderboard_eligible": false,
     "fresh70k_training": false,
-    "fixed320_result_available": false,
+    "fixed320_result_available": true,
     "incumbent_changed": false,
     "training_CPU_tests": 20,
     "total_CPU_tests": 39,
@@ -6370,13 +6370,105 @@
       957380,
       957426
     ],
-    "result_path": "collaborative_test/SW_0185_qce_spatial_connectivity/README.md",
+    "result_path": "collaborative_test/SW_0185_qce_spatial_connectivity/RESULT_KO.md",
     "automatic_independent_audit_registered": true,
     "independent_audit_CPU_tests": 8,
     "independent_audit_pid": 962265,
-    "independent_audit_completed": false,
+    "independent_audit_completed": true,
     "seed0_accepted_updates": 33,
     "seed0_prediction_sha256": "903edf3d366898e032851e5d4fc43857f6e775abb3b0186aaceff2f7967b360f",
-    "seed0_model_state_sha256": "70ed59b14911959ce6872ed40749bf7251f7297468a1ef0306fe76557768551b"
+    "seed0_model_state_sha256": "70ed59b14911959ce6872ed40749bf7251f7297468a1ef0306fe76557768551b",
+    "independent_audit_version": 2,
+    "failed_audit_v1_preserved": true,
+    "score_sha256": "a55e8a3af79e1cea6fbc371cbf799750e2cd359547b11ce252ea3f886c6ba9d9",
+    "means": {
+      "SW0165_foreground_induced_conditional": {
+        "fg_ari": 0.8042989149474199,
+        "foreground_iou": 0.6099754484530632,
+        "matched_object_iou": 0.6511489750258587
+      },
+      "SW0165_foreground_induced_standalone": {
+        "fg_ari": 0.8042989149474199,
+        "foreground_iou": 0.6099754484530632,
+        "matched_object_iou": 0.6511489750258587
+      },
+      "SW0181_conditional": {
+        "fg_ari": 0.8022593453427527,
+        "foreground_iou": 0.6099754484530632,
+        "matched_object_iou": 0.6552174495045815
+      },
+      "SW0181_standalone": {
+        "fg_ari": 0.8148362490119876,
+        "foreground_iou": 0.5893021267072601,
+        "matched_object_iou": 0.6716810693605446
+      },
+      "Slot70k_conditional": {
+        "fg_ari": 0.7816519719609136,
+        "foreground_iou": 0.20436012776655543,
+        "matched_object_iou": 0.20316498618845008
+      },
+      "Slot70k_standalone": {
+        "fg_ari": 0.7816519719609136,
+        "foreground_iou": 0.20436012776655543,
+        "matched_object_iou": 0.20316498618845008
+      },
+      "candidate_conditional": {
+        "fg_ari": 0.7994673968351869,
+        "foreground_iou": 0.6099754484530632,
+        "matched_object_iou": 0.6605627638092736
+      },
+      "candidate_standalone": {
+        "fg_ari": 0.813680573798597,
+        "foreground_iou": 0.591928242695391,
+        "matched_object_iou": 0.6764984310388878
+      }
+    },
+    "gate": {
+      "primary_endpoint": "standalone",
+      "fg_strictly_above_sw0165_three_seed_mean": true,
+      "fg_paired_ci95_lower_above_zero_vs_sw0165": true,
+      "fg_strictly_above_slot_three_seed_mean": true,
+      "fg_paired_ci95_lower_above_zero_vs_slot": true,
+      "fg_strictly_above_sw0181_three_seed_mean": false,
+      "fg_paired_ci95_lower_above_zero_vs_sw0181": false,
+      "foreground_iou_strictly_above_slot_three_seed_mean": true,
+      "matched_object_iou_strictly_above_slot_three_seed_mean": true,
+      "fg_ari_at_least_0_87_goal": false,
+      "mask_supervised": true,
+      "unsupervised_leaderboard_eligible": false,
+      "primary_gate_passed": false
+    },
+    "primary_comparison": {
+      "fg_ari": {
+        "ci95": [
+          -0.006109796225405582,
+          0.003751700767724498
+        ],
+        "mean": -0.0011556752133905696,
+        "replicates": 10000,
+        "resampling_unit": "paired_image_after_three_seed_average",
+        "seed": 178
+      },
+      "foreground_iou": {
+        "ci95": [
+          -0.003957112036866005,
+          0.009528184563428669
+        ],
+        "mean": 0.0026261159881308177,
+        "replicates": 10000,
+        "resampling_unit": "paired_image_after_three_seed_average",
+        "seed": 178
+      },
+      "matched_object_iou": {
+        "ci95": [
+          -0.0008858228181794305,
+          0.010452865395695054
+        ],
+        "mean": 0.004817361678343271,
+        "replicates": 10000,
+        "resampling_unit": "paired_image_after_three_seed_average",
+        "seed": 178
+      }
+    }
   }
 }
