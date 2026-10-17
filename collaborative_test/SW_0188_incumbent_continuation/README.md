@@ -25,3 +25,5 @@ Seed0 training completed and its actual checkpoint/Adam/CNN and matching SW0186 
 Seed2 actual GPU credit/parity, accepted Adam steps and changed original CNN
 were independently inspected; see `results_archive/start_v1/seed2_first_two_GPU_admission.json`.
 This admission does not establish improved masks or a completed performance result.
+
+Seed2 training is complete and validated (64 proposals,25 accepted), preserving the exact SW0186 seed2 start and actual CNN/Adam learning. Seed0 prediction has started. Seed1 was fresh-requeued only for resources with identical queue fingerprint; its old11 completed proposals/6 accepted updates and full partial files are preserved and excluded from delivered weights. New parent1663660 and original prediction parent1614111 were verified live. Current-run admission remains0/2 until replacement seed1 starts. See [resource amendment](RESOURCE_REQUEUE_KO.md) and results_archive/resource_requeue_seed1_v1. An early registration observation lacked the fingerprint field; the same replacement PID was verified later, with no duplicate launch. Model sources remain unchanged.

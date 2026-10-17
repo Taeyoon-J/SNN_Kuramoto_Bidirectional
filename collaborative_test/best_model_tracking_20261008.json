@@ -6955,7 +6955,7 @@
   },
   "latest_incumbent_continuation_20261017": {
     "experiment": "SW0188_incumbent_continuation",
-    "status": "actual_GPU_credit_and_CNN_learning_verified_all_seeds_all_queues_registered",
+    "status": "seed0_seed2_training_validated_seed1_resource_fresh_requeued",
     "seed_scope": [
       0,
       1,
@@ -7016,13 +7016,16 @@
       "2": "9e5f1e31bbc442e20f086bb8bc1885d046300843025cbeef4c3dc39e8b661717"
     },
     "completed_training_seed_scope": [
-      0
+      0,
+      2
     ],
     "completed_training_accepted_updates": {
-      "0": 33
+      "0": 33,
+      "2": 25
     },
     "source_CNN_change_verified_on_completed_training_seed_scope": [
-      0
+      0,
+      2
     ],
     "historical_parent_pids": {
       "training_seed0": 1614093,
@@ -7036,7 +7039,6 @@
     },
     "currently_verified_live_parent_labels": [
       "training_seed1",
-      "training_seed2",
       "prediction_seed0",
       "prediction_seed1",
       "prediction_seed2",
@@ -7045,11 +7047,57 @@
     ],
     "latest_runtime_observation": {
       "seed0": "training_complete_64_proposals_33_accepted",
-      "seed1": "checkpoint11_6accepted_preserved_waiting_for_exclusive_GPU3",
-      "seed2": "actual_GPU2_worker_started",
+      "seed2": "training_complete_64_proposals_25_accepted",
+      "seed1": "new_parent1663660_unbound_GPU_waiting",
+      "prediction_seed0": "actual_GPU2_worker_started",
       "foreign_processes_signalled": false,
       "model_sources_changed": false,
-      "observed_unix": 1792255835.2231271
+      "observed_unix": 1792258275.7464447
+    },
+    "current_run_GPU_admission_seed_scope": [
+      0,
+      2
+    ],
+    "current_run_source_CNN_change_verified_seed_scope": [
+      0,
+      2
+    ],
+    "resource_requeue_seed1": {
+      "status": "SW0188_resource_requeue_same_fingerprint_preserved_partial_and_live_replacement_verified",
+      "seed": 1,
+      "old_parent_pid": 1614100,
+      "new_parent_pid": 1663660,
+      "new_status": "waiting_for_exclusive_gpu",
+      "new_gpu": null,
+      "original_prediction_pid": 1614111,
+      "prediction_resumed": true,
+      "old_work_inventory_SHA_verified": true,
+      "preserved_completed_proposals": 11,
+      "excluded_from_delivered_model": true,
+      "additional_completed_compute_overhead": 11,
+      "queue_fingerprint_sha256": "4921773107d51bcfa9a4ebc674513514c90a596724071940d42de7f40886eafe",
+      "model_data_loss_code_changed": false,
+      "validation_data_read": false,
+      "selection_uses_validation_metrics": false,
+      "old_stop_operator_initiated": true,
+      "initial_observation": "early queue state lacked fingerprint; same replacement PID rechecked; no duplicate launch",
+      "observed_unix": 1792258199.757435
+    },
+    "additional_preserved_partial_proposals": 11,
+    "delivered_total_proposal_budget": 192,
+    "total_completed_proposals_including_preserved_overhead_if_all_finish": 203,
+    "historical_original_run_GPU_admission_seed_scope": [
+      0,
+      1,
+      2
+    ],
+    "current_parent_pids": {
+      "training_seed1": 1663660,
+      "prediction_seed0": 1614108,
+      "prediction_seed1": 1614111,
+      "prediction_seed2": 1614118,
+      "score": 1614121,
+      "audit": 1614125
     }
   },
   "latest_frozen_error_attribution_20261017": {
