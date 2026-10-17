@@ -27,3 +27,9 @@ GT, all three metrics for 1,920 candidate endpoint/image rows and 960 Slot rows,
 seed means, paired confidence intervals and registered gates. It waits on the
 verified live score producer and never updates the best-model tracker itself.
 [Audit launch evidence](results_archive/audit_start_v1/).
+
+Seed0 training and all 320 GT-free prediction rows are now complete. Its actual
+checkpoint/Adam and prediction archive/protocol/row ledger were validated, with
+33 accepted updates out of 64 proposals. No validation masks were opened for
+this milestone and no partial FG score is claimed. Other seeds continue in the
+existing queues. [Frozen seed0 evidence](results_archive/seed0_freeze_v1/).
