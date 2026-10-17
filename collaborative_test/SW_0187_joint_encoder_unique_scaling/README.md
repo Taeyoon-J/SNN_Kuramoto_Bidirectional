@@ -63,3 +63,10 @@ updates changed the original CNN. The new-run receipt is in start_v1 with the
 resource_requeue filename, separately from the retained original admission.
 Seed0 both-arm fixed320 predictions are also frozen and validated in
 `results_archive/frozen_seed0_v1`. GT has not yet been scored.
+
+All three delivered cohorts have now completed their shared prefix and both
+64-proposal branches. Control/candidate accepted counts are37/39 (seed0),31/35
+(seed1 replacement),47/45 (seed2). All six actual trained CNN/Adam artifacts and
+shared model/Adam fork/data-ID checks passed. The resource-only excluded15
+proposals remain preserved separately. Masks for the remaining seeds are queued;
+no new FG-ARI or unique-data benefit is claimed before the full six-archive score.

@@ -6719,7 +6719,7 @@
   },
   "latest_joint_encoder_unique_scaling_20261017": {
     "experiment": "SW0187_joint_encoder_unique_scaling",
-    "status": "seed0_seed2_training_complete_replacement_seed1_actual_GPU_learning_verified",
+    "status": "all_three_seed_paired_training_validated_waiting_for_remaining_prediction_freezes",
     "seed_scope": [
       0,
       1,
@@ -6784,20 +6784,27 @@
     },
     "completed_training_seed_scope": [
       0,
+      1,
       2
     ],
     "exact_actual_model_Adam_fork_verified_seed_scope": [
       0,
+      1,
       2
     ],
     "prefix_rng_binding_and_runtime_guard_verified_seed_scope": [
       0,
+      1,
       2
     ],
     "accepted_updates_by_seed": {
       "0": {
         "control512": 37,
         "candidate1024": 39
+      },
+      "1": {
+        "control512": 31,
+        "candidate1024": 35
       },
       "2": {
         "control512": 47,
