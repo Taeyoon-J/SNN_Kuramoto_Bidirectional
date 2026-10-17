@@ -29,3 +29,7 @@ unsupervised improvement and gate causality remain outstanding.
 
 See [the registered design](DESIGN_KO.md), `results_archive/cpu_v1` and
 `results_archive/start_v1`. Best supervised FG remains SW0186; unsupervised SW0165.
+
+Seed2 actual GPU credit/parity, accepted Adam steps and changed original CNN
+were independently inspected; see `results_archive/start_v1/seed2_first_two_GPU_admission.json`.
+This admission does not establish improved masks or a completed scaling result.
