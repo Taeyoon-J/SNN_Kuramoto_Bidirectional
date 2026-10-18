@@ -1,0 +1,43 @@
+{
+  "event": "actual_seed_GPU_worker",
+  "seed": 1,
+  "state": {
+    "status": "running_worker",
+    "seed": 1,
+    "supervisor_pid": 2357538,
+    "updated_unix": 1792340904.5768259,
+    "physical_gpu": 3,
+    "gpu_uuid": "GPU-6801a3dc-cde3-86c6-d665-6d9ecf063a1e",
+    "child_pid": 2357628,
+    "child_argv": [
+      "/Data0/kevinswk/envs/snn/bin/python",
+      "-u",
+      "-m",
+      "collaborative_test.SW_0217_native64_energy_refinement.queue",
+      "--worker",
+      "--seed",
+      "1",
+      "--physical-gpu",
+      "3"
+    ]
+  },
+  "child": {
+    "pid": 2357628,
+    "state": "R",
+    "start_ticks": 449297316,
+    "argv": [
+      "/Data0/kevinswk/envs/snn/bin/python",
+      "-u",
+      "-m",
+      "collaborative_test.SW_0217_native64_energy_refinement.queue",
+      "--worker",
+      "--seed",
+      "1",
+      "--physical-gpu",
+      "3"
+    ]
+  },
+  "owned_nvidia_rows": [
+    "2357628, GPU-6801a3dc-cde3-86c6-d665-6d9ecf063a1e, 2136 MiB"
+  ]
+}
