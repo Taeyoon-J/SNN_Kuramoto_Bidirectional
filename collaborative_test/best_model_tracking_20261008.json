@@ -9506,7 +9506,15 @@
     "candidate_direction": "learn a small classifier of the four emitted-spike component correlations, then test its actual instance masks; preserve core and no RGB bypass",
     "candidate_not_implemented_or_queued": false,
     "encoder_code_review": "source encoder is stride1 valid convolution and contextual126x126 features, followed by adaptive spatial pooling; no evidence of a fixed16x16 bottleneck",
-    "implemented_experiment": "SW0206_spike_relation_classifier"
+    "implemented_experiment": "SW0206_spike_relation_classifier",
+    "next_candidate_not_implemented": "learn supervised node foreground from four component spike rates and component membrane means/stds; change support before recomputing induced partition, keep original Q/A and core",
+    "prior_foreground_review": {
+      "SW0067": "failed target-coverage heuristic .22, not a learned node classifier; do not repeat",
+      "SW0031": "failed posthoc membrane-mask AND, not a new induced partition",
+      "SW0023": "weak single aggregate cues on old native16 checkpoint; post-label oracle cannot change FGARI by construction",
+      "required_distinction": "proposed support must be applied before grouping; test two objects bridged by a BG node, not post-filtering already merged IDs",
+      "modern_native64_multi_component_classifier_not_yet_tested": true
+    }
   },
   "SW0205_completion": {
     "status": "completed_no_adoption",
@@ -9604,7 +9612,7 @@
     "full320_three_seed_goal_verified": false
   },
   "SW0206_relation_classifier_queue": {
-    "status": "actual_GPU1_worker_and_TRAIN8_prefix_verified",
+    "status": "completed_independently_audited_gate_failed_recipe_closed",
     "supervisor_pid": 2101577,
     "worker_pid": 2102905,
     "physical_gpu": 1,
@@ -9624,5 +9632,56 @@
     "core_optimizer_steps": 0,
     "source": "unchanged_independent197_seed2_baseline",
     "performance_result_available": false
+  },
+  "SW0206_completion": {
+    "status": "no_adoption",
+    "scores": {
+      "old": {
+        "fg_ari": 0.8276711245436154,
+        "foreground_iou": 0.4448827161214092,
+        "matched_object_iou": 0.6892385262933652
+      },
+      "new": {
+        "fg_ari": 0.829202033253486,
+        "foreground_iou": 0.4448827161214092,
+        "matched_object_iou": 0.681268716441097
+      }
+    },
+    "paired": {
+      "fg_ari": {
+        "mean": 0.001530908709870507,
+        "ci95": [
+          -0.0003676246706209968,
+          0.004368497448417535
+        ]
+      },
+      "foreground_iou": {
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "matched_object_iou": {
+        "mean": -0.007969809852268434,
+        "ci95": [
+          -0.023335597202454136,
+          0.00022677551490737167
+        ]
+      }
+    },
+    "images": 16,
+    "seed_scope": [
+      2
+    ],
+    "classifier_parameters": 97,
+    "actual_classifier_Adam_steps": [
+      200
+    ],
+    "TRAIN_pair_accuracy_before": 0.893829345703125,
+    "TRAIN_pair_accuracy_after": 0.8975372314453125,
+    "CPU_refit_maximum_parameter_difference": 0.0,
+    "core_optimizer_steps": 0,
+    "full320_three_seed_goal_verified": false
   }
 }

@@ -106,3 +106,9 @@ TRAIN8 .8429/.6007/.7022. Mean FG not improved, recipe closed, no full320 goal.
 actual CPU admission; parent2101577, actualGPU1 worker2102905, all8 TRAIN caches
 verified. All four GPUs eligible.97 head parameters, source core frozen, original
 independent seed2 baseline retained. Fixed16 evaluation pending.
+
+206 completed and audited:seed2 fixed16 old .8277/.4449/.6892, new
+.8292/.4449/.6813. Small FG change, lower object IoU; gate failed, no adoption.
+Actual200-step classifier/Adam and exact CPU refit verified, all32 masks checked.
+Core unchanged. This is not full320/three-seed success. Pair classifier recipe
+closed without a width/LR rescue. Current205/206 supervisors are terminal.

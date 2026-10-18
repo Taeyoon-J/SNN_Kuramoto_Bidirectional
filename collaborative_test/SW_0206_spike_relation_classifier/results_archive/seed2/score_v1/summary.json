@@ -1,0 +1,60 @@
+{
+  "status": "completed_native64_learned_spike_relation_classifier_screen",
+  "seed_scope": [
+    2
+  ],
+  "images": 16,
+  "grid": [
+    64,
+    64
+  ],
+  "scores": {
+    "old": {
+      "fg_ari": 0.8276711245436154,
+      "foreground_iou": 0.4448827161214092,
+      "matched_object_iou": 0.6892385262933652
+    },
+    "new": {
+      "fg_ari": 0.829202033253486,
+      "foreground_iou": 0.4448827161214092,
+      "matched_object_iou": 0.681268716441097
+    }
+  },
+  "paired_new_minus_old": {
+    "fg_ari": {
+      "mean": 0.001530908709870507,
+      "ci95": [
+        -0.0003676246706209968,
+        0.004368497448417535
+      ]
+    },
+    "foreground_iou": {
+      "mean": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "matched_object_iou": {
+      "mean": -0.007969809852268434,
+      "ci95": [
+        -0.023335597202454136,
+        0.00022677551490737167
+      ]
+    }
+  },
+  "extension_gate_passed": false,
+  "classifier_sha256": "3ee4c7bea248f56f1cea3bd634da2e295eefed88463386d931f13e68a775a290",
+  "classifier_checkpoint_sha256": "aa045a5de474d608315102802dc085d9a306420c89e036603df4c04c4b0dc903",
+  "source_model_sha256": "b2c1a56fc30ae5fee4515e8f003d2b53be5632faf0fd06b5d4089c23a5295e8d",
+  "core_optimizer_steps": 0,
+  "classifier_optimizer_steps": 200,
+  "unique_TRAIN_images_for_classifier": 8,
+  "foreground_support_identical": true,
+  "mask_supervised": true,
+  "unsupervised_leaderboard_eligible": false,
+  "causal_gate_contribution_proved": false,
+  "full320_three_seed_goal_verified": false,
+  "independent_maximum_metric_abs_error": 1.1102230246251565e-16,
+  "raw_imagewise_scores_public": false
+}
