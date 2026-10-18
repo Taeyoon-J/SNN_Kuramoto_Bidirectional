@@ -12,3 +12,9 @@ development result, not full320 validation or a new incumbent.
 
 Public outputs are aggregate scores and audit/queue metadata. Imagewise scores
 remain private. Admission/actual job handles are recorded under results_archive.
+
+Seed1 completed and its actual32 native64 masks were independently rescored:
+FG-ARI .8175115352 / FIoU .4477702463 / object IoU .6664774994.
+Maximum independent metric error2.22e-16. Seed2 remains queued on all four GPUs;
+no three-seed mean or full320 goal claim is available yet. This seed1 is a mapped
+native32 incumbent without additional native64 learning, unlike TRAIN8 seed0.

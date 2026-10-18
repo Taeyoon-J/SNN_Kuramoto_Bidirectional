@@ -7,10 +7,10 @@ This does not imply four GPUs are idle or that another owner's job is displaced.
 | Job | Actual parent PID | Archive queue path | Dependency |
 | --- | ---: | --- | --- |
 | SW0194 native64 TRAIN64 seed0 | 1849671 (completed) | SW_0194_native64_train64/results_archive/queue | Completed; audited .9002/.8308/.7317 on32 development images |
-| SW0196 numerical/throughput benchmark | 1867954 | SW_0196_geodesic_matmul/results_archive/queue_all_gpus | Ready, all4 eligible |
-| SW0197 native64 baseline seed1 | 1867955 | SW_0197_native64_baseline_replication/results_archive/seed1/queue | Yielded afterGPU2 resume;27 saved rows verified, ready to resume |
+| SW0196 numerical/throughput benchmark | 1867954 | SW_0196_geodesic_matmul/results_archive/queue_all_gpus | Running GPU1 worker1966829; actual compute PID confirmed |
+| SW0197 native64 baseline seed1 | 1867955 (completed) | SW_0197_native64_baseline_replication/results_archive/seed1/queue | Audited32 images: .8175/.4478/.6665; seed2 pending |
 | SW0197 native64 baseline seed2 | 1867956 | SW_0197_native64_baseline_replication/results_archive/seed2/queue | Ready, all4 eligible |
-| SW0195 paired TRAIN/development diagnostic | 1853195 | SW_0195_native64_generalization_gap/results_archive/queue | Running onGPU1, worker1944250; exact TRAIN8/TRAIN64 pair admitted |
+| SW0195 paired TRAIN/development diagnostic | 1853195 (completed) | SW_0195_native64_generalization_gap/results_archive/queue | Audited TRAIN16/dev32; no demonstrated overfit signal |
 | SW0198 native64 readout normalization | 1943908 | SW_0198_native64_readout_normalization/results_archive/queue | CPU pair admitted, ready on all4 GPUs |
 
 The old196 waiter1857076 was stopped before CPU admission or GPU work, with its
