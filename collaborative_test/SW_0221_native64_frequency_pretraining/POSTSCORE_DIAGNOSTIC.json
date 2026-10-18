@@ -1,5 +1,5 @@
 {
-  "status": "registered_waiting_for_six_scored_arms",
+  "status": "complete",
   "server_pid": 2410191,
   "source_sha256": "4ae4be0486f4c24366fa3c3b2b6ce5dba6c8a760f951842e6e8f6777d26d0760",
   "local_and_Linux_coherent_and_collapsed_frequency_fixtures_passed": true,
@@ -11,5 +11,23 @@
   "additional_model_forwards": 0,
   "additional_training_updates": 0,
   "six_arm_training_and_evaluation_fingerprint_unchanged": true,
-  "new_segmentation_score": null
+  "new_segmentation_score": {
+    "baseline": {
+      "fg_ari": 0.8428907016774789,
+      "foreground_iou": 0.6006915810165038,
+      "matched_object_iou": 0.7021610526966486
+    },
+    "TRAIN64": {
+      "fg_ari": 0.7057409700057037,
+      "foreground_iou": 0.24328673174344903,
+      "matched_object_iou": 0.5810923746634148
+    },
+    "TRAIN512": {
+      "fg_ari": 0.6930041689725385,
+      "foreground_iou": 0.23999916406280142,
+      "matched_object_iou": 0.574073651433517
+    }
+  },
+  "summary_sha256": "d2f66102802187d489374c5bb24a7112f0e0c4fcbce1e68a1110949d55a38979",
+  "actual_all_six_source_models_and_endpoints_revalidated": true
 }

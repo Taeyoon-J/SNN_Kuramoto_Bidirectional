@@ -1,0 +1,91 @@
+{
+  "status": "complete_actual_six_encoder_checkpoints_and_metric_vector_audit",
+  "actual_checkpoints": [
+    {
+      "seed": 0,
+      "count": 64,
+      "actual_checkpoint_sha256": "b6a94fe4fceb783bf37efc85a6cfd73c06f0807fa3fc5612f789893f5be9f11b",
+      "actual_encoder_state_sha256": "22e0da4bb70e681e74c99285a3ac63553d4aab7068f8db551ea85b5d7867e4b1",
+      "actual_steps": [
+        128
+      ],
+      "actual_cursor": 128,
+      "wrapped_state_empty": true
+    },
+    {
+      "seed": 0,
+      "count": 512,
+      "actual_checkpoint_sha256": "5581659a729d25ed5c359bb0ad28a4501d7fb9a92703e09b037ed0c6a19dfa4c",
+      "actual_encoder_state_sha256": "ac58ada9333663ce9ca704a7169231f950cfdaffce300155b8ff3a3440d7489f",
+      "actual_steps": [
+        128
+      ],
+      "actual_cursor": 128,
+      "wrapped_state_empty": true
+    },
+    {
+      "seed": 1,
+      "count": 64,
+      "actual_checkpoint_sha256": "e8fa5d903d058b3f9398c1f94f9baf877fed4439e4c7be09cb510773ad828955",
+      "actual_encoder_state_sha256": "1f103c49cb3d5ccd4d969d7cf95ed69fcf2bd206823646df27c3bc2e9fb0c24a",
+      "actual_steps": [
+        128
+      ],
+      "actual_cursor": 128,
+      "wrapped_state_empty": true
+    },
+    {
+      "seed": 1,
+      "count": 512,
+      "actual_checkpoint_sha256": "632a47a0e63a4cedf084540cc90bebfe1878666a18942c31445cdd25fe958691",
+      "actual_encoder_state_sha256": "017970d249fe10301ea20f94e61d0850fe05cb151ba95b5c458017fe4a3105d6",
+      "actual_steps": [
+        128
+      ],
+      "actual_cursor": 128,
+      "wrapped_state_empty": true
+    },
+    {
+      "seed": 2,
+      "count": 64,
+      "actual_checkpoint_sha256": "e8f9e7df3c52a22caad7d9c9277156482efe83350ee8ef4366005a566f1cdde1",
+      "actual_encoder_state_sha256": "3ec445a084e7b47902f6ab4a1ba05e569ebc2d0773d570e7f194e77cbb88483f",
+      "actual_steps": [
+        128
+      ],
+      "actual_cursor": 128,
+      "wrapped_state_empty": true
+    },
+    {
+      "seed": 2,
+      "count": 512,
+      "actual_checkpoint_sha256": "44420c495f5b26fbb9fcf1243597a6c28b5b22872a93e6142ffb376f08ae3b5b",
+      "actual_encoder_state_sha256": "8a277fced3f30b8e20858ac082624867f65a08811f5365bc794235ba5da365b2",
+      "actual_steps": [
+        128
+      ],
+      "actual_cursor": 128,
+      "wrapped_state_empty": true
+    }
+  ],
+  "summary_sha256": "a1e588b2e748fc072e0e4f5b0d01802ea27295f356a6d035991a5028f034cd2e",
+  "diagnostic_summary_sha256": "d2f66102802187d489374c5bb24a7112f0e0c4fcbce1e68a1110949d55a38979",
+  "six_frozen_source_models_reconstructed_by_postscore_diagnostic": true,
+  "encoder_updates_per_arm": 128,
+  "core_updates": 0,
+  "actual_native64_candidate_masks": 96,
+  "baseline_masks": 48,
+  "three_seeds": [
+    0,
+    1,
+    2
+  ],
+  "images_per_seed": 16,
+  "independent_metric_maximum_abs_error": 2.220446049250313e-16,
+  "independent_mean_and_bootstrap_maximum_abs_error": 0.0,
+  "all_three_segmentation_metrics_decline_in_both_arms": true,
+  "extension_gates_passed": false,
+  "new70000_training": false,
+  "private_vectors_not_published": true,
+  "full320_incumbent_unchanged": true
+}

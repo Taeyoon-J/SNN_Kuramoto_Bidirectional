@@ -10427,7 +10427,7 @@
   },
   "latest_native64_encoder_frequency_pretraining": {
     "experiment": "SW0221",
-    "status": "actual_GPU_started",
+    "status": "complete_no_gain",
     "seed_scope": [
       0,
       1,
@@ -10444,6 +10444,27 @@
     "registered_jobs": 6,
     "mask_supervised": true,
     "incumbent_changed": false,
-    "new_score": null
+    "new_score": {
+      "baseline": {
+        "fg_ari": 0.8428907016774789,
+        "foreground_iou": 0.6006915810165038,
+        "matched_object_iou": 0.7021610526966486
+      },
+      "TRAIN64": {
+        "fg_ari": 0.7057409700057037,
+        "foreground_iou": 0.24328673174344903,
+        "matched_object_iou": 0.5810923746634148
+      },
+      "TRAIN512": {
+        "fg_ari": 0.6930041689725385,
+        "foreground_iou": 0.23999916406280142,
+        "matched_object_iou": 0.574073651433517
+      }
+    },
+    "extension_gates_passed": false,
+    "actual_checkpoint_audit": true,
+    "within_object_frequency_variance_increased_on_TRAIN_and_DEV": true,
+    "phase_target_branch_closed": true,
+    "completion_summary_sha256": "a1e588b2e748fc072e0e4f5b0d01802ea27295f356a6d035991a5028f034cd2e"
   }
 }
