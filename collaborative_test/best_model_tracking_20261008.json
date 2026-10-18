@@ -9780,5 +9780,114 @@
     "support_before_grouping": true,
     "same_original_product_Q_and_graph": true,
     "performance_result_available": false
+  },
+  "latest_center_classifier_pilots": {
+    "experiments": {
+      "211": {
+        "result": "SW_0211_spike_anchor_center_assignment\\RESULT_KO.md",
+        "scores": {
+          "baseline": {
+            "fg_ari": 0.7884142488069319,
+            "foreground_iou": 0.44547449493657715,
+            "matched_object_iou": 0.6743347721969196
+          },
+          "step32": {
+            "fg_ari": 0.03467810440276488,
+            "foreground_iou": 0.44547449493657715,
+            "matched_object_iou": 0.04441388727160459
+          },
+          "step64": {
+            "fg_ari": 0.03467810440276488,
+            "foreground_iou": 0.44547449493657715,
+            "matched_object_iou": 0.04441388727160459
+          },
+          "step128": {
+            "fg_ari": 0.03467810440276488,
+            "foreground_iou": 0.44547449493657715,
+            "matched_object_iou": 0.04441388727160459
+          },
+          "mean_input": {
+            "fg_ari": 0.03467810440276488,
+            "foreground_iou": 0.44547449493657715,
+            "matched_object_iou": 0.04441388727160459
+          },
+          "moments_only": {
+            "fg_ari": 0.03467810440276488,
+            "foreground_iou": 0.44547449493657715,
+            "matched_object_iou": 0.04441388727160459
+          }
+        },
+        "scope": "seed2_fixed16_native64_supervised_pilot",
+        "incumbent_changed": false
+      },
+      "212": {
+        "result": "SW_0212_learned_foreground_center_readout\\RESULT_KO.md",
+        "scores": {
+          "baseline": {
+            "fg_ari": 0.7884142488069319,
+            "foreground_iou": 0.44547449493657715,
+            "matched_object_iou": 0.6743347721969196
+          },
+          "step128": {
+            "fg_ari": 0.03467810440276488,
+            "foreground_iou": 0.44547449493657715,
+            "matched_object_iou": 0.04441388727160459
+          },
+          "learned_foreground": {
+            "fg_ari": 0.0,
+            "foreground_iou": 0.29253176670674375,
+            "matched_object_iou": 0.022362200593804886
+          }
+        },
+        "scope": "seed2_fixed16_native64_supervised_pilot",
+        "incumbent_changed": false
+      },
+      "213": {
+        "result": "SW_0213_center_head_convergence\\RESULT_KO.md",
+        "scores": {
+          "baseline": {
+            "fg_ari": 0.7884142488069319,
+            "foreground_iou": 0.44547449493657715,
+            "matched_object_iou": 0.6743347721969196
+          },
+          "parent128": {
+            "fg_ari": 0.03467810440276488,
+            "foreground_iou": 0.44547449493657715,
+            "matched_object_iou": 0.04441388727160459
+          },
+          "primary512": {
+            "fg_ari": 0.5896659619540516,
+            "foreground_iou": 0.44547449493657715,
+            "matched_object_iou": 0.32512928818352704
+          },
+          "mean_input": {
+            "fg_ari": 0.03467810440276488,
+            "foreground_iou": 0.44547449493657715,
+            "matched_object_iou": 0.04442111188271977
+          },
+          "moments_only": {
+            "fg_ari": 0.25484842595953594,
+            "foreground_iou": 0.44547449493657715,
+            "matched_object_iou": 0.12668034333104455
+          },
+          "learned_foreground": {
+            "fg_ari": 0.5933199659524945,
+            "foreground_iou": 0.26650351473058886,
+            "matched_object_iou": 0.18944322042179118
+          }
+        },
+        "scope": "seed2_fixed16_native64_supervised_pilot",
+        "incumbent_changed": false
+      }
+    },
+    "direction_status": "center replacement below original core grouping after one fixed512 convergence check; no further budget sweep",
+    "next_direction": "preserve existing components and learn residual same-object mergers",
+    "latest_head_model_sha256": "b4b04ee8fa41f6243868eaeaf91683710ced168e4b6074b51a3ca7a24907638d",
+    "count_pilot": {
+      "exact": 0.25,
+      "images": 16,
+      "seed": 2,
+      "stable_classifier_verified": false
+    }
   }
 }

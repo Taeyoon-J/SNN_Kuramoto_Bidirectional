@@ -28,3 +28,11 @@ recorded in started_v1/actual_GPU_start.json. This starts frozen-core feature
 extraction; it does not yet establish that classifier Adam updates have begun.
 The earlier GPU2 attempt yielded before extraction to respect another owner.
 SW0212 is independently queued to compare learned foreground after completion.
+
+Completed, gate failed: primary128 .034678/.445474/.044414 versus original
+.788414/.445474/.674335. All DEV images use a single-center fallback. Actual128
+Adam updates and96 endpoints independently audited. TRAIN-only diagnosis also
+finds no effective center detections, despite offset error1.5185 pixels versus
+zero-offset4.2434 and mean-input4.7278. These are TRAIN diagnostics, not gains.
+See RESULT_KO.md and results_archive/head_diagnosis_v1/summary.json. Incumbent
+full320 three-seed mean remains .848615/.592533/.672047.

@@ -1,0 +1,52 @@
+{
+  "status": "posthoc_TRAIN_center_offset_diagnosis_DEV_outputs_without_GT",
+  "TRAIN_by_frozen_input_arm": {
+    "real": {
+      "offset_error_object_balanced_px": 1.5185123458504677,
+      "zero_offset_error_object_balanced_px": 4.243378482758999,
+      "center_probability_at_GT_centers": 0.06353771209251136,
+      "GT_center_fraction_reaching_fixed_threshold": 0.0,
+      "max_center_probability": 0.12455257214605808,
+      "fallback": 1.0,
+      "predicted_objects": 1.0,
+      "foreground_fraction": 0.6139373779296875,
+      "foreground_IoU": 0.33510391746878654
+    },
+    "mean_input": {
+      "offset_error_object_balanced_px": 4.727843746542931,
+      "zero_offset_error_object_balanced_px": 4.243378482758999,
+      "center_probability_at_GT_centers": 0.014598315057810396,
+      "GT_center_fraction_reaching_fixed_threshold": 0.0,
+      "max_center_probability": 0.02832312136888504,
+      "fallback": 1.0,
+      "predicted_objects": 1.0,
+      "foreground_fraction": 1.0,
+      "foreground_IoU": 0.19532012939453125
+    },
+    "moments_only": {
+      "offset_error_object_balanced_px": 3.621944911777973,
+      "zero_offset_error_object_balanced_px": 4.243378482758999,
+      "center_probability_at_GT_centers": 0.04294229473453015,
+      "GT_center_fraction_reaching_fixed_threshold": 0.00625,
+      "max_center_probability": 0.12907580751925707,
+      "fallback": 0.9375,
+      "predicted_objects": 1.03125,
+      "foreground_fraction": 0.673004150390625,
+      "foreground_IoU": 0.28091701467022556
+    }
+  },
+  "DEV_unlabeled_mean": {
+    "max_center_probability": 0.11401282646693289,
+    "foreground_fraction": 0.6254730224609375
+  },
+  "new_core_forward_passes": 0,
+  "new_optimizer_steps": 0,
+  "new_head_image_forward_passes": 112,
+  "TRAIN_images": 32,
+  "DEV_images": 16,
+  "DEV_GT_read": false,
+  "source_model_sha256": "be7e17b9be200d2c731958c6e14c5108b1e3f7a68046db5b620785b317592fc9",
+  "source_sha256": "51a8bb9a6c1227a867fff158efc49417e78dfb3ff2eed0d6afa4235b000cb30c",
+  "not_a_new_leaderboard_result": true,
+  "ablations_are_frozen_input_controls_not_retrained_physical_gating_causality": true
+}

@@ -1,0 +1,269 @@
+{
+  "status": "completed_native64_center_assignment_pilot",
+  "seed_scope": [
+    2
+  ],
+  "images": 16,
+  "grid": [
+    64,
+    64
+  ],
+  "TRAIN_images": 32,
+  "primary_steps": 128,
+  "scores": {
+    "baseline": {
+      "fg_ari": 0.7884142488069319,
+      "foreground_iou": 0.44547449493657715,
+      "matched_object_iou": 0.6743347721969196
+    },
+    "step32": {
+      "fg_ari": 0.03467810440276488,
+      "foreground_iou": 0.44547449493657715,
+      "matched_object_iou": 0.04441388727160459
+    },
+    "step64": {
+      "fg_ari": 0.03467810440276488,
+      "foreground_iou": 0.44547449493657715,
+      "matched_object_iou": 0.04441388727160459
+    },
+    "step128": {
+      "fg_ari": 0.03467810440276488,
+      "foreground_iou": 0.44547449493657715,
+      "matched_object_iou": 0.04441388727160459
+    },
+    "mean_input": {
+      "fg_ari": 0.03467810440276488,
+      "foreground_iou": 0.44547449493657715,
+      "matched_object_iou": 0.04441388727160459
+    },
+    "moments_only": {
+      "fg_ari": 0.03467810440276488,
+      "foreground_iou": 0.44547449493657715,
+      "matched_object_iou": 0.04441388727160459
+    }
+  },
+  "paired_minus_baseline": {
+    "step32": {
+      "fg_ari": {
+        "mean": -0.7537361444041669,
+        "ci95": [
+          -0.8832182065809473,
+          -0.5974657341752403
+        ]
+      },
+      "foreground_iou": {
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "matched_object_iou": {
+        "mean": -0.6299208849253148,
+        "ci95": [
+          -0.714138368813614,
+          -0.5319930055173113
+        ]
+      }
+    },
+    "step64": {
+      "fg_ari": {
+        "mean": -0.7537361444041669,
+        "ci95": [
+          -0.8832182065809473,
+          -0.5974657341752403
+        ]
+      },
+      "foreground_iou": {
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "matched_object_iou": {
+        "mean": -0.6299208849253148,
+        "ci95": [
+          -0.714138368813614,
+          -0.5319930055173113
+        ]
+      }
+    },
+    "step128": {
+      "fg_ari": {
+        "mean": -0.7537361444041669,
+        "ci95": [
+          -0.8832182065809473,
+          -0.5974657341752403
+        ]
+      },
+      "foreground_iou": {
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "matched_object_iou": {
+        "mean": -0.6299208849253148,
+        "ci95": [
+          -0.714138368813614,
+          -0.5319930055173113
+        ]
+      }
+    },
+    "mean_input": {
+      "fg_ari": {
+        "mean": -0.7537361444041669,
+        "ci95": [
+          -0.8832182065809473,
+          -0.5974657341752403
+        ]
+      },
+      "foreground_iou": {
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "matched_object_iou": {
+        "mean": -0.6299208849253148,
+        "ci95": [
+          -0.714138368813614,
+          -0.5319930055173113
+        ]
+      }
+    },
+    "moments_only": {
+      "fg_ari": {
+        "mean": -0.7537361444041669,
+        "ci95": [
+          -0.8832182065809473,
+          -0.5974657341752403
+        ]
+      },
+      "foreground_iou": {
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "matched_object_iou": {
+        "mean": -0.6299208849253148,
+        "ci95": [
+          -0.714138368813614,
+          -0.5319930055173113
+        ]
+      }
+    }
+  },
+  "frozen_input_ablation_differences": {
+    "mean_input": {
+      "fg_ari": {
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "foreground_iou": {
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "matched_object_iou": {
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "moments_only": {
+      "fg_ari": {
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "foreground_iou": {
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "matched_object_iou": {
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      }
+    }
+  },
+  "primary_expansion_gate_passed": false,
+  "primary_step_fixed_before_DEV_GT": true,
+  "exploratory_steps": [
+    32,
+    64
+  ],
+  "all_source_foreground_bitwise_preserved": true,
+  "core_optimizer_steps": 0,
+  "actual_head_Adam_steps": [
+    128
+  ],
+  "mask_supervised": true,
+  "count_diagnostics": {
+    "baseline": {
+      "true_object_count": 5.375,
+      "predicted_positive_label_count": 21.8125,
+      "raw_count_exact": 0.0
+    },
+    "step32": {
+      "true_object_count": 5.375,
+      "predicted_positive_label_count": 1.0,
+      "raw_count_exact": 0.0
+    },
+    "step64": {
+      "true_object_count": 5.375,
+      "predicted_positive_label_count": 1.0,
+      "raw_count_exact": 0.0
+    },
+    "step128": {
+      "true_object_count": 5.375,
+      "predicted_positive_label_count": 1.0,
+      "raw_count_exact": 0.0
+    },
+    "mean_input": {
+      "true_object_count": 5.375,
+      "predicted_positive_label_count": 1.0,
+      "raw_count_exact": 0.0
+    },
+    "moments_only": {
+      "true_object_count": 5.375,
+      "predicted_positive_label_count": 1.0,
+      "raw_count_exact": 0.0
+    }
+  },
+  "fallback_fraction": {
+    "step32": 1.0,
+    "step64": 1.0,
+    "step128": 1.0,
+    "mean_input": 1.0,
+    "moments_only": 0.9375
+  },
+  "independent_maximum_metric_abs_error": 2.220446049250313e-16,
+  "cache_protocol_sha256": "24e28d6753c6bcc8f5ecba39282821f4ecd63c8469f3e7d4fb81d677cb48870e",
+  "training_report_sha256": "d273421ca3c1783b5bdd095449a9b48b752f436feef7d365a13f61f93abe4797",
+  "source_model_sha256": "dff381ebcd5280a2a7bf7b99ef8ee3b5af30e91f3384962ef47c6d89b7da53d0",
+  "full320_three_seed_goal_verified": false,
+  "new70000_training": false,
+  "validation_selected_not_untouched_test": true,
+  "frozen_ablations_are_not_retrained_gating_causality_proof": true
+}

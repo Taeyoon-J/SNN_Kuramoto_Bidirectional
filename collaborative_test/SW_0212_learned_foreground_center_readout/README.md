@@ -17,3 +17,8 @@ The first deployment bootstrap encountered system Python3.6's unsupported
 capture_output argument before tests or model execution. Using the established
 research Python3.10 fixed the deployment helper; scientific source was unchanged.
 Original bootstrap logs are retained locally. This is not a failed GPU trial.
+
+Completed and independently audited: .000000/.292532/.022362 versus original
+.788414/.445474/.674335. Parent128 CPU replay was bitwise exact. Center fallback
+remains100%, predicted count1/image. No threshold rescue or expansion of this
+endpoint; no incumbent change. See RESULT_KO.md and completed_v1 evidence.
