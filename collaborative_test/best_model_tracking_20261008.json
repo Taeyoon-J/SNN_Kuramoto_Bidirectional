@@ -10042,5 +10042,99 @@
     },
     "incumbent_changed": false,
     "next_direction": "check FG-conditional TRAIN relation target; keep evaluation unchanged; anchor-order invariance remains a separate hypothesis"
+  },
+  "latest_FG_conditional_relation_pilot": {
+    "experiment": "SW0216",
+    "scope": "native64_fixed16_seed2_supervised",
+    "scores": {
+      "baseline": {
+        "fg_ari": 0.7884142488069319,
+        "foreground_iou": 0.44547449493657715,
+        "matched_object_iou": 0.6743347721969196
+      },
+      "primary": {
+        "fg_ari": 0.7816512094593567,
+        "foreground_iou": 0.44547449493657715,
+        "matched_object_iou": 0.6651168992545251
+      },
+      "geometry_only": {
+        "fg_ari": 0.7884142488069319,
+        "foreground_iou": 0.44547449493657715,
+        "matched_object_iou": 0.6743347721969196
+      },
+      "matched_all_patch_target": {
+        "fg_ari": 0.7816512094593567,
+        "foreground_iou": 0.44547449493657715,
+        "matched_object_iou": 0.6649340063571487
+      }
+    },
+    "paired": {
+      "primary": {
+        "fg_ari": {
+          "mean": -0.0067630393475751685,
+          "ci95": [
+            -0.018548204207659534,
+            4.897846734205902e-05
+          ]
+        },
+        "foreground_iou": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ]
+        },
+        "matched_object_iou": {
+          "mean": -0.00921787294239447,
+          "ci95": [
+            -0.024888125498050154,
+            0.0
+          ]
+        }
+      },
+      "geometry_only": {
+        "fg_ari": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ]
+        },
+        "foreground_iou": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ]
+        },
+        "matched_object_iou": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    "primary_gate_passed": false,
+    "actual_Adam_steps": [
+      128
+    ],
+    "matched_features_weights_and_initialization_verified": true,
+    "GT_assisted_references": {
+      "all_patch": {
+        "fg_ari": 0.8473211269564795,
+        "foreground_iou": 0.44547449493657715,
+        "matched_object_iou": 0.6937739166321683
+      },
+      "foreground_conditional": {
+        "fg_ari": 0.849996517718357,
+        "foreground_iou": 0.44547449493657715,
+        "matched_object_iou": 0.6487563061360797
+      }
+    },
+    "reference_is_not_a_predictor_or_certified_ceiling": true,
+    "incumbent_changed": false,
+    "next_direction": "native signed-energy split/refinement; source groups already4-connected"
   }
 }

@@ -1,0 +1,187 @@
+{
+  "status": "completed_FG_conditional_component_relation_merger",
+  "seed_scope": [
+    2
+  ],
+  "grid": [
+    64,
+    64
+  ],
+  "images": 16,
+  "TRAIN_images": 32,
+  "scores": {
+    "baseline": {
+      "fg_ari": 0.7884142488069319,
+      "foreground_iou": 0.44547449493657715,
+      "matched_object_iou": 0.6743347721969196
+    },
+    "primary": {
+      "fg_ari": 0.7816512094593567,
+      "foreground_iou": 0.44547449493657715,
+      "matched_object_iou": 0.6651168992545251
+    },
+    "geometry_only": {
+      "fg_ari": 0.7884142488069319,
+      "foreground_iou": 0.44547449493657715,
+      "matched_object_iou": 0.6743347721969196
+    },
+    "matched_all_patch_target": {
+      "fg_ari": 0.7816512094593567,
+      "foreground_iou": 0.44547449493657715,
+      "matched_object_iou": 0.6649340063571487
+    }
+  },
+  "paired_minus_baseline": {
+    "primary": {
+      "fg_ari": {
+        "mean": -0.0067630393475751685,
+        "ci95": [
+          -0.018548204207659534,
+          4.897846734205902e-05
+        ]
+      },
+      "foreground_iou": {
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "matched_object_iou": {
+        "mean": -0.00921787294239447,
+        "ci95": [
+          -0.024888125498050154,
+          0.0
+        ]
+      }
+    },
+    "geometry_only": {
+      "fg_ari": {
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "foreground_iou": {
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "matched_object_iou": {
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      }
+    }
+  },
+  "primary_minus_matched_all_patch_target": {
+    "fg_ari": {
+      "mean": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "foreground_iou": {
+      "mean": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "matched_object_iou": {
+      "mean": 0.00018289289737638548,
+      "ci95": [
+        0.0,
+        0.0005486786921291564
+      ]
+    }
+  },
+  "GT_assisted_component_merging_references": {
+    "all_patch": {
+      "fg_ari": 0.8473211269564795,
+      "foreground_iou": 0.44547449493657715,
+      "matched_object_iou": 0.6937739166321683
+    },
+    "foreground_conditional": {
+      "fg_ari": 0.849996517718357,
+      "foreground_iou": 0.44547449493657715,
+      "matched_object_iou": 0.6487563061360797
+    }
+  },
+  "references_are_not_predictors_or_certified_learnable_ceilings": true,
+  "TRAIN_prior_shift": 2.9710021539040063,
+  "TRAIN_relation_statistics": {
+    "positive_mass": 1.5601032477569983,
+    "negative_mass": 30.439897248172272,
+    "weighted_positive_prior": 0.048753225736838955
+  },
+  "primary_minus_frozen_geometry": {
+    "fg_ari": {
+      "mean": -0.0067630393475751685,
+      "ci95": [
+        -0.018548204207659534,
+        4.897846734205902e-05
+      ]
+    },
+    "foreground_iou": {
+      "mean": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ]
+    },
+    "matched_object_iou": {
+      "mean": -0.00921787294239447,
+      "ci95": [
+        -0.024888125498050154,
+        0.0
+      ]
+    }
+  },
+  "primary_expansion_gate_passed": false,
+  "mean_component_merges": {
+    "primary": 2.0,
+    "geometry_only": 0.0
+  },
+  "count_diagnostics": {
+    "baseline": {
+      "true_object_count": 5.375,
+      "predicted_positive_label_count": 21.8125,
+      "raw_count_exact": 0.0
+    },
+    "primary": {
+      "true_object_count": 5.375,
+      "predicted_positive_label_count": 19.8125,
+      "raw_count_exact": 0.0
+    },
+    "geometry_only": {
+      "true_object_count": 5.375,
+      "predicted_positive_label_count": 21.8125,
+      "raw_count_exact": 0.0
+    },
+    "matched_all_patch_target": {
+      "true_object_count": 5.375,
+      "predicted_positive_label_count": 19.875,
+      "raw_count_exact": 0.0
+    }
+  },
+  "all_original_components_unsplit": true,
+  "source_foreground_preserved": true,
+  "actual_Adam_steps": [
+    128
+  ],
+  "core_optimizer_steps": 0,
+  "core_forward_passes": 0,
+  "mask_supervised": true,
+  "new70000_training": false,
+  "full320_three_seed_goal_verified": false,
+  "independent_maximum_metric_abs_error": 3.3306690738754696e-16,
+  "frozen_geometry_control_is_not_retrained_physical_gating_causality": true,
+  "model_sha256": "61124baa4b23941782c9d96fd14cfd88dbd2fca0e22b7f1f4077a54cb46d6400"
+}

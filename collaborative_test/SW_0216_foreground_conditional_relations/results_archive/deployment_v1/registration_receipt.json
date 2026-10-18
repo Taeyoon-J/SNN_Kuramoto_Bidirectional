@@ -1,0 +1,112 @@
+{
+  "registration": {
+    "observed_unix": 1792339026.4021726,
+    "checks": [
+      {
+        "check": "tests",
+        "returncode": 0
+      },
+      {
+        "check": "admit",
+        "returncode": 0
+      }
+    ],
+    "parent_summary_existed_at_registration": true,
+    "parent_summary_read": false,
+    "files": {
+      "DESIGN_KO.md": "ffc19f8608630d516ae63bb70374842c5dfff6f96b282a987bae909f4659a671",
+      "README.md": "e48d4ca124105828e9a3444e7c06eb76e65582593d0010c818591d01dd2a4018",
+      "targets.py": "abd0778c3b9d31ed942f243928858a03bfabdfc5372ffd16a8adc56a5af8d4e6",
+      "run.py": "5bc58262338e73f8eb76edf8cfa24466e6e819f78d1779955dd4bc879ae8db27",
+      "queue.py": "527486e4e6789f7a49fff598a09e03cd70edd8031e40d3d501587508b8b9bf54",
+      "test_target.py": "2929aa5fe14dcb499e34954454c817599a762b534d7db3c02d4698c6a84ac1ff"
+    },
+    "GPU_training_started": false,
+    "new_optimizer_steps": 0
+  },
+  "supervisor_pid": 2352817,
+  "start_ticks": 449109499,
+  "argv": [
+    "/Data0/kevinswk/envs/snn/bin/python",
+    "-u",
+    "-m",
+    "collaborative_test.SW_0216_foreground_conditional_relations.queue"
+  ],
+  "state": {
+    "status": "waiting_for_exclusive_gpu",
+    "supervisor_pid": 2352817,
+    "updated_unix": 1792339028.30222
+  },
+  "admission": {
+    "status": "actual_FG_conditional_relations_CPU_admitted",
+    "binding": {
+      "science": {
+        "files": {
+          "DESIGN_KO.md": "ffc19f8608630d516ae63bb70374842c5dfff6f96b282a987bae909f4659a671",
+          "targets.py": "abd0778c3b9d31ed942f243928858a03bfabdfc5372ffd16a8adc56a5af8d4e6",
+          "run.py": "5bc58262338e73f8eb76edf8cfa24466e6e819f78d1779955dd4bc879ae8db27",
+          "queue.py": "527486e4e6789f7a49fff598a09e03cd70edd8031e40d3d501587508b8b9bf54",
+          "test_target.py": "2929aa5fe14dcb499e34954454c817599a762b534d7db3c02d4698c6a84ac1ff"
+        },
+        "cache_dependency_sha256": "b0bec4934427524e5aa6d644b0b9bbce5f46cb3bba24602a768181a8a1128e3d",
+        "merger_dependency_sha256": "e9b7cd1a549b724754afa1cb4182819cbf5558778ac54401223eb6bb7c4ebf08",
+        "calibration_dependency_sha256": "ad2566170e46b3224ed3a6dfd7a29431084bfdcf3b00b321cbc2a79ed3344d30",
+        "TRAIN": 32,
+        "DEV": 16,
+        "steps": 128,
+        "pair_channels": 548,
+        "core_updates": 0
+      },
+      "cache_protocol_sha256": "24e28d6753c6bcc8f5ecba39282821f4ecd63c8469f3e7d4fb81d677cb48870e",
+      "TRAIN_pair_counts": [
+        153,
+        276,
+        3,
+        21,
+        136,
+        120,
+        6,
+        861,
+        10,
+        78,
+        66,
+        120,
+        378,
+        91,
+        6,
+        210,
+        45,
+        10,
+        6,
+        15,
+        36,
+        1035,
+        6,
+        91,
+        1653,
+        153,
+        465,
+        55,
+        153,
+        153,
+        6,
+        231
+      ],
+      "features_sha256": "f4fd2b6b0acc6b46fcffe7f24f79089818cd2c1b21572aa60341e8b581603b2b",
+      "targets_sha256": "3ba885890f4ebed97bf4a38fe045619220f2eb2a4101f0867a0e2ec84f0484e0",
+      "weights_sha256": "720cac62355cd554b9ff920ed3b38b1c49b89359004dfff4a77434819aee2da7",
+      "DEV_GT_read": false,
+      "TRAIN_prior_shift": 2.9710021539040063,
+      "TRAIN_relation_statistics": {
+        "positive_mass": 1.5601032477569983,
+        "negative_mass": 30.439897248172272,
+        "weighted_positive_prior": 0.048753225736838955
+      }
+    },
+    "cuda_initialized": false,
+    "TRAIN_pairs": 6648,
+    "soft_positive_mass": 1.560103178024292,
+    "initial_loss": 0.6931472420692444,
+    "zero_edge_DEV_identity_verified": true
+  }
+}
