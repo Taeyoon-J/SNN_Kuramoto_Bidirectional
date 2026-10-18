@@ -1,3 +1,5 @@
+2026-10-18 SW0212: prospective frozen-head learned-foreground readout queued after SW0211; CPU only, zero new optimizer steps; five local/five Linux tests and native64 CPU admission passed. Supervisor2285616/start448185348. Registered before211 score existed; exact parent-mask replay required before GT scoring. See SW_0212_learned_foreground_center_readout/README.md. No improvement claimed.
+
 Queued2026-10-18: [SW0211 spike-anchor center assignment](SW_0211_spike_anchor_center_assignment/DESIGN_KO.md),
 actual source seed2, TRAIN32, frozen core and exactly preserved foreground.
 17 local+Linux tests and real native64 CPU admission passed. No new score yet.
