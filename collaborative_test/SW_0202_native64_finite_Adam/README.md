@@ -22,3 +22,18 @@ distinct in reports and final audit.
 Actual worker2036939 subsequently startedGPU1 after199 completed. Its actual
 NVIDIA compute PID and inherited control model/Adam/RNG restoration were verified;
 start evidence is under started_v1. Training/evaluation results are still pending.
+
+Completed and independently audited on fixed16 development images, seed0:
+
+| Arm | FG-ARI | Foreground IoU | Object IoU |
+| --- | ---: | ---: | ---: |
+| finite Adam | .9001477304 | .8595864826 | .7281376470 |
+| matched guarded control / warm | .9244014538 | .8598964167 | .7276384095 |
+
+Two new finite updates were applied, one also passed the old descent check.
+Actual Adam step4 and changed CNN/model were verified against the saved boundary.
+FG difference -.0242537234, paired CI[-.0730305538,.0008761625]. Extension gate
+failed; recipe closed without a learning-rate or update-count micro-rescue.
+This bounded screen does not prove ordinary Adam generally ineffective and does
+not establish minibatch rejection as the cause of poor scaling. No full320 or
+three-seed goal claim. Audit covers all48 candidate/control/warm masks.

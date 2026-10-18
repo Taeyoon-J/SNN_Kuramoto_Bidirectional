@@ -16,7 +16,7 @@ This does not imply four GPUs are idle or that another owner's job is displaced.
 | SW0199 absolute-Q calibration | 1973323 (completed) | SW_0199_native64_absolute_calibration/results_archive/calibrated/queue | Audited16 images: .9005/.8612/.7356 vscontrol .9244/.8599/.7276; FG gate failed, recipe closed |
 | SW0200 full settled-window temporal credit | 2000695 (completed) | SW_0200_native64_long_credit/results_archive/queue | Audited16 images: .8997/.8577/.7234 vscontrol .9244/.8599/.7276; failed extension gate, recipe closed |
 | SW0201 normalized spike group-count loss | 2014332 (completed) | SW_0201_native64_normalized_count/results_archive/queue | Audited16 images; no committed new steps, model and scores unchanged; recipe closed |
-| SW0202 finite Adam, original QCE | 2032092 | SW_0202_native64_finite_Adam/results_archive/queue | Actual GPU1 worker2036939 started; same control model/Adam/RNG and NVIDIA PID verified |
+| SW0202 finite Adam, original QCE | 2032092 (completed) | SW_0202_native64_finite_Adam/results_archive/queue | Audited16 images .9001/.8596/.7281; FG gate failed, finite steps applied2; recipe closed |
 
 The old196 waiter1857076 was stopped before CPU admission or GPU work, with its
 queue state preserved. Its optional195 dependency was removed in the replacement
@@ -53,3 +53,7 @@ lease and foreign-owner guard. All three were observed waiting;202 remains
 running on GPU1. New203 changes grouping affinity units only, with unchanged
 foreground support and no optimizer updates. Eight fixed development images per
 seed; this is not a full320 score or new training result.
+
+202 completed and203 seed2 worker2043968 obtainedGPU1. Other two203 seeds remain
+registered exclusive waiters; all four GPUs remain eligible. Actual worker PID
+and NVIDIA allocation were observed, not inferred from a state file alone.

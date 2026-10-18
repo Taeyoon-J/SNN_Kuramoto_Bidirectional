@@ -1,0 +1,83 @@
+{
+  "status": "actual_completed_boundary_Adam_history_and48_native64_masks_independently_verified",
+  "experiment": "SW_0202_native64_finite_Adam",
+  "summary_sha256": "dfd4a76de510401b60177c267a661a3e13e4a61cc3d03199f8863c9d63e4544e",
+  "actual_model_sha256": "3b918ca8c3a1a788fc536e9495d3b5a6d742a17161025d7a25a7c0675744268c",
+  "actual_Adam_steps": [
+    4
+  ],
+  "new_accepted_updates": 2,
+  "CNN_changed_from_warm": true,
+  "initial_model_Adam_tensor_transaction_matches_control": true,
+  "initial_parent_CPU_CUDA_RNG_restoration_hash_verified": true,
+  "scores": {
+    "finite_adam": {
+      "fg_ari": 0.9001477304039301,
+      "foreground_iou": 0.8595864826069441,
+      "matched_object_iou": 0.7281376470404165
+    },
+    "control": {
+      "fg_ari": 0.924401453845536,
+      "foreground_iou": 0.8598964166728263,
+      "matched_object_iou": 0.7276384094627034
+    },
+    "warm": {
+      "fg_ari": 0.924401453845536,
+      "foreground_iou": 0.8598964166728263,
+      "matched_object_iou": 0.7276384094627034
+    }
+  },
+  "paired_candidate_minus": {
+    "control": {
+      "fg_ari": {
+        "mean": -0.024253723441605875,
+        "ci95": [
+          -0.07303055381485729,
+          0.0008761624891613365
+        ]
+      },
+      "foreground_iou": {
+        "mean": -0.0003099340658825542,
+        "ci95": [
+          -0.009115756686369995,
+          0.009709463257142914
+        ]
+      },
+      "matched_object_iou": {
+        "mean": 0.0004992375777130437,
+        "ci95": [
+          -0.035842854245016965,
+          0.03775196822040157
+        ]
+      }
+    },
+    "warm": {
+      "fg_ari": {
+        "mean": -0.024253723441605875,
+        "ci95": [
+          -0.07303055381485729,
+          0.0008761624891613365
+        ]
+      },
+      "foreground_iou": {
+        "mean": -0.0003099340658825542,
+        "ci95": [
+          -0.009115756686369995,
+          0.009709463257142914
+        ]
+      },
+      "matched_object_iou": {
+        "mean": 0.0004992375777130437,
+        "ci95": [
+          -0.035842854245016965,
+          0.03775196822040157
+        ]
+      }
+    }
+  },
+  "maximum_metric_abs_error": 2.220446049250313e-16,
+  "screen_gate_passed": false,
+  "full320_three_seed_goal_verified": false,
+  "final_boundary_sha256": "f2f20c457adcde3daec6b80c2edcbcaf5b0ca2ef96238a6a2ad53041977c227f",
+  "raw_imagewise_values_included": false
+}
