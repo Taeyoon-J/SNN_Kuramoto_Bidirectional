@@ -8122,7 +8122,7 @@
   },
   "latest_native64_generalization_diagnostic_20261017": {
     "experiment": "SW0195",
-    "status": "dependency194_satisfied_CPU_admitted_waiting_for_exclusive_GPU",
+    "status": "actual_GPU1_worker_running_frozen_pair_comparison",
     "supervisor_pid": 1853195,
     "grid": [
       64,
@@ -8143,7 +8143,9 @@
     "causal_overfitting_proved": false,
     "incumbent_changed": false,
     "raw_imagewise_scores_public": false,
-    "result_path": "collaborative_test/SW_0195_native64_generalization_gap/README.md"
+    "result_path": "collaborative_test/SW_0195_native64_generalization_gap/README.md",
+    "worker_pid": 1944250,
+    "physical_GPU": 1
   },
   "latest_native64_compute_validation_20261017": {
     "experiment": "SW0196",
@@ -8204,7 +8206,10 @@
     },
     "seed1_saved_prefix_after_foreign_owner_yield": 10,
     "seed1_resumed_worker_pid": 1927544,
-    "seed1_resumed_physical_GPU": 2
+    "seed1_resumed_physical_GPU": 2,
+    "seed1_validated_saved_rows": 27,
+    "seed1_status": "yielded_to_foreign_owner_after_second_attempt_waiting_for_GPU",
+    "seed1_last_worker_pid": 1927544
   },
   "active_all_GPU_schedule_20261017": {
     "eligible_GPUs": [
@@ -8227,5 +8232,65 @@
       "SW0194_TRAIN64_seed0"
     ],
     "required195_dependency_satisfied": true
+  },
+  "latest_native64_partition_diagnosis_20261017": {
+    "scope": "seed0 development32, TRAIN64 minus TRAIN8",
+    "full_pair_split": {
+      "defined_images": 32,
+      "before": 0.05129429783270001,
+      "after": 0.07326601195659513,
+      "delta": 0.021971714123895123,
+      "ci95": [
+        -0.001992676085258709,
+        0.05645016823838314
+      ]
+    },
+    "common_support_pair_split": {
+      "defined_images": 32,
+      "before": 0.014056362204508146,
+      "after": 0.03485752371709859,
+      "delta": 0.02080116151259045,
+      "ci95": [
+        -0.0005814540938904305,
+        0.054983129166242886
+      ]
+    },
+    "common_support_pair_merge": {
+      "defined_images": 32,
+      "before": 0.02229031604742982,
+      "after": 0.022235700285138587,
+      "delta": -5.46157622912317e-05,
+      "ci95": [
+        -0.0002702202938776755,
+        7.185968122724851e-05
+      ]
+    },
+    "causal_claim": false
+  },
+  "latest_native64_readout_normalization_20261017": {
+    "experiment": "SW0198",
+    "status": "actual_two_model_CPU_admitted_waiting_any_exclusive_GPU",
+    "supervisor_pid": 1943908,
+    "eligible_GPUs": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "seed_scope": [
+      0
+    ],
+    "images": 8,
+    "total_forward_passes": 16,
+    "optimizer_updates": 0,
+    "reference_normalizer_verified": 1024,
+    "candidate_normalizer": 4096,
+    "local_tests": 17,
+    "server_tests": 17,
+    "new_performance_result_available": false,
+    "incumbent_changed": false,
+    "peer_cycle_commit": "8691c03be210e108b26f0b5b3e40ea8f9e656f10",
+    "absolute_QCE_readout_ambiguity_illustration_proved": true,
+    "real_data_cause_proved": false
   }
 }

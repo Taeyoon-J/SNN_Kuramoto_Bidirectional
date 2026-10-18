@@ -1,0 +1,44 @@
+{
+  "peer_branch": "patch_v2",
+  "previous_commit": "cab6c676e24a149a45ea960586c04e579f78d384",
+  "commit": "8691c03be210e108b26f0b5b3e40ea8f9e656f10",
+  "reviewed": [
+    "PV2_0092_signed_coupling/README.md",
+    "PV2_0093_grid32_revival/README.md",
+    "PV2_0094_grid32_trained/README.md",
+    "PV2_0094_grid32_trained/commands.sh",
+    "ROUTE_MAP_0.9_v2.md",
+    "evaluate_model.py threshold argument wiring"
+  ],
+  "peer_grid32_CC_scores": [
+    0.6044,
+    0.6661,
+    0.584
+  ],
+  "peer_scope": "seed0 validation300, native240x320 contractv2; not directly comparable with our native128/320 contract",
+  "useful_findings": [
+    "finer grid can preserve transduction yet fragment objects",
+    "population membrane threshold fixed peer spike collapse",
+    "signed coupling failed its foreground gate and used a poor retrained control",
+    "crop/resize alignment must be validated before Slot comparison"
+  ],
+  "incorporate": [
+    "separate spike health from instance grouping",
+    "freeze foreground in198 normalization comparison",
+    "require exact193/194 reference-mask replay",
+    "inspect relative-QCE/absolute0.5 ambiguity before more training"
+  ],
+  "not_blindly_ported": [
+    "population threshold without dead-spike evidence in our seed0",
+    "signed coupling with failed gate",
+    "peer numbers as our benchmark"
+  ],
+  "peer_core_implementation_available_in_branch": false,
+  "peer_core_limitation": "branch contains collaborative_test only; actual membrane implementation outside repository, commands and evaluator wiring inspected",
+  "our_Slot_geometry_checked": {
+    "input": "full native128 HDF5 RGB, no crop",
+    "contract_validator": "SW_0135_native32_spike_binding/evaluation_contract32.py:127",
+    "all_three_protocols_validated_by_completed194_audit": true
+  },
+  "causal_claim": false
+}

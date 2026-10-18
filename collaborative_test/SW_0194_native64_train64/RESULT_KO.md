@@ -40,3 +40,27 @@ TRAIN16 및 development32 성능 변화를 비교한다. 데이터와 optimizer 
 
 Summary SHA256:5b3fbfadd86dd4431f34bdb09b9b275bbdf6caa9a02ebb1e8d2fa135129cda13.
 최종 model SHA256:43b562b6448438c4843f32030d236922e6f9be256e61ea44d5b9618e89342e65.
+
+## 저장된 mask의 posthoc 오류 분석
+
+GPU forward 없이 기존 mask로 분석했다. Foreground miss는4.62%→4.73%,
+background false positive는5.53%→5.56%로 변화가 작았다. GT foreground의
+같은 물체 patch 쌍이 갈라지는 비율은5.13%→7.33%였다.
+
+두 모델이 모두 foreground로 잡은 공통 영역에서도 split은1.41%→3.49%,
+다른 물체 patch 쌍의 merge는2.23%→2.22%였다. 따라서 support 변화만으로
+설명되지 않는 fragmentation 경향이 다음 검증의 단서다. 공통 영역은 GT
+foreground의 평균94.75%를 포함한다. 모든 비영 변화의95%CI가0을 포함하므로
+집단 수준의 확정적 변화나 causal attribution으로 주장하지 않는다.
+Split과 merge의 분모가 달라 두 값을 오류 기여도처럼 더하지 않는다.
+
+분석 코드/기존 오류 함수의 테스트9개가 로컬과 서버에서 통과했다. 집계는
+results_archive/partition_diagnosis_v1/summary.json에 있고 imagewise 값은 공개하지 않는다.
+
+별도 CPU 예제에서 상대 QCE와 절대 threshold readout의 불일치도 재현했다.
+같은 class의 off-diagonal Q를.75→.45, 다른 class를.35→.05로 바꾸면 두 class
+상대 차이는 유지되어 QCE가.0181499279로 동일하지만, 절대 Q=.5 readout은
+올바른 두 물체를 네 singleton으로 나눈다. 이는 합성4-patch 예제이며 실제
+194번 원인의 증명이 아니다.198번에는 원래 식의1024와 실제 node 수4096의
+정규화 비교를 독립적으로 등록했다. 이후 학습에서는 loss/readout calibration
+기준을 맞추는 방향이 별도 검증 대상이다. 현재 recipe의 작은 LR/weight 연장은 아니다.
