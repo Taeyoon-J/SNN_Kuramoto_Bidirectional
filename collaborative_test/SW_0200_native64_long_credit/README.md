@@ -27,3 +27,18 @@ then started the registered two-proposal training. This is learning admission,
 not a segmentation improvement result or a gate-contribution ablation.
 Public validation facts are in gradient_admission/public_receipt.json; the
 single-TRAIN-image loss/gradient values remain private.
+
+Completed and independently audited actual final model/Adam/history plus48 masks
+(candidate/control/warm on16 fixed images), maximum metric error2.22e-16.
+
+| Arm | FG-ARI | Foreground IoU | Object IoU |
+| --- | ---: | ---: | ---: |
+| Full512 credit | .899738 | .857661 | .723357 |
+| Matched64 control / warm | .924401 | .859896 | .727638 |
+
+FG difference-.024664,95%CI[-.074037,.001665]. One new update committed (actual
+Adam step3), model and CNN changed; healthy credit/committed learning did not
+produce a mask improvement on this mini. The registered extension gate failed.
+Close this512 recipe, retain the incumbent/live64 setting, and do not extend it
+with small tail/LR sweeps. A population degradation or general claim that longer
+credit can never help is not established by this one seed/16-image screen.

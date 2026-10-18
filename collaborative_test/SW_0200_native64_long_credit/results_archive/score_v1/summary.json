@@ -1,0 +1,94 @@
+{
+  "status": "native64_full_settled_window_credit_mini_complete",
+  "grid": [
+    64,
+    64
+  ],
+  "seed_scope": [
+    0
+  ],
+  "images": 16,
+  "scores": {
+    "long_credit": {
+      "fg_ari": 0.8997377905777305,
+      "foreground_iou": 0.8576607944206456,
+      "matched_object_iou": 0.7233572190326172
+    },
+    "control": {
+      "fg_ari": 0.924401453845536,
+      "foreground_iou": 0.8598964166728263,
+      "matched_object_iou": 0.7276384094627034
+    },
+    "warm": {
+      "fg_ari": 0.924401453845536,
+      "foreground_iou": 0.8598964166728263,
+      "matched_object_iou": 0.7276384094627034
+    }
+  },
+  "paired_long_credit_minus": {
+    "control": {
+      "fg_ari": {
+        "mean": -0.024663663267805523,
+        "ci95": [
+          -0.0740369425682956,
+          0.0016650435300029735
+        ]
+      },
+      "foreground_iou": {
+        "mean": -0.002235622252180894,
+        "ci95": [
+          -0.015448304195600343,
+          0.011378089112651634
+        ]
+      },
+      "matched_object_iou": {
+        "mean": -0.004281190430086262,
+        "ci95": [
+          -0.040946193074546555,
+          0.03328094297751485
+        ]
+      }
+    },
+    "warm": {
+      "fg_ari": {
+        "mean": -0.024663663267805523,
+        "ci95": [
+          -0.0740369425682956,
+          0.0016650435300029735
+        ]
+      },
+      "foreground_iou": {
+        "mean": -0.002235622252180894,
+        "ci95": [
+          -0.015448304195600343,
+          0.011378089112651634
+        ]
+      },
+      "matched_object_iou": {
+        "mean": -0.004281190430086262,
+        "ci95": [
+          -0.040946193074546555,
+          0.03328094297751485
+        ]
+      }
+    }
+  },
+  "screen_gate_passed": false,
+  "candidate_new_accepted_updates": 1,
+  "candidate_CNN_changed": true,
+  "candidate_model_sha256": "e011fff574abcf3e3c6ddc52f768cc78f1464c0141a06d784b9fd01e4c4f1fe7",
+  "candidate_protocol_sha256": "0453d3f1ddd67d9fc712f92c42831940cdf0184ee1b9c5dc56091dc470c9d3fd",
+  "control_protocol_sha256": "cafc43b839d385a44b2ad8947cf5648cb0751ba2e31be5e66e78aa89dc054dff",
+  "training_report_sha256": "6a10ac1843bcf23da7039aca4808d826a4f22d67324b885d2c2bd20f17945071",
+  "independent_maximum_metric_abs_error": 2.220446049250313e-16,
+  "mask_supervised": true,
+  "unsupervised_leaderboard_eligible": false,
+  "live_tail_steps": 512,
+  "control_live_tail_steps": 64,
+  "inference_total_steps": 1024,
+  "inference_readout_unchanged": true,
+  "extra_read_only_TRAIN_gradient_admission_images": 1,
+  "logical_training_proposal_exposures": 16,
+  "full320_three_seed_goal_verified": false,
+  "raw_imagewise_values_included": false
+}

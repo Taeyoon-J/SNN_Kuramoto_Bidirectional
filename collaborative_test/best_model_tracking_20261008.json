@@ -8427,7 +8427,7 @@
     ],
     "independent_jobs": [
       "SW0199_absolute_calibration",
-      "SW0200_long_credit"
+      "SW0201_normalized_count"
     ],
     "additional_required_dependency": "SW0195 waits only for completed194 model",
     "already_running194_restarted": false,
@@ -8440,9 +8440,11 @@
       "SW0197_baseline_seed1",
       "SW0198_readout_normalization",
       "SW0199_QCE_control",
-      "SW0197_baseline_seed2"
+      "SW0197_baseline_seed2",
+      "SW0200_long_credit"
     ],
-    "required195_dependency_satisfied": true
+    "required195_dependency_satisfied": true,
+    "queue_priority_note": "no additional GPU contender until oldest unfinished199 obtains a slot; do not interrupt current201"
   },
   "latest_native64_partition_diagnosis_20261017": {
     "scope": "seed0 development32, TRAIN64 minus TRAIN8",
@@ -8645,7 +8647,7 @@
   },
   "latest_native64_long_credit_20261017": {
     "experiment": "SW0200",
-    "status": "actual_GPU1_full512_gradient_admitted_training_started",
+    "status": "complete_actual_checkpoint_and_masks_audited_gain_gate_failed_recipe_closed",
     "supervisor_pid": 2000695,
     "eligible_GPUs": [
       0,
@@ -8673,17 +8675,86 @@
     "GPU_full512_admission_completed": true,
     "mask_supervised": true,
     "incumbent_changed": false,
-    "new_performance_result_available": false,
+    "new_performance_result_available": true,
     "full320_three_seed_goal_verified": false,
-    "worker_pid": 2003084,
-    "physical_GPU": 1,
     "actual_emitted_S_gradient_positive": true,
     "all_five_parameter_family_gradients_positive": true,
     "peak_admission_allocated_bytes": 6431305216,
     "same_RNG_forward_loss_parity_exact": true,
     "model_Adam_RNG_restored_after_read_only_admission": true,
     "causal_gate_contribution_proved": false,
-    "peer_cycle_commit": "1fc3906474039f5016efb4f492fccdbb8c223e60"
+    "peer_cycle_commit": "1fc3906474039f5016efb4f492fccdbb8c223e60",
+    "scores": {
+      "long_credit": {
+        "fg_ari": 0.8997377905777305,
+        "foreground_iou": 0.8576607944206456,
+        "matched_object_iou": 0.7233572190326172
+      },
+      "control": {
+        "fg_ari": 0.924401453845536,
+        "foreground_iou": 0.8598964166728263,
+        "matched_object_iou": 0.7276384094627034
+      },
+      "warm": {
+        "fg_ari": 0.924401453845536,
+        "foreground_iou": 0.8598964166728263,
+        "matched_object_iou": 0.7276384094627034
+      }
+    },
+    "paired_candidate_minus": {
+      "control": {
+        "fg_ari": {
+          "mean": -0.024663663267805523,
+          "ci95": [
+            -0.0740369425682956,
+            0.0016650435300029735
+          ]
+        },
+        "foreground_iou": {
+          "mean": -0.002235622252180894,
+          "ci95": [
+            -0.015448304195600343,
+            0.011378089112651634
+          ]
+        },
+        "matched_object_iou": {
+          "mean": -0.004281190430086262,
+          "ci95": [
+            -0.040946193074546555,
+            0.03328094297751485
+          ]
+        }
+      },
+      "warm": {
+        "fg_ari": {
+          "mean": -0.024663663267805523,
+          "ci95": [
+            -0.0740369425682956,
+            0.0016650435300029735
+          ]
+        },
+        "foreground_iou": {
+          "mean": -0.002235622252180894,
+          "ci95": [
+            -0.015448304195600343,
+            0.011378089112651634
+          ]
+        },
+        "matched_object_iou": {
+          "mean": -0.004281190430086262,
+          "ci95": [
+            -0.040946193074546555,
+            0.03328094297751485
+          ]
+        }
+      }
+    },
+    "new_accepted_updates": 1,
+    "actual_Adam_steps": [
+      3
+    ],
+    "CNN_changed_from_warm": true,
+    "screen_gate_passed": false
   },
   "latest_native64_count_proxy_review_20261017": {
     "status": "CPU_ideal_affinity_math_and_TRAIN64_review_complete",
@@ -8696,5 +8767,39 @@
     "model_training_effect_not_tested": true,
     "production_loss_unchanged": true,
     "next_hypothesis": "normalized spike-Q count proxy, with actual mask metrics and unequal-group calibration; no fixed rawPR7.5"
+  },
+  "latest_native64_normalized_count_20261017": {
+    "experiment": "SW0201",
+    "status": "actual_GPU1_training_started_same_control_model_Adam_RNG",
+    "supervisor_pid": 2014332,
+    "worker_pid": 2015001,
+    "physical_GPU": 1,
+    "eligible_GPUs": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "seed_scope": [
+      0
+    ],
+    "development_images": 16,
+    "new_proposals": 2,
+    "new_unique_TRAIN": 8,
+    "total_logical_TRAIN_exposures": 16,
+    "objective": "QCE + unit squared log normalized spike-Q count / actual TRAIN classes",
+    "count_target_source": "TRAIN mask classes including background",
+    "target_count_supplied_at_inference": false,
+    "live_tail_steps": 64,
+    "production_gating_and_readout_unchanged": true,
+    "local_tests": 17,
+    "Linux_tests": 17,
+    "CLI_modules": 2,
+    "native4096_CPU_gradient_tested": true,
+    "mask_supervised": true,
+    "unsupervised_leaderboard_eligible": false,
+    "new_performance_result_available": false,
+    "incumbent_changed": false,
+    "full320_three_seed_goal_verified": false
   }
 }
