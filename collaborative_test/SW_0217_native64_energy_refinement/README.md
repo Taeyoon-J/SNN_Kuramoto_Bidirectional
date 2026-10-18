@@ -26,3 +26,18 @@ No new result is claimed at registration. This tests whether the existing native
 signed energy can correct grouping by splitting and remerging, rather than
 training another unconstrained merger. It does not establish gating causality,
 data scaling, fresh native64 70k training, or full320 FG-ARI above .90.
+
+## CPU posthoc diagnosis registered
+
+After all three seeds' predictions and scores are fixed, diagnose_energy.py
+reuses private Q/A and checks whether same-object versus different-object pairs
+are ordered correctly by Q and by the exact signed energy. It separately counts
+positive evidence at existing false merges and negative evidence at false splits.
+An explicitly GT-assisted, connected purification reports its energy change;
+this is a diagnostic action, not a prediction, optimum or performance ceiling.
+No threshold search, core forward, model update or running source change occurs.
+Four local and four Linux tests passed; registration is recorded under
+results_archive/posthoc_diagnosis_registration_v1/. An initial deployment probe
+looked for a receipt that existed only locally and stopped before any file write;
+passing that receipt explicitly resolved the preparation error. GPU jobs were
+unaffected. Pair signs/AUC cannot prove a global partition optimum or gate causality.
