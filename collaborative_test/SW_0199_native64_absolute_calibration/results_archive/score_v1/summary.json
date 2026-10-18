@@ -1,0 +1,109 @@
+{
+  "status": "matched_native64_absolute_calibration_mini_complete",
+  "grid": [
+    64,
+    64
+  ],
+  "seed_scope": [
+    0
+  ],
+  "images": 16,
+  "image_ids": [
+    1320,
+    1322,
+    1324,
+    1326,
+    1328,
+    1330,
+    1332,
+    1334,
+    1336,
+    1338,
+    1340,
+    1342,
+    1344,
+    1346,
+    1348,
+    1350
+  ],
+  "training_unique_exposures_per_arm": 16,
+  "scores": {
+    "control": {
+      "fg_ari": 0.924401453845536,
+      "foreground_iou": 0.8598964166728263,
+      "matched_object_iou": 0.7276384094627034
+    },
+    "calibrated": {
+      "fg_ari": 0.9004848394221717,
+      "foreground_iou": 0.8612262559426833,
+      "matched_object_iou": 0.7355866443081565
+    },
+    "warm": {
+      "fg_ari": 0.924401453845536,
+      "foreground_iou": 0.8598964166728263,
+      "matched_object_iou": 0.7276384094627034
+    }
+  },
+  "paired_calibrated_minus": {
+    "control": {
+      "fg_ari": {
+        "mean": -0.023916614423364208,
+        "ci95": [
+          -0.07188259986478598,
+          0.0019319936301940327
+        ]
+      },
+      "foreground_iou": {
+        "mean": 0.0013298392698569,
+        "ci95": [
+          -0.011141053491356011,
+          0.014175758561186327
+        ]
+      },
+      "matched_object_iou": {
+        "mean": 0.007948234845452984,
+        "ci95": [
+          -0.018544565531422186,
+          0.041139409252965733
+        ]
+      }
+    },
+    "warm": {
+      "fg_ari": {
+        "mean": -0.023916614423364208,
+        "ci95": [
+          -0.07188259986478598,
+          0.0019319936301940327
+        ]
+      },
+      "foreground_iou": {
+        "mean": 0.0013298392698569,
+        "ci95": [
+          -0.011141053491356011,
+          0.014175758561186327
+        ]
+      },
+      "matched_object_iou": {
+        "mean": 0.007948234845452984,
+        "ci95": [
+          -0.018544565531422186,
+          0.041139409252965733
+        ]
+      }
+    }
+  },
+  "screen_gate_passed": false,
+  "candidate_new_accepted_updates": 1,
+  "candidate_committed_model_changed": true,
+  "candidate_CNN_changed": true,
+  "protocol_sha256": {
+    "control": "cafc43b839d385a44b2ad8947cf5648cb0751ba2e31be5e66e78aa89dc054dff",
+    "calibrated": "1ea2af46f151fa636b70aba43329557d19d1fe17c0673377d3644812e2f8f587"
+  },
+  "independent_maximum_metric_abs_error": 2.220446049250313e-16,
+  "mask_supervised": true,
+  "unsupervised_leaderboard_eligible": false,
+  "full320_three_seed_goal_verified": false,
+  "GT_opened_after_both_protocols_frozen": true,
+  "raw_imagewise_score_public": false
+}

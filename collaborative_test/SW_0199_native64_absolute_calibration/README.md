@@ -31,3 +31,15 @@ its proposal4 acceptance differed even though the start model/Adam tensor digest
 and measured gradient norms were almost equal. Cause is not established. Use the
 actual199 control and preserve its original protocol. Calibrated arm is pending;
 no matched performance comparison is available yet.
+
+Both arms subsequently completed. Actual final model/Adam/RNG/history and48
+fixed16 masks (control/calibrated/warm) were independently audited, max metric
+error2.22e-16. Calibrated arm committed one new update, actual Adam step3 and
+CNN changed. Its scores .9004848394/.8612262559/.7355866443 compare with
+control/warm .9244014538/.8598964167/.7276384095.
+
+FG delta-.023917,95%CI[-.071883,.001932]. ForegroundIoU delta+.001330 and
+objectIoU delta+.007948 also have intervals including zero. The primary FG
+extension gate failed. Close this unit-weight calibration recipe and retain the
+incumbent; no weight/temperature micro-sweep or broad claim that calibration can
+never help follows from this one-seed16-image screen.

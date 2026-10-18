@@ -18,3 +18,7 @@ Actual CPU model/Adam/RNG/frozen-control admission completed, source Adam steps2
 Supervisor2032092 registered for all four GPUs; no GPU training start is claimed
 at registration. Actual raw minibatch descent and finite-step flags will remain
 distinct in reports and final audit.
+
+Actual worker2036939 subsequently startedGPU1 after199 completed. Its actual
+NVIDIA compute PID and inherited control model/Adam/RNG restoration were verified;
+start evidence is under started_v1. Training/evaluation results are still pending.

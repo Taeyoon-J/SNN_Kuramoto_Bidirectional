@@ -12,11 +12,11 @@ This does not imply four GPUs are idle or that another owner's job is displaced.
 | SW0197 native64 baseline seed2 | 1867956 (completed) | SW_0197_native64_baseline_replication/results_archive/seed2/queue | All3 baseline seeds audited; .8514/.5781/.6940 on32 images; .90/full320 not achieved |
 | SW0195 paired TRAIN/development diagnostic | 1853195 (completed) | SW_0195_native64_generalization_gap/results_archive/queue | Audited TRAIN16/dev32; no demonstrated overfit signal |
 | SW0198 native64 readout normalization | 1943908 (completed) | SW_0198_native64_readout_normalization/results_archive/queue | Actual32 masks audited; gate failed, no adoption |
-| SW0199 matched QCE control | 1973294 (completed) | SW_0199_native64_absolute_calibration/results_archive/control/queue | No new accepted steps; actual model and16 masks equal warm; unscored pending pair |
-| SW0199 absolute-Q calibration | 1973323 | SW_0199_native64_absolute_calibration/results_archive/calibrated/queue | Resumed GPU1 worker2027186; actual compute PID and inherited start lineage verified |
+| SW0199 matched QCE control | 1973294 (completed) | SW_0199_native64_absolute_calibration/results_archive/control/queue | No new accepted steps; actual model and16 masks equal warm; matched pair audited |
+| SW0199 absolute-Q calibration | 1973323 (completed) | SW_0199_native64_absolute_calibration/results_archive/calibrated/queue | Audited16 images: .9005/.8612/.7356 vscontrol .9244/.8599/.7276; FG gate failed, recipe closed |
 | SW0200 full settled-window temporal credit | 2000695 (completed) | SW_0200_native64_long_credit/results_archive/queue | Audited16 images: .8997/.8577/.7234 vscontrol .9244/.8599/.7276; failed extension gate, recipe closed |
 | SW0201 normalized spike group-count loss | 2014332 (completed) | SW_0201_native64_normalized_count/results_archive/queue | Audited16 images; no committed new steps, model and scores unchanged; recipe closed |
-| SW0202 finite Adam, original QCE | 2032092 | SW_0202_native64_finite_Adam/results_archive/queue |14 local/Linux checks and actual CPU start admitted; all4 GPUs eligible, waiting |
+| SW0202 finite Adam, original QCE | 2032092 | SW_0202_native64_finite_Adam/results_archive/queue | Actual GPU1 worker2036939 started; same control model/Adam/RNG and NVIDIA PID verified |
 
 The old196 waiter1857076 was stopped before CPU admission or GPU work, with its
 queue state preserved. Its optional195 dependency was removed in the replacement
@@ -42,3 +42,14 @@ No fresh70k training or performance improvement is claimed at registration.
 It obtainedGPU1 after201 completed.202 was registered only after that actual
 resumption, and199 was not interrupted. No GPU workload is restarted or displaced
 to change queue order.
+
+## SW0203 registered 2026-10-18
+
+Three additional native64 paired geometric-consensus readout jobs passed four local
+and Linux tests, CLI validation and actual CPU admission of all three independent
+frozen models before scheduling. Parents2042904/2042905/2042906 correspond to
+seeds0/1/2. Each scans physical GPUs0,1,2,3 under the existing exclusive shared
+lease and foreign-owner guard. All three were observed waiting;202 remains
+running on GPU1. New203 changes grouping affinity units only, with unchanged
+foreground support and no optimizer updates. Eight fixed development images per
+seed; this is not a full320 score or new training result.

@@ -1,0 +1,106 @@
+{
+  "status": "actual_matched_model_Adam_RNG_history_and48_masks_independently_verified",
+  "summary_sha256": "5d19aec8aa7d46c2b21c7c9301640967504186d345e8d8ac2dccf33a61a4f5ee",
+  "actual_arm_proofs": {
+    "control": {
+      "boundary_sha256": "0d760fc7a08ace7f14f1017c2cebf320e2afcd7514bf0679194c9369df38841e",
+      "actual_model_sha256": "2dd2b0d64602b85d4082bcaddcd21dfe8c60d34af1ea78a2ed29bf03c8ba4b6e",
+      "actual_CNN_sha256": "5da502014d4435c9ee5e3b1c9d2f15b5c774eb5a925af30c0687c1b2b77daaf6",
+      "actual_Adam_steps": [
+        2
+      ],
+      "new_accepted_updates": 0,
+      "committed_model_changed": false,
+      "CNN_changed_from_warm": false,
+      "new_emitted_S_gradient_l2": [
+        0.016467863314742287,
+        0.0187312568500251
+      ]
+    },
+    "calibrated": {
+      "boundary_sha256": "8f8ac7db192a00da6f1c632d5b9d835ce3318be46b6871659d5c76dffcd40680",
+      "actual_model_sha256": "47834810644b202418b5f5851bb815f6898f3e09b393e54953f2ec4d89866b60",
+      "actual_CNN_sha256": "cf96da3c466d196c69936d761d39b1be0dab6617793957c96302e4a9b6de565f",
+      "actual_Adam_steps": [
+        3
+      ],
+      "new_accepted_updates": 1,
+      "committed_model_changed": true,
+      "CNN_changed_from_warm": true,
+      "new_emitted_S_gradient_l2": [
+        0.04438743039246827,
+        0.04205745641093454
+      ]
+    }
+  },
+  "initial_model_Adam_RNG_and_actual_proposal3_transaction_equal": true,
+  "maximum_metric_abs_error": 2.220446049250313e-16,
+  "scores": {
+    "control": {
+      "fg_ari": 0.924401453845536,
+      "foreground_iou": 0.8598964166728263,
+      "matched_object_iou": 0.7276384094627034
+    },
+    "calibrated": {
+      "fg_ari": 0.9004848394221717,
+      "foreground_iou": 0.8612262559426833,
+      "matched_object_iou": 0.7355866443081565
+    },
+    "warm": {
+      "fg_ari": 0.924401453845536,
+      "foreground_iou": 0.8598964166728263,
+      "matched_object_iou": 0.7276384094627034
+    }
+  },
+  "paired_calibrated_minus": {
+    "control": {
+      "fg_ari": {
+        "mean": -0.023916614423364208,
+        "ci95": [
+          -0.07188259986478598,
+          0.0019319936301940327
+        ]
+      },
+      "foreground_iou": {
+        "mean": 0.0013298392698569,
+        "ci95": [
+          -0.011141053491356011,
+          0.014175758561186327
+        ]
+      },
+      "matched_object_iou": {
+        "mean": 0.007948234845452984,
+        "ci95": [
+          -0.018544565531422186,
+          0.041139409252965733
+        ]
+      }
+    },
+    "warm": {
+      "fg_ari": {
+        "mean": -0.023916614423364208,
+        "ci95": [
+          -0.07188259986478598,
+          0.0019319936301940327
+        ]
+      },
+      "foreground_iou": {
+        "mean": 0.0013298392698569,
+        "ci95": [
+          -0.011141053491356011,
+          0.014175758561186327
+        ]
+      },
+      "matched_object_iou": {
+        "mean": 0.007948234845452984,
+        "ci95": [
+          -0.018544565531422186,
+          0.041139409252965733
+        ]
+      }
+    }
+  },
+  "screen_gate_passed": false,
+  "full320_three_seed_goal_verified": false,
+  "raw_imagewise_values_included": false
+}
