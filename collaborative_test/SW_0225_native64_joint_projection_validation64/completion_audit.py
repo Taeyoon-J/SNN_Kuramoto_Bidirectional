@@ -5,6 +5,23 @@ import numpy as np
 from . import run, evaluate
 
 
+def completed_queue(folder, protocol):
+    original_raw = (folder / 'queue/state.json').read_bytes()
+    original = json.loads(original_raw)
+    if original['status'] == 'complete':
+        return 'queue/state.json'
+    recovery = json.loads((folder / 'queue_memory_recovery_v2/state.json').read_bytes())
+    replay = json.loads((folder / 'queue_memory_recovery_v2/replay.json').read_bytes())
+    if (original['status'] != 'failed' or recovery['status'] != 'complete'
+            or recovery['original_terminal_state_sha256'] != run.sha(original_raw)
+            or recovery['protocol_sha256'] != run.sha((folder / 'protocol.json').read_bytes())
+            or not recovery['per_process_THP_disabled'] or not replay['per_process_THP_disabled']
+            or replay['binding'] != protocol['binding'] or not replay['mask_bitwise_equal']
+            or not replay['frequency_bitwise_equal'] or replay['optimizer_updates'] != 0):
+        raise ValueError('memory recovery not independently verified')
+    return 'queue_memory_recovery_v2/state.json'
+
+
 def audit():
     a = run.ARCHIVE
     raw = (a / 'score_v1/summary.json').read_bytes()
@@ -24,12 +41,11 @@ def audit():
     references = {}
     for seed in run.SEEDS:
         folder = run.archive_for(seed)
-        state = json.loads((folder / 'queue/state.json').read_bytes())
-        if state['status'] != 'complete':
-            raise ValueError('queue not complete')
         protocol = bundle[seed]['protocol']
+        queue_state_path = completed_queue(folder, protocol)
         references[str(seed)] = dict(
             candidate=protocol['binding']['candidate'],
+            queue_state_path=queue_state_path,
             protocol_sha256=run.sha((folder / 'protocol.json').read_bytes()),
             replay=json.loads((folder / 'replay.json').read_bytes()))
         for arm, key in (('baseline', 'baseline'), ('joint_projection', 'labels')):
