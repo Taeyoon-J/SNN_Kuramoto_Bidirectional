@@ -1,15 +1,16 @@
-Latest observation2026-10-18: SW0207 completed fixed16 seed2; learned foreground
-support lowers FG-ARI .827671->.773808 despite foregroundIoU .444883->.616158.
-Independent actual Adam refit and all32 masks verified. Posthoc diagnosis finds
-more same-object fragmentation. Recipe closed; no threshold rescue.
-SW0208 registered actual204 vs warm192 full320 native64 seed0 confirmation,
-four exclusive-GPU shard supervisors2115329..2115332 after11 local+11 Linux
-tests and actual model/full320 RGB CPU admission. It performs no training;
-the last shard automatically scores both masks and comparable Slot. Mini204
-.900539 and warm .924401 are not full320/three-seed scores. Full native64 .90,
-fresh70k success, scaling and all-gate causal claims remain unproved. Goal active.
-Evidence: SW_0207_spike_foreground_classifier/README.md and
-SW_0208_native64_full320_confirmation/README.md.
+Latest observation2026-10-18: SW0208 COMPLETE. Actual native64 fixed320 seed0
+warm192 .877709/.791224/.696284; component204 .876242/.790093/.693262.
+Both .90+ fixed16 scores did not persist on all320. All204-minus-warm paired
+CIs include zero; retain slightly higher warm as seed0 reference. Comparable
+Slot three-seed mean .786902/.198201/.195203, best FG seed2 .878278.
+Our three-seed native64 superiority/.90 remains UNVERIFIED. All640 masks,
+48 mini overlaps and independent metrics checked; maximum error2.22e-16.
+All four evaluation shards completed; no new70k training has been queued.
+These are supervised inherited70k lineages with additional native64 TRAIN8/16,
+not a fresh native64 70k experiment. See SW_0208_native64_full320_confirmation/RESULT_KO.md.
+SW0207 also complete and not adopted: foreground classification improved while
+FG-ARI .827671->.773808 and fragmentation worsened. Goal remains active;
+gating causality, data scaling and native64 three-seed .90 remain unproved.
 
 Historical observations below are superseded by dated updates above.
 
