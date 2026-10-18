@@ -1,0 +1,31 @@
+[22:20] === PV2_0096: graph_top_k is an absolute count at a 4x finer grid ===
+[22:20] true objects per image on contract v2: 6.49
+[22:20] grid 16 at matched extent:  fg_ari .7239  fg_iou .7251  obj_iou .4951  pred_fg .1290
+[22:20] 
+[22:20] label                        fg_ari   fg_iou  obj_iou   groups  pred_fg
+top_k 32, sigma 4.0        0.6293 0.7091 0.5885 16.7633 0.1276 
+top_k 64, sigma 4.0        0.6291 0.7138 0.5849 16.3233 0.1271 
+top_k 128, sigma 4.0       0.6300 0.7178 0.5855 16.1500 0.1265 
+top_k 192, sigma 4.0       0.6307 0.7165 0.5862 16.1933 0.1266 
+top_k 256, sigma 4.0       0.6312 0.7167 0.5857 16.1433 0.1266 
+[22:35] 
+top_k 64, sigma 2.0        0.6220 0.6597 0.5843 20.1800 0.1334 
+top_k 128, sigma 2.0       0.6231 0.6612 0.5855 20.0967 0.1332 
+[22:41] 
+grid 16 at matched extent: 0.7239 / 0.7251 / 0.4951   | true objects 6.49
+
+                       d fg_ari d fg_iou d obj_iou   groups  pred_fg
+  top_k 32   sigma 4.0   -0.0946  -0.0160  +0.0934    16.76   0.1276
+  top_k 64   sigma 4.0   -0.0948  -0.0113  +0.0898    16.32   0.1271
+  top_k 128  sigma 4.0   -0.0939  -0.0073  +0.0904    16.15   0.1265
+  top_k 192  sigma 4.0   -0.0932  -0.0086  +0.0911    16.19   0.1266
+  top_k 256  sigma 4.0   -0.0927  -0.0084  +0.0906    16.14   0.1266
+  top_k 64   sigma 2.0   -0.1019  -0.0654  +0.0892    20.18   0.1334
+  top_k 128  sigma 2.0   -0.1008  -0.0639  +0.0904    20.10   0.1332
+
+Best calibrated: top_k 256 sigma 4.0 at 0.6312 / 0.7167 / 0.5857, groups 16.14
+  against top_k 32 sigma 4.0: fg_ari +0.0019, groups 16.76 -> 16.14
+
+top_k does not move the over-segmentation. The fragments are in what the
+spikes encode, not in how densely the graph is wired.
+[22:41] === PV2_0096 DONE ===
