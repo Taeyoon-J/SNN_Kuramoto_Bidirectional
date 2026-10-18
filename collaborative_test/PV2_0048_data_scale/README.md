@@ -1,5 +1,14 @@
 # PV2_0048 — more training images, at matched compute, made it worse
 
+> **Scope note added 2026-10-18.** This record is sometimes cited as closing data scale.
+> Read precisely, it closes it **at fixed compute, on the end-to-end encoder route**. Its
+> own text says so — holding updates constant "necessarily cut exposures per image from
+> 40 to 6" and the result "says only that more data does not help *at fixed compute*" —
+> and its bar is the end-to-end route's 0.6779, not the published frozen-feature line's
+> 0.7250. The published line trains on **1,000** images and has never been run at 6,000
+> with the full 40 epochs, which is the 6x compute increase this test deliberately
+> avoided. `PV2_0098` runs exactly that.
+
 **exhausted. Negative result.** Parent `PV2_0039`. Validation 300, contract v1,
 end-to-end encoder with the reconstruction term — the only feature route that
 trains at all.

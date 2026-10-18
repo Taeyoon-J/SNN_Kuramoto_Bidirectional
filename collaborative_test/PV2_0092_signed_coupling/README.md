@@ -121,6 +121,22 @@ from the existing checkpoint, so the evaluation is right and the **training comm
 wrong**. The most likely omission is `PV2_0044`'s graph freeze: the published three seeds
 are the FZG (frozen-graph) line and these arms trained the graph from scratch.
 
+### Correction: the freeze is not the explanation
+
+The paragraph above names `PV2_0044`'s graph freeze as the likely omission. **That is
+refuted by our own record.** `PV2_0081`'s sweep reads, with **nothing frozen at all**,
+**0.7239 / 0.7251 / 0.4951** — exactly the published numbers — and the graph-only freeze
+gives 0.7235. Its own heading says it: "`PV2_0044` was variance reduction", and finding 2
+is "`PV2_0044` reduced seed variance; it did not improve a seed".
+
+So the freeze is worth nothing at a fixed seed and cannot account for 0.22. **The gap is
+unexplained**, and the guess should not have been written as a likely cause without
+checking `PV2_0081`, which was already in this repository.
+
+`PV2_0098` tests the next most visible difference — this base trains on
+`wm_patch_gamma_seq_k8_grid16.pt`, which holds **1,000 rows**, while the manifest's train
+range is `[0, 6000)` — at one variable, and will say whether data scale accounts for it.
+
 So this experiment answers a narrower question than it was built to answer:
 
 - **Valid:** the arm-to-arm comparison. All four share one base and differ in one scalar,
