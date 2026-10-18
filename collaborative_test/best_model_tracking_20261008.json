@@ -8282,7 +8282,7 @@
   },
   "latest_native64_baseline_replication_20261017": {
     "experiment": "SW0197",
-    "status": "seed1_complete_independently_audited_seed2_waiting",
+    "status": "seed1_complete_seed2_GPU1_prediction_running",
     "eligible_GPUs": [
       0,
       1,
@@ -8316,7 +8316,9 @@
       "foreground_iou": 0.44777024633307083,
       "matched_object_iou": 0.6664774994467442
     },
-    "three_seed_result_available": false
+    "three_seed_result_available": false,
+    "seed2_worker_pid": 1995376,
+    "seed2_physical_GPU": 1
   },
   "active_all_GPU_schedule_20261017": {
     "eligible_GPUs": [
@@ -8327,8 +8329,8 @@
     ],
     "independent_jobs": [
       "SW0197_baseline_seed2",
-      "SW0199_QCE_control",
-      "SW0199_absolute_calibration"
+      "SW0199_absolute_calibration",
+      "SW0200_long_credit"
     ],
     "additional_required_dependency": "SW0195 waits only for completed194 model",
     "already_running194_restarted": false,
@@ -8339,7 +8341,8 @@
       "SW0195_generalization_diagnostic",
       "SW0196_numerical_benchmark",
       "SW0197_baseline_seed1",
-      "SW0198_readout_normalization"
+      "SW0198_readout_normalization",
+      "SW0199_QCE_control"
     ],
     "required195_dependency_satisfied": true
   },
@@ -8501,7 +8504,7 @@
   },
   "latest_native64_absolute_calibration_20261017": {
     "experiment": "SW0199",
-    "status": "control_GPU1_training_started_calibrated_yielded_waiting_to_resume",
+    "status": "control_completed_unscored_calibrated_waiting",
     "supervisor_pids": {
       "control": 1973294,
       "calibrated": 1973323
@@ -8531,9 +8534,48 @@
     "design_path": "collaborative_test/SW_0199_native64_absolute_calibration/DESIGN_KO.md",
     "actual_inherited_model_Adam_RNG_restored": true,
     "start_observed_unix": 1792291390.5978036,
-    "control_worker_pid": 1979735,
-    "control_physical_GPU": 1,
     "calibrated_last_worker_pid": 1978134,
-    "calibrated_last_physical_GPU": 2
+    "calibrated_last_physical_GPU": 2,
+    "control_actual_Adam_steps": [
+      2
+    ],
+    "control_new_accepted_updates": 0,
+    "control_equals_warm_model": true,
+    "control_exact_warm_mask_rows": 16,
+    "historical194_prefix_model_replayed_exactly": false,
+    "matched_performance_available": false
+  },
+  "latest_native64_long_credit_20261017": {
+    "experiment": "SW0200",
+    "status": "actual_model_Adam_RNG_and_control_CPU_admitted_waiting_all_GPUs",
+    "supervisor_pid": 2000695,
+    "eligible_GPUs": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "grid": [
+      64,
+      64
+    ],
+    "seed_scope": [
+      0
+    ],
+    "images": 16,
+    "live_tail_steps": 512,
+    "control_live_tail_steps": 64,
+    "total_steps": 1024,
+    "settle_steps": 512,
+    "objective": "unchanged QCE",
+    "gating_and_inference_unchanged": true,
+    "local_tests": 14,
+    "Linux_tests": 14,
+    "CLI_modules": 2,
+    "GPU_full512_admission_completed": false,
+    "mask_supervised": true,
+    "incumbent_changed": false,
+    "new_performance_result_available": false,
+    "full320_three_seed_goal_verified": false
   }
 }

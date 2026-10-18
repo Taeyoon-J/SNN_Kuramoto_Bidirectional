@@ -22,3 +22,12 @@ worker1978134 startedGPU2, then yielded to a foreign owner. Control worker197973
 startedGPU1 after198 completion. The calibrated supervisor remains queued and
 restores its last committed boundary when it next obtains a GPU; no source or
 model/loss settings were changed to handle the resource transition.
+
+Control completed: both new proposals were rejected, actual Adam remains step2,
+final model exactly equals the inherited TRAIN8 model. Its16 saved masks replay
+all16 frozen warm masks exactly, without opening GT. Actual S gradients remained
+positive. Historical194 first4 proposals are not a substitute for this control:
+its proposal4 acceptance differed even though the start model/Adam tensor digest
+and measured gradient norms were almost equal. Cause is not established. Use the
+actual199 control and preserve its original protocol. Calibrated arm is pending;
+no matched performance comparison is available yet.
