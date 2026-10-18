@@ -1,15 +1,12 @@
 {
   "peer_branch": "patch_v2",
-  "previous_commit": "8691c03be210e108b26f0b5b3e40ea8f9e656f10",
-  "commit": "1fc3906474039f5016efb4f492fccdbb8c223e60",
+  "previous_commit": "1fc3906474039f5016efb4f492fccdbb8c223e60",
+  "commit": "c2e60a75cbfb8a243b78c6f580f7eb626e58bc2c",
   "reviewed": [
-    "PV2_0095_grid32_readout/README.md",
-    "PV2_0095_grid32_readout/commands.sh",
-    "PV2_0095_grid32_readout/metrics.csv",
-    "PV2_0096_grid32_sparsity/README.md",
-    "PV2_0096_grid32_sparsity/commands.sh",
-    "PV2_0096_grid32_sparsity/metrics.csv",
-    "evaluate_model.py diagnostic output field order"
+    "PV2_0048_data_scale/README.md full scope note and original design",
+    "PV2_0092_signed_coupling/README.md correction diff",
+    "PV2_0092_signed_coupling/commands.sh actual scratch training and evaluation arguments",
+    "PV2_0081_freeze_sweep/README.md and metrics.csv initialization and training scope"
   ],
   "peer_grid32_CC_scores": [
     0.6044,
@@ -31,7 +28,9 @@
     "native64 baseline counts/BGfalse-positive/split attribution completed197; avoid blindly raising group-size floor",
     "do not repeat graph-density inference sweeps as first priority; our transduction already preserves neighbor fraction",
     "validate group-count loss under unequal background/object sizes before using a fixed target; raw PR fails ideal TRAIN partition",
-    "consider normalized spike-Q group-count training as separate hypothesis, retaining existing QCE/control and checking actual masks"
+    "consider normalized spike-Q group-count training as separate hypothesis, retaining existing QCE/control and checking actual masks",
+    "retain actual strong matched controls rather than explain poor retrained controls with an unverified freeze cause",
+    "do not generalize fixed-compute data-scale negatives to all larger-data training; separate unique data, applied steps and epochs"
   ],
   "not_blindly_ported": [
     "population threshold without dead-spike evidence in our seed0",
@@ -60,6 +59,19 @@
         "PV2_0094_grid32_trained/commands.sh",
         "ROUTE_MAP_0.9_v2.md",
         "evaluate_model.py threshold argument wiring"
+      ]
+    },
+    {
+      "commit": "1fc3906474039f5016efb4f492fccdbb8c223e60",
+      "previous_commit": "8691c03be210e108b26f0b5b3e40ea8f9e656f10",
+      "reviewed": [
+        "PV2_0095_grid32_readout/README.md",
+        "PV2_0095_grid32_readout/commands.sh",
+        "PV2_0095_grid32_readout/metrics.csv",
+        "PV2_0096_grid32_sparsity/README.md",
+        "PV2_0096_grid32_sparsity/commands.sh",
+        "PV2_0096_grid32_sparsity/metrics.csv",
+        "evaluate_model.py diagnostic output field order"
       ]
     }
   ],
@@ -97,5 +109,15 @@
     "peer_core_formula_only_documented": true,
     "normalization_prototype_is_not_exact_connected_count": true,
     "model_training_test_of_count_proxy_completed": false
+  },
+  "latest_scope_corrections": {
+    "peer_withdrew_freeze_as_explanation_for_signed_control_gap": true,
+    "signed_control_gap_still_unexplained": true,
+    "PV2_0081_scope": "trained runs from BIM6_s1, seed0,40epochs; freeze/no-freeze fixed-seed scores near .724",
+    "PV2_0092_scope": "scratch arms; do not treat warm-checkpoint freeze sweep as a universal initialization-independent result",
+    "PV2_0048_scope": "fixed compute, end-to-end encoder route,6k40/20k12/40k6; does not exhaust data-plus-compute scaling",
+    "full40k40epoch_followup_cancelled_not_completed": true,
+    "PV2_0098_full_epoch_sixfold_data_experiment_result_not_published_here": true,
+    "new_model_setting_to_port": false
   }
 }

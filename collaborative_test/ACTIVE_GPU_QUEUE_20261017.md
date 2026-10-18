@@ -13,9 +13,10 @@ This does not imply four GPUs are idle or that another owner's job is displaced.
 | SW0195 paired TRAIN/development diagnostic | 1853195 (completed) | SW_0195_native64_generalization_gap/results_archive/queue | Audited TRAIN16/dev32; no demonstrated overfit signal |
 | SW0198 native64 readout normalization | 1943908 (completed) | SW_0198_native64_readout_normalization/results_archive/queue | Actual32 masks audited; gate failed, no adoption |
 | SW0199 matched QCE control | 1973294 (completed) | SW_0199_native64_absolute_calibration/results_archive/control/queue | No new accepted steps; actual model and16 masks equal warm; unscored pending pair |
-| SW0199 absolute-Q calibration | 1973323 | SW_0199_native64_absolute_calibration/results_archive/calibrated/queue | StartedGPU2; yielded to foreign owner, ready to resume original boundary |
+| SW0199 absolute-Q calibration | 1973323 | SW_0199_native64_absolute_calibration/results_archive/calibrated/queue | Resumed GPU1 worker2027186; actual compute PID and inherited start lineage verified |
 | SW0200 full settled-window temporal credit | 2000695 (completed) | SW_0200_native64_long_credit/results_archive/queue | Audited16 images: .8997/.8577/.7234 vscontrol .9244/.8599/.7276; failed extension gate, recipe closed |
-| SW0201 normalized spike group-count loss | 2014332 | SW_0201_native64_normalized_count/results_archive/queue | Worker2015001 onGPU1; same warm model/Adam/RNG verified; live64, actual TRAIN count targets |
+| SW0201 normalized spike group-count loss | 2014332 (completed) | SW_0201_native64_normalized_count/results_archive/queue | Audited16 images; no committed new steps, model and scores unchanged; recipe closed |
+| SW0202 finite Adam, original QCE | 2032092 | SW_0202_native64_finite_Adam/results_archive/queue |14 local/Linux checks and actual CPU start admitted; all4 GPUs eligible, waiting |
 
 The old196 waiter1857076 was stopped before CPU admission or GPU work, with its
 queue state preserved. Its optional195 dependency was removed in the replacement
@@ -38,6 +39,6 @@ checkpoint/Adam/RNG admission for both arms before scheduling. Its registered
 No fresh70k training or performance improvement is claimed at registration.
 
 199 calibrated is the oldest unfinished candidate after foreign-owner yielding.
-Do not add another competing GPU experiment before it obtains a slot; current201
-continues and199 remains ready on all four GPUs. No GPU workload is restarted or
-displaced to change queue order.
+It obtainedGPU1 after201 completed.202 was registered only after that actual
+resumption, and199 was not interrupted. No GPU workload is restarted or displaced
+to change queue order.

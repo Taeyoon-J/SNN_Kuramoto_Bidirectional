@@ -8427,7 +8427,7 @@
     ],
     "independent_jobs": [
       "SW0199_absolute_calibration",
-      "SW0201_normalized_count"
+      "SW0202_finite_Adam"
     ],
     "additional_required_dependency": "SW0195 waits only for completed194 model",
     "already_running194_restarted": false,
@@ -8441,10 +8441,11 @@
       "SW0198_readout_normalization",
       "SW0199_QCE_control",
       "SW0197_baseline_seed2",
-      "SW0200_long_credit"
+      "SW0200_long_credit",
+      "SW0201_normalized_count"
     ],
     "required195_dependency_satisfied": true,
-    "queue_priority_note": "no additional GPU contender until oldest unfinished199 obtains a slot; do not interrupt current201"
+    "queue_priority_note": "oldest199 now resumed onGPU1;202 registered after resumption, without restarting/displacing jobs"
   },
   "latest_native64_partition_diagnosis_20261017": {
     "scope": "seed0 development32, TRAIN64 minus TRAIN8",
@@ -8604,7 +8605,7 @@
   },
   "latest_native64_absolute_calibration_20261017": {
     "experiment": "SW0199",
-    "status": "control_completed_unscored_calibrated_waiting",
+    "status": "calibrated_resumed_on_GPU1_after201_completion",
     "supervisor_pids": {
       "control": 1973294,
       "calibrated": 1973323
@@ -8643,7 +8644,9 @@
     "control_equals_warm_model": true,
     "control_exact_warm_mask_rows": 16,
     "historical194_prefix_model_replayed_exactly": false,
-    "matched_performance_available": false
+    "matched_performance_available": false,
+    "calibrated_worker_pid": 2027186,
+    "calibrated_physical_GPU": 1
   },
   "latest_native64_long_credit_20261017": {
     "experiment": "SW0200",
@@ -8770,10 +8773,8 @@
   },
   "latest_native64_normalized_count_20261017": {
     "experiment": "SW0201",
-    "status": "actual_GPU1_training_started_same_control_model_Adam_RNG",
+    "status": "complete_actual_model_Adam_masks_audited_no_new_applied_steps_recipe_closed",
     "supervisor_pid": 2014332,
-    "worker_pid": 2015001,
-    "physical_GPU": 1,
     "eligible_GPUs": [
       0,
       1,
@@ -8798,8 +8799,119 @@
     "native4096_CPU_gradient_tested": true,
     "mask_supervised": true,
     "unsupervised_leaderboard_eligible": false,
+    "new_performance_result_available": true,
+    "incumbent_changed": false,
+    "full320_three_seed_goal_verified": false,
+    "scores": {
+      "count_calibrated": {
+        "fg_ari": 0.924401453845536,
+        "foreground_iou": 0.8598964166728263,
+        "matched_object_iou": 0.7276384094627034
+      },
+      "control": {
+        "fg_ari": 0.924401453845536,
+        "foreground_iou": 0.8598964166728263,
+        "matched_object_iou": 0.7276384094627034
+      },
+      "warm": {
+        "fg_ari": 0.924401453845536,
+        "foreground_iou": 0.8598964166728263,
+        "matched_object_iou": 0.7276384094627034
+      }
+    },
+    "paired_candidate_minus": {
+      "control": {
+        "fg_ari": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ]
+        },
+        "foreground_iou": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ]
+        },
+        "matched_object_iou": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "warm": {
+        "fg_ari": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ]
+        },
+        "foreground_iou": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ]
+        },
+        "matched_object_iou": {
+          "mean": 0.0,
+          "ci95": [
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    "actual_Adam_steps": [
+      2
+    ],
+    "new_accepted_updates": 0,
+    "CNN_changed_from_warm": false,
+    "screen_gate_passed": false
+  },
+  "latest_native64_finite_Adam_20261018": {
+    "experiment": "SW0202",
+    "status": "actual_model_Adam_RNG_CPU_admitted_waiting_any_GPU",
+    "supervisor_pid": 2032092,
+    "eligible_GPUs": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "seed_scope": [
+      0
+    ],
+    "development_images": 16,
+    "new_proposals": 2,
+    "new_unique_TRAIN": 8,
+    "total_logical_proposal_exposures": 16,
+    "objective": "unchanged QCE",
+    "update_policy": "retain finite Adam steps including uphill minibatches; restore nonfinite",
+    "live_tail_steps": 64,
+    "production_gating_and_readout_unchanged": true,
+    "local_tests": 14,
+    "Linux_tests": 14,
+    "CLI_modules": 2,
+    "source_Adam_steps": [
+      2
+    ],
     "new_performance_result_available": false,
     "incumbent_changed": false,
-    "full320_three_seed_goal_verified": false
+    "full320_three_seed_goal_verified": false,
+    "peer_cycle_commit": "c2e60a75cbfb8a243b78c6f580f7eb626e58bc2c"
+  },
+  "data_scale_scope_clarification_20261018": {
+    "peer_commit": "c2e60a75cbfb8a243b78c6f580f7eb626e58bc2c",
+    "our187_scope": "fixed-update unique1024 versus repeated512; not data-plus-compute scaling exhausted",
+    "our194_scope": "seed0 additional native64 adaptation8-to64 with more proposals; not fresh joint70k",
+    "fresh_joint_native64_encoder_and_core70k_completed": false,
+    "all_data_scaling_impossible_claim": false,
+    "next202_scope": "unchanged QCE/data, finite Adam application versus per-minibatch descent rollback; no scaling proof yet"
   }
 }
