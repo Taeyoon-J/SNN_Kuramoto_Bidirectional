@@ -6,3 +6,7 @@ Supervisor2049352 registered; no actual GPU start or improved score claimed yet.
 Control is the completed finite-Adam202 candidate, not the guarded199 control.
 The legacy report completion status mentions finite_Adam because the step policy
 is retained; experiment bindings and fingerprint specify the new component loss.
+
+Actual GPU1 worker2052928 started after203 finished. NVIDIA PID, initial
+model, Adam moments and CPU/CUDA RNG restoration independently verified.
+Start evidence is under results_archive/started_v1. No evaluation result yet.

@@ -9033,7 +9033,7 @@
     "full320_three_seed_goal_verified": false
   },
   "SW0204_component_credit_queue": {
-    "status": "registered_after18_local_Linux_tests_and_actual_CPU_model_Adam_RNG_admission",
+    "status": "actual_GPU1_training_started_initial_model_Adam_RNG_verified",
     "supervisor_pid": 2049352,
     "eligible_GPUs": [
       0,
@@ -9049,7 +9049,9 @@
     "seed_scope": [
       0
     ],
-    "performance_result_available": false
+    "performance_result_available": false,
+    "worker_pid": 2052928,
+    "physical_gpu": 1
   },
   "SW0203_partial_seed2": {
     "status": "independently_audited_fixed8_no_adoption_claim",
@@ -9063,6 +9065,97 @@
       0.34356443039128404,
       0.7444602991616748
     ],
+    "full320_three_seed_goal_verified": false
+  },
+  "SW0203_consensus_units_completion": {
+    "status": "all_three_seeds_independently_audited_extension_gate_failed_recipe_closed",
+    "scores": {
+      "seed0_old": {
+        "fg_ari": 0.9466015667011984,
+        "foreground_iou": 0.8599269732546727,
+        "matched_object_iou": 0.7833549316724544
+      },
+      "seed0_new": {
+        "fg_ari": 0.9477717886434371,
+        "foreground_iou": 0.8599269732546727,
+        "matched_object_iou": 0.78408830025663
+      },
+      "slot_seed0": {
+        "fg_ari": 0.6315403110049539,
+        "foreground_iou": 0.2005785383068612,
+        "matched_object_iou": 0.19734634930899353
+      },
+      "seed1_old": {
+        "fg_ari": 0.8363075706688428,
+        "foreground_iou": 0.45329320119669786,
+        "matched_object_iou": 0.6884575837477336
+      },
+      "seed1_new": {
+        "fg_ari": 0.8365555071628068,
+        "foreground_iou": 0.45329320119669786,
+        "matched_object_iou": 0.6883134054705077
+      },
+      "slot_seed1": {
+        "fg_ari": 0.8734204776019135,
+        "foreground_iou": 0.1680086915217257,
+        "matched_object_iou": 0.21699827201137348
+      },
+      "seed2_old": {
+        "fg_ari": 0.9009074797966334,
+        "foreground_iou": 0.34356443039128404,
+        "matched_object_iou": 0.7456563146793312
+      },
+      "seed2_new": {
+        "fg_ari": 0.9012796105381559,
+        "foreground_iou": 0.34356443039128404,
+        "matched_object_iou": 0.7444602991616748
+      },
+      "slot_seed2": {
+        "fg_ari": 0.888518903669564,
+        "foreground_iou": 0.17299394020874065,
+        "matched_object_iou": 0.2033830103121069
+      },
+      "old_three_seed_mean": {
+        "fg_ari": 0.8946055390555581,
+        "foreground_iou": 0.5522615349475516,
+        "matched_object_iou": 0.7391562766998396
+      },
+      "new_three_seed_mean": {
+        "fg_ari": 0.8952023021147998,
+        "foreground_iou": 0.5522615349475516,
+        "matched_object_iou": 0.7389540016296041
+      },
+      "slot_three_seed_mean": {
+        "fg_ari": 0.7978265640921438,
+        "foreground_iou": 0.18052705667910923,
+        "matched_object_iou": 0.20590921054415798
+      }
+    },
+    "paired_new_minus_old": {
+      "fg_ari": {
+        "mean": 0.000596763059241695,
+        "ci95": [
+          0.0001360351073733529,
+          0.0011160475484398164
+        ]
+      },
+      "foreground_iou": {
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "matched_object_iou": {
+        "mean": -0.00020227507023554137,
+        "ci95": [
+          -0.0007623143690143299,
+          0.00041377345568669664
+        ]
+      }
+    },
+    "images_per_seed": 8,
+    "new_training": false,
     "full320_three_seed_goal_verified": false
   }
 }

@@ -70,3 +70,10 @@ All physical GPUs0..3 eligible; currently queued, not claimed GPU-started.
 .9009074798/.3435644304/.7456563147, new .9012796105/.3435644304/.7444602992.
 This negligible FG gain and lower object IoU is not an adoption signal.
 Seed0/1 remain pending; no full320 or three-seed result is inferred.
+
+203 all3 seeds completed and independently audited. On the identical eight
+images, means old .8946/.5523/.7392, new .8952/.5523/.7390; tiny FG gain does
+not meet the registered extension criterion and object IoU decreases. Recipe
+closed. This is not full320 or a new .90 three-seed score.
+204 worker2052928 subsequently obtainedGPU1; NVIDIA PID and inherited model/
+Adam/RNG were verified. No204 result yet. All four GPUs remain eligible.
