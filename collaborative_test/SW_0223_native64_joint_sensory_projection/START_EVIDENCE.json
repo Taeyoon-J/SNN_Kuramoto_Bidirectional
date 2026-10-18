@@ -1,0 +1,121 @@
+{
+  "status": "actual_GPU_start_verified",
+  "local_tests": 9,
+  "Linux_tests": 9,
+  "local_CLI_checks": 3,
+  "actual_CPU_admissions": 3,
+  "registered_jobs": 3,
+  "source_sha256": {
+    "DESIGN_KO.md": "30bc7ad5ff8afd6d8681d2383906c39e012cde2c68bba954dc68cd193fc40d61",
+    "projection.py": "76ca2d2a0307483c78bf1424fac3557315eed35aff48267d88d6f046cda0a63c",
+    "train.py": "ca74a9a689d04f57af93d0326d9ba6a527fb9b2097f4f38a5eaef34be29980f9",
+    "evaluate.py": "a377d04ccf7913db2609ad509d8b3f09a170049c6d848e342517a6037c097568",
+    "queue.py": "4ec256bdfd6b69882e1fbad59b8350788e73f53c38a353f1ec62c1481fde4e74",
+    "test_projection.py": "a028800d9d00cffc82854f6a2e3ccd5f666777abc42c990785e58df28368b652",
+    "test_pipeline.py": "2c4eacc1611902cd3ca8d5daa9a3c421d69f779c09f607d70342cf1a27269bfe"
+  },
+  "actual_teacher_and_projection_admissions": [
+    {
+      "seed": 0,
+      "initial_TRAIN_loss": {
+        "total": 0.0046597063774243,
+        "frequency_denoising": 0.0046597063774243,
+        "gamma_anchor": 0.0
+      },
+      "projection_gradient_admission": {
+        "images": 16,
+        "loss": 0.0042407577857375145,
+        "projection_gradient_norm": 0.01038505882024765,
+        "optimizer_updates": 0,
+        "source_unchanged": true
+      },
+      "projection_parameter_count": 32,
+      "natural_within_variance_abs_error": 4.656612873077393e-10,
+      "initial_projection_sha256": "c725f9abf22ccb0284e1f75b583b9f5fa906df42ec57b5e9effe37dd4420420e",
+      "frozen_nonprojection_core_sha256": "89d5719a91141407a8cb692eae2a060017cc89181e3970dcdbf6612bba74dd76",
+      "teacher_arrays_sha256": "fa491716ad049acfd73ebac8c700958741a7dfb11e25ed0753758eccd5b43df5",
+      "encoder_only_control": {
+        "score_sha256": "e82a6453f8f6e2cf4661bcf74dc649a57205d9464c5c0f6e01c0e19d40d155bb",
+        "audit_sha256": "e07e499d3dc7c037a9930431dabb6ae3c241e9edfa7bcbc3609d3cab6aa7fbe3",
+        "report_sha256": "9696a8a9fde0a0b35fc26d54601a8a18bcc6481a66360386afee6868676a745f",
+        "protocol_sha256": "8ac78a121f0466c50c0a7eea39cf63717cd1481c8a610d6ad4e51a7416d80996",
+        "model_sha256": "3f5c37e34a044873501c02874ccb98b201e0883b67e9cc1066e23510db527d2d",
+        "labels_sha256": "8bf04ad0e01ab0278e75c399b67d9f221e071db1be11eaeff4df536197bb9837"
+      }
+    },
+    {
+      "seed": 1,
+      "initial_TRAIN_loss": {
+        "total": 0.013782376423478127,
+        "frequency_denoising": 0.013782376423478127,
+        "gamma_anchor": 0.0
+      },
+      "projection_gradient_admission": {
+        "images": 16,
+        "loss": 0.01227031834423542,
+        "projection_gradient_norm": 0.035371534526348114,
+        "optimizer_updates": 0,
+        "source_unchanged": true
+      },
+      "projection_parameter_count": 32,
+      "natural_within_variance_abs_error": 9.313225746154785e-10,
+      "initial_projection_sha256": "90b94c542ccaa2046f01f66783046c33e4c36e2bf83149716d48231411f8dbd1",
+      "frozen_nonprojection_core_sha256": "651db259ee773ee419f59be88b8b3b674689687f9225c691ee01036e7223a310",
+      "teacher_arrays_sha256": "e79ded249c91095d464d84993745ab9aacd078b6a4a40bdc55ff79f518a0f1b0",
+      "encoder_only_control": {
+        "score_sha256": "e82a6453f8f6e2cf4661bcf74dc649a57205d9464c5c0f6e01c0e19d40d155bb",
+        "audit_sha256": "e07e499d3dc7c037a9930431dabb6ae3c241e9edfa7bcbc3609d3cab6aa7fbe3",
+        "report_sha256": "0a81b8e6c92ffef73954778c0cabc8bd2c684b50f8a7081518c9b1968972dace",
+        "protocol_sha256": "bf8b1b8e54f568dcf573d0bfedbc0d014afde97a74ea8240ad47857ebac081a7",
+        "model_sha256": "658c3821bbacd4f98dfa600afa2dc2065c5a394f7443b71fba4eb199926666b1",
+        "labels_sha256": "674698118cedec540d0b43319538203c27cfd2f2a884729c235b1fbe10acfbe1"
+      }
+    },
+    {
+      "seed": 2,
+      "initial_TRAIN_loss": {
+        "total": 0.005229351110756397,
+        "frequency_denoising": 0.005229351110756397,
+        "gamma_anchor": 0.0
+      },
+      "projection_gradient_admission": {
+        "images": 16,
+        "loss": 0.004705803468823433,
+        "projection_gradient_norm": 0.010753253474831581,
+        "optimizer_updates": 0,
+        "source_unchanged": true
+      },
+      "projection_parameter_count": 32,
+      "natural_within_variance_abs_error": 1.0477378964424133e-09,
+      "initial_projection_sha256": "e1889ac88e743f994c5947a27019dfb29bbea285d889e8c86075a76682e48392",
+      "frozen_nonprojection_core_sha256": "da81f6c93c4c249cf8172c67262296a9f98ebf3669c4fe3e1a1fdc51baa1c1b1",
+      "teacher_arrays_sha256": "01d56f033f5d20a77f78257d7c07ad74d08bfd10700a99cf4c8846e14df64ef4",
+      "encoder_only_control": {
+        "score_sha256": "e82a6453f8f6e2cf4661bcf74dc649a57205d9464c5c0f6e01c0e19d40d155bb",
+        "audit_sha256": "e07e499d3dc7c037a9930431dabb6ae3c241e9edfa7bcbc3609d3cab6aa7fbe3",
+        "report_sha256": "7ecceda00dcb09dff8876707d7b0381e66060fc127c365248cef628ea93abe6a",
+        "protocol_sha256": "dad03cc757691a67b8c5d8145799126f1e0e8c8a4f4c5b1f32c52ab950640121",
+        "model_sha256": "64fb2a24a337e6988ed752ffd39634c14ef3479edbf4ebef952041548a034031",
+        "labels_sha256": "1417c6e432ce94b60696a3fe2294a924e9f576f7a3ee2271e17aacc20e3c2af1"
+      }
+    }
+  ],
+  "actual_projection_parameters": 32,
+  "remaining_core_frozen": true,
+  "GPU_jobs": [
+    {
+      "seed": 1,
+      "TRAIN_count": 64,
+      "physical_gpu": 3,
+      "gpu_uuid": "GPU-6801a3dc-cde3-86c6-d665-6d9ecf063a1e",
+      "child_pid": 2487783,
+      "supervisor_pid": 2486886
+    }
+  ],
+  "observed_server_unix": 1792355231.942742,
+  "mask_supervised": true,
+  "new70000_training": false,
+  "incumbent_changed": false,
+  "new_score": null,
+  "peer_head": "7a21632b93805f4f1da69a2e77a9ddd95c624d0a"
+}
