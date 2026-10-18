@@ -1,3 +1,16 @@
+Queued2026-10-18: SW0211 rich spike-anchor center-voting classifier, source
+warm205 seed2, actual model dff381eb...53d0. Core/encoder/graph fixed; source FG
+membership exactly preserved. TRAIN32, primary128 head Adam updates, preregistered
+32/64 budget diagnostics plus frozen-input mean/moments ablations; no DEV GT used
+in cache/training. Supervisor2269832, shared exclusive GPU0..3 queue.17 local and
+17 Linux tests plus actual source/TRAIN32/native64 head CPU admission passed.
+No source211 cache extraction, trained-head score or .90 claim at registration.
+Read-only waiter2272841 tracks exact PID/start and actual GPU start, then audits
+source/head boundaries, Adam128/TRAIN normalization and96 actual mask endpoints.
+Generic dispatcher seed0 label corrected by explicit seed2 checkpoint/admission
+provenance; no scientific change or job restart. SW0210 seed1/2 full320 reference
+continues independently. Peer a0a39df checked again, unchanged. Goal stays active.
+
 Current2026-10-18: SW0209 COMPLETE; fixed16 seed0 .901220/.862279/.736022,
 matched202 QCE .900148/.859586/.728138, warm192 .924401/.859896/.727638.
 FG difference+.001072 CI[-.000057,.003147]; expansion gate failed. Actual two

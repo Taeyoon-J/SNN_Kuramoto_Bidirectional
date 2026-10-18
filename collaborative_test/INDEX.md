@@ -1,3 +1,7 @@
+Queued2026-10-18: [SW0211 spike-anchor center assignment](SW_0211_spike_anchor_center_assignment/DESIGN_KO.md),
+actual source seed2, TRAIN32, frozen core and exactly preserved foreground.
+17 local+Linux tests and real native64 CPU admission passed. No new score yet.
+
 Completed2026-10-18: [SW0209 pair-ARI+QCE](SW_0209_native64_foreground_pair_ari/RESULT_KO.md)
 fixed16 seed0 .901220/.862279/.736022; FG+.001072 versus matched control,
 CI includes0, no expansion. [SW0210 full320 seed reference](SW_0210_native64_full_seed_reference/DESIGN_KO.md)
