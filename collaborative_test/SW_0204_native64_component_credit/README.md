@@ -26,3 +26,9 @@ object IoU slightly lower. Warm FG difference -.0238624940. Extension gate
 failed; recipe closed. No loss-weight/LR micro-rescue. This does not establish
 that component learning is generally useless or prove gate contribution.
 No full320/three-seed .90 result. Best full-evaluation incumbent is unchanged.
+
+Follow-up clarification: SW0208 has now evaluated this exact checkpoint on
+full320: .876242/.790093/.693262, versus warm192 .877709/.791224/.696284.
+The preceding "No full320" sentence describes the original204 mini admission,
+not the later208 confirmation. No full320 .90 or fresh native64 TRAIN70k claim
+is established. See SCALE_DECISION_KO.md for the expansion decision.
