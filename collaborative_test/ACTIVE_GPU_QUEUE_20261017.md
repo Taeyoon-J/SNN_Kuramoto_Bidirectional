@@ -77,3 +77,13 @@ not meet the registered extension criterion and object IoU decreases. Recipe
 closed. This is not full320 or a new .90 three-seed score.
 204 worker2052928 subsequently obtainedGPU1; NVIDIA PID and inherited model/
 Adam/RNG were verified. No204 result yet. All four GPUs remain eligible.
+
+## SW0205 weak-seed native64 adaptation
+
+Two ready jobs:seed1 parent2054790 andseed2 parent2054791. Six local/Linux tests,
+queue CLI/AST checks and actual independent CPU model admission passed. Initial
+weights must equal the corresponding frozen197 baseline, never seed0 weights.
+Two guarded B4 QCE updates from fresh native64 Adam, following192 policy; fixed16
+paired development masks per seed. This isolates native64 adaptation in the two
+weaker seed lineages. No new loss or validation-data change. Both queues target
+all four physical GPUs; waiting at registration while204 trains onGPU1.

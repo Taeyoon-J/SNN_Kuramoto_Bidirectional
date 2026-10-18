@@ -9157,5 +9157,30 @@
     "images_per_seed": 8,
     "new_training": false,
     "full320_three_seed_goal_verified": false
+  },
+  "SW0205_weak_seed_adaptation_queue": {
+    "status": "both_independent_models_CPU_admitted_and_two_ready_queues_registered",
+    "seed_scope": [
+      1,
+      2
+    ],
+    "supervisor_pids": [
+      2054790,
+      2054791
+    ],
+    "eligible_GPUs": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "initial_models": "corresponding_SW0197_baseline_native32_incumbents_mapped64",
+    "proposed_new_unique_TRAIN_images": 8,
+    "proposed_new_updates": 2,
+    "optimizer_initialization": "fresh_empty_native64_Adam_as_SW0192",
+    "update_policy": "SW0192_guarded_descent",
+    "objective": "unchanged_original_QCE_temperature0.1",
+    "images_evaluation_per_seed": 16,
+    "performance_result_available": false
   }
 }
