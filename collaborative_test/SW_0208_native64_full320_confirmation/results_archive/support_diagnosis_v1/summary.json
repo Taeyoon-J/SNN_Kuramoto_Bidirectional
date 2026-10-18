@@ -1,0 +1,72 @@
+{
+  "status": "posthoc_GT_assisted_native64_fixed_support_attribution",
+  "warm192_seed0_full320": {
+    "images": 320,
+    "actual_FG_ARI": 0.8777090266628867,
+    "GT_pure_positive_partition_fixed_support_reference_FG_ARI": 0.9569390290403426,
+    "GT_missed_foreground_attachment_reference_FG_ARI": 0.9061015168483253,
+    "actual_foreground_IoU": 0.7912240801823831,
+    "foreground_miss_fraction": 0.06369405584652366,
+    "covered_same_object_split_rate": 0.02971291193422059,
+    "covered_different_object_merge_rate": 0.04177975706538382,
+    "independent_maximum_metric_abs_error": 2.220446049250313e-16,
+    "references_use_GT": true,
+    "references_are_not_predictors": true,
+    "references_are_not_a_proof_a_specific_classifier_can_reach_them": true
+  },
+  "shared16_independent_TRAIN8_seeds": {
+    "0": {
+      "images": 16,
+      "actual_FG_ARI": 0.9244014538455361,
+      "GT_pure_positive_partition_fixed_support_reference_FG_ARI": 0.9592045307441595,
+      "GT_missed_foreground_attachment_reference_FG_ARI": 0.9597605220846513,
+      "actual_foreground_IoU": 0.8598964166728265,
+      "foreground_miss_fraction": 0.06157780595394802,
+      "covered_same_object_split_rate": 0.021559465713823608,
+      "covered_different_object_merge_rate": 0.011124818268830028,
+      "independent_maximum_metric_abs_error": 2.220446049250313e-16,
+      "references_use_GT": true,
+      "references_are_not_predictors": true,
+      "references_are_not_a_proof_a_specific_classifier_can_reach_them": true
+    },
+    "1": {
+      "images": 16,
+      "actual_FG_ARI": 0.8158564023799698,
+      "GT_pure_positive_partition_fixed_support_reference_FG_ARI": 0.9360027748063933,
+      "GT_missed_foreground_attachment_reference_FG_ARI": 0.8571841493344718,
+      "actual_foreground_IoU": 0.4967038314401081,
+      "foreground_miss_fraction": 0.08686852770968169,
+      "covered_same_object_split_rate": 0.13897533233608972,
+      "covered_different_object_merge_rate": 0.010759317905084196,
+      "independent_maximum_metric_abs_error": 2.220446049250313e-16,
+      "references_use_GT": true,
+      "references_are_not_predictors": true,
+      "references_are_not_a_proof_a_specific_classifier_can_reach_them": true
+    },
+    "2": {
+      "images": 16,
+      "actual_FG_ARI": 0.7884142488069319,
+      "GT_pure_positive_partition_fixed_support_reference_FG_ARI": 0.9762343382463038,
+      "GT_missed_foreground_attachment_reference_FG_ARI": 0.7990471965296553,
+      "actual_foreground_IoU": 0.4454744949365771,
+      "foreground_miss_fraction": 0.031659950064434665,
+      "covered_same_object_split_rate": 0.09164015344889738,
+      "covered_different_object_merge_rate": 0.11819000240554361,
+      "independent_maximum_metric_abs_error": 3.3306690738754696e-16,
+      "references_use_GT": true,
+      "references_are_not_predictors": true,
+      "references_are_not_a_proof_a_specific_classifier_can_reach_them": true
+    }
+  },
+  "full_source_summary_sha256": "29fac43b549bd98698fe22bc96af9adaa98e7da58a72cd4217254908f93b65c0",
+  "mini_source_protocol_sha256": {
+    "1": "561d7ed2c4105d139dd37304cd20f709dc5f8747eeb4e1aeae9c9661c5f1823a",
+    "2": "ac9cdc95b227479711c99e52e544ec64898e4d828565308dcc9fd6a4686f6710"
+  },
+  "source_sha256": "8439108886fa1a24dd9b7a553187d54143fcb4843ab97d543e257232b3166451",
+  "new_model_forward_passes": 0,
+  "new_training_updates": 0,
+  "does_not_modify_registered209_or210": true,
+  "not_a_new_leaderboard_result": true,
+  "reference_definition": "GT-pure positive groups with original BG membership; separate GT-assisted missed-FG attachment, nonadditive diagnostics"
+}

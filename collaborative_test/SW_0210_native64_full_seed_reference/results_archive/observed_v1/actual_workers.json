@@ -1,0 +1,100 @@
+{
+  "observed_unix": 1792325789.7735772,
+  "seed_records": [
+    {
+      "seed": 1,
+      "state": {
+        "status": "running_worker",
+        "seed": 1,
+        "shard": 0,
+        "supervisor_pid": 2252470,
+        "updated_unix": 1792325291.954873,
+        "physical_gpu": 1,
+        "gpu_uuid": "GPU-45604115-c231-56a5-32ea-d3001e8ff243",
+        "child_pid": 2258383,
+        "child_argv": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "-u",
+          "-m",
+          "collaborative_test.SW_0210_native64_full_seed_reference.queue",
+          "--worker",
+          "--seed",
+          "1",
+          "--shard",
+          "0",
+          "--physical-gpu",
+          "1"
+        ]
+      },
+      "actual_parent_argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0210_native64_full_seed_reference.queue",
+        "--seed",
+        "1"
+      ],
+      "actual_worker_argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0210_native64_full_seed_reference.queue",
+        "--worker",
+        "--seed",
+        "1",
+        "--shard",
+        "0",
+        "--physical-gpu",
+        "1"
+      ]
+    },
+    {
+      "seed": 2,
+      "state": {
+        "status": "running_worker",
+        "seed": 2,
+        "shard": 0,
+        "supervisor_pid": 2252471,
+        "updated_unix": 1792324551.0540771,
+        "physical_gpu": 3,
+        "gpu_uuid": "GPU-6801a3dc-cde3-86c6-d665-6d9ecf063a1e",
+        "child_pid": 2252587,
+        "child_argv": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "-u",
+          "-m",
+          "collaborative_test.SW_0210_native64_full_seed_reference.queue",
+          "--worker",
+          "--seed",
+          "2",
+          "--shard",
+          "0",
+          "--physical-gpu",
+          "3"
+        ]
+      },
+      "actual_parent_argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0210_native64_full_seed_reference.queue",
+        "--seed",
+        "2"
+      ],
+      "actual_worker_argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0210_native64_full_seed_reference.queue",
+        "--worker",
+        "--seed",
+        "2",
+        "--shard",
+        "0",
+        "--physical-gpu",
+        "3"
+      ]
+    }
+  ],
+  "nvidia": "GPU-a0a7d03d-adc1-37ca-4342-328878b3657c, 767110, 818 MiB\nGPU-45604115-c231-56a5-32ea-d3001e8ff243, 2258383, 2136 MiB\nGPU-50cc59a2-8312-ff02-5889-1becf63c7cd4, 2241482, 12400 MiB\nGPU-6801a3dc-cde3-86c6-d665-6d9ecf063a1e, 2252587, 2136 MiB\n"
+}

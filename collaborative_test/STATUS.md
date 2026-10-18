@@ -1,15 +1,21 @@
-Running2026-10-18: SW0209 native64 pair-ARI+QCE pilot, actual GPU1 worker2249387
-and supervisor2249349. Unchanged warm192 model/Adam/RNG,2 new B4 TRAIN proposals,
-matched202 QCE control, fixed16 seed0 screen. All23 local+Linux tests and native4096
-CPU admission passed after an optional test dependency was removed before training;
-original failure preserved. Actual standalone new-loss spike credit will be audited
-at completion, not inferred from toy tests. No new performance or70k claim.
-SW0210 independent native64 TRAIN8 seed1/2 full320 reference registered concurrently:
-parents2252470/2252471, actual seed2 worker2252587 GPU3, seed1 initially waiting.
-Eight local+Linux tests and actual seed-model/RGB/mini CPU admissions passed.
-Four80-image chunks per seed release shared GPU leases between chunks.
-Seed0 reuses actual208 warm predictions. No new training or seed cherry-picking.
-Read-only completion waiters registered for both. Goal active; .90 still unproved.
+Current2026-10-18: SW0209 COMPLETE; fixed16 seed0 .901220/.862279/.736022,
+matched202 QCE .900148/.859586/.728138, warm192 .924401/.859896/.727638.
+FG difference+.001072 CI[-.000057,.003147]; expansion gate failed. Actual two
+new Adam updates both descent, new-term spike gradient .005706/.006321,
+CNN/all5 families learned; boundary/Adam/RNG and48 masks independently checked.
+Close this exact loss recipe without a small coefficient sweep. No70k expansion.
+SW0210 independent TRAIN8 seed1/2 full320 reference remains running/queued:
+parents2252470/2252471, actual seed2 worker2252587 GPU3 verified at start,
+seed1 initially waiting. Seed0 reuses completed208 warm192. No final mean yet.
+Posthoc208/205 attribution: seed2 shared16 FG.788414 versus GT-pure positive
+partition reference.976234 with only3.17% GT-FG missed; split/merge classifier
+is a justified next target, not a proven .976 model. Source0 full320 actual.877709
+versus GT-pure grouping reference.956939. No new model inference/updates.
+Peer a0a39df reviewed: own32-grid8epochs beats40 on same300, not a Slot claim;
+rawPR count loss unstable and objectIoU drops. Preregister budget endpoints for
+later large training; it does not establish our2-pass adaptation is overtrained.
+No211 source/job exists yet; classifier draft remains preparation only.
+Goal stays active; full native64 three-seed .90, scaling and gating causality unproved.
 
 Latest observation2026-10-18: SW0208 COMPLETE. Actual native64 fixed320 seed0
 warm192 .877709/.791224/.696284; component204 .876242/.790093/.693262.

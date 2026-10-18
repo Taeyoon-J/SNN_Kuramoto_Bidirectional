@@ -1,0 +1,88 @@
+{
+  "status": "actual_completed_boundary_Adam_history_and48_native64_masks_independently_verified",
+  "experiment": "SW_0209_native64_foreground_pair_ari",
+  "summary_sha256": "1cb78936a517a989e2e2bc0d85c3180cfdbdbf347adc0f81249d60d2d5884853",
+  "actual_model_sha256": "9b497900ca05e7a1bcab6e26f97eb527c936e6df44b99ccdcb487a048694075d",
+  "actual_Adam_steps": [
+    4
+  ],
+  "new_accepted_updates": 2,
+  "CNN_changed_from_warm": true,
+  "initial_model_Adam_tensor_transaction_matches_control": true,
+  "initial_parent_CPU_CUDA_RNG_restoration_hash_verified": true,
+  "scores": {
+    "foreground_pair_ari": {
+      "fg_ari": 0.9012196952267214,
+      "foreground_iou": 0.8622785903713468,
+      "matched_object_iou": 0.7360216938197477
+    },
+    "control": {
+      "fg_ari": 0.9001477304039301,
+      "foreground_iou": 0.8595864826069441,
+      "matched_object_iou": 0.7281376470404165
+    },
+    "warm": {
+      "fg_ari": 0.924401453845536,
+      "foreground_iou": 0.8598964166728263,
+      "matched_object_iou": 0.7276384094627034
+    }
+  },
+  "paired_candidate_minus": {
+    "control": {
+      "fg_ari": {
+        "mean": 0.0010719648227913298,
+        "ci95": [
+          -5.6851382226863646e-05,
+          0.0031470488043352507
+        ]
+      },
+      "foreground_iou": {
+        "mean": 0.0026921077644027694,
+        "ci95": [
+          -0.0002402897512389833,
+          0.007953044594360591
+        ]
+      },
+      "matched_object_iou": {
+        "mean": 0.007884046779331091,
+        "ci95": [
+          -0.0006526401569284429,
+          0.02411476152287497
+        ]
+      }
+    },
+    "warm": {
+      "fg_ari": {
+        "mean": -0.023181758618814545,
+        "ci95": [
+          -0.06998806538740053,
+          0.0009398465801516957
+        ]
+      },
+      "foreground_iou": {
+        "mean": 0.002382173698520215,
+        "ci95": [
+          -0.0020949676489303765,
+          0.01042402184351053
+        ]
+      },
+      "matched_object_iou": {
+        "mean": 0.008383284357044135,
+        "ci95": [
+          -0.011850104008236316,
+          0.03789208970265566
+        ]
+      }
+    }
+  },
+  "maximum_metric_abs_error": 2.220446049250313e-16,
+  "screen_gate_passed": false,
+  "full320_three_seed_goal_verified": false,
+  "final_boundary_sha256": "9fb38d06400acbce4210183d373ebbee21afac1cfbed0fa693acfe749d3b031f",
+  "raw_imagewise_values_included": false,
+  "actual_standalone_pair_ARI_emitted_spike_gradient_l2": [
+    0.005705932770489593,
+    0.00632066022766189
+  ],
+  "pair_ARI_and_QCE_components_match_recorded_proposal_objective": true
+}

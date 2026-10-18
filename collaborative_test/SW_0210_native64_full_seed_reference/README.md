@@ -13,3 +13,7 @@ Registration and actual process receipts are archived. Read-only waiter2253239
 tracks these exact supervisor identities and automatically archives the final
 three-seed summary and all eight immutable protocols after GT-last scoring.
 No final result, three-seed win or .90 claim exists at registration.
+
+After209 completed and released its lease, seed1 worker2258383 was independently
+verified on GPU1 while seed2 worker2252587 continued on GPU3. Exact /proc commands
+and NVIDIA observations: results_archive/observed_v1/actual_workers.json.

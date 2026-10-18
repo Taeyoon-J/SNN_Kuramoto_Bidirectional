@@ -1,5 +1,22 @@
 # SW0209 foreground pair-ARI loss
 
+**COMPLETE, expansion gate failed.** Fixed16/seed0: candidate
+.901220/.862279/.736022; matched QCE202 .900148/.859586/.728138;
+warm192 .924401/.859896/.727638. FG gain versus matched control+.001072,
+CI[-.000057,+.003147]. The tiny mean improvements are not established gains.
+No full320/seed expansion or coefficient rescue of this recipe. Warm192 remains
+the full320 seed0 reference. Candidate checkpoint and all evidence are preserved.
+
+Actual two new Adam updates applied, both descent; all five families and CNN
+learned. The standalone new term reached emitted spikes with norms.005706/.006321.
+Its TRAIN surrogate losses fell .249533->.237221 and .207382->.197430, but that
+did not establish better hard-mask grouping. Independent boundary/Adam/RNG,
+48 masks and metrics audit passed (maximum error2.22e-16).
+See [RESULT_KO.md](RESULT_KO.md), results_archive/score_v1/summary.json and
+results_archive/score_v1/completion_audit.json. No new70k training or .90 claim.
+
+## Historical registration
+
 RUNNING after23 local and23 Linux tests and actual model/Adam/RNG/native4096
 CPU admission. Supervisor2249349 and actual GPU1 worker2249387 verified.
 New QCE+foreground-pair-ARI surrogate,

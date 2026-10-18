@@ -1,0 +1,70 @@
+{
+  "peer_revision": "a0a39dfb081c1012e1beeae1136c4e7a9ef6073b",
+  "checked_unix": 1792324923.6473937,
+  "source_blob_sha256": {
+    "collaborative_test/PV2_0101_epoch_budget/README.md": "a26863bbbb1835d660eb6459490c14e7ebcedfbe2f39dc0416f88be5b4f2a09e",
+    "collaborative_test/PV2_0101_epoch_budget/metrics.csv": "12677cc093adf517df2d374a943b594af5570d80cdf9f88f7de64594f7e7ec33",
+    "collaborative_test/PV2_0101_epoch_budget/commands.sh": "b034a78f1dd6c92051f15861c667036dfaa2cf87cf74835a297d4db48a9bacc1",
+    "collaborative_test/PV2_0097_group_count/README.md": "2c4f43e16b81e0ea3a143d1487d8def93370b3f51b5bed8b9bff8eaff6730cad",
+    "collaborative_test/PV2_0097_group_count/commands.sh": "09946918ef53f808fbfde31f7b0ee7e903516521affa5fb7dcb6ff072d0d8722"
+  },
+  "matched_epoch_result": {
+    "seed": 0,
+    "validation_images": 300,
+    "grid": [
+      32,
+      32
+    ],
+    "control40": [
+      0.6293,
+      0.7091,
+      0.5885
+    ],
+    "control8": [
+      0.7699,
+      0.7531,
+      0.7017
+    ],
+    "training_unique_limit": 1000,
+    "training_exposures8": 8000,
+    "training_exposures40": 40000
+  },
+  "group_count_result": {
+    "control8": [
+      0.7699,
+      0.7531,
+      0.7017
+    ],
+    "weight5": [
+      0.7803,
+      0.7807,
+      0.6914
+    ],
+    "FG_improves": true,
+    "foreground_IoU_improves": true,
+    "object_IoU_declines": true,
+    "reported_initial_weight5_loss": 4.89e+24
+  },
+  "comparability": {
+    "peer_contract": "v2, validation300, native32, population threshold0.5, precomputed gamma",
+    "our_current_contract": "canonicalHDF5 native128 no-crop validation320 native64 actual learned encoder/spike readout",
+    "cross_contract_raw_score_comparison_valid": false,
+    "peer_has_contract_v2_Slot_baseline": false,
+    "peer_headline_beats_own_published_grid16_not_Slot": true,
+    "independent_seed_replication_pending_in_peer": true
+  },
+  "incorporation": {
+    "running209_and210_unchanged": true,
+    "do_not_port_raw_unbounded_PR_count_loss": true,
+    "our_normalized_count201_was_already_scientifically_rejected": true,
+    "next_large_training_should_preregister_step_endpoints_and_fixed_evaluation_cohort": true,
+    "matched_compute_and_unique_exposure_should_be_recorded_separately": true,
+    "our_foundation_core_exposures_before186": 144096,
+    "our_foundation_unique_pool": 70000,
+    "our186_additional_exposures": 1024,
+    "our186_adaptation_passes": 2,
+    "peer_does_not_prove_our_pipeline_is_overtrained": true,
+    "our209_pair_density_target_uses_GT_pair_counts_not_fixed_count75": true
+  },
+  "no_new_training_claim": true
+}

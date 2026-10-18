@@ -1,6 +1,8 @@
-Running2026-10-18: [SW0209 pair-ARI+QCE training](SW_0209_native64_foreground_pair_ari/DESIGN_KO.md)
-and [SW0210 independent full320 seed reference](SW_0210_native64_full_seed_reference/DESIGN_KO.md).
-Actual209 worker2249387 GPU1;210 seed2 worker2252587 GPU3. No new score yet.
+Completed2026-10-18: [SW0209 pair-ARI+QCE](SW_0209_native64_foreground_pair_ari/RESULT_KO.md)
+fixed16 seed0 .901220/.862279/.736022; FG+.001072 versus matched control,
+CI includes0, no expansion. [SW0210 full320 seed reference](SW_0210_native64_full_seed_reference/DESIGN_KO.md)
+continues. [Posthoc fixed-support attribution](SW_0208_native64_full320_confirmation/SUPPORT_DIAGNOSIS_KO.md)
+supports testing instance grouping; GT references are not new model scores.
 
 Latest2026-10-18: [SW0207 completed diagnosis](SW_0207_spike_foreground_classifier/README.md);
 [SW0208 full320 confirmation complete](SW_0208_native64_full320_confirmation/RESULT_KO.md).
