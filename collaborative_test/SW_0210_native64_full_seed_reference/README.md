@@ -25,3 +25,9 @@ the newer FG-ARI>=.90 target remains false. No new training or fresh70k run.
 All1920 mask endpoints, bindings, dual metrics and paired CIs were revalidated.
 The evaluated models include mask-supervised adaptation. See RESULT_KO.md,
 results_archive/completed_v1/completion_audit.json and selected_reference_v1.json.
+
+Posthoc full320 support attribution also completed without model forwards:
+seed1 is the weakest full FG reference, while seed2 misses only3.70% of true
+foreground but retains split/merge errors. GT-assisted pure-group references
+are .956939/.941650/.976018; these are not predictions or learnable ceilings.
+See SUPPORT_DIAGNOSIS_KO.md. No change to the real .848615 mean or .90 verdict.
