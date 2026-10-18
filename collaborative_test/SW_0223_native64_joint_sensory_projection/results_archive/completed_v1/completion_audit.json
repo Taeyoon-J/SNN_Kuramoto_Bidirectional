@@ -1,0 +1,140 @@
+{
+  "status": "complete_actual_joint_projection_teacher_control_and_mask_audit",
+  "score_sha256": "1aeefaf69a4336177cad33daa7f2f74c936ce7c195c1b746471719390841995f",
+  "diagnostic_source_sha256": "c46c9a6e46a58f77692563115de2ab73200a1a90804d55f2a606caf36d4dd51b",
+  "frequency_helper_sha256": "4ae4be0486f4c24366fa3c3b2b6ce5dba6c8a760f951842e6e8f6777d26d0760",
+  "checkpoints": {
+    "0": {
+      "checkpoint_sha256": "9fc1fc6be2ab20bc0662a216b96e525a50872fa71c68c5988bd5433ec54676df",
+      "encoder_sha256": "e2203acdbea1f87996d49de37ebad47ef3e6f2b1e5a0a4b6d8dcfd118e1d2698",
+      "teacher_sha256": "d7df1a847bf654c281555e6749e3be0a8d592ec9cb78753796d828a6b0db70ae",
+      "protocol_sha256": "e567c3e0e20bb9ddb88329fee18e695dddb655b5a5c5109595c52f85178ec017",
+      "projection_sha256": "f5729b9df58b0fad6d80996354fe77be6410484bed4605c5819c75b77cbde179"
+    },
+    "1": {
+      "checkpoint_sha256": "700e8382030b12f5950789684b60d9881739ff93393b6d5b682fd4ae8ed42d80",
+      "encoder_sha256": "ef331b52077a46aedf1dda0dfacf0bf3a4c0114dae44b1139620db9ac8bb5701",
+      "teacher_sha256": "d250f3bae4e9ca35ef3863a467184475d7a498c63f2d6b91b3ee01def76a69b6",
+      "protocol_sha256": "13d96cb764c501f93f8c5e6f0216c9b08eb589c1c4383980c7140916cd871bcc",
+      "projection_sha256": "4a757b20a1d3d25fd4a29ad093c20a5da44a38624604ffbfca5f0857b3c71c45"
+    },
+    "2": {
+      "checkpoint_sha256": "c7d9487be55757a3c8a7ad1035571584dcb5825a7fa495fddfb57c93d9522b59",
+      "encoder_sha256": "ddb4b3cff5c2b0e2c6561f1f68fd201081c55b902c1de1adf60531f8b1fca347",
+      "teacher_sha256": "810ef4c9227f2cb55516f4f02a09b184a88429194b93cbfd52d69e1f10ed67bc",
+      "protocol_sha256": "118c2fe6e3790c5e3a3a2680b0f9e067c9705113ac114e5d39b0b2e214f548f1",
+      "projection_sha256": "05796eb1e1e2c574b3ec61d8dfd7f75a6c5a882ec8269df851adb2fd25b7dfbf"
+    }
+  },
+  "source_full_models_already_reconstructed_by_frozen_scorer": true,
+  "independent_full_model_factory_repetitions": 0,
+  "actual_encoder_checkpoints": 3,
+  "actual_Adam_steps": 128,
+  "core_projection_updates": 128,
+  "other_core_updates": 0,
+  "actual_projection_parameters": 32,
+  "raw_masks_independently_rescored": 144,
+  "independent_metrics_means_and_bootstrap_maximum_abs_error": 2.220446049250313e-16,
+  "full320_candidate_gate": false,
+  "balanced_candidate_gate": false,
+  "per_seed_frequency": {
+    "0": {
+      "before": {
+        "within_object_variance": 0.005063948124079454,
+        "adjacent_class_mean_squared_distance": 0.0879855531539943,
+        "global_frequency_variance": 0.015690117508127252
+      },
+      "after": {
+        "within_object_variance": 0.003360379487798557,
+        "adjacent_class_mean_squared_distance": 0.08165818439105409,
+        "global_frequency_variance": 0.014309083085901574
+      },
+      "encoder_only": {
+        "within_object_variance": 0.0035301588896361094,
+        "adjacent_class_mean_squared_distance": 0.08298764601012386,
+        "global_frequency_variance": 0.014575854640821045
+      },
+      "source_object_center_MSE": 0.00016938042949732335,
+      "DEV_frequency_denoising_MSE": 0.0035297599172958802,
+      "TRAIN_losses": {
+        "before": {
+          "total": 0.004659706261008978,
+          "frequency_denoising": 0.004659706261008978,
+          "gamma_anchor": 5.067212929535045e-15
+        },
+        "after": {
+          "total": 0.003366256656590849,
+          "frequency_denoising": 0.003299956093542278,
+          "gamma_anchor": 6.630060761381174e-05
+        }
+      }
+    },
+    "1": {
+      "before": {
+        "within_object_variance": 0.017436725990698967,
+        "adjacent_class_mean_squared_distance": 0.16261352385858813,
+        "global_frequency_variance": 0.03523177255789653
+      },
+      "after": {
+        "within_object_variance": 0.013504824911018901,
+        "adjacent_class_mean_squared_distance": 0.13285870910501635,
+        "global_frequency_variance": 0.02861098417659739
+      },
+      "encoder_only": {
+        "within_object_variance": 0.014880934856220544,
+        "adjacent_class_mean_squared_distance": 0.1446172247079389,
+        "global_frequency_variance": 0.031335286521434726
+      },
+      "source_object_center_MSE": 0.00103000888339011,
+      "DEV_frequency_denoising_MSE": 0.014534833794409011,
+      "TRAIN_losses": {
+        "before": {
+          "total": 0.01378237665630877,
+          "frequency_denoising": 0.01378237665630877,
+          "gamma_anchor": 5.24078130949312e-15
+        },
+        "after": {
+          "total": 0.011669190600514412,
+          "frequency_denoising": 0.011636249022558331,
+          "gamma_anchor": 3.29418153341976e-05
+        }
+      }
+    },
+    "2": {
+      "before": {
+        "within_object_variance": 0.007018958751478107,
+        "adjacent_class_mean_squared_distance": 0.0539824095812558,
+        "global_frequency_variance": 0.012594363685591824
+      },
+      "after": {
+        "within_object_variance": 0.0053200308985213805,
+        "adjacent_class_mean_squared_distance": 0.042343489357609794,
+        "global_frequency_variance": 0.009932378307345256
+      },
+      "encoder_only": {
+        "within_object_variance": 0.005820799484925204,
+        "adjacent_class_mean_squared_distance": 0.04710872155110976,
+        "global_frequency_variance": 0.01112466563213501
+      },
+      "source_object_center_MSE": 0.0005527247321879258,
+      "DEV_frequency_denoising_MSE": 0.005872755630709306,
+      "TRAIN_losses": {
+        "before": {
+          "total": 0.005229351460002363,
+          "frequency_denoising": 0.005229351460002363,
+          "gamma_anchor": 4.72968131148252e-15
+        },
+        "after": {
+          "total": 0.00444811990018934,
+          "frequency_denoising": 0.004406619584187865,
+          "gamma_anchor": 4.150043514528079e-05
+        }
+      }
+    }
+  },
+  "all_three_frozen_protocols_checked_before_DEV_GT": true,
+  "additional_model_forwards": 0,
+  "additional_training_updates": 0,
+  "raw_imagewise_vectors_published": false,
+  "frequency_changes_are_not_gating_causal_evidence": true
+}

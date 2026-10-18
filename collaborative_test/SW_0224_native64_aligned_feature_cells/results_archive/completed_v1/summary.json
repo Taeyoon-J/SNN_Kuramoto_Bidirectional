@@ -1,0 +1,204 @@
+{
+  "status": "complete_native64_feature_cell_alignment_mini",
+  "scores": {
+    "baseline": {
+      "fg_ari": 0.8428907016774789,
+      "foreground_iou": 0.6006915810165038,
+      "matched_object_iou": 0.7021610526966486
+    },
+    "aligned": {
+      "fg_ari": 0.8383022162634449,
+      "foreground_iou": 0.5860192494255337,
+      "matched_object_iou": 0.7132449785211362
+    }
+  },
+  "per_seed_scores": {
+    "baseline_seed0": {
+      "fg_ari": 0.924401453845536,
+      "foreground_iou": 0.8598964166728263,
+      "matched_object_iou": 0.7276384094627034
+    },
+    "aligned_seed0": {
+      "fg_ari": 0.8965082050707024,
+      "foreground_iou": 0.8835215703282973,
+      "matched_object_iou": 0.7502277076354652
+    },
+    "baseline_seed1": {
+      "fg_ari": 0.8158564023799697,
+      "foreground_iou": 0.4967038314401081,
+      "matched_object_iou": 0.7045099764303236
+    },
+    "aligned_seed1": {
+      "fg_ari": 0.793259215074171,
+      "foreground_iou": 0.4327026038754369,
+      "matched_object_iou": 0.6527372925874197
+    },
+    "baseline_seed2": {
+      "fg_ari": 0.7884142488069319,
+      "foreground_iou": 0.44547449493657715,
+      "matched_object_iou": 0.6743347721969196
+    },
+    "aligned_seed2": {
+      "fg_ari": 0.8251392286454616,
+      "foreground_iou": 0.4418335740728666,
+      "matched_object_iou": 0.7367699353405242
+    }
+  },
+  "paired_aligned_minus_baseline": {
+    "fg_ari": {
+      "mean": -0.004588485414034253,
+      "ci95": [
+        -0.03500595397693371,
+        0.03738651678493155
+      ]
+    },
+    "foreground_iou": {
+      "mean": -0.01467233159097029,
+      "ci95": [
+        -0.051109007531373464,
+        0.01460658055872182
+      ]
+    },
+    "matched_object_iou": {
+      "mean": 0.01108392582448754,
+      "ci95": [
+        -0.022369561572817356,
+        0.04464905638508738
+      ]
+    }
+  },
+  "FG_track_candidate_gate": false,
+  "balanced_candidate_gate": false,
+  "full320_candidate_gate": false,
+  "optimizer_updates": 0,
+  "geometry": {
+    "feature_shape": [
+      126,
+      126
+    ],
+    "cell_grid": [
+      64,
+      64
+    ],
+    "legacy_window_width_counts": {
+      "2": 4,
+      "3": 60
+    },
+    "legacy_overlapping_adjacent_cells_per_axis": 62,
+    "legacy_mean_center_abs_error_pixels": 0.5,
+    "aligned_mean_center_abs_error_pixels": 0.015625,
+    "aligned_interior_max_center_error_pixels": 0.0,
+    "border_policy": "replicate one existing feature row/column; no RGB or GT resize/crop"
+  },
+  "image_count": 16,
+  "seed_scope": [
+    0,
+    1,
+    2
+  ],
+  "mask_supervised_source_lineage": true,
+  "new70000_training": false,
+  "RGB_GT_resize_or_crop": false,
+  "independent_metric_maximum_abs_error": 2.220446049250313e-16,
+  "all_three_frozen_protocols_validated_before_DEV_GT": true,
+  "full320_incumbent_unchanged": true,
+  "fingerprint": {
+    "files": {
+      "DESIGN_KO.md": "012f164f38c7c5db5c67f69e76165573ee1c6d6aaf2e0fe900b5d4e8ae0bef49",
+      "alignment.py": "3691007b43ff5c29d5c3b51cf9474b0ba40a1ce49d62eae3915ee772e07b6b3a",
+      "run.py": "b02a9f5994c355963b67e2a39ab49e39fcf8c953c360899e21e05bffdd6d80f3",
+      "evaluate.py": "138dc7f543d35344a2956c3bc399153cc877feff263b6736a4dc0ceb6298baf8",
+      "queue.py": "1e19228d7fc1dac3645f021800a9cccfb25cbda3f5877d9bf1760c7ec7626c61",
+      "test_alignment.py": "4aa5effb3ab84d5c7d2928d7717ba519467c00ac933cfa9206012bfcd937cc26",
+      "test_pipeline.py": "5a6fb06e6dfc817d928e459f3682b503f7a8e2dba9cbe47f1a05a871dca57bc0"
+    },
+    "source": {
+      "files": {
+        "DESIGN_KO.md": "af5cae1180e1090435a1de8359a286568566249704fb0116178033e65cad0938",
+        "refine.py": "fe8f54f3487586027d0cf7f72b44de7fed54537ddf8d4d96ca6ac464f17081b4",
+        "run.py": "03acff36a1462942f756394e8df216ee52cabf6df4e1e2ff42e86a5cdae418a9",
+        "queue.py": "11a1df01cb53e898fd9525d212f5986c779ac401a94007ee5bd9c260732436f6",
+        "test_refine.py": "3edb1cc5ae06c1b94ceb599e5611e954465ed05404e6e2e3ddbc50ac46bff44f",
+        "test_pipeline.py": "15b7e10a2adca0fd36f8ad4c0940c10c495ca26fa8f0837a1e5ab108738efa99"
+      },
+      "source_sha256": "3cc02b48ee4d93fd4acbd7151653f0b0cf51c327e4e4cc73970f913083990a85",
+      "energy_operator_sha256": "fd3c760b523b724a864c807e64a7b2d208f2e426b7980c8f4a944f7edd643af5",
+      "models": {
+        "0": "2dd2b0d64602b85d4082bcaddcd21dfe8c60d34af1ea78a2ed29bf03c8ba4b6e",
+        "1": "e1e16281612b2171b6822e0ca70dee051f095ad7ebc9239a9675b8e8d9b391e0",
+        "2": "dff381ebcd5280a2a7bf7b99ef8ee3b5af30e91f3384962ef47c6d89b7da53d0"
+      },
+      "seeds": [
+        0,
+        1,
+        2
+      ],
+      "offsets": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20,
+        22,
+        24,
+        26,
+        28,
+        30
+      ],
+      "new_optimizer_steps": 0
+    },
+    "shared_helpers_sha256": "240afe2d2cb68f1aa86805b546682f585efb98ae95428a5b0b44709297910c62",
+    "reader_sha256": "fc95da321b8974cea693d400e0dc110d7ec1edae6245032c48ea58e4a9234161",
+    "checkpoints": {
+      "0": [
+        "SW_0192_native64_incumbent_mini/results_archive/probe_work_seed0/boundary.ptx",
+        "14d0386db64d3890163574ac2421b1e80d3100536ec25c9940434e0689327e82"
+      ],
+      "1": [
+        "SW_0205_native64_weak_seed_adaptation/results_archive/seed1/training_work/boundary.ptx",
+        "9ef50f95559ca47f0f8f87e1cf7d78e3f8a44c5fb51445b3acd03bf7a9b24e85"
+      ],
+      "2": [
+        "SW_0205_native64_weak_seed_adaptation/results_archive/seed2/training_work/boundary.ptx",
+        "b88668e8cac21ca1b40d65660051443f6ec1881e623a7ee368fb745726f3525c"
+      ]
+    },
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "offsets": [
+      0,
+      2,
+      4,
+      6,
+      8,
+      10,
+      12,
+      14,
+      16,
+      18,
+      20,
+      22,
+      24,
+      26,
+      28,
+      30
+    ],
+    "optimizer_updates": 0,
+    "feature_border_padding": 1,
+    "feature_border_mode": "replicate",
+    "RGB_GT_resize_or_crop": false,
+    "native_grid": [
+      64,
+      64
+    ]
+  }
+}

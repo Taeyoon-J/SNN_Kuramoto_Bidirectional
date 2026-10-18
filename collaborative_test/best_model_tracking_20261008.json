@@ -10568,7 +10568,7 @@
   },
   "latest_native64_joint_sensory_projection": {
     "experiment": "SW0223",
-    "status": "actual_GPU_started",
+    "status": "complete_balanced_mean_gain_uncertain_source_FG",
     "seed_scope": [
       0,
       1,
@@ -10589,11 +10589,125 @@
     "inherited70k_and_native32_TRAIN512_supervision": true,
     "mask_supervised": true,
     "incumbent_changed": false,
-    "new_score": null
+    "new_score": {
+      "baseline": {
+        "fg_ari": 0.8428907016774789,
+        "foreground_iou": 0.6006915810165038,
+        "matched_object_iou": 0.7021610526966486
+      },
+      "encoder_only": {
+        "fg_ari": 0.8542718294076682,
+        "foreground_iou": 0.6315445508080945,
+        "matched_object_iou": 0.695736334480797
+      },
+      "joint_projection": {
+        "fg_ari": 0.8596335268268085,
+        "foreground_iou": 0.6456106600762692,
+        "matched_object_iou": 0.7063404948549898
+      }
+    },
+    "paired": {
+      "baseline": {
+        "fg_ari": {
+          "mean": 0.01674282514932927,
+          "ci95": [
+            -0.00036055725100509893,
+            0.04094037935388452
+          ]
+        },
+        "foreground_iou": {
+          "mean": 0.04491907905976533,
+          "ci95": [
+            0.003369130687924442,
+            0.09266228968615482
+          ]
+        },
+        "matched_object_iou": {
+          "mean": 0.0041794421583413194,
+          "ci95": [
+            -0.03184504792753608,
+            0.04575104968521587
+          ]
+        }
+      },
+      "encoder_only": {
+        "fg_ari": {
+          "mean": 0.00536169741913993,
+          "ci95": [
+            6.180424383217806e-05,
+            0.012049742301749154
+          ]
+        },
+        "foreground_iou": {
+          "mean": 0.01406610926817477,
+          "ci95": [
+            -0.0014329649776206107,
+            0.039373055948243155
+          ]
+        },
+        "matched_object_iou": {
+          "mean": 0.01060416037419298,
+          "ci95": [
+            -0.004340860748647185,
+            0.027799500692391368
+          ]
+        }
+      }
+    },
+    "full320_candidate_gate": false,
+    "balanced_candidate_gate": false,
+    "candidate_references": {
+      "0": {
+        "checkpoint_server": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0223_native64_joint_sensory_projection/results_archive/seed0/TRAIN64/encoder_work/boundary.ptx",
+        "checkpoint_sha256": "9fc1fc6be2ab20bc0662a216b96e525a50872fa71c68c5988bd5433ec54676df",
+        "encoder_sha256": "e2203acdbea1f87996d49de37ebad47ef3e6f2b1e5a0a4b6d8dcfd118e1d2698",
+        "full_model_sha256": "7e2e355b37ee9b8bff39762a025d46dcc17d363929d2929f446fada636032865",
+        "core_state_sha256": "ad2d3844f6f727f56b0d850322878e7f6e85ff879d683850874cadde25cb8933",
+        "frozen_nonprojection_core_sha256": "89d5719a91141407a8cb692eae2a060017cc89181e3970dcdbf6612bba74dd76",
+        "projection_sha256": "f5729b9df58b0fad6d80996354fe77be6410484bed4605c5819c75b77cbde179",
+        "scores": {
+          "fg_ari": 0.9278615841892649,
+          "foreground_iou": 0.862223249208033,
+          "matched_object_iou": 0.7464136530725684
+        }
+      },
+      "1": {
+        "checkpoint_server": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0223_native64_joint_sensory_projection/results_archive/seed1/TRAIN64/encoder_work/boundary.ptx",
+        "checkpoint_sha256": "700e8382030b12f5950789684b60d9881739ff93393b6d5b682fd4ae8ed42d80",
+        "encoder_sha256": "ef331b52077a46aedf1dda0dfacf0bf3a4c0114dae44b1139620db9ac8bb5701",
+        "full_model_sha256": "106287b5f9007d1f5711f3bfa7d10a53defbc3612543010998ce86a7b1877b5d",
+        "core_state_sha256": "2c4b8111ecf07d94b30643fa6b8791f679ac0c94cb2df20a8c2c5999dabdf6ac",
+        "frozen_nonprojection_core_sha256": "651db259ee773ee419f59be88b8b3b674689687f9225c691ee01036e7223a310",
+        "projection_sha256": "4a757b20a1d3d25fd4a29ad093c20a5da44a38624604ffbfca5f0857b3c71c45",
+        "scores": {
+          "fg_ari": 0.8204610563488214,
+          "foreground_iou": 0.584408730825108,
+          "matched_object_iou": 0.6887648677964004
+        }
+      },
+      "2": {
+        "checkpoint_server": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0223_native64_joint_sensory_projection/results_archive/seed2/TRAIN64/encoder_work/boundary.ptx",
+        "checkpoint_sha256": "c7d9487be55757a3c8a7ad1035571584dcb5825a7fa495fddfb57c93d9522b59",
+        "encoder_sha256": "ddb4b3cff5c2b0e2c6561f1f68fd201081c55b902c1de1adf60531f8b1fca347",
+        "full_model_sha256": "e790d1a1ef8d8c306d2d7fd94d38f686c5fc82585529d6153d1d72183f709e16",
+        "core_state_sha256": "b5c69a5dbc93746d513a2919e84f3ff07b75a1ef8b43d7b1e466167b11841047",
+        "frozen_nonprojection_core_sha256": "da81f6c93c4c249cf8172c67262296a9f98ebf3669c4fe3e1a1fdc51baa1c1b1",
+        "projection_sha256": "05796eb1e1e2c574b3ec61d8dfd7f75a6c5a882ec8269df851adb2fd25b7dfbf",
+        "scores": {
+          "fg_ari": 0.8305779399423391,
+          "foreground_iou": 0.4902000001956666,
+          "matched_object_iou": 0.6838429636960016
+        }
+      }
+    },
+    "actual_projection_and_remaining_core_audit": true,
+    "original16_gate_failure_preserved": true,
+    "secondary64_experiment": "SW0225",
+    "mini_evaluation_only": true
   },
   "latest_native64_feature_cell_alignment": {
     "experiment": "SW0224",
-    "status": "actual_GPU_started",
+    "status": "complete_no_FG_gain_Object_IoU_uncertain",
     "seed_scope": [
       0,
       1,
@@ -10611,6 +10725,64 @@
     "registered_jobs": 3,
     "source_mask_supervised_lineage": true,
     "incumbent_changed": false,
-    "new_score": null
+    "new_score": {
+      "baseline": {
+        "fg_ari": 0.8428907016774789,
+        "foreground_iou": 0.6006915810165038,
+        "matched_object_iou": 0.7021610526966486
+      },
+      "aligned": {
+        "fg_ari": 0.8383022162634449,
+        "foreground_iou": 0.5860192494255337,
+        "matched_object_iou": 0.7132449785211362
+      }
+    },
+    "paired": {
+      "fg_ari": {
+        "mean": -0.004588485414034253,
+        "ci95": [
+          -0.03500595397693371,
+          0.03738651678493155
+        ]
+      },
+      "foreground_iou": {
+        "mean": -0.01467233159097029,
+        "ci95": [
+          -0.051109007531373464,
+          0.01460658055872182
+        ]
+      },
+      "matched_object_iou": {
+        "mean": 0.01108392582448754,
+        "ci95": [
+          -0.022369561572817356,
+          0.04464905638508738
+        ]
+      }
+    },
+    "FG_track_candidate_gate": false,
+    "balanced_candidate_gate": false,
+    "Object_IoU_track_retained_but_uncertain": true,
+    "variants": {
+      "0": {
+        "checkpoint_sha256": "14d0386db64d3890163574ac2421b1e80d3100536ec25c9940434e0689327e82",
+        "parameter_sha256": "2dd2b0d64602b85d4082bcaddcd21dfe8c60d34af1ea78a2ed29bf03c8ba4b6e",
+        "adapter_code_sha256": "3691007b43ff5c29d5c3b51cf9474b0ba40a1ce49d62eae3915ee772e07b6b3a",
+        "protocol_sha256": "03444f6d8faaddc62a5caa65f9f383ee4785076d46fd8b43d7005f3d803f87e0"
+      },
+      "1": {
+        "checkpoint_sha256": "9ef50f95559ca47f0f8f87e1cf7d78e3f8a44c5fb51445b3acd03bf7a9b24e85",
+        "parameter_sha256": "e1e16281612b2171b6822e0ca70dee051f095ad7ebc9239a9675b8e8d9b391e0",
+        "adapter_code_sha256": "3691007b43ff5c29d5c3b51cf9474b0ba40a1ce49d62eae3915ee772e07b6b3a",
+        "protocol_sha256": "8cb4559f8d71e3eb9023a8e22983bb86cb3ea4daa9094d56fd949c3da37ff050"
+      },
+      "2": {
+        "checkpoint_sha256": "b88668e8cac21ca1b40d65660051443f6ec1881e623a7ee368fb745726f3525c",
+        "parameter_sha256": "dff381ebcd5280a2a7bf7b99ef8ee3b5af30e91f3384962ef47c6d89b7da53d0",
+        "adapter_code_sha256": "3691007b43ff5c29d5c3b51cf9474b0ba40a1ce49d62eae3915ee772e07b6b3a",
+        "protocol_sha256": "645f3e36c672116ad8ffe850ae6f3a59bc54022ef784df07850b9afb7695cf0a"
+      }
+    },
+    "actual96_mask_and_source_checkpoint_audit": true
   }
 }

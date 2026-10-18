@@ -1,0 +1,55 @@
+{
+  "status": "complete_actual_alignment_source_checkpoint_and96_mask_audit",
+  "score_sha256": "151b144e4f2cca3e7dc03efb74cfe903474f53945e2347da985abd2468f25665",
+  "diagnostic_source_sha256": "3ef18becb6c1a639bf201bbdfcb02367fedbfe78cb458c1132a113c35fd9529d",
+  "source_references": {
+    "0": {
+      "checkpoint_sha256": "14d0386db64d3890163574ac2421b1e80d3100536ec25c9940434e0689327e82",
+      "parameter_sha256": "2dd2b0d64602b85d4082bcaddcd21dfe8c60d34af1ea78a2ed29bf03c8ba4b6e",
+      "adapter_code_sha256": "3691007b43ff5c29d5c3b51cf9474b0ba40a1ce49d62eae3915ee772e07b6b3a",
+      "protocol_sha256": "03444f6d8faaddc62a5caa65f9f383ee4785076d46fd8b43d7005f3d803f87e0"
+    },
+    "1": {
+      "checkpoint_sha256": "9ef50f95559ca47f0f8f87e1cf7d78e3f8a44c5fb51445b3acd03bf7a9b24e85",
+      "parameter_sha256": "e1e16281612b2171b6822e0ca70dee051f095ad7ebc9239a9675b8e8d9b391e0",
+      "adapter_code_sha256": "3691007b43ff5c29d5c3b51cf9474b0ba40a1ce49d62eae3915ee772e07b6b3a",
+      "protocol_sha256": "8cb4559f8d71e3eb9023a8e22983bb86cb3ea4daa9094d56fd949c3da37ff050"
+    },
+    "2": {
+      "checkpoint_sha256": "b88668e8cac21ca1b40d65660051443f6ec1881e623a7ee368fb745726f3525c",
+      "parameter_sha256": "dff381ebcd5280a2a7bf7b99ef8ee3b5af30e91f3384962ef47c6d89b7da53d0",
+      "adapter_code_sha256": "3691007b43ff5c29d5c3b51cf9474b0ba40a1ce49d62eae3915ee772e07b6b3a",
+      "protocol_sha256": "645f3e36c672116ad8ffe850ae6f3a59bc54022ef784df07850b9afb7695cf0a"
+    }
+  },
+  "raw_masks_independently_rescored": 96,
+  "independent_metrics_means_and_bootstrap_maximum_abs_error": 2.220446049250313e-16,
+  "optimizer_updates": 0,
+  "FG_track_candidate_gate": false,
+  "balanced_candidate_gate": false,
+  "Object_IoU_track_retained_but_uncertain": true,
+  "geometry": {
+    "feature_shape": [
+      126,
+      126
+    ],
+    "cell_grid": [
+      64,
+      64
+    ],
+    "legacy_window_width_counts": {
+      "2": 4,
+      "3": 60
+    },
+    "legacy_overlapping_adjacent_cells_per_axis": 62,
+    "legacy_mean_center_abs_error_pixels": 0.5,
+    "aligned_mean_center_abs_error_pixels": 0.015625,
+    "aligned_interior_max_center_error_pixels": 0.0,
+    "border_policy": "replicate one existing feature row/column; no RGB or GT resize/crop"
+  },
+  "RGB_GT_resize_or_crop": false,
+  "all_three_frozen_protocols_checked_before_DEV_GT": true,
+  "additional_model_forwards": 0,
+  "additional_training_updates": 0,
+  "full320_incumbent_unchanged": true
+}
