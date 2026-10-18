@@ -1,0 +1,79 @@
+{
+  "status": "actual_GPU_start_verified",
+  "local_tests": 9,
+  "Linux_tests": 9,
+  "local_CLI_checks": 3,
+  "actual_CPU_admissions": 3,
+  "registered_jobs": 3,
+  "source_sha256": {
+    "DESIGN_KO.md": "a9e09ed4424d635a90939ccaef2cd2552d3d32ec3e0a6830264af19a16f06ef2",
+    "teacher_loss.py": "62028cd3fc3348f705b56d0c575dc2b44a06e6ebc1d18178d02320f21679ffac",
+    "train.py": "3a0454a70a0fcebc111998458e87b8a6853516e4a0ff3833def0c53321c21c21",
+    "evaluate.py": "0e10af1f927ceec112884528d8e4faa910a4615ac217feb88fe43b8dedac60e0",
+    "queue.py": "982cfab11f3ac6fa83d4913aa05577aea63f8ff79c1f69418c90e0811701e215",
+    "test_teacher_loss.py": "0d2bc44ac240fd04631ff908dc0454db1367d8c3be3b805243589d0698697230",
+    "test_pipeline.py": "e24c0c5277766a234061b9de58e04a90e49e5a71e85dcd27ef7f116c39691fd9"
+  },
+  "actual_teacher_admission": [
+    {
+      "seed": 0,
+      "initial_TRAIN_loss": {
+        "total": 0.0046597063774243,
+        "frequency_denoising": 0.0046597063774243,
+        "gamma_anchor": 0.0
+      },
+      "natural_within_variance_abs_error": 4.656612873077393e-10,
+      "teacher_model_sha256": "2dd2b0d64602b85d4082bcaddcd21dfe8c60d34af1ea78a2ed29bf03c8ba4b6e",
+      "teacher_arrays_sha256": "fa491716ad049acfd73ebac8c700958741a7dfb11e25ed0753758eccd5b43df5",
+      "teacher_file_sha256": "d7df1a847bf654c281555e6749e3be0a8d592ec9cb78753796d828a6b0db70ae"
+    },
+    {
+      "seed": 1,
+      "initial_TRAIN_loss": {
+        "total": 0.013782376423478127,
+        "frequency_denoising": 0.013782376423478127,
+        "gamma_anchor": 0.0
+      },
+      "natural_within_variance_abs_error": 9.313225746154785e-10,
+      "teacher_model_sha256": "e1e16281612b2171b6822e0ca70dee051f095ad7ebc9239a9675b8e8d9b391e0",
+      "teacher_arrays_sha256": "e79ded249c91095d464d84993745ab9aacd078b6a4a40bdc55ff79f518a0f1b0",
+      "teacher_file_sha256": "d250f3bae4e9ca35ef3863a467184475d7a498c63f2d6b91b3ee01def76a69b6"
+    },
+    {
+      "seed": 2,
+      "initial_TRAIN_loss": {
+        "total": 0.005229351110756397,
+        "frequency_denoising": 0.005229351110756397,
+        "gamma_anchor": 0.0
+      },
+      "natural_within_variance_abs_error": 1.0477378964424133e-09,
+      "teacher_model_sha256": "dff381ebcd5280a2a7bf7b99ef8ee3b5af30e91f3384962ef47c6d89b7da53d0",
+      "teacher_arrays_sha256": "01d56f033f5d20a77f78257d7c07ad74d08bfd10700a99cf4c8846e14df64ef4",
+      "teacher_file_sha256": "810ef4c9227f2cb55516f4f02a09b184a88429194b93cbfd52d69e1f10ed67bc"
+    }
+  ],
+  "observed_server_unix": 1792352794.0804117,
+  "GPU_jobs": [
+    {
+      "seed": 0,
+      "TRAIN_count": 64,
+      "physical_gpu": 3,
+      "gpu_uuid": "GPU-6801a3dc-cde3-86c6-d665-6d9ecf063a1e",
+      "child_pid": 2424447,
+      "supervisor_pid": 2424287
+    },
+    {
+      "seed": 2,
+      "TRAIN_count": 64,
+      "physical_gpu": 1,
+      "gpu_uuid": "GPU-45604115-c231-56a5-32ea-d3001e8ff243",
+      "child_pid": 2424443,
+      "supervisor_pid": 2424289
+    }
+  ],
+  "mask_supervised": true,
+  "new70000_training": false,
+  "incumbent_changed": false,
+  "new_score": null,
+  "peer_head": "7a21632b93805f4f1da69a2e77a9ddd95c624d0a"
+}
