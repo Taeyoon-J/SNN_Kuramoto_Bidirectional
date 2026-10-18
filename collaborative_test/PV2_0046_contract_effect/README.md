@@ -1,5 +1,16 @@
 # PV2_0046 — the peer gap is the contract, but not in the direction assumed
 
+> **Superseded in one respect, 2026-10-18 (`PV2_0100`).** The normalisation below —
+> "this branch is at 1.17x of Slot, the peer at 0.87x" — used a Slot reference of 0.6656
+> that `PV2_0090` has since shown was depressed by a centre crop misaligning the
+> prediction grid against the target grid. Aligned, the same checkpoints score **0.8102**,
+> and the ratios become **ours 0.94x, peer 1.00x**. The framing in this record is right;
+> its conclusion that we lead on the only comparison that holds is not.
+>
+> Also: the figure 0.19 in this record is a **foreground fraction**, not a score effect.
+> It has been cited as "the label rule is worth 0.19 of fg_ari", which this record does
+> not say and in fact refutes — a looser rule moves our own score 0.7239 -> 0.5355.
+
 **completed. DIAGNOSTIC ONLY; the contract is unchanged.** Parent `PV2_0044`.
 Graph-freeze seeds, validation 300, window 1024, kernel sigma 1.0, sync 0.05.
 

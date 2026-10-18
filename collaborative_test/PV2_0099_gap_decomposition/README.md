@@ -66,6 +66,25 @@ when the grid gets finer it emerges at 19.5 groups against 6.49 true objects. Re
 robustness is not a property either model has or lacks in general; it follows from whether
 the number of groups is a parameter or an outcome. `PV2_0097` is testing exactly that term.
 
+## Correction: the decomposition arithmetic below was built on a misreading
+
+The table below uses "label rule (`PV2_0046`) +0.19". **That is wrong.** In `PV2_0046`
+0.19 is a **foreground fraction** — the prevalence a peer-like `min_frac 0.10` rule
+produces, 0.188, against contract v1's 0.1146 — not a score effect. I read a prevalence
+as a delta and put it in a sum.
+
+Worse, `PV2_0046` had already **tested and refuted** the hypothesis that a looser label
+rule explains the peer's lead. Rebuilding targets at `min_frac 0.25` moves our own score
+**0.7239 -> 0.5355** on fg_ari while foreground IoU barely moves, 0.7251 -> 0.7315,
+because the patches a looser rule adds are partial-coverage patches at object boundaries
+— exactly where the grouping is wrong. A looser rule makes us worse, not better.
+
+So the label-rule row is not +0.19, it is **negative and already measured**, and the sum
+below does not mean what it says. What the two axes measured here establish stands on its
+own: geometry is **-0.083** and mask downsampling is **+0.0101** (`PV2_0100`), so the two
+contract axes we can control account for about -0.07, and the 0.275 is **not** explained
+by anything tested so far.
+
 ## The decomposition does not close
 
 | component | fg_ari |

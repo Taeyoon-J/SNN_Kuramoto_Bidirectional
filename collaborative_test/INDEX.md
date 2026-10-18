@@ -88,6 +88,7 @@
 | PV2_0097 | running | the objective has no term for how many groups form; `--plv-group-count-weight` exists and is unused | | | |
 | PV2_0098 | queued | training images 1000 vs 6000 on the published line: settles both `PV2_0092`'s broken control and the scope `PV2_0048` left | | | |
 | PV2_0099 | completed | **the crop makes it HARDER, not easier (-0.087): smaller cells surface small objects, 6.32 -> 6.49 per image. And grid 16->32 costs Slot +0.007 but costs US -0.095 -- a fixed slot count is resolution-robust, an emergent group count is not** | | | |
+| PV2_0100 | completed | **mask downsampling is worth +0.003, not the missing piece. AND the normalised comparison FLIPS: PV2_0090 moved our Slot reference .6656 -> .8102, so we are at .94x our baseline and peer at 1.00x theirs** | | | |
 | PV2_0091 | completed | **the readout dial cannot reach 0.9: at matched extent (pred_fg .808 vs .853) we score .7718 against aligned Slot's .8102, and .7718 is the dial's maximum anywhere -- .13 below the bar. An architectural change is necessary, not merely desirable** | 0.7718 | | |
 | PV2_0090 | completed | **the Slot Attention baseline was misaligned IN OUR FAVOUR: its centre crop made the prediction and target grids describe different regions. Aligned, Slot fg_ari 0.6656 -> 0.8102 and LEADS our 0.7603. Both IoU wins stand** | | | |
 | PV2_0046 | completed | contract diagnostic: a looser rule *lowers* fg_ari 0.724 to 0.533; cross-branch scores are not poolable | | | |
