@@ -1,0 +1,10 @@
+# SW0220 native64 optimizer-state diagnosis
+
+One bounded TRAIN4 comparison after218's first uphill update: keep inherited
+Adam state versus reset its moments/counter, with the same model, clipped
+gradient, frozen ranking context, learning rates and projection. Measure actual
+same-RNG full-forward loss, then restore source model/Adam/RNG exactly.
+Two temporary proposals, zero committed updates, no DEV scoring or new70k run.
+See DESIGN_KO.md. This diagnosis is not a new segmentation performance result.
+
+Actual start2026-10-18:8 local/8 Linux tests,2 local/2 Linux CLI checks and real source model/Adam/RNG/frozen-control CPU admission passed. Supervisor2394953, worker2397214 on exclusive GPU1. Source and actual NVIDIA/process bindings are archived. Peer patch_v2 rechecked at7a21632, unchanged. No new segmentation score or source update is claimed.
