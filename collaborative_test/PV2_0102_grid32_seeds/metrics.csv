@@ -1,0 +1,28 @@
+[05:02] === PV2_0102: seeds 1 and 2 of the 8-epoch 32x32 model ===
+[05:02] seed 0: control .7699 .7531 .7017 (pred_fg .1512) | w5 .7803 .7807 .6914 (.1444)
+[05:02] 16x16 published: .7239 .7251 .4951 (pred_fg .1290)
+[06:58] --- S32_w0_s1  116 min  collapse 3.699919 ---
+[08:56] --- S32_w5_s1  117 min  collapse 2.986346 ---
+[10:53] --- S32_w0_s2  116 min  collapse 3.083863 ---
+[12:49] --- S32_w5_s2  116 min  collapse 3.214311 ---
+[12:49] 
+[12:49] label                   fg_ari   fg_iou  obj_iou   groups  pred_fg
+w0 seed 0              0.7699 0.7531 0.7017 15.8367 0.1512 
+w0 seed 1              0.2916 0.0947 0.2326 11.4400 0.3101 
+w0 seed 2              0.7068 0.6151 0.5677 11.0867 0.1140 
+w5 seed 0              0.7803 0.7807 0.6914 13.6800 0.1444 
+w5 seed 1              0.2118 0.1978 0.1466 1.5433 0.0319 
+w5 seed 2              0.7617 0.6997 0.6315 10.0700 0.1190 
+[13:06] 
+16x16 published (3-seed, validation): 0.7239 / 0.7251 / 0.4951 at pred_fg 0.1290
+
+  w0   n=3  fg_ari 0.5894 +- 0.2599 | fg_iou 0.4876 +- 0.3472 | obj_iou 0.5007 +- 0.2416 | pred_fg 0.1918
+       beats 16x16 on all three: False | calibrated: True
+  w5   n=3  fg_ari 0.5846 +- 0.3230 | fg_iou 0.5594 +- 0.3158 | obj_iou 0.4898 +- 0.2988 | pred_fg 0.0984
+       beats 16x16 on all three: False | calibrated: True
+
+The seed-0 result does not survive three seeds on all three metrics.
+[13:06] === PV2_0102 DONE ===
+[13:06] 
+[13:06] # re-queuing PV2_0098
+[13:06] # PV2_0098 relaunched as pid 2367724

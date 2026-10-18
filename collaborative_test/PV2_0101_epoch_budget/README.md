@@ -1,4 +1,19 @@
-# PV2_0101 — the 32x32 model was overtrained, and at the right budget it beats grid 16 on all three
+# PV2_0101 — the 32x32 model was overtrained, and at seed 0 the shorter budget beat grid 16
+
+> **The headline claim is WITHDRAWN as a three-seed result (`PV2_0102`).** At seeds 1 and
+> 2 the 8-epoch model gives 0.2916 and 0.7068 against seed 0's 0.7699, for a three-seed
+> mean of **0.5894 +- 0.2599** — far below the published 16x16's 0.7239. Seed 1 fails
+> outright in both arms, by over-predicting foreground in the control (pred_fg 0.3101)
+> and by merging almost everything into one group with the group-count term (1.54 groups
+> per image). **8 epochs is not a stable operating point.**
+>
+> What survives: the **overtraining** finding. 8 epochs beats 40 epochs at seed 0 by
+> +0.1406 / +0.0440 / +0.1132 on the same 300 images, and seed 2 (0.7068) also beats the
+> 40-epoch model's 0.6293. The 40-epoch budget was wrong. What does not survive is that
+> any fixed short budget is right.
+>
+> Everything below is the seed-0 record as written, kept for provenance.
+
 
 **Status:** completed, seed 0. **Parent:** `PV2_0094`, `PV2_0097`. **Contract:** v2.
 **This is the first configuration in this project to beat the published one on all three
