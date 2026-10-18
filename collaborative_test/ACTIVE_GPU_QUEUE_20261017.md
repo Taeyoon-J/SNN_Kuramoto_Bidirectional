@@ -57,3 +57,16 @@ seed; this is not a full320 score or new training result.
 202 completed and203 seed2 worker2043968 obtainedGPU1. Other two203 seeds remain
 registered exclusive waiters; all four GPUs remain eligible. Actual worker PID
 and NVIDIA allocation were observed, not inferred from a state file alone.
+
+## SW0204 ready learning test
+
+Parent2049352 registered after18 local/Linux checks, two CLI checks and actual
+CPU model/Adam/RNG admission. QCE(Q)+mean signed-component QCE is compared to
+completed202 using the same finite-step policy and source TRAIN8 checkpoint.
+Same two new B4 proposals, fixed16 development images, original inference.
+All physical GPUs0..3 eligible; currently queued, not claimed GPU-started.
+
+203 seed2 completed eight paired images and was independently audited: old
+.9009074798/.3435644304/.7456563147, new .9012796105/.3435644304/.7444602992.
+This negligible FG gain and lower object IoU is not an adoption signal.
+Seed0/1 remain pending; no full320 or three-seed result is inferred.

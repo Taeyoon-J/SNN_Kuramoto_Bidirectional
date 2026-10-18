@@ -1,12 +1,12 @@
 {
   "peer_branch": "patch_v2",
-  "previous_commit": "1fc3906474039f5016efb4f492fccdbb8c223e60",
-  "commit": "c2e60a75cbfb8a243b78c6f580f7eb626e58bc2c",
+  "previous_commit": "c2e60a75cbfb8a243b78c6f580f7eb626e58bc2c",
+  "commit": "612f7628fde249e4d4fb45a502851a2e34ee72ff",
   "reviewed": [
-    "PV2_0048_data_scale/README.md full scope note and original design",
-    "PV2_0092_signed_coupling/README.md correction diff",
-    "PV2_0092_signed_coupling/commands.sh actual scratch training and evaluation arguments",
-    "PV2_0081_freeze_sweep/README.md and metrics.csv initialization and training scope"
+    "PV2_0099_gap_decomposition/README.md and metrics.csv",
+    "PV2_0100_normalised_comparison/README.md",
+    "decomp.py and downsample.py implementation diff",
+    "PV2_0046_contract_effect/README.md correction"
   ],
   "peer_grid32_CC_scores": [
     0.6044,
@@ -30,7 +30,10 @@
     "validate group-count loss under unequal background/object sizes before using a fixed target; raw PR fails ideal TRAIN partition",
     "consider normalized spike-Q group-count training as separate hypothesis, retaining existing QCE/control and checking actual masks",
     "retain actual strong matched controls rather than explain poor retrained controls with an unverified freeze cause",
-    "do not generalize fixed-compute data-scale negatives to all larger-data training; separate unique data, applied steps and epochs"
+    "do not generalize fixed-compute data-scale negatives to all larger-data training; separate unique data, applied steps and epochs",
+    "do not explain cross-contract gap with mask downsampling: peer measured only +.003",
+    "do not port superseded +.19 label-rule arithmetic; it was foreground prevalence",
+    "retain original positive-product/control foreground in203; diagnose grouping units independently of geometry"
   ],
   "not_blindly_ported": [
     "population threshold without dead-spike evidence in our seed0",
@@ -45,7 +48,9 @@
   "our_Slot_geometry_checked": {
     "input": "full native128 HDF5 RGB, no crop",
     "contract_validator": "SW_0135_native32_spike_binding/evaluation_contract32.py:127",
-    "all_three_protocols_validated_by_completed194_audit": true
+    "all_three_protocols_validated_by_completed194_audit": true,
+    "current_source_rechecked": "evaluation_contract32.py requires full HDF5 RGB/no crop, native128, eleven slots, own70k epoch10 checkpoint hashes",
+    "peer_crop_bug_not_assumed_to_apply": true
   },
   "causal_claim": false,
   "review_history": [
@@ -72,6 +77,16 @@
         "PV2_0096_grid32_sparsity/commands.sh",
         "PV2_0096_grid32_sparsity/metrics.csv",
         "evaluate_model.py diagnostic output field order"
+      ]
+    },
+    {
+      "commit": "c2e60a75cbfb8a243b78c6f580f7eb626e58bc2c",
+      "previous_commit": "1fc3906474039f5016efb4f492fccdbb8c223e60",
+      "reviewed": [
+        "PV2_0048_data_scale/README.md full scope note and original design",
+        "PV2_0092_signed_coupling/README.md correction diff",
+        "PV2_0092_signed_coupling/commands.sh actual scratch training and evaluation arguments",
+        "PV2_0081_freeze_sweep/README.md and metrics.csv initialization and training scope"
       ]
     }
   ],
@@ -119,5 +134,18 @@
     "full40k40epoch_followup_cancelled_not_completed": true,
     "PV2_0098_full_epoch_sixfold_data_experiment_result_not_published_here": true,
     "new_model_setting_to_port": false
+  },
+  "latest_peer_findings": {
+    "crop_cost_fg_grid16": -0.087,
+    "crop_cost_fg_grid32": -0.09,
+    "whole_grid16_slot": 0.8065,
+    "whole_grid32_slot": 0.8134,
+    "downsample_mask_delta_grid16": 0.0028,
+    "downsample_mask_delta_grid32": 0.0032,
+    "label_rule_point19_is_foreground_fraction_not_score_delta": true,
+    "raw_0099_arithmetic_superseded_by_README_correction": true,
+    "peer_normalized_model_to_slot": 0.94,
+    "comparison_uses_our_old_SW0137_SW0138_not_current_incumbent": true,
+    "new_training_recipe_available": false
   }
 }
