@@ -99,3 +99,10 @@ one accepted Adam step, CNN changed. No adoption from this mini. Frozen-mask
 CPU attribution shows increased cross-object merging despite reduced splitting.
 Seed1 worker2095873 now trains onGPU1; actual initial independent model and
 empty Adam checked. Three-seed result and full320/.90 remain unverified.
+
+205 now fully audited on fixed16 IDs across3 seeds: baseline .8487/.5851/.6909,
+TRAIN8 .8429/.6007/.7022. Mean FG not improved, recipe closed, no full320 goal.
+206 learned spike-relation classifier registered after10 local/Linux tests and
+actual CPU admission; parent2101577, actualGPU1 worker2102905, all8 TRAIN caches
+verified. All four GPUs eligible.97 head parameters, source core frozen, original
+independent seed2 baseline retained. Fixed16 evaluation pending.

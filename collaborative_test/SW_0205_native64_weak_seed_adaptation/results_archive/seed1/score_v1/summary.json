@@ -1,0 +1,59 @@
+{
+  "status": "completed_independent_weak_seed_TRAIN8_screen",
+  "seed": 1,
+  "images": 16,
+  "grid": [
+    64,
+    64
+  ],
+  "scores": {
+    "baseline": {
+      "fg_ari": 0.7984093101692141,
+      "foreground_iou": 0.45710916955661784,
+      "matched_object_iou": 0.647076462493146
+    },
+    "candidate": {
+      "fg_ari": 0.8158564023799697,
+      "foreground_iou": 0.4967038314401081,
+      "matched_object_iou": 0.7045099764303236
+    }
+  },
+  "paired_candidate_minus_baseline": {
+    "fg_ari": {
+      "mean": 0.017447092210755827,
+      "ci95": [
+        -0.020263898318608576,
+        0.07018595029389808
+      ]
+    },
+    "foreground_iou": {
+      "mean": 0.03959466188349029,
+      "ci95": [
+        -0.06206219313378267,
+        0.15122162281418333
+      ]
+    },
+    "matched_object_iou": {
+      "mean": 0.05743351393717745,
+      "ci95": [
+        -0.003361243289516201,
+        0.11703929520092482
+      ]
+    }
+  },
+  "extension_gate_passed": false,
+  "training_proposals_completed": 2,
+  "actual_Adam_steps": [
+    2
+  ],
+  "accepted_updates": 2,
+  "source_CNN_changed": true,
+  "extra_unique_TRAIN_proposal_images": 8,
+  "mask_supervised": true,
+  "control": "same independent native32 incumbent mapped64; no additional64 adaptation",
+  "candidate_model_sha256": "e1e16281612b2171b6822e0ca70dee051f095ad7ebc9239a9675b8e8d9b391e0",
+  "training_report_sha256": "69357397ccc4ffab89be8fedea7f72a3f6d68bb6562ad49403ab4ce8119a19dd",
+  "independent_maximum_metric_abs_error": 2.220446049250313e-16,
+  "full320_three_seed_goal_verified": false,
+  "unsupervised_leaderboard_eligible": false
+}

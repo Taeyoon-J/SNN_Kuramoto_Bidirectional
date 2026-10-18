@@ -39,3 +39,19 @@ denominators and are not additive causal shares. Existing masks only, no GPU
 forward/update. Nine local/Linux operator tests passed. This does not prove
 which gating causes the issue. Seed1 worker2095873 subsequently startedGPU1,
 with its own initial model6c48389f... and empty Adam verified; final mean pending.
+
+All three TRAIN8 seed lineages now independently audited on the same16 IDs.
+Seed0 reuses completed192; source/data/update-code equality and actual boundary
+were checked. New seed1 accepts2 updates, FG .7984->.8159, while seed2 accepts1
+and FG .8277->.7884. This variation is not a uniform adaptation benefit.
+
+| Fixed16 three-seed mean | FG-ARI | Foreground IoU | Object IoU |
+| --- | ---: | ---: | ---: |
+| before native64 adaptation | .8486554367 | .5850936464 | .6909369327 |
+| after TRAIN8 adaptation | .8428907017 | .6006915810 | .7021610527 |
+| comparable Slot | .8034094297 | .1641841075 | .2083960247 |
+
+FG change -.0057647350, CI[-.0439420276,.0234490905]. IoUs improve in mean,
+primary FG does not. Extension gate failed; close the shared recipe without an
+update/LR micro-rescue. Slot FG difference CI also crosses zero. This remains a
+16-image development result, not full320 or a three-seed .90 achievement.

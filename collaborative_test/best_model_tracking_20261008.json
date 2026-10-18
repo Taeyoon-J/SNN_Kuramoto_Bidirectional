@@ -9159,7 +9159,7 @@
     "full320_three_seed_goal_verified": false
   },
   "SW0205_weak_seed_adaptation_queue": {
-    "status": "seed2_completed_negative_mini_seed1_actual_GPU1_training",
+    "status": "all_three_lineages_completed_audited_recipe_gate_failed_closed",
     "seed_scope": [
       1,
       2
@@ -9504,7 +9504,125 @@
       "closed tiny loss/LR/threshold sweeps"
     ],
     "candidate_direction": "learn a small classifier of the four emitted-spike component correlations, then test its actual instance masks; preserve core and no RGB bypass",
-    "candidate_not_implemented_or_queued": true,
-    "encoder_code_review": "source encoder is stride1 valid convolution and contextual126x126 features, followed by adaptive spatial pooling; no evidence of a fixed16x16 bottleneck"
+    "candidate_not_implemented_or_queued": false,
+    "encoder_code_review": "source encoder is stride1 valid convolution and contextual126x126 features, followed by adaptive spatial pooling; no evidence of a fixed16x16 bottleneck",
+    "implemented_experiment": "SW0206_spike_relation_classifier"
+  },
+  "SW0205_completion": {
+    "status": "completed_no_adoption",
+    "scores": {
+      "seed0_baseline": {
+        "fg_ari": 0.9198858752679034,
+        "foreground_iou": 0.8532890536294372,
+        "matched_object_iou": 0.7364958094193104
+      },
+      "seed0_candidate": {
+        "fg_ari": 0.924401453845536,
+        "foreground_iou": 0.8598964166728263,
+        "matched_object_iou": 0.7276384094627034
+      },
+      "slot_seed0": {
+        "fg_ari": 0.64672490814897,
+        "foreground_iou": 0.17807215668648987,
+        "matched_object_iou": 0.2049048100894179
+      },
+      "seed1_baseline": {
+        "fg_ari": 0.7984093101692141,
+        "foreground_iou": 0.45710916955661784,
+        "matched_object_iou": 0.647076462493146
+      },
+      "seed1_candidate": {
+        "fg_ari": 0.8158564023799697,
+        "foreground_iou": 0.4967038314401081,
+        "matched_object_iou": 0.7045099764303236
+      },
+      "slot_seed1": {
+        "fg_ari": 0.8720021942964142,
+        "foreground_iou": 0.16070396554284916,
+        "matched_object_iou": 0.2318761749533904
+      },
+      "seed2_baseline": {
+        "fg_ari": 0.8276711245436154,
+        "foreground_iou": 0.4448827161214092,
+        "matched_object_iou": 0.6892385262933652
+      },
+      "seed2_candidate": {
+        "fg_ari": 0.7884142488069319,
+        "foreground_iou": 0.44547449493657715,
+        "matched_object_iou": 0.6743347721969196
+      },
+      "slot_seed2": {
+        "fg_ari": 0.8915011866929021,
+        "foreground_iou": 0.15377620025406266,
+        "matched_object_iou": 0.18840708891916697
+      },
+      "baseline_three_seed_mean": {
+        "fg_ari": 0.8486554366602442,
+        "foreground_iou": 0.5850936464358215,
+        "matched_object_iou": 0.690936932735274
+      },
+      "candidate_three_seed_mean": {
+        "fg_ari": 0.8428907016774791,
+        "foreground_iou": 0.6006915810165039,
+        "matched_object_iou": 0.7021610526966489
+      },
+      "slot_three_seed_mean": {
+        "fg_ari": 0.8034094297127621,
+        "foreground_iou": 0.16418410749446724,
+        "matched_object_iou": 0.2083960246539918
+      }
+    },
+    "paired": {
+      "fg_ari": {
+        "mean": -0.005764734982765071,
+        "ci95": [
+          -0.04394202757365912,
+          0.023449090512905852
+        ]
+      },
+      "foreground_iou": {
+        "mean": 0.015597934580682461,
+        "ci95": [
+          -0.020489535954830673,
+          0.05333931553321433
+        ]
+      },
+      "matched_object_iou": {
+        "mean": 0.011224119961374842,
+        "ci95": [
+          -0.015249668224229036,
+          0.03758127419156744
+        ]
+      }
+    },
+    "images_per_seed": 16,
+    "seed_scope": [
+      0,
+      1,
+      2
+    ],
+    "full320_three_seed_goal_verified": false
+  },
+  "SW0206_relation_classifier_queue": {
+    "status": "actual_GPU1_worker_and_TRAIN8_prefix_verified",
+    "supervisor_pid": 2101577,
+    "worker_pid": 2102905,
+    "physical_gpu": 1,
+    "eligible_GPUs": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "seed_scope": [
+      2
+    ],
+    "TRAIN_unique_images": 8,
+    "evaluation_images": 16,
+    "classifier_parameters": 97,
+    "classifier_Adam_steps": 200,
+    "core_optimizer_steps": 0,
+    "source": "unchanged_independent197_seed2_baseline",
+    "performance_result_available": false
   }
 }
