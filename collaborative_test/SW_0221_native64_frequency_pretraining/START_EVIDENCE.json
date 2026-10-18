@@ -1,0 +1,42 @@
+{
+  "status": "actual_GPU_start_verified",
+  "local_tests": 12,
+  "Linux_tests": 12,
+  "local_CLI_checks": 3,
+  "actual_CPU_admissions": 6,
+  "registered_jobs": 6,
+  "source_sha256": {
+    "DESIGN_KO.md": "63fb10aabe319ed6d9ecf14539c6fffda9b71a4acc42577d7dfaa40a5300cadb",
+    "frequency_loss.py": "9efe4121c2d538b9858e8c938876aa1d988d3a2dbf07cf57fc145d2a60dfc672",
+    "train.py": "240afe2d2cb68f1aa86805b546682f585efb98ae95428a5b0b44709297910c62",
+    "evaluate.py": "fc95da321b8974cea693d400e0dc110d7ec1edae6245032c48ea58e4a9234161",
+    "queue.py": "450c02f18def79c71e449eb0a8959787bbbba266bfa2aad0d36e7c66c14497b4",
+    "test_frequency_loss.py": "099a2958cd0ba18f85f4ca78fd1337e4edd6a722c48b470a61294a72b954c15a",
+    "test_pipeline.py": "cf96b22bfd3c6e7c278c04db9b7f25b5498bb1b0ea787864aa634cf90723ffc5"
+  },
+  "observed_server_unix": 1792349486.1097875,
+  "GPU_jobs": [
+    {
+      "seed": 1,
+      "TRAIN_count": 512,
+      "physical_gpu": 1,
+      "gpu_uuid": "GPU-45604115-c231-56a5-32ea-d3001e8ff243",
+      "child_pid": 2405532,
+      "supervisor_pid": 2405422
+    },
+    {
+      "seed": 2,
+      "TRAIN_count": 512,
+      "physical_gpu": 3,
+      "gpu_uuid": "GPU-6801a3dc-cde3-86c6-d665-6d9ecf063a1e",
+      "child_pid": 2405531,
+      "supervisor_pid": 2405424
+    }
+  ],
+  "other_jobs_remain_in_exclusive_idle_queue": true,
+  "peer_head": "7a21632b93805f4f1da69a2e77a9ddd95c624d0a",
+  "mask_supervised": true,
+  "new70000_training": false,
+  "incumbent_changed": false,
+  "new_score": null
+}
