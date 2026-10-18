@@ -1,0 +1,37 @@
+{"proposal": 3, "accepted": true}
+{"proposal": 3, "accepted": true}
+{"proposal": 3, "accepted": false}
+{"proposal": 3, "accepted": false}
+{"proposal": 3, "accepted": false}
+test_pair_ari (unittest.loader._FailedTest) ... ERROR
+test_downhill_step_records_both_flags (collaborative_test.SW_0209_native64_foreground_pair_ari.test_policy.PolicyTests) ... ok
+test_finite_uphill_and_equal_steps_are_retained (collaborative_test.SW_0209_native64_foreground_pair_ari.test_policy.PolicyTests) ... ok
+test_nonfinite_or_invalid_parameter_proposal_rejected (collaborative_test.SW_0209_native64_foreground_pair_ari.test_policy.PolicyTests) ... ok
+test_real_metric_improvement_and_CNN_learning_still_required (collaborative_test.SW_0209_native64_foreground_pair_ari.test_policy.PolicyTests) ... ok
+test_changed_parent_checkpoint_is_rejected_before_restore (collaborative_test.SW_0209_native64_foreground_pair_ari.test_training.ContinuationTests) ... ok
+test_changed_prefix_or_TRAIN64_order_is_rejected (collaborative_test.SW_0209_native64_foreground_pair_ari.test_training.ContinuationTests) ... ok
+test_content_hash_ignores_tensor_storage_and_dict_insertion_order (collaborative_test.SW_0209_native64_foreground_pair_ari.test_training.ContinuationTests) ... ok
+test_continues_actual_existing_Adam_without_repeating_prefix_images (collaborative_test.SW_0209_native64_foreground_pair_ari.test_training.ContinuationTests) ... ok
+test_finite_uphill_proposal_keeps_new_weights_and_Adam_moments (collaborative_test.SW_0209_native64_foreground_pair_ari.test_training.ContinuationTests) ... ok
+test_nonfinite_parameter_update_is_restored_before_post_evaluation (collaborative_test.SW_0209_native64_foreground_pair_ari.test_training.ContinuationTests) ... ok
+test_nonfinite_rollout_exception_restores_transaction_without_bad_JSON (collaborative_test.SW_0209_native64_foreground_pair_ari.test_training.ContinuationTests) ... ok
+test_own_committed_boundary_is_preferred_and_no_parent_prefix_is_resaved (collaborative_test.SW_0209_native64_foreground_pair_ari.test_training.ContinuationTests) ... ok
+test_rejection_restores_inherited_model_AND_nonempty_Adam_moments (collaborative_test.SW_0209_native64_foreground_pair_ari.test_training.ContinuationTests) ... ok
+test_wrong_restored_RNG_is_rejected_before_first_new_boundary (collaborative_test.SW_0209_native64_foreground_pair_ari.test_training.ContinuationTests) ... ok
+
+======================================================================
+ERROR: test_pair_ari (unittest.loader._FailedTest)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_pair_ari
+Traceback (most recent call last):
+  File "/Data0/kevinswk/envs/snn/lib/python3.10/unittest/loader.py", line 154, in loadTestsFromName
+    module = __import__(module_name)
+  File "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0209_native64_foreground_pair_ari/test_pair_ari.py", line 4, in <module>
+    from sklearn.metrics import adjusted_rand_score
+ModuleNotFoundError: No module named 'sklearn'
+
+
+----------------------------------------------------------------------
+Ran 15 tests in 1.527s
+
+FAILED (errors=1)

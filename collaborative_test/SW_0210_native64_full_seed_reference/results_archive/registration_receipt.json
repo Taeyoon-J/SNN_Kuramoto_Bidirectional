@@ -1,0 +1,51 @@
+{
+  "launches": [
+    {
+      "seed": 1,
+      "pid": 2252470,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0210_native64_full_seed_reference.queue",
+        "--seed",
+        "1"
+      ]
+    },
+    {
+      "seed": 2,
+      "pid": 2252471,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0210_native64_full_seed_reference.queue",
+        "--seed",
+        "2"
+      ]
+    }
+  ],
+  "states": [
+    {
+      "status": "waiting_for_exclusive_gpu",
+      "seed": 1,
+      "shard": 0,
+      "supervisor_pid": 2252470,
+      "updated_unix": 1792324545.293193
+    },
+    {
+      "status": "waiting_for_exclusive_gpu",
+      "seed": 2,
+      "shard": 0,
+      "supervisor_pid": 2252471,
+      "updated_unix": 1792324545.3007386
+    }
+  ],
+  "Linux_tests": 8,
+  "eligible_physical_GPUs": [
+    0,
+    1,
+    2,
+    3
+  ]
+}

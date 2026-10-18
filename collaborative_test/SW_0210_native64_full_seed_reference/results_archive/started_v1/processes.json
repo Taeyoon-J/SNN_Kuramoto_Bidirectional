@@ -1,0 +1,86 @@
+{
+  "waiter_pid": 2253239,
+  "parents": {
+    "1": {
+      "pid": 2252470,
+      "state": "S",
+      "start_ticks": 447661189,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0210_native64_full_seed_reference.queue",
+        "--seed",
+        "1"
+      ]
+    },
+    "2": {
+      "pid": 2252471,
+      "state": "S",
+      "start_ticks": 447661189,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0210_native64_full_seed_reference.queue",
+        "--seed",
+        "2"
+      ]
+    }
+  },
+  "initial": [
+    {
+      "state": {
+        "status": "waiting_for_exclusive_gpu",
+        "seed": 1,
+        "shard": 0,
+        "supervisor_pid": 2252470,
+        "updated_unix": 1792324545.293193
+      }
+    },
+    {
+      "state": {
+        "status": "running_worker",
+        "seed": 2,
+        "shard": 0,
+        "supervisor_pid": 2252471,
+        "updated_unix": 1792324551.0540771,
+        "physical_gpu": 3,
+        "gpu_uuid": "GPU-6801a3dc-cde3-86c6-d665-6d9ecf063a1e",
+        "child_pid": 2252587,
+        "child_argv": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "-u",
+          "-m",
+          "collaborative_test.SW_0210_native64_full_seed_reference.queue",
+          "--worker",
+          "--seed",
+          "2",
+          "--shard",
+          "0",
+          "--physical-gpu",
+          "3"
+        ]
+      },
+      "actual_worker": {
+        "pid": 2252587,
+        "state": "R",
+        "start_ticks": 447661963,
+        "argv": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "-u",
+          "-m",
+          "collaborative_test.SW_0210_native64_full_seed_reference.queue",
+          "--worker",
+          "--seed",
+          "2",
+          "--shard",
+          "0",
+          "--physical-gpu",
+          "3"
+        ]
+      }
+    }
+  ],
+  "nvidia": "GPU-a0a7d03d-adc1-37ca-4342-328878b3657c, 767110, 818 MiB\nGPU-45604115-c231-56a5-32ea-d3001e8ff243, 2249387, 5844 MiB\nGPU-50cc59a2-8312-ff02-5889-1becf63c7cd4, 2241482, 12360 MiB\nGPU-6801a3dc-cde3-86c6-d665-6d9ecf063a1e, 2252587, 2136 MiB\n"
+}

@@ -1,3 +1,7 @@
+Running2026-10-18: [SW0209 pair-ARI+QCE training](SW_0209_native64_foreground_pair_ari/DESIGN_KO.md)
+and [SW0210 independent full320 seed reference](SW_0210_native64_full_seed_reference/DESIGN_KO.md).
+Actual209 worker2249387 GPU1;210 seed2 worker2252587 GPU3. No new score yet.
+
 Latest2026-10-18: [SW0207 completed diagnosis](SW_0207_spike_foreground_classifier/README.md);
 [SW0208 full320 confirmation complete](SW_0208_native64_full320_confirmation/RESULT_KO.md).
 These supersede historical running observations below. SW0208 compares actual204
