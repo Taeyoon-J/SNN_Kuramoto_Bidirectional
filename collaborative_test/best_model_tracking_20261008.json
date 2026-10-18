@@ -10139,7 +10139,7 @@
   },
   "latest_native_energy_refinement_pilot": {
     "experiment": "SW0217",
-    "status": "actual_GPU_seed0_seed1_running_seed2_registered",
+    "status": "complete_no_FG_improvement",
     "scope": "native64_fixed16_three_seed",
     "optimizer_updates": 0,
     "baseline": "SW0210 exact models and saved masks",
@@ -10147,6 +10147,118 @@
     "source_foreground_preserved": true,
     "incumbent_changed": false,
     "new_score": null,
-    "source_binding": "SW_0217_native64_energy_refinement/results_archive/deployment_v1/registration_receipt.json"
+    "source_binding": "SW_0217_native64_energy_refinement/results_archive/deployment_v1/registration_receipt.json",
+    "scores": {
+      "baseline": {
+        "fg_ari": 0.8428907016774791,
+        "foreground_iou": 0.6006915810165039,
+        "matched_object_iou": 0.7021610526966489
+      },
+      "split": {
+        "fg_ari": 0.8428907016774791,
+        "foreground_iou": 0.6006915810165039,
+        "matched_object_iou": 0.702179525225469
+      },
+      "refined": {
+        "fg_ari": 0.8428907016774791,
+        "foreground_iou": 0.6006915810165039,
+        "matched_object_iou": 0.702179525225469
+      }
+    },
+    "primary_expansion_gate_passed": false,
+    "actual_QA_and144_mask_replay_audited": true,
+    "diagnosis": {
+      "0": {
+        "all_pair_energy_AUC": {
+          "images": 16,
+          "image_mean": 0.9736780546417247
+        },
+        "all_pair_Q_AUC": {
+          "images": 16,
+          "image_mean": 0.9777810785695351
+        },
+        "spatial_neighbor_energy_AUC": {
+          "images": 11,
+          "image_mean": 0.9115953480364559
+        },
+        "spatial_neighbor_Q_AUC": {
+          "images": 11,
+          "image_mean": 0.9274743477398304
+        },
+        "GT_connected_purification_energy_change": {
+          "images": 16,
+          "image_mean": -140010.9931023494
+        },
+        "false_merge_positive_energy_fraction": {
+          "images": 10,
+          "image_mean": 0.995830480720242
+        },
+        "false_split_positive_energy_fraction": {
+          "images": 12,
+          "image_mean": 0.03349376590387839
+        }
+      },
+      "1": {
+        "all_pair_energy_AUC": {
+          "images": 16,
+          "image_mean": 0.885902333285118
+        },
+        "all_pair_Q_AUC": {
+          "images": 16,
+          "image_mean": 0.9237335451940561
+        },
+        "spatial_neighbor_energy_AUC": {
+          "images": 10,
+          "image_mean": 0.8987055043969596
+        },
+        "spatial_neighbor_Q_AUC": {
+          "images": 10,
+          "image_mean": 0.9294141470353894
+        },
+        "GT_connected_purification_energy_change": {
+          "images": 16,
+          "image_mean": -215552.49189455374
+        },
+        "false_merge_positive_energy_fraction": {
+          "images": 9,
+          "image_mean": 0.9817943129715031
+        },
+        "false_split_positive_energy_fraction": {
+          "images": 15,
+          "image_mean": 0.1422072783651193
+        }
+      },
+      "2": {
+        "all_pair_energy_AUC": {
+          "images": 16,
+          "image_mean": 0.9138041163573261
+        },
+        "all_pair_Q_AUC": {
+          "images": 16,
+          "image_mean": 0.9365642806121293
+        },
+        "spatial_neighbor_energy_AUC": {
+          "images": 11,
+          "image_mean": 0.895796869998302
+        },
+        "spatial_neighbor_Q_AUC": {
+          "images": 11,
+          "image_mean": 0.9018557170030609
+        },
+        "GT_connected_purification_energy_change": {
+          "images": 16,
+          "image_mean": -158911.6787561719
+        },
+        "false_merge_positive_energy_fraction": {
+          "images": 13,
+          "image_mean": 0.8958743730597554
+        },
+        "false_split_positive_energy_fraction": {
+          "images": 16,
+          "image_mean": 0.04852866810324003
+        }
+      }
+    },
+    "completion_audit_sha256": "eca37b3c7e925accf814de5c2a130ed11f3e91a909883c3be0b5b9a788820759"
   }
 }
