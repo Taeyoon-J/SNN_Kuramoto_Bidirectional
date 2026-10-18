@@ -1,0 +1,236 @@
+{
+  "status": "complete_native64_source_teacher_denoising_mini",
+  "scores": {
+    "baseline": {
+      "fg_ari": 0.8428907016774789,
+      "foreground_iou": 0.6006915810165038,
+      "matched_object_iou": 0.7021610526966486
+    },
+    "denoised": {
+      "fg_ari": 0.8542718294076682,
+      "foreground_iou": 0.6315445508080945,
+      "matched_object_iou": 0.695736334480797
+    }
+  },
+  "per_seed_scores": {
+    "baseline_seed0": {
+      "fg_ari": 0.924401453845536,
+      "foreground_iou": 0.8598964166728263,
+      "matched_object_iou": 0.7276384094627034
+    },
+    "denoised_seed0": {
+      "fg_ari": 0.9252423154242523,
+      "foreground_iou": 0.8592801827776588,
+      "matched_object_iou": 0.7408197188986191
+    },
+    "baseline_seed1": {
+      "fg_ari": 0.8158564023799697,
+      "foreground_iou": 0.4967038314401081,
+      "matched_object_iou": 0.7045099764303236
+    },
+    "denoised_seed1": {
+      "fg_ari": 0.8078141970370917,
+      "foreground_iou": 0.5471086757420466,
+      "matched_object_iou": 0.6682970725250628
+    },
+    "baseline_seed2": {
+      "fg_ari": 0.7884142488069319,
+      "foreground_iou": 0.44547449493657715,
+      "matched_object_iou": 0.6743347721969196
+    },
+    "denoised_seed2": {
+      "fg_ari": 0.8297589757616619,
+      "foreground_iou": 0.488244793904578,
+      "matched_object_iou": 0.6780922120187093
+    }
+  },
+  "paired_denoised_minus_baseline": {
+    "fg_ari": {
+      "mean": 0.01138112773018934,
+      "ci95": [
+        -0.004210336008210615,
+        0.03444557649329542
+      ]
+    },
+    "foreground_iou": {
+      "mean": 0.030852969791590565,
+      "ci95": [
+        -0.006984324207568893,
+        0.07543470064562734
+      ]
+    },
+    "matched_object_iou": {
+      "mean": -0.006424718215851662,
+      "ci95": [
+        -0.03879931315571354,
+        0.032781710765851894
+      ]
+    }
+  },
+  "full320_candidate_gate": false,
+  "training_losses": {
+    "0": {
+      "before": {
+        "total": 0.004659706261008978,
+        "frequency_denoising": 0.004659706261008978,
+        "gamma_anchor": 5.067212929535045e-15
+      },
+      "after": {
+        "total": 0.003430388227570802,
+        "frequency_denoising": 0.0033505347091704607,
+        "gamma_anchor": 7.985350202943664e-05
+      }
+    },
+    "1": {
+      "before": {
+        "total": 0.01378237665630877,
+        "frequency_denoising": 0.01378237665630877,
+        "gamma_anchor": 5.24078130949312e-15
+      },
+      "after": {
+        "total": 0.012338322354480624,
+        "frequency_denoising": 0.012180725112557411,
+        "gamma_anchor": 0.00015759725283714943
+      }
+    },
+    "2": {
+      "before": {
+        "total": 0.005229351460002363,
+        "frequency_denoising": 0.005229351460002363,
+        "gamma_anchor": 4.72968131148252e-15
+      },
+      "after": {
+        "total": 0.004705336992628872,
+        "frequency_denoising": 0.004584058537147939,
+        "gamma_anchor": 0.00012127845002396498
+      }
+    }
+  },
+  "independent_maximum_metric_abs_error": 2.220446049250313e-16,
+  "grid": [
+    64,
+    64
+  ],
+  "seed_scope": [
+    0,
+    1,
+    2
+  ],
+  "images": 16,
+  "mask_supervised": true,
+  "core_updates": 0,
+  "encoder_updates_per_arm": 128,
+  "all_three_protocols_validated_before_DEV_GT": true,
+  "new70000_training": false,
+  "full320_three_seed_goal_verified": false,
+  "previous_full320_best_unchanged": true,
+  "fingerprint": {
+    "files": {
+      "DESIGN_KO.md": "a9e09ed4424d635a90939ccaef2cd2552d3d32ec3e0a6830264af19a16f06ef2",
+      "teacher_loss.py": "62028cd3fc3348f705b56d0c575dc2b44a06e6ebc1d18178d02320f21679ffac",
+      "train.py": "3a0454a70a0fcebc111998458e87b8a6853516e4a0ff3833def0c53321c21c21",
+      "evaluate.py": "0e10af1f927ceec112884528d8e4faa910a4615ac217feb88fe43b8dedac60e0",
+      "queue.py": "982cfab11f3ac6fa83d4913aa05577aea63f8ff79c1f69418c90e0811701e215",
+      "test_teacher_loss.py": "0d2bc44ac240fd04631ff908dc0454db1367d8c3be3b805243589d0698697230",
+      "test_pipeline.py": "e24c0c5277766a234061b9de58e04a90e49e5a71e85dcd27ef7f116c39691fd9"
+    },
+    "parent": {
+      "files": {
+        "DESIGN_KO.md": "63fb10aabe319ed6d9ecf14539c6fffda9b71a4acc42577d7dfaa40a5300cadb",
+        "frequency_loss.py": "9efe4121c2d538b9858e8c938876aa1d988d3a2dbf07cf57fc145d2a60dfc672",
+        "train.py": "240afe2d2cb68f1aa86805b546682f585efb98ae95428a5b0b44709297910c62",
+        "evaluate.py": "fc95da321b8974cea693d400e0dc110d7ec1edae6245032c48ea58e4a9234161",
+        "queue.py": "450c02f18def79c71e449eb0a8959787bbbba266bfa2aad0d36e7c66c14497b4",
+        "test_frequency_loss.py": "099a2958cd0ba18f85f4ca78fd1337e4edd6a722c48b470a61294a72b954c15a",
+        "test_pipeline.py": "cf96b22bfd3c6e7c278c04db9b7f25b5498bb1b0ea787864aa634cf90723ffc5"
+      },
+      "source": {
+        "files": {
+          "DESIGN_KO.md": "af5cae1180e1090435a1de8359a286568566249704fb0116178033e65cad0938",
+          "refine.py": "fe8f54f3487586027d0cf7f72b44de7fed54537ddf8d4d96ca6ac464f17081b4",
+          "run.py": "03acff36a1462942f756394e8df216ee52cabf6df4e1e2ff42e86a5cdae418a9",
+          "queue.py": "11a1df01cb53e898fd9525d212f5986c779ac401a94007ee5bd9c260732436f6",
+          "test_refine.py": "3edb1cc5ae06c1b94ceb599e5611e954465ed05404e6e2e3ddbc50ac46bff44f",
+          "test_pipeline.py": "15b7e10a2adca0fd36f8ad4c0940c10c495ca26fa8f0837a1e5ab108738efa99"
+        },
+        "source_sha256": "3cc02b48ee4d93fd4acbd7151653f0b0cf51c327e4e4cc73970f913083990a85",
+        "energy_operator_sha256": "fd3c760b523b724a864c807e64a7b2d208f2e426b7980c8f4a944f7edd643af5",
+        "models": {
+          "0": "2dd2b0d64602b85d4082bcaddcd21dfe8c60d34af1ea78a2ed29bf03c8ba4b6e",
+          "1": "e1e16281612b2171b6822e0ca70dee051f095ad7ebc9239a9675b8e8d9b391e0",
+          "2": "dff381ebcd5280a2a7bf7b99ef8ee3b5af30e91f3384962ef47c6d89b7da53d0"
+        },
+        "seeds": [
+          0,
+          1,
+          2
+        ],
+        "offsets": [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18,
+          20,
+          22,
+          24,
+          26,
+          28,
+          30
+        ],
+        "new_optimizer_steps": 0
+      },
+      "drive_implementation_sha256": "9b5f3e077c755738b1636b97ac9640321a5b7abf5ec85b9a12557209cf5ad50b",
+      "checkpoint_implementation_sha256": "75d5076c051f81a51a39bbafedd363e589aa58ffc41ba4a662a87ffb91601f53",
+      "seeds": [
+        0,
+        1,
+        2
+      ],
+      "TRAIN_counts": [
+        64,
+        512
+      ],
+      "encoder_updates": 128,
+      "batch": 16,
+      "learning_rates": {
+        "source_base": 3e-05,
+        "context_encoder": 0.0003
+      },
+      "core_updates": 0,
+      "native_grid": [
+        64,
+        64
+      ],
+      "production_readout_unchanged": true
+    },
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "TRAIN_counts": [
+      64
+    ],
+    "encoder_updates": 128,
+    "batch": 16,
+    "learning_rates": {
+      "source_base": 3e-05,
+      "context_encoder": 0.0003
+    },
+    "target": "fixed_source_TRAIN_object_frequency_centers",
+    "gamma_anchor_coefficient": 1.0,
+    "frequency_coefficient": 1.0,
+    "core_updates": 0,
+    "native_grid": [
+      64,
+      64
+    ],
+    "production_readout_unchanged": true
+  }
+}

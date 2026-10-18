@@ -6,3 +6,5 @@ inter-object frequency margin; original core/gates/readout retained.
 See DESIGN_KO.md. No segmentation result claimed before execution.
 
 Actual start2026-10-18:9 local/9 Linux tests,3 local CLI checks and all3 actual source/TRAIN/teacher CPU admissions passed. Frozen teacher initial loss matches source within-object variance; original gamma anchor is zero. Three exclusive idle GPU queues registered; START_EVIDENCE.json records actual NVIDIA-bound workers. No segmentation improvement claimed before all three final endpoints freeze and score. Full320 incumbent .848615/.592533/.672047 unchanged.
+
+Completed: fixed16 three-seed .854272/.631545/.695736 vs source .842891/.600692/.702161. FG +.011381 CI[-.004210,.034446], Object IoU down; full320 expansion gate failed. Retain as uncertain FG-track candidate. DEV within-object frequency variance decreased on all3 seeds. Actual3 checkpoints/teacher/96 masks and independent metrics/CI audited, with no repeated full-model factory or extra forward. Full320 incumbent remains .848615/.592533/.672047. See RESULT_KO.md and completed_v1.

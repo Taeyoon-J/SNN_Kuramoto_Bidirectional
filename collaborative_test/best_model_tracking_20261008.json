@@ -10469,7 +10469,7 @@
   },
   "latest_native64_frequency_teacher_denoising": {
     "experiment": "SW0222",
-    "status": "actual_GPU_started",
+    "status": "complete_uncertain_FG_track",
     "seed_scope": [
       0,
       1,
@@ -10488,6 +10488,82 @@
     "actual_CPU_admissions": 3,
     "registered_jobs": 3,
     "incumbent_changed": false,
-    "new_score": null
+    "new_score": {
+      "baseline": {
+        "fg_ari": 0.8428907016774789,
+        "foreground_iou": 0.6006915810165038,
+        "matched_object_iou": 0.7021610526966486
+      },
+      "denoised": {
+        "fg_ari": 0.8542718294076682,
+        "foreground_iou": 0.6315445508080945,
+        "matched_object_iou": 0.695736334480797
+      }
+    },
+    "paired": {
+      "fg_ari": {
+        "mean": 0.01138112773018934,
+        "ci95": [
+          -0.004210336008210615,
+          0.03444557649329542
+        ]
+      },
+      "foreground_iou": {
+        "mean": 0.030852969791590565,
+        "ci95": [
+          -0.006984324207568893,
+          0.07543470064562734
+        ]
+      },
+      "matched_object_iou": {
+        "mean": -0.006424718215851662,
+        "ci95": [
+          -0.03879931315571354,
+          0.032781710765851894
+        ]
+      }
+    },
+    "full320_candidate_gate": false,
+    "candidate_references": {
+      "0": {
+        "checkpoint_server": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0222_native64_frequency_teacher_denoising/results_archive/seed0/TRAIN64/encoder_work/boundary.ptx",
+        "checkpoint_sha256": "e17669b62dcf26cd352284a23640f0f1aeae072e89ce765aa02989e2f4ce1777",
+        "encoder_sha256": "9e2aad244aa258e9cf0471832580a4aa2859e292b5304b2acc81c83c36425297",
+        "full_model_sha256": "3f5c37e34a044873501c02874ccb98b201e0883b67e9cc1066e23510db527d2d",
+        "core_state_sha256": "99bca750c1c1ed9c180b67a77a721f081ad2ed222ed8d42f38b2b3883a33cd43",
+        "scores": {
+          "fg_ari": 0.9252423154242523,
+          "foreground_iou": 0.8592801827776588,
+          "matched_object_iou": 0.7408197188986191
+        }
+      },
+      "1": {
+        "checkpoint_server": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0222_native64_frequency_teacher_denoising/results_archive/seed1/TRAIN64/encoder_work/boundary.ptx",
+        "checkpoint_sha256": "0395b35dcf05dde681830ef958faa770c9693081d7d2004e09348caf2f7eec87",
+        "encoder_sha256": "a9efeca760efabc8922524f39c1dccbb0cce9c52eec6ef89b51f074b94baf0d3",
+        "full_model_sha256": "658c3821bbacd4f98dfa600afa2dc2065c5a394f7443b71fba4eb199926666b1",
+        "core_state_sha256": "2b22fa011027fed19b4592e388fddff49bc5d955d6d02c001fbaea963ee2df85",
+        "scores": {
+          "fg_ari": 0.8078141970370917,
+          "foreground_iou": 0.5471086757420466,
+          "matched_object_iou": 0.6682970725250628
+        }
+      },
+      "2": {
+        "checkpoint_server": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0222_native64_frequency_teacher_denoising/results_archive/seed2/TRAIN64/encoder_work/boundary.ptx",
+        "checkpoint_sha256": "db99b569fe7233bdf62334374ada0cf76039eecb0a177ef16008a179e52f6d5d",
+        "encoder_sha256": "4677eefe243a22f1f2b97c5418c472e96d1cdb725257ead726ef86113c84ad6b",
+        "full_model_sha256": "64fb2a24a337e6988ed752ffd39634c14ef3479edbf4ebef952041548a034031",
+        "core_state_sha256": "ba259be74e073a1d654107cde2d8e08bede2947b453a857875745c661ebac967",
+        "scores": {
+          "fg_ari": 0.8297589757616619,
+          "foreground_iou": 0.488244793904578,
+          "matched_object_iou": 0.6780922120187093
+        }
+      }
+    },
+    "DEV_within_object_frequency_variance_reduced_all_three_seeds": true,
+    "mini_evaluation_only": true,
+    "completion_summary_sha256": "e82a6453f8f6e2cf4661bcf74dc649a57205d9464c5c0f6e01c0e19d40d155bb"
   }
 }
