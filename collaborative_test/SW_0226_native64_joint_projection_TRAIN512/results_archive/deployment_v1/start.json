@@ -1,0 +1,103 @@
+{
+  "status": "all_three_actual_CPU_admissions_passed_queues_registered",
+  "observation": {
+    "server_unix": 1792362951.9892142,
+    "deployment": {
+      "status": "three_TRAIN512_queues_registered",
+      "pid": 2665326,
+      "updated_unix": 1792362910.4645534,
+      "jobs": [
+        {
+          "seed": 0,
+          "TRAIN_count": 512,
+          "supervisor_pid": 2665868
+        },
+        {
+          "seed": 1,
+          "TRAIN_count": 512,
+          "supervisor_pid": 2665869
+        },
+        {
+          "seed": 2,
+          "TRAIN_count": 512,
+          "supervisor_pid": 2665870
+        }
+      ]
+    },
+    "jobs": [
+      {
+        "seed": 0,
+        "admitted": true,
+        "natural_within_variance_error": 2.764863893389702e-10,
+        "actual_projection_gradient_norm": 0.01038505882024765,
+        "status": "waiting_for_exclusive_gpu",
+        "pid": 2665868,
+        "actual_process_alive": true,
+        "physical_gpu": null,
+        "error": null,
+        "frozen_masks": 0
+      },
+      {
+        "seed": 1,
+        "admitted": true,
+        "natural_within_variance_error": 2.9103830456733704e-11,
+        "actual_projection_gradient_norm": 0.035371534526348114,
+        "status": "running_worker",
+        "pid": 2665968,
+        "actual_process_alive": true,
+        "physical_gpu": 3,
+        "error": null,
+        "frozen_masks": 0
+      },
+      {
+        "seed": 2,
+        "admitted": true,
+        "natural_within_variance_error": 4.3655745685100555e-10,
+        "actual_projection_gradient_norm": 0.010753253474831581,
+        "status": "waiting_for_exclusive_gpu",
+        "pid": 2665870,
+        "actual_process_alive": true,
+        "physical_gpu": null,
+        "error": null,
+        "frozen_masks": 0
+      }
+    ]
+  },
+  "linux_tests_passed": 10,
+  "CLI_checks_passed": 3,
+  "initial_deployed_files": {
+    "DESIGN_KO.md": {
+      "sha256": "e7d2bbf5eba83ae7d95da5202ad08b7f8487d7a7e5bf44a2dc925504f6526a8b"
+    },
+    "README.md": {
+      "sha256": "73f00e1f139456d4165286c7340fe6daef715c8846088ef5634b4911849a0d3a"
+    },
+    "train.py": {
+      "sha256": "3b8273a0914e4214b2aad80fccec6807326280921bd1f93415e1dbd154c7c281"
+    },
+    "projection.py": {
+      "sha256": "0a9f04dc1ae34d6d7ac05c5729429ac722ef851212ab43037cd3981fdefd3705"
+    },
+    "evaluate.py": {
+      "sha256": "8180ecacee0751b92e21e7b3ca819fad487a6a7fde8b3943240037881bd9d8dd"
+    },
+    "queue.py": {
+      "sha256": "3e24c8f9b616cfd2b84e76eaddece6aade28ce022577d322dd1352a79e6a1a6b"
+    },
+    "test_pipeline.py": {
+      "sha256": "2b0e5dfd5e23f39fe856d7175eb4e1c96c74abbe88f56f1834046c14ee9efbd3"
+    },
+    "test_projection.py": {
+      "sha256": "f2ce228c234769f693e04b11d5ad89da84753536657861a937c30524606f4d77"
+    }
+  },
+  "frozen_TRAIN64_control": "SW0223",
+  "unique_TRAIN_images": 512,
+  "optimizer_updates": 128,
+  "batch": 16,
+  "logical_exposures": 2048,
+  "model_performance_result_available": false,
+  "new70000_training": false,
+  "full320_incumbent_unchanged": true,
+  "raw_RGB_GT_checkpoint_or_imagewise_vectors_published": false
+}

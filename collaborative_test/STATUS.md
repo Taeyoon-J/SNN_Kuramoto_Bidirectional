@@ -1,3 +1,9 @@
+## SW0226: joint projection TRAIN512, same128updates
+
+All3 actual CPU admissions passed; three exclusive-GPU queues registered. Matched TRAIN64 control is SW0223; no new performance score. SW0225 continues; full320 incumbent remains SW0210.
+
+[SW0226 start](SW_0226_native64_joint_projection_TRAIN512/START_KO.md)
+
 2026-10-18 SW0225 ACTUAL GPU START: fixed223 checkpoints, secondary first64 validation IDs1320..1383. No new training/hyperparameter selection. Original16 masks reused after exact RGB/hash checks and one native replay/seed;48 new predictions/seed. 7 local/7 Linux tests,3 actual model/RGB64 CPU admissions and actual GPU mask replay passed. Original22316 gate failure and full320 .848615/.592533/.672047 incumbent remain unchanged.
 
 2026-10-18 SW0223/224 COMPLETE:223 joint32-weight projection fixed16 mean .859634/.645611/.706340 vs source .842891/.600692/.702161 and222 .854272/.631545/.695736. Source FG CI[-.000361,.040940] includes0; original gate False.144 masks/checkpoints/control audited; separate fixed223 validation64 is225. 224 feature-cell alignment mean .838302/.586019/.713245, gate False; retain uncertain Object IoU track, no FG expansion.96 masks/source/adapter audited. No audit retraining/forward. Full320 .848615/.592533/.672047 incumbent unchanged.

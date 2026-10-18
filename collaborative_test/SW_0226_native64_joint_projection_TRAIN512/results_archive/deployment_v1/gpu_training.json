@@ -1,0 +1,79 @@
+{
+  "server_unix": 1792363053.1524658,
+  "deployment": {
+    "status": "three_TRAIN512_queues_registered",
+    "pid": 2665326,
+    "updated_unix": 1792362910.4645534,
+    "jobs": [
+      {
+        "seed": 0,
+        "TRAIN_count": 512,
+        "supervisor_pid": 2665868
+      },
+      {
+        "seed": 1,
+        "TRAIN_count": 512,
+        "supervisor_pid": 2665869
+      },
+      {
+        "seed": 2,
+        "TRAIN_count": 512,
+        "supervisor_pid": 2665870
+      }
+    ]
+  },
+  "jobs": [
+    {
+      "seed": 0,
+      "admitted": true,
+      "natural_within_variance_error": 2.764863893389702e-10,
+      "actual_projection_gradient_norm": 0.01038505882024765,
+      "status": "waiting_for_exclusive_gpu",
+      "pid": 2665868,
+      "actual_process_alive": true,
+      "physical_gpu": null,
+      "error": null,
+      "frozen_masks": 0
+    },
+    {
+      "seed": 1,
+      "admitted": true,
+      "natural_within_variance_error": 2.9103830456733704e-11,
+      "actual_projection_gradient_norm": 0.035371534526348114,
+      "status": "running_worker",
+      "pid": 2665968,
+      "actual_process_alive": true,
+      "physical_gpu": 3,
+      "error": null,
+      "actual_Adam_steps": [
+        128
+      ],
+      "encoder_updates": 128,
+      "projection_updates": 128,
+      "other_core_updates": 0,
+      "before": {
+        "total": 0.014255913847591728,
+        "frequency_denoising": 0.014255913847591728,
+        "gamma_anchor": 5.124667240521753e-15
+      },
+      "after": {
+        "total": 0.012166284985141829,
+        "frequency_denoising": 0.012137342419009656,
+        "gamma_anchor": 2.8942540666321293e-05
+      },
+      "frozen_masks": 0
+    },
+    {
+      "seed": 2,
+      "admitted": true,
+      "natural_within_variance_error": 4.3655745685100555e-10,
+      "actual_projection_gradient_norm": 0.010753253474831581,
+      "status": "waiting_for_exclusive_gpu",
+      "pid": 2665870,
+      "actual_process_alive": true,
+      "physical_gpu": null,
+      "error": null,
+      "frozen_masks": 0
+    }
+  ]
+}
