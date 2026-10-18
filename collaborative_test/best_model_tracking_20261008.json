@@ -9507,14 +9507,15 @@
     "candidate_not_implemented_or_queued": false,
     "encoder_code_review": "source encoder is stride1 valid convolution and contextual126x126 features, followed by adaptive spatial pooling; no evidence of a fixed16x16 bottleneck",
     "implemented_experiment": "SW0206_spike_relation_classifier",
-    "next_candidate_not_implemented": "learn supervised node foreground from four component spike rates and component membrane means/stds; change support before recomputing induced partition, keep original Q/A and core",
+    "next_candidate_not_implemented": false,
     "prior_foreground_review": {
       "SW0067": "failed target-coverage heuristic .22, not a learned node classifier; do not repeat",
       "SW0031": "failed posthoc membrane-mask AND, not a new induced partition",
       "SW0023": "weak single aggregate cues on old native16 checkpoint; post-label oracle cannot change FGARI by construction",
       "required_distinction": "proposed support must be applied before grouping; test two objects bridged by a BG node, not post-filtering already merged IDs",
       "modern_native64_multi_component_classifier_not_yet_tested": true
-    }
+    },
+    "implemented_next_experiment": "SW0207_spike_foreground_classifier"
   },
   "SW0205_completion": {
     "status": "completed_no_adoption",
@@ -9683,5 +9684,29 @@
     "CPU_refit_maximum_parameter_difference": 0.0,
     "core_optimizer_steps": 0,
     "full320_three_seed_goal_verified": false
+  },
+  "SW0207_foreground_classifier_queue": {
+    "status": "actual_GPU1_started_TRAIN_node_features_verified",
+    "supervisor_pid": 2107852,
+    "worker_pid": 2107988,
+    "eligible_GPUs": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "seed_scope": [
+      2
+    ],
+    "core_optimizer_steps": 0,
+    "classifier_parameters": 225,
+    "classifier_Adam_steps": 200,
+    "TRAIN_unique_images": 8,
+    "evaluation_images": 16,
+    "features": "four component spike rates, membrane means/stds after512",
+    "normalization": "TRAIN sample mean/std floor1e-4 clip5",
+    "support_before_grouping": true,
+    "same_original_product_Q_and_graph": true,
+    "performance_result_available": false
   }
 }

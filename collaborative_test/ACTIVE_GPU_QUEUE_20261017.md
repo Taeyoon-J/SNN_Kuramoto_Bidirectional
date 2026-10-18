@@ -112,3 +112,10 @@ independent seed2 baseline retained. Fixed16 evaluation pending.
 Actual200-step classifier/Adam and exact CPU refit verified, all32 masks checked.
 Core unchanged. This is not full320/three-seed success. Pair classifier recipe
 closed without a width/LR rescue. Current205/206 supervisors are terminal.
+
+207 is now registered and actually runningGPU1:parent2107852,worker2107988.
+Eleven local/Linux tests plus real CPU model/node-plan admission passed.225
+classifier parameters learn FG from actual4 component rates and membrane means/
+stds, while core/Q/A stay frozen. New support is applied before grouping, not
+post-filtered. Fixed16 seed2 mini follows TRAIN8; no performance outcome yet.
+All physical GPUs0..3 remain eligible under exclusive foreign-owner guards.
