@@ -1,4 +1,76 @@
 {
+  "current_native64_FG_track_reference": {
+    "scope": "native64_fixed320_supervised_three_seed_reference",
+    "experiment": "SW0210",
+    "models": {
+      "0": {
+        "checkpoint_server": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0192_native64_incumbent_mini/results_archive/probe_work_seed0/boundary.ptx",
+        "model_state_sha256": "2dd2b0d64602b85d4082bcaddcd21dfe8c60d34af1ea78a2ed29bf03c8ba4b6e",
+        "checkpoint_sha256": "14d0386db64d3890163574ac2421b1e80d3100536ec25c9940434e0689327e82"
+      },
+      "1": {
+        "checkpoint_server": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0205_native64_weak_seed_adaptation/results_archive/seed1/training_work/boundary.ptx",
+        "model_state_sha256": "e1e16281612b2171b6822e0ca70dee051f095ad7ebc9239a9675b8e8d9b391e0",
+        "checkpoint_sha256": "9ef50f95559ca47f0f8f87e1cf7d78e3f8a44c5fb51445b3acd03bf7a9b24e85"
+      },
+      "2": {
+        "checkpoint_server": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0205_native64_weak_seed_adaptation/results_archive/seed2/training_work/boundary.ptx",
+        "model_state_sha256": "dff381ebcd5280a2a7bf7b99ef8ee3b5af30e91f3384962ef47c6d89b7da53d0",
+        "checkpoint_sha256": "b88668e8cac21ca1b40d65660051443f6ec1881e623a7ee368fb745726f3525c"
+      }
+    },
+    "seed_scope": [
+      0,
+      1,
+      2
+    ],
+    "grid": [
+      64,
+      64
+    ],
+    "image_count": 320,
+    "image_ids_first_last": [
+      1320,
+      1639
+    ],
+    "inference_seed_base": 193000,
+    "metrics": {
+      "fg_ari": 0.8486147854551633,
+      "foreground_iou": 0.5925328332620152,
+      "matched_object_iou": 0.672047267266326
+    },
+    "slot_metrics": {
+      "fg_ari": 0.7869016920263496,
+      "foreground_iou": 0.19820078921198886,
+      "matched_object_iou": 0.19520252370132735
+    },
+    "per_seed": {
+      "0": {
+        "fg_ari": 0.877709026662887,
+        "foreground_iou": 0.7912240801823831,
+        "matched_object_iou": 0.6962838601550743
+      },
+      "1": {
+        "fg_ari": 0.8255834929395706,
+        "foreground_iou": 0.5171682628614895,
+        "matched_object_iou": 0.6607955224229343
+      },
+      "2": {
+        "fg_ari": 0.8425518367630321,
+        "foreground_iou": 0.4692061567421736,
+        "matched_object_iou": 0.6590624192209706
+      }
+    },
+    "evaluation_summary_sha256": "05bb7f375a74f53c26a97c0ff77a4899f6ecafcb54e2f91c978654559b9ec216",
+    "completion_audit": "SW_0210_native64_full_seed_reference/results_archive/completed_v1/completion_audit.json",
+    "three_seed_strictly_exceeds_Slot_means": true,
+    "FG090_goal_achieved": false,
+    "mask_supervised": true,
+    "unsupervised_leaderboard_eligible": false,
+    "new70000_training": false,
+    "native64_additional_unique_TRAIN_per_seed": 8,
+    "validation_selected_not_untouched_test": true
+  },
   "status": "latest_research_incumbents_and_candidates_tracked",
   "latest_normalized_hard_reset": {
     "experiment": "SW0169",

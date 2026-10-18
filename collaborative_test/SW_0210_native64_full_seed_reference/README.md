@@ -17,3 +17,11 @@ No final result, three-seed win or .90 claim exists at registration.
 After209 completed and released its lease, seed1 worker2258383 was independently
 verified on GPU1 while seed2 worker2252587 continued on GPU3. Exact /proc commands
 and NVIDIA observations: results_archive/observed_v1/actual_workers.json.
+
+Completed and independently recomputed: full320/native64 three-seed mean
+ours .8486147855/.5925328333/.6720472673 versus comparable Slot
+.7869016920/.1982007892/.1952025237. All three strict mean comparisons pass;
+the newer FG-ARI>=.90 target remains false. No new training or fresh70k run.
+All1920 mask endpoints, bindings, dual metrics and paired CIs were revalidated.
+The evaluated models include mask-supervised adaptation. See RESULT_KO.md,
+results_archive/completed_v1/completion_audit.json and selected_reference_v1.json.
