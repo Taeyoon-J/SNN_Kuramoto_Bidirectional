@@ -10396,7 +10396,7 @@
   },
   "latest_native_Adam_state_diagnosis": {
     "experiment": "SW0220",
-    "status": "actual_GPU_running",
+    "status": "complete_both_uphill_no_training_followup",
     "scope": "native64_TRAIN4_read_only_diagnosis",
     "temporary_optimizer_proposals": 2,
     "committed_updates": 0,
@@ -10406,6 +10406,23 @@
     "physical_GPU": 1,
     "performance_claim": false,
     "incumbent_changed": false,
-    "new_score": null
+    "new_score": null,
+    "decision": {
+      "tolerance": 2.8194645853299977e-06,
+      "inherited_descends": false,
+      "reset_descends": false,
+      "reset_beats_inherited": true,
+      "TRAIN_only_followup_eligible": false,
+      "segmentation_improvement_verified": false
+    },
+    "before_loss": 2.8194645853299978,
+    "after_loss": {
+      "inherited_Adam": 2.951870993654324,
+      "reset_Adam": 2.919584878343478
+    },
+    "exact_source_restoration_verified": true,
+    "source218_contexts_match": true,
+    "original218_after_not_bitwise_replayed": true,
+    "segmentation_improvement_verified": false
   }
 }
