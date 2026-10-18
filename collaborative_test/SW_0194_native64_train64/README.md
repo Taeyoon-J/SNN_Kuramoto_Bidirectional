@@ -16,6 +16,17 @@ Adam moments with byte-content hashes equal to source SW0192. An independent
 read of its initial committed boundary verified matching model/Adam/RNG tensors
 and unchanged first-two history. See results_archive/start_v1.
 
-Training and candidate-only prediction/CPU scoring are registered in one
-resumable exclusive-owner queue. All implementation/design sources are frozen
-while this run is active. No new performance result is available yet.
+Completed and independently audited: the TRAIN64 candidate scored
+**.9001655085 / .8308344896 / .7316582231** on seed0, the same32 development
+images. TRAIN8 scored .9185864261 / .8328674431 / .7336862632. The FG change
+was-.0184209176 (paired-image95%CI[-.0472437519,.0013289966]). No improvement
+was established; the registered gain gate failed. Close this budget/recipe,
+retain the incumbent, and use the queued195 generalization diagnostic rather
+than a small LR/weight rescue. Do not call this a proven causal overfit result.
+
+All16 proposals and64 unique additional TRAIN exposures completed;12 updates
+were accepted and the actual Adam step count was12. The two inherited
+proposals/model/Adam/RNG were not repeated. Independent actual-mask scoring
+matched within2.23e-16. See RESULT_KO.md and results_archive/score_v1.
+Full320/three-seed native64 FG>=.90 remains unverified. The model is supervised
+adaptation of an existing trained foundation;64 is not its total data history.
