@@ -11,9 +11,9 @@ This does not imply four GPUs are idle or that another owner's job is displaced.
 | SW0197 native64 baseline seed1 | 1867955 (completed) | SW_0197_native64_baseline_replication/results_archive/seed1/queue | Audited32 images: .8175/.4478/.6665; seed2 pending |
 | SW0197 native64 baseline seed2 | 1867956 | SW_0197_native64_baseline_replication/results_archive/seed2/queue | Ready, all4 eligible |
 | SW0195 paired TRAIN/development diagnostic | 1853195 (completed) | SW_0195_native64_generalization_gap/results_archive/queue | Audited TRAIN16/dev32; no demonstrated overfit signal |
-| SW0198 native64 readout normalization | 1943908 | SW_0198_native64_readout_normalization/results_archive/queue | Running GPU1 worker1970985; actual compute PID confirmed |
-| SW0199 matched QCE control | 1973294 | SW_0199_native64_absolute_calibration/results_archive/control/queue | Exact warm model/Adam/RNG admitted; ready all4 GPUs |
-| SW0199 absolute-Q calibration | 1973323 | SW_0199_native64_absolute_calibration/results_archive/calibrated/queue | Exact same warm model/Adam/RNG admitted; ready all4 GPUs |
+| SW0198 native64 readout normalization | 1943908 (completed) | SW_0198_native64_readout_normalization/results_archive/queue | Actual32 masks audited; gate failed, no adoption |
+| SW0199 matched QCE control | 1973294 | SW_0199_native64_absolute_calibration/results_archive/control/queue | GPU1 worker1979735 started; exact model/Adam/RNG receipt archived |
+| SW0199 absolute-Q calibration | 1973323 | SW_0199_native64_absolute_calibration/results_archive/calibrated/queue | StartedGPU2; yielded to foreign owner, ready to resume original boundary |
 
 The old196 waiter1857076 was stopped before CPU admission or GPU work, with its
 queue state preserved. Its optional195 dependency was removed in the replacement

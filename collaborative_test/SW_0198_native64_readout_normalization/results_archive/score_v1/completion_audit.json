@@ -1,0 +1,103 @@
+{
+  "status": "actual32_masks_old_new_models8_64_replayed_independently_rescored",
+  "summary_sha256": "6bfa8b90130d810deeb4f33d2efe467a2bebe150b48370dee29a01c687d241b0",
+  "maximum_metric_abs_error": 2.220446049250313e-16,
+  "scores": {
+    "TRAIN8_old": {
+      "fg_ari": 0.9547834917905796,
+      "foreground_iou": 0.8832231420581564,
+      "matched_object_iou": 0.7997567490644861
+    },
+    "TRAIN8_new": {
+      "fg_ari": 0.9555329281003682,
+      "foreground_iou": 0.8832231420581564,
+      "matched_object_iou": 0.8002458653068674
+    },
+    "TRAIN64_old": {
+      "fg_ari": 0.8780081663834761,
+      "foreground_iou": 0.8656819554871097,
+      "matched_object_iou": 0.7669417575449209
+    },
+    "TRAIN64_new": {
+      "fg_ari": 0.8780081663834761,
+      "foreground_iou": 0.8656819554871097,
+      "matched_object_iou": 0.7669417575449209
+    }
+  },
+  "paired": {
+    "TRAIN8_new_minus_old": {
+      "fg_ari": {
+        "mean": 0.0007494363097884926,
+        "ci95": [
+          0.0,
+          0.002248308929365478
+        ]
+      },
+      "foreground_iou": {
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "matched_object_iou": {
+        "mean": 0.0004891162423811407,
+        "ci95": [
+          -0.00015602789623314628,
+          0.0016233766233765684
+        ]
+      }
+    },
+    "TRAIN64_new_minus_old": {
+      "fg_ari": {
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "foreground_iou": {
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "matched_object_iou": {
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "new_TRAIN64_minus_TRAIN8": {
+      "fg_ari": {
+        "mean": -0.07752476171689213,
+        "ci95": [
+          -0.17806745165366492,
+          -0.00233632732937538
+        ]
+      },
+      "foreground_iou": {
+        "mean": -0.017541186571046793,
+        "ci95": [
+          -0.04123455676283827,
+          -0.0003324979950646012
+        ]
+      },
+      "matched_object_iou": {
+        "mean": -0.03330410776194659,
+        "ci95": [
+          -0.06465612818080332,
+          -0.00670999654802251
+        ]
+      }
+    }
+  },
+  "primary_gate_passed": false,
+  "foreground_support_identical": true,
+  "optimizer_updates": 0,
+  "full320_three_seed_goal_verified": false,
+  "raw_imagewise_values_included": false
+}
