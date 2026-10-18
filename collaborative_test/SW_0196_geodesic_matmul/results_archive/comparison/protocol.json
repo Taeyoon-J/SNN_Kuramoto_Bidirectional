@@ -1,0 +1,380 @@
+{
+  "binding": {
+    "fingerprint": {
+      "files": {
+        "DESIGN_KO.md": "4068a65438d6892a3b196bd10a87a93332890163353ddfeb182c8671ac78c30e",
+        "operator.py": "84dca7837144412ecef167180f0d7a7c683dd4cea047cdb8612638db6af6c36b",
+        "test_operator.py": "9912113dfff1fed9937c3742d4a1dc94eb276c34c652709df6062730d2bba922",
+        "run.py": "45cd03af59e1d748a0382eac4cbea1edf514e54de68d74211733d3a95b8958cd",
+        "test_run.py": "78506aed00d33badb2cb6327bb35a940465105c72ebfd4d38918918c0f2a34cd",
+        "queue.py": "abc08441a4ecd8da9e2ad4842e652bcbd53da66650645f121dba6c3fabe27fb7"
+      },
+      "parent": {
+        "experiment": "SW0194_native64_train64",
+        "files": {
+          "DESIGN_KO.md": "e7c63fe03bed3b3b053b3434533e7a27174ade4ac7e73eb3ce05352628c79640",
+          "train.py": "8290fd9734435a4ce0f1f9dc0b29bceef18bb6e256ac6b4a08836c6260b26bfe",
+          "evaluate.py": "1df67f67bb31fa6d754282ef401ac8d07997402480b13aca1ff898e95f5d623c",
+          "queue.py": "12b4b682f0500b674299f4af9b7139350cb19bfeaefb515116a3a26e58dd6de0",
+          "test_train.py": "a74709517d82c8cf8fab3e090e886dc605e0741298a597ba83dce9d724e9799d",
+          "test_evaluate.py": "34b94556be1ace4bbeebe90bd969ca6ed49f187179491c8caecfb2300ed3ac1a"
+        },
+        "parent": {
+          "experiment": "SW0192_native64_incumbent_mini",
+          "files": {
+            "DESIGN_KO.md": "d5a739cf6347398f675a7360ba16e6d0d2b85ac933207cc249e62d2a095934f6",
+            "model64.py": "fc3c035ab08d1d2bdd2f817a075b704b19a836144d2a8e703b4dec8f388287fd",
+            "run.py": "801ed9f6b507f025c8d9556bfd00e9d8f995231038b29f07f2b86a98c1d36f4e",
+            "queue.py": "3d0c8f7c989fbb96b91932ca49f865cc65dca7a68d04ea958b6d71a09aaabcbf",
+            "test_model64.py": "a842a2c0946f0ba58378f6bfcdad2d7396b73d7371f812afb5c83ef211bf53ea",
+            "test_run.py": "e1d0ee4c1cbbec551ef68b62219e0549ecd741ec8095d10603efa678ccc97a17"
+          },
+          "parent_factory": "b2c378664b4ce91054bb75c3ade400ce2eb18fc0a4fcd4ff23a785fa5b3ace70",
+          "seed": 0,
+          "batch": 4,
+          "probe_proposals": 2,
+          "objective": "product_QCE_temperature0.1",
+          "training_geometry": [
+            64,
+            64
+          ],
+          "steps": 1024,
+          "settle": 512,
+          "live_tail": 64,
+          "TRAIN_images_for_probe": 8
+        },
+        "readout_screen": {
+          "experiment": "SW0193_native64_probe_screen",
+          "files": {
+            "run.py": "38fbe2a3bca737123d050e9bcbfe48dac8e29ecfb653e6e4520b1de65f27a8ba",
+            "score.py": "5da1c2517d6324d774a36c24fa9474a6507fde32e60b922b02ef00a5d5d8e4d6",
+            "queue.py": "70ecbdc649b6b6178f1fda3c5671ba59a70ee10dbb599f6034d8cad446cad70c",
+            "test_run.py": "f58cc6e0a04ceaec2c15bd87d83c2728ef89245c922b2f746934d657a6d8b5dc",
+            "DESIGN_KO.md": "4ca064dce7f51cef31ffed1d6851437015dca7e45e71f7dc81d185f2f7ceb1d1"
+          },
+          "parent_probe": {
+            "experiment": "SW0192_native64_incumbent_mini",
+            "files": {
+              "DESIGN_KO.md": "d5a739cf6347398f675a7360ba16e6d0d2b85ac933207cc249e62d2a095934f6",
+              "model64.py": "fc3c035ab08d1d2bdd2f817a075b704b19a836144d2a8e703b4dec8f388287fd",
+              "run.py": "801ed9f6b507f025c8d9556bfd00e9d8f995231038b29f07f2b86a98c1d36f4e",
+              "queue.py": "3d0c8f7c989fbb96b91932ca49f865cc65dca7a68d04ea958b6d71a09aaabcbf",
+              "test_model64.py": "a842a2c0946f0ba58378f6bfcdad2d7396b73d7371f812afb5c83ef211bf53ea",
+              "test_run.py": "e1d0ee4c1cbbec551ef68b62219e0549ecd741ec8095d10603efa678ccc97a17"
+            },
+            "parent_factory": "b2c378664b4ce91054bb75c3ade400ce2eb18fc0a4fcd4ff23a785fa5b3ace70",
+            "seed": 0,
+            "batch": 4,
+            "probe_proposals": 2,
+            "objective": "product_QCE_temperature0.1",
+            "training_geometry": [
+              64,
+              64
+            ],
+            "steps": 1024,
+            "settle": 512,
+            "live_tail": 64,
+            "TRAIN_images_for_probe": 8
+          },
+          "image_ids": [
+            1320,
+            1321,
+            1322,
+            1323,
+            1324,
+            1325,
+            1326,
+            1327,
+            1328,
+            1329,
+            1330,
+            1331,
+            1332,
+            1333,
+            1334,
+            1335,
+            1336,
+            1337,
+            1338,
+            1339,
+            1340,
+            1341,
+            1342,
+            1343,
+            1344,
+            1345,
+            1346,
+            1347,
+            1348,
+            1349,
+            1350,
+            1351
+          ],
+          "arms": [
+            "baseline",
+            "candidate"
+          ],
+          "seed": 0,
+          "optimizer_updates": 0,
+          "grid": [
+            64,
+            64
+          ],
+          "inference_seed_base": 193000
+        },
+        "source_seed": 0,
+        "total_proposals": 16,
+        "inherited_proposals": 2,
+        "total_unique_TRAIN": 64,
+        "batch": 4,
+        "micro": 1,
+        "objective": "unchanged product QCE temperature0.1",
+        "mask_supervised": true
+      },
+      "indices": [
+        0,
+        4,
+        8,
+        12
+      ],
+      "inference_seed_base": 196000,
+      "optimizer_updates": 0,
+      "geodesic_product_dtype": "float64",
+      "training_admission": false
+    },
+    "source_model_sha256": "2dd2b0d64602b85d4082bcaddcd21dfe8c60d34af1ea78a2ed29bf03c8ba4b6e",
+    "parent_bindings": {
+      "experiment": "SW0192_native64_training_admission",
+      "fingerprint": {
+        "experiment": "SW0192_native64_incumbent_mini",
+        "files": {
+          "DESIGN_KO.md": "d5a739cf6347398f675a7360ba16e6d0d2b85ac933207cc249e62d2a095934f6",
+          "model64.py": "fc3c035ab08d1d2bdd2f817a075b704b19a836144d2a8e703b4dec8f388287fd",
+          "run.py": "801ed9f6b507f025c8d9556bfd00e9d8f995231038b29f07f2b86a98c1d36f4e",
+          "queue.py": "3d0c8f7c989fbb96b91932ca49f865cc65dca7a68d04ea958b6d71a09aaabcbf",
+          "test_model64.py": "a842a2c0946f0ba58378f6bfcdad2d7396b73d7371f812afb5c83ef211bf53ea",
+          "test_run.py": "e1d0ee4c1cbbec551ef68b62219e0549ecd741ec8095d10603efa678ccc97a17"
+        },
+        "parent_factory": "b2c378664b4ce91054bb75c3ade400ce2eb18fc0a4fcd4ff23a785fa5b3ace70",
+        "seed": 0,
+        "batch": 4,
+        "probe_proposals": 2,
+        "objective": "product_QCE_temperature0.1",
+        "training_geometry": [
+          64,
+          64
+        ],
+        "steps": 1024,
+        "settle": 512,
+        "live_tail": 64,
+        "TRAIN_images_for_probe": 8
+      },
+      "factory_proof": {
+        "seed": 0,
+        "incumbent_lineage": {
+          "experiment": "SW0186_full_encoder_qce",
+          "seed": 0,
+          "manifest_sha256": "05cd7f690eee72e1303225d79385d3e04c840e7c28991854676036c584b39de1",
+          "checkpoint_sha256": "73f290e54fa7f7dd9b3ee1605523b0d0e7ed4dabdeaa90ba13bd059d2df420df",
+          "final_model_state_sha256": "edd716717b8e6c5b47b0e8cfa6c02660fbcfea3d7b8cac3964be4f9ee0e1e34a",
+          "artifact": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0186_full_encoder_qce/results_archive/training_20261016/product_q_ce_seed0",
+          "optimizer_policy": "reset_empty_Adam_all_five_groups"
+        },
+        "native32_model_state_sha256": "edd716717b8e6c5b47b0e8cfa6c02660fbcfea3d7b8cac3964be4f9ee0e1e34a",
+        "native64_initial_model_state_sha256": "d6bc7622ef14f9fab3275623b1b809d453b2c1a9eded7d4259a112826f860ff7",
+        "source_CNN_sha256": "8e1cbe9c1fff1234776fef04eeccfc516b49b24631b5ff561eeca20cd5aada65",
+        "optimizer_groups": [
+          {
+            "name": "context_encoder",
+            "parameter_names": [
+              "context.0.weight",
+              "context.0.bias",
+              "context.2.weight",
+              "context.2.bias",
+              "context.4.weight",
+              "context.4.bias",
+              "context.6.weight",
+              "context.6.bias",
+              "context.8.weight",
+              "context.8.bias"
+            ],
+            "lr": 0.0003,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-08,
+            "weight_decay": 0.0
+          },
+          {
+            "name": "graph",
+            "parameter_names": [
+              "log_temperature",
+              "log_coupling_gain",
+              "spatial_rate",
+              "projection.weight"
+            ],
+            "lr": 3e-05,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-08,
+            "weight_decay": 0.0
+          },
+          {
+            "name": "native_core",
+            "parameter_names": [
+              "gamma_phase_gain",
+              "gamma_channel_proj.weight",
+              "kuramoto.freq_gain",
+              "kuramoto.omega",
+              "kuramoto.kappa",
+              "kuramoto.direction_learner",
+              "dendric_layer.tau_n",
+              "dendric_layer.oscillator_dense.weight",
+              "dendric_layer.oscillator_dense.bias",
+              "membrane_layer.tau_m"
+            ],
+            "lr": 3e-05,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-08,
+            "weight_decay": 0.0
+          },
+          {
+            "name": "integration",
+            "parameter_names": [
+              "a_d",
+              "a_m",
+              "b"
+            ],
+            "lr": 0.001,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-08,
+            "weight_decay": 0.0
+          },
+          {
+            "name": "source_base",
+            "parameter_names": [
+              "base_encoder.kernels",
+              "base_encoder.bias"
+            ],
+            "lr": 3e-05,
+            "betas": [
+              0.9,
+              0.999
+            ],
+            "eps": 1e-08,
+            "weight_decay": 0.0
+          }
+        ],
+        "grid": [
+          64,
+          64
+        ],
+        "graph_top_k": 512,
+        "geodesic_chunk": 1,
+        "validation_data_read": false,
+        "mask_supervised": true,
+        "adam_state_entries": 0
+      },
+      "ordered_train_ids": [
+        68304,
+        49032,
+        70041,
+        7829,
+        16499,
+        31675,
+        67612,
+        54671,
+        17331,
+        2330,
+        23312,
+        50490,
+        56080,
+        20867,
+        3891,
+        34682,
+        5746,
+        38390,
+        7809,
+        50726,
+        4399,
+        52411,
+        29823,
+        21285,
+        47112,
+        67877,
+        21002,
+        41777,
+        64222,
+        59885,
+        43545,
+        21030,
+        31483,
+        45842,
+        53351,
+        20671,
+        14491,
+        36271,
+        40780,
+        7730,
+        5602,
+        34315,
+        70355,
+        45835,
+        20381,
+        51668,
+        20039,
+        63282,
+        37032,
+        7827,
+        28066,
+        63060,
+        47558,
+        49035,
+        34477,
+        62328,
+        29686,
+        14722,
+        42204,
+        67199,
+        35885,
+        23583,
+        15281,
+        50611
+      ],
+      "TRAIN64_modal_sha256": "aafd5333c270d3f02124d99250246450385691c7448f037c627519c2d1486b0e",
+      "source_dataset_arrays_sha256": "4006f191baff3b9e1c9effc8ec67421c011726a5b02b05fdb8c9a432499819ba",
+      "validation_data_read": false
+    },
+    "image_ids": [
+      68304,
+      16499,
+      17331,
+      56080
+    ],
+    "RGB_rows_sha256": [
+      "2d3ee69db159ad5820bd73340990e74605f6e54e8fc4d1103447b01c5d4b0465",
+      "cee13ef2289f341adff86a235e9671162331ee429af71af1de462f4cfaf66187",
+      "0e6bc1d92e1cd6f34c48c16116a949012f5c3c8c52ee99681403059b1c4bc4dd",
+      "cd9491df8f95c1e12d5214512ff98ce93d5d14039df4ee4e5ab2be95d6f53d04"
+    ],
+    "known_TRAIN_GT_available_in_factory": true,
+    "GT_used_for_prediction": false,
+    "optimizer_updates": 0
+  },
+  "gradient_sha256": "7a68e73b3c64b1801c5d1dedd728fad6a9f1204623609e18d47e5f805c0152f4",
+  "rows_sha256": [
+    "f7dd7eb7e74ff1d3ea11dfed18f338468cba9fed9cb5c164c87ff947944ff1ee",
+    "f538e21ebd22154eb4bd6705da54ee5db99ef213415143d71dc2dbeac227b112",
+    "1f5e134d99fa642282b76c2611b244f0a4d74ae7e02918419e91dcb61eb20d06",
+    "3974dec9f4eee815df9c99074c9fe66a29da9882ea1299d315d1266027c754a4"
+  ]
+}

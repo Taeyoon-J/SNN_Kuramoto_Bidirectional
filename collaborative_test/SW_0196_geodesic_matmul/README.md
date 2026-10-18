@@ -20,3 +20,17 @@ The current194/195 models, sources and checkpoints are unchanged.
 gracefully and preserved. `queue --ready-now` uses `queue_all_gpus` and removes
 the optional195 dependency. It scans all four GPUs for an exclusive idle lease.
 The operator, model, numerical gates and benchmark cohort remain unchanged.
+
+Completed four-image GPU comparison, independently checked against actual saved
+mask pairs. Whole predictions133.789s ->80.800s, speedup1.65581; geodesic portion
+72.573s ->3.434s, speedup21.1328. Dense z-gradient relative error2.063e-6,
+cosine .999999999998 passed the registered local gradient gate.
+
+Production gate FAILED: all four Q arrays failed the registered forward tolerance
+(max errors .8748,.2788,.0332,.5916), although distance/adjacency passed and graph
+support was identical. Two of four final masks differed; the mismatches also
+changed foreground support, so they are not merely different instance IDs.
+This is evidence that local operator/gradient agreement was insufficient to
+preserve the full recurrent spike/readout computation. No optimizer-equivalence
+claim, no GT performance improvement claim, and no production training adoption.
+The original operator remains in199 matched training.
