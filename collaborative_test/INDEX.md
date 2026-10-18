@@ -1,3 +1,9 @@
+## SW0225 COMPLETE: secondary64 candidate passed
+
+Fixed SW0223 three-seed mean .877164/.597239/.670309 versus matched source .864270/.571015/.669769. FG and FIoU paired CIs are positive; Object IoU CI includes zero. All384 masks independently audited. Full320 confirmation selected, not completed. Original16 gate failure and SW0210 full320 incumbent remain unchanged. SW0226 continues.
+
+[SW_0225_native64_joint_projection_validation64](SW_0225_native64_joint_projection_validation64/RESULT_KO.md)
+
 ## SW0226: joint projection TRAIN512, same128updates
 
 All3 actual CPU admissions passed; three exclusive-GPU queues registered. Matched TRAIN64 control is SW0223; no new performance score. SW0225 continues; full320 incumbent remains SW0210.
