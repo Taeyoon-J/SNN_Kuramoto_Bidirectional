@@ -1,0 +1,83 @@
+{
+  "status": "actual_GPU_secondary64_validation_started",
+  "local_tests": 7,
+  "Linux_tests": 7,
+  "local_CLI_checks": 2,
+  "actual_CPU_admissions": 3,
+  "registered_jobs": 3,
+  "source_sha256": {
+    "DESIGN_KO.md": "ffec97ecc9d94638cea3173a63f6747a0b1076245687fa1fbf52c972ae26f368",
+    "scope.py": "0c3d28845ac761ca36739a7bd6ba6d3284455a3322d38099d6730dc7d5982d14",
+    "run.py": "ad1220172b68d8ec5f6e0a0757b4cd7e6fdf4d1370834c5982cbb309b375dc6c",
+    "evaluate.py": "d6ed1f32bf71923c989796d3959bacec59b5f85b54d385d7ea907fbdeb5a5c7b",
+    "queue.py": "c11ebce6a6eb0f180310a9e5cfeb7d7e9d1f5b9c30c07211857a196044fb3b41",
+    "test_scope.py": "90cbd460089eadc64364ae15b531bc3b129f0742f5791a0bf89a34b7c8016cec",
+    "test_pipeline.py": "6e00ee5028ba650dc3bb418eaa49ffb8a9287492f4c83b89f3cd7a6170ec3462"
+  },
+  "admitted_fixed_models": [
+    {
+      "seed": 0,
+      "model_sha256": "7e2e355b37ee9b8bff39762a025d46dcc17d363929d2929f446fada636032865",
+      "checkpoint_sha256": "9fc1fc6be2ab20bc0662a216b96e525a50872fa71c68c5988bd5433ec54676df",
+      "original16_protocol_sha256": "e567c3e0e20bb9ddb88329fee18e695dddb655b5a5c5109595c52f85178ec017",
+      "original16_labels_sha256": "042989c3d1df6603aca22cad63f1d620ce547d247cf34eeca78b850029320f48",
+      "RGB64_sha256": "ead031e41012ac7a6398cdf02bfb419dae051c9b65f5f3016b7ca787e09b48a6",
+      "baseline64_sha256": "8140a2c33e3af8322720d1f3a19d92a9ac2486a2b3b67dd0bd04a04fce926cb7"
+    },
+    {
+      "seed": 1,
+      "model_sha256": "106287b5f9007d1f5711f3bfa7d10a53defbc3612543010998ce86a7b1877b5d",
+      "checkpoint_sha256": "700e8382030b12f5950789684b60d9881739ff93393b6d5b682fd4ae8ed42d80",
+      "original16_protocol_sha256": "13d96cb764c501f93f8c5e6f0216c9b08eb589c1c4383980c7140916cd871bcc",
+      "original16_labels_sha256": "b7fe7d44e0e760bfa3cbe08bf039f43f94fb3f0458bfeb64ba34ad1528dc48a6",
+      "RGB64_sha256": "ead031e41012ac7a6398cdf02bfb419dae051c9b65f5f3016b7ca787e09b48a6",
+      "baseline64_sha256": "f0c15669b7e904aaa1c0c86f91102209f3c0558034c39d773cf489c8b3b72235"
+    },
+    {
+      "seed": 2,
+      "model_sha256": "e790d1a1ef8d8c306d2d7fd94d38f686c5fc82585529d6153d1d72183f709e16",
+      "checkpoint_sha256": "c7d9487be55757a3c8a7ad1035571584dcb5825a7fa495fddfb57c93d9522b59",
+      "original16_protocol_sha256": "118c2fe6e3790c5e3a3a2680b0f9e067c9705113ac114e5d39b0b2e214f548f1",
+      "original16_labels_sha256": "4084f14ed4b46345ff4b69cd2e77a011ac427349bece4e0c2e593810decc6d77",
+      "RGB64_sha256": "ead031e41012ac7a6398cdf02bfb419dae051c9b65f5f3016b7ca787e09b48a6",
+      "baseline64_sha256": "ac55d3a18a1921277e5a1824f429be1c3892ce6bdf3cd4c0359c50bc8827ef93"
+    }
+  ],
+  "actual_native_original_mini_replays": [
+    {
+      "seed": 0,
+      "mask_bitwise_equal": true,
+      "frequency_max_abs_error": 0.0
+    },
+    {
+      "seed": 1,
+      "mask_bitwise_equal": true,
+      "frequency_max_abs_error": 0.0
+    }
+  ],
+  "GPU_jobs": [
+    {
+      "seed": 0,
+      "physical_gpu": 1,
+      "gpu_uuid": "GPU-45604115-c231-56a5-32ea-d3001e8ff243",
+      "child_pid": 2591745,
+      "supervisor_pid": 2591647
+    },
+    {
+      "seed": 1,
+      "physical_gpu": 3,
+      "gpu_uuid": "GPU-6801a3dc-cde3-86c6-d665-6d9ecf063a1e",
+      "child_pid": 2591746,
+      "supervisor_pid": 2591648
+    }
+  ],
+  "image_count": 64,
+  "optimizer_updates": 0,
+  "new_prediction_images_per_seed": 48,
+  "reused_mini_images_per_seed": 16,
+  "expected_native_forwards_per_seed": 49,
+  "original223_mini_gate_failure_preserved": true,
+  "new70000_training": false,
+  "incumbent_changed": false,
+  "new_score": null
+}
