@@ -1,0 +1,113 @@
+{
+  "status": "three_actual_CPU_admissions_passed_deferred_queues_registered",
+  "observation": {
+    "server_unix": 1792365771.4781666,
+    "deployment": {
+      "status": "three_center16_TRAIN64_queues_registered",
+      "pid": 2685312,
+      "updated_unix": 1792365701.3283813,
+      "jobs": [
+        {
+          "seed": 0,
+          "TRAIN_count": 64,
+          "supervisor_pid": 2686637
+        },
+        {
+          "seed": 1,
+          "TRAIN_count": 64,
+          "supervisor_pid": 2686638
+        },
+        {
+          "seed": 2,
+          "TRAIN_count": 64,
+          "supervisor_pid": 2686639
+        }
+      ]
+    },
+    "jobs": [
+      {
+        "seed": 0,
+        "admitted": true,
+        "natural_within_variance_error": 4.656612873077393e-10,
+        "actual_projection_gradient_norm": 0.010385050438344479,
+        "status": "waiting_for_full320_first_attempts",
+        "pid": 2686637,
+        "actual_process_alive": true,
+        "physical_gpu": null,
+        "error": null,
+        "frozen_masks": 0
+      },
+      {
+        "seed": 1,
+        "admitted": true,
+        "natural_within_variance_error": 9.313225746154785e-10,
+        "actual_projection_gradient_norm": 0.03537144511938095,
+        "status": "waiting_for_full320_first_attempts",
+        "pid": 2686638,
+        "actual_process_alive": true,
+        "physical_gpu": null,
+        "error": null,
+        "frozen_masks": 0
+      },
+      {
+        "seed": 2,
+        "admitted": true,
+        "natural_within_variance_error": 1.0477378964424133e-09,
+        "actual_projection_gradient_norm": 0.010753250680863857,
+        "status": "waiting_for_full320_first_attempts",
+        "pid": 2686639,
+        "actual_process_alive": true,
+        "physical_gpu": null,
+        "error": null,
+        "frozen_masks": 0
+      }
+    ]
+  },
+  "local_tests_passed": 14,
+  "Linux_tests_passed": 14,
+  "CLI_checks_passed": 3,
+  "initial_deployed_files": {
+    "DESIGN_KO.md": {
+      "sha256": "1e7a38f7c492854e81f1159137bc8068514a875638ef617def82528a6fe4dbc5"
+    },
+    "README.md": {
+      "sha256": "6807f929b23aeea2a748917e2ce7568e48e9213a5c7c4bb8f89da1bbdccfc9ba"
+    },
+    "train.py": {
+      "sha256": "87e6f96084227d4d004bbce416b87bfd2585e408381e9980e70f6934a7471c17"
+    },
+    "projection.py": {
+      "sha256": "fa51bca45db76ae3a3086e6d0d0f8d2afac6b6499ffbaf5a77e7bfa05bc5e0b3"
+    },
+    "evaluate.py": {
+      "sha256": "6367fb9374d53783369ed27662766e1e7d8e1d367b993aadba24742d18a4c770"
+    },
+    "queue.py": {
+      "sha256": "e1181ecac8b0c0b19298edeeb8880b851469829139f08e9cce58e3c9970117c2"
+    },
+    "test_pipeline.py": {
+      "sha256": "d62114f5652c89a0e20c7d4b53e3098aae33c1e5722f5b0608e514597814b96f"
+    },
+    "test_projection.py": {
+      "sha256": "79efc499de069f092fe1009f545807c0f57ecead1e39033cd4bb7ace53ac823b"
+    },
+    "teacher_loss.py": {
+      "sha256": "ecfab8067851fe4cfb7bf8490e7a77ea25b4cb7e83e2fd88b419f8cae39bbcb5"
+    },
+    "test_teacher_loss.py": {
+      "sha256": "65516a8ef1500c1fd5d1087d9f28bce10f6d3d57043169868e56ca47787d7860"
+    }
+  },
+  "source_center_weight": 16.0,
+  "matched_control_experiment": "SW0223",
+  "matched_control_center_weight": 1.0,
+  "TRAIN_count": 64,
+  "optimizer_updates_planned": 128,
+  "batch": 16,
+  "logical_exposures": 2048,
+  "GPU_training_started": false,
+  "model_performance_result_available": false,
+  "new70000_training": false,
+  "full320_incumbent_unchanged": true,
+  "raw_RGB_GT_checkpoint_or_imagewise_vectors_published": false
+}

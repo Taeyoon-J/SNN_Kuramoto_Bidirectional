@@ -1,3 +1,9 @@
+## SW0228: source-center preservation comparison admitted/deferred
+
+Natural source-center loss weight1->16; same TRAIN64/128updates and actual encoder/core projection. All3 actual CPU admissions,14 Linux tests and3 CLI checks passed. Three live supervisors wait until all SW0227 seeds have received their first GPU allocation. No GPU training or performance result yet; SW0227 continues and full320 incumbent is unchanged.
+
+[SW0228 queued test](SW_0228_native64_center_preservation/START_KO.md)
+
 ## SW0226 COMPLETE: small matched-budget data-size change, scaling unproven
 
 Fixed16/three-seed TRAIN512 .860512/.650250/.712453 vs matched TRAIN64 .859634/.645611/.706340. All paired data-size CIs include zero. All144 masks and actual128-update encoder/projection checkpoints independently audited. Source-relative candidate gate passed; data-scaling gate failed. No70k expansion. SW0227 full320 confirmation of SW0223/SW0225 continues; incumbent unchanged.
