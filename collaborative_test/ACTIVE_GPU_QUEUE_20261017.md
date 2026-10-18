@@ -93,3 +93,9 @@ all four physical GPUs; waiting at registration while204 trains onGPU1.
 a demonstrated gain; object IoU slightly lower. Independent48-mask/Adam audit
 passed, extension gate failed, recipe closed.205 seed2 worker2066038 obtained
 GPU1 afterward; seed1 remains queued. No205 evaluation result yet.
+
+205 seed2 completed, audited .7884/.4455/.6743 vs baseline .8277/.4449/.6892;
+one accepted Adam step, CNN changed. No adoption from this mini. Frozen-mask
+CPU attribution shows increased cross-object merging despite reduced splitting.
+Seed1 worker2095873 now trains onGPU1; actual initial independent model and
+empty Adam checked. Three-seed result and full320/.90 remain unverified.

@@ -19,3 +19,23 @@ and compares against same-image native64 Slot outputs; no fresh Slot inference.
 Seed2 worker2066038 actually obtainedGPU1 after204 completed. NVIDIA PID and
 committed proposal0 checkpoint verified: original independent seed2 model
 b2c1a56f... and empty Adam, not seed0 weights. Seed1 remains queued.
+
+Seed2 completed and independently audited on fixed16 development images:
+
+| Arm | FG-ARI | Foreground IoU | Object IoU |
+| --- | ---: | ---: | ---: |
+| baseline | .8276711245 | .4448827161 | .6892385263 |
+| TRAIN8 candidate | .7884142488 | .4454744949 | .6743347722 |
+
+One accepted update, actual Adam step1, changed CNN. Initial CPU/GPU tensor
+transaction, actual boundary and32 masks verified. FG difference -.0392568757,
+CI[-.1393297488,.0190920790]; this is a negative mini mean, not a population-level
+proof of degradation. No adoption. Raw mask analysis shows fewer within-object
+splits (.1226->.1115) but more cross-object merges (.0567->.1024), also on common
+retained GT foreground. BG false positives hardly change (.3212->.3207).
+Raw positive-label count nevertheless rises20.19->21.81 vs true5.375; counting
+predicted groups alone does not diagnose true-object merging. Rates have different
+denominators and are not additive causal shares. Existing masks only, no GPU
+forward/update. Nine local/Linux operator tests passed. This does not prove
+which gating causes the issue. Seed1 worker2095873 subsequently startedGPU1,
+with its own initial model6c48389f... and empty Adam verified; final mean pending.
