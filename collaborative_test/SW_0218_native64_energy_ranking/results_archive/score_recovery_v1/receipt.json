@@ -1,0 +1,51 @@
+{
+  "status": "CPU_score_recovered_without_retraining",
+  "checks": [
+    {
+      "check": "tests",
+      "returncode": 0
+    },
+    {
+      "check": "actual_frozen_mask_admission",
+      "returncode": 0
+    },
+    {
+      "check": "score",
+      "returncode": 0
+    }
+  ],
+  "local_recovery_tests": 4,
+  "server_recovery_tests": 4,
+  "files": {
+    "recover_score.py": "0d34354c5661892850e56de6857c1f029605e1a09bab84e187dc7014851ce515",
+    "test_recover_score.py": "7e985cbbc09647e43f0a326372ad47178ff3f1738cfee49a419104b49060e4ce"
+  },
+  "frozen_source_unchanged": true,
+  "original_queue_state": {
+    "status": "failed",
+    "supervisor_pid": 2368483,
+    "updated_unix": 1792345037.0132802,
+    "error": "ModuleNotFoundError(\"No module named 'collaborative_test.SW_0204_native64_energy_ranking'\")"
+  },
+  "summary_sha256": "dc916495c0a9912cb08090ae929fe24b6a58c83e0ec6873e582113fd3d8e6fe7",
+  "additional_core_forwards": 0,
+  "additional_optimizer_updates": 0,
+  "scores": {
+    "energy_ranking": {
+      "fg_ari": 0.898686754137267,
+      "foreground_iou": 0.8587500719728213,
+      "matched_object_iou": 0.7299985358831782
+    },
+    "control": {
+      "fg_ari": 0.9005389598535832,
+      "foreground_iou": 0.8605773316340178,
+      "matched_object_iou": 0.7276216787864956
+    },
+    "warm": {
+      "fg_ari": 0.924401453845536,
+      "foreground_iou": 0.8598964166728263,
+      "matched_object_iou": 0.7276384094627034
+    }
+  },
+  "screen_gate_passed": false
+}

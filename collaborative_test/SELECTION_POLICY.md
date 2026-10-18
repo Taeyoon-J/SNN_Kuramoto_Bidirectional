@@ -39,3 +39,6 @@ unavailable5.6 Luna with user approval). The implementation operator is6 Luna;
 analysis is handled by5.6 Sol. Use6.1 Sol only when a major branch decision
 requires it. Main-agent model switching is not exposed as a tool in this
 session, so do not claim automatic routing or that the main-agent model changed.
+
+## Scoring preflight after SW0218
+Before deployment, exercise the full scoring branch on a bounded fixture, including the real control-package import, and validate the real saved control/candidate masks on CPU before GT. GT-barrier and optimizer unit tests alone do not cover an import executed only after prediction. Rename candidate arms explicitly; do not rename ancestor package paths with a global substring replacement. A scoring-only failure must preserve trained checkpoints and masks and recover scoring separately without retraining or rewriting frozen fingerprints.

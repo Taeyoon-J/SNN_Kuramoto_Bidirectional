@@ -10263,7 +10263,7 @@
   },
   "latest_native_energy_ranking_pilot": {
     "experiment": "SW0218",
-    "status": "actual_GPU_training_started",
+    "status": "complete_scoring_recovered_no_FG_gain",
     "scope": "native64_fixed16_seed0_supervised",
     "control": "SW0204 identical warm192 model/Adam/RNG and new TRAIN8 exposures",
     "new_optimizer_proposals": 2,
@@ -10273,7 +10273,125 @@
     "local_tests": 22,
     "Linux_tests": 22,
     "incumbent_changed": false,
-    "new_score": null,
-    "peer_reviewed_commit": "7a21632b93805f4f1da69a2e77a9ddd95c624d0a"
+    "new_score": {
+      "energy_ranking": {
+        "fg_ari": 0.898686754137267,
+        "foreground_iou": 0.8587500719728213,
+        "matched_object_iou": 0.7299985358831782
+      },
+      "control": {
+        "fg_ari": 0.9005389598535832,
+        "foreground_iou": 0.8605773316340178,
+        "matched_object_iou": 0.7276216787864956
+      },
+      "warm": {
+        "fg_ari": 0.924401453845536,
+        "foreground_iou": 0.8598964166728263,
+        "matched_object_iou": 0.7276384094627034
+      }
+    },
+    "peer_reviewed_commit": "7a21632b93805f4f1da69a2e77a9ddd95c624d0a",
+    "paired": {
+      "control": {
+        "fg_ari": {
+          "mean": -0.0018522057163162658,
+          "ci95": [
+            -0.0057245260235080815,
+            0.0012964058892063063
+          ]
+        },
+        "foreground_iou": {
+          "mean": -0.0018272596611966438,
+          "ci95": [
+            -0.012881761077731802,
+            0.008174739632002994
+          ]
+        },
+        "matched_object_iou": {
+          "mean": 0.002376857096682297,
+          "ci95": [
+            -0.016655892491911434,
+            0.023306548653193395
+          ]
+        }
+      },
+      "warm": {
+        "fg_ari": {
+          "mean": -0.02571469970826907,
+          "ci95": [
+            -0.07367833612265412,
+            -0.00017029843459949324
+          ]
+        },
+        "foreground_iou": {
+          "mean": -0.001146344700005214,
+          "ci95": [
+            -0.013017665032849639,
+            0.010733687278377443
+          ]
+        },
+        "matched_object_iou": {
+          "mean": 0.002360126420474784,
+          "ci95": [
+            -0.022039681829806642,
+            0.03382937858697522
+          ]
+        }
+      }
+    },
+    "ranking_parameter_credit_verified": true,
+    "actual_optimizer_steps": [
+      4
+    ],
+    "screen_gate_passed": false,
+    "score_only_recovery_verified": true,
+    "actual_model_Adam_RNG_and48_masks_audited": true
+  },
+  "latest_native_Q_readout_ablation": {
+    "experiment": "SW0219",
+    "status": "complete",
+    "scope": "native64_fixed16_three_seed",
+    "scores": {
+      "baseline": {
+        "fg_ari": 0.8428907016774791,
+        "foreground_iou": 0.6006915810165039,
+        "matched_object_iou": 0.7021610526966489
+      },
+      "Q_only": {
+        "fg_ari": 0.8338092583919924,
+        "foreground_iou": 0.6006915810165039,
+        "matched_object_iou": 0.701250165360484
+      }
+    },
+    "paired": {
+      "fg_ari": {
+        "mean": -0.00908144328548682,
+        "ci95": [
+          -0.02249370006505539,
+          -0.0007568265308769633
+        ]
+      },
+      "foreground_iou": {
+        "mean": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "matched_object_iou": {
+        "mean": -0.0009108873361648312,
+        "ci95": [
+          -0.00475181630633209,
+          0.0034385802902166815
+        ]
+      }
+    },
+    "balanced_expansion_gate_passed": false,
+    "FG_first_candidate_retained": false,
+    "actual_QA_and96_mask_replays_verified": true,
+    "physical_gate_ablation": false,
+    "core_forwards": 0,
+    "optimizer_updates": 0,
+    "incumbent_changed": false
   }
 }
