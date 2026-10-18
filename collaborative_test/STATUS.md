@@ -1,3 +1,18 @@
+Latest observation2026-10-18: SW0207 completed fixed16 seed2; learned foreground
+support lowers FG-ARI .827671->.773808 despite foregroundIoU .444883->.616158.
+Independent actual Adam refit and all32 masks verified. Posthoc diagnosis finds
+more same-object fragmentation. Recipe closed; no threshold rescue.
+SW0208 registered actual204 vs warm192 full320 native64 seed0 confirmation,
+four exclusive-GPU shard supervisors2115329..2115332 after11 local+11 Linux
+tests and actual model/full320 RGB CPU admission. It performs no training;
+the last shard automatically scores both masks and comparable Slot. Mini204
+.900539 and warm .924401 are not full320/three-seed scores. Full native64 .90,
+fresh70k success, scaling and all-gate causal claims remain unproved. Goal active.
+Evidence: SW_0207_spike_foreground_classifier/README.md and
+SW_0208_native64_full320_confirmation/README.md.
+
+Historical observations below are superseded by dated updates above.
+
 Current observation (2026-10-13): SW0149 complete and independently audited; joint seed1 .755058/.593880/.585570, no promotion or seed/70k expansion. SW0150 E/G and joint training remain registered; frozen sourceP predictions complete. Separate CUDA-hidden diagnostic supervisor PID2054678 verified waiting for main completion, then one first64 TRAIN assignment-permutation diagnostic (0 updates, no GT). Local/server queue checks 11/11 passed. No new native32 70k/all3-seed win or all-gating contribution claim. Evidence: SW_0149_spike_graph_modularity/results_archive/endpoint_20261012/root_audit_and_decision.json; SW_0150_spike_spatial_mixture/diagnosis_queue_launch_review.json. Goal active; GitHub expanded publication approval remains pending.
 
 ## Earlier observations (historical; superseded by the current status above)

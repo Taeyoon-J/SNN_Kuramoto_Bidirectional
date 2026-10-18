@@ -1,0 +1,163 @@
+{
+  "observed_unix": 1792309022.434026,
+  "states": [
+    {
+      "status": "waiting_for_exclusive_gpu",
+      "shard": 0,
+      "supervisor_pid": 2115329,
+      "updated_unix": 1792308830.4655664
+    },
+    {
+      "status": "running_worker",
+      "shard": 1,
+      "supervisor_pid": 2115330,
+      "updated_unix": 1792308836.0406115,
+      "physical_gpu": 1,
+      "gpu_uuid": "GPU-45604115-c231-56a5-32ea-d3001e8ff243",
+      "child_pid": 2115408,
+      "child_argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0208_native64_full320_confirmation.queue",
+        "--worker",
+        "--shard",
+        "1",
+        "--physical-gpu",
+        "1"
+      ],
+      "actual_child_argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0208_native64_full320_confirmation.queue",
+        "--worker",
+        "--shard",
+        "1",
+        "--physical-gpu",
+        "1"
+      ]
+    },
+    {
+      "status": "waiting_for_exclusive_gpu",
+      "shard": 2,
+      "supervisor_pid": 2115331,
+      "updated_unix": 1792308830.578292
+    },
+    {
+      "status": "waiting_for_exclusive_gpu",
+      "shard": 3,
+      "supervisor_pid": 2115332,
+      "updated_unix": 1792308830.5548792
+    }
+  ],
+  "rows": {
+    "warm192": 5,
+    "component204": 0
+  },
+  "GPU_processes": "GPU-a0a7d03d-adc1-37ca-4342-328878b3657c, 767110, 818 MiB\nGPU-45604115-c231-56a5-32ea-d3001e8ff243, 2115408, 2136 MiB\nGPU-50cc59a2-8312-ff02-5889-1becf63c7cd4, 2105665, 12360 MiB\nGPU-6801a3dc-cde3-86c6-d665-6d9ecf063a1e, 2113381, 1378 MiB\n",
+  "observer_heartbeat": {
+    "time": 1792308997.409117,
+    "observer_pid": 2117324,
+    "live": {
+      "0": {
+        "pid": 2115329,
+        "argv": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "-u",
+          "-m",
+          "collaborative_test.SW_0208_native64_full320_confirmation.queue",
+          "--shard",
+          "0"
+        ],
+        "state": "S",
+        "start_ticks": 446089706
+      },
+      "1": {
+        "pid": 2115330,
+        "argv": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "-u",
+          "-m",
+          "collaborative_test.SW_0208_native64_full320_confirmation.queue",
+          "--shard",
+          "1"
+        ],
+        "state": "S",
+        "start_ticks": 446089706
+      },
+      "2": {
+        "pid": 2115331,
+        "argv": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "-u",
+          "-m",
+          "collaborative_test.SW_0208_native64_full320_confirmation.queue",
+          "--shard",
+          "2"
+        ],
+        "state": "S",
+        "start_ticks": 446089706
+      },
+      "3": {
+        "pid": 2115332,
+        "argv": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "-u",
+          "-m",
+          "collaborative_test.SW_0208_native64_full320_confirmation.queue",
+          "--shard",
+          "3"
+        ],
+        "state": "S",
+        "start_ticks": 446089706
+      }
+    },
+    "states": [
+      {
+        "status": "waiting_for_exclusive_gpu",
+        "shard": 0,
+        "supervisor_pid": 2115329,
+        "updated_unix": 1792308830.4655664
+      },
+      {
+        "status": "running_worker",
+        "shard": 1,
+        "supervisor_pid": 2115330,
+        "updated_unix": 1792308836.0406115,
+        "physical_gpu": 1,
+        "gpu_uuid": "GPU-45604115-c231-56a5-32ea-d3001e8ff243",
+        "child_pid": 2115408,
+        "child_argv": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "-u",
+          "-m",
+          "collaborative_test.SW_0208_native64_full320_confirmation.queue",
+          "--worker",
+          "--shard",
+          "1",
+          "--physical-gpu",
+          "1"
+        ]
+      },
+      {
+        "status": "waiting_for_exclusive_gpu",
+        "shard": 2,
+        "supervisor_pid": 2115331,
+        "updated_unix": 1792308830.578292
+      },
+      {
+        "status": "waiting_for_exclusive_gpu",
+        "shard": 3,
+        "supervisor_pid": 2115332,
+        "updated_unix": 1792308830.5548792
+      }
+    ],
+    "rows": {
+      "warm192": 4,
+      "component204": 0
+    }
+  },
+  "peer_revision_checked": "612f7628fde249e4d4fb45a502851a2e34ee72ff",
+  "peer_new_training_recipe": false
+}

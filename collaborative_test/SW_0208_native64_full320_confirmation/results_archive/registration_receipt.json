@@ -1,0 +1,85 @@
+{
+  "launches": [
+    {
+      "shard": 0,
+      "pid": 2115329,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0208_native64_full320_confirmation.queue",
+        "--shard",
+        "0"
+      ]
+    },
+    {
+      "shard": 1,
+      "pid": 2115330,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0208_native64_full320_confirmation.queue",
+        "--shard",
+        "1"
+      ]
+    },
+    {
+      "shard": 2,
+      "pid": 2115331,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0208_native64_full320_confirmation.queue",
+        "--shard",
+        "2"
+      ]
+    },
+    {
+      "shard": 3,
+      "pid": 2115332,
+      "argv": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-m",
+        "collaborative_test.SW_0208_native64_full320_confirmation.queue",
+        "--shard",
+        "3"
+      ]
+    }
+  ],
+  "states": [
+    {
+      "status": "waiting_for_exclusive_gpu",
+      "shard": 0,
+      "supervisor_pid": 2115329,
+      "updated_unix": 1792308830.4655664
+    },
+    {
+      "status": "waiting_for_exclusive_gpu",
+      "shard": 1,
+      "supervisor_pid": 2115330,
+      "updated_unix": 1792308830.4954555
+    },
+    {
+      "status": "waiting_for_exclusive_gpu",
+      "shard": 2,
+      "supervisor_pid": 2115331,
+      "updated_unix": 1792308830.578292
+    },
+    {
+      "status": "waiting_for_exclusive_gpu",
+      "shard": 3,
+      "supervisor_pid": 2115332,
+      "updated_unix": 1792308830.5548792
+    }
+  ],
+  "Linux_tests": 11,
+  "eligible_physical_GPUs": [
+    0,
+    1,
+    2,
+    3
+  ]
+}

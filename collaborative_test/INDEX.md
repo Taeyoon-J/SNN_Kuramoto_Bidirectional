@@ -1,3 +1,9 @@
+Latest2026-10-18: [SW0207 completed diagnosis](SW_0207_spike_foreground_classifier/README.md);
+[SW0208 full320 confirmation registered](SW_0208_native64_full320_confirmation/README.md).
+These supersede historical running observations below. SW0208 compares actual204
+and stronger warm192, native64 seed0, before considering70k expansion. No new
+full320 .90 or three-seed native64 result yet.
+
 Current results are summarized in [STATUS.md](STATUS.md). [SW0148 live queue v3](SW_0148_checkpointable_boundary_q/results_archive/server_start_v3_20261012/summary.json): supervisor551842 launched; 11 Linux CPU tests passed; idle admission shortened to5 seconds after an observed short GPU2 opportunity. Owner guards, launch recheck, strict checkpoint GPU binding and scientific recipe are unchanged. Both training arms were waiting at launch. No new segmentation score is claimed.
 
 Latest recovery observation: three actual training children verified in /proc and nvidia-smi on GPUs0/1/2. No scores yet. Evidence: SW_0134_native_spike_binding/recovery_gpu_start_20261010.json.
