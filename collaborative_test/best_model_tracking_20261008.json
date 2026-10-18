@@ -9889,5 +9889,158 @@
       "seed": 2,
       "stable_classifier_verified": false
     }
+  },
+  "latest_component_merger_pilots": {
+    "scope": "native64_fixed16_seed2_supervised_pilots",
+    "SW0214": {
+      "scores": {
+        "baseline": {
+          "fg_ari": 0.7884142488069319,
+          "foreground_iou": 0.44547449493657715,
+          "matched_object_iou": 0.6743347721969196
+        },
+        "primary": {
+          "fg_ari": 0.7206070232801015,
+          "foreground_iou": 0.44547449493657715,
+          "matched_object_iou": 0.5804607727397152
+        },
+        "geometry_only": {
+          "fg_ari": 0.8140080973956761,
+          "foreground_iou": 0.44547449493657715,
+          "matched_object_iou": 0.6324099703790164
+        }
+      },
+      "paired": {
+        "primary": {
+          "fg_ari": {
+            "mean": -0.06780722552683024,
+            "ci95": [
+              -0.13936267665642663,
+              -0.00786844591481272
+            ]
+          },
+          "foreground_iou": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "matched_object_iou": {
+            "mean": -0.09387399945720445,
+            "ci95": [
+              -0.16408797483705928,
+              -0.032802369038325535
+            ]
+          }
+        },
+        "geometry_only": {
+          "fg_ari": {
+            "mean": 0.02559384858874444,
+            "ci95": [
+              -0.01387787661667703,
+              0.08560718527821397
+            ]
+          },
+          "foreground_iou": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "matched_object_iou": {
+            "mean": -0.041924801817903215,
+            "ci95": [
+              -0.08453310793581412,
+              -0.002543670569628239
+            ]
+          }
+        }
+      },
+      "primary_gate_passed": false,
+      "geometry_FG_candidate": "point gain only; CI crosses0 and ObjectIoU lower"
+    },
+    "SW0215": {
+      "scores": {
+        "baseline": {
+          "fg_ari": 0.7884142488069319,
+          "foreground_iou": 0.44547449493657715,
+          "matched_object_iou": 0.6743347721969196
+        },
+        "uncorrected_primary": {
+          "fg_ari": 0.7206070232801015,
+          "foreground_iou": 0.44547449493657715,
+          "matched_object_iou": 0.5804607727397152
+        },
+        "uncorrected_geometry": {
+          "fg_ari": 0.8140080973956761,
+          "foreground_iou": 0.44547449493657715,
+          "matched_object_iou": 0.6324099703790164
+        },
+        "corrected_primary": {
+          "fg_ari": 0.7816512094593567,
+          "foreground_iou": 0.44547449493657715,
+          "matched_object_iou": 0.6649340063571487
+        },
+        "corrected_geometry": {
+          "fg_ari": 0.7884142488069319,
+          "foreground_iou": 0.44547449493657715,
+          "matched_object_iou": 0.6743347721969196
+        }
+      },
+      "TRAIN_shift": 3.2638234751140884,
+      "paired": {
+        "corrected_primary": {
+          "fg_ari": {
+            "mean": -0.0067630393475751685,
+            "ci95": [
+              -0.018548204207659534,
+              4.897846734205902e-05
+            ]
+          },
+          "foreground_iou": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "matched_object_iou": {
+            "mean": -0.009400765839770855,
+            "ci95": [
+              -0.02507101839542654,
+              0.0
+            ]
+          }
+        },
+        "corrected_geometry": {
+          "fg_ari": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "foreground_iou": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          },
+          "matched_object_iou": {
+            "mean": 0.0,
+            "ci95": [
+              0.0,
+              0.0
+            ]
+          }
+        }
+      },
+      "new_training_updates": 0
+    },
+    "incumbent_changed": false,
+    "next_direction": "check FG-conditional TRAIN relation target; keep evaluation unchanged; anchor-order invariance remains a separate hypothesis"
   }
 }
