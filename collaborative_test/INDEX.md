@@ -1,3 +1,5 @@
+2026-10-18 SW0211 ACTUAL GPU START: worker2337998/start448637534 on GPU3 after SW0210 seed2 completed all4 prediction shards. Frozen-core descriptor extraction, then TRAIN32 center head fit; no head-training completion or gain claimed. Actual NVIDIA/process evidence: SW_0211_spike_anchor_center_assignment/results_archive/started_v1/actual_GPU_start.json. SW0210 seed1 full evaluation remains active; SW0212 waits for211.
+
 2026-10-18 SW0212: prospective frozen-head learned-foreground readout queued after SW0211; CPU only, zero new optimizer steps; five local/five Linux tests and native64 CPU admission passed. Supervisor2285616/start448185348. Registered before211 score existed; exact parent-mask replay required before GT scoring. See SW_0212_learned_foreground_center_readout/README.md. No improvement claimed.
 
 Queued2026-10-18: [SW0211 spike-anchor center assignment](SW_0211_spike_anchor_center_assignment/DESIGN_KO.md),

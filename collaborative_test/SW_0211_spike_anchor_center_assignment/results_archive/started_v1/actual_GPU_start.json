@@ -1,0 +1,38 @@
+{
+  "event": "actual_GPU_pipeline_started",
+  "phase": "frozen_core_descriptor_extraction_then_head_fit",
+  "classifier_training_started": false,
+  "actual_model_seed": 2,
+  "state": {
+    "status": "running_worker",
+    "supervisor_pid": 2269832,
+    "updated_unix": 1792334306.7563276,
+    "child_pid": 2337998,
+    "child_argv": [
+      "/Data0/kevinswk/envs/snn/bin/python",
+      "-u",
+      "-m",
+      "collaborative_test.SW_0211_spike_anchor_center_assignment.queue",
+      "--worker",
+      "--physical-gpu",
+      "3"
+    ],
+    "physical_gpu": 3,
+    "gpu_uuid": "GPU-6801a3dc-cde3-86c6-d665-6d9ecf063a1e"
+  },
+  "actual_child": {
+    "pid": 2337998,
+    "state": "R",
+    "start_ticks": 448637534,
+    "argv": [
+      "/Data0/kevinswk/envs/snn/bin/python",
+      "-u",
+      "-m",
+      "collaborative_test.SW_0211_spike_anchor_center_assignment.queue",
+      "--worker",
+      "--physical-gpu",
+      "3"
+    ]
+  },
+  "nvidia": "GPU-a0a7d03d-adc1-37ca-4342-328878b3657c, 767110, 818 MiB\nGPU-45604115-c231-56a5-32ea-d3001e8ff243, 2324832, 2136 MiB\nGPU-50cc59a2-8312-ff02-5889-1becf63c7cd4, 2274370, 12400 MiB\nGPU-6801a3dc-cde3-86c6-d665-6d9ecf063a1e, 2337998, 1002 MiB\n"
+}

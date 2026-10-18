@@ -21,3 +21,10 @@ Read-only waiter2272841 tracks the exact supervisor PID/start identity,
 observes actual GPU start and independently audits completed head/Adam/RNG
 boundaries, TRAIN normalization, frozen source and96 mask endpoints. This is
 a supervised pilot, not a fresh70k or full320/three-seed .90 result.
+
+Actual GPU3 worker2337998/start448637534 began after210 seed2 completed all
+four prediction shards. NVIDIA ownership and actual argv/start identity are
+recorded in started_v1/actual_GPU_start.json. This starts frozen-core feature
+extraction; it does not yet establish that classifier Adam updates have begun.
+The earlier GPU2 attempt yielded before extraction to respect another owner.
+SW0212 is independently queued to compare learned foreground after completion.
