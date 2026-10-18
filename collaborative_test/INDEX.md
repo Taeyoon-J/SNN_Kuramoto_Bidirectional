@@ -80,7 +80,9 @@
 | PV2_0087 | completed | **complexity: ours is O(N^3 + T N^2) in patches, Slot Attention O(K L P k^2 C^2) in pixels. 17.6x cheaper at 16x16, parity at 32x32, 13x with a sparse rollout** | | | |
 | PV2_0088 | completed | **the 32x32 enablers: grid rule verified IDENTICAL to v1 at grid 16; geodesic 68.7 GB -> 4.72 GB bit-identical; gamma recipe reconstructed** | | | |
 | PV2_0089 | failed | **32x32: the phase side is healthy (plv_mean .7101 vs grid16's .753) but the spike path dies at epoch 17, spike_plv_collapse = log(10^4). Transduction hyperparameters do not transfer** | 0.0000 | 0.0000 | 0.0000 |
-| PV2_0093 | queued | three 8-epoch arms, one variable each, to keep the 32x32 spike path alive | | | |
+| PV2_0092 | failed | **signed coupling: every arm widens predicted foreground past the gate and sells fg_iou. obj_iou rises in all three (+.0337/+.0284/+.0778). CONTROL IS NOT THE PUBLISHED MODEL -- .5027 vs .7239** | 0.5962 | 0.4708 | 0.4240 |
+| PV2_0093 | completed | **32x32 revived: population threshold falls 4.72 -> 2.58 (alive), control 4.26 -> 5.69 (dying), spatial decay 4.32 -> 8.94 (dead). The transduction did not transfer, not the graph** | | | |
+| PV2_0094 | running | the 32x32 model at 40 epochs with the population threshold, plus figures | | | |
 | PV2_0091 | completed | **the readout dial cannot reach 0.9: at matched extent (pred_fg .808 vs .853) we score .7718 against aligned Slot's .8102, and .7718 is the dial's maximum anywhere -- .13 below the bar. An architectural change is necessary, not merely desirable** | 0.7718 | | |
 | PV2_0090 | completed | **the Slot Attention baseline was misaligned IN OUR FAVOUR: its centre crop made the prediction and target grids describe different regions. Aligned, Slot fg_ari 0.6656 -> 0.8102 and LEADS our 0.7603. Both IoU wins stand** | | | |
 | PV2_0046 | completed | contract diagnostic: a looser rule *lowers* fg_ari 0.724 to 0.533; cross-branch scores are not poolable | | | |
