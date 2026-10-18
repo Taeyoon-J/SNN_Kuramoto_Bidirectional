@@ -1,0 +1,40 @@
+{
+  "status": "actual_native64_full512_GPU_admission_passed_training_started",
+  "observed_unix": 1792294211.6832955,
+  "state": {
+    "status": "running_worker",
+    "supervisor_pid": 2000695,
+    "updated_unix": 1792293809.716372,
+    "child_pid": 2003084,
+    "child_argv": [
+      "/Data0/kevinswk/envs/snn/bin/python",
+      "-u",
+      "-m",
+      "collaborative_test.SW_0200_native64_long_credit.queue",
+      "--worker",
+      "--physical-gpu",
+      "1"
+    ],
+    "physical_gpu": 1,
+    "gpu_uuid": "GPU-45604115-c231-56a5-32ea-d3001e8ff243"
+  },
+  "raw_admission_sha256": "2fe0f17f97ae6c66017ea8b1fc5bb9e931a303c0bf90e749c12ca567b9955b77",
+  "live_tail_steps": 512,
+  "prefix_detached_steps": 512,
+  "scoring_window_steps": 512,
+  "peak_allocated_bytes": 6431305216,
+  "allocator_fraction": 0.8,
+  "same_RNG_loss_parity_exact": true,
+  "actual_emitted_S_gradient_positive": true,
+  "family_gradient_positive": {
+    "context_encoder": true,
+    "graph": true,
+    "native_core": true,
+    "integration": true,
+    "source_base": true
+  },
+  "extra_read_only_gradient_admission_images": 1,
+  "optimizer_updates_in_admission": 0,
+  "model_Adam_RNG_restored": true,
+  "raw_single_TRAIN_loss_or_gradient_values_included": false
+}

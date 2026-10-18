@@ -1,0 +1,73 @@
+{
+  "status": "actual96_baseline_and96_Slot_native64_masks_independently_verified",
+  "grid": [
+    64,
+    64
+  ],
+  "development_images": 32,
+  "seed_scope": [
+    0,
+    1,
+    2
+  ],
+  "optimizer_updates": 0,
+  "ours_per_seed": {
+    "seed0": {
+      "fg_ari": 0.9095369755094326,
+      "foreground_iou": 0.8271468754064402,
+      "matched_object_iou": 0.7344419699559647
+    },
+    "seed1": {
+      "fg_ari": 0.8175115351902164,
+      "foreground_iou": 0.44777024633307083,
+      "matched_object_iou": 0.6664774994467442
+    },
+    "seed2": {
+      "fg_ari": 0.8272358513046323,
+      "foreground_iou": 0.45929914574664527,
+      "matched_object_iou": 0.6810919425962343
+    }
+  },
+  "ours_three_seed_mean": {
+    "fg_ari": 0.8514281206680938,
+    "foreground_iou": 0.578072089162052,
+    "matched_object_iou": 0.6940038039996477
+  },
+  "Slot_three_seed_mean": {
+    "fg_ari": 0.8215711846429223,
+    "foreground_iou": 0.17331530733982128,
+    "matched_object_iou": 0.20398815662503914
+  },
+  "paired_ours_minus_Slot": {
+    "fg_ari": {
+      "mean": 0.029856936025171567,
+      "ci95": [
+        -0.02652276982012968,
+        0.08249218644527846
+      ]
+    },
+    "foreground_iou": {
+      "mean": 0.40475678182223074,
+      "ci95": [
+        0.35796632412092094,
+        0.4560605773351338
+      ]
+    },
+    "matched_object_iou": {
+      "mean": 0.4900156473746087,
+      "ci95": [
+        0.4419239526803258,
+        0.5359271876303142
+      ]
+    }
+  },
+  "maximum_metric_abs_error": 2.220446049250313e-16,
+  "baseline_only_no_new_native64_adaptation": true,
+  "all_three_mini_metrics_above_Slot": true,
+  "mini_mean_FG090_reached": false,
+  "full320_three_seed_goal_verified": false,
+  "source_models_mask_supervised": true,
+  "unsupervised_leaderboard_eligible": false,
+  "aggregate_summary_sha256": "e547d5795a82e8dbbc3113938eea225470060a98b40fbf806bb4242111298f88",
+  "raw_imagewise_values_included": false
+}

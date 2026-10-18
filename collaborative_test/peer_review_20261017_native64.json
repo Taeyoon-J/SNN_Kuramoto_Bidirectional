@@ -1,14 +1,15 @@
 {
   "peer_branch": "patch_v2",
-  "previous_commit": "cab6c676e24a149a45ea960586c04e579f78d384",
-  "commit": "8691c03be210e108b26f0b5b3e40ea8f9e656f10",
+  "previous_commit": "8691c03be210e108b26f0b5b3e40ea8f9e656f10",
+  "commit": "1fc3906474039f5016efb4f492fccdbb8c223e60",
   "reviewed": [
-    "PV2_0092_signed_coupling/README.md",
-    "PV2_0093_grid32_revival/README.md",
-    "PV2_0094_grid32_trained/README.md",
-    "PV2_0094_grid32_trained/commands.sh",
-    "ROUTE_MAP_0.9_v2.md",
-    "evaluate_model.py threshold argument wiring"
+    "PV2_0095_grid32_readout/README.md",
+    "PV2_0095_grid32_readout/commands.sh",
+    "PV2_0095_grid32_readout/metrics.csv",
+    "PV2_0096_grid32_sparsity/README.md",
+    "PV2_0096_grid32_sparsity/commands.sh",
+    "PV2_0096_grid32_sparsity/metrics.csv",
+    "evaluate_model.py diagnostic output field order"
   ],
   "peer_grid32_CC_scores": [
     0.6044,
@@ -26,12 +27,19 @@
     "separate spike health from instance grouping",
     "freeze foreground in198 normalization comparison",
     "require exact193/194 reference-mask replay",
-    "inspect relative-QCE/absolute0.5 ambiguity before more training"
+    "inspect relative-QCE/absolute0.5 ambiguity before more training",
+    "native64 baseline counts/BGfalse-positive/split attribution completed197; avoid blindly raising group-size floor",
+    "do not repeat graph-density inference sweeps as first priority; our transduction already preserves neighbor fraction",
+    "validate group-count loss under unequal background/object sizes before using a fixed target; raw PR fails ideal TRAIN partition",
+    "consider normalized spike-Q group-count training as separate hypothesis, retaining existing QCE/control and checking actual masks"
   ],
   "not_blindly_ported": [
     "population threshold without dead-spike evidence in our seed0",
     "signed coupling with failed gate",
-    "peer numbers as our benchmark"
+    "peer numbers as our benchmark",
+    "fixed raw PLV PR target7.5; ideal TRAIN has mean7.11 true classes but rawPR1.58",
+    "peer missing mean-PLV-loss conclusion as our diagnosis; our current objective is class-balanced QCE",
+    "negative frozen top_k sweep as proof that density could never help after retraining"
   ],
   "peer_core_implementation_available_in_branch": false,
   "peer_core_limitation": "branch contains collaborative_test only; actual membrane implementation outside repository, commands and evaluator wiring inspected",
@@ -40,5 +48,54 @@
     "contract_validator": "SW_0135_native32_spike_binding/evaluation_contract32.py:127",
     "all_three_protocols_validated_by_completed194_audit": true
   },
-  "causal_claim": false
+  "causal_claim": false,
+  "review_history": [
+    {
+      "commit": "8691c03be210e108b26f0b5b3e40ea8f9e656f10",
+      "previous_commit": "cab6c676e24a149a45ea960586c04e579f78d384",
+      "reviewed": [
+        "PV2_0092_signed_coupling/README.md",
+        "PV2_0093_grid32_revival/README.md",
+        "PV2_0094_grid32_trained/README.md",
+        "PV2_0094_grid32_trained/commands.sh",
+        "ROUTE_MAP_0.9_v2.md",
+        "evaluate_model.py threshold argument wiring"
+      ]
+    }
+  ],
+  "latest_findings": {
+    "peer_best_frozen_sweep_scores": [
+      0.6312,
+      0.7167,
+      0.5857
+    ],
+    "peer_groups_mean": 16.1433,
+    "peer_true_objects_mean": 6.49,
+    "scope": "grid32, seed0, validation300, contractv2, G32_POP40; different data/contract from ours",
+    "min_group_increase_removed_true_objects": true,
+    "eightfold_inference_top_k_change_FG_gain": 0.0019,
+    "training_at_denser_top_k_not_tested": true,
+    "group_count_training_result_published": false,
+    "peer_next_proposal": "PV2_0097 raw PLV participation target7.5",
+    "PV2_0095_postprocessing_field_issue": "script labels the fourth evaluator numeric column as predicted foreground; that column is groups. Read raw five-column rows/README and correct PV2_0096 parser instead."
+  },
+  "our_count_proxy_review": {
+    "source": "SW_0197_native64_baseline_replication/count_proxy_review.py",
+    "tests_local": 5,
+    "tests_Linux": 5,
+    "TRAIN_images": 64,
+    "validation_images": 0,
+    "true_classes_including_background_mean": 7.109375,
+    "ideal_raw_PR_mean": 1.5784507079734342,
+    "ideal_raw_PR_target_true_count_loss_mean": 0.5915773155269475,
+    "unequal_90_5_5_blocks": {
+      "true_count": 3,
+      "raw_PR": 1.2269938650306749,
+      "normalized_proxy": 3
+    },
+    "actual_local_counterpart_formula_verified": true,
+    "peer_core_formula_only_documented": true,
+    "normalization_prototype_is_not_exact_connected_count": true,
+    "model_training_test_of_count_proxy_completed": false
+  }
 }

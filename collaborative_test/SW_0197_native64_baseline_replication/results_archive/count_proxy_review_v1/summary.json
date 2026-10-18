@@ -1,0 +1,63 @@
+{
+  "status": "completed_CPU_count_proxy_review_on_ideal_blocks_and_registered_TRAIN64",
+  "peer_commit": "1fc3906474039f5016efb4f492fccdbb8c223e60",
+  "peer_formula_scope": "README formula; peer core implementation absent from branch",
+  "actual_local_loss_function_sha256": "6542d084f66c07101b75869709df9302db45e0dde87b6b5945d1790daa316543",
+  "analysis_source_sha256": "88f7b6174ae547bc44d387172a7832640e591b36799d0191be4435eab5de1c62",
+  "source_TRAIN_report_sha256": "e93f13da2dc28050e911db2dd259e1e4db215672c04b95bba7db1e5ee03f8d1c",
+  "ideal_examples": {
+    "equal": {
+      "sizes": [
+        30,
+        30,
+        30
+      ],
+      "true_blocks": 3,
+      "raw_participation": 3.0,
+      "actual_local_plv_group_count_loss_at_true_count": 0.0,
+      "normalized_proxy": 2.999999999999999
+    },
+    "unequal": {
+      "sizes": [
+        90,
+        5,
+        5
+      ],
+      "true_blocks": 3,
+      "raw_participation": 1.2269938650306749,
+      "actual_local_plv_group_count_loss_at_true_count": 0.3492834171820961,
+      "normalized_proxy": 2.999999999999999
+    }
+  },
+  "TRAIN64_ideal_affinity_aggregates": {
+    "true_classes_including_background": {
+      "mean": 7.109375,
+      "minimum": 3.0,
+      "maximum": 11.0
+    },
+    "ideal_raw_PR": {
+      "mean": 1.5784507079734342,
+      "minimum": 1.050325185305478,
+      "maximum": 2.894347081865649
+    },
+    "background_patch_fraction": {
+      "mean": 0.7992362976074219,
+      "minimum": 0.54833984375,
+      "maximum": 0.9755859375
+    },
+    "ideal_raw_loss_at_true_class_count": {
+      "mean": 0.5915773155269475,
+      "minimum": 0.37249407328990003,
+      "maximum": 0.7494312684752312
+    }
+  },
+  "ideal_affinity_from_GT_not_actual_learned_affinity": true,
+  "validation_images_used": 0,
+  "normalized_proxy_is_not_exact_connected_count": true,
+  "new_GPU_forwards": 0,
+  "optimizer_updates": 0,
+  "fixed_target_7_5_not_imported": true,
+  "production_loss_unchanged": true,
+  "performance_improvement_claim": false,
+  "raw_imagewise_values_included": false
+}

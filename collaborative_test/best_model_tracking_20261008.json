@@ -8282,7 +8282,7 @@
   },
   "latest_native64_baseline_replication_20261017": {
     "experiment": "SW0197",
-    "status": "seed1_complete_seed2_GPU1_prediction_running",
+    "status": "all_three_baseline_seeds_complete_actual_masks_independently_audited",
     "eligible_GPUs": [
       0,
       1,
@@ -8290,6 +8290,7 @@
       3
     ],
     "seed_scope": [
+      0,
       1,
       2
     ],
@@ -8316,9 +8317,106 @@
       "foreground_iou": 0.44777024633307083,
       "matched_object_iou": 0.6664774994467442
     },
-    "three_seed_result_available": false,
-    "seed2_worker_pid": 1995376,
-    "seed2_physical_GPU": 1
+    "three_seed_result_available": true,
+    "newly_evaluated_seeds": [
+      1,
+      2
+    ],
+    "seed2_status": "complete",
+    "ours_per_seed": {
+      "seed0": {
+        "fg_ari": 0.9095369755094326,
+        "foreground_iou": 0.8271468754064402,
+        "matched_object_iou": 0.7344419699559647
+      },
+      "seed1": {
+        "fg_ari": 0.8175115351902164,
+        "foreground_iou": 0.44777024633307083,
+        "matched_object_iou": 0.6664774994467442
+      },
+      "seed2": {
+        "fg_ari": 0.8272358513046323,
+        "foreground_iou": 0.45929914574664527,
+        "matched_object_iou": 0.6810919425962343
+      }
+    },
+    "ours_three_seed_mean": {
+      "fg_ari": 0.8514281206680938,
+      "foreground_iou": 0.578072089162052,
+      "matched_object_iou": 0.6940038039996477
+    },
+    "Slot_three_seed_mean": {
+      "fg_ari": 0.8215711846429223,
+      "foreground_iou": 0.17331530733982128,
+      "matched_object_iou": 0.20398815662503914
+    },
+    "paired_ours_minus_Slot": {
+      "fg_ari": {
+        "mean": 0.029856936025171567,
+        "ci95": [
+          -0.02652276982012968,
+          0.08249218644527846
+        ]
+      },
+      "foreground_iou": {
+        "mean": 0.40475678182223074,
+        "ci95": [
+          0.35796632412092094,
+          0.4560605773351338
+        ]
+      },
+      "matched_object_iou": {
+        "mean": 0.4900156473746087,
+        "ci95": [
+          0.4419239526803258,
+          0.5359271876303142
+        ]
+      }
+    },
+    "mini_mean_FG090_reached": false,
+    "source_models_mask_supervised": true,
+    "unsupervised_leaderboard_eligible": false,
+    "per_seed_error_means": {
+      "seed0": {
+        "foreground_miss_rate": 0.05257407888479047,
+        "background_false_positive_rate": 0.05505264188945106,
+        "pair_split_rate": 0.06062117385191229,
+        "pair_merge_rate": 0.024431959710098233,
+        "pair_merge_via_predicted_background_rate": 0.0037956685013144577,
+        "object_balanced_split_rate": 0.08482111776196627,
+        "object_pair_balanced_merge_rate": 0.02895332457361442,
+        "foreground_precision": 0.8686806213442728,
+        "true_object_count": 5.65625,
+        "predicted_positive_label_count": 8.03125,
+        "raw_count_exact": 0.15625
+      },
+      "seed1": {
+        "foreground_miss_rate": 0.07007672204688703,
+        "background_false_positive_rate": 0.3055209124112117,
+        "pair_split_rate": 0.13986973257499566,
+        "pair_merge_rate": 0.0388107798555351,
+        "pair_merge_via_predicted_background_rate": 0.00950759400208072,
+        "object_balanced_split_rate": 0.12836233748511222,
+        "object_pair_balanced_merge_rate": 0.046575830707711235,
+        "foreground_precision": 0.4608733114150336,
+        "true_object_count": 5.65625,
+        "predicted_positive_label_count": 15.53125,
+        "raw_count_exact": 0.125
+      },
+      "seed2": {
+        "foreground_miss_rate": 0.023133080021457905,
+        "background_false_positive_rate": 0.3131407864381589,
+        "pair_split_rate": 0.10574164233773724,
+        "pair_merge_rate": 0.05692514228441581,
+        "pair_merge_via_predicted_background_rate": 0.0007774726796012552,
+        "object_balanced_split_rate": 0.09002176809867762,
+        "object_pair_balanced_merge_rate": 0.0501384254900661,
+        "foreground_precision": 0.46595044983271855,
+        "true_object_count": 5.65625,
+        "predicted_positive_label_count": 18.0,
+        "raw_count_exact": 0.03125
+      }
+    }
   },
   "active_all_GPU_schedule_20261017": {
     "eligible_GPUs": [
@@ -8328,7 +8426,6 @@
       3
     ],
     "independent_jobs": [
-      "SW0197_baseline_seed2",
       "SW0199_absolute_calibration",
       "SW0200_long_credit"
     ],
@@ -8342,7 +8439,8 @@
       "SW0196_numerical_benchmark",
       "SW0197_baseline_seed1",
       "SW0198_readout_normalization",
-      "SW0199_QCE_control"
+      "SW0199_QCE_control",
+      "SW0197_baseline_seed2"
     ],
     "required195_dependency_satisfied": true
   },
@@ -8547,7 +8645,7 @@
   },
   "latest_native64_long_credit_20261017": {
     "experiment": "SW0200",
-    "status": "actual_model_Adam_RNG_and_control_CPU_admitted_waiting_all_GPUs",
+    "status": "actual_GPU1_full512_gradient_admitted_training_started",
     "supervisor_pid": 2000695,
     "eligible_GPUs": [
       0,
@@ -8572,10 +8670,31 @@
     "local_tests": 14,
     "Linux_tests": 14,
     "CLI_modules": 2,
-    "GPU_full512_admission_completed": false,
+    "GPU_full512_admission_completed": true,
     "mask_supervised": true,
     "incumbent_changed": false,
     "new_performance_result_available": false,
-    "full320_three_seed_goal_verified": false
+    "full320_three_seed_goal_verified": false,
+    "worker_pid": 2003084,
+    "physical_GPU": 1,
+    "actual_emitted_S_gradient_positive": true,
+    "all_five_parameter_family_gradients_positive": true,
+    "peak_admission_allocated_bytes": 6431305216,
+    "same_RNG_forward_loss_parity_exact": true,
+    "model_Adam_RNG_restored_after_read_only_admission": true,
+    "causal_gate_contribution_proved": false,
+    "peer_cycle_commit": "1fc3906474039f5016efb4f492fccdbb8c223e60"
+  },
+  "latest_native64_count_proxy_review_20261017": {
+    "status": "CPU_ideal_affinity_math_and_TRAIN64_review_complete",
+    "true_classes_mean": 7.109375,
+    "ideal_raw_PR_mean": 1.5784507079734342,
+    "source": "SW0197 count_proxy_review.py",
+    "local_tests": 5,
+    "Linux_tests": 5,
+    "validation_used": false,
+    "model_training_effect_not_tested": true,
+    "production_loss_unchanged": true,
+    "next_hypothesis": "normalized spike-Q count proxy, with actual mask metrics and unequal-group calibration; no fixed rawPR7.5"
   }
 }

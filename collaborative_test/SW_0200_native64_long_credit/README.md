@@ -18,3 +18,12 @@ Linux CLI entrypoints passed. Actual CPU model/Adam/RNG matches the199 control's
 start, Adam steps2, frozen control masks/protocol checked without opening GT.
 Supervisor2000695 is registered for all four GPUs. Actual native64 GPU full512
 memory/gradient admission is still pending; CPU tests do not establish GPU fit.
+
+Actual GPU admission subsequently PASSED onGPU1: full512/no-grad forward losses
+matched exactly, actual emitted-S and all five parameter-family gradients were
+positive. Peak allocation6,431,305,216bytes (~5.99GiB), below the .8 allocator
+budget. The read-only probe restored model/Adam/RNG before training. Worker2003084
+then started the registered two-proposal training. This is learning admission,
+not a segmentation improvement result or a gate-contribution ablation.
+Public validation facts are in gradient_admission/public_receipt.json; the
+single-TRAIN-image loss/gradient values remain private.

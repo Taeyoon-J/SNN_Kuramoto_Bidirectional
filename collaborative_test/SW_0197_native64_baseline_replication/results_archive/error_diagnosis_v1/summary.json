@@ -1,0 +1,296 @@
+{
+  "status": "completed_three_seed_baseline_error_attribution",
+  "grid": [
+    64,
+    64
+  ],
+  "images": 32,
+  "seed_scope": [
+    0,
+    1,
+    2
+  ],
+  "per_seed_means": {
+    "seed0": {
+      "foreground_miss_rate": 0.05257407888479047,
+      "background_false_positive_rate": 0.05505264188945106,
+      "pair_split_rate": 0.06062117385191229,
+      "pair_merge_rate": 0.024431959710098233,
+      "pair_merge_via_predicted_background_rate": 0.0037956685013144577,
+      "object_balanced_split_rate": 0.08482111776196627,
+      "object_pair_balanced_merge_rate": 0.02895332457361442,
+      "foreground_precision": 0.8686806213442728,
+      "true_object_count": 5.65625,
+      "predicted_positive_label_count": 8.03125,
+      "raw_count_exact": 0.15625
+    },
+    "seed1": {
+      "foreground_miss_rate": 0.07007672204688703,
+      "background_false_positive_rate": 0.3055209124112117,
+      "pair_split_rate": 0.13986973257499566,
+      "pair_merge_rate": 0.0388107798555351,
+      "pair_merge_via_predicted_background_rate": 0.00950759400208072,
+      "object_balanced_split_rate": 0.12836233748511222,
+      "object_pair_balanced_merge_rate": 0.046575830707711235,
+      "foreground_precision": 0.4608733114150336,
+      "true_object_count": 5.65625,
+      "predicted_positive_label_count": 15.53125,
+      "raw_count_exact": 0.125
+    },
+    "seed2": {
+      "foreground_miss_rate": 0.023133080021457905,
+      "background_false_positive_rate": 0.3131407864381589,
+      "pair_split_rate": 0.10574164233773724,
+      "pair_merge_rate": 0.05692514228441581,
+      "pair_merge_via_predicted_background_rate": 0.0007774726796012552,
+      "object_balanced_split_rate": 0.09002176809867762,
+      "object_pair_balanced_merge_rate": 0.0501384254900661,
+      "foreground_precision": 0.46595044983271855,
+      "true_object_count": 5.65625,
+      "predicted_positive_label_count": 18.0,
+      "raw_count_exact": 0.03125
+    }
+  },
+  "paired_seed_minus_seed0": {
+    "seed1": {
+      "foreground_miss_rate": {
+        "defined_images": 32,
+        "before": 0.05257407888479047,
+        "after": 0.07007672204688703,
+        "delta": 0.01750264316209656,
+        "ci95": [
+          -0.011179299233051686,
+          0.052715147162779086
+        ]
+      },
+      "background_false_positive_rate": {
+        "defined_images": 32,
+        "before": 0.05505264188945106,
+        "after": 0.3055209124112117,
+        "delta": 0.2504682705217607,
+        "ci95": [
+          0.1948590555776744,
+          0.3032140891781672
+        ]
+      },
+      "pair_split_rate": {
+        "defined_images": 32,
+        "before": 0.06062117385191229,
+        "after": 0.13986973257499566,
+        "delta": 0.07924855872308338,
+        "ci95": [
+          0.029059233703727982,
+          0.13661194704411353
+        ]
+      },
+      "pair_merge_rate": {
+        "defined_images": 32,
+        "before": 0.024431959710098233,
+        "after": 0.0388107798555351,
+        "delta": 0.014378820145436863,
+        "ci95": [
+          -0.0003532200805622695,
+          0.033302057571322194
+        ]
+      },
+      "pair_merge_via_predicted_background_rate": {
+        "defined_images": 32,
+        "before": 0.0037956685013144577,
+        "after": 0.00950759400208072,
+        "delta": 0.005711925500766262,
+        "ci95": [
+          -0.0013231744503046472,
+          0.01631539663179827
+        ]
+      },
+      "object_balanced_split_rate": {
+        "defined_images": 32,
+        "before": 0.08482111776196627,
+        "after": 0.12836233748511222,
+        "delta": 0.04354121972314594,
+        "ci95": [
+          0.009952923490997398,
+          0.0795216805405294
+        ]
+      },
+      "object_pair_balanced_merge_rate": {
+        "defined_images": 32,
+        "before": 0.02895332457361442,
+        "after": 0.046575830707711235,
+        "delta": 0.01762250613409681,
+        "ci95": [
+          0.0015219818500354506,
+          0.038836717096303534
+        ]
+      },
+      "foreground_precision": {
+        "defined_images": 32,
+        "before": 0.8686806213442728,
+        "after": 0.4608733114150336,
+        "delta": -0.4078073099292392,
+        "ci95": [
+          -0.48993796624039926,
+          -0.32282665523624743
+        ]
+      },
+      "true_object_count": {
+        "defined_images": 32,
+        "before": 5.65625,
+        "after": 5.65625,
+        "delta": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "predicted_positive_label_count": {
+        "defined_images": 32,
+        "before": 8.03125,
+        "after": 15.53125,
+        "delta": 7.5,
+        "ci95": [
+          4.75,
+          10.4375
+        ]
+      },
+      "raw_count_exact": {
+        "defined_images": 32,
+        "before": 0.15625,
+        "after": 0.125,
+        "delta": -0.03125,
+        "ci95": [
+          -0.1875,
+          0.125
+        ]
+      }
+    },
+    "seed2": {
+      "foreground_miss_rate": {
+        "defined_images": 32,
+        "before": 0.05257407888479047,
+        "after": 0.023133080021457905,
+        "delta": -0.02944099886333257,
+        "ci95": [
+          -0.0465231956141065,
+          -0.014644342870890363
+        ]
+      },
+      "background_false_positive_rate": {
+        "defined_images": 32,
+        "before": 0.05505264188945106,
+        "after": 0.3131407864381589,
+        "delta": 0.2580881445487079,
+        "ci95": [
+          0.19696003232135653,
+          0.31768494064296915
+        ]
+      },
+      "pair_split_rate": {
+        "defined_images": 32,
+        "before": 0.06062117385191229,
+        "after": 0.10574164233773724,
+        "delta": 0.04512046848582494,
+        "ci95": [
+          0.003620503302682249,
+          0.0924728475767623
+        ]
+      },
+      "pair_merge_rate": {
+        "defined_images": 32,
+        "before": 0.024431959710098233,
+        "after": 0.05692514228441581,
+        "delta": 0.032493182574317575,
+        "ci95": [
+          0.005232298596566211,
+          0.07773689583034674
+        ]
+      },
+      "pair_merge_via_predicted_background_rate": {
+        "defined_images": 32,
+        "before": 0.0037956685013144577,
+        "after": 0.0007774726796012552,
+        "delta": -0.0030181958217132022,
+        "ci95": [
+          -0.00579140132390255,
+          -0.0011581639118283488
+        ]
+      },
+      "object_balanced_split_rate": {
+        "defined_images": 32,
+        "before": 0.08482111776196627,
+        "after": 0.09002176809867762,
+        "delta": 0.005200650336711349,
+        "ci95": [
+          -0.02167481366005765,
+          0.03585904344750013
+        ]
+      },
+      "object_pair_balanced_merge_rate": {
+        "defined_images": 32,
+        "before": 0.02895332457361442,
+        "after": 0.0501384254900661,
+        "delta": 0.021185100916451684,
+        "ci95": [
+          -0.000445900044137974,
+          0.049843472420256614
+        ]
+      },
+      "foreground_precision": {
+        "defined_images": 32,
+        "before": 0.8686806213442728,
+        "after": 0.46595044983271855,
+        "delta": -0.40273017151155416,
+        "ci95": [
+          -0.48650807269579327,
+          -0.3169941335377456
+        ]
+      },
+      "true_object_count": {
+        "defined_images": 32,
+        "before": 5.65625,
+        "after": 5.65625,
+        "delta": 0.0,
+        "ci95": [
+          0.0,
+          0.0
+        ]
+      },
+      "predicted_positive_label_count": {
+        "defined_images": 32,
+        "before": 8.03125,
+        "after": 18.0,
+        "delta": 9.96875,
+        "ci95": [
+          6.59375,
+          14.438281249999989
+        ]
+      },
+      "raw_count_exact": {
+        "defined_images": 32,
+        "before": 0.15625,
+        "after": 0.03125,
+        "delta": -0.125,
+        "ci95": [
+          -0.25,
+          -0.03125
+        ]
+      }
+    }
+  },
+  "summary_sha256": "e547d5795a82e8dbbc3113938eea225470060a98b40fbf806bb4242111298f88",
+  "protocol_sha256": {
+    "seed0": "756f99dfd532f081e8f87d6759e059f486feb1c477bd19b26bdc8ee19bc129f7",
+    "seed1": "18a2e471f728b45f41a19eb96f81dcdb55a5e4a65e936c0c86526b00953da485",
+    "seed2": "994b1daf56f204bceb485de3808083959f7db5078f001a22571b6bba3e562fbf"
+  },
+  "error_operator_sha256": "d1cfc168b2f06460cc564bc5ef5b45f555634e703ed11e9c33a062e40de71e35",
+  "paired_operator_sha256": "b4f37dfa2ab5e519a759ecc9a2eefddf9619f36399db63a68a728877a0f1f1e4",
+  "analysis_source_sha256": "e1205eb8b74c711fcc68cae2c8d4ba4c850f3eaa77780559221b34d8cd81316b",
+  "raw_positive_label_count_is_not_a_trained_count_classifier": true,
+  "pair_rates_are_not_additive_error_shares": true,
+  "bootstrap_scope": "fixed trained models, paired development images; not population variation across training seeds",
+  "causal_claim": false,
+  "new_model_forward_passes": 0,
+  "optimizer_updates": 0,
+  "raw_imagewise_values_included": false
+}
