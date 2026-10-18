@@ -86,6 +86,8 @@
 | PV2_0095 | completed | **the 32x32 failure measured: 19.5 groups per image against 6.49 true objects. sigma 4.0 recovers fg_iou to within .016 of grid 16 and holds obj_iou +.0934; min-group-size made it worse, deleting objects not noise** | 0.6293 | 0.7091 | **0.5885** |
 | PV2_0096 | failed | **graph sparsity is not it: top_k 32 -> 256 (8x denser) moves fg_ari +.0019 and groups 16.76 -> 16.14. Three readout knobs swept, fg_ari stuck at .63 -- PV2_0091's verdict arriving at the other grid** | | | |
 | PV2_0097 | running | the objective has no term for how many groups form; `--plv-group-count-weight` exists and is unused | | | |
+| PV2_0098 | queued | training images 1000 vs 6000 on the published line: settles both `PV2_0092`'s broken control and the scope `PV2_0048` left | | | |
+| PV2_0099 | completed | **the crop makes it HARDER, not easier (-0.087): smaller cells surface small objects, 6.32 -> 6.49 per image. And grid 16->32 costs Slot +0.007 but costs US -0.095 -- a fixed slot count is resolution-robust, an emergent group count is not** | | | |
 | PV2_0091 | completed | **the readout dial cannot reach 0.9: at matched extent (pred_fg .808 vs .853) we score .7718 against aligned Slot's .8102, and .7718 is the dial's maximum anywhere -- .13 below the bar. An architectural change is necessary, not merely desirable** | 0.7718 | | |
 | PV2_0090 | completed | **the Slot Attention baseline was misaligned IN OUR FAVOUR: its centre crop made the prediction and target grids describe different regions. Aligned, Slot fg_ari 0.6656 -> 0.8102 and LEADS our 0.7603. Both IoU wins stand** | | | |
 | PV2_0046 | completed | contract diagnostic: a looser rule *lowers* fg_ari 0.724 to 0.533; cross-branch scores are not poolable | | | |
