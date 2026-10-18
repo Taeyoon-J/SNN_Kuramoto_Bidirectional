@@ -63,5 +63,15 @@ class BenchmarkBindingTests(unittest.TestCase):
         self.assertEqual(run.PREDECESSOR_ARCHIVE.name,'results_archive')
         self.assertEqual(run.PREDECESSOR_ARCHIVE.parent.name,'SW_0195_native64_generalization_gap')
 
+    def test_independent_ready_queue_preserves_assigned_GPU_on_all_four_workers(self):
+        from . import queue
+        with patch.object(queue,'READY',True):
+            for gpu in range(4):
+                argv=queue.worker_command(gpu)
+                self.assertEqual(argv[argv.index('--physical-gpu')+1],str(gpu))
+                self.assertIn('--ready-now',argv)
+        with patch.object(queue,'READY',False):
+            self.assertNotIn('--ready-now',queue.worker_command(0))
+
 
 if __name__=='__main__':unittest.main()

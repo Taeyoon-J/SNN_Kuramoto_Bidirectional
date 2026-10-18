@@ -1,0 +1,95 @@
+{
+  "registered": [
+    {
+      "label": "SW0196_ready",
+      "launch": {
+        "pid": 1867954,
+        "argv": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "-u",
+          "-m",
+          "collaborative_test.SW_0196_geodesic_matmul.queue",
+          "--ready-now"
+        ],
+        "launched_unix": 1792284425.1113946,
+        "eligible_physical_GPUs": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      "state": {
+        "status": "waiting_for_exclusive_gpu",
+        "supervisor_pid": 1867954,
+        "updated_unix": 1792284471.3958466
+      },
+      "actual_CPU_admitted": true,
+      "actual_model_sha256": "2dd2b0d64602b85d4082bcaddcd21dfe8c60d34af1ea78a2ed29bf03c8ba4b6e"
+    },
+    {
+      "label": "SW0197_seed1",
+      "launch": {
+        "pid": 1867955,
+        "argv": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "-u",
+          "-m",
+          "collaborative_test.SW_0197_native64_baseline_replication.queue",
+          "--seed",
+          "1"
+        ],
+        "launched_unix": 1792284425.112181,
+        "eligible_physical_GPUs": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      "state": {
+        "status": "waiting_for_exclusive_gpu",
+        "supervisor_pid": 1867955,
+        "updated_unix": 1792284448.8096735
+      },
+      "actual_CPU_admitted": true,
+      "actual_model_sha256": "6c48389f8bd2e492515b38bcc6ce6bdb63ae9be81765aa1137a4a44125dd4ca7"
+    },
+    {
+      "label": "SW0197_seed2",
+      "launch": {
+        "pid": 1867956,
+        "argv": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "-u",
+          "-m",
+          "collaborative_test.SW_0197_native64_baseline_replication.queue",
+          "--seed",
+          "2"
+        ],
+        "launched_unix": 1792284425.112992,
+        "eligible_physical_GPUs": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      "state": {
+        "status": "waiting_for_exclusive_gpu",
+        "supervisor_pid": 1867956,
+        "updated_unix": 1792284449.9831269
+      },
+      "actual_CPU_admitted": true,
+      "actual_model_sha256": "b2c1a56fc30ae5fee4515e8f003d2b53be5632faf0fd06b5d4089c23a5295e8d"
+    }
+  ],
+  "eligible_GPUs": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "existing194_continues": true,
+  "existing195_required_dependency_retained": true
+}

@@ -11,6 +11,7 @@ import threading
 import time
 
 WORKER = '--worker' in sys.argv
+READY = '--ready-now' in sys.argv
 if not WORKER: os.environ['CUDA_VISIBLE_DEVICES'] = ''
 for name in ('OMP_NUM_THREADS', 'MKL_NUM_THREADS', 'OPENBLAS_NUM_THREADS'): os.environ[name] = '1'
 os.environ['PYTHONDONTWRITEBYTECODE'] = '1'
@@ -27,13 +28,14 @@ def load(name):
 api = load('collaborative_test.SW_0196_geodesic_matmul.run')
 MODULE = 'collaborative_test.SW_0196_geodesic_matmul.queue'
 ROOT = api.HERE.parents[1]
-RUNTIME = api.ARCHIVE/'queue'
+RUNTIME = api.ARCHIVE/('queue_all_gpus' if READY else 'queue')
 STOP = threading.Event()
 
 
 def worker_command(gpu):
     if type(gpu) is not int or gpu not in range(4): raise ValueError('invalid physical GPU')
-    return [sys.executable, '-u', '-m', MODULE, '--worker', '--physical-gpu', str(gpu)]
+    command = [sys.executable, '-u', '-m', MODULE, '--worker', '--physical-gpu', str(gpu)]
+    return command + (['--ready-now'] if READY else [])
 
 
 def supervise():
@@ -49,8 +51,8 @@ def supervise():
         api.train.write_json(RUNTIME/'state.json', dict(status=status, supervisor_pid=os.getpid(),
             updated_unix=time.time(), **fields), replace=True)
     try:
-        record('waiting_for_SW0195_completion')
-        while not STOP.is_set():
+        if not READY: record('waiting_for_SW0195_completion')
+        while not READY and not STOP.is_set():
             state = json.loads((api.PREDECESSOR_ARCHIVE/'queue/state.json').read_bytes())
             if state['status'] == 'complete': break
             if state['status'] == 'failed': raise RuntimeError('195 failed; inspect dependency without restarting')
@@ -120,6 +122,7 @@ def supervise():
 
 def main():
     parser = argparse.ArgumentParser(); parser.add_argument('--worker', action='store_true')
+    parser.add_argument('--ready-now', action='store_true')
     parser.add_argument('--physical-gpu', type=int, choices=range(4)); args = parser.parse_args()
     if args.worker:
         if args.physical_gpu is None or os.environ.get('CUDA_VISIBLE_DEVICES') != str(args.physical_gpu):

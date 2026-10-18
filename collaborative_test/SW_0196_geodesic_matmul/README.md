@@ -15,3 +15,8 @@ the registered tolerance. Whole-model optimizer equivalence remains a separate
 requirement before any production training can use the candidate implementation.
 
 The current194/195 models, sources and checkpoints are unchanged.
+
+2026-10-17 user scheduling update: the original unstarted waiter was stopped
+gracefully and preserved. `queue --ready-now` uses `queue_all_gpus` and removes
+the optional195 dependency. It scans all four GPUs for an exclusive idle lease.
+The operator, model, numerical gates and benchmark cohort remain unchanged.

@@ -8038,8 +8038,8 @@
   },
   "latest_native64_compute_validation_20261017": {
     "experiment": "SW0196",
-    "status": "server_queue_registered_waiting_for_SW0195_completion",
-    "supervisor_pid": 1857076,
+    "status": "actual_CPU_admitted_ready_on_any_GPU_0_to_3",
+    "supervisor_pid": 1867954,
     "grid": [
       64,
       64
@@ -8050,8 +8050,8 @@
     "images": 4,
     "source": "immutable SW0192 completed TRAIN8 model",
     "candidate": "same real-valued soft geodesic via float64 exponential/matrix/log products",
-    "local_tests": 22,
-    "server_tests": 22,
+    "local_tests": 28,
+    "server_tests": 28,
     "CLI_modules": 2,
     "CPU_value_and_gradient_cases_passed": true,
     "actual_GPU_mask_parity_verified": false,
@@ -8061,6 +8061,55 @@
     "optimizer_updates": 0,
     "FG_ARI_improvement_claim": false,
     "incumbent_changed": false,
-    "result_path": "collaborative_test/SW_0196_geodesic_matmul/README.md"
+    "result_path": "collaborative_test/SW_0196_geodesic_matmul/README.md",
+    "queue_path": "results_archive/queue_all_gpus",
+    "optional195_dependency_removed": true,
+    "actual_CPU_model_admitted": true
+  },
+  "latest_native64_baseline_replication_20261017": {
+    "experiment": "SW0197",
+    "status": "two_independent_actual_CPU_admitted_GPU_queues_registered",
+    "eligible_GPUs": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "seed_scope": [
+      1,
+      2
+    ],
+    "images": 32,
+    "optimizer_updates": 0,
+    "supervisor_pids": {
+      "1": 1867955,
+      "2": 1867956
+    },
+    "reuse_frozen_seed0_SW0193_baseline": true,
+    "new_performance_result_available": false,
+    "full320_three_seed_goal_verified": false,
+    "incumbent_changed": false,
+    "actual_model_sha256": {
+      "1": "6c48389f8bd2e492515b38bcc6ce6bdb63ae9be81765aa1137a4a44125dd4ca7",
+      "2": "b2c1a56fc30ae5fee4515e8f003d2b53be5632faf0fd06b5d4089c23a5295e8d"
+    }
+  },
+  "active_all_GPU_schedule_20261017": {
+    "eligible_GPUs": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "independent_jobs": [
+      "SW0194_TRAIN64_seed0",
+      "SW0196_numerical_benchmark",
+      "SW0197_baseline_seed1",
+      "SW0197_baseline_seed2"
+    ],
+    "additional_required_dependency": "SW0195 waits only for completed194 model",
+    "already_running194_restarted": false,
+    "sharing_foreign_GPU": false,
+    "foreign_owner_yield": true
   }
 }
