@@ -1,0 +1,30 @@
+{
+  "status": "actual_GPU_worker_and_committed_training_boundary_verified",
+  "seed": 2,
+  "state": {
+    "status": "running_worker",
+    "supervisor_pid": 2054791,
+    "updated_unix": 1792301989.571316,
+    "child_pid": 2066038,
+    "physical_gpu": 1,
+    "gpu_uuid": "GPU-45604115-c231-56a5-32ea-d3001e8ff243"
+  },
+  "actual_worker_argv": [
+    "/Data0/kevinswk/envs/snn/bin/python",
+    "-u",
+    "-m",
+    "collaborative_test.SW_0205_native64_weak_seed_adaptation.queue",
+    "--worker",
+    "--physical-gpu",
+    "1",
+    "--seed",
+    "2"
+  ],
+  "own_NVIDIA_record": "GPU-45604115-c231-56a5-32ea-d3001e8ff243, 2066038, 5716 MiB",
+  "boundary_sha256": "67d263929e4461d5fb534a0d6fd23a32dbd955d80af448ae5801fffae3685e16",
+  "actual_model_sha256": "b2c1a56fc30ae5fee4515e8f003d2b53be5632faf0fd06b5d4089c23a5295e8d",
+  "completed_proposals": 0,
+  "actual_Adam_steps": [],
+  "initial_empty_Adam_and_same_independent_baseline_GPU_model_verified": true,
+  "observed_unix": 1792302224.9322011
+}

@@ -9033,7 +9033,7 @@
     "full320_three_seed_goal_verified": false
   },
   "SW0204_component_credit_queue": {
-    "status": "actual_GPU1_training_started_initial_model_Adam_RNG_verified",
+    "status": "completed_independently_audited_extension_gate_failed_recipe_closed",
     "supervisor_pid": 2049352,
     "eligible_GPUs": [
       0,
@@ -9159,7 +9159,7 @@
     "full320_three_seed_goal_verified": false
   },
   "SW0205_weak_seed_adaptation_queue": {
-    "status": "both_independent_models_CPU_admitted_and_two_ready_queues_registered",
+    "status": "seed2_actual_GPU1_training_seed1_waiting",
     "seed_scope": [
       1,
       2
@@ -9190,6 +9190,90 @@
       "tests_local": 2,
       "tests_Linux": 2,
       "full320_three_seed_goal_verified": false
+    },
+    "seed2_start": {
+      "worker_pid": 2066038,
+      "physical_gpu": 1,
+      "initial_empty_Adam_and_same_independent_baseline_GPU_model_verified": true,
+      "initial_model_sha256": "b2c1a56fc30ae5fee4515e8f003d2b53be5632faf0fd06b5d4089c23a5295e8d"
     }
+  },
+  "SW0204_component_credit_completion": {
+    "status": "closed_no_adoption",
+    "scores": {
+      "component_credit": {
+        "fg_ari": 0.9005389598535832,
+        "foreground_iou": 0.8605773316340178,
+        "matched_object_iou": 0.7276216787864956
+      },
+      "control": {
+        "fg_ari": 0.9001477304039301,
+        "foreground_iou": 0.8595864826069441,
+        "matched_object_iou": 0.7281376470404165
+      },
+      "warm": {
+        "fg_ari": 0.924401453845536,
+        "foreground_iou": 0.8598964166728263,
+        "matched_object_iou": 0.7276384094627034
+      }
+    },
+    "paired_candidate_minus": {
+      "control": {
+        "fg_ari": {
+          "mean": 0.0003912294496530716,
+          "ci95": [
+            -0.0009170428102410353,
+            0.001839370801787437
+          ]
+        },
+        "foreground_iou": {
+          "mean": 0.000990849027073984,
+          "ci95": [
+            -0.0009640834044372609,
+            0.0034123979774601204
+          ]
+        },
+        "matched_object_iou": {
+          "mean": -0.0005159682539205568,
+          "ci95": [
+            -0.0020019847206200103,
+            0.0007200265402258035
+          ]
+        }
+      },
+      "warm": {
+        "fg_ari": {
+          "mean": -0.023862493991952803,
+          "ci95": [
+            -0.07265464096075434,
+            0.0014125255944786674
+          ]
+        },
+        "foreground_iou": {
+          "mean": 0.0006809149611914297,
+          "ci95": [
+            -0.009117479379000775,
+            0.012653612711846642
+          ]
+        },
+        "matched_object_iou": {
+          "mean": -1.6730676207513118e-05,
+          "ci95": [
+            -0.03632896190469239,
+            0.03737833399860737
+          ]
+        }
+      }
+    },
+    "new_applied_steps": 2,
+    "actual_Adam_steps": [
+      4
+    ],
+    "images": 16,
+    "seed_scope": [
+      0
+    ],
+    "model_sha256": "f8d4ac3d9aa1ad0b6177abdd468ae0f5a713f06c9cac1be86635ce2237f36e88",
+    "full320_three_seed_goal_verified": false
   }
 }

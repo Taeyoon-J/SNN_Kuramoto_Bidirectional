@@ -15,3 +15,7 @@ Tensor transaction hashes do not cover RNG; no RNG proof is claimed from them.
 Two extra local/Linux aggregation tests passed. GPU training source hashes were
 unchanged by this addition. Aggregate audits actual model/Adam/history/masks
 and compares against same-image native64 Slot outputs; no fresh Slot inference.
+
+Seed2 worker2066038 actually obtainedGPU1 after204 completed. NVIDIA PID and
+committed proposal0 checkpoint verified: original independent seed2 model
+b2c1a56f... and empty Adam, not seed0 weights. Seed1 remains queued.

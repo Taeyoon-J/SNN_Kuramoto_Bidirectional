@@ -1,0 +1,83 @@
+{
+  "status": "actual_completed_boundary_Adam_history_and48_native64_masks_independently_verified",
+  "experiment": "SW_0204_native64_component_credit",
+  "summary_sha256": "eaeaa07cd809a0688f82652f5d1f729c226c6c58f186580f9b54fefd8da8f138",
+  "actual_model_sha256": "f8d4ac3d9aa1ad0b6177abdd468ae0f5a713f06c9cac1be86635ce2237f36e88",
+  "actual_Adam_steps": [
+    4
+  ],
+  "new_accepted_updates": 2,
+  "CNN_changed_from_warm": true,
+  "initial_model_Adam_tensor_transaction_matches_control": true,
+  "initial_parent_CPU_CUDA_RNG_restoration_hash_verified": true,
+  "scores": {
+    "component_credit": {
+      "fg_ari": 0.9005389598535832,
+      "foreground_iou": 0.8605773316340178,
+      "matched_object_iou": 0.7276216787864956
+    },
+    "control": {
+      "fg_ari": 0.9001477304039301,
+      "foreground_iou": 0.8595864826069441,
+      "matched_object_iou": 0.7281376470404165
+    },
+    "warm": {
+      "fg_ari": 0.924401453845536,
+      "foreground_iou": 0.8598964166728263,
+      "matched_object_iou": 0.7276384094627034
+    }
+  },
+  "paired_candidate_minus": {
+    "control": {
+      "fg_ari": {
+        "mean": 0.0003912294496530716,
+        "ci95": [
+          -0.0009170428102410353,
+          0.001839370801787437
+        ]
+      },
+      "foreground_iou": {
+        "mean": 0.000990849027073984,
+        "ci95": [
+          -0.0009640834044372609,
+          0.0034123979774601204
+        ]
+      },
+      "matched_object_iou": {
+        "mean": -0.0005159682539205568,
+        "ci95": [
+          -0.0020019847206200103,
+          0.0007200265402258035
+        ]
+      }
+    },
+    "warm": {
+      "fg_ari": {
+        "mean": -0.023862493991952803,
+        "ci95": [
+          -0.07265464096075434,
+          0.0014125255944786674
+        ]
+      },
+      "foreground_iou": {
+        "mean": 0.0006809149611914297,
+        "ci95": [
+          -0.009117479379000775,
+          0.012653612711846642
+        ]
+      },
+      "matched_object_iou": {
+        "mean": -1.6730676207513118e-05,
+        "ci95": [
+          -0.03632896190469239,
+          0.03737833399860737
+        ]
+      }
+    }
+  },
+  "maximum_metric_abs_error": 2.220446049250313e-16,
+  "screen_gate_passed": false,
+  "full320_three_seed_goal_verified": false,
+  "final_boundary_sha256": "9c4cd4360b1c02b1e2d4f4973de103f09119e31767cb0d27d2925df942dc3a71",
+  "raw_imagewise_values_included": false
+}

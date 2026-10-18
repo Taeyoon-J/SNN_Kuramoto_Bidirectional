@@ -87,3 +87,9 @@ Two guarded B4 QCE updates from fresh native64 Adam, following192 policy; fixed1
 paired development masks per seed. This isolates native64 adaptation in the two
 weaker seed lineages. No new loss or validation-data change. Both queues target
 all four physical GPUs; waiting at registration while204 trains onGPU1.
+
+204 completed:actual16-image seed0 score .9005/.8606/.7276, versus202
+.9001/.8596/.7281 and warm .9244/.8599/.7276. FG difference +.0004 is not
+a demonstrated gain; object IoU slightly lower. Independent48-mask/Adam audit
+passed, extension gate failed, recipe closed.205 seed2 worker2066038 obtained
+GPU1 afterward; seed1 remains queued. No205 evaluation result yet.
