@@ -1,0 +1,143 @@
+{
+  "status": "complete_actual_joint_projection_teacher_control_and_mask_audit",
+  "score_sha256": "127034b9575f698b6ee6102fe3a32999d2582264506e7bad08e7e2ce83e103bc",
+  "diagnostic_source_sha256": "54daa32167fcc5136654fc8b0d653f0d9de128b9f792efcd2cb67d8e034d9d55",
+  "frequency_helper_sha256": "4ae4be0486f4c24366fa3c3b2b6ce5dba6c8a760f951842e6e8f6777d26d0760",
+  "checkpoints": {
+    "0": {
+      "checkpoint_sha256": "c712cac7072d300124e53b13bd280e4b9981087c04dfda384b61456ca4948637",
+      "encoder_sha256": "2cb9e09ea447197619679a81257ec36d73c56704e7327647f1c4b7fc8db3ac4d",
+      "teacher_sha256": "a3439be4e3c152a0c38aa2111c04553e2aff662753d8e8b432d31495b99b8647",
+      "protocol_sha256": "a386798eba98129bfe6bb9382799c28e4b07b0aac9f2a1c50a8f6882040b13d1",
+      "projection_sha256": "fcebe402d4fbf13ded6cc3db4f4e68c3a87aeaa8712a5e685aa4b05335d79a07"
+    },
+    "1": {
+      "checkpoint_sha256": "a8f66cb8f3d968da4ed43d02fc1a812e525adbe571b0b585fe51d50709f241f1",
+      "encoder_sha256": "c5fa42f14d5a068c130e86a798f218f47586705b2a59c073dada229c8e49cca3",
+      "teacher_sha256": "d2bae6901c54ed8de91bf7ef3bbffb9a19abc221912cc8ee11c1757791aa78ac",
+      "protocol_sha256": "0a323c90b324ce44ab0882dfe0cc7ae9a22bd64101dd53ccf07901710f00e3d7",
+      "projection_sha256": "95d1f3ce8aee474ae7711b9bf9f50d2a78eb688e5917c469d8645d632435fb61"
+    },
+    "2": {
+      "checkpoint_sha256": "790a30929d5df4ac8ffdda751ec025d47222c3027880cca89c5f38c4e20f6135",
+      "encoder_sha256": "dbdf05c6bb283903da935accf847f052cc89743df17855141471697325826bf1",
+      "teacher_sha256": "a9187f755aef129bef4d354c6ad4c5d3fd8155b48ad9bcc42703fd9002211cbb",
+      "protocol_sha256": "2b059ff06a783f520f19d72e8572ac8c147261be4b20ef12085a6402ab8ac4f4",
+      "projection_sha256": "bbf94361318f831a4f0a08ed2a3c48609ef1dd7a504d3a9d35a765e3edcc2f24"
+    }
+  },
+  "source_full_models_already_reconstructed_by_frozen_scorer": true,
+  "independent_full_model_factory_repetitions": 0,
+  "actual_encoder_checkpoints": 3,
+  "actual_Adam_steps": 128,
+  "core_projection_updates": 128,
+  "other_core_updates": 0,
+  "actual_projection_parameters": 32,
+  "raw_masks_independently_rescored": 144,
+  "independent_metrics_means_and_bootstrap_maximum_abs_error": 2.220446049250313e-16,
+  "full320_candidate_gate": true,
+  "balanced_candidate_gate": true,
+  "data_scaling_fg_CI_positive": false,
+  "unique_TRAIN_images": 512,
+  "logical_TRAIN_exposures": 2048,
+  "per_seed_frequency": {
+    "0": {
+      "before": {
+        "within_object_variance": 0.005063948124079454,
+        "adjacent_class_mean_squared_distance": 0.0879855531539943,
+        "global_frequency_variance": 0.015690117508127252
+      },
+      "after": {
+        "within_object_variance": 0.003409009369509485,
+        "adjacent_class_mean_squared_distance": 0.08156928215520315,
+        "global_frequency_variance": 0.014267214979457817
+      },
+      "train64": {
+        "within_object_variance": 0.003360379487798557,
+        "adjacent_class_mean_squared_distance": 0.08165818439105409,
+        "global_frequency_variance": 0.014309083085901574
+      },
+      "source_object_center_MSE": 0.00017199121930389083,
+      "DEV_frequency_denoising_MSE": 0.0035810005888133756,
+      "TRAIN_losses": {
+        "before": {
+          "total": 0.0047768248768989,
+          "frequency_denoising": 0.0047768248768989,
+          "gamma_anchor": 4.909542643312883e-15
+        },
+        "after": {
+          "total": 0.00359048081736546,
+          "frequency_denoising": 0.0035296054047648795,
+          "gamma_anchor": 6.0875424537698564e-05
+        }
+      }
+    },
+    "1": {
+      "before": {
+        "within_object_variance": 0.017436725990698967,
+        "adjacent_class_mean_squared_distance": 0.16261352385858813,
+        "global_frequency_variance": 0.03523177255789653
+      },
+      "after": {
+        "within_object_variance": 0.01357055357351085,
+        "adjacent_class_mean_squared_distance": 0.1326945611331762,
+        "global_frequency_variance": 0.028525545135309197
+      },
+      "train64": {
+        "within_object_variance": 0.013504824911018901,
+        "adjacent_class_mean_squared_distance": 0.13285870910501635,
+        "global_frequency_variance": 0.02861098417659739
+      },
+      "source_object_center_MSE": 0.0010781872733787168,
+      "DEV_frequency_denoising_MSE": 0.014648740846889568,
+      "TRAIN_losses": {
+        "before": {
+          "total": 0.014255913847591728,
+          "frequency_denoising": 0.014255913847591728,
+          "gamma_anchor": 5.124667240521753e-15
+        },
+        "after": {
+          "total": 0.012166284985141829,
+          "frequency_denoising": 0.012137342419009656,
+          "gamma_anchor": 2.8942540666321293e-05
+        }
+      }
+    },
+    "2": {
+      "before": {
+        "within_object_variance": 0.007018958751478107,
+        "adjacent_class_mean_squared_distance": 0.0539824095812558,
+        "global_frequency_variance": 0.012594363685591824
+      },
+      "after": {
+        "within_object_variance": 0.005344161380792088,
+        "adjacent_class_mean_squared_distance": 0.04259787536859788,
+        "global_frequency_variance": 0.00998813910495127
+      },
+      "train64": {
+        "within_object_variance": 0.0053200308985213805,
+        "adjacent_class_mean_squared_distance": 0.042343489357609794,
+        "global_frequency_variance": 0.009932378307345256
+      },
+      "source_object_center_MSE": 0.0005273886108625447,
+      "DEV_frequency_denoising_MSE": 0.005871549991654633,
+      "TRAIN_losses": {
+        "before": {
+          "total": 0.005424391070846468,
+          "frequency_denoising": 0.005424391070846468,
+          "gamma_anchor": 4.6048884635242464e-15
+        },
+        "after": {
+          "total": 0.004621024389052764,
+          "frequency_denoising": 0.004581815162964631,
+          "gamma_anchor": 3.9209224382830143e-05
+        }
+      }
+    }
+  },
+  "all_three_frozen_protocols_checked_before_DEV_GT": true,
+  "additional_model_forwards": 0,
+  "additional_training_updates": 0,
+  "raw_imagewise_vectors_published": false,
+  "frequency_changes_are_not_gating_causal_evidence": true
+}

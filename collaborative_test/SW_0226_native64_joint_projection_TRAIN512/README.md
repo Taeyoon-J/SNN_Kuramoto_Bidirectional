@@ -1,6 +1,5 @@
-# SW0226
+# SW0226 COMPLETE
 
-TRAIN512 vs frozen SW0223 TRAIN64; joint encoder/core projection, fixed128updates.
-
-All three actual CPU admissions passed; three exclusive-GPU queues registered.
-No model performance result yet. See START_KO.md and DESIGN_KO.md.
+Fixed16/three-seed TRAIN512 .860512/.650250/.712453 vs TRAIN64 .859634/.645611/.706340.
+All paired data-size CIs include zero; no confirmed data-scaling gain.
+Source-relative candidate gate passed; full320 incumbent unchanged. See RESULT_KO.md.

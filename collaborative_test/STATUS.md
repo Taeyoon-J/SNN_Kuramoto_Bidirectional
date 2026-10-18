@@ -1,3 +1,15 @@
+## SW0226 COMPLETE: small matched-budget data-size change, scaling unproven
+
+Fixed16/three-seed TRAIN512 .860512/.650250/.712453 vs matched TRAIN64 .859634/.645611/.706340. All paired data-size CIs include zero. All144 masks and actual128-update encoder/projection checkpoints independently audited. Source-relative candidate gate passed; data-scaling gate failed. No70k expansion. SW0227 full320 confirmation of SW0223/SW0225 continues; incumbent unchanged.
+
+[SW0226 result](SW_0226_native64_joint_projection_TRAIN512/RESULT_KO.md)
+
+## SW0227: full320 confirmation queued/running, no new training
+
+All3 actual fixed checkpoint/CPU admissions, actual Slot controls, 9 Linux tests and 3 CLI checks passed. Reuses64 images and predicts256 more per seed, plus exact replay. Fixed models are SW0223, selected by SW0225. No new performance result; SW0210 full320 incumbent unchanged. SW0226 continues.
+
+[SW0227 start](SW_0227_native64_joint_projection_full320/START_KO.md)
+
 ## SW0225 COMPLETE: secondary64 candidate passed
 
 Fixed SW0223 three-seed mean .877164/.597239/.670309 versus matched source .864270/.571015/.669769. FG and FIoU paired CIs are positive; Object IoU CI includes zero. All384 masks independently audited. Full320 confirmation selected, not completed. Original16 gate failure and SW0210 full320 incumbent remain unchanged. SW0226 continues.
