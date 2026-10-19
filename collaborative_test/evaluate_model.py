@@ -70,6 +70,67 @@ def _spectral_labels(affinity, count, grid, background_count=1):
     return labels.reshape(grid, grid)
 
 
+def _merge_groups(groups, affinity, threshold, max_rounds=20):
+    """Average-linkage agglomeration of spatial components on their own affinity.
+
+    `groups` is, per image, a list of TUPLES of node indices -- the structure
+    spike_synchrony_components returns. A first version indexed them as tensors and
+    raised IndexError on the first image, which is why this says so.
+
+    Two components merge when the mean affinity between their members exceeds
+    `threshold`. Repeated to a fixed point so a chain of fragments collapses into one
+    object rather than only pairing up. No ground truth and no object count.
+    """
+    if affinity is None or threshold is None:
+        return groups
+    import torch as _t
+    out = []
+    for b, per_image in enumerate(groups):
+        current = [list(g) for g in per_image]
+        A = affinity[b]
+        for _ in range(int(max_rounds)):
+            n = len(current)
+            if n < 2:
+                break
+            best, pair = None, None
+            for i in range(n):
+                gi = _t.as_tensor(current[i], device=A.device, dtype=_t.long)
+                for j in range(i + 1, n):
+                    gj = _t.as_tensor(current[j], device=A.device, dtype=_t.long)
+                    if gi.numel() == 0 or gj.numel() == 0:
+                        continue
+                    score = float(A.index_select(0, gi).index_select(1, gj).mean())
+                    if best is None or score > best:
+                        best, pair = score, (i, j)
+            import os as _os
+            if _os.environ.get("PV2_MERGE_DEBUG") and b == 0 and _ == 0:
+                allsc = []
+                for ii in range(n):
+                    _gi = _t.as_tensor(current[ii], device=A.device, dtype=_t.long)
+                    for jj in range(ii + 1, n):
+                        _gj = _t.as_tensor(current[jj], device=A.device, dtype=_t.long)
+                        if _gi.numel() and _gj.numel():
+                            allsc.append(float(A.index_select(0, _gi).index_select(1, _gj).mean()))
+                if allsc:
+                    import numpy as _np
+                    a = _np.array(allsc)
+                    print("  inter-group affinity on image 0: n=%d  min %.5f  "
+                          "p50 %.5f  p90 %.5f  p99 %.5f  max %.5f"
+                          % (len(a), a.min(), _np.percentile(a, 50), _np.percentile(a, 90),
+                             _np.percentile(a, 99), a.max()), flush=True)
+                    print("  within-group affinity for scale: %.5f"
+                          % float(_t.stack([A.index_select(0, _t.as_tensor(g, device=A.device, dtype=_t.long))
+                                            .index_select(1, _t.as_tensor(g, device=A.device, dtype=_t.long)).mean()
+                                            for g in current if len(g) > 1]).mean()), flush=True)
+            if best is None or best <= float(threshold):
+                break
+            i, j = pair
+            current[i] = current[i] + current[j]
+            current.pop(j)
+        out.append([tuple(sorted(g)) for g in current])
+    return out
+
+
 def _spike_affinity(spikes, components, args):
     """The same affinity the classifier would build, so a spatial kernel can be
     applied to it here without changing the classifier."""
@@ -139,48 +200,6 @@ def build_core(args, device):
     core.gamma_graph_extra = graph_extra
     core.eval()
     return core
-
-
-def _merge_groups(groups, affinity, threshold, max_rounds=20):
-    """Average-linkage agglomeration of the groups the synchrony readout returned.
-
-    PV2_0105's oracle showed that merging the right pairs is worth more than any
-    dial on the first stage, so this is a second stage rather than a retuning of
-    the first. It uses the same affinity the first stage used and never sees the
-    truth: the pair with the highest mean inter-group affinity is merged while
-    that mean is above `threshold`.
-
-    Components come back as tuples of node indices, not tensors, so the blocks are
-    taken with index_select rather than A[gi][:, gj].
-    """
-    if affinity is None or threshold is None:
-        return groups
-    import torch as _t
-    out = []
-    for b, per_image in enumerate(groups):
-        current = [list(g) for g in per_image]
-        A = affinity[b]
-        for _ in range(int(max_rounds)):
-            n = len(current)
-            if n < 2:
-                break
-            best, pair = None, None
-            for i in range(n):
-                gi = _t.as_tensor(current[i], device=A.device, dtype=_t.long)
-                for j in range(i + 1, n):
-                    gj = _t.as_tensor(current[j], device=A.device, dtype=_t.long)
-                    if gi.numel() == 0 or gj.numel() == 0:
-                        continue
-                    score = float(A.index_select(0, gi).index_select(1, gj).mean())
-                    if best is None or score > best:
-                        best, pair = score, (i, j)
-            if best is None or best <= float(threshold):
-                break
-            i, j = pair
-            current[i] = current[i] + current[j]
-            current.pop(j)
-        out.append([tuple(sorted(g)) for g in current])
-    return out
 
 
 def _coverage_groups(groups, activity, affinity, grid, quantile, synchrony,
@@ -313,13 +332,6 @@ def main():
     ap.add_argument("--foreground-threshold", type=float, default=0.15)
     ap.add_argument("--synchrony-threshold", type=float, default=0.5)
     ap.add_argument("--min-group-size", type=int, default=2)
-    ap.add_argument("--membrane-threshold", type=float, default=0.06,
-                    help="used when --use-model-spikes is off; the core's own v_th")
-    ap.add_argument("--target-foreground", type=float, default=None,
-                    help=("calibrate the synchrony threshold per image so the groups "
-                          "cover this fraction of patches; chosen on validation"))
-    ap.add_argument("--background", default="largest_component",
-                    choices=["largest_component", "activity", "hybrid"])
     ap.add_argument("--coverage-quantile", type=float, default=None,
                     help="Third readout stage: patches above this quantile of the "
                          "image's own mean activity that NO group claimed become new "
@@ -330,12 +342,18 @@ def main():
     ap.add_argument("--coverage-min-size", type=int, default=2,
                     help="Smallest recovered component kept.")
     ap.add_argument("--merge-threshold", type=float, default=None,
-                    help="Second readout stage: agglomerate groups whose mean "
-                         "inter-group affinity exceeds this. The affinity is spike "
-                         "correlation TIMES the spatial Gaussian, so its real scale is "
-                         "~1e-4, not ~1e-1 -- a threshold of 0.05 merges nothing.")
-    ap.add_argument("--merge-rounds", type=int, default=20,
-                    help="Maximum agglomeration rounds per image.")
+                    help="second readout stage (PV2_0107): merge two spatial "
+                         "components when the mean affinity between their "
+                         "members exceeds this. None disables it, so every "
+                         "earlier command is unchanged.")
+    ap.add_argument("--merge-rounds", type=int, default=20)
+    ap.add_argument("--membrane-threshold", type=float, default=0.06,
+                    help="used when --use-model-spikes is off; the core's own v_th")
+    ap.add_argument("--target-foreground", type=float, default=None,
+                    help=("calibrate the synchrony threshold per image so the groups "
+                          "cover this fraction of patches; chosen on validation"))
+    ap.add_argument("--background", default="largest_component",
+                    choices=["largest_component", "activity", "hybrid"])
     ap.add_argument("--synchrony-quantile", type=float, default=0.35,
                     help="hybrid background: fraction of units the synchrony ranking admits")
     ap.add_argument("--membrane-quantile", type=float, default=None,
