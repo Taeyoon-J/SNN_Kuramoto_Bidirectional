@@ -1,0 +1,94 @@
+{
+  "status": "three_actual_accepted128_CPU_restores_verified_and_queued",
+  "deployment": {
+    "status": "three_convergence_TRAIN512_queues_registered",
+    "pid": 2828821,
+    "updated_unix": 1792382136.0216439,
+    "jobs": [
+      {
+        "seed": 0,
+        "TRAIN_count": 512,
+        "supervisor_pid": 2830670
+      },
+      {
+        "seed": 1,
+        "TRAIN_count": 512,
+        "supervisor_pid": 2830671
+      },
+      {
+        "seed": 2,
+        "TRAIN_count": 512,
+        "supervisor_pid": 2830672
+      }
+    ]
+  },
+  "jobs": [
+    {
+      "seed": 0,
+      "admitted": true,
+      "natural_within_variance_error": 2.764863893389702e-10,
+      "actual_projection_gradient_norm": 0.01038505882024765,
+      "accepted_checkpoint_start": {
+        "model_sha256": "53a704034bcd7037716c8fa0d23866a7337f7948e0d4817cb6e3bc0e1fa61398",
+        "checkpoint_sha256": "c712cac7072d300124e53b13bd280e4b9981087c04dfda384b61456ca4948637",
+        "actual_Adam_steps": [
+          128
+        ],
+        "loss": 0.003359393682330847,
+        "projection_gradient_norm": 0.00853519793599844,
+        "optimizer_updates": 0
+      },
+      "status": "waiting_for_SW0235_first_attempts",
+      "pid": 2830670,
+      "actual_process_alive": true,
+      "physical_gpu": null,
+      "error": null,
+      "frozen_masks": 0
+    },
+    {
+      "seed": 1,
+      "admitted": true,
+      "natural_within_variance_error": 2.9103830456733704e-11,
+      "actual_projection_gradient_norm": 0.035371534526348114,
+      "accepted_checkpoint_start": {
+        "model_sha256": "ff8bfeb72877336dd2b26962be80f89478e1f829c49009d2ea2fe97207c9a539",
+        "checkpoint_sha256": "a8f66cb8f3d968da4ed43d02fc1a812e525adbe571b0b585fe51d50709f241f1",
+        "actual_Adam_steps": [
+          128
+        ],
+        "loss": 0.010583208873867989,
+        "projection_gradient_norm": 0.01029955130070448,
+        "optimizer_updates": 0
+      },
+      "status": "waiting_for_SW0235_first_attempts",
+      "pid": 2830671,
+      "actual_process_alive": true,
+      "physical_gpu": null,
+      "error": null,
+      "frozen_masks": 0
+    },
+    {
+      "seed": 2,
+      "admitted": true,
+      "natural_within_variance_error": 4.3655745685100555e-10,
+      "actual_projection_gradient_norm": 0.010753253474831581,
+      "accepted_checkpoint_start": {
+        "model_sha256": "8432e8ee3ee862e8422126387c0ae91dcc6acc3770d38871a48d403d6a0234c6",
+        "checkpoint_sha256": "790a30929d5df4ac8ffdda751ec025d47222c3027880cca89c5f38c4e20f6135",
+        "actual_Adam_steps": [
+          128
+        ],
+        "loss": 0.004054320510476828,
+        "projection_gradient_norm": 0.0013213905040174723,
+        "optimizer_updates": 0
+      },
+      "status": "waiting_for_SW0235_first_attempts",
+      "pid": 2830672,
+      "actual_process_alive": true,
+      "physical_gpu": null,
+      "error": null,
+      "frozen_masks": 0
+    }
+  ],
+  "no_GPU_training_claimed": true
+}
