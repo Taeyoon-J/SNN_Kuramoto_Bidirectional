@@ -12100,5 +12100,26 @@
     "full320_FG090_goal_verified": false,
     "followup": "SW0245",
     "evidence": "SW_0244_native64_within_precision/PUBLIC_RESULT.json"
+  },
+  "native64_precision_conditional_full320_0246": {
+    "experiment": "SW0246",
+    "status": "conditional_full320_followup_registered_waiting_for_audited_245_selection",
+    "prerequisite": "independently_audited_positive_SW0245_three_seed64_loss_screen",
+    "planned_seed_scope": [
+      0,
+      1,
+      2
+    ],
+    "planned_evaluation_images_per_seed": 320,
+    "reused_images_per_seed": 64,
+    "new_prediction_images_per_seed": 256,
+    "optimizer_updates": 0,
+    "GPU_started": false,
+    "actual_seed1_CPU_source_restore_passed": true,
+    "negative_prerequisite_closes_without_GPU": true,
+    "all_three_actual_CPU_admissions_before_GPU_required": true,
+    "current_full320_reference": "SW0237",
+    "global_best_not_updated": true,
+    "evidence": "SW_0246_native64_precision_full320/PREFLIGHT.json"
   }
 }

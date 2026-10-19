@@ -1,0 +1,11 @@
+# SW0246: conditional fixed-checkpoint native64 full320 confirmation
+
+Run only if the unchanged SW0245 three-seed64 matched-loss screen passes its registered FG-led expansion gate and its CPU checkpoint/raw-mask audit completes. A negative screen closes this conditional branch without GPU acquisition. Do not tune coefficients, gates, data or training budget here.
+
+Restore each seed0/1/2 actual within16 encoder checkpoint from245 (128 additional Adam updates after the original512-update232/237 model). Keep the complete core, projection, native64 T1024/settle512 and production spike readout fixed. No optimizer step is taken. Reuse all64 frozen, evenly spaced245 predictions and generate the remaining256 predictions on the exact original320-image validation contract. First replay offset0's original mask and effective frequency bitwise. Preserve per-row resumability and all source/teacher/checkpoint identity checks.
+
+All three full320 protocols, original237 masks and comparable Slot masks must validate before evaluation GT. Independently compute all three patch metrics, retain every seed, and verify237 and Slot means against the existing audited237 result. The full3200.90 claim requires the candidate three-seed mean FG at least0.90 and all three means strictly above comparable Slot. A best-model update requires a separate completion audit and explicit comparisons; no64-image score or conditional queue is a new best.
+
+The matched extra-training control remains evaluated on64 images in245; do not claim a matched-control full320 loss contribution. This is mask-supervised lineage on reused validation data, not an untouched test or unsupervised leaderboard entry. Native6470k scaling and gating necessity remain separate outstanding requirements. The running70k job is unchanged.
+
+Run local/Linux scope, actual serialized encoder restoration and scoring-order tests. Restore the already completed seed1 source on CPU as an early real-data preflight. A CPU-only prerequisite runner waits for the complete245 audit, then admits all three actual models before exclusive GPU queues0..3. Queues never share foreign compute owners and yield only their own workers. Keep registered source immutable.
