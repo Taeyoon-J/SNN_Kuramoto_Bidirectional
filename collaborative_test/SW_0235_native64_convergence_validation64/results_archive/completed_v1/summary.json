@@ -1,0 +1,732 @@
+{
+  "status": "complete_fixed232_secondary64_validation",
+  "scores": {
+    "baseline": {
+      "fg_ari": 0.8642696675516238,
+      "foreground_iou": 0.5710153693618,
+      "matched_object_iou": 0.6697688798740377
+    },
+    "matched128": {
+      "fg_ari": 0.8771637474197741,
+      "foreground_iou": 0.5972394294034024,
+      "matched_object_iou": 0.67030894176582
+    },
+    "joint_projection": {
+      "fg_ari": 0.8939715898301945,
+      "foreground_iou": 0.6258917295683893,
+      "matched_object_iou": 0.680333525071906
+    }
+  },
+  "per_seed_scores": {
+    "baseline_seed0": {
+      "fg_ari": 0.9118939345167726,
+      "foreground_iou": 0.8041578957370257,
+      "matched_object_iou": 0.6987770337144886
+    },
+    "matched128_seed0": {
+      "fg_ari": 0.9116008558321543,
+      "foreground_iou": 0.8079199698658589,
+      "matched_object_iou": 0.6944227925987487
+    },
+    "joint_projection_seed0": {
+      "fg_ari": 0.9135376048979599,
+      "foreground_iou": 0.8112257133702253,
+      "matched_object_iou": 0.6992290898232052
+    },
+    "baseline_seed1": {
+      "fg_ari": 0.8412293699237677,
+      "foreground_iou": 0.46527655250116023,
+      "matched_object_iou": 0.6592016939518313
+    },
+    "matched128_seed1": {
+      "fg_ari": 0.8601124353391125,
+      "foreground_iou": 0.5213666826069895,
+      "matched_object_iou": 0.6661148394355086
+    },
+    "joint_projection_seed1": {
+      "fg_ari": 0.888898678763064,
+      "foreground_iou": 0.5937729555058555,
+      "matched_object_iou": 0.6774693430969735
+    },
+    "baseline_seed2": {
+      "fg_ari": 0.8396856982143321,
+      "foreground_iou": 0.4436116598472144,
+      "matched_object_iou": 0.6513279119557922
+    },
+    "matched128_seed2": {
+      "fg_ari": 0.859777951088055,
+      "foreground_iou": 0.4624316357373602,
+      "matched_object_iou": 0.6503891932632023
+    },
+    "joint_projection_seed2": {
+      "fg_ari": 0.879478485829561,
+      "foreground_iou": 0.47267651982908765,
+      "matched_object_iou": 0.6643021422955399
+    }
+  },
+  "paired_joint_minus": {
+    "baseline": {
+      "fg_ari": {
+        "mean": 0.029701922278570977,
+        "ci95": [
+          0.015205444025313673,
+          0.04643051734008728
+        ]
+      },
+      "foreground_iou": {
+        "mean": 0.054876360206589384,
+        "ci95": [
+          0.029676821684535403,
+          0.08208350948966413
+        ]
+      },
+      "matched_object_iou": {
+        "mean": 0.010564645197868856,
+        "ci95": [
+          -0.004434349587633705,
+          0.0261466664371957
+        ]
+      }
+    },
+    "matched128": {
+      "fg_ari": {
+        "mean": 0.016807842410421214,
+        "ci95": [
+          0.00657249952345075,
+          0.028011328000061043
+        ]
+      },
+      "foreground_iou": {
+        "mean": 0.028652300164986596,
+        "ci95": [
+          0.009232345952061507,
+          0.050311322004883995
+        ]
+      },
+      "matched_object_iou": {
+        "mean": 0.010024583306086292,
+        "ci95": [
+          0.000594418409295516,
+          0.02033430908094057
+        ]
+      }
+    }
+  },
+  "full320_candidate_gate": true,
+  "FG_track_candidate_gate": true,
+  "balanced_candidate_gate": true,
+  "optimizer_updates": 0,
+  "image_count": 64,
+  "seed_scope": [
+    0,
+    1,
+    2
+  ],
+  "fixed_checkpoint_experiment": "SW0232",
+  "new_prediction_images_per_seed": 48,
+  "reused_mini_images_per_seed": 16,
+  "replay_images_per_seed": 1,
+  "source16_gate_failure_preserved": true,
+  "independent_metric_maximum_abs_error": 3.3306690738754696e-16,
+  "all_three_frozen64_protocols_validated_before_DEV_GT": true,
+  "mask_supervised_lineage": true,
+  "new70000_training": false,
+  "conditional_image_bootstrap_not_seed_population_CI": true,
+  "full320_incumbent_unchanged": true,
+  "fingerprint": {
+    "files": {
+      "DESIGN_KO.md": "603f1dd33f64d0e971972c638bece7f9ada2bd5d916131313a52653abc4c9570",
+      "scope.py": "860c73a42861d66e539157589bcf9a917ad63d4738eb664fdfd4dc9026837f2c",
+      "run.py": "cbcc7847dd5254b6d5cdf85e3f7e25f2c12aae4f990ebbde86a1793552e2811a",
+      "evaluate.py": "0c0a599a214113ea0fec14298089f5e58d0618ccb1d5fb2751c2d74e9580ab04",
+      "queue.py": "11f1ff2f9a46c01845dd1fde80fc471dd7f99dbc60724986f71f690d60c90b7f",
+      "test_scope.py": "90cbd460089eadc64364ae15b531bc3b129f0742f5791a0bf89a34b7c8016cec",
+      "test_pipeline.py": "ad790cb7ec3b907af542b7de378c59c970ebca4637ba080560a333f8e5ae2f2c"
+    },
+    "candidate": {
+      "files": {
+        "DESIGN_KO.md": "7aadaff27a755588f4d74719b024241d7ace7ac7b86a6975043431ce1b626f25",
+        "projection.py": "e289bd875562e171447644a5be661a0ac9de5e4b98bf2796feb6f43450f6b42c",
+        "train.py": "48aa1d61ef79c1e6ec87fab41ce9438f1fd370a9b26f4b6c919b8451e32f82ef",
+        "evaluate.py": "51849f346699e05557d894a735b71b36b1ab84672accd1f387868a87b08107d1",
+        "queue.py": "8ac1484e7ab50efa5e9c4f658fd9ff328758187d27a9ded6d5448a14a9f23bbd",
+        "test_projection.py": "6f88343fe9f13204682d68d85cd0161af639bdcd81c8db913fd5baf3f1da3095",
+        "test_pipeline.py": "4f9baa06fe9f41fc6a8c9a9a1e2e5ea72239b0f093d00d4a3cca5f78c1bc79ae",
+        "prefix_guard.py": "8c0eaf6af1556cf930f3b95a2d4dc6358a15eb1a325252584c912cd271364194",
+        "test_prefix_guard.py": "5aac5bc98aeb7abcd47a5e5911820bcea7545c9f4c8fc6a383c80b38cbc64834",
+        "bootstrap.py": "39dd948a418b084252664c5a29db965ffb458451d66d9f14e92475cc4a24363c",
+        "test_bootstrap.py": "c6ba16e5389c12ed5b85e843bc772f07aedba9096a5e288d2796e462892ed786"
+      },
+      "parent": {
+        "files": {
+          "DESIGN_KO.md": "63fb10aabe319ed6d9ecf14539c6fffda9b71a4acc42577d7dfaa40a5300cadb",
+          "frequency_loss.py": "9efe4121c2d538b9858e8c938876aa1d988d3a2dbf07cf57fc145d2a60dfc672",
+          "train.py": "240afe2d2cb68f1aa86805b546682f585efb98ae95428a5b0b44709297910c62",
+          "evaluate.py": "fc95da321b8974cea693d400e0dc110d7ec1edae6245032c48ea58e4a9234161",
+          "queue.py": "450c02f18def79c71e449eb0a8959787bbbba266bfa2aad0d36e7c66c14497b4",
+          "test_frequency_loss.py": "099a2958cd0ba18f85f4ca78fd1337e4edd6a722c48b470a61294a72b954c15a",
+          "test_pipeline.py": "cf96b22bfd3c6e7c278c04db9b7f25b5498bb1b0ea787864aa634cf90723ffc5"
+        },
+        "source": {
+          "files": {
+            "DESIGN_KO.md": "af5cae1180e1090435a1de8359a286568566249704fb0116178033e65cad0938",
+            "refine.py": "fe8f54f3487586027d0cf7f72b44de7fed54537ddf8d4d96ca6ac464f17081b4",
+            "run.py": "03acff36a1462942f756394e8df216ee52cabf6df4e1e2ff42e86a5cdae418a9",
+            "queue.py": "11a1df01cb53e898fd9525d212f5986c779ac401a94007ee5bd9c260732436f6",
+            "test_refine.py": "3edb1cc5ae06c1b94ceb599e5611e954465ed05404e6e2e3ddbc50ac46bff44f",
+            "test_pipeline.py": "15b7e10a2adca0fd36f8ad4c0940c10c495ca26fa8f0837a1e5ab108738efa99"
+          },
+          "source_sha256": "3cc02b48ee4d93fd4acbd7151653f0b0cf51c327e4e4cc73970f913083990a85",
+          "energy_operator_sha256": "fd3c760b523b724a864c807e64a7b2d208f2e426b7980c8f4a944f7edd643af5",
+          "models": {
+            "0": "2dd2b0d64602b85d4082bcaddcd21dfe8c60d34af1ea78a2ed29bf03c8ba4b6e",
+            "1": "e1e16281612b2171b6822e0ca70dee051f095ad7ebc9239a9675b8e8d9b391e0",
+            "2": "dff381ebcd5280a2a7bf7b99ef8ee3b5af30e91f3384962ef47c6d89b7da53d0"
+          },
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "offsets": [
+            0,
+            2,
+            4,
+            6,
+            8,
+            10,
+            12,
+            14,
+            16,
+            18,
+            20,
+            22,
+            24,
+            26,
+            28,
+            30
+          ],
+          "new_optimizer_steps": 0
+        },
+        "drive_implementation_sha256": "9b5f3e077c755738b1636b97ac9640321a5b7abf5ec85b9a12557209cf5ad50b",
+        "checkpoint_implementation_sha256": "75d5076c051f81a51a39bbafedd363e589aa58ffc41ba4a662a87ffb91601f53",
+        "seeds": [
+          0,
+          1,
+          2
+        ],
+        "TRAIN_counts": [
+          64,
+          512
+        ],
+        "encoder_updates": 128,
+        "batch": 16,
+        "learning_rates": {
+          "source_base": 3e-05,
+          "context_encoder": 0.0003
+        },
+        "core_updates": 0,
+        "native_grid": [
+          64,
+          64
+        ],
+        "production_readout_unchanged": true
+      },
+      "source_teacher_preparation": {
+        "files": {
+          "DESIGN_KO.md": "a9e09ed4424d635a90939ccaef2cd2552d3d32ec3e0a6830264af19a16f06ef2",
+          "teacher_loss.py": "62028cd3fc3348f705b56d0c575dc2b44a06e6ebc1d18178d02320f21679ffac",
+          "train.py": "3a0454a70a0fcebc111998458e87b8a6853516e4a0ff3833def0c53321c21c21",
+          "evaluate.py": "0e10af1f927ceec112884528d8e4faa910a4615ac217feb88fe43b8dedac60e0",
+          "queue.py": "982cfab11f3ac6fa83d4913aa05577aea63f8ff79c1f69418c90e0811701e215",
+          "test_teacher_loss.py": "0d2bc44ac240fd04631ff908dc0454db1367d8c3be3b805243589d0698697230",
+          "test_pipeline.py": "e24c0c5277766a234061b9de58e04a90e49e5a71e85dcd27ef7f116c39691fd9"
+        },
+        "parent": {
+          "files": {
+            "DESIGN_KO.md": "63fb10aabe319ed6d9ecf14539c6fffda9b71a4acc42577d7dfaa40a5300cadb",
+            "frequency_loss.py": "9efe4121c2d538b9858e8c938876aa1d988d3a2dbf07cf57fc145d2a60dfc672",
+            "train.py": "240afe2d2cb68f1aa86805b546682f585efb98ae95428a5b0b44709297910c62",
+            "evaluate.py": "fc95da321b8974cea693d400e0dc110d7ec1edae6245032c48ea58e4a9234161",
+            "queue.py": "450c02f18def79c71e449eb0a8959787bbbba266bfa2aad0d36e7c66c14497b4",
+            "test_frequency_loss.py": "099a2958cd0ba18f85f4ca78fd1337e4edd6a722c48b470a61294a72b954c15a",
+            "test_pipeline.py": "cf96b22bfd3c6e7c278c04db9b7f25b5498bb1b0ea787864aa634cf90723ffc5"
+          },
+          "source": {
+            "files": {
+              "DESIGN_KO.md": "af5cae1180e1090435a1de8359a286568566249704fb0116178033e65cad0938",
+              "refine.py": "fe8f54f3487586027d0cf7f72b44de7fed54537ddf8d4d96ca6ac464f17081b4",
+              "run.py": "03acff36a1462942f756394e8df216ee52cabf6df4e1e2ff42e86a5cdae418a9",
+              "queue.py": "11a1df01cb53e898fd9525d212f5986c779ac401a94007ee5bd9c260732436f6",
+              "test_refine.py": "3edb1cc5ae06c1b94ceb599e5611e954465ed05404e6e2e3ddbc50ac46bff44f",
+              "test_pipeline.py": "15b7e10a2adca0fd36f8ad4c0940c10c495ca26fa8f0837a1e5ab108738efa99"
+            },
+            "source_sha256": "3cc02b48ee4d93fd4acbd7151653f0b0cf51c327e4e4cc73970f913083990a85",
+            "energy_operator_sha256": "fd3c760b523b724a864c807e64a7b2d208f2e426b7980c8f4a944f7edd643af5",
+            "models": {
+              "0": "2dd2b0d64602b85d4082bcaddcd21dfe8c60d34af1ea78a2ed29bf03c8ba4b6e",
+              "1": "e1e16281612b2171b6822e0ca70dee051f095ad7ebc9239a9675b8e8d9b391e0",
+              "2": "dff381ebcd5280a2a7bf7b99ef8ee3b5af30e91f3384962ef47c6d89b7da53d0"
+            },
+            "seeds": [
+              0,
+              1,
+              2
+            ],
+            "offsets": [
+              0,
+              2,
+              4,
+              6,
+              8,
+              10,
+              12,
+              14,
+              16,
+              18,
+              20,
+              22,
+              24,
+              26,
+              28,
+              30
+            ],
+            "new_optimizer_steps": 0
+          },
+          "drive_implementation_sha256": "9b5f3e077c755738b1636b97ac9640321a5b7abf5ec85b9a12557209cf5ad50b",
+          "checkpoint_implementation_sha256": "75d5076c051f81a51a39bbafedd363e589aa58ffc41ba4a662a87ffb91601f53",
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "TRAIN_counts": [
+            64,
+            512
+          ],
+          "encoder_updates": 128,
+          "batch": 16,
+          "learning_rates": {
+            "source_base": 3e-05,
+            "context_encoder": 0.0003
+          },
+          "core_updates": 0,
+          "native_grid": [
+            64,
+            64
+          ],
+          "production_readout_unchanged": true
+        },
+        "seeds": [
+          0,
+          1,
+          2
+        ],
+        "TRAIN_counts": [
+          64
+        ],
+        "encoder_updates": 128,
+        "batch": 16,
+        "learning_rates": {
+          "source_base": 3e-05,
+          "context_encoder": 0.0003
+        },
+        "target": "fixed_source_TRAIN_object_frequency_centers",
+        "gamma_anchor_coefficient": 1.0,
+        "frequency_coefficient": 1.0,
+        "core_updates": 0,
+        "native_grid": [
+          64,
+          64
+        ],
+        "production_readout_unchanged": true
+      },
+      "matched_128_control": {
+        "files": {
+          "DESIGN_KO.md": "30bc7ad5ff8afd6d8681d2383906c39e012cde2c68bba954dc68cd193fc40d61",
+          "projection.py": "76ca2d2a0307483c78bf1424fac3557315eed35aff48267d88d6f046cda0a63c",
+          "train.py": "ca74a9a689d04f57af93d0326d9ba6a527fb9b2097f4f38a5eaef34be29980f9",
+          "evaluate.py": "a377d04ccf7913db2609ad509d8b3f09a170049c6d848e342517a6037c097568",
+          "queue.py": "4ec256bdfd6b69882e1fbad59b8350788e73f53c38a353f1ec62c1481fde4e74",
+          "test_projection.py": "a028800d9d00cffc82854f6a2e3ccd5f666777abc42c990785e58df28368b652",
+          "test_pipeline.py": "2c4eacc1611902cd3ca8d5daa9a3c421d69f779c09f607d70342cf1a27269bfe"
+        },
+        "parent": {
+          "files": {
+            "DESIGN_KO.md": "63fb10aabe319ed6d9ecf14539c6fffda9b71a4acc42577d7dfaa40a5300cadb",
+            "frequency_loss.py": "9efe4121c2d538b9858e8c938876aa1d988d3a2dbf07cf57fc145d2a60dfc672",
+            "train.py": "240afe2d2cb68f1aa86805b546682f585efb98ae95428a5b0b44709297910c62",
+            "evaluate.py": "fc95da321b8974cea693d400e0dc110d7ec1edae6245032c48ea58e4a9234161",
+            "queue.py": "450c02f18def79c71e449eb0a8959787bbbba266bfa2aad0d36e7c66c14497b4",
+            "test_frequency_loss.py": "099a2958cd0ba18f85f4ca78fd1337e4edd6a722c48b470a61294a72b954c15a",
+            "test_pipeline.py": "cf96b22bfd3c6e7c278c04db9b7f25b5498bb1b0ea787864aa634cf90723ffc5"
+          },
+          "source": {
+            "files": {
+              "DESIGN_KO.md": "af5cae1180e1090435a1de8359a286568566249704fb0116178033e65cad0938",
+              "refine.py": "fe8f54f3487586027d0cf7f72b44de7fed54537ddf8d4d96ca6ac464f17081b4",
+              "run.py": "03acff36a1462942f756394e8df216ee52cabf6df4e1e2ff42e86a5cdae418a9",
+              "queue.py": "11a1df01cb53e898fd9525d212f5986c779ac401a94007ee5bd9c260732436f6",
+              "test_refine.py": "3edb1cc5ae06c1b94ceb599e5611e954465ed05404e6e2e3ddbc50ac46bff44f",
+              "test_pipeline.py": "15b7e10a2adca0fd36f8ad4c0940c10c495ca26fa8f0837a1e5ab108738efa99"
+            },
+            "source_sha256": "3cc02b48ee4d93fd4acbd7151653f0b0cf51c327e4e4cc73970f913083990a85",
+            "energy_operator_sha256": "fd3c760b523b724a864c807e64a7b2d208f2e426b7980c8f4a944f7edd643af5",
+            "models": {
+              "0": "2dd2b0d64602b85d4082bcaddcd21dfe8c60d34af1ea78a2ed29bf03c8ba4b6e",
+              "1": "e1e16281612b2171b6822e0ca70dee051f095ad7ebc9239a9675b8e8d9b391e0",
+              "2": "dff381ebcd5280a2a7bf7b99ef8ee3b5af30e91f3384962ef47c6d89b7da53d0"
+            },
+            "seeds": [
+              0,
+              1,
+              2
+            ],
+            "offsets": [
+              0,
+              2,
+              4,
+              6,
+              8,
+              10,
+              12,
+              14,
+              16,
+              18,
+              20,
+              22,
+              24,
+              26,
+              28,
+              30
+            ],
+            "new_optimizer_steps": 0
+          },
+          "drive_implementation_sha256": "9b5f3e077c755738b1636b97ac9640321a5b7abf5ec85b9a12557209cf5ad50b",
+          "checkpoint_implementation_sha256": "75d5076c051f81a51a39bbafedd363e589aa58ffc41ba4a662a87ffb91601f53",
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "TRAIN_counts": [
+            64,
+            512
+          ],
+          "encoder_updates": 128,
+          "batch": 16,
+          "learning_rates": {
+            "source_base": 3e-05,
+            "context_encoder": 0.0003
+          },
+          "core_updates": 0,
+          "native_grid": [
+            64,
+            64
+          ],
+          "production_readout_unchanged": true
+        },
+        "encoder_only_control": {
+          "files": {
+            "DESIGN_KO.md": "a9e09ed4424d635a90939ccaef2cd2552d3d32ec3e0a6830264af19a16f06ef2",
+            "teacher_loss.py": "62028cd3fc3348f705b56d0c575dc2b44a06e6ebc1d18178d02320f21679ffac",
+            "train.py": "3a0454a70a0fcebc111998458e87b8a6853516e4a0ff3833def0c53321c21c21",
+            "evaluate.py": "0e10af1f927ceec112884528d8e4faa910a4615ac217feb88fe43b8dedac60e0",
+            "queue.py": "982cfab11f3ac6fa83d4913aa05577aea63f8ff79c1f69418c90e0811701e215",
+            "test_teacher_loss.py": "0d2bc44ac240fd04631ff908dc0454db1367d8c3be3b805243589d0698697230",
+            "test_pipeline.py": "e24c0c5277766a234061b9de58e04a90e49e5a71e85dcd27ef7f116c39691fd9"
+          },
+          "parent": {
+            "files": {
+              "DESIGN_KO.md": "63fb10aabe319ed6d9ecf14539c6fffda9b71a4acc42577d7dfaa40a5300cadb",
+              "frequency_loss.py": "9efe4121c2d538b9858e8c938876aa1d988d3a2dbf07cf57fc145d2a60dfc672",
+              "train.py": "240afe2d2cb68f1aa86805b546682f585efb98ae95428a5b0b44709297910c62",
+              "evaluate.py": "fc95da321b8974cea693d400e0dc110d7ec1edae6245032c48ea58e4a9234161",
+              "queue.py": "450c02f18def79c71e449eb0a8959787bbbba266bfa2aad0d36e7c66c14497b4",
+              "test_frequency_loss.py": "099a2958cd0ba18f85f4ca78fd1337e4edd6a722c48b470a61294a72b954c15a",
+              "test_pipeline.py": "cf96b22bfd3c6e7c278c04db9b7f25b5498bb1b0ea787864aa634cf90723ffc5"
+            },
+            "source": {
+              "files": {
+                "DESIGN_KO.md": "af5cae1180e1090435a1de8359a286568566249704fb0116178033e65cad0938",
+                "refine.py": "fe8f54f3487586027d0cf7f72b44de7fed54537ddf8d4d96ca6ac464f17081b4",
+                "run.py": "03acff36a1462942f756394e8df216ee52cabf6df4e1e2ff42e86a5cdae418a9",
+                "queue.py": "11a1df01cb53e898fd9525d212f5986c779ac401a94007ee5bd9c260732436f6",
+                "test_refine.py": "3edb1cc5ae06c1b94ceb599e5611e954465ed05404e6e2e3ddbc50ac46bff44f",
+                "test_pipeline.py": "15b7e10a2adca0fd36f8ad4c0940c10c495ca26fa8f0837a1e5ab108738efa99"
+              },
+              "source_sha256": "3cc02b48ee4d93fd4acbd7151653f0b0cf51c327e4e4cc73970f913083990a85",
+              "energy_operator_sha256": "fd3c760b523b724a864c807e64a7b2d208f2e426b7980c8f4a944f7edd643af5",
+              "models": {
+                "0": "2dd2b0d64602b85d4082bcaddcd21dfe8c60d34af1ea78a2ed29bf03c8ba4b6e",
+                "1": "e1e16281612b2171b6822e0ca70dee051f095ad7ebc9239a9675b8e8d9b391e0",
+                "2": "dff381ebcd5280a2a7bf7b99ef8ee3b5af30e91f3384962ef47c6d89b7da53d0"
+              },
+              "seeds": [
+                0,
+                1,
+                2
+              ],
+              "offsets": [
+                0,
+                2,
+                4,
+                6,
+                8,
+                10,
+                12,
+                14,
+                16,
+                18,
+                20,
+                22,
+                24,
+                26,
+                28,
+                30
+              ],
+              "new_optimizer_steps": 0
+            },
+            "drive_implementation_sha256": "9b5f3e077c755738b1636b97ac9640321a5b7abf5ec85b9a12557209cf5ad50b",
+            "checkpoint_implementation_sha256": "75d5076c051f81a51a39bbafedd363e589aa58ffc41ba4a662a87ffb91601f53",
+            "seeds": [
+              0,
+              1,
+              2
+            ],
+            "TRAIN_counts": [
+              64,
+              512
+            ],
+            "encoder_updates": 128,
+            "batch": 16,
+            "learning_rates": {
+              "source_base": 3e-05,
+              "context_encoder": 0.0003
+            },
+            "core_updates": 0,
+            "native_grid": [
+              64,
+              64
+            ],
+            "production_readout_unchanged": true
+          },
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "TRAIN_counts": [
+            64
+          ],
+          "encoder_updates": 128,
+          "batch": 16,
+          "learning_rates": {
+            "source_base": 3e-05,
+            "context_encoder": 0.0003
+          },
+          "target": "fixed_source_TRAIN_object_frequency_centers",
+          "gamma_anchor_coefficient": 1.0,
+          "frequency_coefficient": 1.0,
+          "core_updates": 0,
+          "native_grid": [
+            64,
+            64
+          ],
+          "production_readout_unchanged": true
+        },
+        "seeds": [
+          0,
+          1,
+          2
+        ],
+        "TRAIN_counts": [
+          64
+        ],
+        "encoder_updates": 128,
+        "batch": 16,
+        "learning_rates": {
+          "source_base": 3e-05,
+          "context_encoder": 0.0003,
+          "sensory_projection": 0.0003
+        },
+        "target": "fixed_source_TRAIN_object_frequency_centers",
+        "gamma_anchor_coefficient": 1.0,
+        "frequency_coefficient": 1.0,
+        "core_projection_updates": 128,
+        "other_core_updates": 0,
+        "native_grid": [
+          64,
+          64
+        ],
+        "production_readout_unchanged": true
+      },
+      "seeds": [
+        0,
+        1,
+        2
+      ],
+      "TRAIN_counts": [
+        64
+      ],
+      "encoder_updates": 512,
+      "batch": 16,
+      "learning_rates": {
+        "source_base": 3e-05,
+        "context_encoder": 0.0003,
+        "sensory_projection": 0.0003
+      },
+      "target": "fixed_source_TRAIN_object_frequency_centers",
+      "matched_prefix_updates": 128,
+      "convergence_only": true,
+      "resume_actual_accepted_checkpoint": true,
+      "additional_updates": 384,
+      "gamma_anchor_coefficient": 1.0,
+      "frequency_coefficient": 1.0,
+      "core_projection_updates": 512,
+      "other_core_updates": 0,
+      "native_grid": [
+        64,
+        64
+      ],
+      "production_readout_unchanged": true
+    },
+    "original_source": {
+      "files": {
+        "DESIGN_KO.md": "af5cae1180e1090435a1de8359a286568566249704fb0116178033e65cad0938",
+        "refine.py": "fe8f54f3487586027d0cf7f72b44de7fed54537ddf8d4d96ca6ac464f17081b4",
+        "run.py": "03acff36a1462942f756394e8df216ee52cabf6df4e1e2ff42e86a5cdae418a9",
+        "queue.py": "11a1df01cb53e898fd9525d212f5986c779ac401a94007ee5bd9c260732436f6",
+        "test_refine.py": "3edb1cc5ae06c1b94ceb599e5611e954465ed05404e6e2e3ddbc50ac46bff44f",
+        "test_pipeline.py": "15b7e10a2adca0fd36f8ad4c0940c10c495ca26fa8f0837a1e5ab108738efa99"
+      },
+      "source_sha256": "3cc02b48ee4d93fd4acbd7151653f0b0cf51c327e4e4cc73970f913083990a85",
+      "energy_operator_sha256": "fd3c760b523b724a864c807e64a7b2d208f2e426b7980c8f4a944f7edd643af5",
+      "models": {
+        "0": "2dd2b0d64602b85d4082bcaddcd21dfe8c60d34af1ea78a2ed29bf03c8ba4b6e",
+        "1": "e1e16281612b2171b6822e0ca70dee051f095ad7ebc9239a9675b8e8d9b391e0",
+        "2": "dff381ebcd5280a2a7bf7b99ef8ee3b5af30e91f3384962ef47c6d89b7da53d0"
+      },
+      "seeds": [
+        0,
+        1,
+        2
+      ],
+      "offsets": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20,
+        22,
+        24,
+        26,
+        28,
+        30
+      ],
+      "new_optimizer_steps": 0
+    },
+    "shared_reader_sha256": "fc95da321b8974cea693d400e0dc110d7ec1edae6245032c48ea58e4a9234161",
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "IDs": [
+      1320,
+      1321,
+      1322,
+      1323,
+      1324,
+      1325,
+      1326,
+      1327,
+      1328,
+      1329,
+      1330,
+      1331,
+      1332,
+      1333,
+      1334,
+      1335,
+      1336,
+      1337,
+      1338,
+      1339,
+      1340,
+      1341,
+      1342,
+      1343,
+      1344,
+      1345,
+      1346,
+      1347,
+      1348,
+      1349,
+      1350,
+      1351,
+      1352,
+      1353,
+      1354,
+      1355,
+      1356,
+      1357,
+      1358,
+      1359,
+      1360,
+      1361,
+      1362,
+      1363,
+      1364,
+      1365,
+      1366,
+      1367,
+      1368,
+      1369,
+      1370,
+      1371,
+      1372,
+      1373,
+      1374,
+      1375,
+      1376,
+      1377,
+      1378,
+      1379,
+      1380,
+      1381,
+      1382,
+      1383
+    ],
+    "reused_mini_offsets": [
+      0,
+      2,
+      4,
+      6,
+      8,
+      10,
+      12,
+      14,
+      16,
+      18,
+      20,
+      22,
+      24,
+      26,
+      28,
+      30
+    ],
+    "replay_offsets": [
+      0
+    ],
+    "expected_new_native_forwards_per_seed": 49,
+    "optimizer_updates": 0,
+    "selection": "predetermined first64 validation images; fixed232 checkpoints"
+  }
+}

@@ -1,0 +1,126 @@
+{
+  "status": "actual_three_CPU_restores_and_live_full320_queues_verified",
+  "server_unix": 1792387732.8040538,
+  "linux_tests_passed": 15,
+  "CLI_help_checks_passed": 3,
+  "source_files_sha256": {
+    "DESIGN_KO.md": "65df04ef27f170985e54f53683d7f3ed0dadc71955af8af300937912e37870e4",
+    "README.md": "b7446ca9c92f268ebc72eb545af2874bd5b13c0c574d4e2007377f08471ae6c5",
+    "scope.py": "d8d29b3d9b325aa7b5d40521e78bb099e388e0c559b346d685b924b04125b734",
+    "run.py": "fa61a16be64b8f69df683475e5addfa17143459c1c976ac17d0385b7540a07bb",
+    "evaluate.py": "cfe1ac0a5c8273b1edeedd1c8280be6dc4d21ecbee496eb2f1ec8a3a63dcb72f",
+    "queue.py": "d0e8533c16792b45ddc2037f92647ff263ae3e1dd8dcd71f27feefb039fd27e0",
+    "test_scope.py": "d570012dec19de3875129867082ea3492f3da7a585d1169291f4df88f5d4685c",
+    "test_pipeline.py": "9cee1bdbafd5159dbae842e10c44fbc09ef550fb0de4647972485231dbba8357",
+    "completion_audit.py": "84d521dd12bda06bd63af2a93af238ccd4540108c4447b5061ef44625cdca468",
+    "test_completion_audit.py": "e9c3e47fb6f8f5d3317b8b8ee475ba87beb2a308b60b377f5475dcb1b7e1c766"
+  },
+  "jobs": [
+    {
+      "seed": 0,
+      "admission_sha256": "aed97afaa5eff96f534216c767f1b942477177f3d30eb85c420a904cb61edcac",
+      "actual_CPU_restore_passed": true,
+      "cuda_initialized": false,
+      "optimizer_updates": 0,
+      "checkpoint_sha256": "edbf22ae3d4eb0ae2a9c342ce4a55b4b217cf11640d11f84fcb860218983ba79",
+      "full_model_sha256": "e536ca55618984ea473ce4b58f1a604bf9b7bec4e84459057a0e33ce5af5f992",
+      "reused64_labels_sha256": "48793a49697d69fb00882b11df50d1ab95ab421e3a9effa6d3b450ed7dd22ab3",
+      "supervisor_pid": 2880422,
+      "status": "running_worker",
+      "observed_pid": 2880550,
+      "actual_process_alive": true,
+      "physical_gpu": 1,
+      "gpu_attempts": [
+        {
+          "attempt": 1,
+          "physical_gpu": 1,
+          "gpu_uuid": "GPU-45604115-c231-56a5-32ea-d3001e8ff243",
+          "child_pid": 2880550,
+          "child_argv": [
+            "/Data0/kevinswk/envs/snn/bin/python",
+            "-u",
+            "-m",
+            "collaborative_test.SW_0237_native64_converged_full320.queue",
+            "--worker",
+            "--seed",
+            "0",
+            "--physical-gpu",
+            "1"
+          ],
+          "observed_unix": 1792387566.563945
+        }
+      ],
+      "frozen_mask_rows": 66
+    },
+    {
+      "seed": 1,
+      "admission_sha256": "5fb45fab9b28f3700efd5cb813cac31fb3b514091d6fca8da4507a70cacbd53d",
+      "actual_CPU_restore_passed": true,
+      "cuda_initialized": false,
+      "optimizer_updates": 0,
+      "checkpoint_sha256": "388db939336b9b594059608a2e2024e378ca064167a316ca332d23736c6be430",
+      "full_model_sha256": "b7aba22d53e8b787eeef2969c664ad7f2c5ba697110b97ce0011bc94c29fe484",
+      "reused64_labels_sha256": "1b90632d11087f6a4a1e2a8e9390720a7cccaaf7cfaf6aea617a515181701e03",
+      "supervisor_pid": 2880423,
+      "status": "running_worker",
+      "observed_pid": 2880549,
+      "actual_process_alive": true,
+      "physical_gpu": 2,
+      "gpu_attempts": [
+        {
+          "attempt": 1,
+          "physical_gpu": 2,
+          "gpu_uuid": "GPU-50cc59a2-8312-ff02-5889-1becf63c7cd4",
+          "child_pid": 2880549,
+          "child_argv": [
+            "/Data0/kevinswk/envs/snn/bin/python",
+            "-u",
+            "-m",
+            "collaborative_test.SW_0237_native64_converged_full320.queue",
+            "--worker",
+            "--seed",
+            "1",
+            "--physical-gpu",
+            "2"
+          ],
+          "observed_unix": 1792387566.5598137
+        }
+      ],
+      "frozen_mask_rows": 67
+    },
+    {
+      "seed": 2,
+      "admission_sha256": "dd02665be09904f132f2f16676e6d4bb8c3333b30ded9d043dc3be5454bdb3eb",
+      "actual_CPU_restore_passed": true,
+      "cuda_initialized": false,
+      "optimizer_updates": 0,
+      "checkpoint_sha256": "d598253e7fbe17c1180a56da6ee7056706cfb1b27fe5c59e2e4f2e42138804ef",
+      "full_model_sha256": "0aea9f228d293df2cf177cc323763bd564cb4fdf3f3eaec1cf586b362d38ca39",
+      "reused64_labels_sha256": "bd2dc719761b791df83208d118707f57007aaef86543bad09bea3209660ccf32",
+      "supervisor_pid": 2880424,
+      "status": "waiting_for_exclusive_gpu",
+      "observed_pid": 2880424,
+      "actual_process_alive": true,
+      "physical_gpu": null,
+      "gpu_attempts": [],
+      "frozen_mask_rows": 0
+    }
+  ],
+  "initial_preflight_failure_preserved": true,
+  "total_evaluation_images": 320,
+  "native_grid": [
+    64,
+    64
+  ],
+  "seed_scope": [
+    0,
+    1,
+    2
+  ],
+  "optimizer_updates": 0,
+  "reused_images_per_seed": 64,
+  "new_images_per_seed": 256,
+  "replay_images_per_seed": 1,
+  "full320_result_available": false,
+  "incumbent_unchanged": true
+}

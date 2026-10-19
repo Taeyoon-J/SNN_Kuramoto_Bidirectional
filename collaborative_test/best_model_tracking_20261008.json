@@ -11787,5 +11787,119 @@
     "full320_incumbent_unchanged": true,
     "all_gating_causality_not_proven": true,
     "interpretation": "FG_mean_plus_0.001034_vs_TRAIN64_at_matched512_updates_uncertain_CI; foreground_IoU_mean_lower; object_IoU_CI_positive"
+  },
+  "native64_convergence_secondary64_0235": {
+    "status": "complete_independently_audited_fixed232_secondary64",
+    "record": "collaborative_test/SW_0235_native64_convergence_validation64/RESULT_KO.md",
+    "grid": [
+      64,
+      64
+    ],
+    "evaluation_images": 64,
+    "seed_scope": [
+      0,
+      1,
+      2
+    ],
+    "fixed_checkpoint_experiment": "SW0232",
+    "unique_TRAIN_stage_images": 64,
+    "source_optimizer_updates": 512,
+    "additional_training_updates": 0,
+    "scores": {
+      "baseline": {
+        "fg_ari": 0.8642696675516238,
+        "foreground_iou": 0.5710153693618,
+        "matched_object_iou": 0.6697688798740377
+      },
+      "matched128": {
+        "fg_ari": 0.8771637474197741,
+        "foreground_iou": 0.5972394294034024,
+        "matched_object_iou": 0.67030894176582
+      },
+      "joint_projection": {
+        "fg_ari": 0.8939715898301945,
+        "foreground_iou": 0.6258917295683893,
+        "matched_object_iou": 0.680333525071906
+      }
+    },
+    "paired": {
+      "baseline": {
+        "fg_ari": {
+          "mean": 0.029701922278570977,
+          "ci95": [
+            0.015205444025313673,
+            0.04643051734008728
+          ]
+        },
+        "foreground_iou": {
+          "mean": 0.054876360206589384,
+          "ci95": [
+            0.029676821684535403,
+            0.08208350948966413
+          ]
+        },
+        "matched_object_iou": {
+          "mean": 0.010564645197868856,
+          "ci95": [
+            -0.004434349587633705,
+            0.0261466664371957
+          ]
+        }
+      },
+      "matched128": {
+        "fg_ari": {
+          "mean": 0.016807842410421214,
+          "ci95": [
+            0.00657249952345075,
+            0.028011328000061043
+          ]
+        },
+        "foreground_iou": {
+          "mean": 0.028652300164986596,
+          "ci95": [
+            0.009232345952061507,
+            0.050311322004883995
+          ]
+        },
+        "matched_object_iou": {
+          "mean": 0.010024583306086292,
+          "ci95": [
+            0.000594418409295516,
+            0.02033430908094057
+          ]
+        }
+      }
+    },
+    "candidate_references": {
+      "0": {
+        "checkpoint_sha256": "edbf22ae3d4eb0ae2a9c342ce4a55b4b217cf11640d11f84fcb860218983ba79",
+        "full_model_sha256": "e536ca55618984ea473ce4b58f1a604bf9b7bec4e84459057a0e33ce5af5f992",
+        "protocol_sha256": "7e8b8cdb772cb730df244d9636524459e587c2227165c198ca244c5aae5f3ad3"
+      },
+      "1": {
+        "checkpoint_sha256": "388db939336b9b594059608a2e2024e378ca064167a316ca332d23736c6be430",
+        "full_model_sha256": "b7aba22d53e8b787eeef2969c664ad7f2c5ba697110b97ce0011bc94c29fe484",
+        "protocol_sha256": "518d6c606470a1f726c9dbcb9eb632e0bb35560e35834d84db8879b62cb60c77"
+      },
+      "2": {
+        "checkpoint_sha256": "d598253e7fbe17c1180a56da6ee7056706cfb1b27fe5c59e2e4f2e42138804ef",
+        "full_model_sha256": "0aea9f228d293df2cf177cc323763bd564cb4fdf3f3eaec1cf586b362d38ca39",
+        "protocol_sha256": "b98a4b90f9d46226a60e293f499072ebbae857ec9308b37eda5606fd49081139"
+      }
+    },
+    "score_sha256": "6d218930bafd7b91bad14998d8840be346a02f5111e77be2fffe68b5fdf16fb7",
+    "completion_audit_sha256": "dd59ebac3698456d15b0f4e2ede3a7295ffe68ae35cc0d0b8bc3c6b25acdd065",
+    "raw_masks_independently_rescored": 576,
+    "local_statistics_maximum_abs_error": 0.0,
+    "full320_candidate_gate": true,
+    "balanced_candidate_gate": true,
+    "original16_gate_failure_preserved": true,
+    "full320_confirmed": false,
+    "FG090_goal_verified": false,
+    "mask_supervised": true,
+    "new70000_training": false,
+    "full320_incumbent_unchanged": true,
+    "all_gating_causality_not_proven": true,
+    "interpretation": "Fixed64 paired CI supports all3 gains vs actual128 control; same fixed checkpoint selected for full320 SW0237"
   }
 }
