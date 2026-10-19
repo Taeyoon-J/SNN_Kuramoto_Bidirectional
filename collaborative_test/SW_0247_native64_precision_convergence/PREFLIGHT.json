@@ -1,0 +1,44 @@
+{
+  "status": "six_exclusive_queues_started_after_all_actual_CPU_admissions",
+  "local_tests_passed": 12,
+  "Linux_tests_passed": 12,
+  "all_six_actual_CPU_restoration_and_gradient_admissions_passed": true,
+  "seed_scope": [
+    0,
+    1,
+    2
+  ],
+  "TRAIN_unique_images": 64,
+  "evaluation_images_per_seed": 32,
+  "arms": [
+    "control",
+    "within16"
+  ],
+  "new_Adam_updates_per_arm_per_seed": 512,
+  "comparison_new_Adam_updates": 128,
+  "source_checkpoint_updates": 512,
+  "fresh_optimizer_budget_comparison": true,
+  "not_bitwise_adoption_of_prior128_checkpoint": true,
+  "all_core_and_projection_parameters_frozen": true,
+  "CPU_completion_auditor_attached": true,
+  "planned_raw_masks_for_independent_rescore": 576,
+  "performance_result_available": false,
+  "full320_incumbent_unchanged": true,
+  "current_full320_reference": "SW0237",
+  "existing_70000_training_unchanged": true,
+  "source_sha256": {
+    "DESIGN_KO.md": "35cd7bd7f971ee347538c065181210f448c21a9621bb5b2d5fedb0d492765f95",
+    "completion_audit.py": "ff91831b1bd693a5663bbd655ca90dcea59f2a2c53b2f2fd59df7e69f70695e9",
+    "conftest.py": "538a75ee43ec71b36268b0a5da9217826ed2fd8a361345334b458e43681880a4",
+    "loss.py": "960991e2cff67e567d4ad44b17597897da20fa3eb9f3cbafed4956d45731c1bc",
+    "queue.py": "fe7f8299c3ad3a8277db2cf7402413bd79ca827d72f66d4eeb19462e90ca840b",
+    "run.py": "aaa7f26359d6632225244fac71e9ace58ed72936c2fe566dda87d774870712fe",
+    "scope.py": "cc1cdca88c3ab05e55bc24bc3e789859e2a9390cbfb0d85420215e7261a9cbc5",
+    "test_audit_bootstrap.py": "c88d2482f7e17de59c82794c56c6df38dc24d8c2487d4b95feff361f0cf9272e",
+    "test_loss.py": "1f02d7c59f543d985a4e5e36b3b61645bc4f6ef5e4bd5c71943c6a1ebf71bb59",
+    "test_scope.py": "2de9ca7bc8fa6156262ab54c5d3b4bd8b60d37d1da54feb8ca24156be801c6ad",
+    "test_training.py": "be5a8fde02e6c0a25e92108ebf4ddd42c27d0593960336a38fab9edceea20e65"
+  },
+  "colleague_branch_checked": "a1df1c3c2d43693050ff9a55e1895abd83461de1",
+  "no_new_colleague_commit_this_cycle": true
+}

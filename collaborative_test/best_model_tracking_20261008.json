@@ -12240,5 +12240,27 @@
     "original_failed_auditor_preserved": true,
     "audit_recovered_without_training_or_prediction_rerun": true,
     "evidence": "SW_0245_native64_precision_three_seed64/PUBLIC_RESULT.json"
+  },
+  "native64_precision_fixed512_convergence_0247": {
+    "experiment": "SW0247",
+    "status": "six_exclusive_queues_started_after_all_actual_CPU_admissions",
+    "purpose": "one_fixed_fourfold_additional_optimizer_budget_comparison_without_loss_or_architecture_change",
+    "seed_scope": [
+      0,
+      1,
+      2
+    ],
+    "evaluation_images_per_seed": 32,
+    "TRAIN_unique_images": 64,
+    "new_Adam_updates_per_arm_per_seed": 512,
+    "comparison_new_Adam_updates": 128,
+    "source_checkpoint_updates": 512,
+    "all_six_actual_CPU_admissions_passed": true,
+    "CPU_completion_auditor_attached": true,
+    "performance_result_available": false,
+    "current_full320_reference": "SW0237",
+    "global_best_not_updated": true,
+    "prior_negative_SW0246_gate_preserved": true,
+    "evidence": "SW_0247_native64_precision_convergence/PREFLIGHT.json"
   }
 }
