@@ -1,5 +1,11 @@
 # SW0232: 추가 학습 평균은 상승, 고정16장만으로 FG 개선 확정 불가
 
+**장수와 업데이트 구분:** 기존 checkpoint에 추가 학습한 고유 이미지64장,
+해당 추가 학습 단계의 누적 optimizer update512회, 평가 이미지16장,
+seed0·1·2 평균 FG .884622다. 모델의 전체 학습 이력이64장뿐이라는 뜻도,
+512장으로 학습했다는 뜻도 아니다. 기존 checkpoint의 이전 학습 이력은
+그대로 상속한다. [평가 범위 구분](../EVALUATION_SCOPE_KO.md)을 함께 확인한다.
+
 실제 accepted SW0223 128회 checkpoint의 encoder·projection·Adam·history·Torch RNG를 세 seed 모두 bitwise 복원했다. 같은 TRAIN64·teacher·LR·graph·나머지 gate/readout으로 384회 추가해 누적512회 학습했다. 새 노출은6,144회이며 상속된128회를 새 학습으로 세지 않는다.
 
 고정16장·native64·세 seed 평균:
