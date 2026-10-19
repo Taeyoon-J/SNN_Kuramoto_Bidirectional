@@ -1,0 +1,59 @@
+{
+  "status": "server_tests_actual_CPU_admissions_and_single_GPU_queue_verified",
+  "source_manifest": {
+    "DESIGN_KO.md": "e6828b3e0d10d10454bdca2bdb015d7df40d3998a2a66bb64402736d0465a538",
+    "README.md": "9694161ea7ba8a976e3674bb0214a235f82b2480f77cc94ac38dbc01dd17f7f8",
+    "conftest.py": "dc959b1f4a5bf1582f2c2a4e8a4a5e386ba70c6fca8dfa529f153123353446c5",
+    "data.py": "23e43d29563871f6f5def9218ea82b31771d1e7de09f2139d40db315cb30406a",
+    "evaluate.py": "40f1fd8a5916527248585faef4724f48c3f7f8d77881ec1db5a2fb3576a00e91",
+    "queue.py": "0c87512365784b8473eafd057fbc14f14b52e529b0f2c0f2bef36f8a758b176e",
+    "test_data.py": "43437d7e8f03bf907d40343ebe32f0c7d0db43085b5c0401a7c463fa3aa55dee",
+    "test_queue.py": "274c0038ef3b91de5a2f2cc5483d9d989e4452fdb653987e71d57dd5ebd23c8c",
+    "test_training.py": "d9b6b52f89650b45b404ced64fc5960d3240292503a3b640b84e6399902d3255",
+    "train.py": "5ab9e9b8f9c61da6835c03ea34c15b8081005765d6d02f753c9ee40e00343d5c"
+  },
+  "linux_tests_passed": 10,
+  "selected_best_full320_experiment": 227,
+  "selected_source_three_seed_scores": {
+    "fg_ari": 0.8589160177044816,
+    "foreground_iou": 0.6052858849134048,
+    "matched_object_iou": 0.6743132742116557
+  },
+  "CPU_admissions": [
+    {
+      "seed": 0,
+      "actual_CPU_model_and_gradients_passed": true,
+      "original_teacher_targets_bitwise_equal": true,
+      "CPU_train_batches_probed": 2,
+      "optimizer_updates": 0,
+      "CUDA_initialized": false
+    },
+    {
+      "seed": 1,
+      "actual_CPU_model_and_gradients_passed": true,
+      "original_teacher_targets_bitwise_equal": true,
+      "CPU_train_batches_probed": 2,
+      "optimizer_updates": 0,
+      "CUDA_initialized": false
+    },
+    {
+      "seed": 2,
+      "actual_CPU_model_and_gradients_passed": true,
+      "original_teacher_targets_bitwise_equal": true,
+      "CPU_train_batches_probed": 2,
+      "optimizer_updates": 0,
+      "CUDA_initialized": false
+    }
+  ],
+  "single_supervisor_confirmed_live": true,
+  "maximum_concurrent_GPU_workers": 1,
+  "sequential_seeds": [
+    0,
+    1,
+    2
+  ],
+  "queued_state_at_capture": "waiting_for_exclusive_gpu",
+  "GPU_training_started_at_capture": false,
+  "note": "Queue registration is not proof of GPU optimizer updates; observe actual progress separately.",
+  "private_server_paths_process_ids_file_metadata_and_sample_hashes_omitted": true
+}
