@@ -32,17 +32,18 @@ BATCH=16, 10 complete passes, seed당 43,750개의 새 optimizer update와
 teacher는 원래 source 모델에서 고정하며 student를 teacher로 덮어쓰지 않는다.
 학습 mask와 평가 mask의 접근 경로를 구분한다.
 
-기존 source teacher가 CPU에서 계산된 점을 고려해 GPU teacher와의 수치 일치 및
-loss·gradient를 실제 preflight에서 확인해야 한다. 검증되지 않은 teacher 구현으로
-GPU 학습을 시작하지 않는다. 학습 상태·Adam·RNG·이력의 checkpoint 재개와
+기존 source teacher와 동일하게 teacher를 CPU에서 계산한다. 실제 source의
+기존 target cache와 bitwise 일치 및 student loss·gradient를 preflight에서
+확인해야 한다. 검증되지 않은 teacher 구현으로 GPU 학습을 시작하지 않는다.
+학습 상태·Adam·RNG·이력의 checkpoint 재개와
 전용 단일 GPU 큐도 서버 실행 전에 검증한다.
 
-## 현재 상태
+## 초기 데이터 경로 검증 기록
 
 streaming 데이터 경로의 로컬 검사 5개를 통과했다. 기존 `clevr_mask_patch`와
 합성 mask의 label 계산도 bitwise 일치했다. 서버의 실제 HDF5에서 첫 seed0 batch와
 마지막 seed2 batch를 읽어 RGB·mask geometry, 순서 및 기존 patch label 구현과의
 bitwise 일치를 확인했다. 근거는 LOCAL_DATA_PREFLIGHT.json과 SERVER_DATA_PREFLIGHT.json이다.
 이는 전체 70,000장의 데이터 내용 검사나 실제 모델·optimizer의 CPU admission을
-대체하지 않는다. 아직 trainer·단일 GPU 큐는 등록되지 않았고 GPU 학습도 시작하지 않았다.
-학습 시작·완료 보고는 실제 worker 및 checkpoint를 확인한 후 추가한다.
+대체하지 않는다. 위 데이터 검증 기록은 학습 시작 증거가 아니다.
+실제 CPU admission·큐 등록·학습 시작·완료는 별도 실행 기록으로 확인한다.
