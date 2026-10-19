@@ -1,7 +1,7 @@
 """CPU-only existing-mask repeat diagnostic; no new training or inference."""
 
 def main():
-    
+
     import ctypes,os,json
     from pathlib import Path
     assert ctypes.CDLL(None).prctl(41,1,0,0,0)==0
@@ -10,7 +10,7 @@ def main():
     import numpy as np
     from collaborative_test.SW_0244_native64_within_precision import run as old
     from collaborative_test.SW_0245_native64_precision_three_seed64 import run as new
-    
+
     def canonical(x):
      x=np.asarray(x);ids,first,inverse=np.unique(x.ravel(),return_index=True,return_inverse=True);m=np.zeros(len(ids),np.int64);pos=np.flatnonzero(ids>0);m[pos[np.argsort(first[pos])]]=np.arange(1,len(pos)+1);return m[inverse].reshape(x.shape)
     assert np.array_equal(canonical([[0,3,3],[8,0,8]]),canonical([[0,6,6],[2,0,2]]))
