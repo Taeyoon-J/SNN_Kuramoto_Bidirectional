@@ -1,0 +1,12 @@
+=== PV2_0098: training images, 1000 vs 6000, published line, 40 epochs, seed 0 ===
+raw output, /work/USERS/tkim1/runs/pv2_0098_results.txt
+
+arm       wall_min  loss_first  loss_last  spike_plv_collapse  fg_ari  fg_iou  obj_iou
+DS_1000        154   23.457814  16.673826            2.154499  FAILED  FAILED   FAILED
+DS_6000        557   22.035025  14.429044            1.954825  FAILED  FAILED   FAILED
+
+FAILED = evaluate_model.py lives on /export_home, which faulted; checkpoints are intact
+on /work/USERS/tkim1/runs/DS_1000/ and DS_6000/ and need only to be scored.
+
+published reference (contract v1):                     0.7239  0.7251  0.4951  pred_fg 0.1290
+PV2_0092 failed control (1000 images, same base):      0.5027  0.5112  0.3903

@@ -65,6 +65,23 @@ Updated 2026-10-19 00:45. Branch `patch_v2`. Contract v1 and v2, split v1.
 > So: evaluation cannot be restored until `/export_home` comes back. Training checkpoints are
 > unaffected and keep accumulating on `/work`.
 >
+> ### Two findings while blocked
+>
+> **`PV2_0098` is interrupted, not completed.** Both arms trained; neither could be scored,
+> because the evaluator is on the faulted mount. DS_1000 ended at loss 16.673826 / collapse
+> 2.154499, DS_6000 at **14.429044 / 1.954825** — six times the data gives a clearly better
+> training signal and *no patch metric at all*. The checkpoints are intact on `/work`; the
+> test resumes by scoring them.
+>
+> **Graph feedback costs ~27x the wall clock.** `PV2_0110`'s control ran 40 epochs in 23 min
+> (0.58 min/epoch). The `--graph-feedback-strength 0.5` arm is at epoch 5 after 78 min
+> (15.6 min/epoch) — `update_alignment` runs at every one of the 64 timesteps. Projected
+> ~10 h for this arm alone, against 23 min for the control. It is training healthily
+> (`spike_plv_collapse` 2.293 → 2.283 → 2.262, falling), so it is left running: GPU 3 is ours
+> and idle, and the mount being down means nothing else can use it. But the cost is itself a
+> result — if graph feedback needs 27x the compute, it has to earn far more than a marginal
+> gain to be worth keeping, and that judgement can be made before the numbers arrive.
+>
 > ### Resume point
 >
 > 1. When `/export_home` returns, **first** copy `snn_kuramoto_bidirectional/` off it and commit
