@@ -1,3 +1,9 @@
+## SW0233: frozen frequency decomposition
+
+CPU-only accepted-cache diagnosis: static omega within-class variance is much smaller than sensory variance in this fixed16 cohort. No causal attribution or model-score improvement claimed. Keep omega intervention low priority pending SW0232.
+
+[SW0233 result](SW_0233_native64_static_frequency_diagnosis/RESULT_KO.md)
+
 ## SW0232: resume actual accepted128 checkpoint
 
 SW0231 recomputation failed strict bitwise prefix checks; failed states are preserved. SW0232 restores actual SW0223 model/Adam/RNG and adds384 updates to cumulative512 on TRAIN64. Local16 and Linux16 tests plus3 CLI checks passed. Actual three-seed CPU admission precedes queues. No performance result yet; SW0227 full320 remains running.
