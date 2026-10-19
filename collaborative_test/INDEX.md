@@ -1,3 +1,9 @@
+## SW0228 COMPLETE: stronger source-center anchoring rejected
+
+Fixed16/three-seed center16 .844707/.603466/.712916 vs center1 .859634/.645611/.706340. FG/balanced gates failed; no full320 or70k expansion. All144 masks and actual 128-update checkpoints/teachers independently audited. Full320 incumbent unchanged; SW0227 confirmation continues.
+
+[SW0228 result](SW_0228_native64_center_preservation/RESULT_KO.md)
+
 ## SW0229 COMPLETE: CPU-only accepted-mask error diagnosis
 
 Same64/three-seed accepted SW0225 masks: per-image split rate8.32%->6.10%, merge4.27%->4.62%; these rates have different denominators. Foreground precision62.6%, recall94.8%. Only3/51194 GT foreground patches lie outside their largest visible component. No new model result, GPU forward or learning. SW0227 continues and SW0228 remains queued. Full320 incumbent unchanged.

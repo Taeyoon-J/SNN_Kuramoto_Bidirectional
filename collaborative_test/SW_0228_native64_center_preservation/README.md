@@ -1,3 +1,10 @@
+# SW0228 COMPLETE: center16 loss rejected for FG improvement
+
+Fixed16/three-seed mean .844707/.603466/.712916 vs matched center1 .859634/.645611/.706340.
+FG candidate gates failed; stronger center anchoring limited within-object denoising.
+All144 masks/checkpoints/teachers independently audited. No full320 promotion or70k expansion.
+See RESULT_KO.md. Earlier launch/audit preparation notes follow.
+
 # SW0228
 
 Source-center loss weight16 vs frozen223 weight1; same TRAIN64/128updates/joint encoder+projection.
