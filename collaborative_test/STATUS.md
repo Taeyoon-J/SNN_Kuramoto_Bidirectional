@@ -106,6 +106,22 @@ Updated 2026-10-19 00:45. Branch `patch_v2`. Contract v1 and v2, split v1.
 > **mask-supervised** leaderboard, on a reused validation split, on their contract. Nothing
 > from it is portable to our column.
 >
+> ### `PV2_0112` is specified, implemented and offline-verified — it needs only a server
+>
+> The third part of the standing goal is no longer a plan sentence. `PV2_0112` exists:
+> `_coverage_groups` in `evaluate_model.py` with `--coverage-quantile`, and
+> `test_coverage.py` passing **8/8 on CPU torch** against a synthetic grid. The pre-registered
+> gate is in its README — all three metrics up, `patch_matched_object_iou` specifically up,
+> predicted foreground at or below 0.20 — together with the falsification that closes it.
+>
+> The test earned its keep before any GPU time: the first implementation admitted patches at
+> `act >= quantile_value`, and because the background is 87.5% of an image the quantile value
+> *is* the background value, so it recovered **238 of 256 patches as one object**. Strict `>`
+> fixes it and is equivalent where activity is continuous.
+>
+> It runs **after** the merge stage, never before — covering first would let the merger absorb
+> the recovered groups into existing ones, which is `SW_0207`'s failure by another route.
+>
 > ### Resume point
 >
 > 1. When `/export_home` returns, **first** copy `snn_kuramoto_bidirectional/` off it and commit

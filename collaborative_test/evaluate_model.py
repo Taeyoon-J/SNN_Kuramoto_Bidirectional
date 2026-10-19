@@ -183,6 +183,91 @@ def _merge_groups(groups, affinity, threshold, max_rounds=20):
     return out
 
 
+def _coverage_groups(groups, activity, affinity, grid, quantile, synchrony,
+                     min_size, settle=0):
+    """Third readout stage: give unclaimed active regions groups of their own.
+
+    The shape of this stage is fixed by two results on the peer branch, read in
+    REVIEW_0007. SW_0207 learned a foreground support and widened the groups that
+    already existed: foreground IoU rose .171275 while FG-ARI fell .053863 and
+    matched-object IoU fell too, because instances fragment. SW_0234's oracle
+    recovery instead creates new groups for objects that were missed entirely and
+    never splits a group that already merged two objects -- and it gains all three.
+
+    So the rule this encodes is: an existing group's membership is never touched.
+    Only patches that no group claimed may become groups, and only among
+    themselves. A patch that is adjacent to an existing group stays unclaimed
+    rather than joining it.
+
+    Nothing here reads the truth or the object count. The admission threshold is
+    a quantile of the image's own activity and is selected on validation.
+    """
+    if quantile is None:
+        return groups
+    import torch as _t
+    act_all = activity.float()
+    if int(settle) > 0:
+        act_all = act_all[:, :, int(settle):]
+    act_all = act_all.mean(dim=-1)                       # [B, N]
+    g = int(grid)
+    out = []
+    for b, per_image in enumerate(groups):
+        current = [tuple(sorted(x)) for x in per_image]
+        act = act_all[b]
+        n = act.numel()
+        claimed = _t.zeros(n, dtype=_t.bool, device=act.device)
+        for grp in current:
+            if len(grp):
+                claimed[_t.as_tensor(grp, device=act.device, dtype=_t.long)] = True
+        # Strictly above, not at. The background is the majority of an image --
+        # 87.5% of patches here -- so for any quantile below that majority the
+        # quantile VALUE is the background value itself, and `>=` admits the whole
+        # background as one giant component. A synthetic check caught exactly that:
+        # 238 of 256 patches recovered as one group. Where activity is continuous
+        # the two forms are the same, so `>` is safe in both regimes.
+        thr = _t.quantile(act, float(quantile))
+        free = (~claimed) & (act > thr)
+        idx = _t.nonzero(free, as_tuple=False).flatten().tolist()
+        if len(idx) >= int(min_size):
+            member = {i: k for k, i in enumerate(idx)}
+            parent = list(range(len(idx)))
+
+            def find(a):
+                while parent[a] != a:
+                    parent[a] = parent[parent[a]]
+                    a = parent[a]
+                return a
+
+            def union(a, b_):
+                ra, rb = find(a), find(b_)
+                if ra != rb:
+                    parent[rb] = ra
+
+            A = None if affinity is None else affinity[b]
+            for i in idx:
+                r, c = divmod(i, g)
+                for dr, dc in ((0, 1), (1, 0)):          # right and down only
+                    rr, cc = r + dr, c + dc
+                    if rr >= g or cc >= g:
+                        continue
+                    j = rr * g + cc
+                    if j not in member:
+                        continue
+                    if A is not None and synchrony is not None:
+                        if float(A[i, j]) < float(synchrony):
+                            continue
+                    union(member[i], member[j])
+
+            buckets = {}
+            for i in idx:
+                buckets.setdefault(find(member[i]), []).append(i)
+            for comp in buckets.values():
+                if len(comp) >= int(min_size):
+                    current.append(tuple(sorted(comp)))
+        out.append(current)
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--checkpoint", required=True)
@@ -235,6 +320,15 @@ def main():
                           "cover this fraction of patches; chosen on validation"))
     ap.add_argument("--background", default="largest_component",
                     choices=["largest_component", "activity", "hybrid"])
+    ap.add_argument("--coverage-quantile", type=float, default=None,
+                    help="Third readout stage: patches above this quantile of the "
+                         "image's own mean activity that NO group claimed become new "
+                         "groups among themselves. Existing groups are never widened "
+                         "-- see REVIEW_0007 on SW_0207 against SW_0234.")
+    ap.add_argument("--coverage-synchrony", type=float, default=None,
+                    help="Optional affinity floor for linking two unclaimed patches.")
+    ap.add_argument("--coverage-min-size", type=int, default=2,
+                    help="Smallest recovered component kept.")
     ap.add_argument("--merge-threshold", type=float, default=None,
                     help="Second readout stage: agglomerate groups whose mean "
                          "inter-group affinity exceeds this. The affinity is spike "
@@ -533,6 +627,14 @@ def main():
         after = sum(len(g) for g in groups) / max(len(groups), 1)
         print("merge stage: %.2f -> %.2f groups per image (threshold %.4f)"
               % (before, after, args.merge_threshold))
+    if args.coverage_quantile is not None:
+        before = sum(len(g) for g in groups) / max(len(groups), 1)
+        groups = _coverage_groups(
+            groups, spikes, affinity_in, args.grid, args.coverage_quantile,
+            args.coverage_synchrony, args.coverage_min_size, args.settle)
+        after = sum(len(g) for g in groups) / max(len(groups), 1)
+        print("coverage stage: %.2f -> %.2f groups per image (quantile %.3f)"
+              % (before, after, args.coverage_quantile))
     prediction = spatial_components_to_patch_labels(groups, args.grid)
     if args.save_predictions:
         import numpy as _np
