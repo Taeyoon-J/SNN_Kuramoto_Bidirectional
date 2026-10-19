@@ -82,6 +82,30 @@ Updated 2026-10-19 00:45. Branch `patch_v2`. Contract v1 and v2, split v1.
 > result — if graph feedback needs 27x the compute, it has to earn far more than a marginal
 > gain to be worth keeping, and that judgement can be made before the numbers arrive.
 >
+> ### `REVIEW_0007` changes the next experiment
+>
+> The peer branch moved 81 tests past what `REVIEW_0006` covered (SW_0157..SW_0236 at
+> `790ec4f`). Two things matter here.
+>
+> **`SW_0234` reproduced our route map on their own data.** Merge .885762, coverage .883696,
+> both **.911458** — superadditive past .90, as `PV2_0106` found at .9329. Different grid,
+> different split, different supervision. The decomposition is a property of the readout.
+>
+> **Their oracle merge also loses Object IoU** (.674313 → .667059), and theirs chooses pairs
+> *with the truth*. Our `PV2_0107b` lost .0285 with a label-free merger and could be blamed on
+> pair selection; theirs cannot. **`PV2_0111` as scoped — complete linkage against mean
+> linkage — is withdrawn.** The hypothesis behind it is dead.
+>
+> **Coverage moves first, and its shape is now constrained.** `SW_0207`, their label-free
+> foreground head, widened the support of existing groups: foreground IoU +.171275, FG-ARI
+> −.053863, Object IoU down, closed. `SW_0234`'s oracle recovery instead creates **new groups
+> for objects missed entirely** and gains all three. So: a coverage stage may instantiate
+> groups for unclaimed regions and may not widen groups that already exist.
+>
+> Their headline — SW0227 beating Slot on all three as three-seed means — is on their declared
+> **mask-supervised** leaderboard, on a reused validation split, on their contract. Nothing
+> from it is portable to our column.
+>
 > ### Resume point
 >
 > 1. When `/export_home` returns, **first** copy `snn_kuramoto_bidirectional/` off it and commit
