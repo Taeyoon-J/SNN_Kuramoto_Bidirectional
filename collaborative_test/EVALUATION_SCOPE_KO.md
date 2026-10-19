@@ -31,3 +31,20 @@ unsupervised leaderboard 주장이 아니다. FG .90 전체 평가 목표는 아
 [232번 결과](SW_0232_native64_exact_teacher_resume/RESULT_KO.md),
 [235번 범위](SW_0235_native64_convergence_validation64/DESIGN_KO.md),
 [236번 범위](SW_0236_native64_TRAIN512_exact_resume/DESIGN_KO.md).
+
+## Bidirectional loop의 현재 범위
+
+SW0227 최고 모델과 SW0232·235·236은 공통 native rollout을 사용한다.
+이 경로는 spike pulse → Kuramoto feedback과 synchrony → graph feedback이
+활성화되면 설정 검증에서 거부한다. 실제 Kuramoto 호출은 `spike=None`이다.
+따라서 현재 점수를 완전한 bidirectional loop의 성과로 해석하지 않는다.
+
+이전 spike를 dendritic 입력과 membrane reset에 쓰는 지역 recurrent 경로는
+계산에 포함된다. 경로 존재와 성능 기여는 구분하며 기여는 별도 ablation으로
+확인해야 한다. 최근 teacher 추가 학습은 encoder와 실제 gamma projection을
+업데이트하고, 해당 추가 학습 중 나머지 core/gates 파라미터는 고정이다.
+
+근거 실행 경로:
+[native 입력 검증과 rollout](SW_0134_native_spike_binding/rollout.py),
+[native forward 진입점](SW_0175_critical_component_binding/train_v2.py),
+[최근 추가 학습](SW_0236_native64_TRAIN512_exact_resume/train.py).

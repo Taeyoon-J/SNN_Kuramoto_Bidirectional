@@ -71,7 +71,18 @@
   "native64_teacher_stage_unique_TRAIN_per_seed": 64,
   "teacher_stage_optimizer_updates": 128,
   "other_core_updates": 0,
-  "validation_selected_not_untouched_test": true
+  "validation_selected_not_untouched_test": true,
+  "bidirectional_runtime_scope": {
+    "spike_to_Kuramoto_feedback": false,
+    "synchrony_to_graph_feedback": false,
+    "previous_spike_dendritic_input_and_membrane_reset_path_present": true,
+    "local_feedback_causal_contribution_not_verified": true,
+    "latest_teacher_adaptation_updates_encoder_and_gamma_projection_only": true,
+    "evidence_files": {
+      "collaborative_test/SW_0134_native_spike_binding/rollout.py": "66c08404af91b50fb4cbfa63fe44650dd6a698ea669cd3d6a672dfc5c78503f3",
+      "collaborative_test/SW_0175_critical_component_binding/train_v2.py": "284d6de62c4af5cc335b7b953eca1cc936e50f732e55867e4b804c8ec2215a89"
+    }
+  }
 },
   "status": "latest_research_incumbents_and_candidates_tracked",
   "latest_normalized_hard_reset": {
