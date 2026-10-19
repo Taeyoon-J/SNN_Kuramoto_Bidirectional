@@ -1,3 +1,5 @@
+[Completed fixed16 result](RESULT_KO.md): .884622 / .677086 / .712312. Original FG gate remains false; full320 best unchanged.
+
 # SW0232: exact accepted128 checkpoint continuation
 
 Restore SW0223 encoder/projection/Adam/history/Torch RNG and verify bitwise equality,

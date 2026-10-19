@@ -11516,4 +11516,130 @@
     "new70000_training": false
   }
 
+,
+
+  "native64_exact_teacher_resume_mini": {
+    "experiment": "SW0232",
+    "scope": "native64_fixed16_three_seed_mini_not_full320",
+    "unique_TRAIN_images": 64,
+    "inherited_updates": 128,
+    "new_updates": 384,
+    "cumulative_updates": 512,
+    "batch": 16,
+    "scores": {
+      "baseline": {
+        "fg_ari": 0.8428907016774789,
+        "foreground_iou": 0.6006915810165038,
+        "matched_object_iou": 0.7021610526966486
+      },
+      "matched128": {
+        "fg_ari": 0.8596335268268085,
+        "foreground_iou": 0.6456106600762692,
+        "matched_object_iou": 0.7063404948549898
+      },
+      "joint512": {
+        "fg_ari": 0.8846215928276541,
+        "foreground_iou": 0.6770859049377619,
+        "matched_object_iou": 0.7123115568216084
+      }
+    },
+    "paired": {
+      "baseline": {
+        "fg_ari": {
+          "mean": 0.04173089115017471,
+          "ci95": [
+            -0.0013703301905611542,
+            0.0962440008541941
+          ]
+        },
+        "foreground_iou": {
+          "mean": 0.07639432392125789,
+          "ci95": [
+            0.0351133714397405,
+            0.11983509291478087
+          ]
+        },
+        "matched_object_iou": {
+          "mean": 0.010150504124959426,
+          "ci95": [
+            -0.03102651430718961,
+            0.056822811265078335
+          ]
+        }
+      },
+      "matched128": {
+        "fg_ari": {
+          "mean": 0.02498806600084544,
+          "ci95": [
+            -0.00661138521048905,
+            0.06201965097375399
+          ]
+        },
+        "foreground_iou": {
+          "mean": 0.031475244861492564,
+          "ci95": [
+            0.0005884688078556125,
+            0.06728097625052155
+          ]
+        },
+        "matched_object_iou": {
+          "mean": 0.00597106196661811,
+          "ci95": [
+            -0.010016300874961592,
+            0.02185885143835581
+          ]
+        }
+      }
+    },
+    "candidate_references": {
+      "0": {
+        "checkpoint_server": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0232_native64_exact_teacher_resume/results_archive/seed0/TRAIN64/encoder_work/boundary.ptx",
+        "checkpoint_sha256": "edbf22ae3d4eb0ae2a9c342ce4a55b4b217cf11640d11f84fcb860218983ba79",
+        "full_model_sha256": "e536ca55618984ea473ce4b58f1a604bf9b7bec4e84459057a0e33ce5af5f992",
+        "encoder_sha256": "362d733f5e152b69885d2e837eed3e745550bf5805a0bd48377f0c0c853b0ec2",
+        "projection_sha256": "da75bacdce777dead4d181ab470cedaed7c057e07da1ef96c7f8389b28f6412f",
+        "scores": {
+          "fg_ari": 0.9323065245559146,
+          "foreground_iou": 0.8678019102353882,
+          "matched_object_iou": 0.7545460506651253
+        }
+      },
+      "1": {
+        "checkpoint_server": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0232_native64_exact_teacher_resume/results_archive/seed1/TRAIN64/encoder_work/boundary.ptx",
+        "checkpoint_sha256": "388db939336b9b594059608a2e2024e378ca064167a316ca332d23736c6be430",
+        "full_model_sha256": "b7aba22d53e8b787eeef2969c664ad7f2c5ba697110b97ce0011bc94c29fe484",
+        "encoder_sha256": "ba19c9442ade933317486eaf142c1e094ba8122a653dc6ebeb7a3f8f4d341ff8",
+        "projection_sha256": "06c68679c6a52b3fcb3fd190fc6925d7e8c6a9ac5dd66672e883c976f5251595",
+        "scores": {
+          "fg_ari": 0.8654989286545409,
+          "foreground_iou": 0.6748698621606396,
+          "matched_object_iou": 0.6866658407947633
+        }
+      },
+      "2": {
+        "checkpoint_server": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0232_native64_exact_teacher_resume/results_archive/seed2/TRAIN64/encoder_work/boundary.ptx",
+        "checkpoint_sha256": "d598253e7fbe17c1180a56da6ee7056706cfb1b27fe5c59e2e4f2e42138804ef",
+        "full_model_sha256": "0aea9f228d293df2cf177cc323763bd564cb4fdf3f3eaec1cf586b362d38ca39",
+        "encoder_sha256": "14997b3c06fce1da5e8225a87ce4ba4458620eb0362e07832a802d0fb7889836",
+        "projection_sha256": "4083d4d6984c06117ce2a21c19578347bd607a412b169f2418766c1bdf3c4b60",
+        "scores": {
+          "fg_ari": 0.8560593252725063,
+          "foreground_iou": 0.4885859424172574,
+          "matched_object_iou": 0.695722779004936
+        }
+      }
+    },
+    "score_sha256": "d8658dbf587ce2bab86ecdd88c7e8f101569c68f34a2c8933962cde72722a500",
+    "completion_audit_sha256": "d944434ea2aab87eb3eeb926cbb1a1b7ce4536a6aa2fca87535a36ee4fc4cc8c",
+    "FG_track_candidate_gate": false,
+    "balanced_candidate_gate": false,
+    "full320_confirmed": false,
+    "FG090_goal_verified": false,
+    "mask_supervised": true,
+    "new70000_training": false,
+    "full320_incumbent_unchanged": true,
+    "interpretation": "promising_mean_FG_increase_uncertain_fixed16_CI_requires_matched_secondary64",
+    "all_gating_causality_not_proven": true
+  }
+
 }

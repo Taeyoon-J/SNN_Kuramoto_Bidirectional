@@ -1,3 +1,9 @@
+## SW0232: exact continuation mini complete
+
+Actual512 cumulative updates versus128: fixed16 three-seed .884622/.677086/.712312 vs .859634/.645611/.706340. FG delta +.024988, CI[-.006611,.062020]; original FG/balanced gates remain false. Three actual accepted128 prefixes and final512 checkpoints/144 raw masks independently audited. Promising mean increase needs matched secondary64 confirmation; full320 best remains SW0227 .858916.
+
+[SW0232 result](SW_0232_native64_exact_teacher_resume/RESULT_KO.md)
+
 ## SW0234: peer-informed GT-assisted diagnosis, not model performance
 
 Peer latest087cd82 reviewed. On our accepted native64 full320 masks: actualFG .858916, prescribed oracle merge .885762, coverage .883696, both .911458. Merge alone reduces Object IoU. Existing failed learned-merger/foreground branches remain closed pending a different justified approach. Actual best stays SW0227; SW0232 is running.
