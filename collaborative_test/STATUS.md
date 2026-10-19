@@ -1,3 +1,9 @@
+## SW0230: source-relative separation preflight
+
+Matched TRAIN64/128-update encoder+projection pilot; original center1 loss plus a natural source-distance contraction penalty. Local15 and Linux15 tests plus3 CLI checks passed; actual three-seed CPU admissions started before any GPU queue. No score yet; SW0227 full320 confirmation continues.
+
+[SW0230 start](SW_0230_native64_relative_separation/START_KO.md)
+
 ## SW0228 COMPLETE: stronger source-center anchoring rejected
 
 Fixed16/three-seed center16 .844707/.603466/.712916 vs center1 .859634/.645611/.706340. FG/balanced gates failed; no full320 or70k expansion. All144 masks and actual 128-update checkpoints/teachers independently audited. Full320 incumbent unchanged; SW0227 confirmation continues.
