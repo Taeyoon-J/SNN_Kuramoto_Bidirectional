@@ -35,3 +35,24 @@ an untouched-test result or matched training supervision with Slot Attention.
 The source paths underlying the diagram are listed in `provenance.json`.
 Visual inspection of the rendered PNG checked text fit, arrows, feedback
 labels and the separation of inference from training and evaluation.
+
+## Image-based interactive version
+
+`python -B collaborative_test/architecture_figures/draw_interactive.py` creates
+a self-contained HTML diagram and editable SVG under
+`collaborative_testing/generated/architecture_figures/native64_interactive/`.
+Open the HTML directly in a browser. Stage selection provides an explanation
+and enlarged view; the time slider animates illustrative phase maps. The OFF
+checkbox changes only diagram visibility and never a model setting. SVG
+download and browser print are available without a server or network.
+
+The archived RGB input is cropped from the existing local visualisation.
+Internal maps, spike rasters and masks are explicitly illustrative, not a
+checkpoint forward pass, ground-truth segmentation or measured prediction.
+No GT mask is loaded by this generator. Only generated private artifacts
+contain the input image; research source contains no embedded dataset image.
+
+`verify_interactive.py` exercises browser interactions and exports PNG/PDF
+when a local Playwright Chromium process is permitted. It writes its actual
+verification receipt only after all checks pass. Browser launch can require
+permission outside the Windows subprocess sandbox.
