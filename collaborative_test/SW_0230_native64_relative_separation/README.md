@@ -1,3 +1,11 @@
+# SW0230 COMPLETE: relative separation rejected
+
+Fixed16/three-seed .852402/.624603/.711310 vs matched SW0223 .859634/.645611/.706340.
+FG paired95% CI is strictly negative; candidate gates failed. All144 masks independently audited.
+No full320 or70k expansion; full320 incumbent unchanged. See RESULT_KO.md.
+
+Earlier preparation notes follow.
+
 # SW0230: source-relative class-center separation
 
 Prepared matched TRAIN64/128-update encoder+projection comparison against SW0223.

@@ -1,3 +1,9 @@
+## SW0230 COMPLETE: source-relative separation did not improve FG
+
+Fixed16/three-seed .852402/.624603/.711310 vs matched SW0223 .859634/.645611/.706340. FG difference -.007232, paired95% CI[-.014287,-.001225]. Both candidate gates failed. All144 masks/checkpoints/teachers independently audited. No full320/70k expansion. Keep SW0223/SW0225; SW0227 full320 confirmation continues.
+
+[SW0230 result](SW_0230_native64_relative_separation/RESULT_KO.md)
+
 ## SW0230: source-relative separation preflight
 
 Matched TRAIN64/128-update encoder+projection pilot; original center1 loss plus a natural source-distance contraction penalty. Local15 and Linux15 tests plus3 CLI checks passed; actual three-seed CPU admissions started before any GPU queue. No score yet; SW0227 full320 confirmation continues.

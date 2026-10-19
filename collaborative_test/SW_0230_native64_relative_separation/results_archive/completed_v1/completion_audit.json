@@ -1,0 +1,158 @@
+{
+  "status": "complete_actual_relative_separation_teacher_control_and_mask_audit",
+  "score_sha256": "54ff0048dc120a224c67480792b233f763c8b53c15f92a637040628a967d3d0d",
+  "diagnostic_source_sha256": "9900aacf240e3f5ad74b2b147828ef20654cd4c76fa8c47c661a8e92a3fb0897",
+  "frequency_helper_sha256": "4ae4be0486f4c24366fa3c3b2b6ce5dba6c8a760f951842e6e8f6777d26d0760",
+  "checkpoints": {
+    "0": {
+      "checkpoint_sha256": "e56b5f1474224970700cf888d4bdd0816584d1573c202b834716f8db384210e9",
+      "encoder_sha256": "6d8b03a7aa88085409684b2b47094959bd0f550870cbd6fda7fa84e403235711",
+      "teacher_sha256": "a5049c2dcd38d521e60528637cf7ad203cee8346018e18a77c582465f17b9966",
+      "protocol_sha256": "659fa0357f9e6d6512c4f1a05c00576ace9e5f27565fa5aa3ebdb38d4e0281f1",
+      "projection_sha256": "3bccc390b2679c4c6b98fd6e12e118d28eb68d197bc42cc8d6454b16c41a563c"
+    },
+    "1": {
+      "checkpoint_sha256": "222c88520c17b07cdcce2d1299a044cedb1f8c804e49f5fb1809901c2c7b5152",
+      "encoder_sha256": "07b7c15726b0557aa2d75abbeb00d0530f7b3a7154a8090d6c340466505809e1",
+      "teacher_sha256": "ff6de2edddab0799b348434dd597fd80d8f8557d84e58b204f874f7f19e85e8f",
+      "protocol_sha256": "bc4897ad31e7906c89df0ce1bc6c749f19cc829827d792b202fa759f347e7968",
+      "projection_sha256": "c17af927003b8b6c178806426e33a597db4d4f0cfa568170afdf2d0589279814"
+    },
+    "2": {
+      "checkpoint_sha256": "e61beb7055db837046cb926fecf0a5c0e2f8af4c43f440d5c88944b5578ab003",
+      "encoder_sha256": "d447e59095addb68d5fb5df2552845d0f39cf0986e492822b9c0eba9e7d217a3",
+      "teacher_sha256": "ab7856104ea5768a40bcf30894d956adb81894a0b6eff052df543828027dcb1e",
+      "protocol_sha256": "ac711363055ce742c439805c2dbe86e9f7a9d46dc8b79954a9c56dfedd2eabe8",
+      "projection_sha256": "45c2d6c14d45272a4dece5e54cff546a517cead15fe81faec772a81b1260ed12"
+    }
+  },
+  "source_full_models_already_reconstructed_by_frozen_scorer": true,
+  "independent_full_model_factory_repetitions": 0,
+  "actual_encoder_checkpoints": 3,
+  "actual_Adam_steps": 128,
+  "core_projection_updates": 128,
+  "other_core_updates": 0,
+  "actual_projection_parameters": 32,
+  "raw_masks_independently_rescored": 144,
+  "independent_metrics_means_and_bootstrap_maximum_abs_error": 2.220446049250313e-16,
+  "full320_candidate_gate": false,
+  "balanced_candidate_gate": false,
+  "per_seed_frequency": {
+    "0": {
+      "before": {
+        "within_object_variance": 0.005063948124079454,
+        "adjacent_class_mean_squared_distance": 0.0879855531539943,
+        "global_frequency_variance": 0.015690117508127252
+      },
+      "after": {
+        "within_object_variance": 0.0035713490736092915,
+        "adjacent_class_mean_squared_distance": 0.0874819247750281,
+        "global_frequency_variance": 0.015180512569917492
+      },
+      "center1": {
+        "within_object_variance": 0.003360379487798557,
+        "adjacent_class_mean_squared_distance": 0.08165818439105409,
+        "global_frequency_variance": 0.014309083085901574
+      },
+      "source_object_center_MSE": 5.940927400160945e-05,
+      "DEV_frequency_denoising_MSE": 0.003630758347610901,
+      "TRAIN_losses": {
+        "before": {
+          "total": 0.004659706261008978,
+          "frequency_denoising": 0.004659706261008978,
+          "gamma_anchor": 5.067212929535045e-15,
+          "source_center_MSE": 5.952092981762738e-14,
+          "within_object_variance": 0.004659706261008978,
+          "relative_separation": 2.7328289845386482e-14
+        },
+        "after": {
+          "total": 0.0035547520965337753,
+          "frequency_denoising": 0.0034010677482001483,
+          "gamma_anchor": 5.648907790600788e-05,
+          "source_center_MSE": 4.595677000907017e-05,
+          "within_object_variance": 0.0033551109372638166,
+          "relative_separation": 9.719521949591581e-05
+        }
+      }
+    },
+    "1": {
+      "before": {
+        "within_object_variance": 0.017436725990698967,
+        "adjacent_class_mean_squared_distance": 0.16261352385858813,
+        "global_frequency_variance": 0.03523177255789653
+      },
+      "after": {
+        "within_object_variance": 0.01513983765679191,
+        "adjacent_class_mean_squared_distance": 0.15651313617182566,
+        "global_frequency_variance": 0.033629079663659835
+      },
+      "center1": {
+        "within_object_variance": 0.013504824911018901,
+        "adjacent_class_mean_squared_distance": 0.13285870910501635,
+        "global_frequency_variance": 0.02861098417659739
+      },
+      "source_object_center_MSE": 0.00018198574525740696,
+      "DEV_frequency_denoising_MSE": 0.015321823402049317,
+      "TRAIN_losses": {
+        "before": {
+          "total": 0.01378237665630877,
+          "frequency_denoising": 0.01378237665630877,
+          "gamma_anchor": 5.24078130949312e-15,
+          "source_center_MSE": 5.677869453220947e-14,
+          "within_object_variance": 0.01378237665630877,
+          "relative_separation": 5.311623884124623e-14
+        },
+        "after": {
+          "total": 0.012514288071542978,
+          "frequency_denoising": 0.012255672132596374,
+          "gamma_anchor": 3.7031345527793746e-05,
+          "source_center_MSE": 0.0001801746475393884,
+          "within_object_variance": 0.012075497303158045,
+          "relative_separation": 0.00022158453793963417
+        }
+      }
+    },
+    "2": {
+      "before": {
+        "within_object_variance": 0.007018958751478107,
+        "adjacent_class_mean_squared_distance": 0.0539824095812558,
+        "global_frequency_variance": 0.012594363685591824
+      },
+      "after": {
+        "within_object_variance": 0.0062446653823799185,
+        "adjacent_class_mean_squared_distance": 0.050627853935903896,
+        "global_frequency_variance": 0.01182722381033018
+      },
+      "center1": {
+        "within_object_variance": 0.0053200308985213805,
+        "adjacent_class_mean_squared_distance": 0.042343489357609794,
+        "global_frequency_variance": 0.009932378307345256
+      },
+      "source_object_center_MSE": 8.681820008860086e-05,
+      "DEV_frequency_denoising_MSE": 0.006331483582468519,
+      "TRAIN_losses": {
+        "before": {
+          "total": 0.005229351460002363,
+          "frequency_denoising": 0.005229351460002363,
+          "gamma_anchor": 4.72968131148252e-15,
+          "source_center_MSE": 5.029631242335674e-14,
+          "within_object_variance": 0.005229351460002363,
+          "relative_separation": 4.97311089369941e-14
+        },
+        "after": {
+          "total": 0.00488189235329628,
+          "frequency_denoising": 0.0047400068724527955,
+          "gamma_anchor": 1.5275906207534717e-05,
+          "source_center_MSE": 7.281281614268664e-05,
+          "within_object_variance": 0.004667194094508886,
+          "relative_separation": 0.00012660969150601886
+        }
+      }
+    }
+  },
+  "all_three_frozen_protocols_checked_before_DEV_GT": true,
+  "additional_model_forwards": 0,
+  "additional_training_updates": 0,
+  "raw_imagewise_vectors_published": false,
+  "frequency_changes_are_not_gating_causal_evidence": true
+}
