@@ -11980,7 +11980,7 @@
   },
   "native64_event_readout_counterfactual_0241": {
     "experiment": "SW0241",
-    "status": "actual_CPU_restores_passed_three_exclusive_GPU_queues_registered",
+    "status": "completed_six_case_raw_trace_audit_with_tensor_layout_limitation",
     "parent_models": "SW0232 accepted three-seed frozen checkpoints",
     "purpose": "test event information in production mask readout",
     "changes_upstream_dynamics": false,
@@ -11988,7 +11988,12 @@
     "optimizer_updates": 0,
     "new_performance_result_available": false,
     "full320_incumbent_unchanged": true,
-    "evidence": "SW_0241_native64_event_readout_counterfactual/QUEUE_VALIDATION_EVIDENCE.json"
+    "evidence": "SW_0241_native64_event_readout_counterfactual/DIAGNOSTIC_RESULT.json",
+    "total_cases": 6,
+    "identical_partition_case_count": 4,
+    "raw_event_statistics_recomputed": true,
+    "paired_mask_comparisons_recomputed": true,
+    "event_causality_attribution_requires_matched_layout_control": true
   },
   "native64_teacher_separation_audit_0242": {
     "experiment": "SW0242",

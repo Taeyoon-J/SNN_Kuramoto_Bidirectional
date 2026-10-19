@@ -1,0 +1,103 @@
+{
+  "status": "complete_raw_event_statistics_and_paired_mask_consistency_audited",
+  "total_cases": 6,
+  "identical_partition_case_count": 4,
+  "cases": [
+    {
+      "seed": 0,
+      "case_index": 0,
+      "comparison": {
+        "labels_bitwise_equal": false,
+        "partition_equal_up_to_foreground_ID_permutation": false,
+        "foreground_changed_patch_count": 3,
+        "actual_object_count": 5,
+        "gate_only_object_count": 5
+      },
+      "raw_event_occupancy": 0.9967970788634387,
+      "prior238_scalar_diagnostic_exactly_reproduced": true
+    },
+    {
+      "seed": 0,
+      "case_index": 1,
+      "comparison": {
+        "labels_bitwise_equal": true,
+        "partition_equal_up_to_foreground_ID_permutation": true,
+        "foreground_changed_patch_count": 0,
+        "actual_object_count": 9,
+        "gate_only_object_count": 9
+      },
+      "raw_event_occupancy": 0.9978022226937943,
+      "prior238_scalar_diagnostic_exactly_reproduced": true
+    },
+    {
+      "seed": 1,
+      "case_index": 0,
+      "comparison": {
+        "labels_bitwise_equal": true,
+        "partition_equal_up_to_foreground_ID_permutation": true,
+        "foreground_changed_patch_count": 0,
+        "actual_object_count": 15,
+        "gate_only_object_count": 15
+      },
+      "raw_event_occupancy": 1.0,
+      "prior238_scalar_diagnostic_exactly_reproduced": true
+    },
+    {
+      "seed": 1,
+      "case_index": 1,
+      "comparison": {
+        "labels_bitwise_equal": true,
+        "partition_equal_up_to_foreground_ID_permutation": true,
+        "foreground_changed_patch_count": 0,
+        "actual_object_count": 17,
+        "gate_only_object_count": 17
+      },
+      "raw_event_occupancy": 1.0,
+      "prior238_scalar_diagnostic_exactly_reproduced": true
+    },
+    {
+      "seed": 2,
+      "case_index": 0,
+      "comparison": {
+        "labels_bitwise_equal": true,
+        "partition_equal_up_to_foreground_ID_permutation": true,
+        "foreground_changed_patch_count": 0,
+        "actual_object_count": 7,
+        "gate_only_object_count": 7
+      },
+      "raw_event_occupancy": 0.9932649472058842,
+      "prior238_scalar_diagnostic_exactly_reproduced": true
+    },
+    {
+      "seed": 2,
+      "case_index": 1,
+      "comparison": {
+        "labels_bitwise_equal": false,
+        "partition_equal_up_to_foreground_ID_permutation": false,
+        "foreground_changed_patch_count": 0,
+        "actual_object_count": 23,
+        "gate_only_object_count": 22
+      },
+      "raw_event_occupancy": 0.9935102898791233,
+      "prior238_scalar_diagnostic_exactly_reproduced": true
+    }
+  ],
+  "independent_raw_event_statistics_recomputation": true,
+  "paired_mask_comparisons_recomputed": true,
+  "independent_readout_reexecution": false,
+  "changes_upstream_dynamics": false,
+  "full_membrane_causal_necessity_proven": false,
+  "performance_improvement_claim": false,
+  "GT_used": false,
+  "optimizer_updates": 0,
+  "source_code_sha256": {
+    "DESIGN_KO.md": "2b5c2b21f71f4ae398eb52d9203e4b806a54819d0b5d3e9ff520a2ff0a9343fe",
+    "run.py": "e393a8ab1ba5063d04de271dd28488736695a45fb421f24ff49ae7b2c64a932c",
+    "queue.py": "e6342cedb310b3010dbc7b661e873797ff8e95cb5f3dd7cd42f5fd68ac77a39c",
+    "readout.py": "3ee2056c9df433a4ae7f36d0697ffc4b2d668d2da52ed218590a8158edf40abf",
+    "test_readout.py": "ab7bdcc328f0e2e3484e20590077841ccc3dac6303cb0377218894f9ff430e8f"
+  },
+  "actual_native_spike_stride_preserved_in_gate_only_substitution": false,
+  "additional_matched_layout_control_required_before_event_causality_attribution": true,
+  "raw_vectors_model_digests_and_private_server_metadata_omitted": true
+}
