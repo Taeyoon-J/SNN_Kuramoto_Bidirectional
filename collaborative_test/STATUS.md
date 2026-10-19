@@ -38,6 +38,33 @@ Updated 2026-10-19 00:45. Branch `patch_v2`. Contract v1 and v2, split v1.
 > - `figparts.py`: the row x column phase-alignment panels.
 > - `panels.py` and `peer_data.py` are **not** restored and are not in git.
 >
+> ### Recovery attempted and FAILED — the stale copy cannot evaluate
+>
+> The local tree was staged to `/work/USERS/tkim1/code/` (via a tar pipe; `rsync` cannot be
+> used while the remote login shell fails to read its `.bashrc` on the faulted mount) and the
+> mandated regression row was run: `BIM6_s1`, grid 16, validation 300, expecting
+> `0.7239 0.7251 0.4951`. It did not reach a number:
+>
+> ```
+> TypeError: S2NetHyperparameters.__init__() got an unexpected keyword argument
+>            'graph_extra_channels'
+> ```
+>
+> The evaluator passes 20 hyperparameters; the 2026-10-03 package accepts 68 fields and is
+> missing **7** of the 20: `coupling_balance`, `dendrite_per_region`, `geodesic_base`,
+> `geodesic_chunk`, `geodesic_power`, `membrane_threshold_k`, `membrane_threshold_mode`.
+>
+> These are not inert flags. `geodesic_base` and `geodesic_power` (`PV2_0076`, `PV2_0078`),
+> the population membrane threshold (`PV2_0094`) and `dendrite_per_region` all changed what
+> the model computes, and `BIM6_s1` was trained under them. Only two of the seven have a diff
+> in git — `PV2_0088_grid32_enablers/code.patch` and `PV2_0092_signed_coupling/code.patch`.
+> **The other five exist nowhere but the faulted mount.** Reconstructing them by guessing
+> would load the weights into a model that computes something else, which is the exact
+> failure the regression row is there to catch.
+>
+> So: evaluation cannot be restored until `/export_home` comes back. Training checkpoints are
+> unaffected and keep accumulating on `/work`.
+>
 > ### Resume point
 >
 > 1. When `/export_home` returns, **first** copy `snn_kuramoto_bidirectional/` off it and commit
