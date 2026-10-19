@@ -38,5 +38,6 @@ inherited update와 successor update를 구분한다. 합친 이력으로 각 pa
 완전 사용과 최종 Adam step 43,750을 검증해야 한다. 실제 checkpoint 재개 동등성과
 단일 GPU 큐·서버 preflight 전에는 successor 학습을 시작하지 않는다.
 
-현재는 입력 캐시를 생성하는 단계이며, successor trainer·재개 검증·큐 등록은
-아직 완료하지 않았다. 239번의 모델·loss·작업은 이 단계에서 변경하지 않았다.
+Implementation status: the complete cache and file hashes were validated. Two actual TRAIN batches matched original RGB and int64 labels bitwise. Input reads were 3424-4666 times faster; this is not an end-to-end training speedup measurement. All seven local tests passed, including actual Adam checkpoint interruption/rebind matching uninterrupted model, encoder and history hashes.
+
+Server Linux tests must pass before stopping the verified owned239 processes. Preserve the final committed model, Adam, RNG and history boundary, then atomically register migration provenance. All three actual CPU admissions must pass before launching the single-GPU successor queue. The original239 source and artifacts remain unchanged.

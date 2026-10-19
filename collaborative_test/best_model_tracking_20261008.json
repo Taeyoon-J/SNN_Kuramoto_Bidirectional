@@ -11904,7 +11904,7 @@
   },
   "native64_TRAIN70000_0239": {
     "experiment": "SW0239",
-    "status": "actual_GPU_training_started_IO_bottleneck_under_diagnosis",
+    "status": "intentionally_migrated_at_committed_boundary_to_IO_successor240",
     "selected_initial_full320_reference": "SW0227",
     "selected_initial_FG_ARI": 0.8589160177044816,
     "TRAIN_unique_images": 70000,
@@ -11919,16 +11919,25 @@
     "mask_supervised_teacher": true,
     "new_performance_result_available": false,
     "current_native64_incumbent_unchanged": true,
-    "evidence": "SW_0239_native64_best_70000/QUEUE_VALIDATION_EVIDENCE.json"
+    "evidence": "SW_0239_native64_best_70000/QUEUE_VALIDATION_EVIDENCE.json",
+    "preserved_seed0_updates": 128,
+    "successor": "SW0240"
   },
   "native64_TRAIN70000_cached_IO_0240": {
     "experiment": "SW0240",
-    "status": "CPU_only_exact_TRAIN_input_cache_building",
+    "status": "Linux7_tests_passed_exact_parent_boundary_frozen_actual_CPU_admission_running",
     "parent": "SW0239",
     "model_or_loss_changed": false,
     "existing239_job_modified": false,
     "successor_trainer_and_checkpoint_migration_not_yet_admitted": true,
     "new_performance_result_available": false,
-    "evidence": "SW_0240_native64_70000_cached_io/DESIGN_KO.md"
+    "evidence": "SW_0240_native64_70000_cached_io/MIGRATION_VALIDATION_EVIDENCE.json",
+    "old239_owned_processes_intentionally_stopped": true,
+    "preserved_parent_updates": {
+      "0": 128,
+      "1": 0,
+      "2": 0
+    },
+    "maximum_concurrent_GPU_workers": 1
   }
 }
