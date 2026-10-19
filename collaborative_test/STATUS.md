@@ -1,6 +1,53 @@
 # STATUS
 
-Updated 2026-10-13 15:45. Branch `patch_v2`. Contract v1, split v1.
+Updated 2026-10-19 00:45. Branch `patch_v2`. Contract v1 and v2, split v1.
+
+> ## INCIDENT, 2026-10-19 — `/export_home/tkim1` is faulted
+>
+> `ls`, `stat` and `df` on `/export_home/tkim1` all return **`Input/output error`**. This is a
+> filesystem fault on the server's home mount, not a permissions or VPN problem: `/work` is
+> healthy and answers normally in the same session. **It needs the machine's administrator.**
+>
+> ### What survives
+>
+> | | where | state |
+> | --- | --- | --- |
+> | every checkpoint | `/work/USERS/tkim1/runs/` | safe |
+> | gamma tensors, targets, split manifest copy | `/work/USERS/tkim1/` | safe |
+> | all result files (`pv2_*_results.txt`) | `/work/USERS/tkim1/runs/` | safe |
+> | `collaborative_test/` records and scripts | git, `origin/patch_v2` | safe |
+> | `PV2_0098` and `PV2_0110` training | GPUs 2 and 3 | **still running** — already resident in memory, reading from `/work` and writing checkpoints to `/work` |
+>
+> ### What is at risk
+>
+> **`patch_v2` has never tracked `snn_kuramoto_bidirectional/`.** Only `collaborative_test/`
+> is in the branch. The peer branch `patch_v2_sw` *does* track the model package; ours does
+> not. So the only current copy of our model source was on the faulted mount.
+>
+> The local working tree has a copy, but it is dated **2026-10-03** — sixteen days stale, and
+> missing `geodesic_chunk`/`_relax` and `coupling_balance`.
+>
+> Recent model-source changes are recoverable from their experiment diffs, which are in git:
+> `PV2_0088_grid32_enablers/code.patch` (geodesic chunking) and
+> `PV2_0092_signed_coupling/code.patch` (signed coupling). They need a correct base.
+>
+> ### Restored into git from this session, before they could be lost
+>
+> - `evaluate_model.py`: `_merge_groups` plus `--merge-threshold` and `--merge-rounds`. These
+>   had never been committed and existed only on the faulted mount.
+> - `figparts.py`: the row x column phase-alignment panels.
+> - `panels.py` and `peer_data.py` are **not** restored and are not in git.
+>
+> ### Resume point
+>
+> 1. When `/export_home` returns, **first** copy `snn_kuramoto_bidirectional/` off it and commit
+>    it to `patch_v2`. Never work another experiment with the model source untracked.
+> 2. If it does not return, rebuild the package from the 2026-10-03 local copy plus the two
+>    `code.patch` files, and re-verify against a known checkpoint by re-scoring `PV2_0104`
+>    seed 0 — it must reproduce 0.7699 / 0.7531 / 0.7017 before anything below it is read.
+> 3. `PV2_0098` (data scale) and `PV2_0110` (bidirectional feedback) finish on their own; read
+>    `/work/USERS/tkim1/runs/pv2_0098_results.txt` and `pv2_0110_results.txt`.
+>
 
 > ## Resume point, 2026-10-14 — access lost, not compute
 >

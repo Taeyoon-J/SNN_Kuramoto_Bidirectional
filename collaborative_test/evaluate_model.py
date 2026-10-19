@@ -141,6 +141,48 @@ def build_core(args, device):
     return core
 
 
+def _merge_groups(groups, affinity, threshold, max_rounds=20):
+    """Average-linkage agglomeration of the groups the synchrony readout returned.
+
+    PV2_0105's oracle showed that merging the right pairs is worth more than any
+    dial on the first stage, so this is a second stage rather than a retuning of
+    the first. It uses the same affinity the first stage used and never sees the
+    truth: the pair with the highest mean inter-group affinity is merged while
+    that mean is above `threshold`.
+
+    Components come back as tuples of node indices, not tensors, so the blocks are
+    taken with index_select rather than A[gi][:, gj].
+    """
+    if affinity is None or threshold is None:
+        return groups
+    import torch as _t
+    out = []
+    for b, per_image in enumerate(groups):
+        current = [list(g) for g in per_image]
+        A = affinity[b]
+        for _ in range(int(max_rounds)):
+            n = len(current)
+            if n < 2:
+                break
+            best, pair = None, None
+            for i in range(n):
+                gi = _t.as_tensor(current[i], device=A.device, dtype=_t.long)
+                for j in range(i + 1, n):
+                    gj = _t.as_tensor(current[j], device=A.device, dtype=_t.long)
+                    if gi.numel() == 0 or gj.numel() == 0:
+                        continue
+                    score = float(A.index_select(0, gi).index_select(1, gj).mean())
+                    if best is None or score > best:
+                        best, pair = score, (i, j)
+            if best is None or best <= float(threshold):
+                break
+            i, j = pair
+            current[i] = current[i] + current[j]
+            current.pop(j)
+        out.append([tuple(sorted(g)) for g in current])
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--checkpoint", required=True)
@@ -193,6 +235,13 @@ def main():
                           "cover this fraction of patches; chosen on validation"))
     ap.add_argument("--background", default="largest_component",
                     choices=["largest_component", "activity", "hybrid"])
+    ap.add_argument("--merge-threshold", type=float, default=None,
+                    help="Second readout stage: agglomerate groups whose mean "
+                         "inter-group affinity exceeds this. The affinity is spike "
+                         "correlation TIMES the spatial Gaussian, so its real scale is "
+                         "~1e-4, not ~1e-1 -- a threshold of 0.05 merges nothing.")
+    ap.add_argument("--merge-rounds", type=int, default=20,
+                    help="Maximum agglomeration rounds per image.")
     ap.add_argument("--synchrony-quantile", type=float, default=0.35,
                     help="hybrid background: fraction of units the synchrony ranking admits")
     ap.add_argument("--membrane-quantile", type=float, default=None,
@@ -478,6 +527,12 @@ def main():
         synchrony_quantile=args.synchrony_quantile,
         affinity=affinity_in,
     )
+    if args.merge_threshold is not None:
+        before = sum(len(g) for g in groups) / max(len(groups), 1)
+        groups = _merge_groups(groups, affinity_in, args.merge_threshold, args.merge_rounds)
+        after = sum(len(g) for g in groups) / max(len(groups), 1)
+        print("merge stage: %.2f -> %.2f groups per image (threshold %.4f)"
+              % (before, after, args.merge_threshold))
     prediction = spatial_components_to_patch_labels(groups, args.grid)
     if args.save_predictions:
         import numpy as _np
