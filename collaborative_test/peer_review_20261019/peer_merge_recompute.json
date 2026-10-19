@@ -1,0 +1,62 @@
+{
+  "peer_commit": "1eced36b7c7f810f71a1a1ed344010768678f9eb",
+  "source_path": "collaborative_test/PV2_0107b_merge_threshold/metrics.csv",
+  "source_sha256": "ace53d22504d0dd06a136b68dd7e280622267c63508fff6b3290e52bdb217635",
+  "scope": "native32 contract-v2 validation300; published rounded per-seed means; not our contract",
+  "metrics": [
+    "fg_ari",
+    "foreground_iou",
+    "matched_object_iou"
+  ],
+  "control_per_seed": {
+    "0": [
+      0.7699,
+      0.7531,
+      0.7017
+    ],
+    "1": [
+      0.6777,
+      0.6895,
+      0.6357
+    ],
+    "2": [
+      0.6853,
+      0.6963,
+      0.639
+    ]
+  },
+  "merged_per_seed": {
+    "0": [
+      0.8012,
+      0.7531,
+      0.6702
+    ],
+    "1": [
+      0.7354,
+      0.6895,
+      0.6094
+    ],
+    "2": [
+      0.7409,
+      0.6963,
+      0.6112
+    ]
+  },
+  "control_mean": [
+    0.7109666666666667,
+    0.7129666666666666,
+    0.6588
+  ],
+  "merged_mean": [
+    0.7591666666666667,
+    0.7129666666666666,
+    0.6302666666666666
+  ],
+  "delta_from_rounded_input": [
+    0.04820000000000002,
+    0.0,
+    -0.028533333333333338
+  ],
+  "all_three_seeds_FG_up_ObjectIoU_down": true,
+  "new_model_or_per_image_rescore": false
+}
