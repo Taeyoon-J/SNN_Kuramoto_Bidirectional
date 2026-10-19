@@ -1,0 +1,17 @@
+{
+  "status": "actual_shared_spike_function_contract_checked_on_CPU",
+  "source_sha256": "680ad89277b60206f192123165d13eca916e5183dc71eaa443a8eeb5f4b8fac8",
+  "event_values": [
+    0,
+    1
+  ],
+  "source_rule": "ActFun_adp.forward(input)=input.gt(0).float(); emitted=event*gate",
+  "fixture_scope": "CPU scalar-margin integration fixture, not a model trace",
+  "expected_occupancy_given_positive_gate": 0.42857142857142855,
+  "expected_transition_rate_given_both_gates_positive": 0.6,
+  "diagnostic_matches_actual_function": true,
+  "actual_model_forwards": 0,
+  "optimizer_updates": 0,
+  "mask_or_GT_input": false,
+  "performance_or_causal_claim": false
+}
