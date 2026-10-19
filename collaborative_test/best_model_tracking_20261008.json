@@ -12103,7 +12103,7 @@
   },
   "native64_precision_conditional_full320_0246": {
     "experiment": "SW0246",
-    "status": "conditional_full320_followup_registered_waiting_for_audited_245_selection",
+    "status": "closed_without_full320_GPU_evaluation",
     "prerequisite": "independently_audited_positive_SW0245_three_seed64_loss_screen",
     "planned_seed_scope": [
       0,
@@ -12120,6 +12120,125 @@
     "all_three_actual_CPU_admissions_before_GPU_required": true,
     "current_full320_reference": "SW0237",
     "global_best_not_updated": true,
-    "evidence": "SW_0246_native64_precision_full320/PREFLIGHT.json"
+    "evidence": "SW_0246_native64_precision_full320/CLOSURE.json",
+    "reason": "audited_within16_minus_control_FG_gain_below_registered_threshold",
+    "original_prerequisite_audit_failure_preserved": true,
+    "recovered_245_audit_complete": true
+  },
+  "native64_precision_three_seed64_0245": {
+    "experiment": "SW0245",
+    "status": "complete_matched_precision_three_seed64_confirmation",
+    "scoped_scores": {
+      "control": {
+        "fg_ari": 0.8874728313191591,
+        "foreground_iou": 0.6346252797985297,
+        "matched_object_iou": 0.6937654366091314
+      },
+      "within16": {
+        "fg_ari": 0.8926880114464812,
+        "foreground_iou": 0.6723484364923097,
+        "matched_object_iou": 0.6892367684439408
+      },
+      "parent237": {
+        "fg_ari": 0.8795513769384901,
+        "foreground_iou": 0.636343119091007,
+        "matched_object_iou": 0.6991940666617934
+      },
+      "slot": {
+        "fg_ari": 0.7899594705094414,
+        "foreground_iou": 0.19850369902024553,
+        "matched_object_iou": 0.19833256341885971
+      }
+    },
+    "per_seed": {
+      "control": {
+        "0": {
+          "fg_ari": 0.9008273365658872,
+          "foreground_iou": 0.8130242403814865,
+          "matched_object_iou": 0.7134903369183414
+        },
+        "1": {
+          "fg_ari": 0.8809296613526892,
+          "foreground_iou": 0.6156341694226455,
+          "matched_object_iou": 0.6879631352858258
+        },
+        "2": {
+          "fg_ari": 0.8806614960389012,
+          "foreground_iou": 0.4752174295914571,
+          "matched_object_iou": 0.6798428376232268
+        }
+      },
+      "within16": {
+        "0": {
+          "fg_ari": 0.8908861886620651,
+          "foreground_iou": 0.8183293501420712,
+          "matched_object_iou": 0.7109889150086827
+        },
+        "1": {
+          "fg_ari": 0.8977966552757461,
+          "foreground_iou": 0.7224960992734808,
+          "matched_object_iou": 0.6867862843802002
+        },
+        "2": {
+          "fg_ari": 0.8893811904016325,
+          "foreground_iou": 0.4762198600613769,
+          "matched_object_iou": 0.6699351059429396
+        }
+      },
+      "parent237": {
+        "0": {
+          "fg_ari": 0.8869013058703884,
+          "foreground_iou": 0.806675960205052,
+          "matched_object_iou": 0.7148992539224998
+        },
+        "1": {
+          "fg_ari": 0.8770472119781701,
+          "foreground_iou": 0.6276336709163187,
+          "matched_object_iou": 0.6994756623475703
+        },
+        "2": {
+          "fg_ari": 0.8747056129669118,
+          "foreground_iou": 0.4747197261516508,
+          "matched_object_iou": 0.68320728371531
+        }
+      },
+      "slot": {
+        "0": {
+          "fg_ari": 0.6537721269008714,
+          "foreground_iou": 0.20707460339232173,
+          "matched_object_iou": 0.19128609314873057
+        },
+        "1": {
+          "fg_ari": 0.8412541922171592,
+          "foreground_iou": 0.1983225773065582,
+          "matched_object_iou": 0.2166735280108035
+        },
+        "2": {
+          "fg_ari": 0.8748520924102936,
+          "foreground_iou": 0.19011391636185665,
+          "matched_object_iou": 0.187038069097045
+        }
+      }
+    },
+    "seed_scope": [
+      0,
+      1,
+      2
+    ],
+    "evaluation_images_per_seed": 64,
+    "within16_minus_control": {
+      "fg_ari": 0.005215180127322139,
+      "foreground_iou": 0.03772315669378001,
+      "matched_object_iou": -0.004528668165190597
+    },
+    "full320_expansion_gate_passed": false,
+    "raw_masks_independently_rescored": 768,
+    "actual_training_checkpoints_audited": 6,
+    "mask_supervised": true,
+    "current_full320_reference": "SW0237",
+    "global_best_not_updated": true,
+    "original_failed_auditor_preserved": true,
+    "audit_recovered_without_training_or_prediction_rerun": true,
+    "evidence": "SW_0245_native64_precision_three_seed64/PUBLIC_RESULT.json"
   }
 }
