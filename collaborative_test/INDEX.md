@@ -1,3 +1,9 @@
+## SW0236: matched-budget data scaling continuation
+
+Local18/Linux18 tests and3 CLI checks passed; actual three-seed CPU admissions started. Restore actual SW0226 TRAIN512/128 model+Adam+RNG, add384 updates, compare with SW0232 TRAIN64 at512 updates. GPU training waits for all SW0235 first attempts. No new result or fresh70000 training; full320 best remains SW0227.
+
+[SW0236 start](SW_0236_native64_TRAIN512_exact_resume/START_KO.md)
+
 ## SW0235: fixed232 secondary64 validation started
 
 Local8/Linux8 tests and2 CLI checks passed; actual three-checkpoint CPU admissions started before exclusive GPU queues. No new training: reuse16 masks and infer48 more per seed, comparing baseline and actual128 control. Preserve SW0232 original16 gate=false. Full320 best remains SW0227 .858916.
