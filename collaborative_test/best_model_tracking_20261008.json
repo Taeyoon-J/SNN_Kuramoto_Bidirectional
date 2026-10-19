@@ -11651,6 +11651,141 @@
     "full320_incumbent_unchanged": true,
     "interpretation": "promising_mean_FG_increase_uncertain_fixed16_CI_requires_matched_secondary64",
     "all_gating_causality_not_proven": true
+  },
+  "native64_TRAIN512_exact_resume_0236": {
+    "status": "complete_joint512_checkpoint_teacher_control_and_metric_audit_archived",
+    "record": "collaborative_test/SW_0236_native64_TRAIN512_exact_resume/RESULT_KO.md",
+    "grid": [
+      64,
+      64
+    ],
+    "evaluation_images": 16,
+    "seed_scope": [
+      0,
+      1,
+      2
+    ],
+    "TRAIN_unique_stage_images": 512,
+    "optimizer_updates": 512,
+    "logical_TRAIN_exposures": 8192,
+    "actual_accepted_prefix_updates": 128,
+    "additional_updates": 384,
+    "scores": {
+      "baseline": {
+        "fg_ari": 0.8428907016774789,
+        "foreground_iou": 0.6006915810165038,
+        "matched_object_iou": 0.7021610526966486
+      },
+      "train64_512": {
+        "fg_ari": 0.8846215928276541,
+        "foreground_iou": 0.6770859049377619,
+        "matched_object_iou": 0.7123115568216084
+      },
+      "train512_512": {
+        "fg_ari": 0.8856552259838958,
+        "foreground_iou": 0.6574877307777605,
+        "matched_object_iou": 0.7244396842100468
+      }
+    },
+    "paired": {
+      "baseline": {
+        "fg_ari": {
+          "mean": 0.04276452430641653,
+          "ci95": [
+            0.009232753400296945,
+            0.08974081631793004
+          ]
+        },
+        "foreground_iou": {
+          "mean": 0.056796149761256715,
+          "ci95": [
+            0.012846186549763064,
+            0.1045155930842598
+          ]
+        },
+        "matched_object_iou": {
+          "mean": 0.022278631513397845,
+          "ci95": [
+            -0.014171891788791732,
+            0.06437250642171691
+          ]
+        }
+      },
+      "train64_512": {
+        "fg_ari": {
+          "mean": 0.0010336331562418087,
+          "ci95": [
+            -0.017697655217081932,
+            0.02143727224090228
+          ]
+        },
+        "foreground_iou": {
+          "mean": -0.01959817416000118,
+          "ci95": [
+            -0.04811431030366301,
+            0.003657751553706457
+          ]
+        },
+        "matched_object_iou": {
+          "mean": 0.012128127388438412,
+          "ci95": [
+            2.580516868463938e-05,
+            0.025617180822841052
+          ]
+        }
+      }
+    },
+    "candidate_references": {
+      "0": {
+        "checkpoint_server": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0236_native64_TRAIN512_exact_resume/results_archive/seed0/TRAIN512/encoder_work/boundary.ptx",
+        "checkpoint_sha256": "351b4dd329e4495b6ff6647436985b07a8b6c190b1f4fbadec4d28f46d7ececa",
+        "full_model_sha256": "5fb363a25bec0d5b8309155f50afbf9a55d3b1a8dd4bfb5cb42f5e7076ce9531",
+        "encoder_sha256": "69bcc1b7bf1bf8dd6c3d2411be3d0188365082b2c3a1ebfaaf79d6daf0467190",
+        "projection_sha256": "76975827f15ee0b81506a4996196ebccab15e6de19f687fff4f9f4c00aff1ff3",
+        "scores": {
+          "fg_ari": 0.9319391752907376,
+          "foreground_iou": 0.8686728644045781,
+          "matched_object_iou": 0.7699346210370497
+        }
+      },
+      "1": {
+        "checkpoint_server": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0236_native64_TRAIN512_exact_resume/results_archive/seed1/TRAIN512/encoder_work/boundary.ptx",
+        "checkpoint_sha256": "f1b752f913b42b7c489f277ede740a074bef6205f0d9d06cfb57768f1819ccdd",
+        "full_model_sha256": "5f8403b4876a859c51c696dd26a069a8d3688583858fd517fcf6aa4ecbd0d071",
+        "encoder_sha256": "0cb9164009c4f3f83f14eac18e17d3d559da5a46a6e68926015388d63eaf47ff",
+        "projection_sha256": "5c7bf15d79501a88eda1a05ae95995333609f3cd08f60936663711ba23b6193b",
+        "scores": {
+          "fg_ari": 0.868672421514579,
+          "foreground_iou": 0.6144848126401825,
+          "matched_object_iou": 0.7067712396711491
+        }
+      },
+      "2": {
+        "checkpoint_server": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0236_native64_TRAIN512_exact_resume/results_archive/seed2/TRAIN512/encoder_work/boundary.ptx",
+        "checkpoint_sha256": "4ca6d897cd8773953cd34c08a7d1e2b26b2e2b296aeb66193855848fbfc54263",
+        "full_model_sha256": "9f9d42ef63a35b8475287e09f9e57cb53c0806e59cc5dbdaa2c76ef16d557a5b",
+        "encoder_sha256": "c6a175bd35e96480ebd1036a93e0d6ee52fa3b52c0bae019f4ef35b6ae195fa8",
+        "projection_sha256": "5497398868c44908738428b7125c35e7ce8080924ab94d5b814911a66268ee2f",
+        "scores": {
+          "fg_ari": 0.8563540811463707,
+          "foreground_iou": 0.48930551528852095,
+          "matched_object_iou": 0.6966131919219413
+        }
+      }
+    },
+    "score_sha256": "a88682ee72876e6478871a65f2be140c683be507fb17594ef038db9227a66b14",
+    "completion_audit_sha256": "a4916158bdb5aaa49e655dd5d4bd9de086b3a4f323176d5267a8ee953e7d6955",
+    "raw_masks_independently_rescored": 144,
+    "local_statistics_maximum_abs_error": 0.0,
+    "FG_track_candidate_gate": true,
+    "balanced_candidate_gate": false,
+    "data_scaling_FG_CI_positive": false,
+    "full320_confirmed": false,
+    "FG090_goal_verified": false,
+    "mask_supervised": true,
+    "new70000_training": false,
+    "full320_incumbent_unchanged": true,
+    "all_gating_causality_not_proven": true,
+    "interpretation": "FG_mean_plus_0.001034_vs_TRAIN64_at_matched512_updates_uncertain_CI; foreground_IoU_mean_lower; object_IoU_CI_positive"
   }
-
 }

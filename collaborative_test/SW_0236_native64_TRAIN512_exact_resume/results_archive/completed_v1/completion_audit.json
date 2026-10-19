@@ -1,0 +1,146 @@
+{
+  "status": "complete_actual_TRAIN512_exact_resume_teacher_control_and_mask_audit",
+  "score_sha256": "a88682ee72876e6478871a65f2be140c683be507fb17594ef038db9227a66b14",
+  "diagnostic_source_sha256": "828bb72a257ad8558585b98f12e1d7da610f87fa9bba3a10c97fdca11bd70601",
+  "frequency_helper_sha256": "4ae4be0486f4c24366fa3c3b2b6ce5dba6c8a760f951842e6e8f6777d26d0760",
+  "checkpoints": {
+    "0": {
+      "checkpoint_sha256": "351b4dd329e4495b6ff6647436985b07a8b6c190b1f4fbadec4d28f46d7ececa",
+      "encoder_sha256": "69bcc1b7bf1bf8dd6c3d2411be3d0188365082b2c3a1ebfaaf79d6daf0467190",
+      "teacher_sha256": "a3439be4e3c152a0c38aa2111c04553e2aff662753d8e8b432d31495b99b8647",
+      "protocol_sha256": "08319e3f28593adf7b57ac78f2536598639699b47305c990190969b295c39f8d",
+      "projection_sha256": "76975827f15ee0b81506a4996196ebccab15e6de19f687fff4f9f4c00aff1ff3"
+    },
+    "1": {
+      "checkpoint_sha256": "f1b752f913b42b7c489f277ede740a074bef6205f0d9d06cfb57768f1819ccdd",
+      "encoder_sha256": "0cb9164009c4f3f83f14eac18e17d3d559da5a46a6e68926015388d63eaf47ff",
+      "teacher_sha256": "d2bae6901c54ed8de91bf7ef3bbffb9a19abc221912cc8ee11c1757791aa78ac",
+      "protocol_sha256": "c809246d4a170a6f16f98b2baf7e8687316e7df3c0497e86305f8ecbb3602ee8",
+      "projection_sha256": "5c7bf15d79501a88eda1a05ae95995333609f3cd08f60936663711ba23b6193b"
+    },
+    "2": {
+      "checkpoint_sha256": "4ca6d897cd8773953cd34c08a7d1e2b26b2e2b296aeb66193855848fbfc54263",
+      "encoder_sha256": "c6a175bd35e96480ebd1036a93e0d6ee52fa3b52c0bae019f4ef35b6ae195fa8",
+      "teacher_sha256": "a9187f755aef129bef4d354c6ad4c5d3fd8155b48ad9bcc42703fd9002211cbb",
+      "protocol_sha256": "804937e21aa58178711b7216206e2fcd977ad0585e12e2126ce812d08397b821",
+      "projection_sha256": "5497398868c44908738428b7125c35e7ce8080924ab94d5b814911a66268ee2f"
+    }
+  },
+  "source_full_models_already_reconstructed_by_frozen_scorer": true,
+  "independent_full_model_factory_repetitions": 0,
+  "actual_encoder_checkpoints": 3,
+  "actual_Adam_steps": 512,
+  "core_projection_updates": 512,
+  "other_core_updates": 0,
+  "actual_projection_parameters": 32,
+  "raw_masks_independently_rescored": 144,
+  "unique_TRAIN_images": 512,
+  "matched_control_unique_TRAIN_images": 64,
+  "inherited_updates": 128,
+  "new_updates": 384,
+  "actual128_prefixes_verified": 3,
+  "independent_metrics_means_and_bootstrap_maximum_abs_error": 2.220446049250313e-16,
+  "full320_candidate_gate": true,
+  "balanced_candidate_gate": false,
+  "per_seed_frequency": {
+    "0": {
+      "before": {
+        "within_object_variance": 0.005063948124079454,
+        "adjacent_class_mean_squared_distance": 0.0879855531539943,
+        "global_frequency_variance": 0.015690117508127252
+      },
+      "after": {
+        "within_object_variance": 0.002838436545138501,
+        "adjacent_class_mean_squared_distance": 0.08132848963279878,
+        "global_frequency_variance": 0.014109032614560217
+      },
+      "train64_512": {
+        "within_object_variance": 0.0027707814932318767,
+        "adjacent_class_mean_squared_distance": 0.081468005517079,
+        "global_frequency_variance": 0.014098131875098521
+      },
+      "source_object_center_MSE": 0.00022354858560902358,
+      "DEV_frequency_denoising_MSE": 0.0030619851307475245,
+      "TRAIN_losses": {
+        "before": {
+          "total": 0.0047768248768989,
+          "frequency_denoising": 0.0047768248768989,
+          "gamma_anchor": 4.909542643312883e-15
+        },
+        "after": {
+          "total": 0.003169673822412733,
+          "frequency_denoising": 0.003097111199167557,
+          "gamma_anchor": 7.256261346810788e-05
+        }
+      }
+    },
+    "1": {
+      "before": {
+        "within_object_variance": 0.017436725990698967,
+        "adjacent_class_mean_squared_distance": 0.16261352385858813,
+        "global_frequency_variance": 0.03523177255789653
+      },
+      "after": {
+        "within_object_variance": 0.008890882224737513,
+        "adjacent_class_mean_squared_distance": 0.13610305196430575,
+        "global_frequency_variance": 0.028433244285958493
+      },
+      "train64_512": {
+        "within_object_variance": 0.008172478803941442,
+        "adjacent_class_mean_squared_distance": 0.14002432465996467,
+        "global_frequency_variance": 0.02880777723509945
+      },
+      "source_object_center_MSE": 0.0010829843977262499,
+      "DEV_frequency_denoising_MSE": 0.009973866622463762,
+      "TRAIN_losses": {
+        "before": {
+          "total": 0.014255913847591728,
+          "frequency_denoising": 0.014255913847591728,
+          "gamma_anchor": 5.124667240521753e-15
+        },
+        "after": {
+          "total": 0.009508110262686387,
+          "frequency_denoising": 0.008948185539338738,
+          "gamma_anchor": 0.0005599247815553099
+        }
+      }
+    },
+    "2": {
+      "before": {
+        "within_object_variance": 0.007018958751478107,
+        "adjacent_class_mean_squared_distance": 0.0539824095812558,
+        "global_frequency_variance": 0.012594363685591824
+      },
+      "after": {
+        "within_object_variance": 0.0034283825893960005,
+        "adjacent_class_mean_squared_distance": 0.04414323356152502,
+        "global_frequency_variance": 0.009831309926174786
+      },
+      "train64_512": {
+        "within_object_variance": 0.0033981559795027835,
+        "adjacent_class_mean_squared_distance": 0.04380611052614525,
+        "global_frequency_variance": 0.009717766382207994
+      },
+      "source_object_center_MSE": 0.00039421469409717247,
+      "DEV_frequency_denoising_MSE": 0.003822597283493173,
+      "TRAIN_losses": {
+        "before": {
+          "total": 0.005424391070846468,
+          "frequency_denoising": 0.005424391070846468,
+          "gamma_anchor": 4.6048884635242464e-15
+        },
+        "after": {
+          "total": 0.0035927256612922065,
+          "frequency_denoising": 0.0032591420458629727,
+          "gamma_anchor": 0.0003335836272526649
+        }
+      }
+    }
+  },
+  "data_scaling_FG_CI_positive": false,
+  "all_three_frozen_protocols_checked_before_DEV_GT": true,
+  "additional_model_forwards": 0,
+  "additional_training_updates": 0,
+  "raw_imagewise_vectors_published": false,
+  "frequency_changes_are_not_gating_causal_evidence": true
+}
