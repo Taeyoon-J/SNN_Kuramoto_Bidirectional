@@ -1,0 +1,9 @@
+# SW0242: frozen frequency teacher separation audit
+
+The actual SW0239/240 loss is already class-balanced per image, including background. It denoises effective frequencies towards the original217 teacher's object means and anchors gamma. It contains no explicit repulsion between different objects. A controlled native64 counterexample checks that the exact registered loss can be zero with two different objects sharing identical frequency targets. This is a structural observation, not evidence that actual data regressions have this cause.
+
+Measure actual original217 teacher outputs on 128 distinct TRAIN images sampled without replacement with RandomState242000 from the registered70k split, reusing the same sample across seeds0/1/2. Use the validated canonical input cache. Restore the actual original teacher with the existing239 source-teacher CPU path. Shared restoration can load validation RGB and archived predictions; only sampled TRAIN RGB/masks enter these statistics. No GPU, optimizer update or evaluation ground truth is used. Masks are supervised TRAIN inputs, not model predictions.
+
+For each image report foreground-object-center nearest distances, ratios to pooled within-object frequency spread, and nearest-teacher-center patch/object-balanced TRAIN accuracy. Aggregate distributions are descriptive teacher diagnostics, not FG-ARI, IoU, held-out accuracy or proof that achievable trained masks are bounded by these numbers. Empty/single-object cases are excluded from multi-object accuracy distributions. Zero within-object scale is counted separately.
+
+Retain actual frequency vectors and TRAIN labels privately and reproduce all statistics from those arrays. Record frozen teacher/model/cache/source bindings and verify no state changes. Three seeds are sequential CPU processes; existing GPU training and evaluation continue. This diagnostic does not alter the ongoing70k training or reopen the failed228/230 margin hypotheses.
