@@ -8,4 +8,4 @@ Seven local and seven Linux tests passed. A real Adam interruption/rebind test m
 
 Each seed still completes 43,750 logical updates and ten full passes through the same 70,000 unique images; inherited updates count toward that total. Seeds run sequentially on one GPU. Other experiment queues remain independent. The migration manifest and checkpoint bytes are private generated artifacts; aggregate verification is recorded in `MIGRATION_VALIDATION_EVIDENCE.json`.
 
-No new performance result is available yet. SW0227 remains the audited full320 incumbent. This training uses mask supervision and should not be presented as unsupervised learning.
+All three actual CPU admissions subsequently passed. On the assigned GPU, inherited Adam128 resumed and committed Adam192, confirming 64 new successor updates. The final CPU raw-checkpoint/mask audit is attached. No new performance result is available yet. SW0227 remains the audited full320 incumbent. This training uses mask supervision and should not be presented as unsupervised learning.
