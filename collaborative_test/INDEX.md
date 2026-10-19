@@ -1,3 +1,9 @@
+## SW0231: original teacher loss convergence check
+
+Same TRAIN64/source/objective/order/LRs; fixed512 updates vs accepted SW0223 at128. Actual128 model/Adam/history/Torch RNG prefix must match before update129. Local13 and Linux13 tests plus3 CLI checks passed; actual three-seed CPU admissions started. No performance result yet; SW0227 full320 confirmation continues.
+
+[SW0231 start](SW_0231_native64_teacher_convergence/START_KO.md)
+
 ## SW0230 COMPLETE: source-relative separation did not improve FG
 
 Fixed16/three-seed .852402/.624603/.711310 vs matched SW0223 .859634/.645611/.706340. FG difference -.007232, paired95% CI[-.014287,-.001225]. Both candidate gates failed. All144 masks/checkpoints/teachers independently audited. No full320/70k expansion. Keep SW0223/SW0225; SW0227 full320 confirmation continues.
