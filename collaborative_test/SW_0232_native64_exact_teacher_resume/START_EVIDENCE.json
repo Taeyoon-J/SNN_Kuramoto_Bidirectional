@@ -1,0 +1,110 @@
+{
+  "status": "three_convergence_TRAIN64_queues_registered",
+  "local_tests_passed": 16,
+  "linux_tests_passed": 16,
+  "linux_CLI_checks_passed": 3,
+  "deployment": {
+    "status": "three_convergence_TRAIN64_queues_registered",
+    "pid": 2804600,
+    "updated_unix": 1792378752.779571,
+    "jobs": [
+      {
+        "seed": 0,
+        "TRAIN_count": 64,
+        "supervisor_pid": 2805678
+      },
+      {
+        "seed": 1,
+        "TRAIN_count": 64,
+        "supervisor_pid": 2805679
+      },
+      {
+        "seed": 2,
+        "TRAIN_count": 64,
+        "supervisor_pid": 2805680
+      }
+    ]
+  },
+  "jobs": [
+    {
+      "seed": 0,
+      "admitted": true,
+      "natural_within_variance_error": 4.656612873077393e-10,
+      "actual_projection_gradient_norm": 0.01038505882024765,
+      "status": "waiting_for_exclusive_gpu",
+      "pid": 2805678,
+      "actual_process_alive": true,
+      "physical_gpu": null,
+      "error": null,
+      "frozen_masks": 0
+    },
+    {
+      "seed": 1,
+      "admitted": true,
+      "natural_within_variance_error": 9.313225746154785e-10,
+      "actual_projection_gradient_norm": 0.035371534526348114,
+      "status": "waiting_for_exclusive_gpu",
+      "pid": 2805679,
+      "actual_process_alive": true,
+      "physical_gpu": null,
+      "error": null,
+      "frozen_masks": 0
+    },
+    {
+      "seed": 2,
+      "admitted": true,
+      "natural_within_variance_error": 1.0477378964424133e-09,
+      "actual_projection_gradient_norm": 0.010753253474831581,
+      "status": "waiting_for_exclusive_gpu",
+      "pid": 2805680,
+      "actual_process_alive": true,
+      "physical_gpu": null,
+      "error": null,
+      "frozen_masks": 0
+    }
+  ],
+  "source_files": {
+    "DESIGN_KO.md": {
+      "sha256": "7aadaff27a755588f4d74719b024241d7ace7ac7b86a6975043431ce1b626f25"
+    },
+    "README.md": {
+      "sha256": "024d9a5ff10d7a4672d9031e464de352caf013533adee74b2ab7b84f0ad64a8b"
+    },
+    "train.py": {
+      "sha256": "48aa1d61ef79c1e6ec87fab41ce9438f1fd370a9b26f4b6c919b8451e32f82ef"
+    },
+    "projection.py": {
+      "sha256": "e289bd875562e171447644a5be661a0ac9de5e4b98bf2796feb6f43450f6b42c"
+    },
+    "evaluate.py": {
+      "sha256": "51849f346699e05557d894a735b71b36b1ab84672accd1f387868a87b08107d1"
+    },
+    "queue.py": {
+      "sha256": "8ac1484e7ab50efa5e9c4f658fd9ff328758187d27a9ded6d5448a14a9f23bbd"
+    },
+    "test_pipeline.py": {
+      "sha256": "4f9baa06fe9f41fc6a8c9a9a1e2e5ea72239b0f093d00d4a3cca5f78c1bc79ae"
+    },
+    "test_projection.py": {
+      "sha256": "6f88343fe9f13204682d68d85cd0161af639bdcd81c8db913fd5baf3f1da3095"
+    },
+    "prefix_guard.py": {
+      "sha256": "8c0eaf6af1556cf930f3b95a2d4dc6358a15eb1a325252584c912cd271364194"
+    },
+    "test_prefix_guard.py": {
+      "sha256": "5aac5bc98aeb7abcd47a5e5911820bcea7545c9f4c8fc6a383c80b38cbc64834"
+    },
+    "bootstrap.py": {
+      "sha256": "39dd948a418b084252664c5a29db965ffb458451d66d9f14e92475cc4a24363c"
+    },
+    "test_bootstrap.py": {
+      "sha256": "c6ba16e5389c12ed5b85e843bc772f07aedba9096a5e288d2796e462892ed786"
+    }
+  },
+  "GPU_training_claimed": false,
+  "performance_result_available": false,
+  "new70000_training": false,
+  "inherited_updates": 128,
+  "additional_updates": 384,
+  "cumulative_updates": 512
+}

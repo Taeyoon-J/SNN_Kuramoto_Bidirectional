@@ -1,3 +1,9 @@
+## SW0232: resume actual accepted128 checkpoint
+
+SW0231 recomputation failed strict bitwise prefix checks; failed states are preserved. SW0232 restores actual SW0223 model/Adam/RNG and adds384 updates to cumulative512 on TRAIN64. Local16 and Linux16 tests plus3 CLI checks passed. Actual three-seed CPU admission precedes queues. No performance result yet; SW0227 full320 remains running.
+
+[SW0231 failure](SW_0231_native64_teacher_convergence/RESULT_KO.md) | [SW0232 start](SW_0232_native64_exact_teacher_resume/START_KO.md)
+
 ## SW0231: original teacher loss convergence check
 
 Same TRAIN64/source/objective/order/LRs; fixed512 updates vs accepted SW0223 at128. Actual128 model/Adam/history/Torch RNG prefix must match before update129. Local13 and Linux13 tests plus3 CLI checks passed; actual three-seed CPU admissions started. No performance result yet; SW0227 full320 confirmation continues.
