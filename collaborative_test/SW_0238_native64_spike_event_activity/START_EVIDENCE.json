@@ -1,0 +1,88 @@
+{
+  "status": "three_actual_CPU_admissions_and_live_queues_verified_not_GPU_started",
+  "local_tests_passed": 7,
+  "linux_tests_passed": 7,
+  "CLI_help_checks_passed": 2,
+  "source_files": {
+    "DESIGN_KO.md": {
+      "sha256": "16486e73435f11d703857c2ba5352964e0b1686b7b7392f8f3836c83daff29da"
+    },
+    "README.md": {
+      "sha256": "c40afd16e17aa31dc95beb5ee01c24ae64d08e12f58d54acb492ab47df335e54"
+    },
+    "run.py": {
+      "sha256": "3694da678fc3747795e5f506d1b5e2ec0cdbdedaec8fda80c86cba35b0060dd6"
+    },
+    "queue.py": {
+      "sha256": "a8b10f26d1ed361eab0ba2901399b4ac82ae59f3cf4a865cf15f4a74a0db152a"
+    },
+    "spike_gate_activity.py": {
+      "sha256": "934d69f0fa9b6769b51d5e1f1362e549c37cdeedd87c098e1de7d7ca9714cf03"
+    },
+    "test_spike_gate_activity.py": {
+      "sha256": "4cedce3c28efc61fdcb6a5c80e5c4f12f5969e76edccc5491f262cf81843afc4"
+    },
+    "test_pipeline.py": {
+      "sha256": "e67028eae35e389f7539a34370dace8ef09fb98054ee4503d46c675d394d4261"
+    }
+  },
+  "observation": {
+    "server_unix": 1792388412.5961401,
+    "deployment": {
+      "status": "three_queues_started",
+      "pid": 2887130,
+      "updated_unix": 1792388399.8887346,
+      "jobs": [
+        {
+          "seed": 0,
+          "supervisor_pid": 2887596
+        },
+        {
+          "seed": 1,
+          "supervisor_pid": 2887597
+        },
+        {
+          "seed": 2,
+          "supervisor_pid": 2887598
+        }
+      ]
+    },
+    "jobs": [
+      {
+        "seed": 0,
+        "admitted": true,
+        "optimizer_updates": 0,
+        "status": "waiting_for_exclusive_gpu",
+        "pid": 2887596,
+        "actual_process_alive": true,
+        "physical_gpu": null,
+        "error": null,
+        "frozen_masks": 0
+      },
+      {
+        "seed": 1,
+        "admitted": true,
+        "optimizer_updates": 0,
+        "status": "waiting_for_exclusive_gpu",
+        "pid": 2887597,
+        "actual_process_alive": true,
+        "physical_gpu": null,
+        "error": null,
+        "frozen_masks": 0
+      },
+      {
+        "seed": 2,
+        "admitted": true,
+        "optimizer_updates": 0,
+        "status": "waiting_for_exclusive_gpu",
+        "pid": 2887598,
+        "actual_process_alive": true,
+        "physical_gpu": null,
+        "error": null,
+        "frozen_masks": 0
+      }
+    ]
+  },
+  "diagnostic_result_available": false,
+  "full320_incumbent_unchanged": true
+}
