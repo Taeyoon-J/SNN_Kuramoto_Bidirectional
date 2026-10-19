@@ -1,3 +1,9 @@
+## SW0229 COMPLETE: CPU-only accepted-mask error diagnosis
+
+Same64/three-seed accepted SW0225 masks: per-image split rate8.32%->6.10%, merge4.27%->4.62%; these rates have different denominators. Foreground precision62.6%, recall94.8%. Only3/51194 GT foreground patches lie outside their largest visible component. No new model result, GPU forward or learning. SW0227 continues and SW0228 remains queued. Full320 incumbent unchanged.
+
+[SW0229 diagnosis](SW_0229_native64_partition_diagnosis/RESULT_KO.md)
+
 ## SW0228: source-center preservation comparison admitted/deferred
 
 Natural source-center loss weight1->16; same TRAIN64/128updates and actual encoder/core projection. All3 actual CPU admissions,14 Linux tests and3 CLI checks passed. Three live supervisors wait until all SW0227 seeds have received their first GPU allocation. No GPU training or performance result yet; SW0227 continues and full320 incumbent is unchanged.
