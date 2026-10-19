@@ -9,3 +9,5 @@ A post-completion code check found that the gate-only replacement preserved valu
 The required next control is a readout replay using retained arrays, with actual native spike strides restored and the gate-only signal copied into the same layout. First reproduce the original actual and original gate-only masks, then compare the matched-layout substitution. This needs no new training or native trajectory rollout. Preserve this original experiment and its limitation rather than changing its registered source after completion.
 
 This is not a full membrane recurrence ablation, held-out performance result, proof of causal necessity or new best model. SW0237 remains the audited full320 reference. The ongoing70k training is unchanged.
+
+Follow-up: the matched-layout control completed successfully. All original masks replayed bitwise and no substitution mask changed due to layout. The same two event-removal differences remained. See `LAYOUT_RESULT_KO.md` and `LAYOUT_RESULT.json`; attribution remains limited to downstream readout on these six cases.

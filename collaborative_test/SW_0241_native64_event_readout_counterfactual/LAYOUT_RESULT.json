@@ -1,0 +1,148 @@
+{
+  "status": "complete_layout_matched_event_readout_control",
+  "cases": [
+    {
+      "seed": 0,
+      "case_index": 0,
+      "actual_vs_matched": {
+        "labels_bitwise_equal": false,
+        "partition_equal_up_to_foreground_ID_permutation": false,
+        "foreground_changed_patch_count": 3,
+        "actual_object_count": 5,
+        "gate_only_object_count": 5
+      },
+      "legacy_vs_matched": {
+        "labels_bitwise_equal": true,
+        "partition_equal_up_to_foreground_ID_permutation": true,
+        "foreground_changed_patch_count": 0,
+        "actual_object_count": 5,
+        "gate_only_object_count": 5
+      },
+      "actual_tail_bitwise_equal_to_gates": false,
+      "actual_Q_bitwise_equal_to_matched_Q": false
+    },
+    {
+      "seed": 0,
+      "case_index": 1,
+      "actual_vs_matched": {
+        "labels_bitwise_equal": true,
+        "partition_equal_up_to_foreground_ID_permutation": true,
+        "foreground_changed_patch_count": 0,
+        "actual_object_count": 9,
+        "gate_only_object_count": 9
+      },
+      "legacy_vs_matched": {
+        "labels_bitwise_equal": true,
+        "partition_equal_up_to_foreground_ID_permutation": true,
+        "foreground_changed_patch_count": 0,
+        "actual_object_count": 9,
+        "gate_only_object_count": 9
+      },
+      "actual_tail_bitwise_equal_to_gates": false,
+      "actual_Q_bitwise_equal_to_matched_Q": false
+    },
+    {
+      "seed": 1,
+      "case_index": 0,
+      "actual_vs_matched": {
+        "labels_bitwise_equal": true,
+        "partition_equal_up_to_foreground_ID_permutation": true,
+        "foreground_changed_patch_count": 0,
+        "actual_object_count": 15,
+        "gate_only_object_count": 15
+      },
+      "legacy_vs_matched": {
+        "labels_bitwise_equal": true,
+        "partition_equal_up_to_foreground_ID_permutation": true,
+        "foreground_changed_patch_count": 0,
+        "actual_object_count": 15,
+        "gate_only_object_count": 15
+      },
+      "actual_tail_bitwise_equal_to_gates": true,
+      "actual_Q_bitwise_equal_to_matched_Q": true
+    },
+    {
+      "seed": 1,
+      "case_index": 1,
+      "actual_vs_matched": {
+        "labels_bitwise_equal": true,
+        "partition_equal_up_to_foreground_ID_permutation": true,
+        "foreground_changed_patch_count": 0,
+        "actual_object_count": 17,
+        "gate_only_object_count": 17
+      },
+      "legacy_vs_matched": {
+        "labels_bitwise_equal": true,
+        "partition_equal_up_to_foreground_ID_permutation": true,
+        "foreground_changed_patch_count": 0,
+        "actual_object_count": 17,
+        "gate_only_object_count": 17
+      },
+      "actual_tail_bitwise_equal_to_gates": true,
+      "actual_Q_bitwise_equal_to_matched_Q": true
+    },
+    {
+      "seed": 2,
+      "case_index": 0,
+      "actual_vs_matched": {
+        "labels_bitwise_equal": true,
+        "partition_equal_up_to_foreground_ID_permutation": true,
+        "foreground_changed_patch_count": 0,
+        "actual_object_count": 7,
+        "gate_only_object_count": 7
+      },
+      "legacy_vs_matched": {
+        "labels_bitwise_equal": true,
+        "partition_equal_up_to_foreground_ID_permutation": true,
+        "foreground_changed_patch_count": 0,
+        "actual_object_count": 7,
+        "gate_only_object_count": 7
+      },
+      "actual_tail_bitwise_equal_to_gates": false,
+      "actual_Q_bitwise_equal_to_matched_Q": false
+    },
+    {
+      "seed": 2,
+      "case_index": 1,
+      "actual_vs_matched": {
+        "labels_bitwise_equal": false,
+        "partition_equal_up_to_foreground_ID_permutation": false,
+        "foreground_changed_patch_count": 0,
+        "actual_object_count": 23,
+        "gate_only_object_count": 22
+      },
+      "legacy_vs_matched": {
+        "labels_bitwise_equal": true,
+        "partition_equal_up_to_foreground_ID_permutation": true,
+        "foreground_changed_patch_count": 0,
+        "actual_object_count": 22,
+        "gate_only_object_count": 22
+      },
+      "actual_tail_bitwise_equal_to_gates": false,
+      "actual_Q_bitwise_equal_to_matched_Q": false
+    }
+  ],
+  "actual_partition_unchanged_case_count": 4,
+  "legacy_partition_changed_by_layout_case_count": 0,
+  "total_cases": 6,
+  "all_original_actual_and_legacy_masks_replayed_bitwise": true,
+  "additional_native_forwards": 0,
+  "optimizer_updates": 0,
+  "GT_used": false,
+  "changes_upstream_dynamics": false,
+  "full_membrane_causal_necessity_proven": false,
+  "performance_improvement_claim": false,
+  "source_code_sha256": {
+    "LAYOUT_CONTROL.md": "b037eed4295a5f05d4002e70a961ed586e411e875aa1039ef5f5b0f592e65c86",
+    "layout_control.py": "56b7acf68cb27e87fe70362ba2b304460b27e091e0d0a3a23c80b81da5c90c9b",
+    "layout_queue.py": "80f2b56dcc68d79c1dc0030e5c24376a38092d87982e896a7ad351c0d7927b46",
+    "layout_ops.py": "8ebcdbf47a029a43cf5ae1c7d229b5e314b2d02558d0c95bb527b45d4d544cb7",
+    "test_layout_ops.py": "4b80fbc10c6bb3579831c34a46623896c4ed314e3488115c6abad8af25ab1211"
+  },
+  "all_six_saved_mask_comparisons_revalidated": true,
+  "all_matched_spike_strides_equal": true,
+  "identical_tail_negative_control_count": 2,
+  "all_identical_tail_Q_and_mask_controls_bitwise_equal": true,
+  "layout_confound_did_not_change_any_observed_substitution_mask": true,
+  "private_raw_arrays_checkpoint_identity_and_server_metadata_omitted": true
+}
