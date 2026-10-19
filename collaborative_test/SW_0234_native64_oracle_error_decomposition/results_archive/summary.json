@@ -1,0 +1,125 @@
+{
+  "status": "complete_GT_assisted_full320_diagnostic_not_model_result",
+  "arms": {
+    "actual": {
+      "mean": {
+        "fg_ari": 0.8589160177044816,
+        "foreground_iou": 0.6052858849134048,
+        "matched_object_iou": 0.6743132742116557
+      },
+      "per_seed": {
+        "0": {
+          "fg_ari": 0.8829641569476323,
+          "foreground_iou": 0.804962635499564,
+          "matched_object_iou": 0.6938194754742272
+        },
+        "1": {
+          "fg_ari": 0.8396430307166869,
+          "foreground_iou": 0.5297640218308841,
+          "matched_object_iou": 0.6674776330786909
+        },
+        "2": {
+          "fg_ari": 0.8541408654491234,
+          "foreground_iou": 0.48113099740976645,
+          "matched_object_iou": 0.6616427140820456
+        }
+      }
+    },
+    "oracle_merge": {
+      "mean": {
+        "fg_ari": 0.8857623763930582,
+        "foreground_iou": 0.6052858849134048,
+        "matched_object_iou": 0.6670588514482156
+      },
+      "per_seed": {
+        "0": {
+          "fg_ari": 0.8931001739219508,
+          "foreground_iou": 0.804962635499564,
+          "matched_object_iou": 0.6947700051508021
+        },
+        "1": {
+          "fg_ari": 0.8838072205111975,
+          "foreground_iou": 0.5297640218308841,
+          "matched_object_iou": 0.6618109198341087
+        },
+        "2": {
+          "fg_ari": 0.8803797347460265,
+          "foreground_iou": 0.48113099740976645,
+          "matched_object_iou": 0.6445956293597348
+        }
+      }
+    },
+    "oracle_coverage": {
+      "mean": {
+        "fg_ari": 0.8836963099875816,
+        "foreground_iou": 0.6411678010633095,
+        "matched_object_iou": 0.7620600404326731
+      },
+      "per_seed": {
+        "0": {
+          "fg_ari": 0.9134564937774089,
+          "foreground_iou": 0.8566220569286187,
+          "matched_object_iou": 0.805799321597541
+        },
+        "1": {
+          "fg_ari": 0.8710276859276764,
+          "foreground_iou": 0.5689429393584836,
+          "matched_object_iou": 0.7580864802900928
+        },
+        "2": {
+          "fg_ari": 0.866604750257658,
+          "foreground_iou": 0.49793840690282876,
+          "matched_object_iou": 0.7222943194103857
+        }
+      }
+    },
+    "oracle_both": {
+      "mean": {
+        "fg_ari": 0.9114578236019858,
+        "foreground_iou": 0.6411678010633095,
+        "matched_object_iou": 0.7551054122757209
+      },
+      "per_seed": {
+        "0": {
+          "fg_ari": 0.9245608352869323,
+          "foreground_iou": 0.8566220569286187,
+          "matched_object_iou": 0.8069691841825899
+        },
+        "1": {
+          "fg_ari": 0.9166714866549504,
+          "foreground_iou": 0.5689429393584836,
+          "matched_object_iou": 0.7518990353873629
+        },
+        "2": {
+          "fg_ari": 0.8931411488640764,
+          "foreground_iou": 0.49793840690282876,
+          "matched_object_iou": 0.7064480172572096
+        }
+      }
+    }
+  },
+  "actual_metric_maximum_abs_error": 1.1102230246251565e-16,
+  "accepted_score_sha256": "b1dff78bcee22c34ed18f96288f009283e525cfaebf609edc6f93c96a3b45ee6",
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "image_count": 320,
+  "grid": [
+    64,
+    64
+  ],
+  "GT_used_to_transform_predictions": true,
+  "operations_are_not_proven_optimal_or_mathematical_upper_bounds": true,
+  "actual_best_model_unchanged": true,
+  "additional_training_updates": 0,
+  "additional_model_forwards": 0,
+  "peer_commit": "087cd82",
+  "source_files": {
+    "run.py": "5954ef9812392d4a0141a1c9384b2f58e5e83ad8bb0ae1e3e6f1fb306059018e",
+    "transform.py": "c61e3f046f81aa9a5be74df597c384b61233bda3badeb9473ca3659189204803",
+    "test_transform.py": "174f638009cf3e6cf4e97b7435d3fc0863fbca95b4da0cc9e50f048ebaf3b217",
+    "README.md": "77895c591453d7ba5d2f493c63690726f74ae88890d25595b5e2b33ab90a3d64"
+  }
+}
