@@ -1,3 +1,9 @@
+## SW0235: fixed232 secondary64 validation started
+
+Local8/Linux8 tests and2 CLI checks passed; actual three-checkpoint CPU admissions started before exclusive GPU queues. No new training: reuse16 masks and infer48 more per seed, comparing baseline and actual128 control. Preserve SW0232 original16 gate=false. Full320 best remains SW0227 .858916.
+
+[SW0235 start](SW_0235_native64_convergence_validation64/START_KO.md)
+
 ## SW0232: exact continuation mini complete
 
 Actual512 cumulative updates versus128: fixed16 three-seed .884622/.677086/.712312 vs .859634/.645611/.706340. FG delta +.024988, CI[-.006611,.062020]; original FG/balanced gates remain false. Three actual accepted128 prefixes and final512 checkpoints/144 raw masks independently audited. Promising mean increase needs matched secondary64 confirmation; full320 best remains SW0227 .858916.
