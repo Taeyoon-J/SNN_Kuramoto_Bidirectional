@@ -1,0 +1,11 @@
+# SW0242 completed: frozen teacher separation diagnostic
+
+The same128 sampled TRAIN images were analyzed with each original217 teacher used by the current239/240 loss: 128 unique images, 384 seed/image cases. All cases had multiple foreground objects. Source-bound retained frequency vectors and masks were re-read and all descriptive statistics reproduced. Four local and four Linux tests passed. No GPU or optimizer update was used.
+
+The pooled median nearest foreground-object center distance was0.145956 in actual four-component frequency units. Dividing each nearest-center distance by the square root of the two objects' summed within-object frequency variances gave a median ratio0.646069 (quartiles0.341708 and1.123532). Thus many sampled original-teacher objects overlap in their within-object frequency spread. This is a descriptive property of the frozen teacher, not a measurement of the currently trained student's final masks.
+
+The existing loss is already object-balanced, including background. It pulls patches towards the frozen teacher's per-object frequency mean and anchors gamma; it has no explicit requirement that different object means remain separated. A controlled native64 input to the exact loss gave zero loss with two foreground objects sharing frequency targets. That mathematical counterexample does not establish that those gamma/frequency tensors are realizable by the actual fixed core.
+
+These findings do not prove why more data changed prior performance, impose a performance ceiling, or supply FG-ARI/IoU scores. The nearest-teacher-center TRAIN accuracies in the JSON use ground-truth object centers and are diagnostic quantities. The denoising objective itself is intended to reduce the measured within-object spread, so original-teacher overlap alone does not prove that the objective will fail after training.
+
+SW0228 already failed after strengthening absolute source-center preservation. SW0230 already failed after adding source-relative separation. This result does not justify reopening either coefficient sweep. Keep the requested70k training unchanged, await full320 SW0237 confirmation, and use SW0241's actual event-readout intervention before selecting a new gating or objective change. SW0227 remains the audited full320 incumbent.
