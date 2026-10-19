@@ -11904,7 +11904,7 @@
   },
   "native64_TRAIN70000_0239": {
     "experiment": "SW0239",
-    "status": "actual_CPU_admissions_passed_single_GPU_queue_waiting",
+    "status": "actual_GPU_training_started_IO_bottleneck_under_diagnosis",
     "selected_initial_full320_reference": "SW0227",
     "selected_initial_FG_ARI": 0.8589160177044816,
     "TRAIN_unique_images": 70000,
@@ -11920,5 +11920,15 @@
     "new_performance_result_available": false,
     "current_native64_incumbent_unchanged": true,
     "evidence": "SW_0239_native64_best_70000/QUEUE_VALIDATION_EVIDENCE.json"
+  },
+  "native64_TRAIN70000_cached_IO_0240": {
+    "experiment": "SW0240",
+    "status": "CPU_only_exact_TRAIN_input_cache_building",
+    "parent": "SW0239",
+    "model_or_loss_changed": false,
+    "existing239_job_modified": false,
+    "successor_trainer_and_checkpoint_migration_not_yet_admitted": true,
+    "new_performance_result_available": false,
+    "evidence": "SW_0240_native64_70000_cached_io/DESIGN_KO.md"
   }
 }
