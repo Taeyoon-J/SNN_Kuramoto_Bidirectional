@@ -1,0 +1,30 @@
+[13:09] === PV2_0103: rescuing seed 1 at 32x32 ===
+[13:09] seed 1 as it stands: .2916 .0947 .2326 (groups 11.44, pred_fg .3101)
+[13:09] seeds 0 and 2:       .7699 / .7068   |  16x16 published .7239 .7251 .4951
+[13:09] 
+[13:09] --- A: graph frozen from seed 0's working checkpoint, 8 epochs ---
+[14:04]     54 min  collapse 2.217863
+    initialised from /work/USERS/tkim1/runs/GC_w0/core.pt
+[14:04] 
+[14:04] --- B: 16 epochs, no freeze ---
+[19:46]     341 min  collapse 2.874987
+[19:46] 
+[19:46] label                          fg_ari   fg_iou  obj_iou   groups  pred_fg
+seed 1 as it stands (8ep)      0.2916 0.0947 0.2326 11.4400 0.3101 
+A: graph frozen, 8ep           0.6777 0.6895 0.6357 16.8067 0.1306 
+B: 16 epochs                   0.6867 0.6008 0.4887 8.5567 0.1087 
+[20:10] # for scale
+seed 0 (works)                 0.7699 0.7531 0.7017 15.8367 0.1512 
+seed 2 (works)                 0.7068 0.6151 0.5677 11.0867 0.1140 
+[20:25] 
+seed 1 as it stands: 0.2916 / 0.0947 / 0.2326  groups 11.44  pred_fg 0.3101
+16x16 published:     0.7239 / 0.7251 / 0.4951
+
+  A: graph frozen, 8ep     0.6777 / 0.6895 / 0.6357  groups 16.81  pred_fg 0.1306  (fg_ari +0.3861)
+  B: 16 epochs             0.6867 / 0.6008 / 0.4887  groups  8.56  pred_fg 0.1087  (fg_ari +0.3951)
+
+SEED 1 IS RESCUED BY: B: 16 epochs
+  0.6867 / 0.6008 / 0.4887 at predicted foreground 0.1087, from 0.2916.
+Run all three seeds with this setting; if the spread closes, the three-seed
+mean lands near where seeds 0 and 2 already are.
+[20:25] === PV2_0103 DONE ===
