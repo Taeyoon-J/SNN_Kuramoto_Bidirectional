@@ -1,3 +1,9 @@
+## SW0227 full320: new verified FG reference
+
+Three-seed means: .858916 / .605286 / .674313; comparable Slot: .786902 / .198201 / .195203. FG improvement over SW0210 +.010301, paired image CI [.005659,.014751]. Object IoU gain CI includes zero. Independent2880-mask audit passed; FG090 is not achieved. Supervised lineage; not fresh70000 training. SW0232 continuation pilot remains active.
+
+[SW0227 result](SW_0227_native64_joint_projection_full320/RESULT_KO.md)
+
 ## SW0233: frozen frequency decomposition
 
 CPU-only accepted-cache diagnosis: static omega within-class variance is much smaller than sensory variance in this fixed16 cohort. No causal attribution or model-score improvement claimed. Keep omega intervention low priority pending SW0232.

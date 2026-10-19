@@ -1,0 +1,526 @@
+{
+  "status": "complete_independently_audited_fixed223_native64_full320",
+  "score_sha256": "b1dff78bcee22c34ed18f96288f009283e525cfaebf609edc6f93c96a3b45ee6",
+  "diagnostic_source_sha256": "cbe869fa5300fb2cdca68651fafa2e6ad7bced5773b85d728d8c437307cd671f",
+  "candidate_references": {
+    "0": {
+      "candidate": {
+        "model_sha256": "7e2e355b37ee9b8bff39762a025d46dcc17d363929d2929f446fada636032865",
+        "checkpoint_sha256": "9fc1fc6be2ab20bc0662a216b96e525a50872fa71c68c5988bd5433ec54676df",
+        "report_sha256": "4f61591fd3a84118fe6c2d9aede9b1752546d2eb7994e93f2512712c12aac384",
+        "protocol_sha256": "e567c3e0e20bb9ddb88329fee18e695dddb655b5a5c5109595c52f85178ec017",
+        "source_score_sha256": "1aeefaf69a4336177cad33daa7f2f74c936ce7c195c1b746471719390841995f",
+        "mini_masks_sha256": "042989c3d1df6603aca22cad63f1d620ce547d247cf34eeca78b850029320f48",
+        "mini_frequency_sha256": "2f0fca08102eb008bbde0b56e5a5abd234484b85733d95365fc33040ac3f5693",
+        "expected_runtime": {
+          "device_type": "cuda",
+          "torch_version": "2.13.0+cu130",
+          "cuda_runtime": "13.0",
+          "cudnn_version": 92000,
+          "python_version": "3.10.20",
+          "platform": "Linux-4.18.0-553.157.1.el8_10.x86_64-x86_64-with-glibc2.28",
+          "deterministic_algorithms": false,
+          "cudnn_benchmark": false,
+          "cudnn_deterministic": false,
+          "allow_tf32_matmul": false,
+          "allow_tf32_cudnn": true,
+          "float32_matmul_precision": "highest",
+          "cublas_workspace_config": null,
+          "device_index": 0,
+          "device_name": "NVIDIA TITAN RTX",
+          "device_capability": [
+            7,
+            5
+          ],
+          "device_total_memory": 25197805568,
+          "sw0191_resume_policy": "same_software_hardware_math_flags_and_logical_cuda0_physical_index_may_change"
+        },
+        "validation64_score_sha256": "2f27e521a414c1ddba8c268324b8cb7db398806ebb58a96fc506e5a366502f06",
+        "validation64_audit_sha256": "1b3040ea569ef64c596f943597cbc515da5b30d92cdb3cac2370a1fca89e4d51",
+        "validation64_protocol_sha256": "bedd3a5dc9e47c9bd8edbf522dcd026f450839fae9897a11f50b4f5045fc8c49",
+        "validation64_labels_sha256": "32d8ee9a5c41db7e117428465482d104aa6cc04cb629aefdf45f5b309df53096",
+        "validation64_RGB_sha256": "ead031e41012ac7a6398cdf02bfb419dae051c9b65f5f3016b7ca787e09b48a6",
+        "validation64_baseline_sha256": "8140a2c33e3af8322720d1f3a19d92a9ac2486a2b3b67dd0bd04a04fce926cb7"
+      },
+      "protocol_sha256": "8c66704ba41446a022243e39aaac28565561a1060018d0b57ce15b78432e19b9",
+      "Slot": {
+        "prediction_sha256": "240118d55d39c2001ec612149f50a10b14b4a8f8ee1cf424f30569fd2c47e430",
+        "protocol_sha256": "11f4baf5db64101b815e3fd92d2255c8b423554d2c91e82caeb5bd681a115a03",
+        "labels64_sha256": "db10e16e64da5f3f69e8ad164ae61d7170e7b02c51d1889779a1812f66341c8a"
+      }
+    },
+    "1": {
+      "candidate": {
+        "model_sha256": "106287b5f9007d1f5711f3bfa7d10a53defbc3612543010998ce86a7b1877b5d",
+        "checkpoint_sha256": "700e8382030b12f5950789684b60d9881739ff93393b6d5b682fd4ae8ed42d80",
+        "report_sha256": "bb72e31457f2da19e706522117dac559b65e57489df34c6471a2cbba63a975e7",
+        "protocol_sha256": "13d96cb764c501f93f8c5e6f0216c9b08eb589c1c4383980c7140916cd871bcc",
+        "source_score_sha256": "1aeefaf69a4336177cad33daa7f2f74c936ce7c195c1b746471719390841995f",
+        "mini_masks_sha256": "b7fe7d44e0e760bfa3cbe08bf039f43f94fb3f0458bfeb64ba34ad1528dc48a6",
+        "mini_frequency_sha256": "b3237b8fc08b400a4a3816cfd131b091d05b7560eeaa8d3e70a31c4847dc4721",
+        "expected_runtime": {
+          "device_type": "cuda",
+          "torch_version": "2.13.0+cu130",
+          "cuda_runtime": "13.0",
+          "cudnn_version": 92000,
+          "python_version": "3.10.20",
+          "platform": "Linux-4.18.0-553.157.1.el8_10.x86_64-x86_64-with-glibc2.28",
+          "deterministic_algorithms": false,
+          "cudnn_benchmark": false,
+          "cudnn_deterministic": false,
+          "allow_tf32_matmul": false,
+          "allow_tf32_cudnn": true,
+          "float32_matmul_precision": "highest",
+          "cublas_workspace_config": null,
+          "device_index": 0,
+          "device_name": "NVIDIA TITAN RTX",
+          "device_capability": [
+            7,
+            5
+          ],
+          "device_total_memory": 25197805568,
+          "sw0191_resume_policy": "same_software_hardware_math_flags_and_logical_cuda0_physical_index_may_change"
+        },
+        "validation64_score_sha256": "2f27e521a414c1ddba8c268324b8cb7db398806ebb58a96fc506e5a366502f06",
+        "validation64_audit_sha256": "1b3040ea569ef64c596f943597cbc515da5b30d92cdb3cac2370a1fca89e4d51",
+        "validation64_protocol_sha256": "b3cbb98b90d84f84896bd7b30eed4cf74d67a982f2b27ff7007e7e93730856e7",
+        "validation64_labels_sha256": "5eddb5d8b11d5d05976357318a41e892453158561d039e22d843174404165fab",
+        "validation64_RGB_sha256": "ead031e41012ac7a6398cdf02bfb419dae051c9b65f5f3016b7ca787e09b48a6",
+        "validation64_baseline_sha256": "f0c15669b7e904aaa1c0c86f91102209f3c0558034c39d773cf489c8b3b72235"
+      },
+      "protocol_sha256": "1217865ce2b7ab7b407edbe6fb8151513eeac8ddfe668c5f96c524cda9aca161",
+      "Slot": {
+        "prediction_sha256": "48969cac290eaada34f721fd959628abcbad69f1c9e38c384e0198e8bfc2b43b",
+        "protocol_sha256": "a561033539b7e7253b74f1e313712c77c6880916d4e578ef1a83e9cd094ad5eb",
+        "labels64_sha256": "dfbccf2f450eb95a1c73030c2a8dce4f428ae2be3bac84414fec7c732fe1cdd2"
+      }
+    },
+    "2": {
+      "candidate": {
+        "model_sha256": "e790d1a1ef8d8c306d2d7fd94d38f686c5fc82585529d6153d1d72183f709e16",
+        "checkpoint_sha256": "c7d9487be55757a3c8a7ad1035571584dcb5825a7fa495fddfb57c93d9522b59",
+        "report_sha256": "733083fea60975f996b81e3175e7ff1fe6c7683376e773e1e05fa090b64a87bf",
+        "protocol_sha256": "118c2fe6e3790c5e3a3a2680b0f9e067c9705113ac114e5d39b0b2e214f548f1",
+        "source_score_sha256": "1aeefaf69a4336177cad33daa7f2f74c936ce7c195c1b746471719390841995f",
+        "mini_masks_sha256": "4084f14ed4b46345ff4b69cd2e77a011ac427349bece4e0c2e593810decc6d77",
+        "mini_frequency_sha256": "c60103071d7bf9f1980549831271527ce2fe790e40ea505de9db45c58f65696f",
+        "expected_runtime": {
+          "device_type": "cuda",
+          "torch_version": "2.13.0+cu130",
+          "cuda_runtime": "13.0",
+          "cudnn_version": 92000,
+          "python_version": "3.10.20",
+          "platform": "Linux-4.18.0-553.157.1.el8_10.x86_64-x86_64-with-glibc2.28",
+          "deterministic_algorithms": false,
+          "cudnn_benchmark": false,
+          "cudnn_deterministic": false,
+          "allow_tf32_matmul": false,
+          "allow_tf32_cudnn": true,
+          "float32_matmul_precision": "highest",
+          "cublas_workspace_config": null,
+          "device_index": 0,
+          "device_name": "NVIDIA TITAN RTX",
+          "device_capability": [
+            7,
+            5
+          ],
+          "device_total_memory": 25197805568,
+          "sw0191_resume_policy": "same_software_hardware_math_flags_and_logical_cuda0_physical_index_may_change"
+        },
+        "validation64_score_sha256": "2f27e521a414c1ddba8c268324b8cb7db398806ebb58a96fc506e5a366502f06",
+        "validation64_audit_sha256": "1b3040ea569ef64c596f943597cbc515da5b30d92cdb3cac2370a1fca89e4d51",
+        "validation64_protocol_sha256": "9c73167d064e415e0746f092ecb10e22efd2b812e5c21e191bf3bdb7361012d2",
+        "validation64_labels_sha256": "24bcbb34211c423852657e44464bc1149e5e8047dd2eab848e41e07d29ba8ce2",
+        "validation64_RGB_sha256": "ead031e41012ac7a6398cdf02bfb419dae051c9b65f5f3016b7ca787e09b48a6",
+        "validation64_baseline_sha256": "ac55d3a18a1921277e5a1824f429be1c3892ce6bdf3cd4c0359c50bc8827ef93"
+      },
+      "protocol_sha256": "e790482d3fbad1b45d705ab8cce2f82cab10f4a6164e5d38881c5947faf83c7d",
+      "Slot": {
+        "prediction_sha256": "a2f2a20ed1b6986f8bbb4151367988cd86cdc71580b5bb5391fc581905036de2",
+        "protocol_sha256": "d3e380da1995834a279d467e8d43e51e83b22ec0a6d666ba0361cb92c957f891",
+        "labels64_sha256": "3d9f691034c1781fbdbc279b66986fe7fa5fce5a17b9241c9755208a6e0701a7"
+      }
+    }
+  },
+  "raw_masks_independently_rescored": 2880,
+  "independent_metrics_means_and_bootstrap_maximum_abs_error": 5.551115123125783e-16,
+  "three_seed_strictly_exceeds_Slot_means": true,
+  "native64_FG090_three_seed_goal_verified": false,
+  "original16_gate_failure_preserved": true,
+  "accepted64_selection": {
+    "score_sha256": "2f27e521a414c1ddba8c268324b8cb7db398806ebb58a96fc506e5a366502f06",
+    "audit_sha256": "1b3040ea569ef64c596f943597cbc515da5b30d92cdb3cac2370a1fca89e4d51",
+    "source_fingerprint": {
+      "files": {
+        "DESIGN_KO.md": "ffec97ecc9d94638cea3173a63f6747a0b1076245687fa1fbf52c972ae26f368",
+        "scope.py": "0c3d28845ac761ca36739a7bd6ba6d3284455a3322d38099d6730dc7d5982d14",
+        "run.py": "ad1220172b68d8ec5f6e0a0757b4cd7e6fdf4d1370834c5982cbb309b375dc6c",
+        "evaluate.py": "d6ed1f32bf71923c989796d3959bacec59b5f85b54d385d7ea907fbdeb5a5c7b",
+        "queue.py": "c11ebce6a6eb0f180310a9e5cfeb7d7e9d1f5b9c30c07211857a196044fb3b41",
+        "test_scope.py": "90cbd460089eadc64364ae15b531bc3b129f0742f5791a0bf89a34b7c8016cec",
+        "test_pipeline.py": "6e00ee5028ba650dc3bb418eaa49ffb8a9287492f4c83b89f3cd7a6170ec3462"
+      },
+      "candidate": {
+        "files": {
+          "DESIGN_KO.md": "30bc7ad5ff8afd6d8681d2383906c39e012cde2c68bba954dc68cd193fc40d61",
+          "projection.py": "76ca2d2a0307483c78bf1424fac3557315eed35aff48267d88d6f046cda0a63c",
+          "train.py": "ca74a9a689d04f57af93d0326d9ba6a527fb9b2097f4f38a5eaef34be29980f9",
+          "evaluate.py": "a377d04ccf7913db2609ad509d8b3f09a170049c6d848e342517a6037c097568",
+          "queue.py": "4ec256bdfd6b69882e1fbad59b8350788e73f53c38a353f1ec62c1481fde4e74",
+          "test_projection.py": "a028800d9d00cffc82854f6a2e3ccd5f666777abc42c990785e58df28368b652",
+          "test_pipeline.py": "2c4eacc1611902cd3ca8d5daa9a3c421d69f779c09f607d70342cf1a27269bfe"
+        },
+        "parent": {
+          "files": {
+            "DESIGN_KO.md": "63fb10aabe319ed6d9ecf14539c6fffda9b71a4acc42577d7dfaa40a5300cadb",
+            "frequency_loss.py": "9efe4121c2d538b9858e8c938876aa1d988d3a2dbf07cf57fc145d2a60dfc672",
+            "train.py": "240afe2d2cb68f1aa86805b546682f585efb98ae95428a5b0b44709297910c62",
+            "evaluate.py": "fc95da321b8974cea693d400e0dc110d7ec1edae6245032c48ea58e4a9234161",
+            "queue.py": "450c02f18def79c71e449eb0a8959787bbbba266bfa2aad0d36e7c66c14497b4",
+            "test_frequency_loss.py": "099a2958cd0ba18f85f4ca78fd1337e4edd6a722c48b470a61294a72b954c15a",
+            "test_pipeline.py": "cf96b22bfd3c6e7c278c04db9b7f25b5498bb1b0ea787864aa634cf90723ffc5"
+          },
+          "source": {
+            "files": {
+              "DESIGN_KO.md": "af5cae1180e1090435a1de8359a286568566249704fb0116178033e65cad0938",
+              "refine.py": "fe8f54f3487586027d0cf7f72b44de7fed54537ddf8d4d96ca6ac464f17081b4",
+              "run.py": "03acff36a1462942f756394e8df216ee52cabf6df4e1e2ff42e86a5cdae418a9",
+              "queue.py": "11a1df01cb53e898fd9525d212f5986c779ac401a94007ee5bd9c260732436f6",
+              "test_refine.py": "3edb1cc5ae06c1b94ceb599e5611e954465ed05404e6e2e3ddbc50ac46bff44f",
+              "test_pipeline.py": "15b7e10a2adca0fd36f8ad4c0940c10c495ca26fa8f0837a1e5ab108738efa99"
+            },
+            "source_sha256": "3cc02b48ee4d93fd4acbd7151653f0b0cf51c327e4e4cc73970f913083990a85",
+            "energy_operator_sha256": "fd3c760b523b724a864c807e64a7b2d208f2e426b7980c8f4a944f7edd643af5",
+            "models": {
+              "0": "2dd2b0d64602b85d4082bcaddcd21dfe8c60d34af1ea78a2ed29bf03c8ba4b6e",
+              "1": "e1e16281612b2171b6822e0ca70dee051f095ad7ebc9239a9675b8e8d9b391e0",
+              "2": "dff381ebcd5280a2a7bf7b99ef8ee3b5af30e91f3384962ef47c6d89b7da53d0"
+            },
+            "seeds": [
+              0,
+              1,
+              2
+            ],
+            "offsets": [
+              0,
+              2,
+              4,
+              6,
+              8,
+              10,
+              12,
+              14,
+              16,
+              18,
+              20,
+              22,
+              24,
+              26,
+              28,
+              30
+            ],
+            "new_optimizer_steps": 0
+          },
+          "drive_implementation_sha256": "9b5f3e077c755738b1636b97ac9640321a5b7abf5ec85b9a12557209cf5ad50b",
+          "checkpoint_implementation_sha256": "75d5076c051f81a51a39bbafedd363e589aa58ffc41ba4a662a87ffb91601f53",
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "TRAIN_counts": [
+            64,
+            512
+          ],
+          "encoder_updates": 128,
+          "batch": 16,
+          "learning_rates": {
+            "source_base": 3e-05,
+            "context_encoder": 0.0003
+          },
+          "core_updates": 0,
+          "native_grid": [
+            64,
+            64
+          ],
+          "production_readout_unchanged": true
+        },
+        "encoder_only_control": {
+          "files": {
+            "DESIGN_KO.md": "a9e09ed4424d635a90939ccaef2cd2552d3d32ec3e0a6830264af19a16f06ef2",
+            "teacher_loss.py": "62028cd3fc3348f705b56d0c575dc2b44a06e6ebc1d18178d02320f21679ffac",
+            "train.py": "3a0454a70a0fcebc111998458e87b8a6853516e4a0ff3833def0c53321c21c21",
+            "evaluate.py": "0e10af1f927ceec112884528d8e4faa910a4615ac217feb88fe43b8dedac60e0",
+            "queue.py": "982cfab11f3ac6fa83d4913aa05577aea63f8ff79c1f69418c90e0811701e215",
+            "test_teacher_loss.py": "0d2bc44ac240fd04631ff908dc0454db1367d8c3be3b805243589d0698697230",
+            "test_pipeline.py": "e24c0c5277766a234061b9de58e04a90e49e5a71e85dcd27ef7f116c39691fd9"
+          },
+          "parent": {
+            "files": {
+              "DESIGN_KO.md": "63fb10aabe319ed6d9ecf14539c6fffda9b71a4acc42577d7dfaa40a5300cadb",
+              "frequency_loss.py": "9efe4121c2d538b9858e8c938876aa1d988d3a2dbf07cf57fc145d2a60dfc672",
+              "train.py": "240afe2d2cb68f1aa86805b546682f585efb98ae95428a5b0b44709297910c62",
+              "evaluate.py": "fc95da321b8974cea693d400e0dc110d7ec1edae6245032c48ea58e4a9234161",
+              "queue.py": "450c02f18def79c71e449eb0a8959787bbbba266bfa2aad0d36e7c66c14497b4",
+              "test_frequency_loss.py": "099a2958cd0ba18f85f4ca78fd1337e4edd6a722c48b470a61294a72b954c15a",
+              "test_pipeline.py": "cf96b22bfd3c6e7c278c04db9b7f25b5498bb1b0ea787864aa634cf90723ffc5"
+            },
+            "source": {
+              "files": {
+                "DESIGN_KO.md": "af5cae1180e1090435a1de8359a286568566249704fb0116178033e65cad0938",
+                "refine.py": "fe8f54f3487586027d0cf7f72b44de7fed54537ddf8d4d96ca6ac464f17081b4",
+                "run.py": "03acff36a1462942f756394e8df216ee52cabf6df4e1e2ff42e86a5cdae418a9",
+                "queue.py": "11a1df01cb53e898fd9525d212f5986c779ac401a94007ee5bd9c260732436f6",
+                "test_refine.py": "3edb1cc5ae06c1b94ceb599e5611e954465ed05404e6e2e3ddbc50ac46bff44f",
+                "test_pipeline.py": "15b7e10a2adca0fd36f8ad4c0940c10c495ca26fa8f0837a1e5ab108738efa99"
+              },
+              "source_sha256": "3cc02b48ee4d93fd4acbd7151653f0b0cf51c327e4e4cc73970f913083990a85",
+              "energy_operator_sha256": "fd3c760b523b724a864c807e64a7b2d208f2e426b7980c8f4a944f7edd643af5",
+              "models": {
+                "0": "2dd2b0d64602b85d4082bcaddcd21dfe8c60d34af1ea78a2ed29bf03c8ba4b6e",
+                "1": "e1e16281612b2171b6822e0ca70dee051f095ad7ebc9239a9675b8e8d9b391e0",
+                "2": "dff381ebcd5280a2a7bf7b99ef8ee3b5af30e91f3384962ef47c6d89b7da53d0"
+              },
+              "seeds": [
+                0,
+                1,
+                2
+              ],
+              "offsets": [
+                0,
+                2,
+                4,
+                6,
+                8,
+                10,
+                12,
+                14,
+                16,
+                18,
+                20,
+                22,
+                24,
+                26,
+                28,
+                30
+              ],
+              "new_optimizer_steps": 0
+            },
+            "drive_implementation_sha256": "9b5f3e077c755738b1636b97ac9640321a5b7abf5ec85b9a12557209cf5ad50b",
+            "checkpoint_implementation_sha256": "75d5076c051f81a51a39bbafedd363e589aa58ffc41ba4a662a87ffb91601f53",
+            "seeds": [
+              0,
+              1,
+              2
+            ],
+            "TRAIN_counts": [
+              64,
+              512
+            ],
+            "encoder_updates": 128,
+            "batch": 16,
+            "learning_rates": {
+              "source_base": 3e-05,
+              "context_encoder": 0.0003
+            },
+            "core_updates": 0,
+            "native_grid": [
+              64,
+              64
+            ],
+            "production_readout_unchanged": true
+          },
+          "seeds": [
+            0,
+            1,
+            2
+          ],
+          "TRAIN_counts": [
+            64
+          ],
+          "encoder_updates": 128,
+          "batch": 16,
+          "learning_rates": {
+            "source_base": 3e-05,
+            "context_encoder": 0.0003
+          },
+          "target": "fixed_source_TRAIN_object_frequency_centers",
+          "gamma_anchor_coefficient": 1.0,
+          "frequency_coefficient": 1.0,
+          "core_updates": 0,
+          "native_grid": [
+            64,
+            64
+          ],
+          "production_readout_unchanged": true
+        },
+        "seeds": [
+          0,
+          1,
+          2
+        ],
+        "TRAIN_counts": [
+          64
+        ],
+        "encoder_updates": 128,
+        "batch": 16,
+        "learning_rates": {
+          "source_base": 3e-05,
+          "context_encoder": 0.0003,
+          "sensory_projection": 0.0003
+        },
+        "target": "fixed_source_TRAIN_object_frequency_centers",
+        "gamma_anchor_coefficient": 1.0,
+        "frequency_coefficient": 1.0,
+        "core_projection_updates": 128,
+        "other_core_updates": 0,
+        "native_grid": [
+          64,
+          64
+        ],
+        "production_readout_unchanged": true
+      },
+      "original_source": {
+        "files": {
+          "DESIGN_KO.md": "af5cae1180e1090435a1de8359a286568566249704fb0116178033e65cad0938",
+          "refine.py": "fe8f54f3487586027d0cf7f72b44de7fed54537ddf8d4d96ca6ac464f17081b4",
+          "run.py": "03acff36a1462942f756394e8df216ee52cabf6df4e1e2ff42e86a5cdae418a9",
+          "queue.py": "11a1df01cb53e898fd9525d212f5986c779ac401a94007ee5bd9c260732436f6",
+          "test_refine.py": "3edb1cc5ae06c1b94ceb599e5611e954465ed05404e6e2e3ddbc50ac46bff44f",
+          "test_pipeline.py": "15b7e10a2adca0fd36f8ad4c0940c10c495ca26fa8f0837a1e5ab108738efa99"
+        },
+        "source_sha256": "3cc02b48ee4d93fd4acbd7151653f0b0cf51c327e4e4cc73970f913083990a85",
+        "energy_operator_sha256": "fd3c760b523b724a864c807e64a7b2d208f2e426b7980c8f4a944f7edd643af5",
+        "models": {
+          "0": "2dd2b0d64602b85d4082bcaddcd21dfe8c60d34af1ea78a2ed29bf03c8ba4b6e",
+          "1": "e1e16281612b2171b6822e0ca70dee051f095ad7ebc9239a9675b8e8d9b391e0",
+          "2": "dff381ebcd5280a2a7bf7b99ef8ee3b5af30e91f3384962ef47c6d89b7da53d0"
+        },
+        "seeds": [
+          0,
+          1,
+          2
+        ],
+        "offsets": [
+          0,
+          2,
+          4,
+          6,
+          8,
+          10,
+          12,
+          14,
+          16,
+          18,
+          20,
+          22,
+          24,
+          26,
+          28,
+          30
+        ],
+        "new_optimizer_steps": 0
+      },
+      "shared_reader_sha256": "fc95da321b8974cea693d400e0dc110d7ec1edae6245032c48ea58e4a9234161",
+      "seeds": [
+        0,
+        1,
+        2
+      ],
+      "IDs": [
+        1320,
+        1321,
+        1322,
+        1323,
+        1324,
+        1325,
+        1326,
+        1327,
+        1328,
+        1329,
+        1330,
+        1331,
+        1332,
+        1333,
+        1334,
+        1335,
+        1336,
+        1337,
+        1338,
+        1339,
+        1340,
+        1341,
+        1342,
+        1343,
+        1344,
+        1345,
+        1346,
+        1347,
+        1348,
+        1349,
+        1350,
+        1351,
+        1352,
+        1353,
+        1354,
+        1355,
+        1356,
+        1357,
+        1358,
+        1359,
+        1360,
+        1361,
+        1362,
+        1363,
+        1364,
+        1365,
+        1366,
+        1367,
+        1368,
+        1369,
+        1370,
+        1371,
+        1372,
+        1373,
+        1374,
+        1375,
+        1376,
+        1377,
+        1378,
+        1379,
+        1380,
+        1381,
+        1382,
+        1383
+      ],
+      "reused_mini_offsets": [
+        0,
+        2,
+        4,
+        6,
+        8,
+        10,
+        12,
+        14,
+        16,
+        18,
+        20,
+        22,
+        24,
+        26,
+        28,
+        30
+      ],
+      "replay_offsets": [
+        0
+      ],
+      "expected_new_native_forwards_per_seed": 49,
+      "optimizer_updates": 0,
+      "selection": "predetermined first64 validation images; fixed223 checkpoints"
+    }
+  },
+  "all_three_full_protocols_and_Slot_artifacts_checked_before_DEV_GT": true,
+  "additional_model_forwards": 0,
+  "additional_training_updates": 0,
+  "raw_imagewise_vectors_published": false
+}

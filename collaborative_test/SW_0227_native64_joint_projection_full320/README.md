@@ -1,3 +1,5 @@
+[Completed full320 result](RESULT_KO.md): .858916 / .605286 / .674313, independently audited. FG090 pending.
+
 # SW0227
 
 Fixed SW0223 checkpoints selected by audited SW0225; full320, no training.
