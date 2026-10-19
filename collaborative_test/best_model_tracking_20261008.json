@@ -1,89 +1,123 @@
 {
   "current_native64_FG_track_reference": {
-  "scope": "native64_fixed320_supervised_three_seed_reference",
-  "experiment": "SW0227",
-  "models": {
-    "0": {
-      "checkpoint_server": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0223_native64_joint_sensory_projection/results_archive/seed0/TRAIN64/encoder_work/boundary.ptx",
-      "model_state_sha256": "7e2e355b37ee9b8bff39762a025d46dcc17d363929d2929f446fada636032865",
-      "checkpoint_sha256": "9fc1fc6be2ab20bc0662a216b96e525a50872fa71c68c5988bd5433ec54676df"
+    "scope": "native64_fixed320_supervised_three_seed_reference",
+    "experiment": "SW0237",
+    "models": {
+      "0": {
+        "source_training_experiment": "SW0232",
+        "native64_TRAIN_images": 64,
+        "cumulative_Adam_updates": 512,
+        "exact_checkpoint_and_model_identity_preserved_in_private_registry": true
+      },
+      "1": {
+        "source_training_experiment": "SW0232",
+        "native64_TRAIN_images": 64,
+        "cumulative_Adam_updates": 512,
+        "exact_checkpoint_and_model_identity_preserved_in_private_registry": true
+      },
+      "2": {
+        "source_training_experiment": "SW0232",
+        "native64_TRAIN_images": 64,
+        "cumulative_Adam_updates": 512,
+        "exact_checkpoint_and_model_identity_preserved_in_private_registry": true
+      }
     },
-    "1": {
-      "checkpoint_server": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0223_native64_joint_sensory_projection/results_archive/seed1/TRAIN64/encoder_work/boundary.ptx",
-      "model_state_sha256": "106287b5f9007d1f5711f3bfa7d10a53defbc3612543010998ce86a7b1877b5d",
-      "checkpoint_sha256": "700e8382030b12f5950789684b60d9881739ff93393b6d5b682fd4ae8ed42d80"
+    "seed_scope": [
+      0,
+      1,
+      2
+    ],
+    "grid": [
+      64,
+      64
+    ],
+    "image_count": 320,
+    "image_ids_first_last": [
+      1320,
+      1639
+    ],
+    "inference_seed_base": 193000,
+    "metrics": {
+      "fg_ari": 0.8726801997261894,
+      "foreground_iou": 0.6261096605853137,
+      "matched_object_iou": 0.676330506457697
     },
-    "2": {
-      "checkpoint_server": "/Data0/kevinswk/patch_v2_sw/collaborative_test/SW_0223_native64_joint_sensory_projection/results_archive/seed2/TRAIN64/encoder_work/boundary.ptx",
-      "model_state_sha256": "e790d1a1ef8d8c306d2d7fd94d38f686c5fc82585529d6153d1d72183f709e16",
-      "checkpoint_sha256": "c7d9487be55757a3c8a7ad1035571584dcb5825a7fa495fddfb57c93d9522b59"
+    "slot_metrics": {
+      "fg_ari": 0.7869016920263494,
+      "foreground_iou": 0.19820078921198847,
+      "matched_object_iou": 0.1952025237013272
+    },
+    "per_seed": {
+      "0": {
+        "fg_ari": 0.8852403646752849,
+        "foreground_iou": 0.7985825640413935,
+        "matched_object_iou": 0.6971303024984252
+      },
+      "1": {
+        "fg_ari": 0.8693939278528093,
+        "foreground_iou": 0.5925120752976276,
+        "matched_object_iou": 0.6757315171205666
+      },
+      "2": {
+        "fg_ari": 0.8634063066504767,
+        "foreground_iou": 0.4872343424169185,
+        "matched_object_iou": 0.6561296997541017
+      }
+    },
+    "completion_audit": "SW_0237_native64_converged_full320/PUBLIC_RESULT.json",
+    "three_seed_strictly_exceeds_Slot_means": true,
+    "FG090_goal_achieved": false,
+    "mask_supervised": true,
+    "unsupervised_leaderboard_eligible": false,
+    "new70000_training": false,
+    "native64_teacher_stage_unique_TRAIN_per_seed": 64,
+    "teacher_stage_optimizer_updates": 512,
+    "other_core_updates": 0,
+    "validation_selected_not_untouched_test": true,
+    "bidirectional_runtime_scope": {
+      "spike_to_Kuramoto_feedback": false,
+      "synchrony_to_graph_feedback": false,
+      "previous_spike_dendritic_input_and_membrane_reset_path_present": true,
+      "local_feedback_causal_contribution_not_verified": true,
+      "latest_teacher_adaptation_updates_encoder_and_gamma_projection_only": true,
+      "evidence_files": {
+        "collaborative_test/SW_0134_native_spike_binding/rollout.py": "66c08404af91b50fb4cbfa63fe44650dd6a698ea669cd3d6a672dfc5c78503f3",
+        "collaborative_test/SW_0175_critical_component_binding/train_v2.py": "284d6de62c4af5cc335b7b953eca1cc936e50f732e55867e4b804c8ec2215a89"
+      }
+    },
+    "all_gating_causal_contribution_verified": false
+  },
+  "previous_native64_FG_track_reference_SW0227": {
+    "experiment": "SW0227",
+    "scope": "native64_fixed320_supervised_three_seed_reference",
+    "metrics": {
+      "fg_ari": 0.8589160177044816,
+      "foreground_iou": 0.6052858849134048,
+      "matched_object_iou": 0.6743132742116557
+    },
+    "slot_metrics": {
+      "fg_ari": 0.7869016920263494,
+      "foreground_iou": 0.19820078921198847,
+      "matched_object_iou": 0.1952025237013272
+    },
+    "per_seed": {
+      "0": {
+        "fg_ari": 0.8829641569476323,
+        "foreground_iou": 0.804962635499564,
+        "matched_object_iou": 0.6938194754742271
+      },
+      "1": {
+        "fg_ari": 0.8396430307166869,
+        "foreground_iou": 0.5297640218308841,
+        "matched_object_iou": 0.6674776330786909
+      },
+      "2": {
+        "fg_ari": 0.8541408654491234,
+        "foreground_iou": 0.48113099740976645,
+        "matched_object_iou": 0.6616427140820456
+      }
     }
   },
-  "seed_scope": [
-    0,
-    1,
-    2
-  ],
-  "grid": [
-    64,
-    64
-  ],
-  "image_count": 320,
-  "image_ids_first_last": [
-    1320,
-    1639
-  ],
-  "inference_seed_base": 193000,
-  "metrics": {
-    "fg_ari": 0.8589160177044816,
-    "foreground_iou": 0.6052858849134048,
-    "matched_object_iou": 0.6743132742116557
-  },
-  "slot_metrics": {
-    "fg_ari": 0.7869016920263494,
-    "foreground_iou": 0.19820078921198847,
-    "matched_object_iou": 0.1952025237013272
-  },
-  "per_seed": {
-    "0": {
-      "fg_ari": 0.8829641569476323,
-      "foreground_iou": 0.804962635499564,
-      "matched_object_iou": 0.6938194754742271
-    },
-    "1": {
-      "fg_ari": 0.8396430307166869,
-      "foreground_iou": 0.5297640218308841,
-      "matched_object_iou": 0.6674776330786909
-    },
-    "2": {
-      "fg_ari": 0.8541408654491234,
-      "foreground_iou": 0.48113099740976645,
-      "matched_object_iou": 0.6616427140820456
-    }
-  },
-  "evaluation_summary_sha256": "b1dff78bcee22c34ed18f96288f009283e525cfaebf609edc6f93c96a3b45ee6",
-  "completion_audit": "SW_0227_native64_joint_projection_full320/results_archive/completed_v1/completion_audit.json",
-  "three_seed_strictly_exceeds_Slot_means": true,
-  "FG090_goal_achieved": false,
-  "mask_supervised": true,
-  "unsupervised_leaderboard_eligible": false,
-  "new70000_training": false,
-  "native64_teacher_stage_unique_TRAIN_per_seed": 64,
-  "teacher_stage_optimizer_updates": 128,
-  "other_core_updates": 0,
-  "validation_selected_not_untouched_test": true,
-  "bidirectional_runtime_scope": {
-    "spike_to_Kuramoto_feedback": false,
-    "synchrony_to_graph_feedback": false,
-    "previous_spike_dendritic_input_and_membrane_reset_path_present": true,
-    "local_feedback_causal_contribution_not_verified": true,
-    "latest_teacher_adaptation_updates_encoder_and_gamma_projection_only": true,
-    "evidence_files": {
-      "collaborative_test/SW_0134_native_spike_binding/rollout.py": "66c08404af91b50fb4cbfa63fe44650dd6a698ea669cd3d6a672dfc5c78503f3",
-      "collaborative_test/SW_0175_critical_component_binding/train_v2.py": "284d6de62c4af5cc335b7b953eca1cc936e50f732e55867e4b804c8ec2215a89"
-    }
-  }
-},
   "status": "latest_research_incumbents_and_candidates_tracked",
   "latest_normalized_hard_reset": {
     "experiment": "SW0169",
