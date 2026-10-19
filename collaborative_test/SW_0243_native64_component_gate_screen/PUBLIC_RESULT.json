@@ -1,0 +1,77 @@
+{
+  "status": "complete_component_gate_seed1_four_image_viability_screen",
+  "scores": {
+    "component_gate": {
+      "fg_ari": 0.9148016449291511,
+      "foreground_iou": 0.826209960232259,
+      "matched_object_iou": 0.6972103524231043
+    },
+    "control237": {
+      "fg_ari": 0.9692699807102235,
+      "foreground_iou": 0.6475137944695275,
+      "matched_object_iou": 0.7541409944513507
+    },
+    "slot_seed1": {
+      "fg_ari": 0.79775440022609,
+      "foreground_iou": 0.1862515613722526,
+      "matched_object_iou": 0.26511734162065986
+    }
+  },
+  "delta_from_matched_control": {
+    "fg_ari": -0.05446833578107246,
+    "foreground_iou": 0.1786961657627315,
+    "matched_object_iou": -0.05693064202824649
+  },
+  "promising_screen_for_separate_three_seed_confirmation": false,
+  "seed_scope": [
+    1
+  ],
+  "image_count": 4,
+  "optimizer_updates": 0,
+  "full320_or_three_seed_improvement_proven": false,
+  "native64_FG090_goal_verified": false,
+  "mask_supervised_weight_lineage": true,
+  "unsupervised_leaderboard_eligible": false,
+  "parameter_update_or_new70000_training": false,
+  "current_full320_reference_unchanged": true,
+  "source_code_sha256": {
+    "DESIGN_KO.md": "925ab8dd913efdbca1a2844f1d8a5af40b274a1d7e0035480988b385f889b25d",
+    "component_gate.py": "d28bffad4d9749f059dd913dbf4a106b3cddff30936e11c7ea1ded36733f96dc",
+    "rollout.py": "ecc04fc366a6f50ccd3fc2b13c86543de4816bd80bdd5f640ef64ec508686e64",
+    "run.py": "371016347e055db6bde4a92ba3d103e64bd3a21e3c0228b6c3c832e4633c4132",
+    "queue.py": "07af56b599d5d994b964bb808d0e8919245d3f6b2cf62bbefe71cb668d5fbf5b",
+    "test_component_gate.py": "d825762bd449b990813248139eeb935db8930733d319793ba002efe9a73c0fb8",
+    "test_scope.py": "0e33c76bd4caa67b83ed709b50b5f17c1a008146d21b92c59b61c3f10b9b157f"
+  },
+  "independent_metrics_maximum_abs_error": 2.7755575615628914e-17,
+  "original_mask_replay_and_upstream_theta_graph_bitwise_equal": true,
+  "activation_summary_arrays_validated": true,
+  "activation_telemetry": [
+    {
+      "case_index": 0,
+      "maximum_component_gate_difference": 1.0,
+      "positive_gate_event_occupancy": 1.0,
+      "gates_identical_across_components": false
+    },
+    {
+      "case_index": 1,
+      "maximum_component_gate_difference": 0.9999994039535522,
+      "positive_gate_event_occupancy": 1.0,
+      "gates_identical_across_components": false
+    },
+    {
+      "case_index": 2,
+      "maximum_component_gate_difference": 0.9999998807907104,
+      "positive_gate_event_occupancy": 1.0,
+      "gates_identical_across_components": false
+    },
+    {
+      "case_index": 3,
+      "maximum_component_gate_difference": 0.9999997019767761,
+      "positive_gate_event_occupancy": 1.0,
+      "gates_identical_across_components": false
+    }
+  ],
+  "untrained_gate_change_branch_closed": true,
+  "dataset_and_model_metadata_raw_arrays_and_imagewise_vectors_omitted": true
+}

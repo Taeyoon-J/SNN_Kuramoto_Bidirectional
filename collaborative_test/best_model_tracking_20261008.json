@@ -12020,7 +12020,7 @@
   },
   "native64_component_gate_viability_0243": {
     "experiment": "SW0243",
-    "status": "actual_CPU_admitted_single_seed_four_image_screen_queued",
+    "status": "closed_negative_frozen_weight_gate_change_screen",
     "parent_full320_reference": "SW0237",
     "seed_scope": [
       1
@@ -12030,6 +12030,31 @@
     "new_performance_result_available": false,
     "full320_reference_unchanged": true,
     "purpose": "preserve component-specific phase information through sinusoidal dendritic and membrane gates",
-    "evidence": "SW_0243_native64_component_gate_screen/PREFLIGHT.json"
+    "evidence": "SW_0243_native64_component_gate_screen/PUBLIC_RESULT.json",
+    "scoped_scores": {
+      "component_gate": {
+        "fg_ari": 0.9148016449291511,
+        "foreground_iou": 0.826209960232259,
+        "matched_object_iou": 0.6972103524231043
+      },
+      "control237": {
+        "fg_ari": 0.9692699807102235,
+        "foreground_iou": 0.6475137944695275,
+        "matched_object_iou": 0.7541409944513507
+      },
+      "slot_seed1": {
+        "fg_ari": 0.79775440022609,
+        "foreground_iou": 0.1862515613722526,
+        "matched_object_iou": 0.26511734162065986
+      }
+    },
+    "delta_from_matched_control": {
+      "fg_ari": -0.05446833578107246,
+      "foreground_iou": 0.1786961657627315,
+      "matched_object_iou": -0.05693064202824649
+    },
+    "global_best_not_updated": true,
+    "current_full320_reference": "SW0237",
+    "event_saturation_remained_observed": true
   }
 }
