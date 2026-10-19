@@ -1,0 +1,119 @@
+{
+  "status": "complete_matched_precision_seed1_eight_image_screen",
+  "scores": {
+    "control": {
+      "fg_ari": 0.8648375984220756,
+      "foreground_iou": 0.46530431768196534,
+      "matched_object_iou": 0.6966987944475937
+    },
+    "within16": {
+      "fg_ari": 0.9188007342728524,
+      "foreground_iou": 0.5160838628442679,
+      "matched_object_iou": 0.6429509801052781
+    },
+    "parent237": {
+      "fg_ari": 0.8571026821289836,
+      "foreground_iou": 0.46229204389243045,
+      "matched_object_iou": 0.6907157790245491
+    },
+    "slot_seed1": {
+      "fg_ari": 0.8066613107394399,
+      "foreground_iou": 0.20831408784125333,
+      "matched_object_iou": 0.2210331007074785
+    }
+  },
+  "within16_minus_control": {
+    "fg_ari": 0.05396313585077672,
+    "foreground_iou": 0.05077954516230254,
+    "matched_object_iou": -0.05374781434231568
+  },
+  "within16_minus_parent237": {
+    "fg_ari": 0.06169805214386881,
+    "foreground_iou": 0.05379181895183743,
+    "matched_object_iou": -0.04776479891927099
+  },
+  "within16_promising_for_separate_three_seed_confirmation": true,
+  "seed_scope": [
+    1
+  ],
+  "image_count": 8,
+  "unique_TRAIN_images": 64,
+  "new_Adam_updates_per_arm": 128,
+  "source_checkpoint_updates": 512,
+  "frozen_core_and_projection": true,
+  "mask_supervised": true,
+  "unsupervised_leaderboard_eligible": false,
+  "full320_or_three_seed_improvement_proven": false,
+  "native64_FG090_goal_verified": false,
+  "new70000_training": false,
+  "independent_metric_maximum_abs_error": 1.1102230246251565e-16,
+  "current_full320_reference": "SW0237",
+  "source_code_sha256": {
+    "DESIGN_KO.md": "3938f6ba073f4dd021463ddf1271c5cb090d1b013570c4f2074e6b71aa1a4b32",
+    "loss.py": "960991e2cff67e567d4ad44b17597897da20fa3eb9f3cbafed4956d45731c1bc",
+    "run.py": "dd1fe27365ebede46f37f7431c1d24cfd2726fa548b996aadf8c3a294a967c19",
+    "queue.py": "ec8f5f30b000b29f9280d8331c433d68e9aed1bb6278b687bea7231b26f22c57",
+    "test_loss.py": "1f02d7c59f543d985a4e5e36b3b61645bc4f6ef5e4bd5c71943c6a1ebf71bb59",
+    "test_training.py": "be5a8fde02e6c0a25e92108ebf4ddd42c27d0593960336a38fab9edceea20e65",
+    "test_scope.py": "9639d10dadd0d533c6cad501f6c7067d3d851f6b52360eb334fb4fad4c1bf413",
+    "conftest.py": "538a75ee43ec71b36268b0a5da9217826ed2fd8a361345334b458e43681880a4"
+  },
+  "independent_metrics_maximum_abs_error": 1.1102230246251565e-16,
+  "training_audits": {
+    "control": {
+      "status": "actual_CPU_precision_checkpoint_Adam_history_and_frozen_core_audited",
+      "actual_Adam_steps": [
+        128
+      ],
+      "actual_stage_updates": 128,
+      "source_checkpoint_updates": 512,
+      "all_core_and_projection_parameters_unchanged": true,
+      "actual_final_model_restored_on_CPU": true,
+      "optimizer_updates": 0,
+      "additional_native_forwards": 0
+    },
+    "within16": {
+      "status": "actual_CPU_precision_checkpoint_Adam_history_and_frozen_core_audited",
+      "actual_Adam_steps": [
+        128
+      ],
+      "actual_stage_updates": 128,
+      "source_checkpoint_updates": 512,
+      "all_core_and_projection_parameters_unchanged": true,
+      "actual_final_model_restored_on_CPU": true,
+      "optimizer_updates": 0,
+      "additional_native_forwards": 0
+    }
+  },
+  "TRAIN_losses": {
+    "control": {
+      "initial_TRAIN_loss": {
+        "total": 0.008576924446970224,
+        "frequency_denoising": 0.007896793191321194,
+        "gamma_anchor": 0.0006801312702009454,
+        "within_variance": 0.007012230576947331
+      },
+      "final_TRAIN_loss": {
+        "total": 0.008206647587940097,
+        "frequency_denoising": 0.007470670738257468,
+        "gamma_anchor": 0.0007359768787864596,
+        "within_variance": 0.006541297771036625
+      }
+    },
+    "within16": {
+      "initial_TRAIN_loss": {
+        "total": 0.11376038379967213,
+        "frequency_denoising": 0.007896793191321194,
+        "gamma_anchor": 0.0006801312702009454,
+        "within_variance": 0.007012230576947331
+      },
+      "final_TRAIN_loss": {
+        "total": 0.06355619430541992,
+        "frequency_denoising": 0.019044094253331423,
+        "gamma_anchor": 0.0033314822358079255,
+        "within_variance": 0.002745374455116689
+      }
+    }
+  },
+  "dataset_and_model_metadata_raw_arrays_and_imagewise_vectors_omitted": true
+}
