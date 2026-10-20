@@ -178,6 +178,26 @@ Our obj-IoU is 0.6598 where our aligned Slot baseline is 0.1025. **MBO is the co
 the paper on**, not FG-ARI. It also happens to be the column we cannot buy by over-predicting,
 which is why it survives scrutiny.
 
+## 3b. The grid handicap is a CLEVR problem, not an architecture problem
+
+At grid 32 our 1024 oscillators sit at very different pixel scales:
+
+| dataset | image | cell at grid 32 | measured consequence |
+| --- | --- | --- | --- |
+| Tetrominoes | 35x35 | **1.09 x 1.09 px** | near pixel resolution; ceiling ~1 |
+| Multi-dSprites | 64x64 | **2.00 x 2.00 px** | patch purity 0.9878 |
+| CLEVR (ours) | 240x320 | 7.50 x 10.00 px | pixel-protocol ceiling **0.8355** |
+
+So the 0.8355 cap measured on CLEVR does not follow us to the benchmark suites. On
+Tetrominoes and Multi-dSprites the patch grid is close enough to pixel resolution that the
+quantisation handicap nearly disappears.
+
+**That raises what Tier 1 is for.** It is not only groundwork for comparability: it is the
+setting where this architecture can be compared to CAE, Rotating Features, SynCx and AKOrN
+*without* the handicap that its CLEVR numbers carry. Tetrominoes at 35x35 is also where
+35 does not divide the grid evenly -- cells are 1-2 px at grid 32 and 2-3 px at grid 16 --
+which is recorded in `build_mod_targets.py` rather than discovered later.
+
 ## 4. Tiered plan
 
 **Tier 1 — comparability, required.** Tetrominoes, Multi-dSprites, CLEVR6 from
