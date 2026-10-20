@@ -1,96 +1,99 @@
-# PV2_0112 — a label-free coverage stage, specified and pre-registered
+# PV2_0112 — the coverage stage fails, and the diagnostic closes the route
 
-Status: **planned** — implemented and verified offline; cannot run until the server returns
-Parent: `PV2_0106` (oracle decomposition), `PV2_0107b` (merge stage, failed), `REVIEW_0007`
-Replaces: `PV2_0111`, withdrawn. That number is burned and is not reused.
-Contract: v2, grid 32, split manifest v1. Control: `PV2_0104` checkpoints `FRZ_s{0,1,2}`.
+Status: **completed — FAILED its pre-registered gate**
+Parent: `PV2_0106` (oracle decomposition), `REVIEW_0007`. Replaces withdrawn `PV2_0111`.
+Control: `PV2_0104`'s three checkpoints `GC_w0`, `RSC_freeze`, `FRZ_s2`, coverage off.
+Contract v2, grid 32, validation 300. Regression row passed first: `0.7239 0.7251 0.4951`.
 
-## Why this, and why not the linkage sweep
+## Result
 
-`PV2_0111` was going to sweep complete against mean linkage on the belief that our merge
-stage lost `patch_matched_object_iou` because it picked the wrong pairs. `REVIEW_0007` killed
-that hypothesis: the peer's `SW_0234` merge is **GT-prescribed** — the pairs are chosen with
-the truth — and it still loses the column, .674313 → .667059. Our label-free merger lost
-.0285 at three seeds. Pair selection is not the cause, so a better linkage cannot be the fix.
+| three-seed mean | fg_ari | fg_iou | obj_iou | pred_fg | gate |
+| --- | ---: | ---: | ---: | ---: | --- |
+| control | 0.7110 ± 0.0512 | 0.7130 ± 0.0349 | 0.6588 ± 0.0372 | 0.1369 | — |
+| q 0.95 | 0.7109 ± 0.0509 | **0.6375** | 0.6607 ± 0.0364 | 0.1540 | FAIL |
+| q 0.90 | 0.7129 ± 0.0496 | **0.5412** | 0.6624 ± 0.0352 | 0.1853 | FAIL |
+| q 0.85 | 0.7143 ± 0.0484 | **0.4561** | 0.6636 ± 0.0339 | 0.2249 | FAIL |
+| q 0.80 | 0.7154 ± 0.0476 | **0.3863** | 0.6643 ± 0.0333 | 0.2691 | FAIL |
 
-What both decompositions agree is valuable is the *other* stage. On their masks, foreground
-recovery alone moves **all three**: +.0248 FG-ARI, +.0359 foreground IoU, **+.0877
-matched-object IoU**. On ours, coverage alone was worth +.1001 FG-ARI. It is the only stage
-either branch has measured that lifts the honest column.
+fg_ari moves +0.0044 at best. obj_iou moves +0.0055 at best. **Foreground IoU collapses**,
+−0.0755 to −0.3267, and `pred_fg` breaches the 0.20 calibration gate from q 0.85 down.
 
-## The constraint, taken from two of their records before writing any code
+**The registered falsifier fired, in the opposite direction to the one anticipated.** It said
+*fg_iou up while fg_ari or obj_iou falls = `SW_0207` reproduced*. What happened is the
+reverse: fg_iou **falls** while the other two barely move. This is not the peer's failure
+mode; it is a different one.
 
-| | what it did | FG-ARI | foreground IoU | Object IoU |
-| --- | --- | ---: | ---: | ---: |
-| `SW_0207` | widened the support of groups that already existed | −.053863 | **+.171275** | down |
-| `SW_0234` oracle | created new groups for objects missed entirely | +.0248 | +.0359 | **+.0877** |
+## Why — the patches it added were not foreground
 
-`SW_0207` is label-free at inference and was **closed, not adopted**: instances fragment. The
-two differ in one respect only, which `SW_0234` states — the oracle *완전히 누락된 물체에는
-새 그룹도 만든다* and *이미 합친 그룹은 분리하지 않는다*.
+Backing the intersection out of the two IoUs at each quantile:
 
-**So the rule this stage encodes:** an existing group's membership is never touched. Only
-patches that no group claimed may become groups, and only among themselves. A patch adjacent
-to an existing group stays unclaimed rather than joining it.
+| q | patches added per image | of which true foreground | hit rate |
+| ---: | ---: | ---: | ---: |
+| 0.95 | 17.5 | −0.3 | −1.7% |
+| 0.90 | 49.6 | 0.2 | 0.4% |
+| 0.85 | 90.1 | 1.0 | 1.1% |
+| 0.80 | 135.4 | 1.4 | 1.0% |
 
-## What was built
+Essentially **none**. The stage was adding background, which is why foreground IoU tracked
+`pred_fg` downward almost exactly.
 
-`evaluate_model.py::_coverage_groups`, with `--coverage-quantile` (the one dial),
-`--coverage-synchrony` and `--coverage-min-size`. It runs **after** the merge stage, never
-before: covering first would let the merger absorb the recovered groups into existing ones,
-which is the `SW_0207` failure by a different route.
+## The diagnostic that closes the route
 
-Per image: take the mean activity over time after `settle`; mark every patch any group
-claims; admit unclaimed patches strictly above the `coverage_quantile` of the image's own
-activity; link admitted patches that are 4-neighbours on the grid, optionally also requiring
-affinity above `coverage_synchrony`; keep components of at least `coverage_min_size` and
-append them as new groups. No ground truth, no object count. The dial is selected on
-validation.
+Oracle diagnostic on seed 0, 60 images, using the production readout's own saved predictions:
 
-## Verified offline — `test_coverage.py`, 8 checks, all passing
+- The readout already claims **94.6%** of all true-foreground patches.
+- What is left unclaimed: **385** true-foreground patches against **52,451** background ones.
+- **The base rate of foreground among unclaimed patches is 0.73%.**
+- Activity does carry signal — the top 5% by activity is 1.97% foreground, **2.7× the base
+  rate** — but 2.7× on a 0.73% base is still 2% precision.
 
-Run with CPU torch on a synthetic 16x16 grid holding three 3x3 blocks, the readout handed
-only two of them:
+**No admission threshold on any scalar signal can work at that base rate.** To add 18 patches
+an image and have most of them be right would need roughly a hundredfold lift, not threefold.
+Swapping activity for synchrony or membrane does not change the arithmetic unless the
+replacement is two orders of magnitude more discriminative, which nothing here suggests.
 
-```
-PASS  existing groups untouched
-PASS  exactly one new group
-PASS  recovered group IS the missed object
-PASS  no patch in two groups
-PASS  inert at an extreme quantile
-PASS  inert when quantile is None
-PASS  two separated misses stay two groups
-PASS  adjacent patch does not widen an existing group
-```
+## Reconciling this with `PV2_0106`, which said coverage was worth +0.1001
 
-**The test caught a real bug before any GPU time was spent.** The first implementation
-admitted patches with `act >= quantile_value`. The background is the majority of an image —
-87.5% of patches — so for any quantile below that majority the quantile *value* is the
-background value itself and `>=` admits the entire background as one component: 238 of 256
-patches came back as a single recovered "object". Changed to strictly `>`. Where activity is
-continuous the two forms agree, so the fix is safe in both regimes.
+Both are right; they are different averages, and the difference is the finding.
 
-## Pre-registered success criterion
+- `PV2_0106` measures coverage **per object**: 0.8726, i.e. the average object has 12.7% of
+  itself called background, and 2.1% of objects are claimed by nothing.
+- This diagnostic measures it **per patch**, pooled: 94.6% claimed.
 
-Registered here, before the run, as `PROPOSAL_0.9_v2.md` requires:
+Large objects dominate the patch count and are covered well; small objects are covered badly
+and drag the per-object mean down. So the missing foreground is **not spread thinly over the
+image, it is concentrated in small objects and in object edges** — which is exactly the
+population an image-wide activity threshold cannot isolate, because those patches sit in a
+sea of background that looks identical to them by activity.
 
-1. **All three** metrics above the `PV2_0104` control at the same checkpoints, three seeds.
-2. `patch_matched_object_iou` must rise. It is the column `SW_0207` lost and the column the
-   merge stage lost; a gain that does not appear here is not a gain.
-3. Predicted foreground at or below **0.20** — this stage adds foreground by construction, so
-   the calibration gate is the binding constraint, not a formality.
+## What this closes, and what is left
 
-**Falsification, stated now:** if foreground IoU rises while FG-ARI or matched-object IoU
-falls, that is the `SW_0207` failure mode reproduced on our side, and the stage closes
-without a threshold or learning-rate rescue — as theirs did.
+Both readout-side routes to coverage now have evidence against them:
 
-## Commands, ready to run
+1. **Widening existing groups** — `SW_0207` on the peer branch: foreground IoU +0.171, FG-ARI
+   −0.054, instances fragment, closed.
+2. **Admitting unclaimed patches by threshold** — this test: 0.73% base rate, ~2% precision at
+   the top, closed.
 
-See `commands.sh`. It opens with the mandated regression row on `BIM6_s1` expecting
-`0.7239 0.7251 0.4951`; nothing below it is read unless that reproduces.
+Taken with `PV2_0107b` and `SW_0234` — where even a **GT-prescribed** merge loses
+matched-object IoU — the readout-only route to 0.9 is in serious doubt. `PV2_0106`'s oracle
+ceiling of 0.9329 stands as a ceiling; what this test establishes is that **the information
+needed to reach it is not recoverable from the spikes by a readout stage.** If small objects
+are to be covered, the model has to fire on them, which is a core-and-training change, not a
+readout one.
 
-## Blocked on
+## Limitations
 
-`/export_home` is faulted and the VPN tunnel to the 152.19 subnet is down. Both are recorded
-in `STATUS.md`. This test is fully specified, implemented and offline-verified; it needs only
-a working server.
+- Validation only, 300 images; the diagnostic is 60 images on seed 0 alone. The 94.6% figure
+  is seed 0's, the seed with the highest `pred_fg` (0.1512), so the other two seeds likely
+  claim less. The base-rate argument does not depend on the exact figure.
+- `--coverage-synchrony` was implemented but not swept. It constrains *linking*, not
+  *admission*, so it cannot fix a 0.73% base rate; a sweep would be for completeness, not for
+  rescue.
+- The diagnostic reads the ground truth and is an oracle result throughout.
+
+## Next
+
+The honest next question is not another readout stage. It is whether the model can be made to
+fire on small objects at all — which is a loss or a core change, and is the first thing in
+this project that the readout cannot reach.
