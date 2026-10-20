@@ -88,6 +88,52 @@ others. The remaining lever would then be the readout's own foreground rule rath
 spikes, and the honest position would be that 0.9 is not reachable on this contract without
 a change larger than a loss.
 
+## If `PV2_0115` fails: four levers that are not closed
+
+Presenting one open path was thin. These are what remains, with what each is worth from
+`PV2_0114`'s measured confusion (per image: 118.0 true foreground, 143.4 predicted, 31.8
+false positives, 6.4 missed) and what each costs.
+
+**A. `--target-foreground`, never used in any command in this repository.** It calibrates
+the synchrony threshold per image to a fixed target fraction, and that fraction is a
+hyperparameter selected on validation like any other — not an oracle. It is **the only dial
+that acts on the 0.2006 half** rather than the 0.0428 half.
+
+Its sign is genuinely unknown, which is why it is worth running rather than arguing. If
+tightening is **unselective** it makes things worse, measured on the confusion above:
+
+| excess removed | fg-IoU | pred_fg |
+| ---: | ---: | ---: |
+| none (now) | 0.7450 | 0.1400 |
+| 20% | 0.7240 | 0.1351 |
+| 60% | 0.6812 | 0.1252 |
+| 80% | 0.6593 | 0.1202 |
+
+If it were perfectly selective it reaches 0.9456. The truth is between, and nothing in the
+record says where. Note the distinction from `PV2_0114`'s signal check, which found no
+signal **per group**; this dial acts **per patch**, through the synchrony threshold, and
+that is a different question. **Cost: evaluation only, no training.**
+
+**B. `PV2_0098`'s `DS_6000` checkpoint is trained and has never been scored.** Six times the
+training images took the loss to 14.429044 against 16.673826 and the collapse to 1.954825
+against 2.154499. Both are training-side and this project has five times seen a better loss
+fail to convert — but the checkpoint sits on `/work` and the test resumes by scoring it.
+**Cost: evaluation only, no training.**
+
+**C. Grid 64.** Our own 16 → 32 step bought **+0.1017** of actual pixel-protocol score and
+lifted the ceiling by 0.1382. `PV2_0087` priced a 4× finer grid at **18.6×** the compute, so
+64 is expensive and the peer is already moving that way (`SW_0154` onward). **Cost: large,
+and the machine is currently shared with another user on all four GPUs.**
+
+**D. `PV2_0091`'s clean dial sweep, still owed.** That record concluded "the gap is in what
+the spikes encode, not in how they are thresholded" **from values already recorded**, and
+says so: its own sweep was never run. The conclusion this route map leans on is therefore
+argued, not measured, and A would also settle it.
+
+**Ordering.** A and B need no GPU time at all and both bear on the larger half, so they run
+first when the tunnel returns, regardless of what `PV2_0115` says. C is the fallback that
+costs real compute. D is cheap and closes an open claim.
+
 ## What is not yet established, stated plainly
 
 - `PV2_0115` has **no result**. The 8-epoch screen is an interim measure forced by compute:
