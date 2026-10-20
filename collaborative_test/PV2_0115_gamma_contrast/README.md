@@ -1,6 +1,7 @@
 # PV2_0115 — a figure/ground term on the spikes
 
-Status: **running** (8-epoch screen). No result yet. Registered here before results.
+Status: **completed** (8-epoch screen). Mechanism check **passed at weight 5.0**; the
+three-metric gate cannot be evaluated in this regime (see Result).
 Parent: `PV2_0114`. Contract v1, grid 16, three arms: control / weight 1.0 / weight 5.0.
 Checkpoints `GCON_ctrl`, `GCON_w1`, `GCON_w5` — **not** `GC_*`, which belong to `PV2_0097`.
 
@@ -83,3 +84,52 @@ the log.
   0.3699 against a published 0.1290, so **no absolute number from it may be compared to the
   published line** — relative to control only.
 - Seed 0 only. A promotion needs seeds 1 and 2 at full length.
+
+## Result
+
+| 8-epoch screen, seed 0, grid 16 | fg_ari | fg_iou | obj_iou | pred_fg | `gamma_contrast` |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| control (weight 0) | 0.6945 | 0.3652 | 0.4666 | 0.3699 | — |
+| weight 1.0 | 0.6580 | 0.3605 | 0.4567 | 0.3530 | −0.3194 |
+| **weight 5.0** | **0.7015** | **0.4544** | **0.4851** | **0.3122** | −0.5013 |
+
+**Mechanism check, which the gate put first.** Activity-vs-foreground AUC over 60
+validation images:
+
+| | AUC | mean activity, FG | BG | separation |
+| --- | ---: | ---: | ---: | ---: |
+| control | 0.503 | 0.4960 | 0.4989 | **−0.0029** |
+| weight 1.0 | 0.485 | 0.4974 | 0.5028 | −0.0055 |
+| **weight 5.0** | **0.585** | 0.5037 | 0.4986 | **+0.0051** |
+
+**Weight 5.0 passes; weight 1.0 fails** and its scores are therefore not interpreted, as
+registered. In the control the foreground is *less* active than the background — the sign
+is backwards — and the term flips it.
+
+Weight 5.0 moves all three metrics above control and takes predicted foreground **down**,
+0.3699 → 0.3122. That direction matters: `PV2_0114` measured that removing false
+foreground is worth **+0.2006** of foreground IoU against **+0.0428** for recovering every
+miss, and every stage either branch had built until now pushed foreground *up*. This is
+the first intervention here that pushes the other way, and foreground IoU is where it
+gains most (+0.0892, 24% relative).
+
+## Why this is a candidate and not a result
+
+1. **The calibration gate cannot be evaluated.** At eight epochs the control itself sits at
+   `pred_fg` 0.3699 against a published 0.1290, so every arm breaches the 0.20 gate and
+   only the comparison to control is readable. This was recorded before the run.
+2. **Weight 1.0 is worse than control on all three** and fails the mechanism check. Zero →
+   1 → 5 is not monotone, and two points cannot separate a dose-response from noise.
+3. **Seed 0 only, eight epochs.** A promotion needs seeds 1 and 2 at forty.
+
+## A reference that was wrong, and how far it threw the prediction
+
+The run registered "γ deviation separates foreground at AUC 0.947" as its reference. That
+0.947 was measured at **grid 32**; these arms are **grid 16**, where cells are 15×20 px
+against 7.5×10 and the local deviation is blurred. So 0.947 was never the ceiling for
+these arms.
+
+`corr_to_auc.py` built on it and predicted AUC ≈ 0.751 at the correlation weight 5.0
+reached (0.501). The measured value is **0.585**. The model was not wrong in shape — more
+correlation did buy more AUC — but it was anchored to a cue measured on a different grid,
+and overshot by 0.166. The grid-16 cue should be measured before that prediction is reused.
