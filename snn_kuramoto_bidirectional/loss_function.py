@@ -657,7 +657,14 @@ def spike_gamma_contrast_loss(spikes, gamma, patch_grid_size, settle=0,
     """
     if spikes is None or gamma is None or patch_grid_size is None:
         return spikes.new_zeros(())
-    height, width = patch_grid_size
+    # core.spike_spatial_grid_size is an int at training time and a pair at
+    # evaluation time. A unit test that passes (G, G) directly never meets the int,
+    # which is how the first run of PV2_0115 lost both treatment arms to a
+    # TypeError while the control trained fine.
+    if isinstance(patch_grid_size, int):
+        height = width = int(patch_grid_size)
+    else:
+        height, width = patch_grid_size
     x = spikes.float()
     if int(settle) > 0:
         x = x[:, :, int(settle):]

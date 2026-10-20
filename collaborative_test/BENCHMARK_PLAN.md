@@ -135,6 +135,38 @@ PascalVOC and COCO2017, metric **MBO_i / MBO_c**:
 
 AKOrN's own framing: the first non-slot model competitive on real-image object discovery.
 
+## 2e. Two columns the table needs, or the numbers mislead
+
+Checked in AKOrN's own `eval_obj.py` rather than inferred. Its masks come from
+**agglomerative average-linkage clustering of the oscillator/feature states**
+(`activation["z"]`, L2-normalised, after PCA and saccade tiling), and **the cluster count
+is given per dataset**: `n_clusters = 11` for CLEVR, `4` for Tetrominoes, `7` for
+dSprites and COCO.
+
+That is the field's normal practice — Slot Attention fixes its slot count the same way —
+so it is not an oracle in their setting. But it is an asymmetry against ours, and it runs
+in our favour, so the table must carry it explicitly:
+
+| | cluster count | read from |
+| --- | --- | --- |
+| Slot Attention, SLATE, DINOSAUR | fixed per dataset | slot masks |
+| CAE, CtCAE, Rotating Features, SynCx | fixed per dataset | complex phase |
+| **AKOrN** | **fixed per dataset (11 / 4 / 7)** | **oscillator states** |
+| **ours, components readout** | **none given — falls out of connectivity, per image** | **spikes** |
+| ours, spectral *k* = 14 | fixed | spikes |
+
+Two things follow for how we write this up.
+
+**Our components readout answers a strictly harder question** than any row above it: it is
+given no object count at all. Our spectral *k* = 14 readout is **not** in that position — it
+fixes *k* like everyone else — so the two must be reported as separate rows and never
+conflated when the claim is about counting.
+
+**Reading from spikes rather than from the phases is the architectural difference from
+AKOrN**, and it is the one `evaluation_contract.md` already enforces: phase clustering is a
+diagnostic here and never the score. AKOrN clusters exactly what our contract forbids
+scoring. That is where a novelty claim against it stands up; raw FG-ARI is not.
+
 ## 3. MBO is the metric our result is strong in
 
 **Mean Best Overlap** is, up to the matching rule, our `patch_matched_object_iou`: per true
