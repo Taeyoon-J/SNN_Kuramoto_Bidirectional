@@ -30,6 +30,42 @@ we had not noticed.
 - **(C) Report both**, with the patch table as the main result and a pixel-protocol table for
   comparability. Most honest, largest effort.
 
+### DECIDED, 2026-10-19: (A) the field's pixel protocol, at 32x32 or finer
+
+Measured first, on 100 validation images, by quantising the **pixel** ground truth to our
+grid and expanding it straight back — a perfect patch segmenter, zero model error:
+
+| pixel protocol | FG-ARI | fg-IoU | obj-IoU |
+| --- | ---: | ---: | ---: |
+| ceiling, perfect patch model 16x16 | 0.6973 | 0.6965 | 0.5814 |
+| **ours 16x16** | 0.6125 | 0.6179 | 0.3803 |
+| ceiling, perfect patch model 32x32 | **0.8355** | 0.8259 | 0.7627 |
+| **ours 32x32** | **0.7142** | 0.7327 | 0.6190 |
+| ours 16x16, **our patch contract**, same images | 0.7460 | 0.7194 | 0.4893 |
+
+Two things settle it.
+
+**The grid costs more than the model does.** The same predictions score 0.7460 on our
+contract and 0.6125 on the field's. Of that 0.1335, only 0.0848 is model error — the rest
+is quantisation. Going to 32x32 lifts the ceiling by 0.1382 and the actual score by 0.1017.
+
+**At 32x32 the pixel number is competitive where it matters.** Against the synchrony-binding
+family on CLEVR — CAE 0.04, CAE++ 0.27, CtCAE 0.54, SynCx 0.59, Rotating Features 0.65 —
+our 0.7142 sits at the top. It is Slot Attention's 98.8 on CLEVR**6** that is out of reach,
+and that is a different task: at most six objects, decoder reconstruction, their variant.
+
+So the main table is **pixel protocol, 32x32 or finer, against the synchrony family**, and
+the patch table goes in the appendix with the ceiling stated as a limitation. Choosing (B)
+would mean citing nothing and re-running CAE, CtCAE, RF, SynCx and AKOrN ourselves.
+
+**This does not change `evaluation_contract.md`.** The contract and the standing goal — three
+patch metrics, 0.9 FG-ARI — are unchanged; this is a second, clearly labelled reporting path
+for the paper. Mixing the two in one table is the error `PV2_0090` already cost us once.
+
+**Tier 1 is technically unblocked.** Our pure-python reader (no TensorFlow) parses all three
+suites, and the shapes are as published: Tetrominoes 35x35x3 with 4 entities, Multi-dSprites
+64x64x3 with 5, CLEVR 240x320x3 with 11. Both are downloaded to `/work/USERS/tkim1/mod/`.
+
 Nothing below is worth doing until this is chosen.
 
 ## 1. Who we are actually competing with

@@ -15,6 +15,7 @@ try:
     from snn_kuramoto_bidirectional.hyperparameter import S2NetHyperparameters
     from snn_kuramoto_bidirectional.loss_function import (
         UnsupervisedS2NetLoss,
+        spike_gamma_contrast_loss,
         patch_pool_rgb,
         phase_locking_value,
         phase_alignment,
@@ -27,6 +28,7 @@ except ModuleNotFoundError:
     from hyperparameter import S2NetHyperparameters
     from loss_function import (
         UnsupervisedS2NetLoss,
+        spike_gamma_contrast_loss,
         patch_pool_rgb,
         phase_locking_value,
         phase_alignment,
@@ -53,6 +55,7 @@ def train_s2net_core(
     plv_source="phase",
     plv_combine="mean",
     spike_plv_weight=0.0,
+    gamma_contrast_weight=0.0,
     spike_distill_weight=0.0,
     spike_align_weight=0.0,
     freeze_phase_path=False,
@@ -291,6 +294,22 @@ def train_s2net_core(
                 term = (((flat - tgt) ** 2) * msk).sum() / denom
                 loss = loss + float(motion_affinity_weight) * term
                 parts["motion_affinity"] = term.detach()
+
+            if float(gamma_contrast_weight) != 0.0:
+                # PV2_0115. Every PLV term here shapes partition structure and none
+                # says which block is foreground; PV2_0114 measured spike coherence
+                # separating real from spurious groups at AUC 0.500. The cue is in
+                # the input -- a patch's gamma deviation from its 5x5 neighbourhood
+                # separates foreground at AUC 0.947 -- and is lost on the way to the
+                # spikes. This asks for it back, reading no ground truth.
+                spk = getattr(core, "last_spikes", None)
+                if spk is None:
+                    spk = spikes
+                gc = spike_gamma_contrast_loss(
+                    spk, gamma_seq, core.spike_spatial_grid_size,
+                    settle=int(plv_settle))
+                loss = loss + float(gamma_contrast_weight) * gc
+                parts["gamma_contrast"] = gc.detach()
 
             spike_plv = None
             if (float(spike_plv_weight) != 0.0 or float(spike_distill_weight) != 0.0
@@ -775,6 +794,14 @@ def main():
             "set is used while leaving later images genuinely unseen."
         ),
     )
+    parser.add_argument(
+        "--gamma-contrast-weight", type=float, default=0.0,
+        help="PV2_0115. Make spike activity track the gamma deviation from each "
+             "patch's 5x5 neighbourhood. Every PLV term shapes partition structure "
+             "and none says which block is foreground: PV2_0114 measured spike "
+             "coherence separating real from spurious groups at AUC 0.500 and "
+             "activity at 0.494, while the same gamma deviation separates true "
+             "foreground at AUC 0.947. Label-free -- gamma is the model's input.")
     parser.add_argument(
         "--spike-plv-weight",
         type=float,
@@ -1460,6 +1487,7 @@ def main():
         plv_source=args.plv_source,
         plv_combine=args.plv_combine,
         spike_plv_weight=args.spike_plv_weight,
+        gamma_contrast_weight=args.gamma_contrast_weight,
         spike_distill_weight=args.spike_distill_weight,
         spike_align_weight=args.spike_align_weight,
         freeze_phase_path=args.freeze_phase_path,

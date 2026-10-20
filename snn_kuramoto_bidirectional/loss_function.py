@@ -632,6 +632,59 @@ def plv_group_balance_loss(plv, target_density=0.25, reduction="mean"):
     return _reduce(loss, reduction)
 
 
+def spike_gamma_contrast_loss(spikes, gamma, patch_grid_size, settle=0,
+                              kernel=5, reduction="mean"):
+    """Put the figure/ground cue that is in gamma into the spikes.
+
+    Every other PLV term in this file shapes PARTITION structure -- bimodality,
+    balance, collapse, participation ratio. None of them says which block is
+    foreground, and PV2_0114 measured the consequence: internal spike coherence
+    separates a real group from a spurious one at AUC 0.500, and mean activity at
+    0.494. The optimiser made the background block as coherent as the objects.
+
+    The cue exists in the input and is destroyed on the way to the spikes.
+    PV2_0115's check: a patch's gamma deviation from its own 5x5 neighbourhood
+    separates true foreground from background at **AUC 0.947**, label-free, over
+    200 images -- against 0.500 for the spikes the readout actually uses.
+
+    So this asks for one thing: let spike activity track that deviation. Per
+    image, the negative Pearson correlation between mean spike activity after
+    settle and the local gamma deviation. Scale-free, so it constrains the
+    ordering rather than the level, and it reads no ground truth -- gamma is the
+    model's own input.
+
+    spikes [B, N, T], gamma [B, C, N] or [B, N, C].
+    """
+    if spikes is None or gamma is None or patch_grid_size is None:
+        return spikes.new_zeros(())
+    height, width = patch_grid_size
+    x = spikes.float()
+    if int(settle) > 0:
+        x = x[:, :, int(settle):]
+    activity = x.mean(dim=-1)                                  # [B, N]
+    num_nodes = activity.size(1)
+
+    g = gamma.float()
+    if g.dim() != 3:
+        raise ValueError("gamma must have shape [B, C, N] or [B, N, C].")
+    if g.size(1) == num_nodes and g.size(2) != num_nodes:
+        g = g.transpose(1, 2)                                  # -> [B, C, N]
+    batch, channels = g.size(0), g.size(1)
+    maps = g.reshape(batch * channels, 1, height, width)
+    pad = int(kernel) // 2
+    blur = torch.nn.functional.avg_pool2d(
+        torch.nn.functional.pad(maps, (pad, pad, pad, pad), mode="replicate"),
+        int(kernel), stride=1)
+    deviation = (maps - blur).reshape(batch, channels, num_nodes).norm(dim=1)  # [B, N]
+
+    def standardise(v):
+        v = v - v.mean(dim=1, keepdim=True)
+        return v / v.norm(dim=1, keepdim=True).clamp_min(1e-8)
+
+    correlation = (standardise(activity) * standardise(deviation.detach())).sum(dim=1)
+    return _reduce(-correlation, reduction)
+
+
 def plv_spatial_coherence_loss(plv, patch_grid_size, reduction="mean"):
     """
     Prefer synchronised groups that are spatially contiguous.
