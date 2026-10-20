@@ -302,11 +302,19 @@ def train_s2net_core(
                 # the input -- a patch's gamma deviation from its 5x5 neighbourhood
                 # separates foreground at AUC 0.947 -- and is lost on the way to the
                 # spikes. This asks for it back, reading no ground truth.
-                spk = getattr(core, "last_spikes", None)
-                if spk is None:
-                    spk = spikes
+                # `spikes` is the model's spike output, the same tensor the other
+                # spike-side terms read. An earlier version looked for
+                # core.last_spikes first; that attribute does not exist, so the
+                # lookup was dead and the term only worked through the fallback.
+                import os as _os
+                if _os.environ.get("GC_DEBUG"):
+                    _a = spikes[:, :, int(plv_settle):].float().mean(-1)
+                    print("  GC_DEBUG spikes", tuple(spikes.shape),
+                          "gamma_seq", tuple(gamma_seq.shape),
+                          "grid", core.spike_spatial_grid_size,
+                          "act-std", float(_a.std(dim=1).mean()), flush=True)
                 gc = spike_gamma_contrast_loss(
-                    spk, gamma_seq, core.spike_spatial_grid_size,
+                    spikes, gamma_seq, core.spike_spatial_grid_size,
                     settle=int(plv_settle))
                 loss = loss + float(gamma_contrast_weight) * gc
                 parts["gamma_contrast"] = gc.detach()
