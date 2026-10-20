@@ -185,6 +185,7 @@ def build_core(args, device):
         membrane_threshold_mode=args.membrane_threshold_mode,
         membrane_threshold_k=args.membrane_threshold_k,
         spike_pulse_gain=args.spike_pulse_gain, center_pulse=not args.no_center_pulse,
+        graph_feedback_strength=args.graph_feedback_strength,
         geodesic_steps=args.geodesic_steps, geodesic_radius=args.geodesic_radius,
         geodesic_chunk=args.geodesic_chunk,
         coupling_balance=args.coupling_balance,
@@ -332,6 +333,8 @@ def main():
     ap.add_argument("--foreground-threshold", type=float, default=0.15)
     ap.add_argument("--synchrony-threshold", type=float, default=0.5)
     ap.add_argument("--min-group-size", type=int, default=2)
+    ap.add_argument("--graph-feedback-strength", type=float, default=0.0,
+                    help="Spikes -> graph alignment feedback. Must match the value the\n                         checkpoint was TRAINED with: a checkpoint trained with it carries\n                         graph_generator.feedback_strength, and a strict load_state_dict\n                         rejects that key unless the model is built with the flag too.")
     ap.add_argument("--coverage-quantile", type=float, default=None,
                     help="Third readout stage: patches above this quantile of the "
                          "image's own mean activity that NO group claimed become new "
