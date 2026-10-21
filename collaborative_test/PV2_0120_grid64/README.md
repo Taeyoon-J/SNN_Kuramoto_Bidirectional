@@ -1,70 +1,80 @@
-# PV2_0120 — route C is blocked by hardware, not refuted
+# PV2_0120 — route C, grid 64
 
-Status: **blocked**. Grid 64 does not fit on a 24 GB TITAN RTX at **any** batch size with
-this configuration. No score was produced and none is claimed.
+Status: **running** (seed 0, batch 4). An earlier version of this record said route C was
+**blocked by hardware**. That was wrong and is retracted below.
 
-## What was built first, and holds
+## Retraction: grid 64 is not blocked
 
-Both inputs exist and are verified:
+The first launch used `--batch-size 8`, died on `torch.OutOfMemoryError`, and I recorded
+route C as needing more than 24 GB. The peer runs native64 at **batch 4 with a peak of
+5.01 GiB** (`SW_0192`), which is what prompted the recheck.
+
+Measured properly — **one process per batch size**, forward + loss + backward:
+
+| batch | peak |
+| ---: | ---: |
+| 1 | **4.59 GB** |
+| 2 | **8.90 GB** |
+| **4** | **17.52 GB** of 23.47 |
+| 8 | ~34 GB — what the first launch asked for |
+
+**Grid 64 was never blocked. Batch 8 was one size too large.**
+
+### Two measurement errors, both mine
+
+1. **The first probe measured a forward pass only** and cleared at 2.08 GB, so I reported
+   that memory was not the constraint. The large tensor is allocated by the **loss** —
+   `signal_synchrony`'s `torch.bmm(trace, trace.transpose(1, 2))`, an N × N matrix at
+   N = 4096, built once per oscillator component because `spike_per_component` is on.
+2. **The second probe ran batch 8, 4, 2 and 1 in one process.** After the batch-8 OOM the
+   exception object held references to the tensors, so `empty_cache()` could not return the
+   memory and every later size ran on top of it. That is how *"batch 1 OOMs at 23.16 GB"*
+   was recorded when batch 1 actually needs 4.59 GB.
+
+Both were avoidable by the same discipline: measure the thing you will actually run, in a
+process that nothing has already broken.
+
+### Which knob costs what, at batch 1
+
+| configuration | peak |
+| --- | ---: |
+| full (chunk 8, per-component, spike-plv) | 4.59 GB |
+| `--spike-plv-weight 0` | 3.05 GB |
+| `spike_per_component` off | 3.04 GB |
+| `--geodesic-chunk 1` | 4.60 GB |
+
+The geodesic chunking is already doing its job — tightening it further changes nothing.
+The spike-side objective costs about 1.5 GB at batch 1, which is real but not decisive.
+
+## Inputs, built and verified
 
 | | shape | statistic |
 | --- | --- | --- |
 | `wm10k_full_grid64.pt` | (10000, 8, 4096) | mean +0.0000, std 1.0000 |
-| `targets_v3_grid64.pt` | (8000, 64, 64) | foreground 0.1200, **purity 0.9890**, ties 0.18% |
+| `targets_v3_grid64.pt` | (8000, 64, 64) | foreground 0.1200, purity **0.9890**, ties 0.18% |
 
 Patch purity rises with the grid exactly as route C's argument needs — **16: 0.9572,
 32: 0.9779, 64: 0.9890** — and `make_targets_grid.py` verified its grid-16 output against
 `targets_v1.pt` before writing. `PV2_0114` tied 23.1% of the missed patches to
-narrow-majority boundary cells, and that population shrinks as the grid refines. The
-groundwork is sound; only the training is blocked.
+narrow-majority boundary cells, and that population shrinks as the grid refines.
 
-## The failure, and the probe that missed it
+## Why route C is worth the compute
 
-Training died on `torch.OutOfMemoryError` inside `signal_synchrony`, at
-`torch.bmm(trace, trace.transpose(1, 2))` — the **N × N spike synchrony matrix** that
-`--spike-plv-weight 5.0` asks for, built once per oscillator component because
-`spike_per_component` is on.
+`PV2_0119` measured what the readout can do: the dial trades FG-ARI against foreground IoU
+along the same axis `PV2_0090` caught Slot Attention on, peaking at **0.7862 with 84% of the
+image called foreground**. Nine routes are closed by measurement. Raising the grid is the
+one untested way to move that axis rather than slide along it, and grid 16 → 32 bought
+**+0.1017** of actual pixel-protocol score while lifting the ceiling 0.6973 → 0.8355.
 
-**My first probe measured a forward pass only** and cleared at 2.08 GB, so I reported that
-memory was not the constraint. That was wrong: the forward pass is not what allocates the
-large tensor. The loss is.
+## Gate and falsifier, registered before the run
 
-Re-probed with forward, loss and backward together:
+- **Gate:** beat `PV2_0104`'s grid-32 seed 0 — 0.7699 / 0.7531 / 0.7017 at `pred_fg` 0.1512
+  — with matched-object IoU up at minimum and predicted foreground at or below 0.20.
+- One seed cannot promote anything; it decides whether seeds 1 and 2 are worth 64 more
+  GPU-hours.
+- **Falsifier:** if seed 0 does not clear grid 32 on at least matched-object IoU, route C
+  closes and every route in `ROUTE_MAP_0.9_v3` is closed by measurement.
 
-| batch | result |
-| ---: | --- |
-| 8 | OOM |
-| 2 | OOM, peak 22.74 GB |
-| **1** | **OOM, peak 23.16 GB of 23.47** |
-
-**Reducing the batch does not rescue it.** At batch 1 the peak is within 0.3 GB of the
-card, so there is no headroom to find.
-
-## What this is and is not
-
-Route C is **blocked by hardware**, which is not the same as closed by measurement. The
-nine closed routes were each refuted by a number; this one has no number. It must not be
-written up as evidence that a finer grid does not help.
-
-Two ways forward, neither free:
-
-1. **A bigger card.** The earlier rental estimate flagged grid 64 as the one case that might
-   need 80 GB; that is now measured rather than guessed. At roughly 32 GPU-hours per seed
-   (`PV2_0087` prices a 4× grid at 18.6× of grid 32's 103 minutes), an A100 80 GB at
-   $1.19–1.43/hr is about **$38–46 for one seed** and **$114–137 for three**.
-2. **Drop `--spike-plv-weight` at grid 64.** It removes the allocation, but it removes the
-   entire spike-side objective with it, and every configuration since `PV2_0094` was tuned
-   with it on. That is a different experiment, not a workaround, and it would not answer
-   whether the grid helps.
-
-## Where the goal stands
-
-| route | state |
-| --- | --- |
-| nine readout and training routes | **closed by measurement** (`PV2_0112`–`PV2_0119`) |
-| C grid 64 | **blocked — needs more than 24 GB** |
-
-So: **no route to 0.9 has been demonstrated on this contract.** Nine were closed by
-measurement and the tenth cannot be run on this hardware. The honest statement for a
-write-up is that the readout is exhausted and the one untested direction is a resolution
-increase whose memory cost exceeds the available card.
+Hyperparameters carried from the record rather than guessed: `--membrane-threshold-mode
+population` because `PV2_0094` measured that the absolute threshold 0.06 kills the spike
+path at 1024 oscillators, and the argument is stronger at 4096.

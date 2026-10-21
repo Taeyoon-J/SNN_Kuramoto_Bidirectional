@@ -1,22 +1,31 @@
-=== PV2_0120: route C, grid 64 -- BLOCKED, no score produced ===
+=== PV2_0120: route C, grid 64 -- RUNNING at batch 4 ===
+
+RETRACTION: an earlier version of this file said grid 64 needs more than 24 GB.
+It does not. Measured one process per batch size, forward + loss + backward:
+
+  batch 1   OK   peak  4.59 GB
+  batch 2   OK   peak  8.90 GB
+  batch 4   OK   peak 17.52 GB of 23.47     <- the configuration now running
+  batch 8        ~34 GB, what the first launch asked for and died on
+
+the peer runs native64 at batch 4 with peak 5.01 GiB (SW_0192)
+
+two measurement errors behind the wrong verdict
+  1. the first probe measured a FORWARD PASS only and cleared at 2.08 GB; the large
+     tensor is allocated by the loss (signal_synchrony's N x N bmm, N = 4096, one per
+     oscillator component)
+  2. the second probe ran batch 8, 4, 2, 1 in ONE process; after the batch-8 OOM the
+     exception held the tensors, empty_cache() could not free them, and every later
+     size ran on top -- recording "batch 1 OOMs at 23.16 GB" when it needs 4.59
+
+memory by knob, batch 1
+  full (chunk 8, per-component, spike-plv)   4.59 GB
+  --spike-plv-weight 0                       3.05 GB
+  spike_per_component off                    3.04 GB
+  --geodesic-chunk 1                         4.60 GB   (chunking is already sufficient)
 
 inputs built and verified
   wm10k_full_grid64.pt    (10000, 8, 4096)   mean +0.0000  std 1.0000
   targets_v3_grid64.pt    (8000, 64, 64)     foreground 0.1200  purity 0.9890  ties 0.0018
 
-patch purity by grid (the quantity route C's argument rests on)
-  grid 16   0.9572
-  grid 32   0.9779
-  grid 64   0.9890
-
-memory, TITAN RTX 24 GB (23.47 GiB usable)
-  forward pass only, batch 1      OK    peak  2.08 GB   <- the probe that misled me
-  forward+loss+backward, batch 8  OOM
-  forward+loss+backward, batch 2  OOM   peak 22.74 GB
-  forward+loss+backward, batch 1  OOM   peak 23.16 GB
-
-failure site: loss_function.signal_synchrony
-  torch.bmm(trace, trace.transpose(1, 2))  -- the N x N spike synchrony matrix,
-  N = 4096, one per oscillator component because spike_per_component is on.
-
-verdict: blocked by hardware, NOT refuted. No number exists for this route.
+patch purity by grid:  16  0.9572     32  0.9779     64  0.9890
