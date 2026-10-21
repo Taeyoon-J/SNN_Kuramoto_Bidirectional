@@ -1,0 +1,26 @@
+=== PV2_0118: gamma-contrast at 40 epochs, 3 seeds, grid 16, contract v1, validation 300 ===
+regression row passed first: BIM6_s1 -> 0.7239 0.7251 0.4951 (exact)
+
+arm            wall    collapse    gamma_contrast   fg_ari   fg_iou  obj_iou   groups  pred_fg
+GCP_ctrl_s0   21min   2.154499    --               0.3374   0.3246   0.2383   3.3500   0.1272
+GCP_w5_s0     22min   6.065009    -0.551440        0.5176   0.3300   0.2473   3.4300   0.0964
+GCP_ctrl_s1   22min   1.918831    --               0.7064   0.7345   0.4820   5.1633   0.1249
+GCP_w5_s1     21min   1.960432    -0.698360        0.7143   0.7363   0.4963   4.9967   0.1160
+GCP_ctrl_s2   21min   2.197183    --               0.7451   0.7084   0.5083   5.6767   0.1366
+GCP_w5_s2     22min   2.005267    -0.608000        0.4752   0.4900   0.2934   2.8833   0.0735
+
+THREE-SEED MEANS
+                   fg_ari            fg_iou   obj_iou   pred_fg
+control        0.5963 +- 0.2251      0.5892    0.4095    0.1296
+gamma-contrast 0.5690 +- 0.1276      0.5188    0.3457    0.0986
+delta             -0.0273           -0.0704   -0.0639   -0.0310     GATE FAILED
+
+pred_fg falls at every seed; true foreground is 0.1152
+  seed 0  0.1272 -> 0.0964
+  seed 1  0.1249 -> 0.1160
+  seed 2  0.1366 -> 0.0735
+
+GCP_ctrl_s0 equals PV2_0116's DS_1000 to four decimals (0.3374 / 0.3246 / 0.2383):
+the configuration reproduces exactly, and does NOT reproduce the published 0.7239.
+
+GCP_w5_s0 ended at spike_plv_collapse 6.065009, close to PV2_0094's dead-path 9.210340.
