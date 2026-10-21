@@ -1,0 +1,19 @@
+=== PV2_0122: grid 64 by parameter replication from grid 32, NO fine-tuning ===
+30 validation images, identical conditions on both rows
+grid 64 uses --geodesic-chunk 1 because evaluate_model has no batch flag: --limit IS
+the batch and _relax allocates batch x chunk x N x N (12.5 GiB at limit 100, chunk 8)
+
+label                        fg_ari   fg_iou  obj_iou   groups  pred_fg
+parent, grid 32 (GC_w0)      0.7588   0.7629   0.7179  15.2667   0.1281
+replicated, grid 64          0.7066   0.7633   0.7188  19.7000   0.1257
+
+delta                       -0.0522  +0.0004  +0.0009  +4.4333  -0.0024
+
+both IoUs survive the move intact with 4x the oscillators and zero gradient steps.
+FG-ARI falls together with the group count rising: replication gives each parent node's
+2x2 block four children starting from identical parameters but receiving different gamma,
+so phases diverge inside a block and one object splits across groups. FG-ARI penalises
+that; neither IoU does.
+
+grid_distance formula verified against the model's stored values at grid 32:
+  max abs diff 0
