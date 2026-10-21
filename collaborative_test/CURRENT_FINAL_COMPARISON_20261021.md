@@ -29,6 +29,13 @@ deployed; ten local tests and ten Linux tests passed. Actual source-checkpoint
 and CPU-gradient admissions are running before all twelve GPU queues are
 released. Do not equate the deployment/preflight process with GPU training.
 
+Server preflight subsequently passed. All twelve independent job supervisors
+were registered and confirmed live. Both authorized original244 missing-seed
+reproductions completed and their final-source CPU admissions followed. Ready
+jobs lease shared GPUs automatically. Actual short8-image loss/gradient checks
+passed for both retained objectives. No older owned exploratory queues were
+running. See SW0249/PREFLIGHT.json for the registration evidence summary.
+
 Old goal's benchmark endpoint was achieved by supervised240, independently
 audited and recorded/pushed. Its history does not establish gate causality or
 unsupervised superiority. The active task is now this bounded comparison.
