@@ -1,0 +1,22 @@
+=== PV2_0120: route C, grid 64 -- BLOCKED, no score produced ===
+
+inputs built and verified
+  wm10k_full_grid64.pt    (10000, 8, 4096)   mean +0.0000  std 1.0000
+  targets_v3_grid64.pt    (8000, 64, 64)     foreground 0.1200  purity 0.9890  ties 0.0018
+
+patch purity by grid (the quantity route C's argument rests on)
+  grid 16   0.9572
+  grid 32   0.9779
+  grid 64   0.9890
+
+memory, TITAN RTX 24 GB (23.47 GiB usable)
+  forward pass only, batch 1      OK    peak  2.08 GB   <- the probe that misled me
+  forward+loss+backward, batch 8  OOM
+  forward+loss+backward, batch 2  OOM   peak 22.74 GB
+  forward+loss+backward, batch 1  OOM   peak 23.16 GB
+
+failure site: loss_function.signal_synchrony
+  torch.bmm(trace, trace.transpose(1, 2))  -- the N x N spike synchrony matrix,
+  N = 4096, one per oscillator component because spike_per_component is on.
+
+verdict: blocked by hardware, NOT refuted. No number exists for this route.
