@@ -55,3 +55,16 @@ def test_actual_checkpoint_API_roundtrip_and_Adam_resume(tmp_path):
         expected_runtime=runtime,device='cpu',max_updates=2)
     assert all(torch.equal(encoder.state_dict()[k],v) for k,v in expected.items())
     assert {int(v['step'].item()) for v in opt.state.values()}=={1}
+
+def test_final_audit_rejects_cross_model_substitution_and_runtime_change():
+    import copy
+    from .evaluate import validate_terminal_identity
+    binding={'model':'240','seed':0,'source':{'model_sha256':'actual-initial'}}
+    runtime={'device_name':'fixture-TITAN'}
+    report=dict(binding=binding,checkpoint_binding={'binding':binding},runtime=runtime)
+    saved=dict(bindings=report['checkpoint_binding'],completed_updates=scope.UPDATES,runtime=runtime)
+    validate_terminal_identity(binding,runtime,report,saved)
+    wrong=copy.deepcopy(binding);wrong['model']='237'
+    with pytest.raises(ValueError):validate_terminal_identity(wrong,runtime,report,saved)
+    wrong=copy.deepcopy(saved);wrong['runtime']={'device_name':'different'}
+    with pytest.raises(ValueError):validate_terminal_identity(binding,runtime,report,wrong)

@@ -7,6 +7,10 @@ from . import scope,factory,run
 from collaborative_test.SW_0240_native64_70000_cached_io import train as old,data
 from collaborative_test.SW_0237_native64_converged_full320 import evaluate as ref
 
+def validate_terminal_identity(actual_binding,source_runtime,report,saved):
+    if actual_binding!=report['binding']:raise ValueError('terminal report differs from actual named source and common training conditions')
+    if saved['bindings']!=report['checkpoint_binding'] or saved['completed_updates']!=scope.UPDATES or saved['runtime']!=report['runtime'] or saved['runtime']!=source_runtime:raise ValueError('saved checkpoint binding/runtime differs')
+
 def predict(p,report,device):
     import h5py
     a=factory.archive(p['model'],p['seed']);found=p['found'];found.encoder.eval();found.wrapped.eval()
@@ -61,7 +65,7 @@ def score_and_audit():
     for (m,s),value in bundle.items():
         p=run.prepare(m,s);a=factory.archive(m,s);report=value['report']
         saved=factory.payload(a/'encoder_work/boundary.ptx',report['checkpoint_sha256'])
-        if saved['bindings']!=report['checkpoint_binding'] or saved['completed_updates']!=scope.UPDATES or saved['runtime']!=report['runtime']:raise ValueError('saved checkpoint binding/runtime differs')
+        validate_terminal_identity(p['binding'],p['source']['runtime'],report,saved)
         if {int(v['step'].item()) for v in saved['optimizer_state']['state'].values()}!={scope.UPDATES}:raise ValueError('actual Adam budget differs')
         if saved['optimizer_schema']!=old.checkpoint.optimizer_schema(p['optimizer']):raise ValueError('optimizer groups differ')
         run.history_check(saved['history'],s)

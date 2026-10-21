@@ -24,6 +24,11 @@ twelve-job queue must not be claimed as registered until server receipts exist.
 The user's fresh connection request is pending. A local quiet45-second observer
 is running; server preflight/queue registration will resume on restored access.
 
+Connection was subsequently restored. The nine frozen research files were
+deployed; ten local tests and ten Linux tests passed. Actual source-checkpoint
+and CPU-gradient admissions are running before all twelve GPU queues are
+released. Do not equate the deployment/preflight process with GPU training.
+
 Old goal's benchmark endpoint was achieved by supervised240, independently
 audited and recorded/pushed. Its history does not establish gate causality or
 unsupervised superiority. The active task is now this bounded comparison.
