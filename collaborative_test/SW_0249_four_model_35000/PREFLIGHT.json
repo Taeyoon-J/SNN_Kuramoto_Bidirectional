@@ -19,6 +19,12 @@
   "grid": [64, 64],
   "checkpoint_protocol": "restore exact named source; preserve source histories; fresh common-stage Adam",
   "resource_policy": "shared_memory_admission_no_foreign_process_yield_v2",
+  "waiting_queue_resource_policy": "shared_8GiB_admission_no_foreign_yield_v3",
+  "resource_only_tests_local_and_Linux": 2,
+  "waiting_supervisors_identity_checked_and_replaced": 10,
+  "existing_active_workers_untouched": 2,
+  "scientific_source_fingerprint_unchanged_after_resource_handoff": true,
+  "free_memory_required_by_waiting_queues_MiB": 8192,
   "other_owned_exploratory_queues_running_at_registration": 0,
   "missing244_source_reproduction": "seed0/2 original128-update recipe; independently admitted before35000 stage",
   "no_final_training_or_evaluation_results_claimed": true
