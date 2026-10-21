@@ -1,5 +1,97 @@
 {
   "current_native64_FG_track_reference": {
+  "scope": "native64_fixed320_supervised_three_seed_reference",
+  "experiment": "SW0240",
+  "models": {
+    "0": {
+      "source_training_experiment": "SW0240",
+      "native64_TRAIN_images": 70000,
+      "stage_Adam_updates": 43750,
+      "complete_passes": 10,
+      "exact_checkpoint_and_model_identity_preserved_in_private_registry": true
+    },
+    "1": {
+      "source_training_experiment": "SW0240",
+      "native64_TRAIN_images": 70000,
+      "stage_Adam_updates": 43750,
+      "complete_passes": 10,
+      "exact_checkpoint_and_model_identity_preserved_in_private_registry": true
+    },
+    "2": {
+      "source_training_experiment": "SW0240",
+      "native64_TRAIN_images": 70000,
+      "stage_Adam_updates": 43750,
+      "complete_passes": 10,
+      "exact_checkpoint_and_model_identity_preserved_in_private_registry": true
+    }
+  },
+  "seed_scope": [
+    0,
+    1,
+    2
+  ],
+  "grid": [
+    64,
+    64
+  ],
+  "image_count": 320,
+  "image_ids_first_last": [
+    1320,
+    1639
+  ],
+  "inference_seed_base": 193000,
+  "metrics": {
+    "fg_ari": 0.888129753561589,
+    "foreground_iou": 0.7434444053664248,
+    "matched_object_iou": 0.6843820917013183
+  },
+  "slot_metrics": {
+    "fg_ari": 0.7869016920263494,
+    "foreground_iou": 0.19820078921198847,
+    "matched_object_iou": 0.1952025237013272
+  },
+  "per_seed": {
+    "0": {
+      "fg_ari": 0.8959562830473778,
+      "foreground_iou": 0.8287956550015438,
+      "matched_object_iou": 0.7007910834486194
+    },
+    "1": {
+      "fg_ari": 0.894246955658865,
+      "foreground_iou": 0.7467659492970926,
+      "matched_object_iou": 0.6886536169504531
+    },
+    "2": {
+      "fg_ari": 0.8741860219785274,
+      "foreground_iou": 0.6547716118006368,
+      "matched_object_iou": 0.6637015747048823
+    }
+  },
+  "completion_audit": "SW_0240_native64_70000_cached_io/PUBLIC_RESULT.json",
+  "three_seed_strictly_exceeds_Slot_means": true,
+  "FG090_goal_achieved": false,
+  "mask_supervised": true,
+  "unsupervised_leaderboard_eligible": false,
+  "new70000_training": true,
+  "native64_teacher_stage_unique_TRAIN_per_seed": 70000,
+  "teacher_stage_optimizer_updates": 43750,
+  "other_core_updates": 0,
+  "validation_selected_not_untouched_test": true,
+  "bidirectional_runtime_scope": {
+    "spike_to_Kuramoto_feedback": false,
+    "synchrony_to_graph_feedback": false,
+    "previous_spike_dendritic_input_and_membrane_reset_path_present": true,
+    "local_feedback_causal_contribution_not_verified": true,
+    "latest_teacher_adaptation_updates_encoder_and_gamma_projection_only": true,
+    "evidence_files": {
+      "collaborative_test/SW_0134_native_spike_binding/rollout.py": "66c08404af91b50fb4cbfa63fe44650dd6a698ea669cd3d6a672dfc5c78503f3",
+      "collaborative_test/SW_0175_critical_component_binding/train_v2.py": "284d6de62c4af5cc335b7b953eca1cc936e50f732e55867e4b804c8ec2215a89"
+    }
+  },
+  "all_gating_causal_contribution_verified": false,
+  "source_selection_at_registration": "SW0227; later SW0237 did not replace the running training initialization"
+},
+"previous_native64_FG_track_reference_SW0237": {
     "scope": "native64_fixed320_supervised_three_seed_reference",
     "experiment": "SW0237",
     "models": {

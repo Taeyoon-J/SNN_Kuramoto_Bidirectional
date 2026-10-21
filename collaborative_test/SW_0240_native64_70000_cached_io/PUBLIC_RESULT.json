@@ -1,0 +1,93 @@
+{
+  "experiment": "SW0240",
+  "status": "complete_independently_audited",
+  "grid": [
+    64,
+    64
+  ],
+  "image_count": 320,
+  "seed_scope": [
+    0,
+    1,
+    2
+  ],
+  "scores": {
+    "ours": {
+      "fg_ari": 0.888129753561589,
+      "foreground_iou": 0.7434444053664248,
+      "matched_object_iou": 0.6843820917013183
+    },
+    "slot": {
+      "fg_ari": 0.7869016920263494,
+      "foreground_iou": 0.19820078921198847,
+      "matched_object_iou": 0.1952025237013272
+    }
+  },
+  "per_seed_scores": {
+    "ours_seed0": {
+      "fg_ari": 0.8959562830473778,
+      "foreground_iou": 0.8287956550015438,
+      "matched_object_iou": 0.7007910834486194
+    },
+    "slot_seed0": {
+      "fg_ari": 0.6362654413147756,
+      "foreground_iou": 0.20550839815827335,
+      "matched_object_iou": 0.18498561410276235
+    },
+    "ours_seed1": {
+      "fg_ari": 0.894246955658865,
+      "foreground_iou": 0.7467659492970926,
+      "matched_object_iou": 0.6886536169504531
+    },
+    "slot_seed1": {
+      "fg_ari": 0.8461613938549046,
+      "foreground_iou": 0.1971932266473949,
+      "matched_object_iou": 0.2124113860630576
+    },
+    "ours_seed2": {
+      "fg_ari": 0.8741860219785274,
+      "foreground_iou": 0.6547716118006368,
+      "matched_object_iou": 0.6637015747048823
+    },
+    "slot_seed2": {
+      "fg_ari": 0.8782782409093708,
+      "foreground_iou": 0.19190074283029862,
+      "matched_object_iou": 0.18821057093816215
+    }
+  },
+  "paired_ours_minus_slot": {
+    "fg_ari": {
+      "mean": 0.10122806153523962,
+      "ci95": [
+        0.08530598737292937,
+        0.11753375104910152
+      ]
+    },
+    "foreground_iou": {
+      "mean": 0.5452436161544358,
+      "ci95": [
+        0.5255077594159916,
+        0.5649326404689174
+      ]
+    },
+    "matched_object_iou": {
+      "mean": 0.4891795679999906,
+      "ci95": [
+        0.47338362241555576,
+        0.50458261384391
+      ]
+    }
+  },
+  "mask_supervised": true,
+  "unsupervised_leaderboard_eligible": false,
+  "new_TRAIN_unique_images_per_seed": 70000,
+  "complete_passes": 10,
+  "optimizer_updates_per_seed": 43750,
+  "raw_masks_independently_rescored": 1920,
+  "independent_metric_max_abs_error": 3.3306690738754696e-16,
+  "three_seed_strictly_exceeds_Slot_means": true,
+  "FG090_goal_achieved": false,
+  "evaluation_scope": "reused fixed validation, not untouched final test",
+  "selected_training_source": "SW0227",
+  "implementation": "encoder and sensory projection adapted; remaining core and readout unchanged"
+}
