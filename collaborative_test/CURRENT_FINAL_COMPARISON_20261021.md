@@ -1,41 +1,24 @@
-# Current user-authorized goal: final four-model comparison only
+# Final four-model comparison: completed
 
-Open-ended architecture/loss improvement is stopped. Do not revive old
-exploratory queues. Active work is SW0249, documented in
-`SW_0249_four_model_35000/DESIGN_KO.md`.
+SW0249 completed all twelve model/seed training and evaluation jobs, final
+checkpoint/Adam/history restores, and independent scoring of 4,800 masks.
+The frozen research source files were not changed during the comparison.
 
-- Models240,237,244-within16,245-within16; seeds0/1/2; twelve final jobs.
-- Same35,000 distinct TRAIN images, ten passes,21,880 updates,350,000 exposures.
-- Same fresh optimizer/LRs, whole encoder and actual sensory projection trainable;
-  other core/readout remain fixed. Preserve each model's existing loss.
-- Original244 seed1 exists. User explicitly approved reproducing original244
-  seed0/2 with the unchanged128-update recipe before common35k training.
-- Same fixed320/native64 evaluation, three metrics, all final protocols before GT.
-- Shared GPUs allowed when sufficient memory remains; never automatically yield
-  on another process's arrival; never signal other users' processes.
-- Quiet periodic SSH observation, beginning/end reports, preserve checkpoints.
-- Final scoring/audit/report/publication completes this goal; no followup search.
+Contract: models 240/237/244/245, seeds 0/1/2, same additional TRAIN35,000
+images x10 full passes, fresh Adam/LRs/batch, native64 and fixed320 evaluation.
+Each model retained its existing loss. Authorized original244 seed0/2
+reproductions completed before matched additional training.
 
-At initial preparation, nine local CPU tests passed, including exact35k coverage,
-last8-image batch, source routing, CUDA visibility, and actual Adam checkpoint
-roundtrip. Frontier SSH subsequently returned Broken pipe/banner timeout from
-both WSL and Windows. Initial server deployment was not confirmed and the new
-twelve-job queue must not be claimed as registered until server receipts exist.
-The user's fresh connection request is pending. A local quiet45-second observer
-is running; server preflight/queue registration will resume on restored access.
+Final mean FG-ARI ranking: 240 (0.889187), 237 (0.887640),
+244 (0.879873), 245 (0.879739). 240 leads mean object IoU;
+245 leads foreground IoU. The 237-minus240 FG-ARI image-bootstrap
+interval includes zero. Prior training histories remain different.
 
-Connection was subsequently restored. The nine frozen research files were
-deployed; ten local tests and ten Linux tests passed. Actual source-checkpoint
-and CPU-gradient admissions are running before all twelve GPU queues are
-released. Do not equate the deployment/preflight process with GPU training.
+All four models are mask-supervised. Slot is a pre-existing reconstruction
+reference, not matched35k training. Fixed320 is reused validation, not an
+untouched test. No architectural, gate-causal or unsupervised claim follows.
 
-Server preflight subsequently passed. All twelve independent job supervisors
-were registered and confirmed live. Both authorized original244 missing-seed
-reproductions completed and their final-source CPU admissions followed. Ready
-jobs lease shared GPUs automatically. Actual short8-image loss/gradient checks
-passed for both retained objectives. No older owned exploratory queues were
-running. See SW0249/PREFLIGHT.json for the registration evidence summary.
-
-Old goal's benchmark endpoint was achieved by supervised240, independently
-audited and recorded/pushed. Its history does not establish gate causality or
-unsupervised superiority. The active task is now this bounded comparison.
+See SW_0249_four_model_35000/RESULT_KO.md and PUBLIC_RESULT.json.
+Local registry and mask visualizations are under collaborative_testing/.
+All twelve jobs and coordinator exited normally; no followup training or
+exploratory queues remain. Complete this goal after publication and final report.
