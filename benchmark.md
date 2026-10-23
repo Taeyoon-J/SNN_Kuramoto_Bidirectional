@@ -95,18 +95,37 @@ This matters because of a measurement on `patch_v2` (`PV2_0119`, `BENCHMARK_PLAN
 quantise the **pixel** ground truth to a patch grid and expand it straight back, and a
 *perfect* patch segmenter — zero model error — scores only
 
-| CLEVR, pixel protocol | perfect patch model |
-| --- | ---: |
-| grid 16 | **0.6973** FG-ARI |
-| grid 32 | **0.8355** FG-ARI |
+So **measure that ceiling per dataset and per grid before running anything**, and pick the
+grid from it. Measured on the 300 validation images of each set (`benchmark/ceil.py`,
+no model involved -- quantise the pixel truth, expand it straight back, score it):
 
-**That ceiling is CLEVR's large images, not the architecture.** On Tetrominoes and
-Multi-dSprites the ceiling is effectively 1.0, so a pixel-protocol number from them is a
-measurement of the model rather than of the grid. That is the whole reason to run these
-two before arguing about CLEVR.
+| dataset | source | grid | source px / cell | ceiling FG-ARI | fg-IoU | obj-IoU |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Tetrominoes | 35x35 | 16 | 2.19 | 0.6881 | 0.7705 | 0.7667 |
+| Tetrominoes | 35x35 | **32** | 1.09 | **0.9409** | 0.9602 | 0.9587 |
+| Multi-dSprites | 64x64 | 16 | 4.00 | 0.4740 | 0.7520 | 0.6980 |
+| Multi-dSprites | 64x64 | 32 | 2.00 | 0.5619 | 0.8699 | 0.8368 |
+| Multi-dSprites | 64x64 | **64** | 1.00 | **1.0000** | 1.0000 | 1.0000 |
+| CLEVR | 240x320 | 16 | 15.0 x 20.0 | 0.6973 | -- | -- |
+| CLEVR | 240x320 | 32 | 7.5 x 10.0 | 0.8355 | -- | -- |
 
-Measured patch purity backs it: grid 32 purity is **0.9941** on Tetrominoes and **0.9878**
-on Multi-dSprites against **0.9170** on CLEVR.
+Two things follow, and both are binding:
+
+- **Multi-dSprites has to run at grid 64.** At grid 64 the cell *is* the pixel and the
+  conversion is the identity, so the ceiling is exactly 1.0. At grid 32 the ceiling is
+  **0.5619** -- below CtCAE's published 0.56 and far below SynCx's 0.82. A grid-32 run on
+  this dataset decides the comparison before the model is involved, and a loss there means
+  nothing.
+- **Tetrominoes cannot run finer than grid 32.** 35 does not admit 64 cells -- some cell
+  would be empty and the target builder raises. Its ceiling is 0.9409 and every Tetrominoes
+  number has to be read against that, not against 1.0.
+
+**Do not estimate the ceiling from patch purity.** That is the mistake this table corrects.
+Grid-32 purity is 0.9941 on Tetrominoes and 0.9878 on Multi-dSprites, which reads as "both
+are nearly lossless" -- yet the real ceilings are 0.9409 and 0.5619. Purity is a per-cell
+label-agreement rate; FG-ARI counts *pairs*, so a thin boundary error on a small object
+costs far more than its cell count suggests, and two sprites that touch get merged by the
+quantisation into one cluster whatever the model does. Measure the ceiling; never infer it.
 
 ### 3b. Because the comparison family publishes on them
 
@@ -178,7 +197,7 @@ Reading a channels-last mask as channels-first leaves a period-E stripe in the l
 0.2 for a random 5-way assignment and looked like a normal file. `build_mod_targets.py`
 now refuses to save below a neighbour-coherence of 0.85.
 
-**Run the preflight.** `collaborative_test/preflight.py` compares a dataset's targets and
+**Run the preflight.** `benchmark/preflight.py` compares a dataset's targets and
 manifest against the CLEVR reference in the order the evaluator touches the fields, and
 exits non-zero. It exists because four consecutive evaluation failures here were all one
 question asked four times — missing `contract_version`, `names`, `patch_size`, and the
@@ -189,7 +208,7 @@ targets' `names` to `manifest["splits"][split]`, which is **how the γ tensor an
 ground truth are verified to describe the same images in the same order**.
 
 ```bash
-python collaborative_test/preflight.py --dataset tetrominoes --grid 32   # 8/8 expected
+python benchmark/preflight.py --dataset tetrominoes --grid 32   # 8/8 expected
 ```
 
 ---
@@ -276,6 +295,49 @@ Multi-dSprites that expansion is lossless or near it (section 3a); on CLEVR it i
 the ceiling above is what it costs.
 
 ---
+
+## 6b. What our side has measured so far
+
+So you can see what a run produces, and what it is worth. `patch_v2`, `PV2_0121`, one seed,
+300 validation images, grid 32, evaluated through `evaluate_model.py --expect-contract
+v2-pixel` and converted by `benchmark/pixbench.py`. **Not a final number**: one
+seed, validation, and the grid is wrong for Multi-dSprites as section 3a now shows.
+
+| | Tetrominoes | Multi-dSprites |
+| --- | ---: | ---: |
+| grid | 32 | 32 (**too coarse**) |
+| ceiling at that grid | 0.9409 | 0.5619 |
+| ours, pixel FG-ARI | **0.9280** | 0.2080 |
+| ours, pixel fg-IoU | 0.7041 | 0.5334 |
+| ours, pixel obj-IoU | 0.7889 | 0.4180 |
+| gap to ceiling, FG-ARI | 0.0129 | 0.3539 |
+| predicted foreground fraction | 0.3004 | 0.0927 |
+| groups per image | -- | 18.57 |
+
+Published pixel ARI-FG for comparison -- CAE .00/.05, CAE++ .78/.51, CtCAE .84/.56,
+Rotating Features .42/.84, SynCx .89/.82 (Tetrominoes/Multi-dSprites).
+
+Read it honestly, in three parts:
+
+1. **Tetrominoes 0.9280 is above every published number in the family**, and it sits
+   0.0129 from the grid's own ceiling, so the model is very nearly saturating what grid 32
+   can express. One seed, validation split.
+2. **The same run's other two columns are not close to the ceiling** -- fg-IoU is 0.2561
+   below it against FG-ARI's 0.0129, with predicted foreground at 0.3004. The model
+   over-paints foreground and FG-ARI cannot see it, because FG-ARI is scored over
+   true-foreground cells only. This is why section 5 asks for all three columns: a
+   Tetrominoes table showing FG-ARI alone would be a selected number.
+3. **Multi-dSprites loses, and for two separate reasons that must not be merged.** The grid
+   caps it at 0.5619, so a win was impossible at grid 32; and the model is a further 0.3539
+   under even that, under-painting foreground at 0.0927 against Tetrominoes' 0.3004. Fixing
+   the grid will not by itself fix the model.
+
+No mask supervision is in any of this. The training command carries `--gamma-seq-path`
+only; `--targets` is passed to `evaluate_model.py` and never to training, the losses are
+PLV-structure terms on the model's own phases and spikes, the per-dataset input encoders
+are 224 parameters trained by reconstruction on TRAIN only, and the readout is connected
+components over spike synchrony, so **the cluster count is not supplied either**. That last
+point is worth stating in the paper: several models in the comparison family are given K.
 
 ## 7. Open questions, stated rather than hidden
 
