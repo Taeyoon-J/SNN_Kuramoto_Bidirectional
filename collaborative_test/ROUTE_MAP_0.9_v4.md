@@ -89,6 +89,17 @@ works. Nothing here measures an **object-to-object** wall, and CLEVR's 10 shaded
 same-material objects are exactly where that matters, while Tetrominoes' three separated
 shapes on black are exactly where it does not.
 
+## The mechanism — see `PROPOSAL_0.9_v3.md`
+
+Written after this document, from the equations rather than from more measurements, and it
+answers the "how" this section only gestured at. In short: `A_lat = relu(...)` makes coupling
+non-negative, `α` is bounded by a hardcoded `alpha_scale = 1.0` that no experiment has ever
+varied, so `|α| < 57.3°` while repulsion needs 90° — and a pair's stable state is
+`Δ = α`. **No two oscillators can be driven apart; anti-phase is not a reachable state.**
+Worse, `α ∝ 1/A_lat`, so the lag vanishes exactly where coupling is strongest, which is the
+case of two touching same-material objects. That is why nine routes that changed *when* the
+model merges all failed, and why Tetrominoes' separated objects need none of it.
+
 ## Where that leaves the goal's third part
 
 **The question was: can the core, modified, reach 0.9+?** The answer now has a shape it did
