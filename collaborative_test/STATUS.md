@@ -1,6 +1,46 @@
 # STATUS
 
-Updated 2026-10-19 00:45. Branch `patch_v2`. Contract v1 and v2, split v1.
+Updated 2026-10-24. Branch `patch_v2`; the shipped version and `benchmark.md` are on
+`patch_final`. Contract v1, v2, v3 and `v2-pixel`; split v1.
+
+> ## RESUME POINT, 2026-10-24 — three jobs detached on frontier, local VPN down
+>
+> The session's VPN tunnel lost its IPv4 address while work was running. `utun8` is `UP`
+> and the route to the bastion still points at it, so outbound connections fail with
+> `Can't assign requested address` and ssh reports `Connection closed by UNKNOWN port
+> 65535`. Not a server fault and not rate limiting: the open internet answers over `en0`,
+> and no ssh ControlMaster socket existed to be stale. **It needs the VPN client
+> reconnected.** All three jobs were launched with `setsid nohup`, so they are detached
+> from that session and unaffected.
+>
+> | job | GPU | script | log | expected |
+> | --- | --- | --- | --- | --- |
+> | Tetrominoes seeds 1 then 2 | 2 | `/work/USERS/tkim1/tet_seeds.sh` | `tet_seeds.out` | ~608 min each; seed 1 started 01:35 |
+> | Multi-dSprites grid 64, replicated checkpoint | 2 | `md64b.sh` | `md64b.out` | `--eval-batch 4`, peaked 5.5 GB |
+> | CLEVR row: pixel truth test 1000, then 3 seeds | 2 | `clevr_pix.sh` | `clevr_pix.out` | waits for the grid-64 job to free memory first |
+>
+> ### On reconnect, read in this order
+>
+> 1. `md64b.out` — Multi-dSprites at grid 64, where the ceiling is 1.0000 against grid 32's
+>    measured 0.5619. It separates how much of `PV2_0125`'s 0.2080 was the grid from how
+>    much was the model. A gain near the ceiling means the grid was the binding constraint;
+>    no gain means the model is, and grid-64 *training* (not replication) becomes the
+>    question — 4x nodes and 16x the pairwise cost, so days rather than hours.
+> 2. `clevr_pix.out` — `GC_w0`, `RSC_freeze`, `FRZ_s2` at grid 32 on the 1000 test images,
+>    predictions saved to `/work/USERS/tkim1/mod/pred_clevr_grid32_s{0,1,2}.npz`. Then
+>    `pixbench.py` on each for the 3-seed pixel mean and std. This promotes
+>    `BENCHMARK_PLAN.md`'s 0.7142, which was 100 **validation** images with the seed count
+>    never stated, to a number the table can carry. The three share seed 0's graph
+>    (`PV2_0104`'s freeze) — the same disclosed structure as the published grid-16 line, not
+>    three independent runs.
+> 3. `tet_seeds.out` — the two seeds that turn `PV2_0125`'s 0.9280 into a 3-seed mean.
+>
+> ### Do not re-run
+>
+> `PV2_0125` (both grid-32 pixel numbers), the per-dataset grid ceilings (`ceil.py`), the
+> target and manifest rebuild (all five dataset x grid configurations pass `preflight.py`
+> 8/8), and the grid-32 `--eval-batch 25` regression, which reproduced
+> 0.9362 / 0.6914 / 0.7817 / 0.3004 exactly.
 
 > ## INCIDENT, 2026-10-19 — `/export_home/tkim1` is faulted
 >
