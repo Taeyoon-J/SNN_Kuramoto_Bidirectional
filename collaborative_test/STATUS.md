@@ -1,46 +1,45 @@
 # STATUS
 
-Updated 2026-10-24. Branch `patch_v2`; the shipped version and `benchmark.md` are on
-`patch_final`. Contract v1, v2, v3 and `v2-pixel`; split v1.
+Updated 2026-10-26. Branch `patch_v2`; the shipped version, `benchmark.md` and the script
+bundle are on `patch_final`. Contract v1, v2, v3 and `v2-pixel`; split v1.
 
-> ## RESUME POINT, 2026-10-24 — three jobs detached on frontier, local VPN down
+> ## RESUME POINT, 2026-10-26 — benchmark mode, two jobs detached, local VPN down again
 >
-> The session's VPN tunnel lost its IPv4 address while work was running. `utun8` is `UP`
-> and the route to the bastion still points at it, so outbound connections fail with
-> `Can't assign requested address` and ssh reports `Connection closed by UNKNOWN port
-> 65535`. Not a server fault and not rate limiting: the open internet answers over `en0`,
-> and no ssh ControlMaster socket existed to be stale. **It needs the VPN client
-> reconnected.** All three jobs were launched with `setsid nohup`, so they are detached
-> from that session and unaffected.
+> **Model improvement is paused by the user's decision.** The work is benchmark comparison
+> only. The grid is chosen **per dataset from its measured ceiling**, not unified:
+> CLEVR 32, Multi-dSprites 64, Tetrominoes 32 — grid 64 is impossible on Tetrominoes' 35px
+> source and has no trained CLEVR model. The table states each row's grid and ceiling.
 >
-> | job | GPU | script | log | expected |
+> The VPN tunnel has lost its IPv4 address again (`utun8` up, no `inet`, route to the
+> bastion still pointing at it). Client-side; the jobs are `setsid nohup` and detached.
+>
+> | job | GPU | script | log | state at last contact |
 > | --- | --- | --- | --- | --- |
-> | Tetrominoes seeds 1 then 2 | 2 | `/work/USERS/tkim1/tet_seeds.sh` | `tet_seeds.out` | ~608 min each; seed 1 started 01:35 |
-> | Multi-dSprites grid 64, replicated checkpoint | 2 | `md64b.sh` | `md64b.out` | `--eval-batch 4`, peaked 5.5 GB |
-> | CLEVR row: pixel truth test 1000, then 3 seeds | 2 | `clevr_pix.sh` | `clevr_pix.out` | waits for the grid-64 job to free memory first |
+> | Multi-dSprites grid 64, replicated checkpoint | 2 | `md64c.sh` | `md64c.out` | 2h49m in, 100% util, preflight 8/8; ~2.8h was the predicted total |
+> | Tetrominoes seeds 1–2, graph frozen from seed 0 | 3 | `tetfrz.sh` | `tetfrz.out` | seed 1 at 2h31m of ~10h; seed 2 and three evaluations follow |
 >
-> ### On reconnect, read in this order
+> ### The table, as it stands
 >
-> 1. `md64b.out` — Multi-dSprites at grid 64, where the ceiling is 1.0000 against grid 32's
->    measured 0.5619. It separates how much of `PV2_0125`'s 0.2080 was the grid from how
->    much was the model. A gain near the ceiling means the grid was the binding constraint;
->    no gain means the model is, and grid-64 *training* (not replication) becomes the
->    question — 4x nodes and 16x the pairwise cost, so days rather than hours.
-> 2. `clevr_pix.out` — `GC_w0`, `RSC_freeze`, `FRZ_s2` at grid 32 on the 1000 test images,
->    predictions saved to `/work/USERS/tkim1/mod/pred_clevr_grid32_s{0,1,2}.npz`. Then
->    `pixbench.py` on each for the 3-seed pixel mean and std. This promotes
->    `BENCHMARK_PLAN.md`'s 0.7142, which was 100 **validation** images with the seed count
->    never stated, to a number the table can carry. The three share seed 0's graph
->    (`PV2_0104`'s freeze) — the same disclosed structure as the published grid-16 line, not
->    three independent runs.
-> 3. `tet_seeds.out` — the two seeds that turn `PV2_0125`'s 0.9280 into a 3-seed mean.
+> | dataset | grid | ceiling | ours, pixel FG-ARI | state |
+> | --- | ---: | ---: | --- | --- |
+> | CLEVR | 32 | 0.8406 | **0.6668 ± 0.0506**, 3 seeds, 1000 test | **done** (`PV2_0127`) |
+> | Tetrominoes | 32 | 0.9409 | 0.9280 / 0.9126 / seed died | frozen retrain running |
+> | Multi-dSprites | 64 | 1.0000 | — | evaluation running |
 >
 > ### Do not re-run
 >
-> `PV2_0125` (both grid-32 pixel numbers), the per-dataset grid ceilings (`ceil.py`), the
-> target and manifest rebuild (all five dataset x grid configurations pass `preflight.py`
-> 8/8), and the grid-32 `--eval-batch 25` regression, which reproduced
-> 0.9362 / 0.6914 / 0.7817 / 0.3004 exactly.
+> `PV2_0125` (grid-32 pixel numbers for both benchmark datasets), the per-dataset ceilings
+> (`ceil.py`), the target and manifest rebuild (five dataset × grid configurations pass
+> `preflight.py` 8/8), the `--eval-batch 25` regression (reproduced
+> 0.9362 / 0.6914 / 0.7817 / 0.3004 exactly), `pixel_truth_test1000.pt`, and the CLEVR
+> 3-seed test evaluation whose predictions are saved as
+> `/work/USERS/tkim1/mod/pred_clevr_grid32_s{0,1,2}.npz`.
+>
+> ### Dropped deliberately
+>
+> The CLEVR grid-64 pixel ceiling. It is cheap and still unmeasured, but it answers a route C
+> question — model improvement — which is paused. `ROUTE_MAP_0.9_v4.md` and
+> `PROPOSAL_0.9_v3.md` hold that thread for when it resumes.
 
 > ## INCIDENT, 2026-10-19 — `/export_home/tkim1` is faulted
 >
