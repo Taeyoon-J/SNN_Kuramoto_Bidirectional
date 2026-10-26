@@ -296,48 +296,113 @@ the ceiling above is what it costs.
 
 ---
 
-## 6b. What our side has measured so far
+## 6b. What our side has measured, and the grid decision that came out of it
 
-So you can see what a run produces, and what it is worth. `patch_v2`, `PV2_0121`, one seed,
-300 validation images, grid 32, evaluated through `evaluate_model.py --expect-contract
-v2-pixel` and converted by `benchmark/pixbench.py`. **Not a final number**: one
-seed, validation, and the grid is wrong for Multi-dSprites as section 3a now shows.
+Updated after the first full round. **The grid is chosen per dataset from its measured
+ceiling, not unified**, because grid 64 is not available everywhere:
 
-| | Tetrominoes | Multi-dSprites |
+| dataset | grid we use | that grid's ceiling | why not finer |
+| --- | ---: | ---: | --- |
+| CLEVR | 32 | 0.8406 | grid 64 is buildable and the data exists, but no grid-64 model has ever been trained here |
+| Multi-dSprites | **64** | 1.0000 | nothing finer exists; the cell is already the pixel |
+| Tetrominoes | 32 | 0.9409 | **impossible**: 35 admits no 64 cells, `cell_index` raises. A 128 upscale would score against an upscaled truth and could not sit beside published 35x35 numbers |
+
+Tetrominoes also has little to gain: it already holds 98.63% of 0.9409, so a finer grid
+could add at most 0.059 of ceiling. **State each row's grid and its ceiling in the table.**
+Differing grids are not something to hide; they are a choice each dataset's measured
+ceiling forces.
+
+### CLEVR -- 3 seeds, 1000 test images, pixel protocol
+
+| | FG-ARI | fg-IoU | obj-IoU |
+| --- | ---: | ---: | ---: |
+| ceiling, grid 32 | 0.8406 | 0.8319 | 0.7651 |
+| per seed, FG-ARI | 0.7252 / 0.6351 / 0.6402 | | |
+| **mean** | **0.6668** | 0.6922 | 0.5788 |
+| std | 0.0506 | 0.0348 | 0.0338 |
+| fraction of ceiling | 79.33% | | |
+
+The three seeds share seed 0's graph (`PV2_0044`'s freeze), so they are **not three
+independent runs**, and we say so wherever the number appears.
+
+**This corrects an earlier figure downward.** `BENCHMARK_PLAN.md` reported 0.7142 on **100
+validation images with the seed count never stated**, and wrote that it "sits at the top" of
+the synchrony family. At three seeds on test it is **0.6668**, lower by 0.0474, and the
+claim has to be weakened:
+
+| | published CLEVR pixel ARI-FG | our margin |
 | --- | ---: | ---: |
-| grid | 32 | 32 (**too coarse**) |
-| ceiling at that grid | 0.9409 | 0.5619 |
-| ours, pixel FG-ARI | **0.9280** | 0.2080 |
-| ours, pixel fg-IoU | 0.7041 | 0.5334 |
-| ours, pixel obj-IoU | 0.7889 | 0.4180 |
-| gap to ceiling, FG-ARI | 0.0129 | 0.3539 |
-| predicted foreground fraction | 0.3004 | 0.0927 |
-| groups per image | -- | 18.57 |
+| Rotating Features | 0.65 | **+0.0168 -- inside one std (0.0506)** |
+| SynCx | 0.59 | +0.0768 |
+| CtCAE | 0.54 | +0.1268 |
+| CAE++ | 0.27 | +0.3968 |
 
-Published pixel ARI-FG for comparison -- CAE .00/.05, CAE++ .78/.51, CtCAE .84/.56,
-Rotating Features .42/.84, SynCx .89/.82 (Tetrominoes/Multi-dSprites).
+**We are not distinguishable from Rotating Features on CLEVR.** SynCx and below are cleared
+with margin. If you quote our CLEVR row, quote the std with it.
 
-Read it honestly, in three parts:
+### Tetrominoes -- grid 32, 300 validation images, and a dead seed
 
-1. **Tetrominoes 0.9280 is above every published number in the family**, and it sits
-   0.0129 from the grid's own ceiling, so the model is very nearly saturating what grid 32
-   can express. One seed, validation split.
-2. **The same run's other two columns are not close to the ceiling** -- fg-IoU is 0.2561
-   below it against FG-ARI's 0.0129, with predicted foreground at 0.3004. The model
-   over-paints foreground and FG-ARI cannot see it, because FG-ARI is scored over
-   true-foreground cells only. This is why section 5 asks for all three columns: a
-   Tetrominoes table showing FG-ARI alone would be a selected number.
-3. **Multi-dSprites loses, and for two separate reasons that must not be merged.** The grid
-   caps it at 0.5619, so a win was impossible at grid 32; and the model is a further 0.3539
-   under even that, under-painting foreground at 0.0927 against Tetrominoes' 0.3004. Fixing
-   the grid will not by itself fix the model.
+| seed | pixel FG-ARI | pred_fg | groups/img | `spike_plv_collapse` |
+| --- | ---: | ---: | ---: | ---: |
+| 0 | **0.9280** | 0.3004 | -- | 1.62 |
+| 1 | **0.0000** | 0.0032 | 0.79 | **4.90** |
+| 2 | 0.9126 | 0.2723 | 8.49 | 1.82 |
 
-No mask supervision is in any of this. The training command carries `--gamma-seq-path`
-only; `--targets` is passed to `evaluate_model.py` and never to training, the losses are
-PLV-structure terms on the model's own phases and spikes, the per-dataset input encoders
-are 224 parameters trained by reconstruction on TRAIN only, and the readout is connected
-components over spike synchrony, so **the cluster count is not supplied either**. That last
-point is worth stating in the paper: several models in the comparison family are given K.
+**One of three independently trained seeds died.** Seed 1's spike path is dead -- 0.32% of
+the grid called foreground, 0.79 groups per image. **There is no 3-seed Tetrominoes mean**,
+and two numbers that look like one are both false: 0.6135 across all three describes
+training instability rather than segmentation quality, and 0.9203 across the two that worked
+selects the arms that worked. The honest sentence is that two of three seeds reach 0.91-0.93
+and the third's spike path died in training.
+
+If you see `spike_plv_collapse` around 4.9 on your side, treat it as fatal. We did not:
+9.210340 = log(1e4) is the fully saturated value, so 4.90 reads as "not dead" and is not.
+
+A frozen-graph retrain (`--init-from` seed 0, `--freeze-components graph_generator`) is
+running for a valid row, and the independent checkpoints are kept so the frozen mean and the
+independent-seed failure rate can be reported side by side. The freeze would otherwise hide
+a real property of the architecture.
+
+### Tetrominoes seed 0, read honestly
+
+**0.9280 is above every published number on this dataset** (SynCx 0.89, CtCAE 0.84) and sits
+0.0129 from the grid's ceiling. But the same run's **fg-IoU is 0.2561 under** that ceiling
+where FG-ARI is 0.0129 under it, at predicted foreground 0.3004 against a true 0.2363. The
+model over-paints and FG-ARI, scored over true-foreground cells only, cannot see it. **A
+Tetrominoes table showing FG-ARI alone would be a selected number.** That is why section 5
+asks for all three columns.
+
+### Multi-dSprites -- the grid-32 number, and why it is not a comparison
+
+| | pixel FG-ARI | fg-IoU | obj-IoU |
+| --- | ---: | ---: | ---: |
+| ceiling at grid 32 | 0.5619 | 0.8699 | 0.8368 |
+| ours at grid 32 | 0.2080 | 0.5334 | 0.4180 |
+
+**Two separate losses that must not be merged.** The grid caps this at 0.5619, below CtCAE's
+published 0.56, so no win was available at grid 32; **and** the model is a further 0.3539
+under even that cap, under-painting foreground at 0.0927 where Tetrominoes over-paints at
+0.3004. Fixing the grid will not by itself fix the model. The grid-64 run, where the ceiling
+is 1.0000, is what separates the two, and it is still in progress on our side.
+
+### No mask supervision, anywhere
+
+Checked by reading the launch command rather than assumed. Training carries
+`--gamma-seq-path` only; `--targets` goes to `evaluate_model.py` and **never** to training.
+The losses are PLV-structure terms on the model's own phases and spikes
+(`--spike-plv-weight`, `--plv-collapse-weight`, `--plv-bimodality-weight`,
+`--plv-balance-weight`, `--plv-coherence-weight`), with `--structural-weight 0`. The
+per-dataset input encoders are 224 parameters trained by reconstruction on TRAIN only. The
+readout is connected components over spike synchrony, so **the cluster count is not supplied
+either** -- worth stating in the paper, since several models in the comparison family are
+given K. The one scalar carried from CLEVR tuning is `--plv-target-density 0.867`, and the
+readout thresholds were carried unchanged rather than tuned per dataset.
+
+### How we run the evaluation
+
+`collaborative_test/BENCHMARK_EVALUATION.md` on `patch_v2`, mirrored here as
+`BENCHMARK_EVALUATION.md`: the two protocols, the exact commands, what is read when, the
+batch-size caveat, and every number with what weakens it.
 
 ## 7. Open questions, stated rather than hidden
 
