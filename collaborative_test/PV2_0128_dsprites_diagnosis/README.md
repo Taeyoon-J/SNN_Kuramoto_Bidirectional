@@ -141,7 +141,70 @@ and any tuned setting will be reported, labelled.
    plausible and each was wrong, and the cheap measurement settled all three in an hour of
    CPU.
 
-## 6. Next
+## 6. The readout sweep: not the cause
 
-Read the sweep. Then, if the readout is not the cause, swap the Multi-dSprites input
-encoder and rebuild γ — the other dataset-wide constant, and equally cheap to test.
+Nine combinations, 150 validation images, same checkpoint, no training:
+
+| | FG-ARI | groups/image | pred_fg |
+| --- | ---: | ---: | ---: |
+| range over all 9 | 0.2292 – 0.2361 | 18.15 – 18.79 | 0.0903 – 0.0927 |
+
+Tripling `spatial-sigma` (4 → 12) and dropping `synchrony-threshold` fivefold
+(0.05 → 0.01) moves the group count by **0.4**. Both changes admit more edges and
+should reduce fragmentation if the readout were binding. It is not.
+
+That narrows the diagnosis usefully: the fragments are not produced by the thresholding,
+they are already present in the spike synchrony structure the readout reads.
+
+## 7. Grid 64: the grid was not the cause either
+
+The replicated checkpoint at grid 64, where the conversion is the identity and the ceiling
+is exactly 1.0000:
+
+| | grid 32 | grid 64 | change |
+| --- | ---: | ---: | ---: |
+| ceiling | 0.5619 | **1.0000** | +0.4381 |
+| FG-ARI | 0.2080 | 0.2817 | +0.0737 |
+| fg-IoU | 0.5334 | 0.5480 | +0.0146 |
+| obj-IoU | 0.4180 | 0.5327 | +0.1147 |
+| **fraction of ceiling** | 37.0% | **28.2%** | **−8.8 points** |
+| groups per image | 18.57 | **65.37** | ×3.5 |
+| predicted foreground | 0.0927 | 0.1293 | true is 0.0880 |
+
+**The ceiling rose by 0.44 and the score by 0.07.** The fraction of ceiling *fell*. Freeing
+the grid did not free the model; it made the limit plainer, and the fragmentation followed
+the grid — 4× the cells, 3.5× the groups.
+
+So five candidates are now eliminated by measurement: the grid, the readout settings, sprite
+overlap, object/background contrast, and within-image uniformity.
+
+## 8. Where that leaves it
+
+| dataset | grid | ceiling | ours | fraction of ceiling |
+| --- | ---: | ---: | ---: | ---: |
+| Tetrominoes | 32 | 0.9409 | 0.9478 | ~100% |
+| CLEVR | 32 | 0.8406 | 0.6668 | 79% |
+| Multi-dSprites | 64 | 1.0000 | 0.2817 | **28%** |
+
+Same core, same losses, same readout. The remaining dataset-wide constants are the
+224-parameter input encoder and the training run itself (seed 0 only, 737 min, collapse
+never checked).
+
+And a comparison that did not exist before: the peer reports **0.6979** on this dataset,
+unsupervised, at grid 64 — **0.4162 above ours**. With the grid eliminated, that is a model
+gap, not a protocol one. `peer_updates/REQUEST_0008_multidsprites.md` asks for their
+configuration, listing what we have already ruled out so they can skip it. The first
+question there is which of the three Multi-dSprites variants they used; we used
+`colored_on_colored`, and if theirs differs that alone could be most of the gap.
+
+## 9. Infrastructure fixed to get here
+
+`_spike_affinity` built the per-channel affinity as a list of D `[B, N, N]` tensors and then
+a (D+1)th via `torch.stack`, reduced immediately by `prod(dim=0)`. At grid 64 that asked the
+**host** allocator for 80.53 GB with 161 GB needed in total against 102 GB free — a CPU
+failure, not a GPU one, since the eval loop moves spikes to CPU. The product now accumulates
+in place and `--affinity-chunk` bounds the image axis. Verified inert: Tetrominoes grid 32
+returned 0.9362 / 0.6914 / 0.7817 / 0.3004, identical to four decimals.
+
+At grid 32 the same code was already using 33.6 GB on CLEVR's 1000 images. It never failed,
+so it was never noticed.
