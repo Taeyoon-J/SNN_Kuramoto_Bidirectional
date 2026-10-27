@@ -8,7 +8,7 @@ Nothing here uses the true object count, the true masks, or anything else from
 the ground truth to choose a threshold or a group count: the classifier's two
 thresholds are arguments, chosen on validation.
 """
-import argparse, json, sys
+import argparse, json, os, sys
 from pathlib import Path
 
 import torch
@@ -133,7 +133,21 @@ def _merge_groups(groups, affinity, threshold, max_rounds=20):
 
 def _spike_affinity(spikes, components, args):
     """The same affinity the classifier would build, so a spatial kernel can be
-    applied to it here without changing the classifier."""
+    applied to it here without changing the classifier.
+
+    The product over component channels is accumulated in place instead of being
+    stacked. The stacked form held D copies of a [B, N, N] tensor and then made a
+    (D+1)th as the stack itself, to reduce it immediately with prod(dim=0). At
+    grid 32 that was 33.6 GB on CLEVR's 1000 images and nobody noticed; at grid 64
+    it asks for 161 GB on 300 images and the host allocator refuses -- a CPU
+    failure, not a GPU one, because the spikes are moved to CPU in the eval loop.
+    Accumulating gives the identical value: clamping each channel at zero and
+    multiplying is what stack -> clamp_min -> prod computes.
+
+    --affinity-chunk additionally splits the image axis. It changes no value; it
+    bounds the working set while the [B, N, N] result is built. 0 keeps the whole
+    batch in one pass, which is what every recorded number used.
+    """
     def correlate(x):
         x = x[:, :, int(args.settle):].float()
         x = x - x.mean(dim=-1, keepdim=True)
@@ -141,8 +155,17 @@ def _spike_affinity(spikes, components, args):
         return (x @ x.transpose(-1, -2)).clamp(-1.0, 1.0)
     if components is None:
         return correlate(spikes)
-    per = [correlate(components[:, d]) for d in range(components.size(1))]
-    return torch.stack(per).clamp_min(0.0).prod(dim=0)
+    batch = components.size(0)
+    step = int(getattr(args, "affinity_chunk", 0) or 0) or batch
+    pieces = []
+    for start in range(0, batch, step):
+        block = None
+        for d in range(components.size(1)):
+            channel = correlate(components[start:start + step, d]).clamp_min_(0.0)
+            block = channel if block is None else block.mul_(channel)
+            del channel
+        pieces.append(block)
+    return pieces[0] if len(pieces) == 1 else torch.cat(pieces, dim=0)
 
 
 def _checkpoint_channels(path, device):
@@ -321,6 +344,27 @@ def main():
     ap.add_argument("--geodesic-steps", type=int, default=0, help="must match training")
     ap.add_argument("--coupling-balance", type=float, default=0.0,
                     help="must match training")
+    ap.add_argument("--induced-merge", action="store_true",
+                    help="after the components, regroup foreground patches with the ported "
+                         "foreground_induced_merge. Preserves the foreground support "
+                         "exactly; merges only four-connected pairs with Q > 0.5.")
+    ap.add_argument("--induced-merge-gain", type=float, default=8.0,
+                    help="coupling gain for the signed pair energy. Only scales the "
+                         "adjacency term, which is zero here, so it is inert unless the "
+                         "graph is supplied.")
+    ap.add_argument("--induced-merge-native-nodes", type=int, default=-1,
+                    help="node-count constant in the energy. -1 uses this run's actual "
+                         "grid**2. The source file hardcodes 1024, the grid-32 count, and "
+                         "does not change it at grid 64; pass 1024 to reproduce that.")
+    ap.add_argument("--affinity-chunk", type=int, default=0,
+                    help="images per pass when building the spike affinity. 0 is the "
+                         "whole batch, which every recorded number used. Grid 64 needs "
+                         "about 25: the affinity is [B, N, N] per component channel, so "
+                         "it grows with the SQUARE of the node count.")
+    ap.add_argument("--eval-batch", type=int, default=25,
+                    help="images per forward pass. 25 is right at grid 32 and OOMs at "
+                         "grid 64: the per-node tensors grow 4x with the node count but "
+                         "the coupling matrix grows 16x, so grid 64 needs about 2-4.")
     ap.add_argument("--geodesic-chunk", type=int, default=0,
                     help="rows of the min-plus relaxation formed at once; "
                          "bit-identical, only the peak memory changes")
@@ -505,13 +549,13 @@ def main():
     core = build_core(args, args.device)
     spikes_all, comp_all, plv_all, rates = [], [], [], []
     with torch.no_grad():
-        for s in range(0, gamma.size(0), 25):
+        for s in range(0, gamma.size(0), args.eval_batch):
             # The oracle ceiling: couple only within a true group, built exactly
             # as training builds it. A model trained on the forced graph never
             # trained its graph generator, so scoring it on the learned graph
             # would measure nothing.
             if args.oracle_graph:
-                rows = target[s:s + 25].reshape(target[s:s + 25].size(0), -1).long()
+                rows = target[s:s + args.eval_batch].reshape(target[s:s + args.eval_batch].size(0), -1).long()
                 same = (rows.unsqueeze(2) == rows.unsqueeze(1)).float()
                 same = same * (1.0 - torch.eye(same.size(-1)).unsqueeze(0))
                 core.forced_graph = (same / same.sum(-1, keepdim=True).clamp_min(1e-8)
@@ -520,8 +564,8 @@ def main():
                 # The core strips graph-only channels after building the graph, so
                 # the same hook serves here: hand it the full-width graph tensor and
                 # let it read the phase tensor for everything downstream.
-                core.phase_gamma_override = phase_gamma[s:s + 25].to(args.device)
-            _, model_spikes, membrane, theta = core(gamma[s:s + 25].to(args.device),
+                core.phase_gamma_override = phase_gamma[s:s + args.eval_batch].to(args.device)
+            _, model_spikes, membrane, theta = core(gamma[s:s + args.eval_batch].to(args.device),
                                                     return_core_out=True, return_theta=True)
             # The model's own spikes, from its membrane threshold. Re-binarising
             # the membrane at its median destroyed the foreground signal: it makes
@@ -656,6 +700,54 @@ def main():
         after = sum(len(g) for g in groups) / max(len(groups), 1)
         print("coverage stage: %.2f -> %.2f groups per image (quantile %.3f)"
               % (before, after, args.coverage_quantile))
+    if args.induced_merge:
+        # The peer's SW0250 readout stage, ported from patch_final
+        # snn_kuramoto_bidirectional/sw240/{partition,signed_energy}.py and verified against
+        # their own test (collaborative_test/ported/).
+        #
+        # Why it belongs here: our failure on Multi-dSprites is fragmentation and only
+        # fragmentation -- 4.24 predicted groups per true object, never merging two objects
+        # into one. This stage regroups foreground patches by positive evidence and asserts
+        # the foreground support is unchanged, so it cannot trade foreground away the way
+        # --min-group-size 32 did (groups 65.37 -> 2.16 but predicted foreground 0.1294 ->
+        # 0.0532 against a true 0.0880).
+        #
+        # Measured first: the merge fires only on pairs with Q > 0.5, and on our affinity
+        # the four-connected foreground pairs split 51.3% above 0.5 within an object against
+        # 4.0% across objects, medians 0.6497 and 0.0000. The signal is there and our
+        # --synchrony-threshold 0.05 was discarding it.
+        #
+        # The adjacency term is passed as zeros. In the source it is
+        # 1 + native_nodes*(A+A^T)/(2*gain), which with A >= 0 is always >= 1 and never
+        # changes a sign -- verified -- so omitting it leaves the set of mergeable pairs
+        # identical and only neutralises the ordering. The core does not retain A after the
+        # rollout; adding it is a separate change, worth making only if this arm moves.
+        import numpy as _np
+        _here = os.path.dirname(os.path.abspath(__file__))
+        if _here not in sys.path:
+            sys.path.insert(0, _here)
+        sys.path.insert(0, os.path.join(_here, "ported"))
+        from partition import foreground_induced_merge
+        gain = float(args.induced_merge_gain)
+        nn_scale = (args.grid * args.grid if args.induced_merge_native_nodes < 0
+                    else int(args.induced_merge_native_nodes))
+        merged, before, after = [], 0, 0
+        for i in range(prediction.size(0)):
+            comp_i = None if components is None else components[i:i + 1]
+            q = _spike_affinity(spikes[i:i + 1], comp_i, args)[0].double().cpu().numpy()
+            q = _np.clip(0.5 * (q + q.T), 0.0, 1.0)
+            sup = prediction[i].cpu().numpy().astype(_np.int64)
+            before += int(sup.max())
+            res = foreground_induced_merge(q, _np.zeros_like(q), gain, sup,
+                                           grid_shape=(args.grid, args.grid),
+                                           native_nodes=nn_scale)
+            after += int(res["labels"].max())
+            merged.append(torch.as_tensor(res["labels"], dtype=prediction.dtype))
+        prediction = torch.stack(merged)
+        n = max(prediction.size(0), 1)
+        print("induced merge: %.2f -> %.2f groups per image (gain %.3f, native_nodes %d)"
+              % (before / n, after / n, gain, nn_scale))
+
     prediction = spatial_components_to_patch_labels(groups, args.grid)
     if args.save_predictions:
         import numpy as _np
