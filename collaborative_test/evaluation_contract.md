@@ -1,7 +1,15 @@
 # Evaluation contract
 
-**Version 1.** Raise this version on any change below, and re-evaluate both
+**Version 2.** Raise this version on any change below, and re-evaluate both
 models when it changes.
+
+**Version 2 requires no re-evaluation.** It adds a documented property of
+`patch_fg_ari` and two reporting requirements; it changes no scoring function,
+no threshold and no conversion, so every number measured under version 1 is
+unchanged under version 2 and stays comparable. The re-evaluation rule is
+satisfied by inspection here rather than by rerunning, and this paragraph is the
+record of that. A version that *does* change a computed score says so and the
+models are rerun.
 
 Scoring code: `collaborative_test/evaluation.py`, used unmodified by both models.
 
@@ -46,6 +54,34 @@ Per the implementation: `patch_fg_ari` is NaN with fewer than two foreground
 patches, `patch_matched_object_iou` is NaN with no target objects. NaNs are
 excluded per metric; `valid_count` is reported beside every mean so the
 denominators are visible.
+
+### FG-ARI has no partial credit on a single-object image
+
+**Added in version 2 (`PV2_0128`).** When an image holds exactly one true object,
+every true-foreground cell belongs to one cluster, so the truth contains no
+disagreeing pair for a chance-corrected index to score. FG-ARI is then
+all-or-nothing: **1.0 if the prediction is also exactly one group, and
+approximately 0 if it splits the object at all.** There is nothing in between,
+and the image is not NaN, so it enters the mean as a 0 or a 1.
+
+This is not a defect to patch silently. It is a property of ARI, it is what the
+published numbers we compare against also carry, and the three metrics do not
+share it — `patch_foreground_iou` and `patch_matched_object_iou` degrade
+smoothly on the same image. But it changes how a mean is read, so:
+
+- **Report the count of single-object images in any split** where the fraction is
+  non-trivial, beside the FG-ARI mean.
+- **Where that fraction is large, also report the mean over images with two or
+  more objects**, labelled, so a reader can see which part of the number is the
+  cliff.
+
+Measured consequence, Multi-dSprites validation, 300 images: 86 of them (29%)
+hold one object. At grid 32 their ceiling — the score of the ground truth
+quantised and expanded back — is **0.0000**, and the whole-split ceiling is
+0.5619 where the ≥2-object ceiling is **0.7877**. CLEVR has no single-object
+images and Tetrominoes always has three, so neither shows this. The effect was
+read as "the patch grid is too coarse for Multi-dSprites" for several records
+before it was measured.
 
 ## Aggregation
 
