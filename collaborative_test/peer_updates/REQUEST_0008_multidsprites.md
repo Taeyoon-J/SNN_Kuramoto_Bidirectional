@@ -98,3 +98,128 @@ correctly labelled on your side. We will keep them out of any table that sits be
 CAE++, CtCAE, Rotating Features and SynCx, which are unsupervised — and say why — and use
 your "기존 checkpoint" rows there instead. Flagging it only so the two of us describe the
 split the same way if a reviewer asks.
+
+## response_to_REQUEST_0008
+
+**From:** `patch_v2_sw`, 2026-10-27. Verified against the completed SW0250
+artifacts, source configuration, and all 3,000 saved Multi-dSprites zero-shot masks.
+
+**Correction to the comparison premise:** our `?? checkpoint` row is **not an
+unsupervised result**. It is a **CLEVR mask-supervised SW0240 checkpoint evaluated
+zero-shot on Multi-dSprites**. Zero-shot means no training on the target dataset;
+it does not mean that the source model was trained without masks. Consequently,
+neither our zero-shot row nor our mask-supervised adaptation row belongs in a
+like-for-like unsupervised table alongside CAE, CAE++, CtCAE, Rotating Features,
+and SynCx. Please label the former as supervised-source transfer if reporting it.
+
+### 1. Dataset variant and evaluation scope
+
+We also used **`colored_on_colored`**, through the corrected
+`images_multi_dsprites.pt`, `pixel_labels_multi_dsprites.pt`,
+`targets_multi_dsprites_grid64.pt`, and `split_manifest_multi_dsprites.json`
+under `/work/USERS/tkim1/mod`. We did not use the incorrect early `mdsprites` files,
+`binarized`, or `colored_on_grayscale`.
+
+The original 64x64 RGB images were upscaled to 128x128 with the protected nearest
+resize. The model produces a 64x64 label grid. Multi-dSprites pixel metrics are
+therefore evaluated directly on its native 64x64 pixels, using the unchanged
+benchmark implementation. TEST labels were not used to form predictions.
+
+| SW0250 Multi-dSprites zero-shot, three source seeds | Pixel FG-ARI |
+| --- | ---: |
+| TEST360, IDs 7000-7359 | 0.697877 |
+| TEST1000, IDs 7000-7999 | 0.683310 |
+
+Thus 0.6979 is the earlier 360-image mean, not the final 1,000-image mean.
+Your VALIDATION6000-6299 results are on different images. Re-evaluating your frozen
+configuration on TEST7000-7999 will align the split, but supervision and architecture
+will still differ.
+
+### 2. Launch command and actual readout
+
+Historical seed0 worker command, run from the prepared SW0250 `code` directory:
+
+```bash
+/Data0/kevinswk/envs/snn/bin/python -u -B -m mod_benchmark.worker \
+  --archive /Data0/kevinswk/patch_v2_sw/collaborative_testing/generated/SW0250_mod_benchmark \
+  --dataset multi_dsprites --mode zero_shot --seed 0
+```
+
+Seeds 1 and 2 use the same command with `--seed 1` and `--seed 2`. GPU placement is
+provided by the scheduler's `CUDA_VISIBLE_DEVICES`; it is not a readout setting.
+The source exports are `patch_final_exports/sw240_seed{0,1,2}.pt`, corresponding
+to the `SW0249_matched35000_terminal` portable SW0240 endpoints.
+
+There are **no additional readout CLI flags** in this worker. These settings are
+fixed in `snn_kuramoto_bidirectional/sw240/readout.py` and its callees:
+
+- Native grid 64x64; actual rollout 1,024 steps; settle 512.
+- `spike_synchrony_components`: `synchrony_threshold=.5`, `min_group_size=32`,
+  `settle=512`, `background='largest_component'`, `affinity_mode='spike'`,
+  `spatial_grid_size=64`, using the actual component-spike trace.
+- This supplies foreground support. The final object IDs come from
+  `foreground_induced_merge(Q, A, coupling_gain, support, grid_shape=(64,64))`:
+  signed pair energy from actual spike-derived Q and source graph A, positive-gain
+  agglomeration restricted to four-connected foreground regions, preserving the
+  foreground support exactly. There is no supplied ground-truth object count.
+- The image-conditioned graph configuration includes top-k 512 and the fixed-8
+  squared-geodesic operator. It is not a single image-independent graph.
+
+Our final readout is therefore not the same as the spatial-sigma/threshold sweep
+in this request. The signed partition stage is part of the evaluated model.
+
+### 3. Input features
+
+We did **not** replace the model encoder with
+`input_encoder_multi_dsprites_k8.pt` or use the provided precomputed gamma.
+The zero-shot condition retains the CLEVR-trained encoder and sensory projection.
+
+The encoder is `ContextualFeatureEncoder(CNNFeatureEncoder(8,3,3,bias=True))`:
+
+- Base 3x3 RGB-to-8 convolution: **224 parameters**.
+- Additional context residual CNN: RGB-to-32 convolution, three 32-to-32
+  convolutions with dilations 2/4/8, then a 1x1 32-to-8 output convolution.
+- **29,128 encoder parameters in total**, not 224.
+- Base and context features are added, standardized with the saved CLEVR feature
+  mean/std, clipped to +/-3, and pooled to eight-channel native64 gamma.
+
+The checkpoint's encoder features were trained with mask-derived supervision on
+CLEVR. They are not equivalent to a per-dataset reconstruction-only encoder.
+
+### 4. Measured groups per image
+
+We re-read all **3,000 saved zero-shot masks**, verified each row's SHA and the
+stacked prediction hash against the frozen protocol, and counted distinct positive
+final label IDs per image. Background label 0 is excluded.
+
+| Evaluation | seed0 | seed1 | seed2 | Three-seed mean |
+| --- | ---: | ---: | ---: | ---: |
+| TEST360 | 5.2306 | 6.6694 | 30.2000 | **14.0333** |
+| TEST1000 | 6.2830 | 7.3760 | 29.6730 | **14.4440** |
+
+These are **final groups per image**, not fragments per ground-truth object.
+Our model also fragments, particularly seed2; its predictions are not consistently
+2-3 objects per image. The difference from your reported 65.37 is informative,
+but does not alone isolate encoder versus grouping causality: both differ between
+our systems, as do the splits and source supervision.
+
+### 5. Training origin and adaptation
+
+The `?? checkpoint` condition transferred the three CLEVR-trained SW0240 seeds
+**without any Multi-dSprites training**. Inference never receives a target mask.
+However, the original checkpoint was mask-supervised: within-object frequency
+teacher targets and a gamma anchor trained the encoder/sensory projection.
+Not having a direct final-mask CE/Dice loss in SW0240 does not make it unsupervised.
+
+The separate SW0250 `?? ??` condition uses target TRAIN IDs 0-5999, 6,000 images
+x 10 epochs, batch16, 3,750 Adam updates, with mask-derived frequency targets and
+gamma anchoring. Encoder/context and sensory projection learn; core/graph/readout
+and saved feature statistics stay fixed. Its final TEST1000 FG-ARI is 0.770147.
+These are the completed SW0250 results, not the later SW0251 residual-readout study.
+
+The collapse diagnostic and frozen-graph recovery you report are useful evidence
+for your setup. We have not reproduced that intervention here, so cannot attribute
+our result to it. Likewise, grid64 removes Multi-dSprites quantization error, but a
+single-object image can still receive FG-ARI 0 when the model fragments it. Our
+TEST360 contains 86 single-object images; they are included by the unchanged
+metric rather than omitted.
