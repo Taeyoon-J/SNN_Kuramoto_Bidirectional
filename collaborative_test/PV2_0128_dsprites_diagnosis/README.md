@@ -190,12 +190,57 @@ Same core, same losses, same readout. The remaining dataset-wide constants are t
 224-parameter input encoder and the training run itself (seed 0 only, 737 min, collapse
 never checked).
 
-And a comparison that did not exist before: the peer reports **0.6979** on this dataset,
-unsupervised, at grid 64 — **0.4162 above ours**. With the grid eliminated, that is a model
-gap, not a protocol one. `peer_updates/REQUEST_0008_multidsprites.md` asks for their
-configuration, listing what we have already ruled out so they can skip it. The first
-question there is which of the three Multi-dSprites variants they used; we used
-`colored_on_colored`, and if theirs differs that alone could be most of the gap.
+### CORRECTION — there is no peer unsupervised number
+
+This section first read: *"the peer reports 0.6979 on this dataset, unsupervised, at grid
+64 — 0.4162 above ours. With the grid eliminated, that is a model gap."* **That was wrong**,
+and it was pushed in `6f4dd7d` before their answer arrived.
+
+Their reply to `REQUEST_0008` states it plainly: the row labelled "기존 checkpoint" is a
+**CLEVR mask-supervised SW0240 checkpoint evaluated zero-shot** on Multi-dSprites. Zero-shot
+means no training on the target dataset; it does not mean the source model was trained
+without masks. **Neither of their two rows is unsupervised.** The comparison I drew does not
+exist, and our 0.2817 is the only unsupervised Multi-dSprites number either side holds.
+
+| Multi-dSprites, pixel FG-ARI | supervision | |
+| --- | --- | ---: |
+| **ours**, grid 64, validation 300 | **unsupervised** | **0.2817** |
+| peer zero-shot, TEST1000 | CLEVR mask-supervised source | 0.6833 |
+| peer zero-shot, TEST360 | same | 0.6979 |
+| peer adapted, TEST1000 | + target-mask supervision | 0.7701 |
+| CAE / CAE++ / CtCAE / RF / SynCx | unsupervised | .05 / .51 / .56 / .84 / .82 |
+
+Against the unsupervised column our 0.2817 clears only CAE's 0.05. The same correction
+applies to Tetrominoes: their 0.6164 is also supervised-source transfer, so our 0.9478 beats
+it but the two rows are not like for like and the table must say so.
+
+### What their answer did settle
+
+- **The dataset variant is not the cause.** They used the same `colored_on_colored` through
+  our own files. Eliminated.
+- **Their readout is a different algorithm**, not a different setting of ours:
+
+  | | ours | peer |
+  | --- | ---: | ---: |
+  | `synchrony_threshold` | 0.05 | **0.50** |
+  | `min_group_size` | 2 | **32** |
+  | graph top-k | 32 | **512** |
+  | merge stage | none | `foreground_induced_merge`: signed pair energy, positive-gain agglomeration inside four-connected foreground regions |
+  | encoder | 224 params, reconstruction | **29,128** params, dilated 2/4/8 context CNN, mask-supervised on CLEVR |
+
+- **My sweep ran the wrong way.** I varied the threshold 0.05 → 0.01, looser, expecting
+  fragments to merge. Theirs is 0.50 — ten times my highest value — with `min_group_size` 32
+  against my fixed 2. The regime I swept was never the one that could have helped.
+- **They fragment too**: 14.44 groups per image on TEST1000 against our 65.37, and their
+  seed 2 alone produces 29.7. Not the 2–3 a clean segmentation would give.
+- **They also carry 86 single-object images** in TEST360 and include them under the
+  unchanged metric, confirming the cliff is not avoided by grid 64 alone — only by not
+  fragmenting.
+
+A corrected sweep is running: `threshold {0.05, 0.10, 0.30, 0.50} × min_group_size {2, 8,
+32}` at grid 64. Their merge stage is **excluded** — it is a code port, and `PV2_0107b` lost
+matched-object IoU with a different merge rule, so it needs its own test rather than being
+folded into a configuration sweep.
 
 ## 9. Infrastructure fixed to get here
 

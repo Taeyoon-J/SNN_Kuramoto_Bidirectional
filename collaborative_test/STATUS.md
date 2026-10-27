@@ -1,45 +1,58 @@
 # STATUS
 
-Updated 2026-10-26. Branch `patch_v2`; the shipped version, `benchmark.md` and the script
-bundle are on `patch_final`. Contract v1, v2, v3 and `v2-pixel`; split v1.
+Updated 2026-10-27. Branch `patch_v2`; the shipped version, `benchmark.md` and the script
+bundle are on `patch_final`. Contract **v2**; split v1.
 
-> ## RESUME POINT, 2026-10-26 — benchmark mode, two jobs detached, local VPN down again
+> ## RESUME POINT, 2026-10-27 — benchmark comparison, one sweep running
 >
-> **Model improvement is paused by the user's decision.** The work is benchmark comparison
-> only. The grid is chosen **per dataset from its measured ceiling**, not unified:
-> CLEVR 32, Multi-dSprites 64, Tetrominoes 32 — grid 64 is impossible on Tetrominoes' 35px
-> source and has no trained CLEVR model. The table states each row's grid and ceiling.
+> **Model improvement is paused by the user's decision.** Benchmark comparison only. The
+> grid is chosen per dataset from its measured ceiling: CLEVR 32, Multi-dSprites 64,
+> Tetrominoes 32 (35px admits no 64 cells).
 >
-> The VPN tunnel has lost its IPv4 address again (`utun8` up, no `inet`, route to the
-> bastion still pointing at it). Client-side; the jobs are `setsid nohup` and detached.
+> ### The table
 >
-> | job | GPU | script | log | state at last contact |
-> | --- | --- | --- | --- | --- |
-> | Multi-dSprites grid 64, replicated checkpoint | 2 | `md64c.sh` | `md64c.out` | 2h49m in, 100% util, preflight 8/8; ~2.8h was the predicted total |
-> | Tetrominoes seeds 1–2, graph frozen from seed 0 | 3 | `tetfrz.sh` | `tetfrz.out` | seed 1 at 2h31m of ~10h; seed 2 and three evaluations follow |
+> | dataset | grid | ceiling | ours, pixel FG-ARI | supervision |
+> | --- | ---: | ---: | ---: | --- |
+> | CLEVR | 32 | 0.8406 | **0.6668 ± 0.0506**, 3 seeds, 1000 test | unsupervised |
+> | Tetrominoes | 32 | 0.9409 | **0.9478 ± 0.0171**, 3 seeds, 300 validation | unsupervised |
+> | Multi-dSprites | 64 | 1.0000 | **0.2817**, 1 seed, 300 validation | unsupervised |
 >
-> ### The table, as it stands
+> Tetrominoes' three share seed 0's graph (`PV2_0044` freeze) after one independent seed
+> died; CLEVR's three share one graph the same way. Both disclosed.
 >
-> | dataset | grid | ceiling | ours, pixel FG-ARI | state |
-> | --- | ---: | ---: | --- | --- |
-> | CLEVR | 32 | 0.8406 | **0.6668 ± 0.0506**, 3 seeds, 1000 test | **done** (`PV2_0127`) |
-> | Tetrominoes | 32 | 0.9409 | 0.9280 / 0.9126 / seed died | frozen retrain running |
-> | Multi-dSprites | 64 | 1.0000 | — | evaluation running |
+> ### Running
+>
+> `sweep2.sh` on GPU 3: Multi-dSprites grid 64, `threshold {.05,.10,.30,.50}` ×
+> `min_group_size {2,8,32}`, 150 validation images, no training. Log `sweep2.out`.
+> Half a day or more — a grid-64 evaluation is about an hour per combination.
+>
+> ### What the peer's REQUEST_0008 answer changed
+>
+> **They hold no unsupervised number.** Both their rows come from a CLEVR mask-supervised
+> SW0240 source; "기존 checkpoint" is that source evaluated zero-shot. Our earlier claim that
+> their unsupervised result beat ours is withdrawn in `PV2_0128`. Their readout is a
+> different algorithm, not a different setting: threshold 0.50, min_group_size 32, top-k 512,
+> a 29,128-parameter mask-supervised encoder, and a `foreground_induced_merge` stage we do
+> not have.
+>
+> ### Next, after the sweep
+>
+> 1. If the sweep moves the number, re-run Multi-dSprites and Tetrominoes on **TEST
+>    7000–7999** to align with the peer's split. `evaluate_model.py` has **no offset flag**,
+>    and grid-64 affinity for 1000 images is `[1000,4096,4096]` = 67 GB with `torch.cat`
+>    doubling it, so test at grid 64 needs an `--offset` and chunked aggregation. Started,
+>    then paused.
+> 2. If it does not, the cause is the encoder or the merge stage. The merge stage is a code
+>    port and needs its own test — `PV2_0107b` lost matched-object IoU with a different merge
+>    rule.
 >
 > ### Do not re-run
 >
-> `PV2_0125` (grid-32 pixel numbers for both benchmark datasets), the per-dataset ceilings
-> (`ceil.py`), the target and manifest rebuild (five dataset × grid configurations pass
-> `preflight.py` 8/8), the `--eval-batch 25` regression (reproduced
-> 0.9362 / 0.6914 / 0.7817 / 0.3004 exactly), `pixel_truth_test1000.pt`, and the CLEVR
-> 3-seed test evaluation whose predictions are saved as
-> `/work/USERS/tkim1/mod/pred_clevr_grid32_s{0,1,2}.npz`.
->
-> ### Dropped deliberately
->
-> The CLEVR grid-64 pixel ceiling. It is cheap and still unmeasured, but it answers a route C
-> question — model improvement — which is paused. `ROUTE_MAP_0.9_v4.md` and
-> `PROPOSAL_0.9_v3.md` hold that thread for when it resumes.
+> `PV2_0125`, the per-dataset ceilings, the target/manifest rebuild (8/8 preflight on five
+> dataset × grid configurations), the `--eval-batch 25` and `--affinity-chunk` regressions
+> (both reproduced 0.9362 / 0.6914 / 0.7817 / 0.3004 exactly), `pixel_truth_test1000.pt`, the
+> CLEVR 3-seed test evaluation, the first readout sweep (nine combinations, swept the wrong
+> direction, 0.2292–0.2361), and Multi-dSprites grid 64 at the default readout.
 
 > ## INCIDENT, 2026-10-19 — `/export_home/tkim1` is faulted
 >
