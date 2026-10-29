@@ -700,6 +700,7 @@ def main():
         after = sum(len(g) for g in groups) / max(len(groups), 1)
         print("coverage stage: %.2f -> %.2f groups per image (quantile %.3f)"
               % (before, after, args.coverage_quantile))
+    prediction = spatial_components_to_patch_labels(groups, args.grid)
     if args.induced_merge:
         # The peer's SW0250 readout stage, ported from patch_final
         # snn_kuramoto_bidirectional/sw240/{partition,signed_energy}.py and verified against
@@ -748,7 +749,6 @@ def main():
         print("induced merge: %.2f -> %.2f groups per image (gain %.3f, native_nodes %d)"
               % (before / n, after / n, gain, nn_scale))
 
-    prediction = spatial_components_to_patch_labels(groups, args.grid)
     if args.save_predictions:
         import numpy as _np
         _np.savez_compressed(
