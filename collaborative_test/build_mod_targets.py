@@ -24,6 +24,7 @@ architecture. On the small suites the grid is near pixel resolution and that han
 nearly vanishes.
 """
 import sys, json, argparse
+from pathlib import Path
 import numpy as np, torch
 sys.path.insert(0, "/export_home/tkim1/collaborative_test")
 sys.path.insert(0, "/export_home/tkim1")
@@ -80,6 +81,21 @@ print("pixel share per entity:", " ".join("%d:%.3f" % (e, s) for e, s in enumera
 assert int(np.argmax(share)) == 0, "entity 0 is not the largest; background convention differs"
 
 stem = "%s/targets_%s" % (args.out_dir, args.dataset)
+
+# `names` and the manifest's `splits` are written HERE, not by a follow-up script.
+# They used to be added afterwards by addnames.py and fixman.py, and the consequence was
+# concrete and happened twice: a later rebuild at another grid rewrote the manifest from
+# `ranges` alone, dropped `splits`, and broke the grids that were already finished. The
+# evaluator compares the targets' `names` to manifest["splits"][split] and refuses to score
+# when they disagree -- the check the data contract asks for -- so it has to be produced by
+# whatever produces the targets.
+names = ["%s_%06d.png" % (args.dataset, i) for i in range(int(pix.shape[0]))]
+img_dir = Path("%s/images_%s" % (args.out_dir, args.dataset))
+if img_dir.is_dir():
+    missing = [x for x in (names[0], names[len(names) // 2], names[-1])
+               if not (img_dir / x).exists()]
+    assert not missing, "named image files are absent: %s -- names would be a lie" % missing
+
 for grid in args.grids:
     labels, purity, ties, redges, cedges = mask_cells(pix, grid)
     print("grid %d: foreground %.4f, purity %.4f, ties %.4f"
@@ -89,14 +105,23 @@ for grid in args.grids:
                 "grid": grid, "row_edges": redges, "col_edges": cedges,
                 "dataset": args.dataset, "source": cfg["records"],
                 "mask_order": ORDER, "count": int(pix.shape[0]),
-                "contract_version": "v2-pixel", "manifest_version": 1},
+                "contract_version": "v2-pixel", "manifest_version": 1,
+                "names": names, "patch_size": None},
                "%s_grid%d.pt" % (stem, grid))
     print("  saved %s_grid%d.pt" % (stem, grid), flush=True)
 
 torch.save(pix, "%s/pixel_labels_%s.pt" % (args.out_dir, args.dataset))
 torch.save(img, "%s/images_%s.pt" % (args.out_dir, args.dataset))
+ranges = {"train": [0, 6000], "validation": [6000, 7000], "test": [7000, 8000]}
+splits = {}
+for k, (lo, hi) in ranges.items():
+    splits[k] = names[lo:hi]
+    assert len(splits[k]) == hi - lo, (k, len(splits[k]), hi - lo)
 json.dump({"dataset": args.dataset, "version": 1, "mask_order": ORDER,
-           "ranges": {"train": [0, 6000], "validation": [6000, 7000], "test": [7000, 8000]},
+           "ranges": ranges, "splits": splits,
+           "counts": {k: hi - lo for k, (lo, hi) in ranges.items()},
+           "image_dir": str(img_dir),
+           "order": "row order of the source tfrecord, as dump_png.py wrote the PNGs",
            "count": int(pix.shape[0]), "note": "same split shape as the CLEVR manifest"},
           open("%s/split_manifest_%s.json" % (args.out_dir, args.dataset), "w"), indent=2)
-print("manifest written; done")
+print("manifest written with splits %s; done" % {k: len(v) for k, v in splits.items()})
