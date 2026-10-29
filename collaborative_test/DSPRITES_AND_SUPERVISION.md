@@ -171,15 +171,46 @@ saw no masks.
 
 **Nothing, if we stay unsupervised — and that is the recommendation.**
 
-| dataset | grid | ceiling | ours, unsupervised | best published unsupervised |
-| --- | ---: | ---: | ---: | --- |
-| Tetrominoes | 32 | 0.9409 | **0.9478 ± 0.0171** | SynCx 0.89 |
-| CLEVR | 32 | 0.8406 | 0.6668 ± 0.0506 | RF 0.65 |
-| Multi-dSprites | 64 | 1.0000 | 0.2817 | RF 0.84 |
+All three rows are now on the TEST split:
 
-**We win Tetrominoes outright**, above every published number on that dataset. CLEVR is
-inside one standard deviation of Rotating Features, so not distinguishable. Multi-dSprites we
-lose, and the honest table says so.
+| dataset | split | seeds | grid | ceiling | ours, unsupervised |
+| --- | --- | ---: | ---: | ---: | ---: |
+| Tetrominoes | TEST 1000 | 3 | 32 | 0.9409 | **0.9282 ± 0.0170** |
+| CLEVR | TEST 1000 | 3 | 32 | 0.8406 | 0.6668 ± 0.0506 |
+| Multi-dSprites | TEST 300 | 1 | 64 | 1.0000 | 0.3061 |
+
+### The comparison family was the wrong one
+
+`BENCHMARK_PLAN.md` chose to compare against the synchrony-binding line on the grounds that
+it is what this architecture competes with. A literature check says that choice does not
+survive review:
+
+| | Tetrominoes | Multi-dSprites | CLEVR6 |
+| --- | ---: | ---: | ---: |
+| **Slot Attention** | **99.5** | **91.3** | **98.8** |
+| IODINE | 99.2 | 76.7 | 98.8 |
+| MONet | — | 90.4 | 96.2 |
+| SynCx | 89 | 82 | 59 |
+| CtCAE | 84 | 56 | 54 |
+| Rotating Features | 42 | 84 | 65 |
+| **ours** | **92.8** | 30.6 | 66.7 |
+
+**All of these are unsupervised.** We beat the synchrony family on Tetrominoes and lose to
+the slot family by a wide margin, on a dataset where the conditions match exactly — 35×35,
+three objects.
+
+CLEVR is not comparable as listed: the published figures are **CLEVR6**, at most six objects
+at 128×128, while ours is full CLEVR, ten objects at 240×320. Our own re-run of Slot
+Attention under our conditions scored 0.8102, not 0.988, which is the size of that gap.
+
+Three honest ways forward, and this is a decision rather than a measurement:
+
+1. put the slot family in the table and report the loss
+2. restrict the claim explicitly to synchrony/phase-based binding and justify the restriction
+3. move to a setting where the slot family is weak — harder CLEVR, CLEVRTex
+
+What is not available is quietly keeping the current family. A reviewer asks about Slot
+Attention first.
 
 Going supervised would cost all of that: the Tetrominoes win is only meaningful against
 unsupervised baselines, and we would be entering a league where our numbers are weak.
@@ -191,10 +222,12 @@ unsupervised baselines, and we would be entering a league where our numbers are 
 2. **Report the supervised result as an ablation**, clearly separated, answering "what does
    this architecture do when the features are supervised?" That is a legitimate and
    interesting row — it just is not a comparison.
-3. **The remaining unsupervised route is the objective.** Reconstruction learns texture;
-   masks learn boundaries. What is missing is an *unsupervised* signal that produces
-   boundaries — which is precisely the problem CAE and SynCx solve, and where they beat us on
-   Multi-dSprites.
+3. **The remaining unsupervised route is the objective — and it is open.** Reconstruction
+   learns texture; masks learn boundaries. `PV2_0129` added a total-variation penalty, which
+   says "flat inside a region, free to jump at an edge" with no labels, and it reached
+   **0.4617** on Multi-dSprites against our mask-supervised 0.4252 and the peer's
+   mask-supervised 0.4574. 40 images and one seed, so exploratory — but the premise that the
+   unsupervised route was exhausted is withdrawn.
 
 ---
 

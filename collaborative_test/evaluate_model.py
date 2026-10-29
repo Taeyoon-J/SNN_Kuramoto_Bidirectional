@@ -356,6 +356,11 @@ def main():
                     help="node-count constant in the energy. -1 uses this run's actual "
                          "grid**2. The source file hardcodes 1024, the grid-32 count, and "
                          "does not change it at grid 64; pass 1024 to reproduce that.")
+    ap.add_argument("--offset", type=int, default=0,
+                    help="skip this many images from the start of the split before "
+                         "--limit applies. For scoring a split in windows when the whole "
+                         "of it will not fit; the metrics are per image, so windowing "
+                         "changes no value.")
     ap.add_argument("--affinity-chunk", type=int, default=0,
                     help="images per pass when building the spike affinity. 0 is the "
                          "whole batch, which every recorded number used. Grid 64 needs "
@@ -514,6 +519,17 @@ def main():
 
     manifest = json.load(open(args.manifest))
     start, end = manifest["ranges"][args.split]
+    # --offset moves the window inside the split. The whole TEST split cannot be scored in
+    # one pass at grid 64: the affinity is [B, N, N] and at B=1000, N=4096 that is 67 GB,
+    # which torch.cat momentarily doubles. With an offset the split is scored in windows and
+    # the per-image predictions are concatenated afterwards, which changes no value --
+    # every metric here is per image. At grid 32 the whole split fits and no offset is used.
+    if args.offset:
+        if args.offset < 0 or start + args.offset >= end:
+            raise ValueError(
+                f"--offset {args.offset} is outside split {args.split} "
+                f"[{start}, {end}); it is relative to the split start.")
+        start = start + args.offset
     if args.limit is not None:
         end = min(end, start + args.limit)
     blob = torch.load(args.targets)
