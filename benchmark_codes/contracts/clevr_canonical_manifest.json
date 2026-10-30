@@ -1,0 +1,409 @@
+{
+  "status": "complete_exact_registered_TRAIN70000_input_cache",
+  "binding": {
+    "dataset": {
+      "path": "/Data0/kevinswk/datasets/object_centric_data/clevr_10-full.hdf5",
+      "size": 2188394103,
+      "mtime_ns": 1776053764504468257
+    },
+    "registered_split": {
+      "TRAIN_count": 70000,
+      "TRAIN_ids_sha256": "4f6527527ab36aec1d45be1147a6a2d0af194e006db89a457d78e07e297bb4d6",
+      "TRAIN_ranges": [
+        [
+          0,
+          999
+        ],
+        [
+          1640,
+          70639
+        ]
+      ],
+      "reserved_range": [
+        1000,
+        1639
+      ],
+      "evaluation_ids": [
+        1320,
+        1639
+      ],
+      "batch": 16,
+      "complete_passes": 10,
+      "additional_updates": 43750,
+      "logical_exposures": 700000
+    },
+    "registered_input_code_sha256": "23e43d29563871f6f5def9218ea82b31771d1e7de09f2139d40db315cb30406a",
+    "builder_code_sha256": "91e4c47dc5fb7774069e9f64318b48254f8fcc40d08a47e762fcff6446657d88"
+  },
+  "blocks": [
+    {
+      "source_range": [
+        0,
+        1000
+      ],
+      "destination_range": [
+        0,
+        1000
+      ],
+      "tensor_sha256": {
+        "rgb.npy": "e1d673e7723ab2eb75fddc46dcdd46f41ab3a88a3321c347b74caf139d8fc29f",
+        "labels64.npy": "0cde7d481114bec21b2fc15e7a52f46c60f2b16905ec9c3c30b1af689e01290a"
+      },
+      "elapsed_seconds": 2.808485801331699
+    },
+    {
+      "source_range": [
+        1640,
+        3125
+      ],
+      "destination_range": [
+        1000,
+        2485
+      ],
+      "tensor_sha256": {
+        "rgb.npy": "2c4f7eb517fcf8c7c3ad92a8874314d58b08974a178137c6ba089b87089bba6e",
+        "labels64.npy": "015a44af2c727fa7b728ae6cca302545cbe87d7acdc972ac4b29c1b72b69f7cf"
+      },
+      "elapsed_seconds": 3.6527462722733617
+    },
+    {
+      "source_range": [
+        3125,
+        6250
+      ],
+      "destination_range": [
+        2485,
+        5610
+      ],
+      "tensor_sha256": {
+        "rgb.npy": "74488efc76efc2c6d265741348039e2b8f09defb47ebb8b9fd022f941eb1df7f",
+        "labels64.npy": "9f4c3882942227b9752ba7394be1e4f823c3c40da3a8767782a05b296b49ca64"
+      },
+      "elapsed_seconds": 6.606827965006232
+    },
+    {
+      "source_range": [
+        6250,
+        9375
+      ],
+      "destination_range": [
+        5610,
+        8735
+      ],
+      "tensor_sha256": {
+        "rgb.npy": "dd9ecf6a6f8263a7408792207c2405e8af25bb3aee44a167028b0538e9bda9cf",
+        "labels64.npy": "971415428e8abb942891ae2b9c645eed3e2f4976ae7cf4d584c54fed7fe53ee6"
+      },
+      "elapsed_seconds": 6.6091891610994935
+    },
+    {
+      "source_range": [
+        9375,
+        12500
+      ],
+      "destination_range": [
+        8735,
+        11860
+      ],
+      "tensor_sha256": {
+        "rgb.npy": "91b1821bbeb12da8bd8edf8551f902dfa9b65922077ce76065c6d6a95ee97249",
+        "labels64.npy": "f088216eb5ef2eaa37f803b3225b54c37103ecd68ae414219772b7fb4a5f09a9"
+      },
+      "elapsed_seconds": 6.603022679686546
+    },
+    {
+      "source_range": [
+        12500,
+        15625
+      ],
+      "destination_range": [
+        11860,
+        14985
+      ],
+      "tensor_sha256": {
+        "rgb.npy": "026adcfc47ad43848b0e777a5afc7471323005aee6731eb8adb585db21f90c0f",
+        "labels64.npy": "8423a146463de7e893aedac95731b35e0bcb364a72ca8c984a2f3c0f39dff5e8"
+      },
+      "elapsed_seconds": 6.5952841155231
+    },
+    {
+      "source_range": [
+        15625,
+        18750
+      ],
+      "destination_range": [
+        14985,
+        18110
+      ],
+      "tensor_sha256": {
+        "rgb.npy": "e0a0ebb373dd71051bf2a2921b5b2dd87fc51ab8171c7583c1dd4a8c07ecca40",
+        "labels64.npy": "7a1d02b0036f24fac27e50171debd69267d979548413f9961ef50a3b855ce414"
+      },
+      "elapsed_seconds": 6.599581381306052
+    },
+    {
+      "source_range": [
+        18750,
+        21875
+      ],
+      "destination_range": [
+        18110,
+        21235
+      ],
+      "tensor_sha256": {
+        "rgb.npy": "8e3ee4915f5a53257476c7b9195f7389644921301f29415896cc8dd094e90a4d",
+        "labels64.npy": "3424f836de86ef9c4ca6a3403ed21bd300cfcc27fc782e4596219e5105ad090d"
+      },
+      "elapsed_seconds": 6.586908278986812
+    },
+    {
+      "source_range": [
+        21875,
+        25000
+      ],
+      "destination_range": [
+        21235,
+        24360
+      ],
+      "tensor_sha256": {
+        "rgb.npy": "5c89809ecf24f509260bb6612858aea0bd977c13d50184a28f5269833055e0ec",
+        "labels64.npy": "dbb0eba3eeaaadcbb1b133b86cf8277bc9296b45c4d33bae12bfdd38230535c6"
+      },
+      "elapsed_seconds": 6.600088015198708
+    },
+    {
+      "source_range": [
+        25000,
+        28125
+      ],
+      "destination_range": [
+        24360,
+        27485
+      ],
+      "tensor_sha256": {
+        "rgb.npy": "49786656846b86fed99a22ac1144294115a3d7bf7271909936aa81abf16b439a",
+        "labels64.npy": "78817e434539897a417f5d1b1156a59341e52da64dd6c6862a589cce75f7dbad"
+      },
+      "elapsed_seconds": 6.590404290705919
+    },
+    {
+      "source_range": [
+        28125,
+        31250
+      ],
+      "destination_range": [
+        27485,
+        30610
+      ],
+      "tensor_sha256": {
+        "rgb.npy": "157eac2a0de8f7c7f546be6f4c3c89c7e180f1057fd9c51a69fe48b23b09a4e6",
+        "labels64.npy": "5e5214c4797dfbca64b1189b9dcf550ae0c92d0925129dfb57b30106177ce6f0"
+      },
+      "elapsed_seconds": 6.597794713452458
+    },
+    {
+      "source_range": [
+        31250,
+        34375
+      ],
+      "destination_range": [
+        30610,
+        33735
+      ],
+      "tensor_sha256": {
+        "rgb.npy": "8e68c356d907fdfef9b80ecdf746bbe8cf5143c57bd8bfc97aa97c97b71dca6f",
+        "labels64.npy": "995dfceb6a6a2a8f23c38594e554bb51e7f406442256bd29077514069db8fc1b"
+      },
+      "elapsed_seconds": 6.58074935246259
+    },
+    {
+      "source_range": [
+        34375,
+        37500
+      ],
+      "destination_range": [
+        33735,
+        36860
+      ],
+      "tensor_sha256": {
+        "rgb.npy": "599fb54b13328eb5a9a3c4ba413ab3fbd5cd38544dcb208da575fac08d7a069f",
+        "labels64.npy": "fe167aa98709ba270007797a44bc22451fdc7ede7b93831418e1c5f28c90b970"
+      },
+      "elapsed_seconds": 6.5758649399504066
+    },
+    {
+      "source_range": [
+        37500,
+        40625
+      ],
+      "destination_range": [
+        36860,
+        39985
+      ],
+      "tensor_sha256": {
+        "rgb.npy": "4a8ce34fc3578153829272fa8fe30e3f460fda5914ffe714456b2d6f15c47d97",
+        "labels64.npy": "c42eb7801697d22e2f4a798bd10a3962c265ac3ca3aa6c801bbdb92141dd23d1"
+      },
+      "elapsed_seconds": 6.591382242739201
+    },
+    {
+      "source_range": [
+        40625,
+        43750
+      ],
+      "destination_range": [
+        39985,
+        43110
+      ],
+      "tensor_sha256": {
+        "rgb.npy": "ce47187dc4f854a88b3820b14febcd29a23765888859448b5193adb705812c16",
+        "labels64.npy": "85186434801a6b1b62e1a696f69d40d3772dc729f1c73885f367fa625bdc4c1a"
+      },
+      "elapsed_seconds": 6.610221395269036
+    },
+    {
+      "source_range": [
+        43750,
+        46875
+      ],
+      "destination_range": [
+        43110,
+        46235
+      ],
+      "tensor_sha256": {
+        "rgb.npy": "e58777cf8a18954b1ae7b10f9de7db12955536f9af3340c31e95b38b7e961a86",
+        "labels64.npy": "c7a478d82c7dd6843fc04e0179736dba89a31c0d8fd71562c2fb44151b1a192f"
+      },
+      "elapsed_seconds": 6.571492955088615
+    },
+    {
+      "source_range": [
+        46875,
+        50000
+      ],
+      "destination_range": [
+        46235,
+        49360
+      ],
+      "tensor_sha256": {
+        "rgb.npy": "6dfaee6092ec41b2c124cedbb16f211a1d36bb2df9bbf4570aedf0447a08e1d0",
+        "labels64.npy": "1cc373d305adf2241dbb36a7312bfe8063fff5c8bc9d0e446ec7c8f5adc81ceb"
+      },
+      "elapsed_seconds": 6.589878613129258
+    },
+    {
+      "source_range": [
+        50000,
+        53125
+      ],
+      "destination_range": [
+        49360,
+        52485
+      ],
+      "tensor_sha256": {
+        "rgb.npy": "471b00e117b57eb40b0cd2368817b461def99ea498186975f611d6e8cc309e1b",
+        "labels64.npy": "84a5b6cde000cc93144874d17687733377b6bfdf3dc7e71e5c9f8852d49b1320"
+      },
+      "elapsed_seconds": 6.580273310653865
+    },
+    {
+      "source_range": [
+        53125,
+        56250
+      ],
+      "destination_range": [
+        52485,
+        55610
+      ],
+      "tensor_sha256": {
+        "rgb.npy": "10cedb752c33efb86a9264dc2dd08d97352c4d314d8e9d0aff32d81256aa34ba",
+        "labels64.npy": "4497148fae50da032a1d6d509880bed24917ad59b2ec017f8bc4bae44e746fad"
+      },
+      "elapsed_seconds": 6.626618170179427
+    },
+    {
+      "source_range": [
+        56250,
+        59375
+      ],
+      "destination_range": [
+        55610,
+        58735
+      ],
+      "tensor_sha256": {
+        "rgb.npy": "a45bfa956e4c3701ed4a4175d601f85ce67d49f6f42ea7ac77fde2bf7e9ae62b",
+        "labels64.npy": "8f6dfbf541ca1d09b300d4370fad829ca4584057dd2721ecb0503a53abafea1a"
+      },
+      "elapsed_seconds": 6.640383808873594
+    },
+    {
+      "source_range": [
+        59375,
+        62500
+      ],
+      "destination_range": [
+        58735,
+        61860
+      ],
+      "tensor_sha256": {
+        "rgb.npy": "9fc51daf9b015f7651c302d7d67a178e13b70d2c3801acc81c1e2ec3a8f489c1",
+        "labels64.npy": "3fc6760c8188d8eba449d4cdd1180851c292031a71c1576a99137a8b607e0437"
+      },
+      "elapsed_seconds": 6.61957798153162
+    },
+    {
+      "source_range": [
+        62500,
+        65625
+      ],
+      "destination_range": [
+        61860,
+        64985
+      ],
+      "tensor_sha256": {
+        "rgb.npy": "8943a628cb35c6f3f1b90da334063d98adebd351a9432c84513a4c69143c7baa",
+        "labels64.npy": "058c6e42e668046675b80e89cb8a1c6de550b3b591452d90738cd3292b3d5a10"
+      },
+      "elapsed_seconds": 6.593637369573116
+    },
+    {
+      "source_range": [
+        65625,
+        68750
+      ],
+      "destination_range": [
+        64985,
+        68110
+      ],
+      "tensor_sha256": {
+        "rgb.npy": "0e4b95672ee5df93ed2b5f22fee99ca6c39f2f6dcbe95960a1e8749ac112e783",
+        "labels64.npy": "f395ae208b2d6a8ab5ef27ab1aa88094f548278e5bb98d52f6e4597ce8bec1b9"
+      },
+      "elapsed_seconds": 6.614920126274228
+    },
+    {
+      "source_range": [
+        68750,
+        70640
+      ],
+      "destination_range": [
+        68110,
+        70000
+      ],
+      "tensor_sha256": {
+        "rgb.npy": "be389d011679fd2ee87cb22c8e398508ab0ba42df27911eb6da1d8135349d369",
+        "labels64.npy": "f685dc0a1ab466484017e323c630ad91c8c574b64f025a7a18eb57f1b4d4107a"
+      },
+      "elapsed_seconds": 4.374537249095738
+    }
+  ],
+  "file_sha256": {
+    "rgb.npy": "22e220f937a4d92b8504df592ae7e956ad792b6874a2bbaa64c2d3030fbcc492",
+    "labels64.npy": "45ba9cd82c2f7483947c3987eae619d2272db3d354286f5bbdbafae74c758715"
+  },
+  "source_evaluation_masks_read": false,
+  "RGB_and_modal_patch_labels_verified_before_each_block_commit": true,
+  "logical_dataset_changed": false,
+  "optimizer_updates": 0,
+  "GPU_used": false
+}

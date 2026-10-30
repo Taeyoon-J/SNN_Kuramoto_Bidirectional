@@ -1,0 +1,81 @@
+{
+  "dataset": "clevrtex_original",
+  "source": {
+    "path": "/work/USERS/kevinswk/datasets/clevrtex_original/data/clevrtex_full",
+    "selected_RGB_masks_ordered_sha256": "991b019b87657bc4e2dabf1746f7883e012f0467a35fa8124a5685d2fb37a01a"
+  },
+  "official_loader": {
+    "url": "https://raw.githubusercontent.com/karazijal/clevrtex/master/ool/clevrtex_eval.py",
+    "sha256": "d915af96e8c78d0e07ff95bfe5e1a7e785043a4e517c2621d33dc577b91f1335"
+  },
+  "official_split_ranges": {
+    "train": [
+      10000,
+      50000
+    ],
+    "validation": [
+      5000,
+      10000
+    ],
+    "test": [
+      0,
+      5000
+    ]
+  },
+  "train_selection": "sorted RandomState25535000 choose35000 without replacement from official40000 TRAIN",
+  "validation_source_range": [
+    5000,
+    6000
+  ],
+  "test_source_range": [
+    0,
+    1000
+  ],
+  "holdout_subset_count": 1000,
+  "raw_pixel_shape": [
+    240,
+    320
+  ],
+  "pixel_evaluation_shape": [
+    128,
+    128
+  ],
+  "training_target_grid": 64,
+  "preprocessing": "pinned official default center192 crop; RGBA/RGB bilinear128; mask nearest128; modal64 TRAIN targets",
+  "truth_note": "standardized official128 mask, explicitly not full uncropped240x320 pixel evaluation",
+  "actual_official_getitem_oracle_checks": 7,
+  "variant": "Original full, not CAMO/OOD/PBG/VBG",
+  "status": "complete_verified_TRAIN35000",
+  "count": 37000,
+  "unique_train": 35000,
+  "ids_sha256": "9efeadc7250c5fae529c9e99469bcceec5c96ed1b299f0be8b5541823f0f9a31",
+  "files": {
+    "pixels.npy": {
+      "size": 606208128,
+      "sha256": "84d5069ed9e267312988cc84b239d1f2f4fe5a60e64ce6531f8cbde95635bd5b"
+    },
+    "rgb128.npy": {
+      "size": 1818624128,
+      "sha256": "347910a5d45ae924a7873194e3045cccee476187ddbd9833b8ce7f0f4ed67d7c"
+    },
+    "labels64.npy": {
+      "size": 151552128,
+      "sha256": "5899f1bb502eeeb72ebc69a1956b12509b87f7064b8d306a48c78364fabd6784"
+    }
+  },
+  "benchmark_unchanged": {
+    "benchmark.md": "2fc30bb2a0ead8bed489f5e3d806f3ad9aa90e889c9ba675656ce227d7b05eaa",
+    "benchmark/bench_encoder.py": "9deb6ab9814716c319f739540bf5a13ff2b9adaaef6b78fb07ab1f61d4d177a9",
+    "benchmark/build_gamma_grid.py": "902e4b8f465c263de283925b0593cdc6eaaa843c0f9fa56cc994d51e52b73bd0",
+    "benchmark/build_mod_targets.py": "9867b97cf3fb7da4bd6b20b21cf971bbaa2afd7654ac2ba5e87517e84fe61fe8",
+    "benchmark/ceil.py": "cb074d422c564573f0a0c566a4c6517e2d717484cb8182ee760c1c7a88514100",
+    "benchmark/evaluation.py": "fb07fcb930b5f50edad5c1ce7f50d39852688fdd6cc9799b0d775ed3671d440a",
+    "benchmark/make128.py": "de3e5f4c27ca20872334831a180d5a7aef644360312009235164d3f15fe0fa1a",
+    "benchmark/make_targets_grid.py": "7e9578abb174227f5b0aca7b6f307564ebd4d536da3a506e6bcec27d085a8e5d",
+    "benchmark/pixbench.py": "506e04964c45dc6c126049b5e22d356e65ca062f77b74a851fbb3ecb94151041",
+    "benchmark/preflight.py": "08484863daabec2dd8d61eb8490c9c8705f7d05060bea1160ce0dcb9d0cdecdd",
+    "benchmark/README.md": "e8d69831e898d721bc80f0d95d7f58ace8ee19bd658ae06fbb74724f3f67e9ed"
+  },
+  "phase2_training_started": false,
+  "seconds": 463.41616106033325
+}
