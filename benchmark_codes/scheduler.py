@@ -6,7 +6,7 @@ from mod_benchmark import common as c
 from full_benchmark.engine import scientific_sources
 
 def conditions():
-    request=json.loads((HERE/'snapshot/controller/REQUEST.json').read_text())
+    request=json.loads((HERE/'configs/active_request.json').read_text())
     return sorted(request['conditions'],key=lambda x:x['priority'])
 def location(root,job,admission):
     return root/('engine_admission' if admission else 'jobs')/f"model{job['model']}"/job['dataset']/f"seed{job['seed']}"
@@ -31,7 +31,7 @@ def completed(root,job,admission):
 def rows_for(root):
     rows=[];live=[]
     for condition in conditions():
-        for seed in (0,1,2):
+        for seed in condition['seeds']:
             row=dict(model=condition['model'],dataset=condition['dataset'],seed=seed,phase=condition['phase'],priority=condition['priority'])
             for admission,key in ((True,'admission'),(False,'training')):
                 out=location(root,row,admission)
@@ -44,7 +44,7 @@ def rows_for(root):
             rows.append(row)
     return rows,live
 def audit_all(root):
-    from snapshot.controller.audit_matrix import write_reports
+    from single_seed_reports import write_reports
     rows,_=rows_for(root);audited=write_reports(root,rows)
     return dict(audited_conditions=audited,required_conditions=20,complete=audited==20)
 def run_queue(config,root,gpus):

@@ -1,3 +1,5 @@
+> Active protocol: 3500 unique TRAIN x10 epochs, seed0 only. Previously started seed1/2 checkpoints remain preserved and inactive. `configs/active_request.json` overrides the historical `snapshot/controller/REQUEST.json`.
+
 # SW0255: current four-model benchmark, standalone reproduction
 
 현재 실행 중인 실험을 **이 폴더만으로** 실행하기 위한 코드 묶음입니다.
@@ -10,10 +12,10 @@ Linux/WSL2, Python 환경, CUDA GPU와 실제 데이터 파일은 필요합니�
 
 - 각 데이터셋의 **고유 TRAIN3,500장 ×10epochs =35,000 image exposures/seed**.
   이전35,000 unique ×10 계획은 사용자가 명시적으로 축소 승인했습니다.
-- 네 모델 모두 **무작위 초기화**, seed0/1/2. 학습된240 checkpoint를 불러오지 않습니다.
+- All four models start from random initialization. **Current queue: seed0 only.**
 - effective batch16, physical microbatch1, epoch 마지막12장도 학습합니다.
   epoch당219updates, seed당2,190updates입니다.
-- 총4모델×5데이터셋×3seeds=60개 본 학습입니다.
+- **4models x5datasets x1seed =20 scientific training jobs.**
 - 먼저 CLEVR/Multi-dSprites/Tetrominoes의12조건을 완료한 뒤,
   Objects Room/CLEVRTex의8조건을 실행합니다. 각 단계에서 모델252→253→254→240 순입니다.
 - 설정·loss는 과거240 checkpoint의 frozen-core 추가학습과 **다릅니다**.
@@ -47,7 +49,7 @@ CUDA_VISIBLE_DEVICES=0 python -B run.py --config configs/frontier.json --output 
 # 본 학습: 고유3500×10, 그 뒤 고정 평가 전체
 CUDA_VISIBLE_DEVICES=0 python -B run.py --config configs/frontier.json --output /work/USERS/$USER/sw0255_reproduce train --model 252 --dataset clevr --seed 0
 
-# 전체60개 큐: 자기 프로세스만 추적, 타 사용자 작업은 종료하지 않습니다.
+# Queue all20 seed0 jobs; preserve prior seed1/2 checkpoints.
 python -u -B run.py --config configs/frontier.json --output /work/USERS/$USER/sw0255_reproduce queue --gpus 0,1,2,3
 ```
 
@@ -85,7 +87,7 @@ python -u -B run.py --config configs/local.json --output /scratch/sw0255_run que
 실제3500 subset 검사를 연결합니다. 모델·loss·평가 공식을 바꾸지 않습니다.
 `vendor/`의 역사적 보조 CLI를 직접 실행하지 말고 위 `run.py`를 사용하세요.
 
-완료 후 결과는 `reports/model{번호}_{dataset}.json`에 seed별/평균/표준편차로 저장합니다.
+Each completed condition is independently audited in `reports/single_seed/model{number}_{dataset}.json`; no multi-seed mean is claimed.
 ```bash
 python -B run.py --config configs/local.json --output /scratch/sw0255_run audit
 CUDA_VISIBLE_DEVICES=0 python -B run.py --config configs/local.json --output /scratch/sw0255_eval evaluate --model 252 --dataset clevr --seed 0 --checkpoint /scratch/sw0255_run/jobs/model252/clevr/seed0/resume.pt

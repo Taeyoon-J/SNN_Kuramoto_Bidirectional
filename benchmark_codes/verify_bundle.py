@@ -17,6 +17,11 @@ def verify():
         split=json.loads((HERE/'contracts'/f'{dataset}_split.json').read_text())
         train=set(split['train_ids']);validation=set(split['validation_ids']);test=set(split['evaluation_ids'])
         assert len(train)==3500 and not (train&validation or train&test or validation&test)
+    request=json.loads((HERE/'configs/active_request.json').read_text(encoding='utf-8'))
+    conditions=request['conditions']
+    assert len(conditions)==20 and len({(x['model'],x['dataset']) for x in conditions})==20
+    assert all(x['seeds']==[0] and x['epochs']==10 and x['unique_train_images']==3500 for x in conditions)
+    assert sum(x['phase']==1 for x in conditions)==12
     files=list(HERE.rglob('*.py'))
     for path in files:compile(path.read_bytes(),str(path),'exec')
     assets=json.loads((HERE/'contracts/assets.json').read_text(encoding='utf-8-sig'))

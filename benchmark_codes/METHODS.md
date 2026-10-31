@@ -93,8 +93,9 @@ For252/254 all predicted region IDs are positive, including whatever region
 captures GT background. Therefore raw Foreground IoU has this specific semantic
 limitation; no post-hoc largest-region deletion is applied to improve that metric.
 
-Each condition report contains all three seeds, arithmetic mean and population
-standard deviation. The independent audit recomputes metrics from frozen masks
+The active queue runs seed0 only for each of the20 conditions. Reports identify
+this as a single-seed result; no multi-seed mean or standard deviation is claimed.
+Previously started seed1/2 checkpoints are retained in place but not queued. The independent audit recomputes metrics from frozen masks
 and verifies all epoch image orders, all35000exposures,2190optimizer steps,
 checkpoint identities and saved prediction hashes.
 
