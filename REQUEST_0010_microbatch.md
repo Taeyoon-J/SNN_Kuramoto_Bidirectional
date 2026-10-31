@@ -1,10 +1,80 @@
 # REQUEST_0010 — raising the physical microbatch, and what we checked before asking
 
-**From:** `patch_v2`, 2026-10-31
-**About:** `vendor/full_benchmark/engine.py`, `microbatch=1`
+> ## WITHDRAWN AND REPLACED, 2026-10-31
+>
+> **Do not raise the microbatch. We measured it and the proposal below is wrong.**
+>
+> Gradients from 4×4 differ from 16×1 by **4.06e-02** in global relative norm, with
+> `wrapped.core.gamma_phase_gain` off by **2.07** — while two *identical* fp32 runs differ by
+> **2.09e-08** and agree on the loss to **0.000e+00**. So the difference is not float noise;
+> it is batch coupling, 10⁶ times the run-to-run control. Normalising by `/4` instead of
+> `/16` does not recover it either.
+>
+> **Why the reasoning below failed.** The two checks it rests on are both correct — the
+> forward draws no randomness, and 253's loss path has no per-sample indexing — but they are
+> not sufficient. The loss itself is not separable across the batch. `plv_group_balance_loss`
+> computes `(density − target).pow(2)` and reduces across the batch, and that is one of
+> several terms where a batched reduction is not the sum of per-image reductions. **We read
+> the function names and not the reductions inside them.**
+>
+> Measured forward losses, 8 images, 253 at grid 32: micro 1 gives 66.74195766, micro 4 gives
+> 66.73821640, micro 8 gives 66.74630737.
+>
+> **A replacement proposal follows that does hold, with a stronger check behind it.**
 
-Not a change we have made. This is a proposal with the measurements behind it, because the
-code is yours and twenty conditions are running on it right now.
+---
+
+## REPLACEMENT — fuse the four coupling bmms into two
+
+`kuramoto_layer.py:122-126` reads each `[B,H,H]` matrix **twice** per step:
+
+```python
+interaction = ( cos_theta * bmm(lag_cos, sin_theta)
+              - sin_theta * bmm(lag_cos, cos_theta)
+              - cos_theta * bmm(lag_sin, cos_theta)
+              - sin_theta * bmm(lag_sin, sin_theta) )
+```
+
+Concatenating the right-hand sides reads each matrix **once**:
+
+```python
+sc = torch.cat([sin_theta, cos_theta], dim=-1)      # [B,H,2D]
+Lc = torch.bmm(lag_cos, sc)
+Ls = torch.bmm(lag_sin, sc)
+interaction = ( cos_theta * Lc[..., :D] - sin_theta * Lc[..., D:]
+              - cos_theta * Ls[..., D:] - sin_theta * Ls[..., :D] )
+```
+
+Matrix-times-matrix is column-wise independent, so this is the same arithmetic. We checked
+that it is also the same *bits*:
+
+| H | agreement | original | fused | speedup | matrix traffic |
+| ---: | --- | ---: | ---: | ---: | --- |
+| 1024 (grid 32) | `torch.equal` **True** | 0.673 ms | 0.562 ms | 1.20× | 0.02 → 0.01 GB |
+| **4096 (grid 64)** | `torch.equal` **True** | 1.286 ms | 0.666 ms | **1.93×** | 0.27 → 0.13 GB |
+
+`torch.equal`, not a tolerance. The gain is larger at grid 64, which is where it is needed.
+
+A 1,024-step rollout does this once per step, so the speedup carries directly. On ~1,980
+GPU-hours for the twenty conditions that is roughly **half**.
+
+### Why this is safe where the microbatch was not
+
+The microbatch changed *which images share a loss reduction*. This changes neither the
+images nor the reduction — only how many times a matrix is fetched from memory to compute
+the same products.
+
+### Where the remaining time goes, measured
+
+After fusing, the op reaches **81%** of what a pure read of the same bytes achieves on the
+same card (160.7 GB/s against 199.3 GB/s), so there is about **1.24×** left to a perfect
+kernel and no more. The 199 GB/s itself is only 30% of a TITAN RTX's 672 GB/s rated figure,
+because a single `[4096,4096]` matrix against 8 columns does not expose enough parallelism —
+that is a property of the shape, not of the kernel.
+
+---
+
+*The original proposal follows unchanged, for the record.*
 
 ## The measurement
 
