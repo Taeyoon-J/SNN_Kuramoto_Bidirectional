@@ -62,12 +62,12 @@ def run_queue(config,root,gpus):
         used={int(a):int(b) for a,b in (line.split(',') for line in usage.stdout.splitlines()) if a.strip().isdigit() and b.strip().isdigit()}
         def budget(model):return 3000 if model==253 else 11000
         for worker in live:free[worker['gpu']]=max(0,free[worker['gpu']]-max(0,budget(worker['model'])-used.get(worker['pid'],0)))
-        while len(live)<8:
+        while len(live)<12:
             chosen=None
             eligible=[r for r in rows if r['phase']==phase]
             reserve=any(r['admission']!='complete' for r in eligible) and not any(r['admission'] for r in live)
             for gpu in sorted(free,key=free.get,reverse=True):
-                if sum(w['gpu']==gpu for w in live)>=2:continue
+                if sum(w['gpu']==gpu for w in live)>=3:continue
                 modes=(True,False) if reserve else (False,True)
                 for admission in modes:
                     chosen=next((r for r in eligible if r['admission' if admission else 'training']=='queued' and (admission or r['admission']=='complete') and free[gpu]>budget(r['model'])),None)

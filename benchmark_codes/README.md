@@ -111,3 +111,11 @@ CUDA_VISIBLE_DEVICES=0 python -B run.py --config configs/local.json --output /sc
 이 마지막 검사는 **CUDA smoke**이며 모델의 최종 benchmark 성능이 아닙니다.
 같은 환경·동일 설정이어도 원래 CUDA backward의 atomic 연산 반올림 때문에
 서로 다른 실행의 전체 학습이 bitwise 동일하다고 주장하지 않습니다.
+
+## GPU queue capacity
+
+The queue permits up to3 owned workers per GPU and12 across four GPUs.
+Every active native64 worker retains an11000MiB reservation and native32 an3000MiB
+reservation, including not-yet-allocated headroom. Memory fitting remains required.
+This lets a queued native64 job share a GPU running two smaller native32 jobs;
+other users and running training processes are never stopped for this admission.
