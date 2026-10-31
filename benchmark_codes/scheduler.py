@@ -60,7 +60,7 @@ def run_queue(config,root,gpus):
         free={int(a):int(b) for a,b in (line.split(',') for line in query.stdout.splitlines()) if int(a) in gpus}
         usage=subprocess.run(['nvidia-smi','--query-compute-apps=pid,used_gpu_memory','--format=csv,noheader,nounits'],capture_output=True,text=True,check=True)
         used={int(a):int(b) for a,b in (line.split(',') for line in usage.stdout.splitlines()) if a.strip().isdigit() and b.strip().isdigit()}
-        def budget(model):return 3000 if model==253 else 11000
+        def budget(model):return 11000
         for worker in live:free[worker['gpu']]=max(0,free[worker['gpu']]-max(0,budget(worker['model'])-used.get(worker['pid'],0)))
         while len(live)<12:
             chosen=None

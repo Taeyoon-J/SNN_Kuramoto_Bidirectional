@@ -20,7 +20,14 @@ Do not load them into this scratch protocol and still call it scratch training.
 
 Current checkpoint pattern:
 
-`/work/USERS/kevinswk/experiments/SW0255_full3500/jobs/model{252,253,254,240}/{dataset}/seed{0,1,2}/{initial,resume}.pt`
+`/work/USERS/kevinswk/experiments/SW0255_full3500/jobs/model{252,254,240}/{dataset}/seed0/{initial,resume}.pt`
+
+Current253 native64 checkpoints use the isolated root:
+`/work/USERS/kevinswk/experiments/SW0255_full3500/native64_253/jobs/model253/{dataset}/seed0/{initial,resume}.pt`
+
+Previous253 native32 files remain under the original `jobs/model253` root.
+Do not load them into the new64-grid model. Re-evaluation requires the previous
+source commit in `results/README.md`. Code-fingerprint assertions remain enforced.
 
 Previous35k jobs were retired with their original files retained. Verification
 records are in `snapshot/previous35000_retirement.json`. They are not silently

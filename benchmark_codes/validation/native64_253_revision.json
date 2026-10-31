@@ -1,0 +1,187 @@
+{
+  "status": "actual_native64_253_CUDA_admission_passed",
+  "only_numerical_model_change": "native grid32 to64 with inherited proportional top-k128 to512 and spacing16/grid",
+  "encoder_parameters": 224,
+  "model_grid": 64,
+  "patches": 4096,
+  "graph_top_k": 512,
+  "training_masks_used": false,
+  "optimizer_updates": 2,
+  "image_exposures": 4,
+  "evaluation_images": 1,
+  "optimizer_restore_verified": true,
+  "all_active_tensor_gradients_nonzero_and_finite": true,
+  "all_active_groups_changed": true,
+  "other_three_initial_states": {
+    "status": "native64_constructor_and_unchanged_other_three_initial_states_verified",
+    "only_model_grid_changed": true,
+    "new_model_SHA": "e63492c7b68abb4638326fa4e21b065ef7b67e59bec0e56fe502f619e0bac325",
+    "old_model_SHA": "02ed59a650dfa3564cb1a1758d013a6fc0bfd3bad3b83f08eb4e3635dd71d3eb",
+    "before": [
+      {
+        "model": 252,
+        "grid": 64,
+        "hash": "0299cc9c45050a02622d8e3dbf873efa59d78a823d91d5b10d467df731a25094",
+        "head": true,
+        "groups": [
+          "encoder",
+          "graph",
+          "kuramoto",
+          "dendrite",
+          "membrane",
+          "sensory_projection",
+          "integration",
+          "mask_head"
+        ]
+      },
+      {
+        "model": 254,
+        "grid": 64,
+        "hash": "0299cc9c45050a02622d8e3dbf873efa59d78a823d91d5b10d467df731a25094",
+        "head": true,
+        "groups": [
+          "encoder",
+          "graph",
+          "kuramoto",
+          "dendrite",
+          "membrane",
+          "sensory_projection",
+          "integration",
+          "mask_head"
+        ]
+      },
+      {
+        "model": 240,
+        "grid": 64,
+        "hash": "d16098b7d0800dd2de0629df7e54504eb3cb380c1c624e736373344213bce0aa",
+        "head": false,
+        "groups": [
+          "encoder",
+          "graph",
+          "kuramoto",
+          "dendrite",
+          "membrane",
+          "sensory_projection",
+          "integration"
+        ]
+      },
+      {
+        "model": 253,
+        "grid": 32,
+        "hash": "67164873cdb5d52e52e50f6857d4dbf8b2396f2fd58b1ecd3e3fdadfdbd826f2",
+        "head": false,
+        "groups": [
+          "encoder",
+          "graph",
+          "kuramoto",
+          "dendrite",
+          "membrane",
+          "sensory_projection",
+          "integration"
+        ]
+      }
+    ],
+    "after": [
+      {
+        "model": 252,
+        "grid": 64,
+        "hash": "0299cc9c45050a02622d8e3dbf873efa59d78a823d91d5b10d467df731a25094",
+        "head": true,
+        "groups": [
+          "encoder",
+          "graph",
+          "kuramoto",
+          "dendrite",
+          "membrane",
+          "sensory_projection",
+          "integration",
+          "mask_head"
+        ]
+      },
+      {
+        "model": 254,
+        "grid": 64,
+        "hash": "0299cc9c45050a02622d8e3dbf873efa59d78a823d91d5b10d467df731a25094",
+        "head": true,
+        "groups": [
+          "encoder",
+          "graph",
+          "kuramoto",
+          "dendrite",
+          "membrane",
+          "sensory_projection",
+          "integration",
+          "mask_head"
+        ]
+      },
+      {
+        "model": 240,
+        "grid": 64,
+        "hash": "d16098b7d0800dd2de0629df7e54504eb3cb380c1c624e736373344213bce0aa",
+        "head": false,
+        "groups": [
+          "encoder",
+          "graph",
+          "kuramoto",
+          "dendrite",
+          "membrane",
+          "sensory_projection",
+          "integration"
+        ]
+      },
+      {
+        "model": 253,
+        "grid": 64,
+        "hash": "9b22110dbbabe2f4246ca1c3ea511cdc7d88773162c7cf6a6f9323218bfa9f83",
+        "head": false,
+        "groups": [
+          "encoder",
+          "graph",
+          "kuramoto",
+          "dendrite",
+          "membrane",
+          "sensory_projection",
+          "integration"
+        ]
+      }
+    ],
+    "all_five_dataset_contracts_unchanged": true,
+    "training_masks_allowed_for253": false
+  },
+  "peak_GPU_bytes": 6279158272,
+  "active_tensor_gradient_coverage": {
+    "wrapped.a_d": 1.3656206279993057,
+    "wrapped.a_m": 0.9007818326354027,
+    "wrapped.b": 25.32600688934326,
+    "wrapped.core.gamma_phase_gain": 63.194539070129395,
+    "wrapped.core.gamma_channel_proj.weight": 23780.882843017578,
+    "wrapped.core.graph_generator.log_temperature": 239.04057240486145,
+    "wrapped.core.graph_generator.log_coupling_gain": 331.0709800720215,
+    "wrapped.core.graph_generator.spatial_rate": 36.06124225258827,
+    "wrapped.core.graph_generator.projection.weight": 10390.54853439331,
+    "wrapped.core.kuramoto.freq_gain": 176.59173393249512,
+    "wrapped.core.kuramoto.omega": 639.3511009216309,
+    "wrapped.core.kuramoto.kappa": 396.79627752304077,
+    "wrapped.core.kuramoto.direction_learner": 1.7775819711387157,
+    "wrapped.core.dendric_layer.tau_n": 9.18483567237854,
+    "wrapped.core.dendric_layer.oscillator_dense.weight": 738.8436732292175,
+    "wrapped.core.dendric_layer.oscillator_dense.bias": 1678.8492279052734,
+    "wrapped.core.membrane_layer.tau_m": 1.024643164128065,
+    "encoder.kernels": 132878.53637695312,
+    "encoder.bias": 15674.977478027344
+  },
+  "diagnostic_only_not_a_benchmark_score": true,
+  "source_files": {
+    "model.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_full3500/code/engine_3500_native64_253_v1/full_benchmark/model.py",
+      "sha256": "e63492c7b68abb4638326fa4e21b065ef7b67e59bec0e56fe502f619e0bac325",
+      "size": 6269
+    },
+    "data.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_full3500/code/engine_3500_native64_253_v1/full_benchmark/data.py",
+      "sha256": "9afa1837232588c17e3ec01d649dbdf1c5caa93520072cc4c1838764212cc7a7",
+      "size": 4265
+    }
+  },
+  "server_isolated_root": "/work/USERS/kevinswk/experiments/SW0255_full3500/native64_253"
+}

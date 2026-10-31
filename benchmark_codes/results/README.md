@@ -1,5 +1,16 @@
 # SW0255 actual scientific results
 
+## Revision2026-10-31: historical32-grid result
+
+The completed253 row below belongs to the previous native32 condition. Current253
+is native64, retaining its224-parameter encoder and unsupervised losses, with
+top-k512. Its final benchmark score is pending. The separate CUDA admission
+receipt is a correctness diagnostic, not a benchmark score. Old32 weights remain
+preserved. To re-evaluate this old checkpoint, use a separate checkout of commit
+`5f77240c74d25b4e02160bead43d257893893b0b` and run the command below from that
+checkout. Do not load it with the current64-grid code.
+
+
 기록일:2026-10-30. **완료된 단일 seed 결과이며 세 seed 평균이 아닙니다.**
 현재 예산은 고유 TRAIN3,500장×10epochs=35,000exposures/seed입니다.
 다른 결과가 아직 없는 것은 미완료/미검증 상태이며0점이라는 뜻이 아닙니다.

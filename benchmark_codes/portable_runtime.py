@@ -52,7 +52,7 @@ def configure(config_file):
 def connect_inputs(config,output):
     output=Path(output).resolve();source=Path(config['prepared_inputs']).resolve()
     forbidden=Path('/work/USERS/kevinswk/experiments/SW0255_full3500')
-    if output==forbidden:raise ValueError('Use a NEW output directory; do not write into the live server experiment.')
+    if output==forbidden or output.is_relative_to(forbidden):raise ValueError('Use a NEW output directory; do not write into the live server experiment.')
     output.mkdir(parents=True,exist_ok=True)
     inputs=output/'inputs'
     if inputs.exists():assert inputs.resolve()==source,'output already bound to other input data'

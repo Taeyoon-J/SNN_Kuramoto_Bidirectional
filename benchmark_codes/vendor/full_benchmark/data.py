@@ -26,7 +26,7 @@ class Dataset:
             assert c.sha(self.folder/'ids.npz')==manifest['ids_sha256']
             self.binding=dict(dataset=dataset,manifest_sha256=c.sha(self.folder/'manifest.json'),source=manifest['source'],
                 train_ids=self.train.tolist(),validation_ids=self.validation.tolist(),evaluation_ids=self.test.tolist(),
-                scoring='original pixels; Tet model64 modal32 then protected lift to35; model253 native32 lift')
+                scoring='original pixels; Tet model64 modal32 then protected lift to35; native32 predictions use protected lift')
             if dataset in ('objects_room','clevrtex_original'):
                 with np.load(self.folder/'ids.npz',allow_pickle=False) as ids:self.source_ids=ids['source_ids'].copy()
                 self.binding.update(preprocessing=manifest['preprocessing'],evaluation_source_ids=self.source_ids[self.test].tolist(),

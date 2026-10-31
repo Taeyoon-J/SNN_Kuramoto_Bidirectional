@@ -5,7 +5,7 @@ Model numbers identify a model family here, not an identical training history.
 | Item | Historical SW0253 / SW0165 transfer | Current SW0255 variant253 |
 |---|---|---|
 | Initial state | Trained SW0097 source core and trained reconstruction encoder | Random initialization |
-| Grid | Trained16-grid core mapped to native32 | Fresh native32 |
+| Grid | Trained16-grid core mapped to native32 | Fresh native64 (previous scratch condition:32) |
 | Target-dataset training | None in the frozen transfer evaluation | 3500 unique TRAIN images x10 epochs |
 | Encoder/core updates in this experiment | Both frozen for transfer | Encoder, graph and active core/gates trained |
 | Training masks | None | None; runtime audit confirms TRAIN labels never opened |
@@ -44,7 +44,7 @@ ratios alone cannot establish the cause of the score gap.
 
 ## What the completed scratch result proves
 
-Current253/CLEVR/seed0, fixed320 original-pixel evaluation:
+Previous native32 scratch253/CLEVR/seed0, fixed320 original-pixel evaluation:
 FG-ARI0.428118 /Foreground IoU0.277787 /matched-object IoU0.240651.
 The same fresh predictions scored on the historical fixed64 patch contract give
 0.457315 /0.273522 /0.248168. Neither row is the historical frozen model's score.
@@ -61,3 +61,12 @@ at epoch10. That is evidence against assuming monotonic improvement, not a causa
 control for the current scratch run. Additional data diversity and repeated
 passes must be distinguished; validation segmentation quality must be measured
 before claiming either explanation or recovery.
+
+## Native64 revision2026-10-31
+
+Current253 uses4096 patches and top-k512 with spacing16/64. It keeps the same
+224-parameter base encoder and unsupervised objectives. It starts fresh in a
+separate output root; previous native32 checkpoints/results are preserved.
+No64-grid benchmark score is inferred from the32-grid row. Actual CUDA
+forward/backward, active parameter updates and optimizer restoration passed;
+see `../validation/native64_253_revision.json`.

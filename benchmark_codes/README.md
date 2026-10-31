@@ -24,12 +24,12 @@ Linux/WSL2, Python 환경, CUDA GPU와 실제 데이터 파일은 필요합니�
 | 모델 | native patch grid | 학습 mask 사용 | 최종 mask loss의 body gradient | 추론 배경 규칙 |
 |---|---:|---|---|---|
 |252|64×64|frequency teacher + CE/Dice head|head feature에서 detach|전용 배경 지정·삭제 없음|
-|253 (165계열)|32×32|사용하지 않음|mask head 없음|기존 largest-component 배경 규칙|
+|253 (165계열)|64×64|사용하지 않음|mask head 없음|기존 largest-component 배경 규칙|
 |254|64×64|frequency teacher + CE/Dice head|encoder까지 연결|전용 배경 지정·삭제 없음|
 |240|64×64|mask 기반 frequency teacher|최종 mask head 없음|기존 largest-component 배경 규칙|
 
-253은 현재 실험의 실제32×32 구조입니다. 모든 모델이64×64라는 뜻이 아닙니다.
-Multi-dSprites에서 이 차이가 성능에 영향을 줄 수 있습니다.
+253 now uses64x64 (4096 patches), retaining its224-parameter base encoder and unsupervised losses.
+Graph top-k512 preserves the prior128/1024 neighbor fraction; spacing is16/64. Previous32-grid checkpoints/results are preserved separately.
 
 ## 빠른 실행: Frontier에 데이터가 이미 있을 때
 
@@ -98,6 +98,10 @@ CUDA_VISIBLE_DEVICES=0 python -B run.py --config configs/local.json --output /sc
 
 ## 포함된 실제 검증 기록
 
+Current standalone validation is recorded in `validation/native64_isolated_review.json`: all12 initial states, all5 dataset splits/protected preflights and metric comparisons passed with imports confined to this bundle.
+
+The following isolated review is historical: its253 condition used32x32. Current native64 proof is `validation/native64_253_revision.json`. It records actual CUDA2updates/4images/1evaluation, all active tensor gradients and parameter updates, optimizer restoration, and unchanged initial states of the other three models. These are correctness diagnostics, not benchmark scores.
+
 `validation/isolated_review.json`은 다른 프로젝트 소스를 import하지 않는 별도
 서버 디렉터리에서 수행한 검증입니다.
 
@@ -115,9 +119,6 @@ CUDA_VISIBLE_DEVICES=0 python -B run.py --config configs/local.json --output /sc
 ## GPU queue capacity
 
 The queue permits up to3 owned workers per GPU and12 across four GPUs.
-Every active native64 worker retains an11000MiB reservation and native32 an3000MiB
-reservation, including not-yet-allocated headroom. Memory fitting remains required.
-This lets a queued native64 job share a GPU running two smaller native32 jobs;
-other users and running training processes are never stopped for this admission.
+All active workers are now native64 and reserve11000MiB, including not-yet-allocated headroom. Memory fitting remains required. Other users and unrelated running training processes are never stopped for admission.
 
 Historical checkpoints and current scratch variants have different training histories. See [the provenance and budget comparison](results/HISTORICAL_VS_SCRATCH.md), including the distinction between encoder phase/spike gradients and final supervised-mask gradients.

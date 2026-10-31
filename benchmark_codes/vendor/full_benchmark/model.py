@@ -22,7 +22,7 @@ class FreshModel(nn.Module):
     def __init__(self,variant,seed,*,normalization=None):
         super().__init__()
         if variant not in (240,252,253,254):raise ValueError('unknown model')
-        self.variant=int(variant);self.seed=int(seed);self.grid=32 if variant==253 else 64
+        self.variant=int(variant);self.seed=int(seed);self.grid=64
         # No torch.load, source encoder, learned source state or checkpoint reset.
         with torch.random.fork_rng(devices=[]):
             torch.manual_seed(255000+seed)

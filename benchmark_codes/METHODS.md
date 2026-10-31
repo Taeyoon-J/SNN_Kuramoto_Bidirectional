@@ -12,7 +12,9 @@ Features are normalized, clipped to[-3,3] and pooled into patch γ.
 
 Each patch has4 oscillator components. The learned image-conditioned graph uses
 fixed8 squared-geodesic distance, spatial spacing16/grid, three geodesic stages,
-and top-k512 at64-grid or128 at32-grid. The Kuramoto/sinusoidal/dendritic/membrane
+and top-k512 at64-grid for all four active variants. Variant253 keeps its
+224-parameter base encoder. The previous32-grid condition used top-k128;
+both retain a12.5% neighborhood fraction. The Kuramoto/sinusoidal/dendritic/membrane
 and spike trace has1024forward steps; correlation/readout discards the first512.
 Training backpropagates through the last64 time steps, including live graph
 construction. It is **not1024-step full BPTT**. The factorized Kuramoto backend,
@@ -82,8 +84,9 @@ before GT is opened for scoring, using the unchanged protected
 |Objects Room|source36000–36999,1000images|original64pixels; in-distribution heldout, **not official OOD test**|
 |CLEVRTex Original|official TEST source0–999,1000image subset|official center192crop and nearest128pixel mask|
 
-Tetrominoes is35×35, not32×32. Native32 model253 predictions are lifted with the
-same protected cell boundaries. Multi-dSprites uses the corrected `multi_dsprites`
+Tetrominoes is35×35, not32×32. All current64-grid predictions use modal32
+then protected lifting as above. Historical native32 predictions use the same
+protected cell boundaries. Multi-dSprites uses the corrected `multi_dsprites`
 artifacts; the old malformed `mdsprites` variants are never substituted.
 
 FG-ARI uses only GT foreground pixels and excludes undefined one-object cases
