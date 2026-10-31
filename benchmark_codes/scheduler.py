@@ -4,6 +4,7 @@ from pathlib import Path
 from portable_runtime import HERE
 from mod_benchmark import common as c
 from full_benchmark.engine import scientific_sources
+from full_benchmark.microbatch import memory_budget_mib,select_microbatch
 
 def conditions():
     request=json.loads((HERE/'configs/active_request.json').read_text())
@@ -47,7 +48,8 @@ def audit_all(root):
     from single_seed_reports import write_reports
     rows,_=rows_for(root);audited=write_reports(root,rows)
     return dict(audited_conditions=audited,required_conditions=20,complete=audited==20)
-def run_queue(config,root,gpus):
+def run_queue(config,root,gpus,*,microbatch='auto'):
+    if str(microbatch) not in ('auto','1','2','4','8'):raise ValueError('invalid physical microbatch')
     root=Path(root);lock=(root/'coordinator.lock').open('a+')
     fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
     assert gpus and len(gpus)==len(set(gpus)) and all(g>=0 for g in gpus)
@@ -60,8 +62,11 @@ def run_queue(config,root,gpus):
         free={int(a):int(b) for a,b in (line.split(',') for line in query.stdout.splitlines()) if int(a) in gpus}
         usage=subprocess.run(['nvidia-smi','--query-compute-apps=pid,used_gpu_memory','--format=csv,noheader,nounits'],capture_output=True,text=True,check=True)
         used={int(a):int(b) for a,b in (line.split(',') for line in usage.stdout.splitlines()) if a.strip().isdigit() and b.strip().isdigit()}
-        def budget(model):return 11000
-        for worker in live:free[worker['gpu']]=max(0,free[worker['gpu']]-max(0,budget(worker['model'])-used.get(worker['pid'],0)))
+        # Larger physical batches need more headroom, not the old fixed11GB.
+        # These conservative bounds can reject large sizes on24GB cards; use
+        # the real profile to select a size rather than overcommitting a GPU.
+        budget=memory_budget_mib
+        for worker in live:free[worker['gpu']]=max(0,free[worker['gpu']]-max(0,budget(worker.get('microbatch',1))-used.get(worker['pid'],0)))
         while len(live)<12:
             chosen=None
             eligible=[r for r in rows if r['phase']==phase]
@@ -70,19 +75,21 @@ def run_queue(config,root,gpus):
                 if sum(w['gpu']==gpu for w in live)>=3:continue
                 modes=(True,False) if reserve else (False,True)
                 for admission in modes:
-                    chosen=next((r for r in eligible if r['admission' if admission else 'training']=='queued' and (admission or r['admission']=='complete') and free[gpu]>budget(r['model'])),None)
+                    size=select_microbatch(free[gpu],microbatch,admission=admission)
+                    chosen=next((r for r in eligible if r['admission' if admission else 'training']=='queued' and (admission or r['admission']=='complete') and size is not None),None)
                     if chosen is not None:break
                 if chosen is not None:break
             if chosen is None:break
             out=location(root,chosen,admission);out.mkdir(parents=True,exist_ok=True)
             command=[sys.executable,'-u','-B',str(HERE/'run.py'),'--config',str(Path(config).resolve()),'--output',str(root),'train','--dataset',chosen['dataset'],'--model',str(chosen['model']),'--seed',str(chosen['seed'])]
+            command+=['--microbatch',str(size)]
             if admission:command.append('--admission')
             env=dict(os.environ,CUDA_VISIBLE_DEVICES=str(gpu))
             with (out/'worker.stdout').open('xb') as stdout,(out/'worker.stderr').open('xb') as stderr:
                 proc=subprocess.Popen(command,env=env,cwd=HERE,stdin=subprocess.DEVNULL,stdout=stdout,stderr=stderr,start_new_session=True)
-            launch=dict(model=chosen['model'],dataset=chosen['dataset'],seed=chosen['seed'],admission=admission,pid=proc.pid,gpu=gpu,command=command,started=time.time())
+            launch=dict(model=chosen['model'],dataset=chosen['dataset'],seed=chosen['seed'],admission=admission,pid=proc.pid,gpu=gpu,command=command,started=time.time(),microbatch=size)
             c.write(out/'launch.json',launch);live.append(launch)
-            chosen['admission' if admission else 'training']='running';free[gpu]-=budget(chosen['model'])
+            chosen['admission' if admission else 'training']='running';free[gpu]-=budget(launch['microbatch'])
         c.write(root/'queue.json',dict(status='active',phase=phase,rows=rows,live=live,updated=time.time()))
         result=audit_all(root)
         if result['complete']:c.write(root/'complete.json',result);return result

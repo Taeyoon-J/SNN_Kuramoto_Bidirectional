@@ -29,8 +29,19 @@ def verify():
     assert not revision['training_masks_used'] and revision['optimizer_restore_verified']
     assert revision['all_active_tensor_gradients_nonzero_and_finite']
     assert revision['all_active_groups_changed']
+    runtime=json.loads((HERE/'validation/microbatch_revision.json').read_text())
+    assert runtime['all12_native64_initial_states_unchanged']
+    assert runtime['all5_dataset_splits_preflights_and_metric_oracles_unchanged']
+    assert runtime['CPU_equivalence']['per_sample_gamma_noise_exact']
+    assert runtime['CPU_equivalence']['nonzero_final_head_residual_tested']
+    assert runtime['CPU_equivalence']['automatic_memory_policy_checked']
+    assert hashlib.sha256((HERE/'validation/microbatch_revision.json').read_bytes()).hexdigest()==manifest['microbatch_revision']['proof_sha256']
     for filename,record in revision['source_files'].items():
-        assert hashlib.sha256((HERE/'vendor/full_benchmark'/filename).read_bytes()).hexdigest()==record['sha256']
+        name='vendor/full_benchmark/'+filename
+        current=hashlib.sha256((HERE/name).read_bytes()).hexdigest()
+        if current!=record['sha256']:
+            assert manifest['microbatch_revision']['previous_origins'][name]['sha256']==record['sha256']
+            assert runtime['origins'][name]['sha256']==current
     files=list(HERE.rglob('*.py'))
     for path in files:compile(path.read_bytes(),str(path),'exec')
     assets=json.loads((HERE/'contracts/assets.json').read_text(encoding='utf-8-sig'))

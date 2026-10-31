@@ -17,16 +17,18 @@ def main():
     p=sub.add_parser('train');p.add_argument('--dataset',choices=DATASETS,required=True)
     p.add_argument('--model',type=int,choices=(252,253,254,240),required=True)
     p.add_argument('--seed',type=int,choices=(0,1,2),required=True);p.add_argument('--admission',action='store_true')
+    p.add_argument('--microbatch',choices=('auto','1','2','4','8'),default='auto')
     p=sub.add_parser('evaluate');p.add_argument('--checkpoint',required=True);p.add_argument('--dataset',choices=DATASETS,required=True)
     p.add_argument('--model',type=int,choices=(252,253,254,240),required=True);p.add_argument('--seed',type=int,choices=(0,1,2),required=True)
     p=sub.add_parser('queue');p.add_argument('--gpus',default='0,1,2,3')
+    p.add_argument('--microbatch',choices=('auto','1','2','4','8'),default='auto')
     sub.add_parser('audit')
     args=parser.parse_args();config=configure(args.config);output=connect_inputs(config,args.output)
     if args.action=='preflight':
         result=check_splits(config,output,DATASETS if args.dataset=='all' else (args.dataset,))
     elif args.action=='train':
         from full_benchmark.engine import train
-        result=train(args.dataset,args.model,args.seed,output,admission=args.admission)
+        result=train(args.dataset,args.model,args.seed,output,admission=args.admission,microbatch=args.microbatch)
     elif args.action=='evaluate':
         import torch
         from full_benchmark.data import Dataset
@@ -37,7 +39,7 @@ def main():
         result=evaluate(model,Dataset(args.dataset,output),output/'evaluation'/f'model{args.model}'/args.dataset/f'seed{args.seed}')
     elif args.action=='queue':
         from scheduler import run_queue
-        return run_queue(args.config,output,[int(x) for x in args.gpus.split(',')])
+        return run_queue(args.config,output,[int(x) for x in args.gpus.split(',')],microbatch=args.microbatch)
     else:
         from scheduler import audit_all
         result=audit_all(output)

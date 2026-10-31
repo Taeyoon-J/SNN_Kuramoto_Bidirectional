@@ -64,6 +64,11 @@ RandomState2553500 choice selects3500 unique rows without replacement, shared
 across variants/seeds. Each epoch shuffles these with
 RandomState(249000+seed+10000×epoch). Inference/training initialization uses
 255000+image_ID+100000×epoch. Ten epochs yield35000exposures and2190Adam updates.
+New runs default to memory-aware physical microbatch selection4/2/1 while
+retaining logical batch16. Forward passes carry per-image seeds; loss and
+Hungarian matching are evaluated separately for each image before gradient
+accumulation. See [MICROBATCH.md](MICROBATCH.md). Floating-point reduction order
+can differ, so this is not a claim of bitwise-identical training trajectories.
 The last12 images are retained. γ/graph/activation are computed anew per image.
 
 `initial.pt` stores own INITIAL state/statistics. `resume.pt` atomically saves

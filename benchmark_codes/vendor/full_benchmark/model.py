@@ -73,12 +73,33 @@ class FreshModel(nn.Module):
         features=self.encoder(rgb.to(next(self.parameters()).device).permute(0,3,1,2).float()/255.)
         return self.patcher(((features-self.feature_mean)/self.feature_std).clamp(-3.,3.))
 
-    def forward(self,rgb,*,inference_seed,live_tail_steps=64):
-        torch.manual_seed(int(inference_seed))
-        if next(self.parameters()).is_cuda:torch.cuda.manual_seed(int(inference_seed))
+    def forward(self,rgb,*,inference_seed=None,inference_seeds=None,live_tail_steps=64):
+        if inference_seeds is not None and inference_seed is not None:
+            raise ValueError('provide scalar seed OR per-image seeds')
+        if inference_seeds is None:
+            if len(rgb)!=1 or inference_seed is None:
+                raise ValueError('batched forward requires one seed per image')
+            seeds=[int(inference_seed)]
+        else:
+            seeds=[int(value) for value in inference_seeds]
+            if len(seeds)!=len(rgb) or not seeds:raise ValueError('one seed per image required')
+        def seed_rng(seed):
+            torch.manual_seed(seed)
+            if next(self.parameters()).is_cuda:torch.cuda.manual_seed(seed)
+        seed_rng(seeds[0])
         gamma=self.encode(rgb)
+        def initialize(core,drive,batch):
+            # Generate noise, if configured, with the same single-image RNG calls.
+            # The current gamma initialization is deterministic, but do not silently
+            # make future gamma_noise depend on a sample's position in the batch.
+            values=[]
+            for index,seed in enumerate(seeds):
+                seed_rng(seed)
+                values.append(core._init_theta(drive[index:index+1],1))
+            return torch.cat(values,dim=0)
         trace,adjacency=capture_source_coupling(self.wrapped.core.kuramoto,
-            lambda:late_rollout(self.wrapped,gamma,total_steps=1024,live_tail_steps=live_tail_steps))
+            lambda:late_rollout(self.wrapped,gamma,total_steps=1024,live_tail_steps=live_tail_steps,
+                theta_initializer=initialize if len(seeds)>1 else None))
         rho,q=native_component_rho_q(trace['spikes'],trace['component_spikes'],settle=512)
         return dict(gamma=gamma,trace=trace,adjacency=adjacency,rho=rho,q=q)
 

@@ -15,6 +15,7 @@ from full_benchmark.model import FreshModel
 from full_benchmark.statistics import fit_dataset
 from full_benchmark.loss import InitialTeacher,objective
 from full_benchmark.evaluation import evaluate
+from full_benchmark.microbatch import backward_microbatch,select_microbatch
 
 
 def scientific_sources():
@@ -36,7 +37,8 @@ def state_digest(model):
 def cpu_state(model):return {k:v.detach().cpu().clone() for k,v in model.state_dict().items()}
 
 
-def train(dataset_name,variant,seed,root,*,admission=False):
+def train(dataset_name,variant,seed,root,*,admission=False,microbatch='auto'):
+    if str(microbatch) not in ('auto','1','2','4','8'):raise ValueError('invalid physical microbatch')
     torch.set_num_threads(1);torch.backends.cuda.matmul.allow_tf32=False
     torch.backends.cudnn.allow_tf32=False;torch.backends.cudnn.deterministic=True
     if not torch.cuda.is_available():raise RuntimeError('actual CUDA required')
@@ -44,10 +46,18 @@ def train(dataset_name,variant,seed,root,*,admission=False):
     namespace='engine_admission' if admission else 'jobs'
     out=root/namespace/f'model{variant}'/dataset_name/f'seed{seed}';out.mkdir(parents=True,exist_ok=True)
     lock=(out/'worker.lock').open('a+');fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+    if microbatch=='auto':
+        if (out/'binding.json').exists():
+            microbatch=int(json.loads((out/'binding.json').read_bytes())['microbatch'])
+        else:
+            free,_=torch.cuda.mem_get_info()
+            microbatch=select_microbatch(free/1024**2,admission=admission)
+            if microbatch is None:raise RuntimeError('insufficient free memory; use the persistent queue')
+    else:microbatch=int(microbatch)
     epochs=1 if admission else 10;batch=2 if admission else 16
     binding=dict(experiment='SW0255',dataset=dataset.binding,variant=variant,seed=seed,
         initialization='random_from_scratch',unique_train=3500,epochs=epochs,effective_batch=batch,
-        microbatch=1,loss_reduction='mean of per-image objectives; divide by actual last batch length',
+        microbatch=microbatch,loss_reduction='mean of per-image objectives; divide by actual last batch length',
         total_rollout_steps=1024,gradient_tail_steps=64,all_active_groups_trained=True,
         pretrained_checkpoint_used=False,mask_training=variant!=253,
         final_mask_to_body_gradient=variant==254,admission_only=admission,
@@ -128,16 +138,17 @@ def train(dataset_name,variant,seed,root,*,admission=False):
             images=dataset.rgb(selected)
             labels=dataset.labels(selected) if variant!=253 else None
             accumulated_loss=0.;parts_sum={}
-            for index,image_id in enumerate(selected):
+            for index in range(0,len(selected),microbatch):
+                chunk=selected[index:index+microbatch]
                 c.write(out/'progress.json',dict(stage='training_actual_native_forward_backward',epoch=epoch+1,total_epochs=epochs,
-                    optimizer_updates=updates,images_seen=seen,current_image=int(image_id),microbatch=index+1,effective_batch=len(selected)))
-                image=torch.from_numpy(images[index:index+1]).to('cuda:0')
-                output=model(image,inference_seed=255000+int(image_id)+100000*epoch,live_tail_steps=64)
-                total,base,mask,parts=objective(model,output,rgb=image,labels=labels[index:index+1] if labels is not None else None,teacher=teacher)
-                (total/len(selected)).backward()
-                accumulated_loss+=float(total.detach())/len(selected)
-                for key,value in parts.items():parts_sum[key]=parts_sum.get(key,0.)+float(value.detach())/len(selected)
-                del total,base,mask,parts,output
+                    optimizer_updates=updates,images_seen=seen,current_image=int(chunk[0]),microbatch=index+1,
+                    physical_microbatch=len(chunk),configured_microbatch=microbatch,effective_batch=len(selected)))
+                image=torch.from_numpy(images[index:index+len(chunk)]).to('cuda:0')
+                value,parts=backward_microbatch(model,image,
+                    labels[index:index+len(chunk)] if labels is not None else None,
+                    teacher,chunk,epoch,len(selected))
+                accumulated_loss+=value
+                for key,value in parts.items():parts_sum[key]=parts_sum.get(key,0.)+value
             if variant==253:assert not dataset.labels_opened,'unsupervised training opened target masks'
             for name,p in model.named_parameters():
                 if not p.requires_grad or p.grad is None:continue
@@ -168,6 +179,7 @@ def train(dataset_name,variant,seed,root,*,admission=False):
     assert state_digest(model)==digest and {int(s['step'].item()) for s in optimizer.state.values()}=={updates}
     if head_optimizer:assert {int(s['step'].item()) for s in head_optimizer.state.values()}=={updates}
     c.write(out/'training_report.json',dict(binding_sha256=binding_sha,initial_sha256=initial_sha,updates=updates,images_seen=seen,
+        physical_microbatch=microbatch,maximum_actual_physical_batch=min(microbatch,batch),effective_batch=batch,
         unique_TRAIN=3500,epochs_completed=0 if admission else 10,diagnostic_only=admission,
         active_tensor_gradient_coverage=coverage,parameter_changes=changes,optimizer_resume_verified=True,
         model_sha256=digest,mask_opened_during_training=dataset.labels_opened,seconds=time.time()-started,
@@ -184,4 +196,5 @@ def train(dataset_name,variant,seed,root,*,admission=False):
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('--dataset',required=True);p.add_argument('--variant',type=int,choices=(252,253,254,240),required=True)
     p.add_argument('--seed',type=int,choices=(0,1,2),required=True);p.add_argument('--root',required=True);p.add_argument('--admission',action='store_true')
-    a=p.parse_args();print(json.dumps(train(a.dataset,a.variant,a.seed,a.root,admission=a.admission)))
+    p.add_argument('--microbatch',choices=('auto','1','2','4','8'),default='auto')
+    a=p.parse_args();print(json.dumps(train(a.dataset,a.variant,a.seed,a.root,admission=a.admission,microbatch=a.microbatch)))

@@ -349,5 +349,18 @@
   "seed_revision": "User explicitly requested one seed per model for fast first results; consistent seed0 selected across all20 conditions",
   "preserve_other_seed_checkpoints": true,
   "user_priority": "first finish all4 models onCLEVR/Multi-dSprites/Tetrominoes, thenObjectsRoom/CLEVRTex",
-  "model253_native64_revision": "Grid64, top-k512, unchanged224-parameter base encoder and unsupervised phase/spike objectives; new scratch training, historical32 states preserved"
+  "model253_native64_revision": "Grid64, top-k512, unchanged224-parameter base encoder and unsupervised phase/spike objectives; new scratch training, historical32 states preserved",
+  "future_training_runtime": {
+    "physical_microbatch": "auto",
+    "preferred_sizes": [
+      4,
+      2,
+      1
+    ],
+    "effective_batch": 16,
+    "per_image_seed_and_loss": true,
+    "documentation": "MICROBATCH.md",
+    "existing_server_workers_unchanged": true,
+    "speedup_requires_device_specific_measurement": true
+  }
 }

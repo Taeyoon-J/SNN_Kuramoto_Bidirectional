@@ -22,7 +22,8 @@ def _validate(wrapped, gamma, total_steps, live_tail_steps):
         raise ValueError("gamma and wrapped source core must be on the same device")
 
 
-def late_rollout(wrapped, gamma, *, total_steps=None, live_tail_steps=64):
+def late_rollout(wrapped, gamma, *, total_steps=None, live_tail_steps=64,
+                 theta_initializer=None):
     """Roll out the complete sequence, detaching only recurrent state at boundary.
 
     The static graph, gamma drive, and factorized coupling are prepared once
@@ -47,7 +48,10 @@ def late_rollout(wrapped, gamma, *, total_steps=None, live_tail_steps=64):
         graph = (core.graph_generator(gamma) if core.graph_generator is not None
                  else core.sc.to(gamma.device).unsqueeze(0).expand(batch, -1, -1))
         drive = core.gamma_to_drive(gamma, core.gamma_channel_proj, core.gamma_phase_gain)
-        theta = core._init_theta(drive, batch)
+        theta = (core._init_theta(drive, batch) if theta_initializer is None
+                 else theta_initializer(core, drive, batch))
+        if tuple(theta.shape) != (batch, core.in_dim, core.osc_dim):
+            raise ValueError('initial theta must preserve per-sample oscillator geometry')
         coupling = None
         if core.kuramoto_backend == "factorized" and not feedback:
             coupling = core.kuramoto.prepare_coupling(

@@ -1,5 +1,9 @@
 > Active protocol: 3500 unique TRAIN x10 epochs, seed0 only. Previously started seed1/2 checkpoints remain preserved and inactive. `configs/active_request.json` overrides the historical `snapshot/controller/REQUEST.json`.
 
+> REQUEST_0010: new training/queue commands now default to `--microbatch auto`.
+> See [MICROBATCH.md](MICROBATCH.md) for per-image seeds/losses, memory reservations,
+> profiling and explicit batch controls. Existing server workers are unchanged.
+
 # SW0255: current four-model benchmark, standalone reproduction
 
 현재 실행 중인 실험을 **이 폴더만으로** 실행하기 위한 코드 묶음입니다.
@@ -13,7 +17,7 @@ Linux/WSL2, Python 환경, CUDA GPU와 실제 데이터 파일은 필요합니�
 - 각 데이터셋의 **고유 TRAIN3,500장 ×10epochs =35,000 image exposures/seed**.
   이전35,000 unique ×10 계획은 사용자가 명시적으로 축소 승인했습니다.
 - All four models start from random initialization. **Current queue: seed0 only.**
-- effective batch16, physical microbatch1, epoch 마지막12장도 학습합니다.
+- effective batch16, physical microbatch auto(4→2→1), epoch 마지막12장도 학습합니다.
   epoch당219updates, seed당2,190updates입니다.
 - **4models x5datasets x1seed =20 scientific training jobs.**
 - 먼저 CLEVR/Multi-dSprites/Tetrominoes의12조건을 완료한 뒤,
@@ -119,6 +123,10 @@ The following isolated review is historical: its253 condition used32x32. Current
 ## GPU queue capacity
 
 The queue permits up to3 owned workers per GPU and12 across four GPUs.
-All active workers are now native64 and reserve11000MiB, including not-yet-allocated headroom. Memory fitting remains required. Other users and unrelated running training processes are never stopped for admission.
+All models are native64. New queue commands reserve memory according to the
+selected physical microbatch:11000MiB for1,16000MiB for2,28000MiB for4.
+These include headroom and are conservative admission limits. Other users and
+running training processes are never stopped for admission. Existing server
+workers retain their prior physical1 protocol; this folder updates future runs.
 
 Historical checkpoints and current scratch variants have different training histories. See [the provenance and budget comparison](results/HISTORICAL_VS_SCRATCH.md), including the distinction between encoder phase/spike gradients and final supervised-mask gradients.

@@ -1,0 +1,837 @@
+{
+  "status": "microbatch_standalone_CPU_controls_native64_states_splits_metrics_passed",
+  "CPU_equivalence": {
+    "status": "all_four_reduced_grid_loss_gradient_and_per_image_noise_controls_passed",
+    "grid": 16,
+    "steps": 1024,
+    "tail": 64,
+    "logical_batch": 16,
+    "physical_sizes": [
+      1,
+      2,
+      4
+    ],
+    "results": [
+      {
+        "model": 253,
+        "losses": {
+          "1": 18.830910682678223,
+          "2": 18.830910682678223,
+          "4": 18.830910682678223
+        },
+        "gradient_comparisons": {
+          "2": {
+            "relative_l2": 3.362346469635115e-06,
+            "cosine": 0.9999999999943893,
+            "max_absolute": 3.904104232788086e-06
+          },
+          "4": {
+            "relative_l2": 9.251563630836504e-06,
+            "cosine": 0.999999999958404,
+            "max_absolute": 1.3440847396850586e-05
+          }
+        }
+      },
+      {
+        "model": 252,
+        "losses": {
+          "1": 20.461520195007324,
+          "2": 20.461520195007324,
+          "4": 20.461520195007324
+        },
+        "gradient_comparisons": {
+          "2": {
+            "relative_l2": 3.4443302461269296e-06,
+            "cosine": 0.9999999999940855,
+            "max_absolute": 4.902482032775879e-06
+          },
+          "4": {
+            "relative_l2": 6.66674735057402e-06,
+            "cosine": 0.9999999999781466,
+            "max_absolute": 8.52346420288086e-06
+          }
+        }
+      },
+      {
+        "model": 254,
+        "losses": {
+          "1": 20.461520195007324,
+          "2": 20.461520195007324,
+          "4": 20.461520195007324
+        },
+        "gradient_comparisons": {
+          "2": {
+            "relative_l2": 2.458160767248823e-06,
+            "cosine": 0.9999999999970166,
+            "max_absolute": 2.991408109664917e-06
+          },
+          "4": {
+            "relative_l2": 3.8123126693266794e-06,
+            "cosine": 0.9999999999927441,
+            "max_absolute": 3.2633543014526367e-06
+          }
+        }
+      },
+      {
+        "model": 240,
+        "losses": {
+          "1": 18.831621170043945,
+          "2": 18.831621170043945,
+          "4": 18.831621170043945
+        },
+        "gradient_comparisons": {
+          "2": {
+            "relative_l2": 3.4449330689641026e-06,
+            "cosine": 0.9999999999940835,
+            "max_absolute": 4.902482032775879e-06
+          },
+          "4": {
+            "relative_l2": 6.667914212498352e-06,
+            "cosine": 0.9999999999781393,
+            "max_absolute": 8.52346420288086e-06
+          }
+        }
+      }
+    ],
+    "per_sample_gamma_noise_exact": true,
+    "native64_GPU_speed_claimed": false,
+    "nonzero_final_head_residual_tested": true,
+    "automatic_memory_policy_checked": true
+  },
+  "native64_initial_states": {
+    "252/seed0": {
+      "state_sha256": "0299cc9c45050a02622d8e3dbf873efa59d78a823d91d5b10d467df731a25094",
+      "grid": 64,
+      "groups": {
+        "encoder": 29128,
+        "graph": 131,
+        "kuramoto": 16809985,
+        "dendrite": 16396,
+        "membrane": 4096,
+        "sensory_projection": 32,
+        "integration": 13,
+        "mask_head": 11650
+      },
+      "trainable_tensors": 37
+    },
+    "252/seed1": {
+      "state_sha256": "fd987d3c5103f7726ea1b278451350ab68df8eeb76d65dc703a67d706eb7780d",
+      "grid": 64,
+      "groups": {
+        "encoder": 29128,
+        "graph": 131,
+        "kuramoto": 16809985,
+        "dendrite": 16396,
+        "membrane": 4096,
+        "sensory_projection": 32,
+        "integration": 13,
+        "mask_head": 11650
+      },
+      "trainable_tensors": 37
+    },
+    "252/seed2": {
+      "state_sha256": "3390176b1be77ab71f548bd0ff9c793b86fe3b8ba0c072472f3128d91b281566",
+      "grid": 64,
+      "groups": {
+        "encoder": 29128,
+        "graph": 131,
+        "kuramoto": 16809985,
+        "dendrite": 16396,
+        "membrane": 4096,
+        "sensory_projection": 32,
+        "integration": 13,
+        "mask_head": 11650
+      },
+      "trainable_tensors": 37
+    },
+    "253/seed0": {
+      "state_sha256": "9b22110dbbabe2f4246ca1c3ea511cdc7d88773162c7cf6a6f9323218bfa9f83",
+      "grid": 64,
+      "groups": {
+        "encoder": 224,
+        "graph": 131,
+        "kuramoto": 16809985,
+        "dendrite": 16396,
+        "membrane": 4096,
+        "sensory_projection": 32,
+        "integration": 13
+      },
+      "trainable_tensors": 19
+    },
+    "253/seed1": {
+      "state_sha256": "795fd60559a99a319ab25f45547e746e1dec212c79140453fee369e6f88637ef",
+      "grid": 64,
+      "groups": {
+        "encoder": 224,
+        "graph": 131,
+        "kuramoto": 16809985,
+        "dendrite": 16396,
+        "membrane": 4096,
+        "sensory_projection": 32,
+        "integration": 13
+      },
+      "trainable_tensors": 19
+    },
+    "253/seed2": {
+      "state_sha256": "77687ef0410254ebdda9616f234a92ea346139af505bb81cc8a3c230dbd4ec8f",
+      "grid": 64,
+      "groups": {
+        "encoder": 224,
+        "graph": 131,
+        "kuramoto": 16809985,
+        "dendrite": 16396,
+        "membrane": 4096,
+        "sensory_projection": 32,
+        "integration": 13
+      },
+      "trainable_tensors": 19
+    },
+    "254/seed0": {
+      "state_sha256": "0299cc9c45050a02622d8e3dbf873efa59d78a823d91d5b10d467df731a25094",
+      "grid": 64,
+      "groups": {
+        "encoder": 29128,
+        "graph": 131,
+        "kuramoto": 16809985,
+        "dendrite": 16396,
+        "membrane": 4096,
+        "sensory_projection": 32,
+        "integration": 13,
+        "mask_head": 11650
+      },
+      "trainable_tensors": 37
+    },
+    "254/seed1": {
+      "state_sha256": "fd987d3c5103f7726ea1b278451350ab68df8eeb76d65dc703a67d706eb7780d",
+      "grid": 64,
+      "groups": {
+        "encoder": 29128,
+        "graph": 131,
+        "kuramoto": 16809985,
+        "dendrite": 16396,
+        "membrane": 4096,
+        "sensory_projection": 32,
+        "integration": 13,
+        "mask_head": 11650
+      },
+      "trainable_tensors": 37
+    },
+    "254/seed2": {
+      "state_sha256": "3390176b1be77ab71f548bd0ff9c793b86fe3b8ba0c072472f3128d91b281566",
+      "grid": 64,
+      "groups": {
+        "encoder": 29128,
+        "graph": 131,
+        "kuramoto": 16809985,
+        "dendrite": 16396,
+        "membrane": 4096,
+        "sensory_projection": 32,
+        "integration": 13,
+        "mask_head": 11650
+      },
+      "trainable_tensors": 37
+    },
+    "240/seed0": {
+      "state_sha256": "d16098b7d0800dd2de0629df7e54504eb3cb380c1c624e736373344213bce0aa",
+      "grid": 64,
+      "groups": {
+        "encoder": 29128,
+        "graph": 131,
+        "kuramoto": 16809985,
+        "dendrite": 16396,
+        "membrane": 4096,
+        "sensory_projection": 32,
+        "integration": 13
+      },
+      "trainable_tensors": 29
+    },
+    "240/seed1": {
+      "state_sha256": "73b3bdcf91cb6c8373cfad48bdb3f7b6ff7e377d5630574e59fbed73670e7271",
+      "grid": 64,
+      "groups": {
+        "encoder": 29128,
+        "graph": 131,
+        "kuramoto": 16809985,
+        "dendrite": 16396,
+        "membrane": 4096,
+        "sensory_projection": 32,
+        "integration": 13
+      },
+      "trainable_tensors": 29
+    },
+    "240/seed2": {
+      "state_sha256": "d7957a9bab49bfbe23cb5f04389da0ca94b941861f0381045cb6f5bc2e459fa7",
+      "grid": 64,
+      "groups": {
+        "encoder": 29128,
+        "graph": 131,
+        "kuramoto": 16809985,
+        "dendrite": 16396,
+        "membrane": 4096,
+        "sensory_projection": 32,
+        "integration": 13
+      },
+      "trainable_tensors": 29
+    }
+  },
+  "all12_native64_initial_states_unchanged": true,
+  "all5_dataset_splits_preflights_and_metric_oracles_unchanged": true,
+  "splits": {
+    "clevr": {
+      "unique_TRAIN": 3500,
+      "validation": 320,
+      "evaluation": 320,
+      "splits_equal_actual_server": true,
+      "RGB_shape": [
+        128,
+        128,
+        3
+      ]
+    },
+    "multi_dsprites": {
+      "unique_TRAIN": 3500,
+      "validation": 1000,
+      "evaluation": 1000,
+      "splits_equal_actual_server": true,
+      "RGB_shape": [
+        128,
+        128,
+        3
+      ]
+    },
+    "tetrominoes": {
+      "unique_TRAIN": 3500,
+      "validation": 1000,
+      "evaluation": 1000,
+      "splits_equal_actual_server": true,
+      "RGB_shape": [
+        128,
+        128,
+        3
+      ]
+    },
+    "objects_room": {
+      "unique_TRAIN": 3500,
+      "validation": 1000,
+      "evaluation": 1000,
+      "splits_equal_actual_server": true,
+      "RGB_shape": [
+        128,
+        128,
+        3
+      ]
+    },
+    "clevrtex_original": {
+      "unique_TRAIN": 3500,
+      "validation": 1000,
+      "evaluation": 1000,
+      "splits_equal_actual_server": true,
+      "RGB_shape": [
+        128,
+        128,
+        3
+      ]
+    }
+  },
+  "protected_benchmark": {
+    "benchmark.md": "2fc30bb2a0ead8bed489f5e3d806f3ad9aa90e889c9ba675656ce227d7b05eaa",
+    "benchmark/bench_encoder.py": "9deb6ab9814716c319f739540bf5a13ff2b9adaaef6b78fb07ab1f61d4d177a9",
+    "benchmark/build_gamma_grid.py": "902e4b8f465c263de283925b0593cdc6eaaa843c0f9fa56cc994d51e52b73bd0",
+    "benchmark/build_mod_targets.py": "9867b97cf3fb7da4bd6b20b21cf971bbaa2afd7654ac2ba5e87517e84fe61fe8",
+    "benchmark/ceil.py": "cb074d422c564573f0a0c566a4c6517e2d717484cb8182ee760c1c7a88514100",
+    "benchmark/evaluation.py": "fb07fcb930b5f50edad5c1ce7f50d39852688fdd6cc9799b0d775ed3671d440a",
+    "benchmark/make128.py": "de3e5f4c27ca20872334831a180d5a7aef644360312009235164d3f15fe0fa1a",
+    "benchmark/make_targets_grid.py": "7e9578abb174227f5b0aca7b6f307564ebd4d536da3a506e6bcec27d085a8e5d",
+    "benchmark/pixbench.py": "506e04964c45dc6c126049b5e22d356e65ca062f77b74a851fbb3ecb94151041",
+    "benchmark/preflight.py": "08484863daabec2dd8d61eb8490c9c8705f7d05060bea1160ce0dcb9d0cdecdd",
+    "benchmark/README.md": "e8d69831e898d721bc80f0d95d7f58ace8ee19bd658ae06fbb74724f3f67e9ed"
+  },
+  "origins": {
+    "vendor/benchmark.md": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/benchmark.md",
+      "sha256": "2fc30bb2a0ead8bed489f5e3d806f3ad9aa90e889c9ba675656ce227d7b05eaa",
+      "size": 17751
+    },
+    "vendor/readout_benchmark/runtime.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/readout_benchmark/runtime.py",
+      "sha256": "5008f0583b7d141d674aee2fa25a83fb289f1561d2a535303381f36d10d1c4a9",
+      "size": 17470
+    },
+    "vendor/readout_benchmark/bootstrap.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/readout_benchmark/bootstrap.py",
+      "sha256": "02d4bbface1f40f574afd6763b36f1d92eb534386a925d7bedb219940e8e101f",
+      "size": 14277
+    },
+    "vendor/readout_benchmark/head.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/readout_benchmark/head.py",
+      "sha256": "11c32ef9ceb3769357622709b6b24a4cfcd3497dda4942503da1d79bba44f4f4",
+      "size": 10075
+    },
+    "vendor/readout_benchmark/__init__.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/readout_benchmark/__init__.py",
+      "sha256": "339dedb4681300db3192582bd58b02c112e359d4fdcfaaa10513fa4743a11ef9",
+      "size": 81
+    },
+    "vendor/readout_benchmark/test_head.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/readout_benchmark/test_head.py",
+      "sha256": "4a244e0c02437801ed5aa985b718e23076fbed0a8246b7e434e670061a934de0",
+      "size": 2931
+    },
+    "vendor/readout_benchmark/DESIGN_KO.md": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/readout_benchmark/DESIGN_KO.md",
+      "sha256": "dac2c8efe91be7ca925fe36a8e1316aef25b1d179a3f48db032a91c661eff937",
+      "size": 5186
+    },
+    "vendor/snn_kuramoto_bidirectional/loss_function.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/loss_function.py",
+      "sha256": "6542d084f66c07101b75869709df9302db45e0dde87b6b5945d1790daa316543",
+      "size": 45931
+    },
+    "vendor/snn_kuramoto_bidirectional/evaluation.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/evaluation.py",
+      "sha256": "fb07fcb930b5f50edad5c1ce7f50d39852688fdd6cc9799b0d775ed3671d440a",
+      "size": 11146
+    },
+    "vendor/snn_kuramoto_bidirectional/error_bound.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/error_bound.py",
+      "sha256": "5a79eb565f3d4646caf485f708a8f157341b08711ed12eb894a3b380cb7bb390",
+      "size": 28811
+    },
+    "vendor/snn_kuramoto_bidirectional/membrane_layer.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/membrane_layer.py",
+      "sha256": "680ad89277b60206f192123165d13eca916e5183dc71eaa443a8eeb5f4b8fac8",
+      "size": 2768
+    },
+    "vendor/snn_kuramoto_bidirectional/image_conditioned_sc.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/image_conditioned_sc.py",
+      "sha256": "ffc400fa9074ecc10d132ace47c111dd6f6d279797acf4d01eb584e5a572b5bd",
+      "size": 24065
+    },
+    "vendor/snn_kuramoto_bidirectional/__init__.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/__init__.py",
+      "sha256": "96edbbcdeaeafd4cd066998cfeba3d282c244fc491e966ac2d1f81274a9dc35b",
+      "size": 125
+    },
+    "vendor/snn_kuramoto_bidirectional/kuramoto_layer.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/kuramoto_layer.py",
+      "sha256": "fe023ceda953a45ffb727eddecd7f4ea0d3552a402ae5d42fe339e2a194680d6",
+      "size": 8303
+    },
+    "vendor/snn_kuramoto_bidirectional/hierarchical_spike_classifier.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/hierarchical_spike_classifier.py",
+      "sha256": "9c7ee47252a56cbe747551dde9b4fad1ffb0e5c270b06b751f6ef0169850a977",
+      "size": 8919
+    },
+    "vendor/snn_kuramoto_bidirectional/gamma_initializer.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/gamma_initializer.py",
+      "sha256": "9b5f3e077c755738b1636b97ac9640321a5b7abf5ec85b9a12557209cf5ad50b",
+      "size": 10293
+    },
+    "vendor/snn_kuramoto_bidirectional/s2net_cls.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/s2net_cls.py",
+      "sha256": "e62112502d426536a2d7af9f729578a5559d9e7bc87c8a6da4d217491a249119",
+      "size": 21126
+    },
+    "vendor/snn_kuramoto_bidirectional/sc_generator.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/sc_generator.py",
+      "sha256": "445b859f907f8309e5739faa2bba52651d8babd51ed2e455183ab0ffe7f51a11",
+      "size": 4881
+    },
+    "vendor/snn_kuramoto_bidirectional/input_layer_generator.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/input_layer_generator.py",
+      "sha256": "83b7e83e6c05b849a7678113db43c2d85cb49b22f9f3d5102013dd4e47200db3",
+      "size": 4473
+    },
+    "vendor/snn_kuramoto_bidirectional/sinusoidal_gating.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/sinusoidal_gating.py",
+      "sha256": "e323a3b6472f51def23d63628fe25cc83088822ae73b5e0fcd1789884739f6c4",
+      "size": 4440
+    },
+    "vendor/snn_kuramoto_bidirectional/dendric_layer.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/dendric_layer.py",
+      "sha256": "69d960809ff1ad73a91a7067f87f605ae69ef612be9b936e4b486cc29511dd1a",
+      "size": 3411
+    },
+    "vendor/snn_kuramoto_bidirectional/spike_classifier.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/spike_classifier.py",
+      "sha256": "2d13c15a928f503bc09239aae2153a5f1a82de77aab4b5a76d0dfe876b755181",
+      "size": 24673
+    },
+    "vendor/snn_kuramoto_bidirectional/hyperparameter.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/hyperparameter.py",
+      "sha256": "bceea67a10a4533eae48ce682b23ce81330c981d687fa928cca7b9f3b97fc73e",
+      "size": 7660
+    },
+    "vendor/snn_kuramoto_bidirectional/image_reconstruct.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/image_reconstruct.py",
+      "sha256": "0f2c5169fcc51f9c2cf70df0fb3fe76856b69e69ff6539c6144a878965952db7",
+      "size": 22993
+    },
+    "vendor/snn_kuramoto_bidirectional/graph_generator.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/graph_generator.py",
+      "sha256": "4f4c4d680a60822a5e4645eec3bbceb960846d4fac89e799076f6b4cf1bc6dde",
+      "size": 8538
+    },
+    "vendor/snn_kuramoto_bidirectional/sw240/correlation.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/correlation.py",
+      "sha256": "9cef04975c8d233bceca294fb206a0b67f4580183080aec7f56982f064381492",
+      "size": 2159
+    },
+    "vendor/snn_kuramoto_bidirectional/sw240/model.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/model.py",
+      "sha256": "d55d6357d9964f5d83daf4169cc568ea74109d5130e9a5857b162c2d4d6dd29a",
+      "size": 10500
+    },
+    "vendor/snn_kuramoto_bidirectional/sw240/__init__.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/__init__.py",
+      "sha256": "72f9d12909465ebd0926d3e65c48501afc13e973fc020b6a81b3fb754f71d19c",
+      "size": 85
+    },
+    "vendor/snn_kuramoto_bidirectional/sw240/encoding.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/encoding.py",
+      "sha256": "7e0f28d0571361fd7986316d845f6b52028e03f6ac6f12c2a7249827a380cd18",
+      "size": 1041
+    },
+    "vendor/snn_kuramoto_bidirectional/sw240/signed_energy.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/signed_energy.py",
+      "sha256": "b9556b62d712c11d1e20336143df847e7136c09b45c50129788d3adfe5f06608",
+      "size": 1564
+    },
+    "vendor/snn_kuramoto_bidirectional/sw240/loss.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/loss.py",
+      "sha256": "bfbed844391c08a93b429c4c6f4b66225fda6002b958f9d70a5ad1e4cf9ea5e6",
+      "size": 3056
+    },
+    "vendor/snn_kuramoto_bidirectional/sw240/rollout.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/rollout.py",
+      "sha256": "2553268b565f48119a9765beb64f3a4de67e2769f7c74a0e47c52200aa90b897",
+      "size": 7242
+    },
+    "vendor/snn_kuramoto_bidirectional/sw240/data.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/data.py",
+      "sha256": "bdf826f3ab0686e43981c2625c9703c12a15a0b652f158ac7a4d77c37a085753",
+      "size": 1885
+    },
+    "vendor/snn_kuramoto_bidirectional/sw240/context.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/context.py",
+      "sha256": "8956309af2ba8eaac01769d9bae01940f3342c64730d3ba38415072131fb333a",
+      "size": 3158
+    },
+    "vendor/snn_kuramoto_bidirectional/sw240/integration.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/integration.py",
+      "sha256": "d2ce20d4c089cbc0ed5bd0609694d45b5926e1c0e1e1a3d6143b1b62de08f7d6",
+      "size": 8896
+    },
+    "vendor/snn_kuramoto_bidirectional/sw240/geodesic.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/geodesic.py",
+      "sha256": "f3c75ddc9f785ae8b6a7dfee47fa71efb853d9aa5cc379f49895af91d4073b2a",
+      "size": 2545
+    },
+    "vendor/snn_kuramoto_bidirectional/sw240/capture.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/capture.py",
+      "sha256": "587685b4d9c3db3ac337c9a7177681ea186536f395f95000dd1346f5efbe05c7",
+      "size": 1451
+    },
+    "vendor/snn_kuramoto_bidirectional/sw240/readout.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/readout.py",
+      "sha256": "6fd64712d744c5e6fa8872c601156f91d5563f4a6e2fb3a027f792d545fe5069",
+      "size": 1081
+    },
+    "vendor/snn_kuramoto_bidirectional/sw240/partition.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/partition.py",
+      "sha256": "06adab36abb8ee3d74eb9e301bf7496505a2aa2065a9a43d90b733f3e371133a",
+      "size": 4595
+    },
+    "vendor/mod_benchmark/BENCHMARK_LOCK.json": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/mod_benchmark/BENCHMARK_LOCK.json",
+      "sha256": "ee2ee4a21481f297590096811392c9ccd6225db3f8ef91e25dd90beb4752911b",
+      "size": 1079
+    },
+    "vendor/mod_benchmark/queue.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/mod_benchmark/queue.py",
+      "sha256": "e21e92ce56a667388e122e00fb11c1888de74e7faf4450234f11c0158ce236a6",
+      "size": 5304
+    },
+    "vendor/mod_benchmark/smoke.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/mod_benchmark/smoke.py",
+      "sha256": "2e427a246afdcb5685eceaf08ebcb8c82fa37541451ca7249abe4f2f95a548c8",
+      "size": 1543
+    },
+    "vendor/mod_benchmark/prepare.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/mod_benchmark/prepare.py",
+      "sha256": "d225dae2d8abc420b524f9678d9962bf51c87e4c4773aa55f0a2f02e1289a5e5",
+      "size": 4677
+    },
+    "vendor/mod_benchmark/bootstrap.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/mod_benchmark/bootstrap.py",
+      "sha256": "b65d4ff72cace2f1e31d0b9768f3d3840f44591b345de7aeff93a54a0d447c25",
+      "size": 2259
+    },
+    "vendor/mod_benchmark/worker.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/mod_benchmark/worker.py",
+      "sha256": "a1d3e7929ff2c64aaed795cc5a8f12715dbae0a73378d3555883c53240f7ef92",
+      "size": 11327
+    },
+    "vendor/mod_benchmark/__init__.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/mod_benchmark/__init__.py",
+      "sha256": "d6cd23a34899e7c8c1e28a66a057d00561910b6949ed405acc2ed04cc4a47932",
+      "size": 81
+    },
+    "vendor/mod_benchmark/common.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/mod_benchmark/common.py",
+      "sha256": "6806a3db6319fcc468f6b819ea9ac3ed3dcd7786c61dd35ace7ecc1ca51e5546",
+      "size": 5350
+    },
+    "vendor/mod_benchmark/test_contract.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/mod_benchmark/test_contract.py",
+      "sha256": "66ded552f64fc72fe63d4117f462e27397bbb956727edb9cfd1e20096b94094e",
+      "size": 1951
+    },
+    "vendor/mod_benchmark/DESIGN_KO.md": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/mod_benchmark/DESIGN_KO.md",
+      "sha256": "4cb2168b76d684645279d563b92e131b9d9d96f7c53801c30f1e531d4eb7a9f8",
+      "size": 3986
+    },
+    "vendor/full_benchmark/model.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/full_benchmark/model.py",
+      "sha256": "6a5719cc7832f5139e0298257792d1cf0cd40d0d941471a87e6a00065143438a",
+      "size": 7431
+    },
+    "vendor/full_benchmark/__init__.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/full_benchmark/__init__.py",
+      "sha256": "bf7412c516bbfabb4560d67772d69c274e3c45d00ff9e4900dd54e7bff6cb64c",
+      "size": 82
+    },
+    "vendor/full_benchmark/DESIGN.md": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/full_benchmark/DESIGN.md",
+      "sha256": "4fcb113fc6a615d9341433fd6a5d03cc4d9783d45f6f28d533079571385ca953",
+      "size": 4037
+    },
+    "vendor/full_benchmark/prepare_extra.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/full_benchmark/prepare_extra.py",
+      "sha256": "20ae3eb9f2532e3825cb992bfac7955f7262ffaaff74e84bf97a86b59554bc5c",
+      "size": 9552
+    },
+    "vendor/full_benchmark/loss.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/full_benchmark/loss.py",
+      "sha256": "a15e256cf47cab5c9adc48d5c958cb201f2b0554f9278260fb12d30620a085cb",
+      "size": 4078
+    },
+    "vendor/full_benchmark/probe.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/full_benchmark/probe.py",
+      "sha256": "8701ad2cf219190f16f4ccee341c04a5639ad824f0a0458dff467deb91e3e53f",
+      "size": 7888
+    },
+    "vendor/full_benchmark/data.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/full_benchmark/data.py",
+      "sha256": "9afa1837232588c17e3ec01d649dbdf1c5caa93520072cc4c1838764212cc7a7",
+      "size": 4265
+    },
+    "vendor/full_benchmark/tfrecord.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/full_benchmark/tfrecord.py",
+      "sha256": "372734d93498a742dcd0c20d128c4b8b7bf0e821591b3a9fd71d067312074009",
+      "size": 2800
+    },
+    "vendor/full_benchmark/evaluation.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/full_benchmark/evaluation.py",
+      "sha256": "096e254a4b4fd7a6b584c74e95a49b4a995f689c1b4254b3bb56e52e2dc630af",
+      "size": 5104
+    },
+    "vendor/full_benchmark/engine.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/full_benchmark/engine.py",
+      "sha256": "a6c9c1dd0b5cccd9a97407a40ae81fc4c5217838464300ab07e69b218d6b3fbc",
+      "size": 13711
+    },
+    "vendor/full_benchmark/extra_preflight.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/full_benchmark/extra_preflight.py",
+      "sha256": "c02f1d69f8170d3811427b8ddc1be294c0872a0f3f87ca30cd062aa2cd9a6f54",
+      "size": 4627
+    },
+    "vendor/full_benchmark/geodesic.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/full_benchmark/geodesic.py",
+      "sha256": "8aaec82aefa25fb2d9f9e753d1f950ed04be4ba5ed4738ad53e2d541232a2995",
+      "size": 1396
+    },
+    "vendor/full_benchmark/microbatch.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/full_benchmark/microbatch.py",
+      "sha256": "3af35f838b4bd14dc04dc073afe8f2d70dad36d22bfc8451bc1a856308acdef7",
+      "size": 2084
+    },
+    "vendor/full_benchmark/fast_partition.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/full_benchmark/fast_partition.py",
+      "sha256": "c763e74c79c3eb576da3e52abbd7f40c68e12f9bf49d0e9f6d50cbcfdc9305f2",
+      "size": 3315
+    },
+    "vendor/full_benchmark/prepare_mod.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/full_benchmark/prepare_mod.py",
+      "sha256": "ab3e33fc262882a97758d3f392cd5b76016add6b758349ee91c0dbdb5f6bc57d",
+      "size": 5869
+    },
+    "vendor/full_benchmark/statistics.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/full_benchmark/statistics.py",
+      "sha256": "e03ac9bd5c45a8afefe09b7a2fe511df0244a169ad97370f23d04d8fa670901f",
+      "size": 4383
+    },
+    "vendor/neutral_readout/head.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/neutral_readout/head.py",
+      "sha256": "6bda9287d1b5ed81c47c9612f24ac0b8b9bf7daf817ef715061513a407933815",
+      "size": 3939
+    },
+    "vendor/neutral_readout/run.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/neutral_readout/run.py",
+      "sha256": "551e556c1cce727c88e02ec379ffbdb560474b2e6d53dd90d98366af1f3ae0d5",
+      "size": 8136
+    },
+    "vendor/neutral_readout/__init__.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/neutral_readout/__init__.py",
+      "sha256": "8a6561b72171ad6e14a16b74275ccfe82fdb5e4352e87a1ca5596a7cd8f477aa",
+      "size": 72
+    },
+    "vendor/benchmark/pixbench.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/benchmark/pixbench.py",
+      "sha256": "506e04964c45dc6c126049b5e22d356e65ca062f77b74a851fbb3ecb94151041",
+      "size": 2840
+    },
+    "vendor/benchmark/build_mod_targets.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/benchmark/build_mod_targets.py",
+      "sha256": "9867b97cf3fb7da4bd6b20b21cf971bbaa2afd7654ac2ba5e87517e84fe61fe8",
+      "size": 5382
+    },
+    "vendor/benchmark/make128.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/benchmark/make128.py",
+      "sha256": "de3e5f4c27ca20872334831a180d5a7aef644360312009235164d3f15fe0fa1a",
+      "size": 2959
+    },
+    "vendor/benchmark/make_targets_grid.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/benchmark/make_targets_grid.py",
+      "sha256": "7e9578abb174227f5b0aca7b6f307564ebd4d536da3a506e6bcec27d085a8e5d",
+      "size": 6238
+    },
+    "vendor/benchmark/build_gamma_grid.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/benchmark/build_gamma_grid.py",
+      "sha256": "902e4b8f465c263de283925b0593cdc6eaaa843c0f9fa56cc994d51e52b73bd0",
+      "size": 4951
+    },
+    "vendor/benchmark/evaluation.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/benchmark/evaluation.py",
+      "sha256": "fb07fcb930b5f50edad5c1ce7f50d39852688fdd6cc9799b0d775ed3671d440a",
+      "size": 11146
+    },
+    "vendor/benchmark/preflight.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/benchmark/preflight.py",
+      "sha256": "08484863daabec2dd8d61eb8490c9c8705f7d05060bea1160ce0dcb9d0cdecdd",
+      "size": 3751
+    },
+    "vendor/benchmark/README.md": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/benchmark/README.md",
+      "sha256": "e8d69831e898d721bc80f0d95d7f58ace8ee19bd658ae06fbb74724f3f67e9ed",
+      "size": 2549
+    },
+    "vendor/benchmark/bench_encoder.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/benchmark/bench_encoder.py",
+      "sha256": "9deb6ab9814716c319f739540bf5a13ff2b9adaaef6b78fb07ab1f61d4d177a9",
+      "size": 2469
+    },
+    "vendor/benchmark/ceil.py": {
+      "server_path": "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/benchmark/ceil.py",
+      "sha256": "cb074d422c564573f0a0c566a4c6517e2d717484cb8182ee760c1c7a88514100",
+      "size": 1673
+    }
+  },
+  "actual_scientific_sources": {
+    "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/full_benchmark/__init__.py": "bf7412c516bbfabb4560d67772d69c274e3c45d00ff9e4900dd54e7bff6cb64c",
+    "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/full_benchmark/data.py": "9afa1837232588c17e3ec01d649dbdf1c5caa93520072cc4c1838764212cc7a7",
+    "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/full_benchmark/engine.py": "a6c9c1dd0b5cccd9a97407a40ae81fc4c5217838464300ab07e69b218d6b3fbc",
+    "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/full_benchmark/evaluation.py": "096e254a4b4fd7a6b584c74e95a49b4a995f689c1b4254b3bb56e52e2dc630af",
+    "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/full_benchmark/extra_preflight.py": "c02f1d69f8170d3811427b8ddc1be294c0872a0f3f87ca30cd062aa2cd9a6f54",
+    "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/full_benchmark/fast_partition.py": "c763e74c79c3eb576da3e52abbd7f40c68e12f9bf49d0e9f6d50cbcfdc9305f2",
+    "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/full_benchmark/geodesic.py": "8aaec82aefa25fb2d9f9e753d1f950ed04be4ba5ed4738ad53e2d541232a2995",
+    "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/full_benchmark/loss.py": "a15e256cf47cab5c9adc48d5c958cb201f2b0554f9278260fb12d30620a085cb",
+    "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/full_benchmark/microbatch.py": "3af35f838b4bd14dc04dc073afe8f2d70dad36d22bfc8451bc1a856308acdef7",
+    "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/full_benchmark/model.py": "6a5719cc7832f5139e0298257792d1cf0cd40d0d941471a87e6a00065143438a",
+    "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/full_benchmark/prepare_extra.py": "20ae3eb9f2532e3825cb992bfac7955f7262ffaaff74e84bf97a86b59554bc5c",
+    "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/full_benchmark/prepare_mod.py": "ab3e33fc262882a97758d3f392cd5b76016add6b758349ee91c0dbdb5f6bc57d",
+    "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/full_benchmark/probe.py": "8701ad2cf219190f16f4ccee341c04a5639ad824f0a0458dff467deb91e3e53f",
+    "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/full_benchmark/statistics.py": "e03ac9bd5c45a8afefe09b7a2fe511df0244a169ad97370f23d04d8fa670901f",
+    "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/full_benchmark/tfrecord.py": "372734d93498a742dcd0c20d128c4b8b7bf0e821591b3a9fd71d067312074009",
+    "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/neutral_readout/head.py": "6bda9287d1b5ed81c47c9612f24ac0b8b9bf7daf817ef715061513a407933815",
+    "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/readout_benchmark/__init__.py": "339dedb4681300db3192582bd58b02c112e359d4fdcfaaa10513fa4743a11ef9",
+    "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/readout_benchmark/bootstrap.py": "02d4bbface1f40f574afd6763b36f1d92eb534386a925d7bedb219940e8e101f",
+    "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/readout_benchmark/head.py": "11c32ef9ceb3769357622709b6b24a4cfcd3497dda4942503da1d79bba44f4f4",
+    "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/readout_benchmark/runtime.py": "5008f0583b7d141d674aee2fa25a83fb289f1561d2a535303381f36d10d1c4a9",
+    "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/readout_benchmark/test_head.py": "4a244e0c02437801ed5aa985b718e23076fbed0a8246b7e434e670061a934de0",
+    "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/__init__.py": "96edbbcdeaeafd4cd066998cfeba3d282c244fc491e966ac2d1f81274a9dc35b",
+    "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/dendric_layer.py": "69d960809ff1ad73a91a7067f87f605ae69ef612be9b936e4b486cc29511dd1a",
+    "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/error_bound.py": "5a79eb565f3d4646caf485f708a8f157341b08711ed12eb894a3b380cb7bb390",
+    "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/evaluation.py": "fb07fcb930b5f50edad5c1ce7f50d39852688fdd6cc9799b0d775ed3671d440a",
+    "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/gamma_initializer.py": "9b5f3e077c755738b1636b97ac9640321a5b7abf5ec85b9a12557209cf5ad50b",
+    "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/graph_generator.py": "4f4c4d680a60822a5e4645eec3bbceb960846d4fac89e799076f6b4cf1bc6dde",
+    "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/hierarchical_spike_classifier.py": "9c7ee47252a56cbe747551dde9b4fad1ffb0e5c270b06b751f6ef0169850a977",
+    "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/hyperparameter.py": "bceea67a10a4533eae48ce682b23ce81330c981d687fa928cca7b9f3b97fc73e",
+    "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/image_conditioned_sc.py": "ffc400fa9074ecc10d132ace47c111dd6f6d279797acf4d01eb584e5a572b5bd",
+    "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/image_reconstruct.py": "0f2c5169fcc51f9c2cf70df0fb3fe76856b69e69ff6539c6144a878965952db7",
+    "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/input_layer_generator.py": "83b7e83e6c05b849a7678113db43c2d85cb49b22f9f3d5102013dd4e47200db3",
+    "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/kuramoto_layer.py": "fe023ceda953a45ffb727eddecd7f4ea0d3552a402ae5d42fe339e2a194680d6",
+    "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/loss_function.py": "6542d084f66c07101b75869709df9302db45e0dde87b6b5945d1790daa316543",
+    "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/membrane_layer.py": "680ad89277b60206f192123165d13eca916e5183dc71eaa443a8eeb5f4b8fac8",
+    "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/s2net_cls.py": "e62112502d426536a2d7af9f729578a5559d9e7bc87c8a6da4d217491a249119",
+    "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/sc_generator.py": "445b859f907f8309e5739faa2bba52651d8babd51ed2e455183ab0ffe7f51a11",
+    "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/sinusoidal_gating.py": "e323a3b6472f51def23d63628fe25cc83088822ae73b5e0fcd1789884739f6c4",
+    "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/spike_classifier.py": "2d13c15a928f503bc09239aae2153a5f1a82de77aab4b5a76d0dfe876b755181",
+    "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/__init__.py": "72f9d12909465ebd0926d3e65c48501afc13e973fc020b6a81b3fb754f71d19c",
+    "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/capture.py": "587685b4d9c3db3ac337c9a7177681ea186536f395f95000dd1346f5efbe05c7",
+    "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/context.py": "8956309af2ba8eaac01769d9bae01940f3342c64730d3ba38415072131fb333a",
+    "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/correlation.py": "9cef04975c8d233bceca294fb206a0b67f4580183080aec7f56982f064381492",
+    "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/data.py": "bdf826f3ab0686e43981c2625c9703c12a15a0b652f158ac7a4d77c37a085753",
+    "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/encoding.py": "7e0f28d0571361fd7986316d845f6b52028e03f6ac6f12c2a7249827a380cd18",
+    "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/geodesic.py": "f3c75ddc9f785ae8b6a7dfee47fa71efb853d9aa5cc379f49895af91d4073b2a",
+    "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/integration.py": "d2ce20d4c089cbc0ed5bd0609694d45b5926e1c0e1e1a3d6143b1b62de08f7d6",
+    "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/loss.py": "bfbed844391c08a93b429c4c6f4b66225fda6002b958f9d70a5ad1e4cf9ea5e6",
+    "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/model.py": "d55d6357d9964f5d83daf4169cc568ea74109d5130e9a5857b162c2d4d6dd29a",
+    "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/partition.py": "06adab36abb8ee3d74eb9e301bf7496505a2aa2065a9a43d90b733f3e371133a",
+    "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/readout.py": "6fd64712d744c5e6fa8872c601156f91d5563f4a6e2fb3a027f792d545fe5069",
+    "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/rollout.py": "2553268b565f48119a9765beb64f3a4de67e2769f7c74a0e47c52200aa90b897",
+    "/work/USERS/kevinswk/experiments/SW0255_microbatch_code_reviews/5b14e4c66055/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/signed_energy.py": "b9556b62d712c11d1e20336143df847e7136c09b45c50129788d3adfe5f06608"
+  },
+  "native64_shared_GPU_diagnostic": {
+    "status": "actual_native64_microbatch_profile_complete",
+    "model": 253,
+    "image_ids": [
+      24,
+      56,
+      72,
+      126
+    ],
+    "logical_batch": 16,
+    "diagnostic_only_not_a_benchmark_score": true,
+    "current_theta_init": "gamma",
+    "results": [
+      {
+        "size": 1,
+        "seconds": 12.323891746811569,
+        "images": 4,
+        "images_per_second": 0.32457279584875276,
+        "peak_allocated_bytes": 6144498176,
+        "loss": 20.739474296569824,
+        "parts": {
+          "phase_primary": 1.3092005997896194,
+          "positive_spike": 3.8860546946525574
+        },
+        "active_gradient_tensors": 19,
+        "initial_state_identical": true,
+        "no_training_masks_read": true,
+        "steps": 1024,
+        "gradient_tail_steps": 64,
+        "reference": true
+      },
+      {
+        "size": 2,
+        "status": "does_not_fit_measured_GPU_memory"
+      }
+    ],
+    "GPU": "NVIDIA TITAN RTX",
+    "training_masks_used": false
+  },
+  "current_server_training_workers_modified": false,
+  "native64_multisample_speedup_verified": false
+}
