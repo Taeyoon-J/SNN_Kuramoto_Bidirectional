@@ -91,7 +91,8 @@ python -B run.py --config configs/local.json --output /scratch/sw0255_run audit
 CUDA_VISIBLE_DEVICES=0 python -B run.py --config configs/local.json --output /scratch/sw0255_eval evaluate --model 252 --dataset clevr --seed 0 --checkpoint /scratch/sw0255_run/jobs/model252/clevr/seed0/resume.pt
 ```
 
-현재 전체 학습이 끝난 결과를 포함한 패키지는 아닙니다. 실행 코드를 재현하기 위한 패키지입니다.
+전체20조건은 아직 완료되지 않았습니다. 완료·독립 검증된 과학적 결과는
+[results/README.md](results/README.md)에 seed별로 기록합니다.
 
 ## 포함된 실제 검증 기록
 
