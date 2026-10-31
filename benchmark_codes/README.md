@@ -1,6 +1,7 @@
 > Active protocol: 3500 unique TRAIN x10 epochs, seed0 only. Previously started seed1/2 checkpoints remain preserved and inactive. `configs/active_request.json` overrides the historical `snapshot/controller/REQUEST.json`.
 
-> REQUEST_0010: new training/queue commands now default to `--microbatch auto`.
+> REQUEST_0010: the peer withdrew automatic microbatch increases in commit08e384a.
+> Supported training/queue entrypoints default to physical1; larger batches are explicit experiments.
 > See [MICROBATCH.md](MICROBATCH.md) for per-image seeds/losses, memory reservations,
 > profiling and explicit batch controls. Existing server workers are unchanged.
 
@@ -17,7 +18,7 @@ Linux/WSL2, Python 환경, CUDA GPU와 실제 데이터 파일은 필요합니�
 - 각 데이터셋의 **고유 TRAIN3,500장 ×10epochs =35,000 image exposures/seed**.
   이전35,000 unique ×10 계획은 사용자가 명시적으로 축소 승인했습니다.
 - All four models start from random initialization. **Current queue: seed0 only.**
-- effective batch16, physical microbatch auto(4→2→1), epoch 마지막12장도 학습합니다.
+- effective batch16, physical microbatch1, epoch 마지막12장도 학습합니다.
   epoch당219updates, seed당2,190updates입니다.
 - **4models x5datasets x1seed =20 scientific training jobs.**
 - 먼저 CLEVR/Multi-dSprites/Tetrominoes의12조건을 완료한 뒤,

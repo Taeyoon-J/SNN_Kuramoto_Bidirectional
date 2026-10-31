@@ -351,7 +351,7 @@
   "user_priority": "first finish all4 models onCLEVR/Multi-dSprites/Tetrominoes, thenObjectsRoom/CLEVRTex",
   "model253_native64_revision": "Grid64, top-k512, unchanged224-parameter base encoder and unsupervised phase/spike objectives; new scratch training, historical32 states preserved",
   "future_training_runtime": {
-    "physical_microbatch": "auto",
+    "physical_microbatch": 1,
     "preferred_sizes": [
       4,
       2,
@@ -361,6 +361,9 @@
     "per_image_seed_and_loss": true,
     "documentation": "MICROBATCH.md",
     "existing_server_workers_unchanged": true,
-    "speedup_requires_device_specific_measurement": true
+    "speedup_requires_device_specific_measurement": true,
+    "automatic_increase_default": false,
+    "peer_proposal_withdrawn": "08e384a",
+    "batched_forward_status": "explicit experimental option; independent per-image loss implemented but native64 multisample validation pending"
   }
 }

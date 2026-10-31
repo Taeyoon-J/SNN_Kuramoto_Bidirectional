@@ -17,11 +17,11 @@ def main():
     p=sub.add_parser('train');p.add_argument('--dataset',choices=DATASETS,required=True)
     p.add_argument('--model',type=int,choices=(252,253,254,240),required=True)
     p.add_argument('--seed',type=int,choices=(0,1,2),required=True);p.add_argument('--admission',action='store_true')
-    p.add_argument('--microbatch',choices=('auto','1','2','4','8'),default='auto')
+    p.add_argument('--microbatch',choices=('auto','1','2','4','8'),default='1')
     p=sub.add_parser('evaluate');p.add_argument('--checkpoint',required=True);p.add_argument('--dataset',choices=DATASETS,required=True)
     p.add_argument('--model',type=int,choices=(252,253,254,240),required=True);p.add_argument('--seed',type=int,choices=(0,1,2),required=True)
     p=sub.add_parser('queue');p.add_argument('--gpus',default='0,1,2,3')
-    p.add_argument('--microbatch',choices=('auto','1','2','4','8'),default='auto')
+    p.add_argument('--microbatch',choices=('auto','1','2','4','8'),default='1')
     sub.add_parser('audit')
     args=parser.parse_args();config=configure(args.config);output=connect_inputs(config,args.output)
     if args.action=='preflight':

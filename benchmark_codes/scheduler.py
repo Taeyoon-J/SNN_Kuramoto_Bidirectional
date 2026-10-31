@@ -48,7 +48,7 @@ def audit_all(root):
     from single_seed_reports import write_reports
     rows,_=rows_for(root);audited=write_reports(root,rows)
     return dict(audited_conditions=audited,required_conditions=20,complete=audited==20)
-def run_queue(config,root,gpus,*,microbatch='auto'):
+def run_queue(config,root,gpus,*,microbatch='1'):
     if str(microbatch) not in ('auto','1','2','4','8'):raise ValueError('invalid physical microbatch')
     root=Path(root);lock=(root/'coordinator.lock').open('a+')
     fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)

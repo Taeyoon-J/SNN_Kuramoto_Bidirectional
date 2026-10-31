@@ -1,3 +1,5 @@
+> UPDATE: proposal withdrawn in peer commit08e384a. Supported run.py training/queue commands now default to physical1. Batched forward with independent per-image objectives remains an explicit experimental option (--microbatch auto/2/4), not a validated faster default. The earlier automatic-default description below is historical. The replacement fused-bmm proposal has not yet been applied here.
+
 # REQUEST_0010 반영: 앞으로의 학습·검증 방법
 
 이 폴더에서 **새로 시작하는 학습**은 physical microbatch를 자동 선택합니다.
