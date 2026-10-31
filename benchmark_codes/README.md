@@ -119,3 +119,5 @@ Every active native64 worker retains an11000MiB reservation and native32 an3000M
 reservation, including not-yet-allocated headroom. Memory fitting remains required.
 This lets a queued native64 job share a GPU running two smaller native32 jobs;
 other users and running training processes are never stopped for this admission.
+
+Historical checkpoints and current scratch variants have different training histories. See [the provenance and budget comparison](results/HISTORICAL_VS_SCRATCH.md), including the distinction between encoder phase/spike gradients and final supervised-mask gradients.
