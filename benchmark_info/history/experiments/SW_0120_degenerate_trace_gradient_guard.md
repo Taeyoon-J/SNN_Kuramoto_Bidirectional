@@ -1,0 +1,29 @@
+# SW_0120_degenerate_trace_gradient_guard
+
+이 문서의 인용 블록은 기존 문서 원문이다. 서로 다른 시점의 계획/결과를 소급 수정하지 않는다. 원문 안의 상대 경로는 ZIP 안의 원래 디렉터리를 기준으로 해석한다.
+
+## README.md
+
+<details>
+<summary>README.md</summary>
+
+Source SHA256: `e776aac28f06973c780c055695cdf4e76a69efd714dc5fe8b94b257c4af3a18e`
+
+````markdown
+# SW0120: Degenerate-trace gradient guard
+
+SW0120 tests a narrow backward-only intervention in the positive four-component spike-affinity path. For centered traces whose norm is at or below the existing `1e-8` clamp, the normalized trace is detached in backward. Forward affinity, phase loss, all loss coefficients, partition RGB, production hard labels, prediction, and evaluation remain unchanged.
+
+The registered seed-0 pilot reuses the SW0097 source core and live encoder, the exact SW0117 data order and optimizer schedule, and the immutable SW0117 lambda. It first requires the actual update-3 replay proof, which established bitwise equality of forward Q, losses, and production labels/H; exact valid-row direct gradients; zero degenerate-row direct gradients; and a finite combined-gradient reduction. The first failed primary-gradient replay is preserved: recomputing the primary objective on a second phase graph showed small encoder autograd repeat variation, so the accepted proof retains the original primary tensor instead of relaxing tolerances.
+
+The actual four-batch GPU preflight, all 256 training updates, and unchanged fixed 320-image evaluation completed successfully. Candidate metrics (FG-ARI / foreground IoU / matched-object IoU) are **0.8236617 / 0.7185236 / 0.6561076**. FG-ARI is below both the SW0097 source (0.8248677) and matched SW0117 control (0.8262101). Paired FG-ARI differences are -0.0012060 versus source (95% CI [-0.0087734, 0.0064453]) and -0.0025484 versus control (95% CI [-0.0073430, 0.0022351]). The expansion gate failed: no seed fanout or incumbent replacement. See `seed0_paired_summary_20261009.json` for validated artifacts and comparisons.
+
+Across the completed training, the guarded candidate's preclip gradient norm had median 173.3702, p99 1321.7225, and maximum 3694.9094. The matched SW0117 candidate had median 190.4081, p99 180347181.6, and maximum 446360736. Both histories contain 256 finite gradient norms. This establishes suppression of extreme gradients in this pilot, not improved segmentation or a three-seed result.
+
+The completed candidate core SHA256 is `447b4b8c273fdb049af026ca841fbe7256d9079b10239e8e14758838575a29e5`; its encoder SHA256 is `34f6319025c8366cb102eabb8df94abff5a54222122ebcbcd5e291d161fffdc2`. The current state and comparison anchors are recorded in `../best_model_tracking_20261008.json`.
+
+Run the local synthetic suites from the repository root with `python -m unittest collaborative_test.SW_0120_degenerate_trace_gradient_guard.test_affinity collaborative_test.SW_0120_degenerate_trace_gradient_guard.test_run -v`.
+
+````
+
+</details>

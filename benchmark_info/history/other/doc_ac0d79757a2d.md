@@ -1,0 +1,38 @@
+# peer_updates/REVIEW_0002_20261004.md
+
+<details>
+<summary>REVIEW_0002_20261004.md</summary>
+
+Source SHA256: `81cf8b3289f31edf35a5b308a61818f2aa962aaee751d327750fc6e5be87be08`
+
+````markdown
+# Peer review 0002: patch_v2 PV2_0008
+
+Reviewed peer head `c76492d` on 2026-10-04. New peer results use contract v1
+but a different dataset/render manifest: validation/test contain 1000 images,
+the reported primary test subset has 300 images, and target foreground fraction
+is about .125 versus our fixed validation's ~.217. Its graph also uses spatial
+decay .35 plus geodesic steps 3. Do not pool its absolute metrics with ours.
+
+## Transferable findings
+
+- It retains the phase objective and adds the same PLV family on product-combined
+  per-component spike synchrony. Three peer seeds improved all three peer metrics.
+- Seed variance is material. Peer seed 0 is much worse than 1/2 even though its
+  final training loss is lowest. Training loss alone is not a selection metric.
+- Full-affinity MSE distillation from phase to spike failed by making synchrony
+  dense and foreground too large. Preserve contrast rather than matching values.
+- The peer classifier separates foreground/activity threshold from synchrony
+  component threshold and predicts roughly 4.5–6.5 groups per image. Its exact
+  thresholds cannot transfer without our validation contract.
+
+## Action here
+
+Port only the additive component-spike PLV mechanism as SW_0038. Keep our graph,
+data, split, evaluator, spatial-only control, and vth2 dynamics calibration.
+Prepare a matched phase-only versus phase+spike-weight5 seed-0 comparison.
+Do not import peer geodesic settings or numeric performance claims.
+
+````
+
+</details>

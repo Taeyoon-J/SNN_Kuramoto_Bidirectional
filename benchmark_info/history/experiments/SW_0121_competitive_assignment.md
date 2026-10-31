@@ -1,0 +1,45 @@
+# SW_0121_competitive_assignment
+
+이 문서의 인용 블록은 기존 문서 원문이다. 서로 다른 시점의 계획/결과를 소급 수정하지 않는다. 원문 안의 상대 경로는 ZIP 안의 원래 디렉터리를 기준으로 해석한다.
+
+## README.md
+
+<details>
+<summary>README.md</summary>
+
+Source SHA256: `04607e4d399e384702bfe9f3b5eb771ae38616c0eb0f8929002e4e27771f6915`
+
+````markdown
+# SW0121 competitive assignment (offline prototype)
+
+This directory contains the assignment head, auxiliary-loss definition, local runner/task adapter, synthetic CPU tests, and registered protocol. The seven registered files were deployed after local checks; real-data preflight, training, and fixed320 evaluation completed.
+
+The head receives settled actual component spikes with shape `[B,4,256,32]`. It flattens each patch's four component traces into 128 channels and normalizes each channel by one fixed RMS fitted from the first 32 ordered B16 TRAIN batches (512 images) using the frozen SW0097 seed-0 core and original encoder. This scale stays fixed through warmup and joint training; RMS values at or below `1e-8` use neutral denominator `1.0`, avoiding large amplification of inactive channels. A shared `128 → 64 GELU → 11` network is followed by softmax at temperature `0.1`. Eleven slots provide capacity; the objective does not force a slot count or uniform occupancy. RGB, XY, and gamma are not head inputs.
+
+For detached native RGB patch means `X`, the head's per-slot RGB means are `mu = PᵀX / clamp_min(sum_p(P), 1e-8)`. Per-image RGB variance is the mean across channels of each channel's variance over the 256 patches; `R = mean((P mu - X)^2) / clamp_min(variance, 1e-6)`. Affinity consistency is `C = offdiag_mean((Q - detach(PPᵀ))²)`. Thus `R` trains the assignment head, while `C` sends gradients to the live affinity `Q` without training `P` through its consistency target. The prototype uses `old phase + 5 × old actual-positive-Q objective + λ(R+C)` and retains the existing legacy Q-based prediction path; the assignment head is discarded at inference.
+
+The registered schedule uses SW0097's seed-0 frozen core and encoder and the same 4096 ordered training IDs. A 32-batch B16 head-only warmup uses Adam at `3e-4`, unweighted `R`, and clip 1; its head optimizer state is retained. Then 256 B16 joint updates run at T64/settle32. A fresh core/graph/encoder Adam uses core/graph `3e-5`, encoder `3e-6`, and clip 1 over those core families. The retained head Adam continues at `3e-4` on unweighted `R` alone, with separate clip 1. Seed-0 `λ` is fixed as `0.25 × median(||grad(old)|| / ||grad(R+C)||)` over the first four TRAIN batches, then held constant. Nonfinite, zero, or out-of-range calibration stops the branch; there is no clamp or retuning.
+
+The real-data preflight must show reconstruction below the global-mean baseline, increased loss after fixed row scrambling, nonconstant assignments, finite nonzero `R→P` and `C→Q` credit, and a finite throwaway two-optimizer update that changes the expected parameters. The registered completed SW0117 candidate is validated as the control prerequisite; no new control training arm is added. These are eligibility checks, not evidence of improved segmentation. Evaluation remains the registered 320-image actual-spike readout and does not use the head or ground truth to construct predictions. Promotion requires mean FG-ARI at least `0.01` above both frozen SW0097 and matched SW0117 references, positive paired-image bootstrap lower bounds against both, and both IoU metrics more than `0.05` above the registered Slot means. The full machine-readable contract and promotion gate are in [protocol.json](protocol.json).
+
+The synthetic tests validate tensor layout, fixed normalization, capacity/probability behavior, exact loss equations, gradient routing, diagonal exclusion, and fail-closed input checks. They do not establish a successful real-data preflight or training result.
+
+Actual GPU execution update (2026-10-09): the registered SW0117 control validated, then the full SW0121 real-data preflight passed and joint training started on GPU0. Frozen lambda is 3.983464726966146. Warmed-head RGB reconstruction is 0.5220084 versus global-mean baseline 1.0; fixed row scrambling increases it by 0.4687805. All four calibration batches have nonzero direct R-to-component-spikes and C-to-Q gradients; a disposable update changes encoder, graph, core and head. These establish live training credit, not segmentation improvement. See actual_preflight_summary_20261009.json for preflight evidence and the completed result below.
+
+## Completed seed-0 result (2026-10-09)
+
+Original fixed320 evaluation scored FG-ARI / foreground IoU / matched-object IoU **.824101 / .717444 / .653268**. All three metrics are below both the matched SW0117 candidate (.826210 / .722913 / .659548) and frozen SW0097 seed0 (.824868 / .719872 / .655663). Paired-image FG delta versus SW0117 is -.002109, 95% CI [-.008939, .004875]; versus SW0097 it is -.000766, CI [-.008285, .006990]. All pipeline stages validated, but the registered FG promotion gates fail. No seed fanout or incumbent replacement follows. Live auxiliary credit and warmed reconstruction did not translate into better original spike masks. The next action is a bounded TRAIN-only transfer diagnosis, not a coefficient sweep. Exact metrics, artifact hashes and paired comparisons are in [seed0_paired_summary_20261009.json](seed0_paired_summary_20261009.json).
+
+## Bounded TRAIN transfer diagnosis
+
+A read-only paired comparison forwarded the first four registered B16 TRAIN batches through source97 and final121, and cross-applied the warmed and final heads. No GT or optimizer was used. On identical source traces, warmed-head R averaged 0.536213 and final-head R 0.451014; final head on final traces averaged 0.439532. With the final candidate assignments held fixed, source-Q C was 0.058666 and final-Q C 0.057699. Source/final threshold-edge agreement averaged 0.9859.
+
+Strictly negative Pearson factors completely blocked all component-product Jacobians on 20.62% of off-diagonal pairs, but those pairs carried only 2.08% of the absolute C-to-Q gradient signal. This supports a real dead-path mechanism, not a claim that it explains most performance loss. A single batch also had a large encoder C-gradient (~55,437), so aggregate gradient connectivity alone is insufficient evidence of useful object learning. See [training_credit_diagnostic_20261009.json](training_credit_diagnostic_20261009.json) and the reviewed diagnostic script/tests.
+
+Execution audit: the reviewed diagnostic SHA was e8536d475449a1b0bad1dd83a00c35279f0e055822fc37f5a1830d7031d60808. Initial operator transport/guard attempts started no diagnostic; native Windows SSH was corrected to the existing WSL connection, and the shell GPU guard failed closed before model work. The successful root Python supervisor (PID1398374) held the common GPU0 lease, rechecked memory and compute ownership, and launched child1398381. The child completed once with return code0; its PID was then absent. Results and logs are preserved server-side under results_archive/training_credit_readonly_20261009_root.*. No failed model execution or training was restarted.
+
+Decision: the signed-correlation loss proposal is not advanced from this diagnosis: the measured blocked signal mass is small. A separately registered three-seed replication will investigate the untested weaker seeds of the joint analytic-RGB recipe; SW0117 and SW0121 failed-promotion decisions remain unchanged.
+
+````
+
+</details>

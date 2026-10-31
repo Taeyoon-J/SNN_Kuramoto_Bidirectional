@@ -1,0 +1,56 @@
+# SELECTION_POLICY.md
+
+<details>
+<summary>SELECTION_POLICY.md</summary>
+
+Source SHA256: `5cb3442349e272cd66f47722b95b80932e32b1a4eea6e27e85b898c7a96033c9`
+
+````markdown
+# Experiment continuation policy
+
+The final goal remains a **three-seed mean above the saved Slot Attention
+reference on all three shared patch metrics**, using spike- or membrane-derived
+masks. However, a candidate does **not** need to improve all three metrics in
+one step to remain useful.
+
+Maintain multiple validation tracks:
+
+- **FG-ARI-first track:** preserve and extend methods that substantially
+  improve foreground object separation, even if foreground IoU or matched
+  object IoU is temporarily lower. These remain open candidates for later
+  foreground/background or mask-quality improvements.
+- **Foreground and mask-quality tracks:** retain methods that materially
+  improve either IoU, including as components to combine with an ARI-leading
+  method, while recording the full three-metric tradeoff.
+- **Balanced track:** prioritize any method that improves all three metrics
+  against a matched baseline. Test only frozen validation-selected settings
+  on the reference split; never choose thresholds from reference-test scores.
+
+Use the same checkpoint, images, grid, readout, and seeds for a controlled
+comparison whenever possible. Label pilots versus full validation and do
+not claim final success until the exact three-seed contract is verified.
+Do not silently discard a useful one-metric result; explain which track it
+advances and what must improve next.
+
+## GPU allocation — user updates 2026-10-07
+The user explicitly authorized use of all four GPUs. The latest clarification
+specifies GPUs 1 and 2 may be used when tkim1 is not using them. Before each
+launch, check current compute PIDs and owners on GPUs 0-3. Use a device only
+when it has no other compute process; never terminate, migrate, or share
+another user's process. The SW0100 coordinator checks this dynamically, so
+GPUs 1 and 2 are eligible when free and unused by tkim1. The authorization does
+not imply all four are free at any given launch.
+
+Requested reasoning/work split, as authorized by the user: important design decisions on6.1 Sol,
+ordinary analysis on5.6 Sol, and implementation/execution on6 Luna (replacing
+unavailable5.6 Luna with user approval). The implementation operator is6 Luna;
+analysis is handled by5.6 Sol. Use6.1 Sol only when a major branch decision
+requires it. Main-agent model switching is not exposed as a tool in this
+session, so do not claim automatic routing or that the main-agent model changed.
+
+## Scoring preflight after SW0218
+Before deployment, exercise the full scoring branch on a bounded fixture, including the real control-package import, and validate the real saved control/candidate masks on CPU before GT. GT-barrier and optimizer unit tests alone do not cover an import executed only after prediction. Rename candidate arms explicitly; do not rename ancestor package paths with a global substring replacement. A scoring-only failure must preserve trained checkpoints and masks and recover scoring separately without retraining or rewriting frozen fingerprints.
+
+````
+
+</details>

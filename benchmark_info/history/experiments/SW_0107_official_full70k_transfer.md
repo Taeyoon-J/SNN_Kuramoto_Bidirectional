@@ -1,0 +1,31 @@
+# SW_0107_official_full70k_transfer
+
+이 문서의 인용 블록은 기존 문서 원문이다. 서로 다른 시점의 계획/결과를 소급 수정하지 않는다. 원문 안의 상대 경로는 ZIP 안의 원래 디렉터리를 기준으로 해석한다.
+
+## README.md
+
+<details>
+<summary>README.md</summary>
+
+Source SHA256: `b6e94d3974be6c7245450fa4882c99a5c44ce3921ebebd936c0a30b90edce7ce`
+
+````markdown
+# SW0107: current best fixed-feature recipe on official CLEVR70k
+
+The user requested the current strongest setting trained on Slot Attention's original70000-image data, evaluated on our own data. This is a new experiment: SW0092's earlier official-data arm used the released CLEVR6 stream (skip512, object-count<=6), yielding34766 images, and an older graph-only initialization/loss/LR recipe. Its three-seed scores on our320 validation images were .769129/.486582/.608472 at epoch1 and .740027/.566435/.603881 at epoch10. Those are not current-best-setting full70000 results.
+
+This experiment uses deterministic TFDS CLEVR3.1.0 **train indices0-69999, with no skip or object-count filtering**. The original training split contains70000 images; the full split is distinct from the released-code CLEVR6 subset. Preserve the previous official-data crop `image[29:221,64:256]`, bilinear128x128 resize, float32/255 clipped to[0,1], stored as float16. Record all source indices and export/gamma hashes; decode/count failures stop instead of silently skipping rows. No instance-mask or count supervision is used.
+
+Source models are all three completed SW0097 `positive_frozen` whole-core checkpoints, whose current matched320 means are .776348/.577070/.601537 (FG-ARI/foreground IoU/matched-object IoU). Freeze source-core, registered native encoder, preprocessing, and graph provenance before export. This setting keeps encoder and graph fixed, retains the phase primary plus5x positive-product **actual-spike** affinity objective, and uses the unchanged raw gates and spike classifier.
+
+Each seed receives one additional complete70000-image pass:4375 updates of batch16, shuffle117+seed, T64/settle32, Adam LR3e-5, gradient clip1. All seed results are retained. Adam is initialized afresh for this cross-domain continuation because the source SW0097 optimizer moments were not archived; this is disclosed and is distinct from SW0106's saved-Adam continuation. The source core already saw140000 own-domain downstream exposures plus4096 matched continuation images, in addition to inherited encoder/graph pretraining. This is not a model trained exclusively or from scratch on official data, and a before/after change does not isolate dataset effects from additional computation and optimizer initialization.
+
+Evaluation remains **our HDF5 IDs1320-1639**, all320 images, native128RGB and modal8px16x16 target masks. Use the same registered frozen encoder/gamma, B8/T1024/settle512, positive component spike-product affinity, threshold.50, minimum group2, largest-component background, and the same three patch metrics. No GT is used to form predictions. The official-data export has no instance masks for this evaluation, so this is explicitly cross-domain transfer.
+
+CPU export and frozen-gamma preparation, per-seed real training-batch preflight, training, and full320 evaluation are registered in the shared owner-aware follow-up queue. SW0107 is independent of SW0106's model-promotion gates; a rejected SW0106 recipe must not cancel this requested experiment. Both use GPUs0-3 exclusively when a device has no foreign owner. Existing outputs and failures are preserved, never silently overwritten or repeated. Reserve90640-90959 is not used by this experiment.
+
+Status: all three full70000 training runs and native320 evaluations completed. Mean FG-ARI/FG-IoU/object-IoU: .769423/.532391/.591882; source SW0097 mean .776348/.577070/.601537; matched Slot mean .774933/.203589/.206937. FG-ARI did not beat matched Slot. Summary-only failure from a missing archived Slot record was repaired without retraining; original queue failure and complete training histories are preserved in results_archive. This cross-domain continuation does not isolate a unique-data-size effect.
+
+````
+
+</details>

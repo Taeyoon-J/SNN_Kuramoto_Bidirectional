@@ -1,0 +1,31 @@
+# SW_0102_cannot_link_draft
+
+이 문서의 인용 블록은 기존 문서 원문이다. 서로 다른 시점의 계획/결과를 소급 수정하지 않는다. 원문 안의 상대 경로는 ZIP 안의 원래 디렉터리를 기준으로 해석한다.
+
+## README.md
+
+<details>
+<summary>README.md</summary>
+
+Source SHA256: `51388640a6a78fb303d3c8e788ba4cd72ef7166926aa0c5a4ef185e841dbb547`
+
+````markdown
+# SW0102 cannot-link continuation
+
+SW0102 kept the existing phase objective and five-times positive-product spike criterion, adding a calibrated cannot-link forest loss. The deterministic maximum-spanning forest uses detached symmetrized positive-product classifier affinity with strict edge threshold `>.40`; selected live bottleneck affinity is penalized by `relu(c - .40)^2`. The immutable shared lambda was 3.692937560668443. Exact SW0101 negative masks and their positive-based anchor eligibility were used; positive pairs received no supervision. No labels were used for training.
+
+The synthetic forest implementation passed five tests covering widest-path equivalence, indirect bottleneck gradients, deterministic tie handling, disconnected zero loss and `.50` connected-component equivalence. Its synthetic B16×256 CPU map benchmark median was .5111 seconds. Actual calibration used the first four matched SW0097 training batches for each of three SW0095 sources, without optimizer updates or labels; all 12 batches had connected negatives and finite nonzero cut gradients. A one-update B16 GPU preflight passed with finite gradients, changed trainable core, and unchanged encoder/graph. The matched queue then completed 256 updates and full 320-image validation for all three seeds.
+
+Mean FG-ARI/foreground IoU/matched-object IoU was `.773720/.577959/.600421`, against matched frozen SW0097 means `.776348/.577070/.601537`. Mean paired deltas were `-.002628/+.000888/-.001116`; FG-ARI fell in all three seeds. The registered promotion criterion fails, so the recipe stops without a 70k continuation and no paired bootstrap was needed. Per-seed scores, valid counts, finite histories, source/control SHA and ordered-ID matches are recorded in `results_archive/summary.json`.
+
+The cut term remained active over training: its mean by seed was `.05227/.09453/.10773`; first-four to last-four update means were `.05387→.05130`, `.07526→.08043`, and `.12161→.11378`. The strict `q>.40` forest marked 33.8%, 59.0%, and 75.2% of selected directed negative decisions as connected over the three histories. Matched SW0097 histories do not record these masks or connectivity, so no before/after conflict reduction is claimed. The per-seed training primary and unweighted spike loss means are included in the summary.
+
+A paired no-GT/no-optimizer diagnostic then compared the first four registered B16/T64/settle32 training batches from each matched SW0097 frozen control and final SW0102 checkpoint. IDs/order and exact SW0101 masks matched; graph tensors were bitwise equal. Mean cut loss control→candidate was `.053909→.053521`, `.075608→.073829`, and `.114102→.110461`. Same-CC negative decisions at classifier q≥.50 changed `1785→1790`, `4000→3987`, and `5063→5089`, with no consistent reduction. Primary/spike losses, q≥.50 density and near-saturated spike occupancy were essentially unchanged. The paired values are in `results_archive/paired_train_audit.json`; the exact executed script SHA is `9ac39d78139ab47b8374b6a69218b93189ed120fffa5db54cdb3f73eb8077e6e`.
+
+All three source/control pairs used the exact SW0097 training IDs and order, 4096 images, seeds 117/118/119, B16, T64/settle32, Adam, LR3e-5 and 256 updates. Evaluation used IDs1320–1639, batch8, T1024/settle512, classifier threshold .50, largest-component background and minimum group size2. The full records contain no model weights. GPU ownership at launch was checked: workers used GPUs0,2,3; GPU1 remained occupied by another user and was not used. The recorded cycle peer check at 2026-10-07 09:37 UTC found no newer peer commit than `e2389f5`.
+
+Run `python -m unittest collaborative_test.SW_0102_cannot_link_draft.test_forest` for synthetic checks and `python collaborative_test/SW_0102_cannot_link_draft/summarize_results.py` to revalidate and regenerate the JSON comparison from archived evaluator/history files.
+
+````
+
+</details>

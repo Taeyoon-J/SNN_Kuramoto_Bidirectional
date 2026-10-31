@@ -1,0 +1,65 @@
+# priority_comparison_20261013/REPORT_KO.md
+
+<details>
+<summary>REPORT_KO.md</summary>
+
+Source SHA256: `a9bc99a807928667632a7d46bba97e49df89911f786a6592cf8997052115a448`
+
+````markdown
+# 요청한 네 가지 우선 과제: 확인된 결과
+
+점수 순서는 **FG-ARI / foreground IoU / matched-object IoU**다. 아래 우리 모델은 각 조건에서 확인된 seed 0·1·2 평균 중 FG-ARI가 가장 높은 모델을 선택했다. 세 지표 각각의 최고치를 서로 다른 모델에서 조합하지 않았다.
+
+| 학습 → 평가 | patch 개수 | 우리 모델 | Slot Attention |
+|---|---|---|---|
+| 우리 → 우리 | 16×16 | **.7814 / .4780 / .6167** (SW72, 2,500장) | .7749 / .2036 / .2069 (우리 70,000장 학습) |
+| 우리 → 우리 | 32×32 | **.7830 / .6100 / .5962** (SW143-T) | .7817 / .2044 / .2032 |
+| Slot 데이터 추가 학습 → 우리 | 16×16 | .7694 / .5324 / .5919 (SW107) | **.8946 / .2235 / .2460** (공개 checkpoint) |
+| Slot 데이터 → 우리 | 32×32 | 아직 검증된 결과 없음 | 아직 검증된 결과 없음 |
+| Slot 데이터 → Slot 데이터 | 16×16 | 아직 검증된 결과 없음 | 아직 검증된 결과 없음 |
+| Slot 데이터 → Slot 데이터 | 32×32 | 아직 검증된 결과 없음 | 아직 검증된 결과 없음 |
+| 우리 → 우리 | 64×64 | SW154 결과 대기 | **.7869 / .1982 / .1952** |
+
+비교의 범위:
+
+- 우리 70,000장 계보를 가진 16×16 모델 SW97의 평균은 **.7763 / .5771 / .6015**다. 위 16×16 최고값 .7814는 2,500장 실험이므로 학습량을 맞춘 비교는 아니다.
+- SW143-T는 16×16으로 학습한 SW97을 32×32로 옮기고 추론 graph를 바꾼 모델이다. 처음부터 32×32로 70,000장을 학습한 결과가 아니다.
+- SW107은 우리 데이터로 학습한 모델을 Slot 데이터 70,000장으로 추가 학습한 모델이다. Slot 데이터만으로 처음부터 학습한 결과가 아니다.
+- .8946은 공개 Slot checkpoint 하나를 **우리 데이터로 평가한 값**이다. Slot 데이터 평가값이나 세 seed 평균이 아니다.
+- 32×32의 우리–Slot FG-ARI 차이는 약 .0014이며, paired-image 95% 신뢰구간은 [-.0180, .0204]다. 안정적인 우위가 입증된 결과는 아니다.
+- 현재 확보한 공식 TFDS RGB export에는 instance mask가 없다. 다른 데이터셋의 같은 행 번호 mask를 붙여 공식 데이터 평가 칸을 채우지 않는다.
+
+## Gamma ordering
+
+현재 gamma는 고정된 encoder의 **8개 feature 채널 × patch 위치**를 갖는다. 채널만 임의로 재배열하고 기존 weight를 그대로 두면 결과가 달라진다. 따라서 현재 모델은 순서에 영향을 받는다.
+
+SW153의 TRAIN 이미지 네 장 검사에서는 채널과 해당 채널을 받는 두 consumer의 weight 열을 함께 같은 방식으로 바꿨을 때 Q 차이가 약 9.2e-7이고 최종 QCC label은 같았다. 채널 번호 자체가 절대적인 의미를 갖기보다는, 학습된 weight와 채널의 대응이 중요하다는 근거다. patch 위치 재배열은 공간 좌표와 위치별 parameter의 대응까지 바꾸므로 별개의 문제다.
+
+TRAIN 평균으로 채널을 정렬한 검사도 결과를 바꿨지만, mask를 사용한 성능 평가는 아니었다. 가장 좋은 ordering을 찾았다는 결론은 아직 없다.
+
+Encoder와 core를 함께 학습하는 이전 SW150에서는 같은 seed의 source FG-ARI **.7541 → encoder+graph .7404 → joint .7369**로 내려갔다. 이 실험은 원래 encoder 전체를 풀어 학습한 것이 아니라, 원래 encoder를 고정하고 학습 가능한 residual encoder를 추가했다. 이 결과만으로 encoder 공동 학습 자체가 나쁘다고 결론 내릴 수 없다.
+
+## 64×64와 supervised 실험
+
+SW154는 실제 **4,096개 node**에서 rollout하는 비교다. 32×32 결과 mask를 확대하는 평가가 아니다. 다만 기존 학습 checkpoint를 해상도에 맞춰 옮기는 추론 실험이며 새 64×64 학습은 아니다. Slot의 native128 mask를 2×2 pixel patch로 직접 변환한 비교 기준은 위 표에 기록했다. 우리 세 seed 최종 점수는 아직 확보하지 못했다.
+
+SW155는 TRAIN mask 2,048장으로 두 가지를 비교했다: residual encoder+graph만 학습하는 경우, 그리고 core까지 함께 학습하는 경우다. 같은 이미지와 128 update를 사용하고, 물체가 같은 patch끼리 실제 spike 관계가 강해지도록 loss를 줬다. 마지막 checkpoint의 예측을 모두 저장한 뒤 평가 mask를 읽었다. 최종 결과는 다음과 같으며, **seed1만의 결과**다.
+
+| 모델 | FG-ARI / foreground IoU / matched-object IoU |
+|---|---|
+| 같은 seed source97 | .7541 / .6069 / .5822 |
+| 같은 seed SW143-T | .7553 / .6150 / .5795 |
+| mask-supervised encoder+graph | .7550 / .6060 / .5815 |
+| mask-supervised joint | .7535 / .6076 / .5819 |
+
+T 대비 FG-ARI 차이는 encoder+graph -.00029, joint -.00174이며 두 paired 95% 신뢰구간 모두 0을 포함한다. 이 설정은 의미 있는 FG 향상을 보이지 않았으므로 등록된 확장 기준에 따라 seed0·2 추가 학습을 하지 않는다. 짧은 추가 학습이며 supervised 70,000장 학습의 한계 성능을 뜻하지 않는다.
+
+기존 unsupervised Slot 점수는 문맥용 기준이다. 동일한 mask supervision을 준 Slot과의 공정한 비교 결과는 아직 없다.
+
+서버 연결 복구 후 확인: SW154 seed0·1 예측은 완료됐고 seed2 child는 실제 실행 중이다. SW155 두 arm의 학습·예측·최종 평가 artifact 검증이 완료됐다. 기존 작업을 관측 실패만으로 종료하거나 재시작하지 않았다.
+
+근거: `comparison.json`, SW153 완료 audit, SW154 Slot64 baseline, SW155 protocol 및 보관된 실행 기록. 새로운 모델 점수로 해석할 수 있는 로컬 CPU 검사 결과는 없다.
+
+````
+
+</details>

@@ -1,0 +1,38 @@
+# SW_0100_phasor_imag_raw_gate
+
+이 문서의 인용 블록은 기존 문서 원문이다. 서로 다른 시점의 계획/결과를 소급 수정하지 않는다. 원문 안의 상대 경로는 ZIP 안의 원래 디렉터리를 기준으로 해석한다.
+
+## README.md
+
+<details>
+<summary>README.md</summary>
+
+Source SHA256: `bce1a124b0b306f9d9cf6019784686aa5f465aec55355ab9233d0c721e8fd44a`
+
+````markdown
+# SW0100 phasor-imaginary raw gate
+
+This experiment tests one opt-in mode, `phasor_imag_raw`, on matched whole SW0095 seed 0/1/2 final cores. Its delayed scalar membrane mask is `0.5 * (1 + mean_d(sin(theta_delayed[..., d])))`; dendritic drive remains `sin(theta_current) * mask[..., None]`. The existing `raw` implementation and default are unchanged. No componentwise phase folding, graph, loss, classifier, temporal window, learning rate, or encoder adaptation is introduced.
+
+## Registered pilot plan
+
+Use Adam for 256 updates, batch 16, exactly the 4,096 SW0097 `positive_frozen` training IDs in the same per-seed order, shuffle seeds 117/118/119, 64 training steps with settle 32, core LR `3e-5`, gradient clip 1, and the unchanged primary objective plus 5x positive-product spike synchrony loss. Freeze encoder and graph; initialize each seed from its whole SW0095 final core. Compare with the completed matched SW0097 frozen controls and verify source checkpoint hashes, ordered training IDs, and all unchanged hyperparameters. Evaluation uses IDs 1320-1639, original batch 8, 1024 steps/512 settle, fixed `.50` spike classifier, largest-component background, and existing patch metrics.
+
+Before training, static checks and the focused gate tests passed. The coordinator compared raw/new-mode actual-source CPU forwards (batch 2, 64 steps) for all three SW0095 cores with graph feedback and spike pulses disabled; graph, theta, and `sin(theta)` carrier were exactly equal. Actual gate and drive changed as expected. It then ran one actual-data CPU forward/backward/update preflight per source seed. Each strictly loaded the source state, produced finite loss and gradients, updated the trainable core, and left graph and encoder unchanged. A separate batch-16, one-update CUDA preflight passed with a 3,393,191,936-byte CUDA peak reserved allocation. The coordinator verifies the 4,096 ordered IDs, source SHA, shuffle, update count, batch, learning rate, and training window against SW0097.
+
+The three-seed candidate queue is running. The coordinator launched seed 1 on GPU 0 and seed 2 on GPU 2; seed 0 is pending. At launch, GPU 1 was occupied by tdan and GPU 3 by tkim1. GPU 2 was free and had no tkim1 compute process, so it was eligible under the user's latest device instruction. The coordinator only schedules devices with no active compute PID, so GPUs 1 and 2 remain eligible when free and unused by tkim1. The preflight process first spent about 210 seconds on an unnecessary internal grouping/clique calculation; only the owned preflight processes were stopped, the attempt was retained in `preflight_attempts/`, and the corrected diagnostic stubs that unused internal result. This stub is confined to the gate-comparison diagnostic; the training and evaluation readout is unchanged. Small preflight output records are archived under `preflight_evidence/`; they contain manifests and histories, not model weights. Registration, preflights, and a running queue are not results.
+
+The zero-update diagnostic applies raw versus the new mode to each SW0095 source on fixed SW0099 IDs 1320-1335, then applies raw to each completed candidate on the same images. It captures the actual gate and gated drive at the forward call, and computes spike and gated-drive product-Pearson pair AUC/separation in distance bins (0-2 and 2-5 patch units). Gate and drive variances are explicitly pooled over recorded images, 512 settle steps, and 256 patches; the cancellation index is also recorded. These are representation checks, not mode-selection or tuning data. The first swap run had an undefined near-bin separation key and is preserved in `diagnostic_attempts/`; its coordinator traceback is also preserved. The next attempt used the right schema but passed settle=512 to an already settled 512-frame drive trace, making its gated-drive pair metrics invalid. Those six outputs are preserved under `diagnostic_attempts/first_pass_invalid_gated_drive_auc/`. The corrected run asserts a 512-frame trace and uses `settle=0`; a first-batch actual-source smoke confirmed finite, nonempty 8x256x256 affinity before the six 16-image diagnostics. No candidate training or full320 evaluation was rerun for these fixes.
+
+The implementation defaults to legacy `raw`; only SW0100 passes `--gate-mode phasor_imag_raw`. `test_phasor_imag_raw_gate.py` covers independent phase lifts, component permutation, D=1, exact cancellation, legacy exactness, unchanged state-dict structure, and finite gradients. The coordinator may use one independent seed per genuinely free GPU among 0-3 and never shares an occupied device. Registration and preflights are not results.
+
+## Completed result and promotion decision
+
+All three fixed candidates completed the 256-update matched continuation and valid 320-image evaluation. Against matched SW0097 frozen controls, the candidate mean was `.763415/.706827/.590691` for FG-ARI/foreground IoU/matched-object IoU; mean paired deltas were `-.012933/+.129757/-.010846`. All three seeds lost FG-ARI, all three gained foreground IoU, and one gained matched-object IoU. Each evaluation scored 320 valid images, and each candidate matched the SW0097 source SHA and ordered 4,096 training IDs. No 70k expansion is authorized by the updated gate: the user-priority rule requires at least `.01` mean FG-ARI gain vs SW0097 and FG-ARI gains in two seeds, plus both IoUs at least `.05` above the matched Slot baseline. The FG-ARI gates fail. The original registered balanced gate also fails: both FG-ARI and mean matched-object-IoU fall vs SW0097, and no seed improves both. Paired-bootstrap/extra connectivity evidence cannot override the endpoint gates, so no such analysis or training was launched.
+
+The exact candidate and matched-control records and six corrected swap JSONs are archived in `results_archive/summary.json` and `results_archive/trained_models/`; no model weights are included. The run log's stale running state at the swap exception is preserved as historical provenance; all three candidate markers and all six corrected diagnostic outputs are complete.
+
+The user set a hard work deadline of `2026-10-07 10:37:49 UTC`; see `execution_control.json`. Do not launch work expected to outlast that deadline or queue new jobs after it.
+````
+
+</details>

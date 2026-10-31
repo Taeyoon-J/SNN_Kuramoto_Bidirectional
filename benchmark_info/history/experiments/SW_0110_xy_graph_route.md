@@ -1,0 +1,23 @@
+# SW_0110_xy_graph_route
+
+이 문서의 인용 블록은 기존 문서 원문이다. 서로 다른 시점의 계획/결과를 소급 수정하지 않는다. 원문 안의 상대 경로는 ZIP 안의 원래 디렉터리를 기준으로 해석한다.
+
+## README.md
+
+<details>
+<summary>README.md</summary>
+
+Source SHA256: `9ecdfce4500d1270efd9fb9def8c9eebb9916efa4c74b965f3fd2d59c3332484`
+
+````markdown
+# SW0110: absolute XY in graph node features
+
+This preregistered matched test adds a zero-initialized 16x2 XY projection before graph feature normalization. The existing distance prior remains fixed. Native image features, oscillator drive, actual spike classifier and evaluation contract remain unchanged. Candidate and control start from each whole SW0097 checkpoint and train for 256 matched updates; all three seeds receive full320 evaluation.
+
+`protocol.json` is the frozen scientific contract. Run only after implementation review and real first-four-TRAIN-batch preflight. A zero coordinate projection must reproduce the legacy forward, and coordinate gradients must be finite and nonzero. No GT-selected coordinate strength or alternate readout is allowed.
+
+Promotion requires the registered FG-ARI margin against both the newly continued matched control and the original SW0097, with IoU floors and paired-image uncertainty checks. A failed candidate does not block unrelated queued tests.
+
+````
+
+</details>

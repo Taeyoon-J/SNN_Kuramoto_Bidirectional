@@ -1,0 +1,45 @@
+# SW_0086_sw0072_on_peer_contract
+
+이 문서의 인용 블록은 기존 문서 원문이다. 서로 다른 시점의 계획/결과를 소급 수정하지 않는다. 원문 안의 상대 경로는 ZIP 안의 원래 디렉터리를 기준으로 해석한다.
+
+## README.md
+
+<details>
+<summary>README.md</summary>
+
+Source SHA256: `6b56e3e94115298197931206ef3ff8aa9c4a2661f81b83032afc8af9932f0abd`
+
+````markdown
+# SW0086: SW0072 on the peer contract
+
+This is the requested cross-contract transfer test. The current best SW0072
+seed0/1/2 cores are evaluated without retraining on the peer's
+`clevr_with_masks` validation rows 6000-6299 and contract-v1 targets. The input
+is the peer's aligned 10,000-row gamma tensor; its shape is `[10000,8,256]`, the
+target names match the split manifest, and the selected target foreground
+fraction is `.117604`.
+
+Every model and classifier setting remains the registered SW0072 setting:
+T1024/settle512, membrane threshold `.06`, spike connected components at
+threshold `.35`, largest-component background, graph spatial decay `.35`,
+geodesic 3/1.5/2/.5/16, factorized Kuramoto, and raw gating. No threshold is
+selected on peer labels and no target informs a prediction. Seed0 is the
+original SW0055 source core; seeds1/2 are the SW0072 retrained downstream cores.
+Their six graph tensors were verified bitwise equal before the run.
+
+The resulting three-seed mean will be compared to the peer contract's published
+single-checkpoint Slot reference `.6195/.1241/.0920`. This is a transfer
+diagnostic, not a replacement for either branch's fixed-contract headline and
+not a matched-training comparison.
+
+The evaluation completed before the matched Slot GPU acceleration began. Its
+three-seed mean is `.616852/.198362/.353836`: it is just below the peer's Slot
+reference in FG-ARI (`-.002648`) and above it in both IoUs (`+.074262/.261836`).
+This mixed result does not pass the all-three transfer gate. The initially
+failed summary was recovered directly from the three complete seed reports
+after correcting their metric-key contract; no evaluation was repeated.
+
+
+````
+
+</details>

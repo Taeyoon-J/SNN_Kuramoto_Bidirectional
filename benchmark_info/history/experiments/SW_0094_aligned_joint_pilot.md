@@ -1,0 +1,297 @@
+# SW_0094_aligned_joint_pilot
+
+이 문서의 인용 블록은 기존 문서 원문이다. 서로 다른 시점의 계획/결과를 소급 수정하지 않는다. 원문 안의 상대 경로는 ZIP 안의 원래 디렉터리를 기준으로 해석한다.
+
+## README.md
+
+<details>
+<summary>README.md</summary>
+
+Source SHA256: `d19cad114e17e9c4178325ec69166970c77e564271b8bc6407fcd138188362c4`
+
+````markdown
+# SW0094 — aligned spike loss with graph and encoder adaptation
+
+User restarted goal mode on 2026-10-06. Final target remains all three
+spike/membrane mask metrics above comparable Slot Attention for seeds0/1/2,
+including training on the full70,000 unique images. Short pilots are selection
+evidence only, never a substitute for that target.
+
+## Four registered pilot arms
+
+| Arm | Spike-loss affinity | Graph | Encoder |
+|---|---|---|---|
+| absolute_frozen | Existing absolute-correlation product | Frozen | Frozen |
+| positive_frozen | Actual classifier's positive-correlation product | Frozen | Frozen |
+| positive_graph | Actual classifier's positive-correlation product | Trainable | Frozen |
+| positive_joint | Actual classifier's positive-correlation product | Trainable | Trainable |
+
+All continue the **entire** SW0090 seed0 epoch1 core, not just its graph. This is
+the best measured70k single-seed checkpoint, not representative three-seed proof.
+Common downstream/graph LR3e-5; joint encoder LR3e-6; Adam; clip1; 256 updates,
+batch16; fixed shuffle seed17; same4,096 unique training examples sampled without
+replacement from the existing70k pool. Full pool IDs0–999 plus1640–70639;
+held-out IDs1000–1639 never enter training. The images/data contract is unchanged.
+The script records every actual training ID and initial checkpoint hash.
+
+Primary phase loss and all global affinity weights remain unchanged from
+SW0090. Only spike-affinity semantics and parameter eligibility differ across
+arms. No reconstruction term or GT instance loss is added. The joint arm uses
+native RGB -> encoder -> scalar saved normalization/clip -> differentiable patch
+pooling -> graph/core. It is intentionally not the earlier reconstruction-only
+joint-training recipe. Encoder preprocessing statistics remain fixed to make
+the comparison interpretable; learning those statistics is not tested here.
+
+Training retains64 steps, settle32. Evaluation retains1024 steps, settle512,
+threshold .50, largest component as background, spike component-positive
+correlation product. Evaluate validation IDs1320–1399 (80 images), no readout
+sweep. Joint evaluation uses **its updated encoder** to regenerate all320 cached
+validation gamma rows; other arms retain the existing gamma. These are one-source
+pilot scores, not full320 or three-seed results. The unchanged source's first80
+per-image scores provide the immediate continuation control.
+
+## Preflight and execution
+
+`test_affinity.py` checks the sign counterexample, nonzero gradient on correlated
+signals and finite forward/backward on constant traces. The coordinator also
+requires all four actual-data CPU forward/backward/update preflights before GPU
+launch. Each verifies finite loss/gradients, changed downstream parameters,
+unchanged frozen graph, graph gradients when trainable, encoder gradients when
+trainable, held-out exclusion and RGB/cache correspondence. Unused maximal-clique
+group detection is skipped only during training because object-overlap loss is
+zero; mask evaluation uses the actual unmodified classifier.
+
+The first synthetic preflight caught and corrected a filename collision with
+Python's standard `queue` module. The first asset import caught and corrected
+the legacy core's package search-path requirement. Both happened before any GPU
+training. Preserve these checks to avoid wasting training on startup errors.
+
+Server:
+
+```
+/Data0/kevinswk/envs/snn/bin/python collaborative_test/SW_0094_aligned_joint_pilot/test_affinity.py
+/Data0/kevinswk/envs/snn/bin/python collaborative_test/SW_0094_aligned_joint_pilot/coordinator.py --preflight
+/Data0/kevinswk/envs/snn/bin/python collaborative_test/SW_0094_aligned_joint_pilot/coordinator.py --daemon
+```
+
+Outputs: `trained_models/SW0094_aligned_joint_pilot/`, including process PID,
+atomic queue state, per-arm logs/manifests/history/checkpoints/evaluations and
+final summary. The queue checks real GPU compute processes every60 seconds and
+starts only on completely free GPU0/1/2. Initially it used0/1 under the earlier
+restriction; the user explicitly requested use of free GPU2 on2026-10-06.
+No busy-GPU sharing or stopping
+other users. GPU/queue locks prevent duplicate copies of this queue. A failed
+arm is terminal and requires diagnosis; the queue does not silently retry it.
+Already-live arms may finish after another arm fails. If restarted, completed
+arms are skipped; incomplete output directories require explicit inspection.
+
+GPU2 was added by stopping only the old queue manager (PID3546691), adopting
+its live GPU0 training child in the new manager (PID3557827), and retaining all
+completed arms. No training was restarted. GPU2 launched positive_graph as
+PID3557832; GPU0 subsequently launched positive_joint as PID3558132. CPU
+compilation and actual process/GPU checks verified the updated queue.
+
+User also proposed smaller patches. This is an open architectural candidate,
+not an added arm or promised gain: 8px ->4px changes native grid16x16 ->32x32,
+quadruples nodes and multiplies full pairwise affinity size by16. It may resolve
+small objects/boundaries but may worsen fragmentation and changes spatial
+priors, parameter shapes and compute needs. Any pilot must retain the fixed16x16
+comparison contract (project finer predictions back without GT), separately
+label native-grid diagnostics, and avoid direct comparisons across metrics
+computed on different grids. Current connectivity pilots take priority.
+
+## Peer incorporation
+
+Fetched `origin/patch_v2` through `e2389f5` in this cycle. Read
+`PV2_0045_e2e_frozen_graph` and `PV2_0047_matched_slot`.
+
+- Peer found severe collapse when adapting encoder inputs while freezing the
+  image-conditioned graph. Therefore our encoder arm also trains graph parameters.
+- Their newly trained Slot scores are on their own6,000-image split, two seeds,
+  60,000 steps; they must not replace our matched70k three-seed baseline.
+- Their reconstruction/end-to-end failures support testing actual spike
+  affinity alignment first, rather than repeating only reconstruction weights.
+
+## Next decision
+
+### First completed GPU pilot results
+
+Validation80 only, same source core and256 updates:
+
+| Arm | FG-ARI | Foreground IoU | Matched-object IoU |
+|---|---:|---:|---:|
+| Unchanged source | .823070 | .728778 | .672128 |
+| Old absolute loss, frozen graph | .830922 | .722971 | .669574 |
+| Aligned positive loss, frozen graph | .847604 | .729511 | .676380 |
+| Aligned positive loss, trainable graph | .828366 | .734116 | .667680 |
+
+The aligned frozen-graph arm improves all3 metrics versus both the old-loss
+continuation and unchanged source on this subset. Graph adaptation improves
+foreground IoU and count MAE but loses FG-ARI/object IoU versus the aligned
+frozen arm; retain as a tradeoff, not a universal failure of graph learning.
+The joint encoder arm was still live when this partial report was written.
+Raw completed artifacts and explicitly partial summary are in `results/`.
+
+Full320 validation for positive_frozen is queued as PID3560324 onGPU0 after
+joint training/evaluation finishes. GPU2 was reoccupied by the colleague's next
+job, so the free-GPU check correctly prevented sharing it. The full evaluation
+reuses the unchanged pilot checkpoint and readout, without threshold selection.
+SW0095 registers a complete additional70k pass for source seeds0/1/2; it waits
+for pilot/full320 confirmation to finish. This is additional evidence gathering,
+not a three-seed success claim from these80-image numbers.
+
+The serialized full-evaluation queue was superseded on2026-10-07: waiting
+manager PID3560324 had no child and was terminated without stopping training.
+New manager PID3567316 launched actual full320 evaluator PID3567321 onGPU0,
+batch1. Sharing is allowed only when all compute PIDs belong to our UID and
+free VRAM exceeds8GiB. Observed evaluation memory was496MiB alongside the
+existing joint worker's7,592MiB. This evaluates the same model/readout; compare
+overlapping80-image scores to check numerical stability across batch sizes
+before interpreting the full result. The three-seed SW0095 evaluations retain
+the original default evaluation batch.
+
+The joint pilot is slow because random RGB reads are CPU-bound: the live worker
+had CPU time advancing and92GB of logical reads after about24 minutes, with
+only603MB physical reads and momentarily0% GPU utilization. A16-image benchmark
+confirmed byte-identical alternative reads but **did not improve throughput**:
+fancy indexing12.79s, direct row reads15.02s. No access-method replacement was
+adopted on this evidence. If joint adaptation becomes promising, prepare a
+verified derived RGB cache or chunk-aware sequential loading before scaling it
+to70k. The running joint worker is preserved; no training has been restarted.
+Benchmark code and raw output are committed beside the experiment.
+
+Full320 batch1 evaluation completed: seed0 aligned pilot scores
+`.822781/.719916/.662139`, count MAE1.421875. This is not the final controlled
+comparison: overlapping80-image means differ from batch8 by about
+`.000277/.003828/.000197`, and maximum per-image differences reach
+`.027690/.282848/.156250`. Predictions therefore show batch sensitivity;
+an aggregate near-match does not establish per-image invariance. Full320
+**batch8** revalidation was launched through queue PID3570002 using the original
+evaluation batch. Keep both results and provenance; never choose the batch with
+the better score. SW0095 already uses the original default batch8 throughout.
+Its seed0 full70k continuation began onGPU0 as PID3569312; this result does not
+depend on changing the evaluation batch.
+
+Original **batch8 full320** revalidation completed:
+`.822115/.718331/.661153`, compared with the unchanged SW0090 seed0 epoch1
+`.818470/.714993/.660334`. Deltas are `+.003644/+.003339/+.000818`.
+The overlapping first80 per-image scores exactly match the original batch8
+pilot for all3 metrics (maximum absolute difference0). Thus the small gain
+persists under the original batch condition. This is one source-model seed
+after4,096 additional training images, not a full70k additional pass or a
+three-seed win. Preserve batch1 as diagnostic only; batch8 is authoritative.
+Raw batch8 output and launch command are archived in `results/positive_frozen/`.
+
+### Completed CPU temporal diagnosis
+
+`diagnose_windows.py` completed on unchanged SW0090 seed0/2 epoch1/10 cores,
+validation IDs1320–1323 only. It uses no GPU, no optimization, and no GT in the
+forward path. GT foreground pairs enter post-forward diagnostic scoring only.
+Foreground pair AUC is computed using tie-averaged ranks (scipy), so no new
+package installation is required. Raw32 image/checkpoint/window rows are in
+`window_diagnosis.json`. This diagnostic is not an evaluation of the queued arms.
+
+Mean actual classifier positive-product measurements on these4 images:
+
+| Seed / epoch | Window / settle | FG pair AUC | Same-object edges above .50 | Different-object edges above .50 |
+|---|---|---:|---:|---:|
+| 0 / 1 | 64 / 32 | .9549 | .8958 | .1031 |
+| 0 / 1 | 1024 / 512 | .9697 | .9253 | .0128 |
+| 0 / 10 | 64 / 32 | .9269 | .8968 | .3649 |
+| 0 / 10 | 1024 / 512 | .9575 | .8935 | .0057 |
+| 2 / 1 | 64 / 32 | .8894 | .7891 | .2270 |
+| 2 / 1 | 1024 / 512 | .9510 | .9109 | .0090 |
+| 2 / 10 | 64 / 32 | .8642 | .3620 | .0295 |
+| 2 / 10 | 1024 / 512 | .9613 | .4802 | .0007 |
+
+Seed2's long-window AUC stays high while same-object edge recall roughly halves:
+rank separation alone does not ensure sufficient edges for connected-component
+grouping. This supports checking affinity calibration/within-object connectivity
+as well as pair AUC. It does not establish activation death or prove which layer
+caused the change. No threshold is selected from these scores.
+
+Training absolute-affinity vs classifier-positive-affinity threshold disagreement
+over **all** off-diagonal patch pairs is3.00–22.58% in the short window, but
+0.00–3.54% in the long window. Thus the sign mismatch is meaningful in the actual
+training window; its long-window size can be small. We must not attribute all
+observed degradation to it. Short-window and long-window different-object edge
+rates also differ substantially, motivating a later controlled temporal-window
+or temporal-consistency loss test if the current aligned-loss arms cannot
+preserve connectivity. This four-image diagnostic is too narrow to conclude
+which mechanism dominates across the full validation set.
+
+The four queued GPU arms remain unchanged, so their controlled comparison is
+preserved. Extend this diagnosis to a larger fixed subset and per-layer traces
+when the pilot results identify which arm needs explanation.
+
+All four CPU asset preflights passed. RGB/cached gamma maximum error was zero;
+the modified downstream parameters include Kuramoto, dendritic and membrane
+tensors. The joint arm's first-step pre-clipping gradient norms were187.46 for
+the core,21.21 for the graph and1182.82 for the encoder. Norm clipping is active;
+nonzero gradients establish connectivity, not stable learning over many updates.
+Training-vs-classifier thresholded edge disagreement was9.66% on this two-image
+preflight; this is real checkpoint evidence of the sign mismatch, not a
+representative held-out measurement or a proven cause of the metric decline.
+Queue PID3546691 was verified live and waiting for free GPU0/1. Preflight
+manifests/history and a timestamped queue snapshot are committed in this folder.
+Synthetic checks and evaluator argument parsing also passed.
+
+Compare positive_frozen against absolute_frozen for the objective change;
+positive_graph against positive_frozen for graph adaptation; positive_joint
+against positive_graph for encoder adaptation. Inspect gradient/edge disagreement
+alongside all three metrics. Prefer balanced gains but retain useful FG-ARI or
+mask-quality tradeoffs per SELECTION_POLICY. Expand promising arms to all320
+validation images and three seed-specific starting cores, then full70k training.
+Use independent test evidence for final success; training/validation pilot gains
+cannot complete the goal. Do not discard a method based solely on one pilot seed.
+
+### Completed four-arm pilot (2026-10-07)
+
+All four training/evaluation arms completed. Original evaluation batch8,
+validation IDs1320–1399, source-model seed0, 4,096 additional unique images:
+
+| Arm | FG-ARI | Foreground IoU | Matched-object IoU |
+|---|---:|---:|---:|
+| Unchanged source | .823070 | .728778 | .672128 |
+| Absolute affinity, frozen graph/encoder | .830922 | .722971 | .669574 |
+| Positive affinity, frozen graph/encoder | .847604 | .729511 | .676380 |
+| Positive affinity, train graph | .828366 | .734116 | .667680 |
+| Positive affinity, train encoder + graph | .826403 | .733943 | .677628 |
+
+Joint adaptation did not collapse: all three metrics exceed the unchanged
+source on this subset. Compared with positive_frozen, FG-ARI drops .021201,
+foreground IoU rises .004432 and matched-object IoU rises .001248. This is a
+tradeoff, not evidence that joint adaptation is intrinsically bad or that a
+single-seed pilot beats the full320 three-seed Slot benchmark. positive_frozen
+remains the ongoing SW0095 full70k candidate; do not replace its running jobs.
+
+The joint manifest records 256 finite updates, initial RGB/gamma maximum
+difference 7.15e-7, and updates to graph, Kuramoto, dendritic and membrane
+parameters. Core/graph/encoder gradient norms were nonzero at the first and
+last steps. Updated encoder gamma is used for evaluation; GT is not used in
+training or prediction. Raw manifest/history/evaluation and gamma provenance
+are in `results/positive_joint/`; all-arm comparison is `results/summary.json`.
+
+Queue training status was complete with no failed arms. Its final aggregation
+initially lacked a baseline JSON on the server; the archived baseline was
+copied there and aggregation can run without repeating training. The local
+aggregation and repaired server aggregation both passed. Full320 joint evaluation was launched with explicit
+batch8 on GPU0 (evaluation PID3576680), sharing only our own training process.
+No readout threshold was retuned.
+
+Full320 joint evaluation subsequently completed: **.809536/.722944/.652387**.
+Compared with positive_frozen full320 (.822115/.718331/.661153), foreground
+IoU improves .004612 but FG-ARI declines .012579 and matched-object IoU declines
+.008766. The80-image matched-object advantage did not generalize to all320.
+Compared with unchanged source full320 (.818470/.714993/.660334), joint
+adaptation likewise trades lower FG-ARI/matched-object IoU for higher foreground
+IoU. This supports keeping SW0095 on the frozen aligned-loss recipe. It does
+not justify concluding that encoder adaptation is impossible: this pilot has
+one source seed,256 updates and the original global loss. A future encoder
+candidate needs a mechanism targeting object grouping rather than longer
+training of this exact recipe. Raw full320 result is archived alongside its
+explicit batch8 launch command.
+
+````
+
+</details>

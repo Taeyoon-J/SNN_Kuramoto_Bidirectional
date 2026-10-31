@@ -1,0 +1,78 @@
+# peer_updates/REVIEW_0004_20261004.md
+
+<details>
+<summary>REVIEW_0004_20261004.md</summary>
+
+Source SHA256: `03c8bc12dfdd63592d1c26989f7ecb2da055af503d5a7cbe76f53eb355fe3f39`
+
+````markdown
+# Peer update review 0004 — 2026-10-04
+
+Fetched `origin/patch_v2` through `b2ba1b7`. The commits since the prior
+`a026c1a` review are `2fab924`, `232a0b9`, and `b2ba1b7`. They add or correct
+experiment documents; none contains a model implementation to cherry-pick.
+
+## New peer evidence
+
+- On the peer validation-300 contract, BIM6 with a T1024/settle512 spike
+  readout improves from FG-ARI .6887 without a spatial kernel to .7043 at
+  Gaussian sigma 1.0. Foreground IoU / matched-object IoU are .6740/.4914 and
+  predicted groups average 5.89 versus target 6.20.
+- The peer reports a monotonic spike-window gain: FG-ARI .512/.597/.651/.679/
+  .688 at windows 64/128/256/512/1024, flat by 2048. Phase saturates near .711
+  by window 128. Their interpretation is sampling variance in sparse spikes,
+  especially after multiplying four component affinities.
+- Training at a 256-step window is negative; short-window training and
+  long-window inference remain the selected split. Bimodality weight 6 remains
+  best among 4/6/8 at the long readout.
+- Per-region dendritic projection and several phase-to-spike imitation losses
+  remain negative. The shared projection acts as a useful prior.
+- An inference-only population membrane threshold revives a checkpoint whose
+  absolute threshold produced no spikes. Applying the moving population
+  threshold during training collapses all three peer seeds, so it must not be
+  added to the training recipe.
+- Commit `b2ba1b7` adds the fixed-k control that was previously missing. On the
+  peer validation-300 contract, spatial-only affinity reaches FG-ARI .3902,
+  while spike-times-spatial reaches .6068 under the identical spectral readout.
+  The +.217 difference is evidence that this peer spike result is not explained
+  by grid geometry alone. Its connected-component readout remains stronger for
+  FG-ARI/foreground IoU, while spectral k=10 raises matched-object IoU from
+  .4807 to .5240 at the cost of the other two metrics.
+
+The absolute peer numbers are not pooled with SW0042 because renderer, split,
+foreground prevalence, and target contract differ.
+
+## Incorporation here
+
+- SW0042/SW0044 already use short T64/settle32 training, long
+  T1024/settle512 evaluation, shared projection, BIM6, and Gaussian spatial
+  readout sigmas including 1.0. This covers the positive mechanisms without
+  importing peer scores.
+- SW0051 is the direct port of the peer's remaining outstanding request:
+  spectral spatial grouping, constrained by the strong connected-component
+  foreground mask on our aligned HDF5 contract.
+- Population thresholding is retained as an inference-only diagnostic for
+  saturated checkpoints. It is not added to SW0050 training. Our collapsed
+  SW0042 seed2 differs from the peer's dead-spike example: its phase, membrane,
+  and spike distance-controlled AUCs are already below chance
+  (.461/.442/.440), so changing only the final threshold cannot repair the
+  learned object relation even though it can repair binary saturation.
+- Do not reopen longer-window training, per-region projection, or BIM6 weight
+  selection based on these documents.
+- Reproduce the new fixed-k control only on the current low-LR checkpoint and
+  aligned HDF5 contract. It does not overturn SW0033: that older result tested
+  membrane-times-spatial on a different checkpoint and found only a tiny
+  learned increment. SW0054's gate/K interventions take priority because they
+  test the claimed rhythm-to-spike mechanism directly.
+
+## Source state caveat
+
+The peer Git working tree contains many uncommitted code changes, but the
+published commits through `b2ba1b7` are documentation only. The threshold
+flags described in the README are not present in the fetched committed Python
+tree, so any local port needs its own implementation, real-asset smoke test,
+and regression check rather than copying an unversioned server snapshot.
+
+````
+
+</details>

@@ -1,0 +1,178 @@
+# SW_0194_native64_train64
+
+이 문서의 인용 블록은 기존 문서 원문이다. 서로 다른 시점의 계획/결과를 소급 수정하지 않는다. 원문 안의 상대 경로는 ZIP 안의 원래 디렉터리를 기준으로 해석한다.
+
+## DESIGN_KO.md
+
+<details>
+<summary>DESIGN_KO.md</summary>
+
+Source SHA256: `e7c63fe03bed3b3b053b3434533e7a27174ade4ac7e73eb3ce05352628c79640`
+
+````markdown
+# SW0194: registered TRAIN64 native64 mini continuation
+
+Keep the user-selected native64 FG-ARI>=.90 direction, successful SW0186
+encoder/graph/gates/spikes and product-QCE. Continue the exact completed SW0192
+seed0 native64 model AND Adam/RNG/history, without redoing its two proposals.
+SW0193's32-image FG gain was+.009049, below its registered+.01 gate; that gate
+remains false and no incumbent was promoted. This experiment implements the
+TRAIN64/16-proposal mini budget already registered in SW0192 before that score.
+It does not relax the prior gate or introduce a weight/rate/threshold sweep.
+
+Same native128 RGB, direct2x2 modal TRAIN64 targets and ordered first64 rows of
+the existing TRAIN512 cohort. Source two proposals cover rows0..7. Add proposals
+3..16 on rows8..63: total64 unique images,64 exposures, B4/micro1. Keep T1024,
+settle512, live-tail64, graph top-k512/exact SourceT chunk1, all five learning
+rates, clip1, integration projections and same-RNG full-forward strict-descent
+accept-or-restore transactions. Proposal RNG192000+zero_based_cursor continues
+the exact prefix convention. Persist each boundary atomically. Permit physical
+GPU migration only under the existing same-software/hardware/logical-CUDA0 policy.
+Record actual GPU worker attempts. The source192 checkpoint stays immutable.
+
+All first-two source spike/five-family gradient/delta proofs remain bound to the
+inherited history. Measure all new family gradients/proposed deltas and full-loss
+parity; later zero gradients are disclosed rather than fabricated or treated as
+an initial-admission failure. This is supervised native64 additional adaptation,
+not unsupervised training or fresh70k training. More unique data AND optimizer
+opportunities change together, so this is not an isolated causal data-scaling test.
+
+After training, freeze candidate predictions on the same predetermined32
+development images and per-image RNG193000+offset as SW0193. Reuse its validated
+frozen native64 baseline/probe8 masks, avoiding repeated inference. Use the same
+production QCC/foreground-induced merge and direct modal GT/Slot64 contract.
+Recompute actual masks and metrics independently; publish aggregates only.
+
+Primary development comparison is TRAIN64 minus TRAIN8 FG, with both IoU changes
+reported. A gain>=.01 with positive paired-image95%CI lower bound admits full320
+and three-seed confirmation; a32-image seed0 FG>=.90 alone is not final success.
+If this budget fails, close it without a tiny LR/weight rescue; diagnose native64
+transfer/learning before another substantial test. No70k job is scheduled.
+
+````
+
+</details>
+
+## README.md
+
+<details>
+<summary>README.md</summary>
+
+Source SHA256: `8045783c977fb0567bc457e7b9c03e9a9a92d2e7cf207e1df244deb4d3b7bb60`
+
+````markdown
+# SW0194 native64 TRAIN64 mini continuation
+
+Continue the exact SW0192 trained native64 weights, Adam and RNG for14 more
+B4/micro1 proposals: total16 proposals/64 unique TRAIN images. Same graph,
+encoder/gates/QCE, same time horizon and acceptance rule. Reuse SW0193 frozen
+baseline/TRAIN8 controls and infer only the new candidate on the same32
+development images. This implements the mini budget registered before SW0193;
+its earlier+.01 gain gate remains false and is not retrospectively relaxed.
+More data and update opportunities both change, so this is not an isolated
+causal data-scaling proof. No70k training is queued and no FG.90 result is claimed.
+
+Local/server18 tests and both actual CLI entrypoints passed before queue launch.
+CPU admission restored the exact native64 learned model and nonempty Adam steps2.
+The actual GPU2 worker (PID1849711, parent1849671) then restored CPU/CUDA RNG and
+Adam moments with byte-content hashes equal to source SW0192. An independent
+read of its initial committed boundary verified matching model/Adam/RNG tensors
+and unchanged first-two history. See results_archive/start_v1.
+
+Completed and independently audited: the TRAIN64 candidate scored
+**.9001655085 / .8308344896 / .7316582231** on seed0, the same32 development
+images. TRAIN8 scored .9185864261 / .8328674431 / .7336862632. The FG change
+was-.0184209176 (paired-image95%CI[-.0472437519,.0013289966]). No improvement
+was established; the registered gain gate failed. Close this budget/recipe,
+retain the incumbent, and use the queued195 generalization diagnostic rather
+than a small LR/weight rescue. Do not call this a proven causal overfit result.
+
+All16 proposals and64 unique additional TRAIN exposures completed;12 updates
+were accepted and the actual Adam step count was12. The two inherited
+proposals/model/Adam/RNG were not repeated. Independent actual-mask scoring
+matched within2.23e-16. See RESULT_KO.md and results_archive/score_v1.
+Full320/three-seed native64 FG>=.90 remains unverified. The model is supervised
+adaptation of an existing trained foundation;64 is not its total data history.
+
+````
+
+</details>
+
+## RESULT_KO.md
+
+<details>
+<summary>RESULT_KO.md</summary>
+
+Source SHA256: `49f0b8f8938e812ddbb10d32dd8156f18a1d3444809c0b6c5c014a5bf405a2bc`
+
+````markdown
+# SW0194 완료: native64 TRAIN64 추가 학습
+
+범위:64×64 patch, seed0, 미리 정한 development32장. 아래64장은 기존 foundation의
+전체 학습량이 아니라 이번 계열에서 추가 adaptation에 사용한 고유 이미지 수다.
+Mask-supervised 학습이며 새70,000장 전체 학습이나 unsupervised 성과가 아니다.
+
+| 모델 | FG-ARI | Foreground IoU | Matched object IoU |
+| --- | ---: | ---: | ---: |
+| Native64 전이 baseline | .9095369755 | .8271468754 | .7344419700 |
+| TRAIN8 추가 학습 | .9185864261 | .8328674431 | .7336862632 |
+| TRAIN64 추가 학습 | .9001655085 | .8308344896 | .7316582231 |
+| 같은32장 Slot3mean 참고 | .8215711846 | .1733153073 | .2039881566 |
+
+우리 모델의 위 세 행은 seed0 한 개다. Slot3mean 참고 행과 이 표만으로
+전체320장/세 seed 평균의 우위를 입증했다고 표시하지 않는다.
+
+TRAIN64−TRAIN8 FG 변화는-.0184209176, paired-image bootstrap95%CI는
+[-.0472437519,.0013289966]. IoU 변화는 각각-.0020329535와-.0020280401이다.
+세 지표의 paired CI 모두0을 포함한다. 개선이 확인되지 않았고 평균 점수도 낮다.
+등록한 FG gain>=.01 및 CI하한>0 조건은 실패했다. 최고 모델을 교체하지 않는다.
+
+이 결과만으로 과적합을 확정할 수 없다.195번은 같은 TRAIN8/TRAIN64 모델의
+TRAIN16 및 development32 성능 변화를 비교한다. 데이터와 optimizer 기회가
+동시에 증가했으므로194번 자체도 독립적인 causal data-scaling 실험은 아니다.
+현재 TRAIN64 recipe는 닫고 작은 LR/weight 조정으로 계속 연장하지 않는다.
+
+실행·검증: 총16 B4/micro1 proposals,64 exposures,12 accepted updates/실제Adam12.
+여기서64 exposures는 logical gradient-training 이미지 수다. Proposal마다 같은
+이미지의 before/after no-grad forward도 수행한다. 거절된 proposal은3,14,15,16이며,
+실제 반영된12개 proposal에 포함된 고유 이미지는48장이다.64장 모두의 update가
+반영되었다고 해석하지 않는다.
+기존 두 proposal의 model/Adam/CPU·CUDA RNG 및 history를 정확히 이어갔다.
+기존 source checkpoint는 그대로 보존했다. 새14 proposal의 기록 시간 합은
+6181.84초, candidate32장 추론 합은1073.09초다. 대기·초기화·checkpoint I/O 등은
+이 두 합에 포함하지 않는다.192번에서 이미 끝난 두 proposal의 시간도 제외했다.
+
+완료 checkpoint의 실제 model/Adam/history와96개 우리 mask 및96개 Slot mask를
+독립 검증했다. 세 지표·평균·CI의 최대 수치 오차는2.220446049250313e-16이다.
+공개 기록은 집계와 해시만 포함하며 imagewise GT-derived 점수는 비공개 보관한다.
+
+Summary SHA256:5b3fbfadd86dd4431f34bdb09b9b275bbdf6caa9a02ebb1e8d2fa135129cda13.
+최종 model SHA256:43b562b6448438c4843f32030d236922e6f9be256e61ea44d5b9618e89342e65.
+
+## 저장된 mask의 posthoc 오류 분석
+
+GPU forward 없이 기존 mask로 분석했다. Foreground miss는4.62%→4.73%,
+background false positive는5.53%→5.56%로 변화가 작았다. GT foreground의
+같은 물체 patch 쌍이 갈라지는 비율은5.13%→7.33%였다.
+
+두 모델이 모두 foreground로 잡은 공통 영역에서도 split은1.41%→3.49%,
+다른 물체 patch 쌍의 merge는2.23%→2.22%였다. 따라서 support 변화만으로
+설명되지 않는 fragmentation 경향이 다음 검증의 단서다. 공통 영역은 GT
+foreground의 평균94.75%를 포함한다. 모든 비영 변화의95%CI가0을 포함하므로
+집단 수준의 확정적 변화나 causal attribution으로 주장하지 않는다.
+Split과 merge의 분모가 달라 두 값을 오류 기여도처럼 더하지 않는다.
+
+분석 코드/기존 오류 함수의 테스트9개가 로컬과 서버에서 통과했다. 집계는
+results_archive/partition_diagnosis_v1/summary.json에 있고 imagewise 값은 공개하지 않는다.
+
+별도 CPU 예제에서 상대 QCE와 절대 threshold readout의 불일치도 재현했다.
+같은 class의 off-diagonal Q를.75→.45, 다른 class를.35→.05로 바꾸면 두 class
+상대 차이는 유지되어 QCE가.0181499279로 동일하지만, 절대 Q=.5 readout은
+올바른 두 물체를 네 singleton으로 나눈다. 이는 합성4-patch 예제이며 실제
+194번 원인의 증명이 아니다.198번에는 원래 식의1024와 실제 node 수4096의
+정규화 비교를 독립적으로 등록했다. 이후 학습에서는 loss/readout calibration
+기준을 맞추는 방향이 별도 검증 대상이다. 현재 recipe의 작은 LR/weight 연장은 아니다.
+
+````
+
+</details>

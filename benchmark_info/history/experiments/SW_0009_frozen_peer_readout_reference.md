@@ -1,0 +1,66 @@
+# SW_0009_frozen_peer_readout_reference
+
+이 문서의 인용 블록은 기존 문서 원문이다. 서로 다른 시점의 계획/결과를 소급 수정하지 않는다. 원문 안의 상대 경로는 ZIP 안의 원래 디렉터리를 기준으로 해석한다.
+
+## README.md
+
+<details>
+<summary>README.md</summary>
+
+Source SHA256: `f4700bf101b4b38d8dbedeef6d9cf2950fba8d63879febd34dec70b87bb5810b`
+
+````markdown
+# SW_0009 — 검증에서 선택한 분류법을 고정하고 reference에 적용
+
+Status: seed-0 reference evaluation complete; goal not met.
+
+## 쉽게 설명하면
+
+SW_0008 검증에서 세 점수가 함께 좋아진 설정을 **더 이상 바꾸지 않고**
+reference 이미지 320장에 적용합니다. 동료 방식으로 spike를 연결하되,
+4개 oscillator 성분의 양의 동기화를 곱하고 연결 임계값은 0.50으로
+고정했습니다. 가장 큰 연결 덩어리를 배경으로 둡니다.
+
+## 고정 조건
+
+- SW_0004 graph-teacher seed-0, 10-epoch checkpoint 그대로 사용.
+- 실제 spike 256 step, 초기 64 step 제외, 성분별 centered signed correlation.
+- 양의 correlation만 곱하고 0.50 이상인 patch 연결; 연결 덩어리별 물체.
+- CLEVR HDF5 ID 1000–1319, 16×16 patch. 정답은 점수에만 사용.
+- `evaluate.py`는 이 한 설정만 산출하며 test 결과로 임계값을 다시
+  고르지 않습니다. 결과에는 per-image 세 지표도 기록합니다.
+- 저장된 Slot Attention 비교값은 같은 reference 이미지의 **한 checkpoint**
+  결과입니다. 이전에 이 split의 시작 baseline도 검사했으므로 완전히
+  untouched test라는 주장은 하지 않습니다. 최종 목표에는 3-seed 평균과
+  추가 독립 검증이 필요합니다.
+
+| 같은 reference 이미지 320장 | FG-ARI ↑ | 전경 IoU ↑ | 물체별 IoU ↑ |
+|---|---:|---:|---:|
+| 저장된 Slot Attention 한 checkpoint | 0.8901 | 0.2123 | 0.2355 |
+| 이번 SW_0004 + 고정 동료 분류법, seed 0 | 0.1909 | 0.2709 | 0.2298 |
+
+**해석:** 검증에서 본 전경 IoU 개선은 reference에서도 유지됐습니다.
+그러나 FG-ARI는 Slot Attention보다 크게 낮고, 물체별 IoU도 0.0057
+낮습니다. 예측 물체 수는 이미지당 평균 30.14개, 예측 전경은 patch의
+55.84%입니다. 3-seed 평균이나 목표 달성으로 해석할 수 없습니다.
+자세한 per-image 점수와 실제 spike 비율은 `results.json`에 있습니다.
+
+## 물체 개수 진단
+
+저장된 reference 320장의 patch mask에서 배경 ID 0을 제외하고 서로 다른
+object ID 수를 직접 세었습니다 (`count_objects.py`, `object_counts.json`).
+정답은 이미지당 평균 **6.04개**(범위 2–10개)인데, 이번 예측은 평균
+**30.14개**(범위 9–64개)입니다. 물체 개수를 정확히 맞힌 이미지는
+**0/320장(0%)**이고 ±1개 이내인 이미지도 0장입니다.
+
+이는 분류기가 물체 개수를 별도로 추정하지 않고, spike 동기화 연결
+성분 하나를 object 하나로 세기 때문입니다. 현재는 한 물체가 여러
+조각으로 나뉘는 과분할이 심합니다. 이전 SW_0001의 고정 k=8 spectral
+분류도 최대 7개 그룹만 내므로 이미지별 실제 물체 수를 유연하게 맞추는
+방식이 아닙니다. 이 진단은 이번 SW_0004 seed-0 10-epoch checkpoint와
+고정된 동료 분류법에 대한 결과이며, 모든 향후 checkpoint에 일반화하지
+않습니다.
+
+````
+
+</details>

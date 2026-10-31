@@ -1,0 +1,230 @@
+# SW_0092_cross_dataset_training
+
+이 문서의 인용 블록은 기존 문서 원문이다. 서로 다른 시점의 계획/결과를 소급 수정하지 않는다. 원문 안의 상대 경로는 ZIP 안의 원래 디렉터리를 기준으로 해석한다.
+
+## README.md
+
+<details>
+<summary>README.md</summary>
+
+Source SHA256: `96ddfd790d4ad5e15b74c55adc024b2e45451a3c68219382d0d27ba248d25658`
+
+````markdown
+# SW0092 — reciprocal cross-dataset training
+
+This experiment runs both directions requested after obtaining the released
+Slot Attention TFDS data.
+
+1. **Our model on released Slot data.** TFDS CLEVR 3.1.0 train is processed in
+   released-code order: skip the first 512 rows, keep scenes with at most six
+   objects, center-crop, and bilinear-resize to 128x128. This yields 34,766
+   unique training images. The strongest fixed-feature/frozen-graph SNN recipe
+   trains for 1/3/10 epochs and is evaluated on our fixed mask-bearing HDF5
+   validation IDs1320-1639.
+2. **Slot Attention on our data.** The official architecture is trained from
+   scratch on our 70,000 unique training IDs for ten exact passes. It uses 11
+   slots for the up-to-ten-object HDF5 scenes. A real batch64 backward preflight
+   exceeded 24GB; batch32 passed, so all registered runs use batch32. Epochs
+   1/3/10 are evaluated on the same validation IDs and three metrics.
+
+The first direction must use our validation domain for mask scores because TFDS
+CLEVR 3.1.0 does not provide instance masks. Consequently it is explicitly a
+cross-domain transfer test, while the second direction is a matched-data test.
+
+## Active scheduling (2026-10-06)
+
+Experiment 1 has completed all three seeds, epoch1/3/10 evaluations and mask
+visualizations. Experiment 2 seed1 remains live on GPU1; experiment 3 seeds1/2
+remain live on GPUs2/3. GPU0 currently belongs to another user.
+
+`resume_our_official.py` replaces the original experiment 2 waiting queue.
+It preserves existing live/completed seeds and uses whichever of GPUs0/1 is
+free for remaining seeds and evaluations. Only the old queue and its waiting
+seed0 wrapper were stopped; the live seed1 training process was preserved.
+Its log is `trained_models/SW0092/our_resume_queue.log`, and its state is
+`trained_models/SW0092_OUR_OFFICIAL_QUEUE.json`.
+
+`queue_slot_finish.sh` independently finishes experiment 3 on GPUs2/3:
+after seed1 completes, train seed0 on GPU2 while evaluating the completed
+seeds1/2 on GPU3. Then evaluate seed0 at epochs1/3/10 and write the three-seed
+summary. No model modification tests are queued.
+After both experiments finish, retrieve results, record comparison, and pause
+goal mode as requested in `../ACTIVE_REQUEST_TEST123.md`.
+
+Experiment 2 reuses our existing encoder and frozen graph pretrained on our
+data; its downstream training uses released Slot data. It is not a complete
+model trained from scratch exclusively on released Slot data.
+
+### Pending coordinator update after SSH reconnect
+
+The new local coordinator launches pending seeds on both available GPUs0/1,
+reserving a GPU immediately so two jobs cannot select it before CUDA registers.
+CPU-only `preflight_queue.py` passes three checks: preserve an existing seed,
+reserve distinct GPUs, and refuse partial output without launching a job.
+Windows sandbox temporary-file access failed; the identical checks passed when
+run with filesystem access outside that restriction.
+
+SSH multiplex broke during deployment. The pending local scp/SSH mutation
+commands were cancelled; this update is **not verified as deployed**. Last
+verified live training handles were experiment2 seed1 PID3415859 and experiment3
+seeds1/2 PID3336397/PID3336399. Last verified queue handles were experiment2
+PID3417653 and experiment3 PID3419065. After reconnect, inspect those handles,
+the remote coordinator file and its log before replacing any queue. Preserve
+all live training; never restart based only on this observation failure.
+
+### Reconnected and deployed
+
+The user reconnected successfully after forcing curve25519 key exchange for
+both SSH hops. The default WSL hybrid exchange stalled at the raptor key
+exchange reply; forcing curve25519 reached authentication. The underlying
+network cause remains unconfirmed.
+
+All four requested training jobs survived the observation outage. Experiment2
+seed0 started automatically when GPU0 became free (PID3428389, wrapper3428384),
+while seed1 continued on GPU1 (PID3415859). Experiment3 seeds1/2 continued on
+GPUs2/3. The parallel experiment2 coordinator is now deployed, remotely compiled
+and confirmed live as PID3442230. Only its previous parent PID3417653 was
+stopped; both training wrappers and trainers remained live. Its state explicitly
+reports running seeds0/1 and waiting seed2, which will start on the first free
+GPU0/1. Experiment3 finish queue PID3419065 remains live. No training restart
+or architecture change was performed.
+
+### First experiment3 evaluations and GPU3 reuse
+
+Experiment3 seeds1/2 completed ten epochs (21880 updates each); their six
+epoch1/3/10 evaluations are now saved under `results/slot_our70000/`. All six
+were checked for exact held-out IDs1320-1639, 320 valid scores per metric,
+16x16 patches, seed/checkpoint identity, the prescribed 70000 training IDs and
+no GT use during training or prediction. `partial_summary_seed12.json` reports
+**two seeds only**, not a final three-seed result:
+
+| Epoch | FG-ARI | Foreground IoU | Matched-object IoU |
+| --- | --- | --- | --- |
+| 1 | 0.617100 | 0.216267 | 0.176199 |
+| 3 | 0.745254 | 0.218597 | 0.202319 |
+| 10 | 0.853923 | 0.200172 | 0.212717 |
+
+Experiment3 seed0 is training on GPU2 (PID3444264). Once all six earlier
+evaluations finished, GPU3 became free and experiment2 seed2 started there
+(PID3447194). The coordinator permits GPU3 only after those six scoring
+completion markers exist and nvidia-smi confirms the GPU is free. Its new
+live handle is PID3447179; experiment2 seeds0/1 were preserved on GPUs0/1.
+This follows the user's request to use all four available GPUs. Experiment3's
+remaining seed0 evaluations use GPU2, so GPU3 is no longer required by its
+finish queue. Three-seed conclusions remain pending.
+
+### Experiment2 seed1 completed; missing marker recovered
+
+The trainer completed epoch10 and saved `core.pt` plus epochs01/03/10, but its
+wrapper did not write `TRAINING_COMPLETED`. The queue stopped conservatively;
+the other three training jobs remained alive. Recovery loaded all four saved
+state dictionaries on CPU, checked matching keys and finite values, and proved
+the final model tensors exactly equal the epoch10 model tensors. It also
+required the trainer's epoch10 and final-save log lines. Only then was the
+completion marker restored. Hash evidence and the completed training log are
+saved under `results/our_on_official/`; training was not repeated.
+
+The marker omission's root cause is unconfirmed. A launcher was updated while
+older wrappers were running, so future shell deployments should use a new
+file/inode rather than overwrite an executing script in place.
+
+The current coordinator PID3467736 reports completed seed1 and live seeds0/2.
+`evaluate_seed1_early.sh` PID3467737 evaluates seed1 epochs1/3/10 on the now-free
+GPU1 while the remaining jobs train on GPUs0/2/3. The final coordinator waits
+for this early-evaluation wrapper before reading or generating evaluation
+outputs, avoiding duplicate writes. Actual first evaluation PID3467744 was
+confirmed on GPU1. Model architecture and training parameters are unchanged.
+
+### Experiment2 seed1 early evaluation completed
+
+The three seed1 evaluations completed and are saved in
+`results/our_on_official/seed1_epoch{1,3,10}.json`. Validation checked 320
+held-out images, correct checkpoint/epoch, 1024 steps with settle512,
+membrane threshold .06, spike threshold .50, 16x16 patch scoring, finite
+scores with 320 per-image values and no GT used for prediction.
+`partial_summary_seed1.json` is explicitly a single-seed cross-domain result:
+
+| Epoch | FG-ARI | Foreground IoU | Matched-object IoU |
+| --- | --- | --- | --- |
+| 1 | 0.758584 | 0.345658 | 0.580763 |
+| 3 | 0.748688 | 0.371336 | 0.581524 |
+| 10 | 0.732275 | 0.409210 | 0.593392 |
+
+The early evaluator exited successfully and its completion marker exists.
+Experiment2 seeds0/2 and experiment3 seed0 are still training; both final
+three-seed summaries remain pending.
+
+### Experiment2 seed0 completed and recovered automatically
+
+Seed0 finished training. Its old running wrapper reported `line 30: 1: command
+not found` when returning from the trainer; the launcher had been overwritten
+in place while that wrapper was executing. This is consistent with its script
+read position no longer matching the rewritten file. The coordinator recovered
+the completion marker only after validating all four state dictionaries,
+finite values, final/epoch10 tensor equality and the completed trainer log.
+Evidence is saved in `completion_recovery_seed0.json` and `training_seed0.log`.
+No model training was repeated. Future launcher deployments must preserve
+running scripts by writing a new file and atomically replacing its pathname.
+
+Current live jobs are experiment2 seed2 PID3447194 and experiment3 seed0
+PID3444264. Both queues remain live; experiment2 will evaluate remaining
+checkpoints after seed2 finishes and reuse the completed seed1 evaluations.
+
+## Experiment2 final result
+
+All three seeds completed training and all nine epoch1/3/10 evaluations
+completed. `results/our_on_official/verification.json` validates all ten epochs
+in each training log, correct seed/epoch checkpoint paths, the full 320-image
+evaluation contract, finite per-image scores, and independently recomputed
+three-seed means. Raw evaluations, final summary and completion state are local.
+
+The user explicitly requested evaluation on our data and comparison against
+the public Slot checkpoint. Both reference and experiment2 use the same HDF5
+IDs1320-1639 and 16x16 patch metrics; neither uses GT to predict masks.
+
+| Model/checkpoint | FG-ARI | Foreground IoU | Matched-object IoU |
+| --- | --- | --- | --- |
+| Our model on released Slot data, epoch1, 3-seed mean | 0.769129 | 0.486582 | 0.608472 |
+| Our model on released Slot data, epoch3, 3-seed mean | 0.738899 | 0.569473 | 0.596554 |
+| Our model on released Slot data, epoch10, 3-seed mean | 0.740027 | 0.566435 | 0.603881 |
+| Official pretrained Slot transfer, single checkpoint | 0.894641 | 0.223511 | 0.245968 |
+
+Both IoUs exceed the official checkpoint; FG-ARI does not. This does not meet
+the original all-three-metric objective. The official row is a single pretrained
+checkpoint, not a three-seed training mean. Experiment2 is downstream training
+on 34766 filtered/cropped released images with our previous encoder and frozen
+graph retained; evaluation is cross-domain on our mask-bearing data. It is not
+matched training conditions with experiment1 or the official pretrained model.
+Experiment3 will provide the requested same-70000-training-image comparison.
+
+Experiment1 and experiment2 are complete. Experiment3 seed0 PID3444264 and its
+finish queue PID3419065 remain live; seeds1/2 already have six completed
+evaluations. No model-improvement tests are authorized in the current scope.
+Pause goal mode only after experiment3 results are retrieved, verified,
+compared and shared.
+
+## Experiment3 final result and current completion state
+
+Experiment3 is complete: all three seeds trained ten passes over the same
+70000 HDF5 training IDs as experiment1, and all nine epoch1/3/10 evaluations
+completed. Its final three-seed means are epoch1 `.524048/.212999/.158664`,
+epoch3 `.684707/.215308/.195487`, epoch10 `.774933/.203589/.206937`.
+The earlier two-seed FG-ARI `.853923` was lowered by seed0's `.616953` and
+must not be reported as a three-seed mean.
+
+All training protocols, completion markers, logs, evaluation contracts,
+per-image CSVs, final summary and verification are under
+`results/slot_our70000/`. Independent checks confirmed 21880 updates per seed,
+all ten finite-loss epochs, exact training IDs shared with experiment1, full
+held-out scoring without GT prediction, and recomputed three-seed means.
+No requested GPU job remains live. Historical running-state entries earlier
+in this file are superseded by this section.
+
+See [final experiment1/2/3 comparison](../TEST123_FINAL_RESULTS.md). All
+requested deliverables are complete; pause goal mode after sharing final
+artifacts, as requested. Do not begin another model-modification cycle.
+
+
+````
+
+</details>

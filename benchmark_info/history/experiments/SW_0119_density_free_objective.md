@@ -1,0 +1,33 @@
+# SW_0119_density_free_objective
+
+이 문서의 인용 블록은 기존 문서 원문이다. 서로 다른 시점의 계획/결과를 소급 수정하지 않는다. 원문 안의 상대 경로는 ZIP 안의 원래 디렉터리를 기준으로 해석한다.
+
+## README.md
+
+<details>
+<summary>README.md</summary>
+
+Source SHA256: `839d5ecc8ec694d8e4543770b4e161292f2f732ed5fcb5c51b2a748895ef5801`
+
+````markdown
+# SW0119 density-free objective pilot
+
+SW0119 tests one change to the completed SW0117 analytic-RGB recipe: remove only the explicit PLV target-density balance term from the phase PLV and actual four-component spike-product Q losses. The exact objective change is `L119 = L117 - 10 B(PLV) - 50 B(Q)`, where `B` is the existing off-diagonal density loss targeting 0.867. The configured PLV bimodality, coherence, collapse, phase-primary, positive-Q, and RGB terms remain unchanged. In particular, the remaining collapse prior can still exert density-related pressure; “density-free” here means only that the explicit target-density term is removed. There is no density, coefficient, threshold, or time-window sweep.
+
+The pilot uses the whole SW0097 seed-0 source and registered live encoder, with encoder, graph, and remaining core parameters trainable. It retains SW0117's native-RGB cache, 4096 ordered IDs, shuffle seed 117, batch 16, 256 updates, 64/32 training horizon, fresh Adam, learning rates `3e-5 / 3e-6`, clip 1, and immutable RGB coefficient `7.865416617457706`. Evaluation reuses the unchanged actual-spike production classifier on IDs 1320–1639 with batch 8, 1024/512 steps, threshold 0.50, minimum component size 2, and largest-component background.
+
+Before training, the real four-batch preflight checks the existing SW0117 cache/live and same-input source identity guards, exact labels and hard partitions, the retained loss and rollout against the source, the removed-balance scalar and gradient decomposition, finite nonzero gradients to encoder/graph/core, the fixed count-preserving partition scramble, and a throwaway B16 Adam update. The preflight and all training artifacts are hash-bound. No ground-truth masks are used for training or prediction.
+
+SW0120 completed with the gradient guard enabled but did not improve over its matched references: FG-ARI was 0.8236616854, below the SW0097 source. Its result does not justify adopting that guard for performance. SW0119 tests density removal independently, with the gradient guard disabled.
+
+Earlier SW0117 outlier diagnosis established a verified update-3 zero-centered trace and a large derivative through Pearson normalization. The attempted update-46 replay failed its fixed parity check at update 13 and remains preserved. Neither observation proves that density balance caused later gradient outliers or data-scaling behavior.
+
+SW0119 completed the seed-0 pilot: registered-control validation, actual four-batch GPU preflight, all 256 training updates, and original fixed 320-image evaluation passed. `actual_preflight_summary_20261009.json` records the preflight artifact SHA and checks: all three parameter families changed in the throwaway update, removed-loss gradient decomposition passed, and count-preserving partition scrambling increased RGB loss by 0.4061853.
+
+Candidate metrics (FG-ARI / foreground IoU / matched-object IoU) are **0.8266219 / 0.7162481 / 0.6637756**. Relative to SW0117, FG-ARI changed by +0.0004117 (paired-image 95% CI [-0.0063687, 0.0070418]), foreground IoU by -0.0066649, and matched-object IoU by +0.0042278. FG-ARI versus the original SW0097 source changed by +0.0017541 (95% CI [-0.0056055, 0.0094321]). Neither FG-ARI expansion gate passed. No seed expansion, incumbent replacement or density/coefficient sweep follows this result. The unchanged Pearson path still had large gradients (maximum preclip norm 739498112); removal of the density target did not resolve that conditioning issue. This pilot does not establish the cause of weak 70k data scaling.
+
+Full validated comparison and artifact hashes are in `seed0_paired_summary_20261009.json`. The next independent hypothesis is a training-only competitive assignment module that supplies split/merge credit while retaining the original spike-derived evaluation masks.
+
+````
+
+</details>
