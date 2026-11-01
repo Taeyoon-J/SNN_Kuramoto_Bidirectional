@@ -36,6 +36,18 @@ def verify():
             head=row['head'];assert head['updates']==2 and head['unique_train']==2
             assert head['encoder_core_gradients_absent'] and head['optimizer_restore_verified']
             assert all(v>0 for v in head['gradient_coverage'].values())
+    capacity=json.loads((HERE/request['capacity_evidence']).read_bytes())
+    manager=HERE/request['optional_capacity_manager']
+    assert hashlib.sha256(manager.read_bytes()).hexdigest()==capacity['manager']['manager_sha256']
+    policy=capacity['memory_policy']
+    assert policy['maximum_workers_per_GPU']==2 and policy['allocator_limit_MiB']==13000
+    assert policy['reduced_allocator_not_adopted'] and capacity['scientific_source_and_backward_unchanged']
+    assert len(capacity['new_workers'])>=4 and all(r['scientific_code_and_training_budget_unchanged'] for r in capacity['new_workers'])
+    for row in capacity['same_GPU_allocator_control']['rows']:
+        original=row['results'][0]
+        assert original['cap']==13000 and original['core_fixed']
+        assert original['peak_reserved_MiB']*2+1024<policy['reservation_per_additional_worker_MiB']
+        assert row['equal']['predictions'] and row['equal']['metrics']
     return dict(status='SW0257_source_and_actual_partial_admissions_verified',source_files=count,
         actual_admissions=len(proof['admissions']),scientific_results_complete=proof['full_training_complete'],
         full_goal_complete=False,warning='admissions are diagnostics, not benchmark results')

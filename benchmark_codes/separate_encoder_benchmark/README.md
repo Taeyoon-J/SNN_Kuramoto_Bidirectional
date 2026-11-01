@@ -47,3 +47,21 @@ initialize full training. Checkpoints preserve Adam/RNG/offset; code/data/source
 bindings fail closed on changes. The final independent audit checks every TRAIN
 ID/update, prediction hashes and recomputes all protected metrics. Failures keep
 artifacts and are diagnosed before resuming; foreign GPU processes are untouched.
+
+## Optional concurrency manager
+
+`manage_separate_capacity.py --root OUTPUT` can fill a second worker slot per GPU
+after a resource dry-run and actual CUDA memory profiling. The recorded original
+13,000MiB allocator peak was below2,000MiB for representative252/253 diagnostics.
+The additional worker reserves8,000MiB for scheduling, but keeps the ORIGINAL
+13,000MiB allocator, identical scientific entrypoint, batch16 and training budgets.
+The reduced8,000MiB allocator was **not adopted**: tiny252 encoder differences
+propagated to detached head weights, despite identical diagnostic hard masks.
+Raw comparison evidence is retained in `validation/concurrency_revision.json`.
+
+The manager accounts for foreign GPU memory, adds1,024MiB GPU headroom, limits
+each GPU to two scientific workers and reserves eventual10GiB host RAM per worker.
+It only quiesces the coordinator in its verified20s sleep interval to serialize
+launch bookkeeping; scientific workers are never signalled. It fails closed if
+the locked coordinator source, profiled memory bound or source binding changes.
+The original `queue` entrypoint remains usable without this optional manager.

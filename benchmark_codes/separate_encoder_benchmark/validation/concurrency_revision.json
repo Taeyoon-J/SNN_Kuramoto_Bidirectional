@@ -1,0 +1,292 @@
+{
+  "status": "additional_original_configuration_workers_started",
+  "observed": 1793554206.5349846,
+  "manager": {
+    "pid": 3843015,
+    "manager": "/work/USERS/kevinswk/experiments/SW0257_separate_encoder35000/capacity_feeders/21ac06993d4e/manage_separate_capacity.py",
+    "manager_sha256": "21ac06993d4e0991567bd606c09e1748ab1be5fdd053a3cc4e1f85a667186410",
+    "created": 1793554096.0774133
+  },
+  "same_GPU_allocator_control": {
+    "status": "allocator_control_differs",
+    "rows": [
+      {
+        "variant": 252,
+        "dataset": "clevrtex_original",
+        "results": [
+          {
+            "cap": 13000,
+            "encoder_sha": "ace5fac87a7cd1ed513cb03249ec3cc95269db053a47f54e25b47916dac1e518",
+            "head_sha": "817770b65928552ef74ce04599845b997ca474e2993618c4b8cb911080206b75",
+            "predictions": {
+              "ids": [
+                36000
+              ],
+              "GT_used_for_prediction": false,
+              "hashes": {
+                "036000.npy": "ded8e932d8ec46dc5218fa77c4b2504abf86778597f96ed82004b467e9ace750"
+              }
+            },
+            "metrics": {
+              "fg_ari": 0.5245251113901241,
+              "foreground_iou": 0.05096435546875,
+              "matched_object_iou": 0.2583378938142082
+            },
+            "peak_allocated_MiB": 1441.02734375,
+            "peak_reserved_MiB": 1974.0,
+            "core_fixed": true
+          },
+          {
+            "cap": 8000,
+            "encoder_sha": "10ffcbd3c4bd89366a88a88c5ca18385d49767e876fd4538dc8bb5c5a884f3f9",
+            "head_sha": "1e6e2740a329f60a3cfa48ac8b479fa404a0f1c8533ce15dc56ec497d731afa6",
+            "predictions": {
+              "ids": [
+                36000
+              ],
+              "GT_used_for_prediction": false,
+              "hashes": {
+                "036000.npy": "ded8e932d8ec46dc5218fa77c4b2504abf86778597f96ed82004b467e9ace750"
+              }
+            },
+            "metrics": {
+              "fg_ari": 0.5245251113901241,
+              "foreground_iou": 0.05096435546875,
+              "matched_object_iou": 0.2583378938142082
+            },
+            "peak_allocated_MiB": 1441.02734375,
+            "peak_reserved_MiB": 1974.0,
+            "core_fixed": true
+          }
+        ],
+        "equal": {
+          "encoder_sha": false,
+          "head_sha": false,
+          "predictions": true,
+          "metrics": true
+        }
+      },
+      {
+        "variant": 253,
+        "dataset": "clevr",
+        "results": [
+          {
+            "cap": 13000,
+            "encoder_sha": "eff2417ad75b3202eeac8c7ca46eab88c59826baffe8c3c91795af0b0e55895c",
+            "head_sha": null,
+            "predictions": {
+              "ids": [
+                1320
+              ],
+              "GT_used_for_prediction": false,
+              "hashes": {
+                "001320.npy": "38565e45dc39861f3d8a9f04e15d15c25632aff946f2adb87e0dad856863c404"
+              }
+            },
+            "metrics": {
+              "fg_ari": 0.9380379511303479,
+              "foreground_iou": 0.9025590551181102,
+              "matched_object_iou": 0.8713805887970635
+            },
+            "peak_allocated_MiB": 1440.8212890625,
+            "peak_reserved_MiB": 1940.0,
+            "core_fixed": true
+          },
+          {
+            "cap": 8000,
+            "encoder_sha": "eff2417ad75b3202eeac8c7ca46eab88c59826baffe8c3c91795af0b0e55895c",
+            "head_sha": null,
+            "predictions": {
+              "ids": [
+                1320
+              ],
+              "GT_used_for_prediction": false,
+              "hashes": {
+                "001320.npy": "38565e45dc39861f3d8a9f04e15d15c25632aff946f2adb87e0dad856863c404"
+              }
+            },
+            "metrics": {
+              "fg_ari": 0.9380379511303479,
+              "foreground_iou": 0.9025590551181102,
+              "matched_object_iou": 0.8713805887970635
+            },
+            "peak_allocated_MiB": 1440.8212890625,
+            "peak_reserved_MiB": 1940.0,
+            "core_fixed": true
+          }
+        ],
+        "equal": {
+          "encoder_sha": true,
+          "head_sha": true,
+          "predictions": true,
+          "metrics": true
+        }
+      }
+    ],
+    "current_scientific_workers_unchanged": true,
+    "goal_complete": false,
+    "observed": 1793553781.6870828
+  },
+  "memory_policy": {
+    "maximum_workers_per_GPU": 2,
+    "reservation_per_additional_worker_MiB": 8000,
+    "allocator_limit_MiB": 13000,
+    "extra_GPU_headroom_MiB": 1024,
+    "future_host_RAM_per_worker_MiB": 10240,
+    "reduced_allocator_not_adopted": true
+  },
+  "new_workers": [
+    {
+      "variant": 252,
+      "dataset": "clevrtex_original",
+      "seed": 0,
+      "record": {
+        "pid": 3843026,
+        "start_ticks": 570616489,
+        "command": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "-B",
+          "/work/USERS/kevinswk/experiments/SW0257_separate_encoder35000/code/dadd66565e9d/benchmark_codes/run_separate_encoder.py",
+          "--config",
+          "/work/USERS/kevinswk/experiments/SW0257_separate_encoder35000/code/dadd66565e9d/benchmark_codes/configs/frontier.json",
+          "--sources",
+          "/work/USERS/kevinswk/experiments/SW0257_separate_encoder35000/code/dadd66565e9d/benchmark_codes/frozen_core_benchmark/sources.frontier.json",
+          "--heads",
+          "/work/USERS/kevinswk/experiments/SW0257_separate_encoder35000/code/dadd66565e9d/benchmark_codes/separate_encoder_benchmark/heads.frontier.json",
+          "--output",
+          "/work/USERS/kevinswk/experiments/SW0257_separate_encoder35000",
+          "train",
+          "--model",
+          "252",
+          "--dataset",
+          "clevrtex_original",
+          "--seed",
+          "0"
+        ],
+        "gpu": 2,
+        "created": 1793554096.3072805,
+        "reservation_mib": 8000,
+        "allocator_limit_MiB": 13000,
+        "capacity_feeder_sha256": "21ac06993d4e0991567bd606c09e1748ab1be5fdd053a3cc4e1f85a667186410",
+        "capacity_evidence_sha256": "926e7c1185d7e7e77ae4cf654abefc9e0c31410ef59849d0b2102c6da611d93e"
+      },
+      "binding_sha256": "613f127aeebf5f8ae7a28555aca22effe56740f1a0a7589205d8e08de741f6a5",
+      "scientific_code_and_training_budget_unchanged": true
+    },
+    {
+      "variant": 252,
+      "dataset": "clevrtex_original",
+      "seed": 1,
+      "record": {
+        "pid": 3843027,
+        "start_ticks": 570616489,
+        "command": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "-B",
+          "/work/USERS/kevinswk/experiments/SW0257_separate_encoder35000/code/dadd66565e9d/benchmark_codes/run_separate_encoder.py",
+          "--config",
+          "/work/USERS/kevinswk/experiments/SW0257_separate_encoder35000/code/dadd66565e9d/benchmark_codes/configs/frontier.json",
+          "--sources",
+          "/work/USERS/kevinswk/experiments/SW0257_separate_encoder35000/code/dadd66565e9d/benchmark_codes/frozen_core_benchmark/sources.frontier.json",
+          "--heads",
+          "/work/USERS/kevinswk/experiments/SW0257_separate_encoder35000/code/dadd66565e9d/benchmark_codes/separate_encoder_benchmark/heads.frontier.json",
+          "--output",
+          "/work/USERS/kevinswk/experiments/SW0257_separate_encoder35000",
+          "train",
+          "--model",
+          "252",
+          "--dataset",
+          "clevrtex_original",
+          "--seed",
+          "1"
+        ],
+        "gpu": 3,
+        "created": 1793554096.3102412,
+        "reservation_mib": 8000,
+        "allocator_limit_MiB": 13000,
+        "capacity_feeder_sha256": "21ac06993d4e0991567bd606c09e1748ab1be5fdd053a3cc4e1f85a667186410",
+        "capacity_evidence_sha256": "926e7c1185d7e7e77ae4cf654abefc9e0c31410ef59849d0b2102c6da611d93e"
+      },
+      "binding_sha256": "2eaf135f49d6499a85b25ed16d40a218c3e46e92bcf1f7cefeaa4c3e8a264ffc",
+      "scientific_code_and_training_budget_unchanged": true
+    },
+    {
+      "variant": 252,
+      "dataset": "tetrominoes",
+      "seed": 1,
+      "record": {
+        "pid": 3843024,
+        "start_ticks": 570616488,
+        "command": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "-B",
+          "/work/USERS/kevinswk/experiments/SW0257_separate_encoder35000/code/dadd66565e9d/benchmark_codes/run_separate_encoder.py",
+          "--config",
+          "/work/USERS/kevinswk/experiments/SW0257_separate_encoder35000/code/dadd66565e9d/benchmark_codes/configs/frontier.json",
+          "--sources",
+          "/work/USERS/kevinswk/experiments/SW0257_separate_encoder35000/code/dadd66565e9d/benchmark_codes/frozen_core_benchmark/sources.frontier.json",
+          "--heads",
+          "/work/USERS/kevinswk/experiments/SW0257_separate_encoder35000/code/dadd66565e9d/benchmark_codes/separate_encoder_benchmark/heads.frontier.json",
+          "--output",
+          "/work/USERS/kevinswk/experiments/SW0257_separate_encoder35000",
+          "train",
+          "--model",
+          "252",
+          "--dataset",
+          "tetrominoes",
+          "--seed",
+          "1"
+        ],
+        "gpu": 0,
+        "created": 1793554096.3015428,
+        "reservation_mib": 8000,
+        "allocator_limit_MiB": 13000,
+        "capacity_feeder_sha256": "21ac06993d4e0991567bd606c09e1748ab1be5fdd053a3cc4e1f85a667186410",
+        "capacity_evidence_sha256": "926e7c1185d7e7e77ae4cf654abefc9e0c31410ef59849d0b2102c6da611d93e"
+      },
+      "binding_sha256": "25070c0917e6ea286efe28505ff756b1ae9176741fe41ea4884f1b0bdbd6b9f1",
+      "scientific_code_and_training_budget_unchanged": true
+    },
+    {
+      "variant": 252,
+      "dataset": "tetrominoes",
+      "seed": 2,
+      "record": {
+        "pid": 3843025,
+        "start_ticks": 570616489,
+        "command": [
+          "/Data0/kevinswk/envs/snn/bin/python",
+          "-B",
+          "/work/USERS/kevinswk/experiments/SW0257_separate_encoder35000/code/dadd66565e9d/benchmark_codes/run_separate_encoder.py",
+          "--config",
+          "/work/USERS/kevinswk/experiments/SW0257_separate_encoder35000/code/dadd66565e9d/benchmark_codes/configs/frontier.json",
+          "--sources",
+          "/work/USERS/kevinswk/experiments/SW0257_separate_encoder35000/code/dadd66565e9d/benchmark_codes/frozen_core_benchmark/sources.frontier.json",
+          "--heads",
+          "/work/USERS/kevinswk/experiments/SW0257_separate_encoder35000/code/dadd66565e9d/benchmark_codes/separate_encoder_benchmark/heads.frontier.json",
+          "--output",
+          "/work/USERS/kevinswk/experiments/SW0257_separate_encoder35000",
+          "train",
+          "--model",
+          "252",
+          "--dataset",
+          "tetrominoes",
+          "--seed",
+          "2"
+        ],
+        "gpu": 1,
+        "created": 1793554096.3041797,
+        "reservation_mib": 8000,
+        "allocator_limit_MiB": 13000,
+        "capacity_feeder_sha256": "21ac06993d4e0991567bd606c09e1748ab1be5fdd053a3cc4e1f85a667186410",
+        "capacity_evidence_sha256": "926e7c1185d7e7e77ae4cf654abefc9e0c31410ef59849d0b2102c6da611d93e"
+      },
+      "binding_sha256": "e90ea2a5aeb649e4d59ab3912ff8d1eca5b536352671d625b9ee9afa99e31b6d",
+      "scientific_code_and_training_budget_unchanged": true
+    }
+  ],
+  "original_workers_not_restarted": true,
+  "scientific_source_and_backward_unchanged": true,
+  "goal_complete": false,
+  "scientific_results_complete": 0
+}
