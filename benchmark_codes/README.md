@@ -1,5 +1,8 @@
-> Current goal is **SW0256: pretrained core fixed, encoder fine-tuning,35000 TRAIN x10epochs,252/253 x3datasets x3seeds**.
-> Use [the frozen-core instructions](frozen_core_benchmark/README.md) and `run_frozen_core.py`.
+> Current goal is **SW0257: separated encoder35000x10; detached252 head3500x10; fixed pretrained core; 18 conditions**.
+> Use [the separated training instructions](separate_encoder_benchmark/README.md) and `run_separate_encoder.py`.
+> No recurrent simulation/backprop runs during encoder learning. SW0256's previous
+> encoder-through-core training is stopped and preserved, and is not reused as a completed result.
+> The remainder below documents historical SW0256/SW0255 protocols.
 > `verify_frozen_core.py` checks its actual partial validation evidence. The older `run.py`
 > and `configs/active_request.json` below retain the separate SW0255 scratch protocol.
 > REQUEST_0010 replacement: future SW0256 jobs fuse four coupling bmms into two only in
