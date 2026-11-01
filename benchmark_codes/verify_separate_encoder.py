@@ -1,5 +1,5 @@
 """Stdlib-only validation of SW0257 published source and actual admission evidence."""
-import hashlib,json
+import hashlib,itertools,json
 from pathlib import Path,PurePosixPath
 HERE=Path(__file__).resolve().parent
 
@@ -20,9 +20,12 @@ def verify():
         assert hashlib.sha256(path.read_bytes()).hexdigest()==sha,str(path);count+=1
     expected=pre['protected_benchmark']
     for name,sha in expected.items():assert hashlib.sha256((HERE/'vendor'/name).read_bytes()).hexdigest()==sha
-    assert len(proof['admissions'])>=4
+    assert len(proof['admissions'])==18
+    assert {(r['binding']['variant'],r['binding']['dataset']['dataset'],r['binding']['seed']) for r in proof['admissions']}==set(
+        itertools.product((252,253),('clevr','tetrominoes','clevrtex_original'),(0,1,2)))
     for row in proof['admissions']:
         done=row['complete'];binding=row['binding'];enc=row['encoder']
+        assert binding['code']==pre['code']
         assert done['diagnostic_only'] and done['count']==1 and done['status']=='admission_passed'
         assert binding['diagnostic_only'] and not binding['core_backward'] and not binding['core_weight_updates']
         assert enc['updates']==2 and enc['images_seen']==32 and enc['core_simulation_calls']==0
