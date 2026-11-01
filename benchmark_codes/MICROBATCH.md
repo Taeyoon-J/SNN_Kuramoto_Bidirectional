@@ -1,4 +1,6 @@
-> UPDATE: proposal withdrawn in peer commit08e384a. Supported run.py training/queue commands now default to physical1. Batched forward with independent per-image objectives remains an explicit experimental option (--microbatch auto/2/4), not a validated faster default. The earlier automatic-default description below is historical. The replacement fused-bmm proposal has not yet been applied here.
+> UPDATE: proposal withdrawn in peer commit08e384a. Supported run.py training/queue commands default to physical1. Batched forward with independent per-image objectives remains an explicit experiment, not a validated faster default. The earlier automatic-default description below is historical.
+>
+> SW0256 now enables the replacement fused-bmm proposal for the no-gradient960-step prefix of future queued jobs. The live64 autograd tail retains four bmms. All18 actual native64 forward/loss/gradient controls and all6 initialization checks passed; measured shared-GPU median end-to-end speedup was1.051x. Existing running workers keep their original immutable packages. See [the frozen-core protocol](frozen_core_benchmark/README.md) and its execution evidence. A separate physical2 control is queued until14500MiB is free; no physical2 scientific training is enabled.
 
 # REQUEST_0010 반영: 앞으로의 학습·검증 방법
 

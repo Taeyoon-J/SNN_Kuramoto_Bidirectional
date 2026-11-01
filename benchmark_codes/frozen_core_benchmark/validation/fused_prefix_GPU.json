@@ -1,0 +1,468 @@
+{
+  "status": "all18_native64_full_forward_and_control_matched_gradients_passed",
+  "candidate_sha256": "e21851f2f1525505b237666e80f058ef703e3c6dae5a60f245a9fcf93171f40f",
+  "GPU": 3,
+  "device": "NVIDIA TITAN RTX",
+  "physical_microbatch": 1,
+  "logical_batch": 16,
+  "rollout_steps": 1024,
+  "gradient_tail_steps": 64,
+  "no_grad_prefix_bmm_count": 2,
+  "live_tail_bmm_count": 4,
+  "rows": [
+    {
+      "model": 252,
+      "dataset": "clevr",
+      "seed": 0,
+      "image_id": 59220,
+      "source": "actual_current_checkpoint_update24",
+      "all_full_forward_tensor_hashes_equal": true,
+      "loss_equal": true,
+      "control_gradient": {
+        "relative_l2": 2.6745973201602666e-09,
+        "cosine": 0.9999999999999998,
+        "max_absolute": 3.725290298461914e-09
+      },
+      "fused_prefix_gradient": {
+        "relative_l2": 2.5032980894378367e-09,
+        "cosine": 0.9999999999999996,
+        "max_absolute": 3.725290298461914e-09
+      },
+      "gradient_limit": 1e-07,
+      "core_unchanged": true,
+      "old_seconds": 14.139787588268518,
+      "new_seconds": 14.908929790370166,
+      "speedup": 0.9484106362484552,
+      "peak_allocated_MiB": 6400.0
+    },
+    {
+      "model": 252,
+      "dataset": "clevr",
+      "seed": 1,
+      "image_id": 17867,
+      "source": "actual_current_checkpoint_update24",
+      "all_full_forward_tensor_hashes_equal": true,
+      "loss_equal": true,
+      "control_gradient": {
+        "relative_l2": 7.146236224455923e-09,
+        "cosine": 0.9999999999999997,
+        "max_absolute": 1.4901161193847656e-08
+      },
+      "fused_prefix_gradient": {
+        "relative_l2": 6.822639370513973e-10,
+        "cosine": 0.9999999999999998,
+        "max_absolute": 4.656612873077393e-10
+      },
+      "gradient_limit": 1e-07,
+      "core_unchanged": true,
+      "old_seconds": 17.27891461364925,
+      "new_seconds": 14.993795678019524,
+      "speedup": 1.152404300065236,
+      "peak_allocated_MiB": 6400.0
+    },
+    {
+      "model": 252,
+      "dataset": "clevr",
+      "seed": 2,
+      "image_id": 27667,
+      "source": "registered_pretrained_initialization",
+      "all_full_forward_tensor_hashes_equal": true,
+      "loss_equal": true,
+      "control_gradient": {
+        "relative_l2": 3.1889643466483945e-08,
+        "cosine": 0.9999999999999996,
+        "max_absolute": 3.725290298461914e-09
+      },
+      "fused_prefix_gradient": {
+        "relative_l2": 1.2878889706478648e-08,
+        "cosine": 0.9999999999999998,
+        "max_absolute": 3.725290298461914e-09
+      },
+      "gradient_limit": 1.5944821733241973e-07,
+      "core_unchanged": true,
+      "old_seconds": 17.569278832525015,
+      "new_seconds": 16.81229311786592,
+      "speedup": 1.0450257266722687,
+      "peak_allocated_MiB": 6400.0
+    },
+    {
+      "model": 252,
+      "dataset": "tetrominoes",
+      "seed": 0,
+      "image_id": 31330,
+      "source": "registered_pretrained_initialization",
+      "all_full_forward_tensor_hashes_equal": true,
+      "loss_equal": true,
+      "control_gradient": {
+        "relative_l2": 3.2622329707898475e-09,
+        "cosine": 1.0,
+        "max_absolute": 1.862645149230957e-09
+      },
+      "fused_prefix_gradient": {
+        "relative_l2": 6.061756971968295e-09,
+        "cosine": 1.0,
+        "max_absolute": 3.725290298461914e-09
+      },
+      "gradient_limit": 1e-07,
+      "core_unchanged": true,
+      "old_seconds": 18.49348706798628,
+      "new_seconds": 19.515851380303502,
+      "speedup": 0.9476136453186433,
+      "peak_allocated_MiB": 6400.0
+    },
+    {
+      "model": 252,
+      "dataset": "tetrominoes",
+      "seed": 1,
+      "image_id": 10659,
+      "source": "registered_pretrained_initialization",
+      "all_full_forward_tensor_hashes_equal": true,
+      "loss_equal": true,
+      "control_gradient": {
+        "relative_l2": 2.5889392995651956e-09,
+        "cosine": 1.0,
+        "max_absolute": 4.656612873077393e-10
+      },
+      "fused_prefix_gradient": {
+        "relative_l2": 6.123688247172652e-09,
+        "cosine": 1.0,
+        "max_absolute": 1.862645149230957e-09
+      },
+      "gradient_limit": 1e-07,
+      "core_unchanged": true,
+      "old_seconds": 15.773088490590453,
+      "new_seconds": 15.319479836151004,
+      "speedup": 1.0296099253558872,
+      "peak_allocated_MiB": 6400.0
+    },
+    {
+      "model": 252,
+      "dataset": "tetrominoes",
+      "seed": 2,
+      "image_id": 15623,
+      "source": "registered_pretrained_initialization",
+      "all_full_forward_tensor_hashes_equal": true,
+      "loss_equal": true,
+      "control_gradient": {
+        "relative_l2": 2.231280135347025e-08,
+        "cosine": 0.9999999999999998,
+        "max_absolute": 7.450580596923828e-09
+      },
+      "fused_prefix_gradient": {
+        "relative_l2": 2.519475510961852e-08,
+        "cosine": 0.9999999999999997,
+        "max_absolute": 7.450580596923828e-09
+      },
+      "gradient_limit": 1.1156400676735125e-07,
+      "core_unchanged": true,
+      "old_seconds": 16.248548766598105,
+      "new_seconds": 15.677505161613226,
+      "speedup": 1.0364243927269177,
+      "peak_allocated_MiB": 6400.0
+    },
+    {
+      "model": 252,
+      "dataset": "clevrtex_original",
+      "seed": 0,
+      "image_id": 29330,
+      "source": "registered_pretrained_initialization",
+      "all_full_forward_tensor_hashes_equal": true,
+      "loss_equal": true,
+      "control_gradient": {
+        "relative_l2": 2.6046699967322576e-09,
+        "cosine": 1.0,
+        "max_absolute": 7.450580596923828e-09
+      },
+      "fused_prefix_gradient": {
+        "relative_l2": 4.144131554379293e-09,
+        "cosine": 1.0,
+        "max_absolute": 1.4901161193847656e-08
+      },
+      "gradient_limit": 1e-07,
+      "core_unchanged": true,
+      "old_seconds": 15.815439442638308,
+      "new_seconds": 16.520919145084918,
+      "speedup": 0.9572977934065796,
+      "peak_allocated_MiB": 6400.0
+    },
+    {
+      "model": 252,
+      "dataset": "clevrtex_original",
+      "seed": 1,
+      "image_id": 8659,
+      "source": "registered_pretrained_initialization",
+      "all_full_forward_tensor_hashes_equal": true,
+      "loss_equal": true,
+      "control_gradient": {
+        "relative_l2": 4.54433676159911e-09,
+        "cosine": 1.0,
+        "max_absolute": 1.862645149230957e-09
+      },
+      "fused_prefix_gradient": {
+        "relative_l2": 9.012503192691512e-09,
+        "cosine": 0.9999999999999998,
+        "max_absolute": 3.725290298461914e-09
+      },
+      "gradient_limit": 1e-07,
+      "core_unchanged": true,
+      "old_seconds": 12.661596882157028,
+      "new_seconds": 12.625246478244662,
+      "speedup": 1.002879183703463,
+      "peak_allocated_MiB": 6400.0
+    },
+    {
+      "model": 252,
+      "dataset": "clevrtex_original",
+      "seed": 2,
+      "image_id": 13623,
+      "source": "registered_pretrained_initialization",
+      "all_full_forward_tensor_hashes_equal": true,
+      "loss_equal": true,
+      "control_gradient": {
+        "relative_l2": 1.589431797571294e-08,
+        "cosine": 1.0,
+        "max_absolute": 3.725290298461914e-09
+      },
+      "fused_prefix_gradient": {
+        "relative_l2": 3.106333884342815e-08,
+        "cosine": 0.9999999999999994,
+        "max_absolute": 3.725290298461914e-09
+      },
+      "gradient_limit": 1e-07,
+      "core_unchanged": true,
+      "old_seconds": 15.421419721562415,
+      "new_seconds": 16.725800276733935,
+      "speedup": 0.9220138627993812,
+      "peak_allocated_MiB": 6400.0
+    },
+    {
+      "model": 253,
+      "dataset": "clevr",
+      "seed": 0,
+      "image_id": 59220,
+      "source": "registered_pretrained_initialization",
+      "all_full_forward_tensor_hashes_equal": true,
+      "loss_equal": true,
+      "control_gradient": {
+        "relative_l2": 0.0,
+        "cosine": 1.0,
+        "max_absolute": 0.0
+      },
+      "fused_prefix_gradient": {
+        "relative_l2": 1.424787128219083e-09,
+        "cosine": 1.0000000000000002,
+        "max_absolute": 3.725290298461914e-09
+      },
+      "gradient_limit": 1e-07,
+      "core_unchanged": true,
+      "old_seconds": 4.747574389446527,
+      "new_seconds": 4.490892875008285,
+      "speedup": 1.0571560091906598,
+      "peak_allocated_MiB": 6400.0
+    },
+    {
+      "model": 253,
+      "dataset": "clevr",
+      "seed": 1,
+      "image_id": 17867,
+      "source": "registered_pretrained_initialization",
+      "all_full_forward_tensor_hashes_equal": true,
+      "loss_equal": true,
+      "control_gradient": {
+        "relative_l2": 0.0,
+        "cosine": 1.0,
+        "max_absolute": 0.0
+      },
+      "fused_prefix_gradient": {
+        "relative_l2": 1.967802380365729e-08,
+        "cosine": 0.9999999999999997,
+        "max_absolute": 3.725290298461914e-09
+      },
+      "gradient_limit": 1e-07,
+      "core_unchanged": true,
+      "old_seconds": 5.006589551456273,
+      "new_seconds": 3.983465801924467,
+      "speedup": 1.2568426090259193,
+      "peak_allocated_MiB": 6400.0
+    },
+    {
+      "model": 253,
+      "dataset": "clevr",
+      "seed": 2,
+      "image_id": 27667,
+      "source": "registered_pretrained_initialization",
+      "all_full_forward_tensor_hashes_equal": true,
+      "loss_equal": true,
+      "control_gradient": {
+        "relative_l2": 6.206222452257857e-09,
+        "cosine": 0.9999999999999999,
+        "max_absolute": 9.313225746154785e-10
+      },
+      "fused_prefix_gradient": {
+        "relative_l2": 0.0,
+        "cosine": 1.0,
+        "max_absolute": 0.0
+      },
+      "gradient_limit": 1e-07,
+      "core_unchanged": true,
+      "old_seconds": 5.263871014583856,
+      "new_seconds": 3.909197760745883,
+      "speedup": 1.346534848515696,
+      "peak_allocated_MiB": 6400.0
+    },
+    {
+      "model": 253,
+      "dataset": "tetrominoes",
+      "seed": 0,
+      "image_id": 31330,
+      "source": "registered_pretrained_initialization",
+      "all_full_forward_tensor_hashes_equal": true,
+      "loss_equal": true,
+      "control_gradient": {
+        "relative_l2": 0.0,
+        "cosine": 1.0,
+        "max_absolute": 0.0
+      },
+      "fused_prefix_gradient": {
+        "relative_l2": 0.0,
+        "cosine": 1.0,
+        "max_absolute": 0.0
+      },
+      "gradient_limit": 1e-07,
+      "core_unchanged": true,
+      "old_seconds": 5.13414700422436,
+      "new_seconds": 4.567901425994933,
+      "speedup": 1.1239618646337346,
+      "peak_allocated_MiB": 6400.0
+    },
+    {
+      "model": 253,
+      "dataset": "tetrominoes",
+      "seed": 1,
+      "image_id": 10659,
+      "source": "registered_pretrained_initialization",
+      "all_full_forward_tensor_hashes_equal": true,
+      "loss_equal": true,
+      "control_gradient": {
+        "relative_l2": 5.911453530081749e-10,
+        "cosine": 1.0,
+        "max_absolute": 1.1641532182693481e-10
+      },
+      "fused_prefix_gradient": {
+        "relative_l2": 5.911453530081749e-10,
+        "cosine": 1.0,
+        "max_absolute": 1.1641532182693481e-10
+      },
+      "gradient_limit": 1e-07,
+      "core_unchanged": true,
+      "old_seconds": 5.138129740487784,
+      "new_seconds": 5.238340679556131,
+      "speedup": 0.9808697171110989,
+      "peak_allocated_MiB": 6400.0
+    },
+    {
+      "model": 253,
+      "dataset": "tetrominoes",
+      "seed": 2,
+      "image_id": 15623,
+      "source": "registered_pretrained_initialization",
+      "all_full_forward_tensor_hashes_equal": true,
+      "loss_equal": true,
+      "control_gradient": {
+        "relative_l2": 6.657989545374588e-09,
+        "cosine": 0.9999999999999999,
+        "max_absolute": 1.862645149230957e-09
+      },
+      "fused_prefix_gradient": {
+        "relative_l2": 6.432222649891155e-09,
+        "cosine": 1.0,
+        "max_absolute": 1.862645149230957e-09
+      },
+      "gradient_limit": 1e-07,
+      "core_unchanged": true,
+      "old_seconds": 5.248666009865701,
+      "new_seconds": 4.46396295633167,
+      "speedup": 1.1757861929434272,
+      "peak_allocated_MiB": 6400.0
+    },
+    {
+      "model": 253,
+      "dataset": "clevrtex_original",
+      "seed": 0,
+      "image_id": 29330,
+      "source": "registered_pretrained_initialization",
+      "all_full_forward_tensor_hashes_equal": true,
+      "loss_equal": true,
+      "control_gradient": {
+        "relative_l2": 0.0,
+        "cosine": 1.0,
+        "max_absolute": 0.0
+      },
+      "fused_prefix_gradient": {
+        "relative_l2": 0.0,
+        "cosine": 1.0,
+        "max_absolute": 0.0
+      },
+      "gradient_limit": 1e-07,
+      "core_unchanged": true,
+      "old_seconds": 4.821499921847135,
+      "new_seconds": 4.188619586639106,
+      "speedup": 1.1510952050233436,
+      "peak_allocated_MiB": 6400.0
+    },
+    {
+      "model": 253,
+      "dataset": "clevrtex_original",
+      "seed": 1,
+      "image_id": 8659,
+      "source": "registered_pretrained_initialization",
+      "all_full_forward_tensor_hashes_equal": true,
+      "loss_equal": true,
+      "control_gradient": {
+        "relative_l2": 9.076848518137059e-09,
+        "cosine": 1.0,
+        "max_absolute": 2.7939677238464355e-09
+      },
+      "fused_prefix_gradient": {
+        "relative_l2": 1.012564842937378e-08,
+        "cosine": 0.9999999999999999,
+        "max_absolute": 3.725290298461914e-09
+      },
+      "gradient_limit": 1e-07,
+      "core_unchanged": true,
+      "old_seconds": 5.329627260565758,
+      "new_seconds": 4.862608554773033,
+      "speedup": 1.0960428339094475,
+      "peak_allocated_MiB": 6400.0
+    },
+    {
+      "model": 253,
+      "dataset": "clevrtex_original",
+      "seed": 2,
+      "image_id": 13623,
+      "source": "registered_pretrained_initialization",
+      "all_full_forward_tensor_hashes_equal": true,
+      "loss_equal": true,
+      "control_gradient": {
+        "relative_l2": 0.0,
+        "cosine": 1.0,
+        "max_absolute": 0.0
+      },
+      "fused_prefix_gradient": {
+        "relative_l2": 2.1469981986191454e-08,
+        "cosine": 0.9999999999999998,
+        "max_absolute": 1.862645149230957e-09
+      },
+      "gradient_limit": 1e-07,
+      "core_unchanged": true,
+      "old_seconds": 4.771696352865547,
+      "new_seconds": 3.8120150081813335,
+      "speedup": 1.251751722546881,
+      "peak_allocated_MiB": 6400.0
+    }
+  ],
+  "baseline_package": "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes",
+  "median_speedup": 1.0510908679314643,
+  "scientific_training_workers_modified": false,
+  "multi_image_full_model_not_tested": true
+}

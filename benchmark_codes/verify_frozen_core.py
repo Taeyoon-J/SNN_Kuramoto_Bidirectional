@@ -4,6 +4,65 @@ from pathlib import Path,PurePosixPath
 HERE=Path(__file__).resolve().parent
 
 
+def canonical(code):
+    result={}
+    for path,sha in code.items():
+        parts=PurePosixPath(path).parts
+        name='/'.join(parts[parts.index('benchmark_codes')+1:])
+        assert name not in result;result[name]=sha
+    return result
+
+
+def verify_execution_revision(base,baseline):
+    revision=json.loads((base/'validation/execution_revision.json').read_bytes())
+    contract=revision['contract'];assert contract['status']=='verified_fused_no_grad_prefix_only'
+    old=canonical(contract['from_code']);new=canonical(contract['to_code'])
+    assert old==canonical(baseline['preparation']['code'])
+    changed={n for n in old.keys()|new.keys() if old.get(n)!=new.get(n)}
+    assert changed=={'frozen_core_benchmark/model.py','frozen_core_benchmark/queue.py',
+                     'frozen_core_benchmark/execution.py','vendor/snn_kuramoto_bidirectional/kuramoto_layer.py'}
+    for name,sha in new.items():assert hashlib.sha256((HERE/name).read_bytes()).hexdigest()==sha,name
+    proofs={}
+    for name,record in revision['local_proofs'].items():
+        path=base/'validation'/record['file'];raw=path.read_bytes()
+        assert hashlib.sha256(raw).hexdigest()==record['sha256']
+        assert record['sha256']==contract['proofs'][name]['sha256']
+        proofs[name]=json.loads(raw)
+    gpu=proofs['GPU'];cpu=proofs['CPU']
+    assert gpu['status']=='all18_native64_full_forward_and_control_matched_gradients_passed'
+    assert gpu['candidate_sha256']==new['vendor/snn_kuramoto_bidirectional/kuramoto_layer.py']
+    assert gpu['physical_microbatch']==1 and gpu['logical_batch']==16
+    assert gpu['rollout_steps']==1024 and gpu['gradient_tail_steps']==64
+    assert gpu['no_grad_prefix_bmm_count']==2 and gpu['live_tail_bmm_count']==4
+    expected=set(itertools.product((252,253),('clevr','tetrominoes','clevrtex_original'),(0,1,2)))
+    assert len(gpu['rows'])==18 and {(r['model'],r['dataset'],r['seed']) for r in gpu['rows']}==expected
+    for row in gpu['rows']:
+        assert row['all_full_forward_tensor_hashes_equal'] and row['loss_equal'] and row['core_unchanged']
+        assert row['gradient_limit']==max(1e-7,5*row['control_gradient']['relative_l2'])
+        assert row['fused_prefix_gradient']['relative_l2']<=row['gradient_limit']
+    before={(r['model'],r['seed']):r for r in baseline['CPU']['rows']}
+    after={(r['model'],r['seed']):r for r in cpu['rows']}
+    assert before.keys()==after.keys() and len(after)==6 and canonical(cpu['code'])==new
+    for key in before:
+        for name in ('mapped_core_sha256','encoder_sha256','active_groups'):assert before[key][name]==after[key][name]
+    assert revision['activation']['running_training_packages_unchanged']
+    assert revision['activation']['no_checkpoint_optimizer_binding_or_training_history_edits']
+    assert revision['batch2']['status']=='queued_until14500MiB_is_free'
+    checks={}
+    for name,record in revision['additional_checks'].items():
+        raw=(base/'validation'/record['file']).read_bytes()
+        assert hashlib.sha256(raw).hexdigest()==record['sha256'];checks[name]=json.loads(raw)
+    inference=checks['inference']
+    assert inference['status']=='all18_actual_optimized_package_inference_forwards_bitwise_equal'
+    assert len(inference['rows'])==18 and {(r['model'],r['dataset'],r['seed']) for r in inference['rows']}==expected
+    assert all(r['live_tail_steps']==0 and r['full1024_forward_bitwise_equal'] and r['core_unchanged'] for r in inference['rows'])
+    assert inference['protected_benchmark']==baseline['preflight']['protected_benchmark']
+    guard=checks['guards'];assert guard['status']=='execution_compatibility_fail_closed_checks_passed'
+    assert {'unregistered_source_hash_rejected','incomplete_GPU_coverage_rejected',
+            'changed_encoder_gradient_rejected','changed_initial_encoder_rejected'}<=set(guard['checks'])
+    return new
+
+
 def verify():
     base=HERE/'frozen_core_benchmark'
     request=json.loads((base/'REQUEST.json').read_bytes())
@@ -16,8 +75,8 @@ def verify():
         assert row['core_frozen'] and row['encoder_finetuned']
     proof=json.loads((base/'validation/runtime_snapshot.json').read_bytes())
     assert proof['status']=='partial_validation_snapshot_not_final_benchmark'
-    for path,sha in proof['preparation']['code'].items():
-        parts=PurePosixPath(path).parts;name=Path(*parts[parts.index('benchmark_codes')+1:])
+    code=verify_execution_revision(base,proof)
+    for name,sha in code.items():
         assert hashlib.sha256((HERE/name).read_bytes()).hexdigest()==sha,str(name)
     inventory_sha=hashlib.sha256((base/'sources.frontier.json').read_bytes()).hexdigest()
     assert proof['CPU']['source_inventory_sha256']==proof['preflight']['sources_sha256']==inventory_sha
@@ -41,7 +100,8 @@ def verify():
         assert all(v>0 for v in report['active_tensor_gradient_coverage'].values())
         assert report['mask_opened_during_training']==(done['variant']==252)
     return dict(status='SW0256_source_protocol_and_partial_real_evidence_verified',required_seed_jobs=18,
-        source_files_verified=len(proof['preparation']['code']),pretrained_initializations_verified=len(initial),
+        source_files_verified=len(code),pretrained_initializations_verified=len(initial),
+        real_full_forward_gradient_execution_controls_verified=18,
         actual_GPU_admissions_verified=len(proof['admissions']),
         final_benchmark_completed_at_snapshot=proof['queue_snapshot']['scientific_complete'],
         full_goal_completion_claimed=False)

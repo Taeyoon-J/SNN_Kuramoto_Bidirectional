@@ -72,6 +72,9 @@ class FrozenCoreModel(FreshModel):
         self.normalization_provenance='preserved_pretrained_encoder_statistics; no refit or TEST access'
         self.source_provenance=record
         self.frozen_initial_sha256=digest(self.wrapped)
+        # REQUEST_0010: fewer matrix reads during the detached prefix only.
+        # The live64 autograd tail retains the original four-bmm graph.
+        self.wrapped.core.kuramoto.fuse_no_grad_bmm=True
         self.assert_frozen()
 
     def assert_frozen(self):

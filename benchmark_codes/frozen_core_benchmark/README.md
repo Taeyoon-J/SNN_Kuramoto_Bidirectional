@@ -80,3 +80,25 @@ terminal checkpoint의 모든 `wrapped.*` tensor를 직접 비교하고,350,000�
 순서·21,880업데이트·모든 예측 SHA·GT를 읽기 전 예측 고정·원래 metric 재계산을 확인합니다.
 세 seed가 모두 끝난 데이터셋만 `reports/model{252,253}_{dataset}.json`에 평균과
 표준편차를 작성합니다. 아직 이번18개 조건의 완료 성능은 없습니다.
+# 실행 효율 검증: REQUEST_0010 대체안
+
+현재 SW0256의 물리 배치는 **1**, 유효 배치는 **16**입니다. 최신 REQUEST_0010은
+여러 이미지의 loss를 한 번에 줄이는 단순 배치 확대를 철회했습니다. 2장 동시 처리는
+이미지별 seed와 loss를 유지하는 별도 GPU 검증 큐에 있으며, 아직 본 학습에 적용하지 않았습니다.
+
+대신 고정 1,024 step 중 gradient가 없는 앞 960 step에서 Kuramoto 행렬곱을 4개에서
+2개로 통합했습니다. 역전파가 진행되는 마지막 64 step은 기존 4개 행렬곱을 유지합니다.
+18개 모델·데이터·seed 조건에서 전체 forward tensor와 loss가 비트 단위로 같고,
+encoder gradient 차이가 대조 실행 수준임을 확인했습니다. 공유 TITAN RTX에서 측정한
+전체 forward/backward 속도 개선의 중앙값은 약 **5.1%**였습니다. 이는 커널 단독 1.93배나
+전체 학습 1.93배를 의미하지 않습니다.
+
+평가에 사용하는 `live_tail_steps=0` 경로도 18개 조건에서 실제 새 패키지로 별도 실행해,
+1,024 step 전체 출력이 기존과 비트 단위로 같음을 확인했습니다.
+
+가속은 새로 시작하는 대기 작업에 적용됩니다. 이미 실행 중인 세 학습은 원래의 불변 코드
+패키지로 계속 진행하며 checkpoint·Adam·학습 이력·초기화를 바꾸지 않았습니다.
+큐는 `execution_compatibility.json`의 정확한 두 코드 목록과 GPU/CPU 증거 SHA를 검증합니다.
+기존 증거와 새 실행 버전은 `validation/runtime_snapshot.json` 및
+`validation/execution_revision.json`에 각각 보존했습니다. 18개 가속 검증은 최종 학습
+18개가 완료됐다는 뜻이 아닙니다.

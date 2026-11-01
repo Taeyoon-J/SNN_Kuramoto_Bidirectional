@@ -27,6 +27,9 @@ class graphVectorKuramoto(nn.Module):
         if kuramoto_backend not in ("pairwise", "factorized"):
             raise ValueError("kuramoto_backend must be 'pairwise' or 'factorized'")
         self.kuramoto_backend = kuramoto_backend
+        # Opt-in: combine RHS columns only outside the live autograd tail.
+        # The four-bmm training graph remains the registered baseline.
+        self.fuse_no_grad_bmm = False
 
         # Sensory frequency modulation.
         #
@@ -119,12 +122,19 @@ class graphVectorKuramoto(nn.Module):
                 )
             A_lat, lag_cos, lag_sin = coupling
             sin_theta, cos_theta = torch.sin(theta_prev), torch.cos(theta_prev)
-            interaction = (
-                cos_theta * torch.bmm(lag_cos, sin_theta)
-                - sin_theta * torch.bmm(lag_cos, cos_theta)
-                - cos_theta * torch.bmm(lag_sin, cos_theta)
-                - sin_theta * torch.bmm(lag_sin, sin_theta)
-            )
+            if getattr(self, 'fuse_no_grad_bmm', False) and not torch.is_grad_enabled():
+                sc = torch.cat((sin_theta, cos_theta), dim=-1)
+                lc = torch.bmm(lag_cos, sc)
+                ls = torch.bmm(lag_sin, sc)
+                interaction = (cos_theta * lc[..., :D] - sin_theta * lc[..., D:]
+                               - cos_theta * ls[..., D:] - sin_theta * ls[..., :D])
+            else:
+                interaction = (
+                    cos_theta * torch.bmm(lag_cos, sin_theta)
+                    - sin_theta * torch.bmm(lag_cos, cos_theta)
+                    - cos_theta * torch.bmm(lag_sin, cos_theta)
+                    - sin_theta * torch.bmm(lag_sin, sin_theta)
+                )
             coupling_term = (self.K / float(H)) * interaction
         else:
             if A is None:

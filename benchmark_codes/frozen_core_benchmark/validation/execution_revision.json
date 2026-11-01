@@ -1,0 +1,328 @@
+{
+  "status": "verified_prefix_execution_revision_not_final_benchmark",
+  "created": 1793500270.1106856,
+  "contract": {
+    "status": "verified_fused_no_grad_prefix_only",
+    "from_code": {
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/frozen_core_benchmark/__init__.py": "eb2b0871d036c1673df1b4871c6df40877f40aa08b39de55cb79acaa1411cd54",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/frozen_core_benchmark/audit.py": "d9615be19a4eab4c28350d1b0635c5a2442b5f68d2ac4ac12e581c095e8cbe26",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/frozen_core_benchmark/data.py": "704afc89fb8fd82b47384b608aa2af1ee58fc6bc2dddb2eee3b44d40131145c5",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/frozen_core_benchmark/engine.py": "183622944641883430db4a80aa53771a1a80dd92442c9ab790d1be2f73f11182",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/frozen_core_benchmark/model.py": "dd0d330ec7751dc180b71e17b721e6f002090d8fc01e074f8f7884e29b48713a",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/frozen_core_benchmark/queue.py": "f494fb1460ae3976b285476c4523a7ce9c4ab3ebebbd49ad1bbf2a064f9e55ea",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/frozen_core_benchmark/runtime.py": "3a3d345069f013ad8de3f7b0c2ba74a65a330be6ab1268b3d846ca33d644c86b",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/frozen_core_benchmark/validation.py": "60d7f6f872cebf14b23887270d9c23ea395d76e3705d038ba9edbe17cd9458c5",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/portable_runtime.py": "4a0714c3b30be722c8f5c2a573c83bbe5f95251c0ba6174cfd23e65f752ab8ec",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/run_frozen_core.py": "1f88205219f1e055e070fe158b329c58a076a5e9292039bf32143061deaa3d80",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/vendor/full_benchmark/__init__.py": "bf7412c516bbfabb4560d67772d69c274e3c45d00ff9e4900dd54e7bff6cb64c",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/vendor/full_benchmark/data.py": "9afa1837232588c17e3ec01d649dbdf1c5caa93520072cc4c1838764212cc7a7",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/vendor/full_benchmark/engine.py": "a6c9c1dd0b5cccd9a97407a40ae81fc4c5217838464300ab07e69b218d6b3fbc",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/vendor/full_benchmark/evaluation.py": "096e254a4b4fd7a6b584c74e95a49b4a995f689c1b4254b3bb56e52e2dc630af",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/vendor/full_benchmark/extra_preflight.py": "c02f1d69f8170d3811427b8ddc1be294c0872a0f3f87ca30cd062aa2cd9a6f54",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/vendor/full_benchmark/fast_partition.py": "c763e74c79c3eb576da3e52abbd7f40c68e12f9bf49d0e9f6d50cbcfdc9305f2",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/vendor/full_benchmark/geodesic.py": "8aaec82aefa25fb2d9f9e753d1f950ed04be4ba5ed4738ad53e2d541232a2995",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/vendor/full_benchmark/loss.py": "a15e256cf47cab5c9adc48d5c958cb201f2b0554f9278260fb12d30620a085cb",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/vendor/full_benchmark/microbatch.py": "3af35f838b4bd14dc04dc073afe8f2d70dad36d22bfc8451bc1a856308acdef7",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/vendor/full_benchmark/model.py": "6a5719cc7832f5139e0298257792d1cf0cd40d0d941471a87e6a00065143438a",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/vendor/full_benchmark/prepare_extra.py": "20ae3eb9f2532e3825cb992bfac7955f7262ffaaff74e84bf97a86b59554bc5c",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/vendor/full_benchmark/prepare_mod.py": "ab3e33fc262882a97758d3f392cd5b76016add6b758349ee91c0dbdb5f6bc57d",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/vendor/full_benchmark/probe.py": "8701ad2cf219190f16f4ccee341c04a5639ad824f0a0458dff467deb91e3e53f",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/vendor/full_benchmark/statistics.py": "e03ac9bd5c45a8afefe09b7a2fe511df0244a169ad97370f23d04d8fa670901f",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/vendor/full_benchmark/tfrecord.py": "372734d93498a742dcd0c20d128c4b8b7bf0e821591b3a9fd71d067312074009",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/vendor/neutral_readout/head.py": "6bda9287d1b5ed81c47c9612f24ac0b8b9bf7daf817ef715061513a407933815",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/vendor/readout_benchmark/__init__.py": "339dedb4681300db3192582bd58b02c112e359d4fdcfaaa10513fa4743a11ef9",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/vendor/readout_benchmark/bootstrap.py": "02d4bbface1f40f574afd6763b36f1d92eb534386a925d7bedb219940e8e101f",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/vendor/readout_benchmark/head.py": "11c32ef9ceb3769357622709b6b24a4cfcd3497dda4942503da1d79bba44f4f4",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/vendor/readout_benchmark/runtime.py": "5008f0583b7d141d674aee2fa25a83fb289f1561d2a535303381f36d10d1c4a9",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/vendor/readout_benchmark/test_head.py": "4a244e0c02437801ed5aa985b718e23076fbed0a8246b7e434e670061a934de0",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/vendor/snn_kuramoto_bidirectional/__init__.py": "96edbbcdeaeafd4cd066998cfeba3d282c244fc491e966ac2d1f81274a9dc35b",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/vendor/snn_kuramoto_bidirectional/dendric_layer.py": "69d960809ff1ad73a91a7067f87f605ae69ef612be9b936e4b486cc29511dd1a",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/vendor/snn_kuramoto_bidirectional/error_bound.py": "5a79eb565f3d4646caf485f708a8f157341b08711ed12eb894a3b380cb7bb390",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/vendor/snn_kuramoto_bidirectional/evaluation.py": "fb07fcb930b5f50edad5c1ce7f50d39852688fdd6cc9799b0d775ed3671d440a",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/vendor/snn_kuramoto_bidirectional/gamma_initializer.py": "9b5f3e077c755738b1636b97ac9640321a5b7abf5ec85b9a12557209cf5ad50b",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/vendor/snn_kuramoto_bidirectional/graph_generator.py": "4f4c4d680a60822a5e4645eec3bbceb960846d4fac89e799076f6b4cf1bc6dde",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/vendor/snn_kuramoto_bidirectional/hierarchical_spike_classifier.py": "9c7ee47252a56cbe747551dde9b4fad1ffb0e5c270b06b751f6ef0169850a977",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/vendor/snn_kuramoto_bidirectional/hyperparameter.py": "bceea67a10a4533eae48ce682b23ce81330c981d687fa928cca7b9f3b97fc73e",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/vendor/snn_kuramoto_bidirectional/image_conditioned_sc.py": "ffc400fa9074ecc10d132ace47c111dd6f6d279797acf4d01eb584e5a572b5bd",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/vendor/snn_kuramoto_bidirectional/image_reconstruct.py": "0f2c5169fcc51f9c2cf70df0fb3fe76856b69e69ff6539c6144a878965952db7",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/vendor/snn_kuramoto_bidirectional/input_layer_generator.py": "83b7e83e6c05b849a7678113db43c2d85cb49b22f9f3d5102013dd4e47200db3",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/vendor/snn_kuramoto_bidirectional/kuramoto_layer.py": "fe023ceda953a45ffb727eddecd7f4ea0d3552a402ae5d42fe339e2a194680d6",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/vendor/snn_kuramoto_bidirectional/loss_function.py": "6542d084f66c07101b75869709df9302db45e0dde87b6b5945d1790daa316543",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/vendor/snn_kuramoto_bidirectional/membrane_layer.py": "680ad89277b60206f192123165d13eca916e5183dc71eaa443a8eeb5f4b8fac8",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/vendor/snn_kuramoto_bidirectional/s2net_cls.py": "e62112502d426536a2d7af9f729578a5559d9e7bc87c8a6da4d217491a249119",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/vendor/snn_kuramoto_bidirectional/sc_generator.py": "445b859f907f8309e5739faa2bba52651d8babd51ed2e455183ab0ffe7f51a11",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/vendor/snn_kuramoto_bidirectional/sinusoidal_gating.py": "e323a3b6472f51def23d63628fe25cc83088822ae73b5e0fcd1789884739f6c4",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/vendor/snn_kuramoto_bidirectional/spike_classifier.py": "2d13c15a928f503bc09239aae2153a5f1a82de77aab4b5a76d0dfe876b755181",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/__init__.py": "72f9d12909465ebd0926d3e65c48501afc13e973fc020b6a81b3fb754f71d19c",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/capture.py": "587685b4d9c3db3ac337c9a7177681ea186536f395f95000dd1346f5efbe05c7",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/context.py": "8956309af2ba8eaac01769d9bae01940f3342c64730d3ba38415072131fb333a",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/correlation.py": "9cef04975c8d233bceca294fb206a0b67f4580183080aec7f56982f064381492",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/data.py": "bdf826f3ab0686e43981c2625c9703c12a15a0b652f158ac7a4d77c37a085753",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/encoding.py": "7e0f28d0571361fd7986316d845f6b52028e03f6ac6f12c2a7249827a380cd18",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/geodesic.py": "f3c75ddc9f785ae8b6a7dfee47fa71efb853d9aa5cc379f49895af91d4073b2a",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/integration.py": "d2ce20d4c089cbc0ed5bd0609694d45b5926e1c0e1e1a3d6143b1b62de08f7d6",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/loss.py": "bfbed844391c08a93b429c4c6f4b66225fda6002b958f9d70a5ad1e4cf9ea5e6",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/model.py": "d55d6357d9964f5d83daf4169cc568ea74109d5130e9a5857b162c2d4d6dd29a",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/partition.py": "06adab36abb8ee3d74eb9e301bf7496505a2aa2065a9a43d90b733f3e371133a",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/readout.py": "6fd64712d744c5e6fa8872c601156f91d5563f4a6e2fb3a027f792d545fe5069",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/rollout.py": "2553268b565f48119a9765beb64f3a4de67e2769f7c74a0e47c52200aa90b897",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/77054007fa1c/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/signed_energy.py": "b9556b62d712c11d1e20336143df847e7136c09b45c50129788d3adfe5f06608"
+    },
+    "to_code": {
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/frozen_core_benchmark/__init__.py": "eb2b0871d036c1673df1b4871c6df40877f40aa08b39de55cb79acaa1411cd54",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/frozen_core_benchmark/audit.py": "d9615be19a4eab4c28350d1b0635c5a2442b5f68d2ac4ac12e581c095e8cbe26",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/frozen_core_benchmark/data.py": "704afc89fb8fd82b47384b608aa2af1ee58fc6bc2dddb2eee3b44d40131145c5",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/frozen_core_benchmark/engine.py": "183622944641883430db4a80aa53771a1a80dd92442c9ab790d1be2f73f11182",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/frozen_core_benchmark/execution.py": "b6286d9d0f3dc11febea7a1bd5875bf76107f4ad2d2a40d94a8507096cdd55f8",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/frozen_core_benchmark/model.py": "32a0a7a8eeaba0265ef65b7a7b3b708c78d79221d5397f88bc6afbebabdbfd8c",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/frozen_core_benchmark/queue.py": "d6782d5f3327e3bcd2d08beabee3011e0f61c65e7058ef263f88f2919d99e8da",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/frozen_core_benchmark/runtime.py": "3a3d345069f013ad8de3f7b0c2ba74a65a330be6ab1268b3d846ca33d644c86b",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/frozen_core_benchmark/validation.py": "60d7f6f872cebf14b23887270d9c23ea395d76e3705d038ba9edbe17cd9458c5",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/portable_runtime.py": "4a0714c3b30be722c8f5c2a573c83bbe5f95251c0ba6174cfd23e65f752ab8ec",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/run_frozen_core.py": "1f88205219f1e055e070fe158b329c58a076a5e9292039bf32143061deaa3d80",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/vendor/full_benchmark/__init__.py": "bf7412c516bbfabb4560d67772d69c274e3c45d00ff9e4900dd54e7bff6cb64c",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/vendor/full_benchmark/data.py": "9afa1837232588c17e3ec01d649dbdf1c5caa93520072cc4c1838764212cc7a7",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/vendor/full_benchmark/engine.py": "a6c9c1dd0b5cccd9a97407a40ae81fc4c5217838464300ab07e69b218d6b3fbc",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/vendor/full_benchmark/evaluation.py": "096e254a4b4fd7a6b584c74e95a49b4a995f689c1b4254b3bb56e52e2dc630af",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/vendor/full_benchmark/extra_preflight.py": "c02f1d69f8170d3811427b8ddc1be294c0872a0f3f87ca30cd062aa2cd9a6f54",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/vendor/full_benchmark/fast_partition.py": "c763e74c79c3eb576da3e52abbd7f40c68e12f9bf49d0e9f6d50cbcfdc9305f2",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/vendor/full_benchmark/geodesic.py": "8aaec82aefa25fb2d9f9e753d1f950ed04be4ba5ed4738ad53e2d541232a2995",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/vendor/full_benchmark/loss.py": "a15e256cf47cab5c9adc48d5c958cb201f2b0554f9278260fb12d30620a085cb",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/vendor/full_benchmark/microbatch.py": "3af35f838b4bd14dc04dc073afe8f2d70dad36d22bfc8451bc1a856308acdef7",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/vendor/full_benchmark/model.py": "6a5719cc7832f5139e0298257792d1cf0cd40d0d941471a87e6a00065143438a",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/vendor/full_benchmark/prepare_extra.py": "20ae3eb9f2532e3825cb992bfac7955f7262ffaaff74e84bf97a86b59554bc5c",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/vendor/full_benchmark/prepare_mod.py": "ab3e33fc262882a97758d3f392cd5b76016add6b758349ee91c0dbdb5f6bc57d",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/vendor/full_benchmark/probe.py": "8701ad2cf219190f16f4ccee341c04a5639ad824f0a0458dff467deb91e3e53f",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/vendor/full_benchmark/statistics.py": "e03ac9bd5c45a8afefe09b7a2fe511df0244a169ad97370f23d04d8fa670901f",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/vendor/full_benchmark/tfrecord.py": "372734d93498a742dcd0c20d128c4b8b7bf0e821591b3a9fd71d067312074009",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/vendor/neutral_readout/head.py": "6bda9287d1b5ed81c47c9612f24ac0b8b9bf7daf817ef715061513a407933815",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/vendor/readout_benchmark/__init__.py": "339dedb4681300db3192582bd58b02c112e359d4fdcfaaa10513fa4743a11ef9",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/vendor/readout_benchmark/bootstrap.py": "02d4bbface1f40f574afd6763b36f1d92eb534386a925d7bedb219940e8e101f",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/vendor/readout_benchmark/head.py": "11c32ef9ceb3769357622709b6b24a4cfcd3497dda4942503da1d79bba44f4f4",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/vendor/readout_benchmark/runtime.py": "5008f0583b7d141d674aee2fa25a83fb289f1561d2a535303381f36d10d1c4a9",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/vendor/readout_benchmark/test_head.py": "4a244e0c02437801ed5aa985b718e23076fbed0a8246b7e434e670061a934de0",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/vendor/snn_kuramoto_bidirectional/__init__.py": "96edbbcdeaeafd4cd066998cfeba3d282c244fc491e966ac2d1f81274a9dc35b",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/vendor/snn_kuramoto_bidirectional/dendric_layer.py": "69d960809ff1ad73a91a7067f87f605ae69ef612be9b936e4b486cc29511dd1a",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/vendor/snn_kuramoto_bidirectional/error_bound.py": "5a79eb565f3d4646caf485f708a8f157341b08711ed12eb894a3b380cb7bb390",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/vendor/snn_kuramoto_bidirectional/evaluation.py": "fb07fcb930b5f50edad5c1ce7f50d39852688fdd6cc9799b0d775ed3671d440a",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/vendor/snn_kuramoto_bidirectional/gamma_initializer.py": "9b5f3e077c755738b1636b97ac9640321a5b7abf5ec85b9a12557209cf5ad50b",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/vendor/snn_kuramoto_bidirectional/graph_generator.py": "4f4c4d680a60822a5e4645eec3bbceb960846d4fac89e799076f6b4cf1bc6dde",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/vendor/snn_kuramoto_bidirectional/hierarchical_spike_classifier.py": "9c7ee47252a56cbe747551dde9b4fad1ffb0e5c270b06b751f6ef0169850a977",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/vendor/snn_kuramoto_bidirectional/hyperparameter.py": "bceea67a10a4533eae48ce682b23ce81330c981d687fa928cca7b9f3b97fc73e",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/vendor/snn_kuramoto_bidirectional/image_conditioned_sc.py": "ffc400fa9074ecc10d132ace47c111dd6f6d279797acf4d01eb584e5a572b5bd",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/vendor/snn_kuramoto_bidirectional/image_reconstruct.py": "0f2c5169fcc51f9c2cf70df0fb3fe76856b69e69ff6539c6144a878965952db7",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/vendor/snn_kuramoto_bidirectional/input_layer_generator.py": "83b7e83e6c05b849a7678113db43c2d85cb49b22f9f3d5102013dd4e47200db3",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/vendor/snn_kuramoto_bidirectional/kuramoto_layer.py": "e21851f2f1525505b237666e80f058ef703e3c6dae5a60f245a9fcf93171f40f",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/vendor/snn_kuramoto_bidirectional/loss_function.py": "6542d084f66c07101b75869709df9302db45e0dde87b6b5945d1790daa316543",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/vendor/snn_kuramoto_bidirectional/membrane_layer.py": "680ad89277b60206f192123165d13eca916e5183dc71eaa443a8eeb5f4b8fac8",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/vendor/snn_kuramoto_bidirectional/s2net_cls.py": "e62112502d426536a2d7af9f729578a5559d9e7bc87c8a6da4d217491a249119",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/vendor/snn_kuramoto_bidirectional/sc_generator.py": "445b859f907f8309e5739faa2bba52651d8babd51ed2e455183ab0ffe7f51a11",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/vendor/snn_kuramoto_bidirectional/sinusoidal_gating.py": "e323a3b6472f51def23d63628fe25cc83088822ae73b5e0fcd1789884739f6c4",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/vendor/snn_kuramoto_bidirectional/spike_classifier.py": "2d13c15a928f503bc09239aae2153a5f1a82de77aab4b5a76d0dfe876b755181",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/__init__.py": "72f9d12909465ebd0926d3e65c48501afc13e973fc020b6a81b3fb754f71d19c",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/capture.py": "587685b4d9c3db3ac337c9a7177681ea186536f395f95000dd1346f5efbe05c7",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/context.py": "8956309af2ba8eaac01769d9bae01940f3342c64730d3ba38415072131fb333a",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/correlation.py": "9cef04975c8d233bceca294fb206a0b67f4580183080aec7f56982f064381492",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/data.py": "bdf826f3ab0686e43981c2625c9703c12a15a0b652f158ac7a4d77c37a085753",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/encoding.py": "7e0f28d0571361fd7986316d845f6b52028e03f6ac6f12c2a7249827a380cd18",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/geodesic.py": "f3c75ddc9f785ae8b6a7dfee47fa71efb853d9aa5cc379f49895af91d4073b2a",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/integration.py": "d2ce20d4c089cbc0ed5bd0609694d45b5926e1c0e1e1a3d6143b1b62de08f7d6",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/loss.py": "bfbed844391c08a93b429c4c6f4b66225fda6002b958f9d70a5ad1e4cf9ea5e6",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/model.py": "d55d6357d9964f5d83daf4169cc568ea74109d5130e9a5857b162c2d4d6dd29a",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/partition.py": "06adab36abb8ee3d74eb9e301bf7496505a2aa2065a9a43d90b733f3e371133a",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/readout.py": "6fd64712d744c5e6fa8872c601156f91d5563f4a6e2fb3a027f792d545fe5069",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/rollout.py": "2553268b565f48119a9765beb64f3a4de67e2769f7c74a0e47c52200aa90b897",
+      "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/vendor/snn_kuramoto_bidirectional/sw240/signed_energy.py": "b9556b62d712c11d1e20336143df847e7136c09b45c50129788d3adfe5f06608"
+    },
+    "sources_sha256": "05f5e78e273892518acb7b1814d28a70ee26eac7d6fc8d0f990e5647a874a9af",
+    "previous_CPU_rows": [
+      {
+        "model": 252,
+        "seed": 0,
+        "source_core": {
+          "path": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0097_graph_adaptation/seed0_positive_frozen/core.pt",
+          "bytes": 806187,
+          "sha256": "36f2481dd1fa51fa29bd4dc34275a876b71d8b76fbee13ac47a0a1bfe6766fbf"
+        },
+        "mapped_core_sha256": "05d3d20b594836cf13d352d64948c2d329d9c65a05fca79742a745d7b79add80",
+        "strict_spatial_mapping_verified": true,
+        "all_core_and_integration_parameters_frozen": true,
+        "active_groups": {
+          "encoder": 29128,
+          "mask_head": 11650
+        },
+        "encoder_sha256": "2208771afbb04397b95ce638f4aa512940d33a3ec8793f3de6e85ab7bbad13ea",
+        "encoder_pretrained": true,
+        "normalization_preserved": true
+      },
+      {
+        "model": 253,
+        "seed": 0,
+        "source_core": {
+          "path": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0097_graph_adaptation/seed0_positive_frozen/core.pt",
+          "bytes": 806187,
+          "sha256": "36f2481dd1fa51fa29bd4dc34275a876b71d8b76fbee13ac47a0a1bfe6766fbf"
+        },
+        "mapped_core_sha256": "05d3d20b594836cf13d352d64948c2d329d9c65a05fca79742a745d7b79add80",
+        "strict_spatial_mapping_verified": true,
+        "all_core_and_integration_parameters_frozen": true,
+        "active_groups": {
+          "encoder": 224
+        },
+        "encoder_sha256": "85085bec46639858f9199550a00b487f303e848a0add914345a16d2794bd53ee",
+        "encoder_pretrained": true,
+        "normalization_preserved": true
+      },
+      {
+        "model": 252,
+        "seed": 1,
+        "source_core": {
+          "path": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0097_graph_adaptation/seed1_positive_frozen/core.pt",
+          "bytes": 806187,
+          "sha256": "76f379d5a7e4cd9d12fdf0b701f3dd9dbbf28b5eea270a9cee2d30d87b4dad98"
+        },
+        "mapped_core_sha256": "71e756e630fdc30383db08ee7d94aacdc51b0ee9bbcb8469a0451e96b8579ac4",
+        "strict_spatial_mapping_verified": true,
+        "all_core_and_integration_parameters_frozen": true,
+        "active_groups": {
+          "encoder": 29128,
+          "mask_head": 11650
+        },
+        "encoder_sha256": "e6319f4aeb07c9abda3dbbda505e187781ecaf99538d3fcd6372d66ec8c83f33",
+        "encoder_pretrained": true,
+        "normalization_preserved": true
+      },
+      {
+        "model": 253,
+        "seed": 1,
+        "source_core": {
+          "path": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0097_graph_adaptation/seed1_positive_frozen/core.pt",
+          "bytes": 806187,
+          "sha256": "76f379d5a7e4cd9d12fdf0b701f3dd9dbbf28b5eea270a9cee2d30d87b4dad98"
+        },
+        "mapped_core_sha256": "71e756e630fdc30383db08ee7d94aacdc51b0ee9bbcb8469a0451e96b8579ac4",
+        "strict_spatial_mapping_verified": true,
+        "all_core_and_integration_parameters_frozen": true,
+        "active_groups": {
+          "encoder": 224
+        },
+        "encoder_sha256": "85085bec46639858f9199550a00b487f303e848a0add914345a16d2794bd53ee",
+        "encoder_pretrained": true,
+        "normalization_preserved": true
+      },
+      {
+        "model": 252,
+        "seed": 2,
+        "source_core": {
+          "path": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0097_graph_adaptation/seed2_positive_frozen/core.pt",
+          "bytes": 806187,
+          "sha256": "798ad3e9d4bf837b1bbeb1bd7c13900df511b5c76f5736d2b9f8b973d7fa5661"
+        },
+        "mapped_core_sha256": "b6509aadfe91ca2586414210cd49aaa7d200768895872a954db9530c12ab1a7d",
+        "strict_spatial_mapping_verified": true,
+        "all_core_and_integration_parameters_frozen": true,
+        "active_groups": {
+          "encoder": 29128,
+          "mask_head": 11650
+        },
+        "encoder_sha256": "4aaa9cd5c5cc00e91265f79d9d706c3bf6c0f9a39cfd8b6be38d1fc110fe9568",
+        "encoder_pretrained": true,
+        "normalization_preserved": true
+      },
+      {
+        "model": 253,
+        "seed": 2,
+        "source_core": {
+          "path": "/Data0/kevinswk/patch_v2_sw/trained_models/SW0097_graph_adaptation/seed2_positive_frozen/core.pt",
+          "bytes": 806187,
+          "sha256": "798ad3e9d4bf837b1bbeb1bd7c13900df511b5c76f5736d2b9f8b973d7fa5661"
+        },
+        "mapped_core_sha256": "b6509aadfe91ca2586414210cd49aaa7d200768895872a954db9530c12ab1a7d",
+        "strict_spatial_mapping_verified": true,
+        "all_core_and_integration_parameters_frozen": true,
+        "active_groups": {
+          "encoder": 224
+        },
+        "encoder_sha256": "85085bec46639858f9199550a00b487f303e848a0add914345a16d2794bd53ee",
+        "encoder_pretrained": true,
+        "normalization_preserved": true
+      }
+    ],
+    "proofs": {
+      "GPU": {
+        "path": "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/efficiency/7bd88a37c780/complete.json",
+        "sha256": "b2eb091e46f9219d6bdd908dc80355f6b954af79628c59084a5a48d35a36ead4"
+      },
+      "CPU": {
+        "path": "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/CPU_validation/CPU_validation.json",
+        "sha256": "9e4146aa9a71ab27a2cd6b0d0db6a5e376b7d21da99aa25d0188122f998cdabc"
+      }
+    },
+    "running_workers_policy": "continue original immutable package; no checkpoint or optimizer migration",
+    "queued_workers_policy": "new immutable package; physical1/logical16/full1024/live64 unchanged"
+  },
+  "activation": {
+    "status": "proof_backed_prefix_execution_enabled_for_future_queued_jobs",
+    "coordinator": {
+      "pid": 3555086,
+      "package": "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes",
+      "command": [
+        "/Data0/kevinswk/envs/snn/bin/python",
+        "-u",
+        "-B",
+        "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000/code/b0d656f26b9d/benchmark_codes/run_frozen_core.py",
+        "--output",
+        "/work/USERS/kevinswk/experiments/SW0256_frozen_core35000",
+        "queue",
+        "--gpus",
+        "0,1,2,3",
+        "--legacy-root",
+        "/work/USERS/kevinswk/experiments/SW0255_full3500"
+      ],
+      "created": 1793500228.7127557
+    },
+    "original_training_PIDs_preserved": [
+      3485297,
+      3494068,
+      3553436
+    ],
+    "running_training_packages_unchanged": true,
+    "legacy_scheduler_and_workers_untouched": true,
+    "no_checkpoint_optimizer_binding_or_training_history_edits": true,
+    "real_GPU_controls_passed": 18,
+    "CPU_initializations_unchanged": 6,
+    "created": 1793500233.6790156
+  },
+  "batch2": {
+    "status": "queued_until14500MiB_is_free",
+    "free_MiB": {
+      "0": 2067,
+      "1": 3693,
+      "2": 7749,
+      "3": 8547
+    },
+    "updated": 1793500265.979573,
+    "training_workers_untouched": true
+  },
+  "local_proofs": {
+    "GPU": {
+      "file": "fused_prefix_GPU.json",
+      "sha256": "b2eb091e46f9219d6bdd908dc80355f6b954af79628c59084a5a48d35a36ead4"
+    },
+    "CPU": {
+      "file": "fused_prefix_CPU.json",
+      "sha256": "9e4146aa9a71ab27a2cd6b0d0db6a5e376b7d21da99aa25d0188122f998cdabc"
+    }
+  },
+  "diagnostic_head_probe": "When a private252 diagnostic model has zero head residual scale, set it to0.25 for both control and candidate only; no scientific initialization or checkpoint is modified.",
+  "additional_checks": {
+    "inference": {
+      "file": "fused_prefix_inference.json",
+      "sha256": "0e2c43d8840a640006c02dd77a80a853ffa9a099e78f8cd1fc1019746cf90066"
+    },
+    "guards": {
+      "file": "execution_guard_checks.json",
+      "sha256": "7a866d0ba96812caa10c29aa55533429b96cb75224ad07d393c1d45e3c06881a"
+    }
+  }
+}

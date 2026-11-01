@@ -2,6 +2,9 @@
 > Use [the frozen-core instructions](frozen_core_benchmark/README.md) and `run_frozen_core.py`.
 > `verify_frozen_core.py` checks its actual partial validation evidence. The older `run.py`
 > and `configs/active_request.json` below retain the separate SW0255 scratch protocol.
+> REQUEST_0010 replacement: future SW0256 jobs fuse four coupling bmms into two only in
+> the no-gradient prefix. All18 actual forward/gradient controls and6 initialization
+> checks passed; shared-GPU median speedup1.051x. Physical batch remains1; batch2 is queued for validation.
 
 > Historical SW0255 protocol:3500 unique TRAIN x10epochs,seed0 only. Its prior seed1/2 checkpoints remain preserved.
 

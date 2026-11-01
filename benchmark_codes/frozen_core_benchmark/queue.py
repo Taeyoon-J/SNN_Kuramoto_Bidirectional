@@ -5,6 +5,7 @@ import numpy as np
 from portable_runtime import HERE
 from mod_benchmark import common as c
 from frozen_core_benchmark.engine import scientific_sources
+from frozen_core_benchmark.execution import verify_code,allowed_entrypoints
 
 
 def jobs():
@@ -23,9 +24,13 @@ def alive(record):
     p=Path('/proc')/str(record['pid'])
     try:
         args=p.joinpath('cmdline').read_bytes().split(b'\0')
-        required=str(HERE/'run_frozen_core.py').encode()
-        if record.get('legacy'):required=b'full_benchmark.engine'
-        return p.stat().st_uid==os.getuid() and required in args and p.joinpath('stat').read_text().rsplit(')',1)[1].split()[0]!='Z'
+        if record.get('legacy'):recognized=b'full_benchmark.engine' in args
+        else:
+            root=Path(record['output']).parents[3]
+            scripts=allowed_entrypoints(root,scientific_sources())
+            recognized=any(script.encode() in args for script in scripts)
+            if 'command' in record:recognized=recognized and [x for x in args if x]==[x.encode() for x in record['command']]
+        return p.stat().st_uid==os.getuid() and recognized and p.joinpath('stat').read_text().rsplit(')',1)[1].split()[0]!='Z'
     except OSError:return False
 
 
@@ -35,7 +40,8 @@ def completed(root,job,admission):
     done=json.loads((out/'complete.json').read_bytes());binding=json.loads((out/'binding.json').read_bytes())
     assert binding['experiment']=='SW0256' and binding['unique_train']==35000
     assert binding['core_weight_updates'] is False and binding['encoder_finetuned']
-    assert binding['microbatch']==1 and binding['code']==scientific_sources()
+    assert binding['microbatch']==1
+    verify_code(root,binding['code'],scientific_sources())
     assert binding['benchmark']==c.immutable() and done['binding_sha256']==c.sha(out/'binding.json')
     assert done['updates']==(2 if admission else 21880) and done['images_seen']==(4 if admission else 350000)
     assert done['evaluation_count']==(1 if admission else 320 if job['dataset']=='clevr' else 1000)
@@ -140,7 +146,7 @@ def run_queue(config,sources,root,gpus,legacy_root):
     assert ready['sources_sha256']==c.sha(sources)
     checked=json.loads((root/'CPU_validation.json').read_bytes())
     assert checked['source_inventory_sha256']==c.sha(sources) and len(checked['rows'])==6
-    assert checked['code']==scientific_sources()
+    verify_code(root,checked['code'],scientific_sources())
     while True:
         rows,live=rows_for(root)
         query=subprocess.check_output(['nvidia-smi','--query-gpu=index,memory.free','--format=csv,noheader,nounits']).decode()
