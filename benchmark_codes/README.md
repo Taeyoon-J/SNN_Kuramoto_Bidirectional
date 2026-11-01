@@ -1,5 +1,8 @@
-> Current goal is **SW0257: separated encoder35000x10; detached252 head3500x10; fixed pretrained core; 18 conditions**.
-> Use [the separated training instructions](separate_encoder_benchmark/README.md) and `run_separate_encoder.py`.
+> Current goal is **SW0258: fixed existing core; eligible encoder/head reuse; otherwise scratch3500x10; 18 conditions**.
+> Use [the selective training instructions](selective3500_benchmark/README.md) and `run_selective3500.py`.
+> Eligibility requires the same dataset/seed,3500 unique TRAIN images and35000 exposures.
+> Reused histories are reported as inherited; they are never relabelled as a fresh3500x10 run.
+> SW0257 checkpoints/Adam/RNG and compatible feature caches are preserved.
 > No recurrent simulation/backprop runs during encoder learning. SW0256's previous
 > encoder-through-core training is stopped and preserved, and is not reused as a completed result.
 > The remainder below documents historical SW0256/SW0255 protocols.

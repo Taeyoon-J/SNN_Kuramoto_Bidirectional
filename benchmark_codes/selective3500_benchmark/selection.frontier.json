@@ -1,0 +1,294 @@
+{
+  "experiment": "SW0258",
+  "core": "same-seed SW0097 native16 strictly mapped64, bitwise frozen",
+  "request": "reuse eligible same-dataset/seed encoder/head; otherwise random3500unique x10; preserve existing core",
+  "eligibility": {
+    "minimum_unique_TRAIN": 3500,
+    "minimum_image_exposures": 35000
+  },
+  "base_CLEVR253_encoder_not_reused": "original1000unique x100 fails3500unique floor; fresh when no eligible native64 source",
+  "earlier_training_histories_kept": true,
+  "excluded_sources": [
+    {
+      "path": "/work/USERS/kevinswk/experiments/SW0255_full3500/controller_v3/validation/jobs/model253/clevr/seed0",
+      "reason": "source native grid not64"
+    },
+    {
+      "path": "/work/USERS/kevinswk/experiments/SW0255_full3500/jobs/model253/clevr/seed0",
+      "reason": "source native grid not64"
+    }
+  ],
+  "cases": {
+    "252/clevr/0": {
+      "encoder": {
+        "path": "/work/USERS/kevinswk/experiments/SW0258_selective3500/assets/252/clevr/0/encoder.pt",
+        "bytes": 120511,
+        "sha256": "72a9f84bd252bce570b05fad470469b37fd45cae7f715cc9cd5c928e5eb3dc95",
+        "unique_train": 35000,
+        "exposures": 350000,
+        "source": "/work/USERS/kevinswk/experiments/SW0258_selective3500/transition/recovery/model252/clevr/seed0/encoder_resume.pt",
+        "source_sha256": "ce6bc7e44cabe2f36efce704ae44365b08d1a844ddd2bd82ee1d5698a30ba0da",
+        "same_current_core": true,
+        "initialization": "reuse_qualified_current_encoder",
+        "source_optimizer_updates": 21880
+      },
+      "head": {
+        "path": "/work/USERS/kevinswk/experiments/SW0258_selective3500/assets/252/clevr/0/random_head.pt",
+        "bytes": 50245,
+        "sha256": "d2fa6ba06ec7212bdf750af4ca4041e0bfe531b25df39ad4609fc303a27a4ff4",
+        "unique_train": 0,
+        "exposures": 0,
+        "initialization": "random_from_scratch",
+        "initialization_seed": 258500
+      },
+      "head_reused": false,
+      "cache_source": "/work/USERS/kevinswk/experiments/SW0257_separate_encoder35000/jobs/model252/clevr/seed0/head"
+    },
+    "252/clevr/1": {
+      "encoder": {
+        "path": "/work/USERS/kevinswk/experiments/SW0258_selective3500/assets/252/clevr/1/encoder.pt",
+        "bytes": 120511,
+        "sha256": "926d40533bc32a08e954d8f6fd007ce5ece7f218fe65d67e0f450da61e51295c",
+        "unique_train": 35000,
+        "exposures": 350000,
+        "source": "/work/USERS/kevinswk/experiments/SW0258_selective3500/transition/recovery/model252/clevr/seed1/encoder_resume.pt",
+        "source_sha256": "c9dfcadfaab079679506b0703c93f71a48d7afb049b9c254f0d88ab4ff90e16b",
+        "same_current_core": true,
+        "initialization": "reuse_qualified_current_encoder",
+        "source_optimizer_updates": 21880
+      },
+      "head": {
+        "path": "/work/USERS/kevinswk/experiments/SW0258_selective3500/assets/252/clevr/1/random_head.pt",
+        "bytes": 50245,
+        "sha256": "92f8be93c21e14b4e3140a43358391cc07808c84017c4528478505021354cf6b",
+        "unique_train": 0,
+        "exposures": 0,
+        "initialization": "random_from_scratch",
+        "initialization_seed": 258501
+      },
+      "head_reused": false,
+      "cache_source": "/work/USERS/kevinswk/experiments/SW0257_separate_encoder35000/jobs/model252/clevr/seed1/head"
+    },
+    "252/clevr/2": {
+      "encoder": {
+        "path": "/work/USERS/kevinswk/experiments/SW0258_selective3500/assets/252/clevr/2/encoder.pt",
+        "bytes": 120511,
+        "sha256": "e728ba6c0063d402bcee81d02ebe3538f62c2d83590a3b9e349da7c9d251fb01",
+        "unique_train": 35000,
+        "exposures": 350000,
+        "source": "/work/USERS/kevinswk/experiments/SW0258_selective3500/transition/recovery/model252/clevr/seed2/encoder_resume.pt",
+        "source_sha256": "81927d1b2e17bf9ae0f7aa45d5feabc86ef87ec3d8d5a3d3d0b5f16aae1f5526",
+        "same_current_core": true,
+        "initialization": "reuse_qualified_current_encoder",
+        "source_optimizer_updates": 21880
+      },
+      "head": {
+        "path": "/work/USERS/kevinswk/experiments/SW0258_selective3500/assets/252/clevr/2/random_head.pt",
+        "bytes": 50245,
+        "sha256": "ac977322e298949b7a52f8dab3309f78518c9613eff8773db32f9588384e0fc0",
+        "unique_train": 0,
+        "exposures": 0,
+        "initialization": "random_from_scratch",
+        "initialization_seed": 258502
+      },
+      "head_reused": false,
+      "cache_source": "/work/USERS/kevinswk/experiments/SW0257_separate_encoder35000/jobs/model252/clevr/seed2/head"
+    },
+    "252/tetrominoes/0": {
+      "encoder": {
+        "path": "/work/USERS/kevinswk/experiments/SW0258_selective3500/assets/252/tetrominoes/0/encoder.pt",
+        "bytes": 120511,
+        "sha256": "2fcda306392f77c71c707aecfbc5fc5d8e2916eb4aeccee2462e3d3435b5e2f2",
+        "unique_train": 35000,
+        "exposures": 350000,
+        "source": "/work/USERS/kevinswk/experiments/SW0258_selective3500/transition/recovery/model252/tetrominoes/seed0/encoder_resume.pt",
+        "source_sha256": "1bb5ebe78bd84b06f6500238a4b0f73d3fcc463b264a027b59c4e578b0597eb5",
+        "same_current_core": true,
+        "initialization": "reuse_qualified_current_encoder",
+        "source_optimizer_updates": 21880
+      },
+      "head": {
+        "path": "/work/USERS/kevinswk/experiments/SW0258_selective3500/assets/252/tetrominoes/0/head.pt",
+        "bytes": 49571,
+        "sha256": "f9cd8d46ef0a14a3753ff3922bf392cde83ae7b7c28d2dae8f98926acc907005",
+        "unique_train": 3500,
+        "exposures": 35000,
+        "source": "/work/USERS/kevinswk/experiments/SW0255_full3500/jobs/model252/tetrominoes/seed0/resume.pt",
+        "source_sha256": "bd3f9df40f2968bfc0d60082449e0a4e7eceb04e45e2691efcb0f42b43c5728d",
+        "same_current_core": false,
+        "initialization": "reuse_qualified_head_trained_with_previous_core",
+        "source_optimizer_updates": 2190
+      },
+      "head_reused": true,
+      "cache_source": "/work/USERS/kevinswk/experiments/SW0257_separate_encoder35000/jobs/model252/tetrominoes/seed0/head"
+    },
+    "252/tetrominoes/1": {
+      "encoder": {
+        "path": "/work/USERS/kevinswk/experiments/SW0258_selective3500/assets/252/tetrominoes/1/encoder.pt",
+        "bytes": 120511,
+        "sha256": "e8332274bce51dfe02397b45ffa8e3053865fa6e63e4317f5720a97284729348",
+        "unique_train": 35000,
+        "exposures": 133096,
+        "source": "/work/USERS/kevinswk/experiments/SW0258_selective3500/transition/recovery/model252/tetrominoes/seed1/encoder_resume.pt",
+        "source_sha256": "5dbd3069aca1a13f0ee4949fc2aca0da2919efe9719cfd95dd8306c1017586e2",
+        "same_current_core": true,
+        "initialization": "reuse_qualified_current_encoder",
+        "source_optimizer_updates": 8320
+      },
+      "head": {
+        "path": "/work/USERS/kevinswk/experiments/SW0258_selective3500/assets/252/tetrominoes/1/random_head.pt",
+        "bytes": 50245,
+        "sha256": "92f8be93c21e14b4e3140a43358391cc07808c84017c4528478505021354cf6b",
+        "unique_train": 0,
+        "exposures": 0,
+        "initialization": "random_from_scratch",
+        "initialization_seed": 258501
+      },
+      "head_reused": false,
+      "cache_source": "/work/USERS/kevinswk/experiments/SW0257_separate_encoder35000/jobs/model252/tetrominoes/seed1/head"
+    },
+    "252/tetrominoes/2": {
+      "encoder": {
+        "path": "/work/USERS/kevinswk/experiments/SW0258_selective3500/assets/252/tetrominoes/2/encoder.pt",
+        "bytes": 120511,
+        "sha256": "f91931632f5d60a9bea139545b06ec5158a5b0eef66e1b99c5bea7361a3cd516",
+        "unique_train": 35000,
+        "exposures": 129000,
+        "source": "/work/USERS/kevinswk/experiments/SW0258_selective3500/transition/recovery/model252/tetrominoes/seed2/encoder_resume.pt",
+        "source_sha256": "ea2fcdacdd8d9faf49ef1cac567818351b3ec637ed1cea84f5d577324f6b162d",
+        "same_current_core": true,
+        "initialization": "reuse_qualified_current_encoder",
+        "source_optimizer_updates": 8064
+      },
+      "head": {
+        "path": "/work/USERS/kevinswk/experiments/SW0258_selective3500/assets/252/tetrominoes/2/random_head.pt",
+        "bytes": 50245,
+        "sha256": "ac977322e298949b7a52f8dab3309f78518c9613eff8773db32f9588384e0fc0",
+        "unique_train": 0,
+        "exposures": 0,
+        "initialization": "random_from_scratch",
+        "initialization_seed": 258502
+      },
+      "head_reused": false,
+      "cache_source": "/work/USERS/kevinswk/experiments/SW0257_separate_encoder35000/jobs/model252/tetrominoes/seed2/head"
+    },
+    "252/clevrtex_original/0": {
+      "encoder": {
+        "path": "/work/USERS/kevinswk/experiments/SW0258_selective3500/assets/252/clevrtex_original/0/encoder.pt",
+        "bytes": 120511,
+        "sha256": "f5f22aa90a95cf172d1d8f42f9b91fce9e7055382851a5c9b13965487f79bc9a",
+        "unique_train": 35000,
+        "exposures": 131048,
+        "source": "/work/USERS/kevinswk/experiments/SW0258_selective3500/transition/recovery/model252/clevrtex_original/seed0/encoder_resume.pt",
+        "source_sha256": "ce0bc057d3bc875363ecbc70b918e792c7a1f1b7085483e1a90136ea3a6e911b",
+        "same_current_core": true,
+        "initialization": "reuse_qualified_current_encoder",
+        "source_optimizer_updates": 8192
+      },
+      "head": {
+        "path": "/work/USERS/kevinswk/experiments/SW0258_selective3500/assets/252/clevrtex_original/0/random_head.pt",
+        "bytes": 50245,
+        "sha256": "d2fa6ba06ec7212bdf750af4ca4041e0bfe531b25df39ad4609fc303a27a4ff4",
+        "unique_train": 0,
+        "exposures": 0,
+        "initialization": "random_from_scratch",
+        "initialization_seed": 258500
+      },
+      "head_reused": false,
+      "cache_source": "/work/USERS/kevinswk/experiments/SW0257_separate_encoder35000/jobs/model252/clevrtex_original/seed0/head"
+    },
+    "252/clevrtex_original/1": {
+      "encoder": {
+        "path": "/work/USERS/kevinswk/experiments/SW0258_selective3500/assets/252/clevrtex_original/1/encoder.pt",
+        "bytes": 120511,
+        "sha256": "fb4ec52c05b2c84b195c3e40411af17280ed6b57e5405f66947cb8b7568aac84",
+        "unique_train": 35000,
+        "exposures": 129000,
+        "source": "/work/USERS/kevinswk/experiments/SW0258_selective3500/transition/recovery/model252/clevrtex_original/seed1/encoder_resume.pt",
+        "source_sha256": "77d7b5e476bcab6685b8de6a1ec41c2b277bd1d398b5ff6719acfa79776533a9",
+        "same_current_core": true,
+        "initialization": "reuse_qualified_current_encoder",
+        "source_optimizer_updates": 8064
+      },
+      "head": {
+        "path": "/work/USERS/kevinswk/experiments/SW0258_selective3500/assets/252/clevrtex_original/1/random_head.pt",
+        "bytes": 50245,
+        "sha256": "92f8be93c21e14b4e3140a43358391cc07808c84017c4528478505021354cf6b",
+        "unique_train": 0,
+        "exposures": 0,
+        "initialization": "random_from_scratch",
+        "initialization_seed": 258501
+      },
+      "head_reused": false,
+      "cache_source": "/work/USERS/kevinswk/experiments/SW0257_separate_encoder35000/jobs/model252/clevrtex_original/seed1/head"
+    },
+    "252/clevrtex_original/2": {
+      "encoder": null,
+      "head": {
+        "path": "/work/USERS/kevinswk/experiments/SW0258_selective3500/assets/252/clevrtex_original/2/random_head.pt",
+        "bytes": 50245,
+        "sha256": "ac977322e298949b7a52f8dab3309f78518c9613eff8773db32f9588384e0fc0",
+        "unique_train": 0,
+        "exposures": 0,
+        "initialization": "random_from_scratch",
+        "initialization_seed": 258502
+      },
+      "head_reused": false,
+      "cache_source": null
+    },
+    "253/clevr/0": {
+      "encoder": null,
+      "head": null,
+      "head_reused": false,
+      "cache_source": null
+    },
+    "253/clevr/1": {
+      "encoder": null,
+      "head": null,
+      "head_reused": false,
+      "cache_source": null
+    },
+    "253/clevr/2": {
+      "encoder": null,
+      "head": null,
+      "head_reused": false,
+      "cache_source": null
+    },
+    "253/tetrominoes/0": {
+      "encoder": null,
+      "head": null,
+      "head_reused": false,
+      "cache_source": null
+    },
+    "253/tetrominoes/1": {
+      "encoder": null,
+      "head": null,
+      "head_reused": false,
+      "cache_source": null
+    },
+    "253/tetrominoes/2": {
+      "encoder": null,
+      "head": null,
+      "head_reused": false,
+      "cache_source": null
+    },
+    "253/clevrtex_original/0": {
+      "encoder": null,
+      "head": null,
+      "head_reused": false,
+      "cache_source": null
+    },
+    "253/clevrtex_original/1": {
+      "encoder": null,
+      "head": null,
+      "head_reused": false,
+      "cache_source": null
+    },
+    "253/clevrtex_original/2": {
+      "encoder": null,
+      "head": null,
+      "head_reused": false,
+      "cache_source": null
+    }
+  }
+}

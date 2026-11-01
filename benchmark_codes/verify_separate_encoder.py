@@ -6,6 +6,8 @@ HERE=Path(__file__).resolve().parent
 
 def verify():
     request=json.loads((HERE/'CURRENT_EXPERIMENT.json').read_bytes())
+    if request['experiment']!='SW0257_separate_encoder35000':
+        request=json.loads((HERE/'separate_encoder_benchmark/CURRENT_SW0257.json').read_bytes())
     assert request['experiment']=='SW0257_separate_encoder35000'
     assert request['total_seed_jobs']==18 and request['unique_TRAIN_per_job']==35000 and request['epochs']==10
     assert request['encoder_updates']==21880 and request['supervised_head_additional_updates']==35000
