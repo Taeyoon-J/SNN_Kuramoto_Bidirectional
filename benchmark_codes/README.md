@@ -1,4 +1,9 @@
-> Active protocol: 3500 unique TRAIN x10 epochs, seed0 only. Previously started seed1/2 checkpoints remain preserved and inactive. `configs/active_request.json` overrides the historical `snapshot/controller/REQUEST.json`.
+> Current goal is **SW0256: pretrained core fixed, encoder fine-tuning,35000 TRAIN x10epochs,252/253 x3datasets x3seeds**.
+> Use [the frozen-core instructions](frozen_core_benchmark/README.md) and `run_frozen_core.py`.
+> `verify_frozen_core.py` checks its actual partial validation evidence. The older `run.py`
+> and `configs/active_request.json` below retain the separate SW0255 scratch protocol.
+
+> Historical SW0255 protocol:3500 unique TRAIN x10epochs,seed0 only. Its prior seed1/2 checkpoints remain preserved.
 
 > REQUEST_0010: the peer withdrew automatic microbatch increases in commit08e384a.
 > Supported training/queue entrypoints default to physical1; larger batches are explicit experiments.

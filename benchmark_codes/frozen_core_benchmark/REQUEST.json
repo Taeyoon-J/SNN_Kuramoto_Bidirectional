@@ -1,0 +1,112 @@
+{
+  "experiment": "SW0256_fixed_pretrained_core",
+  "conditions": [
+    {
+      "model": 252,
+      "dataset": "clevr",
+      "seeds": [
+        0,
+        1,
+        2
+      ],
+      "unique_train": 35000,
+      "epochs": 10,
+      "exposures": 350000,
+      "updates": 21880,
+      "grid": 64,
+      "core_frozen": true,
+      "encoder_finetuned": true
+    },
+    {
+      "model": 252,
+      "dataset": "tetrominoes",
+      "seeds": [
+        0,
+        1,
+        2
+      ],
+      "unique_train": 35000,
+      "epochs": 10,
+      "exposures": 350000,
+      "updates": 21880,
+      "grid": 64,
+      "core_frozen": true,
+      "encoder_finetuned": true
+    },
+    {
+      "model": 252,
+      "dataset": "clevrtex_original",
+      "seeds": [
+        0,
+        1,
+        2
+      ],
+      "unique_train": 35000,
+      "epochs": 10,
+      "exposures": 350000,
+      "updates": 21880,
+      "grid": 64,
+      "core_frozen": true,
+      "encoder_finetuned": true
+    },
+    {
+      "model": 253,
+      "dataset": "clevr",
+      "seeds": [
+        0,
+        1,
+        2
+      ],
+      "unique_train": 35000,
+      "epochs": 10,
+      "exposures": 350000,
+      "updates": 21880,
+      "grid": 64,
+      "core_frozen": true,
+      "encoder_finetuned": true
+    },
+    {
+      "model": 253,
+      "dataset": "tetrominoes",
+      "seeds": [
+        0,
+        1,
+        2
+      ],
+      "unique_train": 35000,
+      "epochs": 10,
+      "exposures": 350000,
+      "updates": 21880,
+      "grid": 64,
+      "core_frozen": true,
+      "encoder_finetuned": true
+    },
+    {
+      "model": 253,
+      "dataset": "clevrtex_original",
+      "seeds": [
+        0,
+        1,
+        2
+      ],
+      "unique_train": 35000,
+      "epochs": 10,
+      "exposures": 350000,
+      "updates": 21880,
+      "grid": 64,
+      "core_frozen": true,
+      "encoder_finetuned": true
+    }
+  ],
+  "total_seed_jobs": 18,
+  "physical_microbatch": 1,
+  "effective_batch": 16,
+  "rollout_steps": 1024,
+  "gradient_tail_steps": 64,
+  "source_grid": 16,
+  "target_grid": 64,
+  "source_initialization": "same-seed SW0097 source core;252 legacy240 encoder;253 original reconstruction encoder",
+  "head252": "fresh deterministic initialization, detached activity CE+Dice, all regions exchangeable",
+  "existing_checkpoints_reused_as_initialization_only": true,
+  "model_architecture_search": false
+}

@@ -1,0 +1,18 @@
+{
+  "experiment": "SW0256_fixed_pretrained_core",
+  "entrypoint": "run_frozen_core.py",
+  "protocol": "frozen_core_benchmark/REQUEST.json",
+  "sources": "frozen_core_benchmark/sources.frontier.json",
+  "instructions": "frozen_core_benchmark/README.md",
+  "validation_snapshot": "frozen_core_benchmark/validation/runtime_snapshot.json",
+  "verification": "verify_frozen_core.py",
+  "total_seed_jobs": 18,
+  "unique_TRAIN_per_job": 35000,
+  "epochs": 10,
+  "source_core_grid": 16,
+  "native_model_grid": 64,
+  "core_weights_frozen": true,
+  "encoder_finetuned": true,
+  "old_scratch_protocol_preserved": true,
+  "full_goal_complete": false
+}
