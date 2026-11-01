@@ -212,3 +212,24 @@ Oracle results, per the contract. Never compared against Slot Attention.
 | --- | --- | --- | --- |
 | trained on a ground-truth coupling graph | 0.5370 | 0.6096 | 0.3884 |
 | phase/PLV readouts, every variant | — | — | — |
+
+## PV2_0131 — the GPU that is fast at what this job does not do
+
+Infrastructure, no metric. I argued the coupling is bandwidth-bound and rented an H200 NVL
+at 3875 GB/s for an estimated 11.8 h / $43. It ran at **14.286 s/update — 24.8 h, $90**, off
+by 2.10x, because the premise came from a single bmm in isolation and the loop is 1,024
+sequential steps at microbatch 1.
+
+| | s/update | hours | one seed |
+| --- | ---: | ---: | ---: |
+| TITAN RTX, frontier, four processes on the card | 67.41 | 117.0 | — |
+| H200 NVL | 14.29 | 24.8 | $89.98 |
+| **RTX 4090** | **10.71** | **18.6** | **$8.07** |
+
+The 4090 is **1.33x faster and 11.2x cheaper**. The counters say why: the H200 idled its
+memory at **6%** while running its clock at 1785 MHz against the 4090's 2790 MHz, and
+2790/1785 = 1.563x nearly accounts for the whole gap. **Sustained clock buys time here;
+bandwidth, TFLOPS, DLPerf and VRAM do not.** An A100 at 1410 MHz would likely be slower than
+either.
+
+The frontier row shares its card with the peer's jobs and is not a clean hardware number.
