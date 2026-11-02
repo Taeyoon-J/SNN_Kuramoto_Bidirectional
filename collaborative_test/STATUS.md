@@ -1,9 +1,73 @@
 # STATUS
 
-Updated 2026-10-27. Branch `patch_v2`; the shipped version, `benchmark.md` and the script
+Updated 2026-11-02. Branch `patch_v2`; the shipped version, `benchmark.md` and the script
 bundle are on `patch_final`. Contract **v2**; split v1.
 
-> ## RESUME POINT, 2026-10-27 — benchmark comparison, one sweep running
+> ## RESUME POINT, 2026-11-02 — the peer's grid-64 engine, trained on rented GPUs
+>
+> Work moved to the peer's `benchmark_codes` bundle (`5372351`, every variant at grid 64)
+> run on **rented Vast GPUs**, because frontier's four TITAN RTX cards are occupied by the
+> peer's own multi-day jobs and measured **117 h** for a job a rented RTX 4090 does in 18.5.
+>
+> ### Results in hand
+>
+> **253, CLEVR, grid 64, 10,000 x 10, seed 0, unsupervised** (`PV2_0132`):
+>
+> | | fixed320 | validation |
+> | --- | ---: | ---: |
+> | FG-ARI | **0.7794** | 0.7862 |
+> | foreground IoU | **0.7308** | 0.7513 |
+> | matched-object IoU | **0.5807** | 0.5808 |
+>
+> against the peer's **reported** 0.4281 / 0.2778 / 0.2407 at 3,500 x 10 on the same grid.
+> One seed. The baseline has **not** been reproduced here, and unique images and gradient
+> steps both rose 2.86x together, so this does not say which caused the gain.
+>
+> Do not compare these with the 0.6668 CLEVR row below: that is grid 32, 1000 test images,
+> our own pipeline. Different evaluation set and different code.
+>
+> ### Running
+>
+> **252, CLEVR, grid 64, 10,000 x 10, seed 0 — SUPERVISED** on a rented RTX 4090
+> (Montana, m:24711, Ryzen 9 7950X3D). 17.8 s/update, 6,250 updates, ~31 h, ~$15.
+> Under supervisor (`/opt/supervisor-scripts/train252.sh`), restart capped at 4 stalled
+> starts; an outside watch runs on frontier. Same 10,000 images and same budget as the 253
+> run above, so the pair differs **only** in supervision. 252 cannot share a row with 253 or
+> with Slot Attention.
+>
+> ### Tools built this session
+>
+> - `benchmark_codes/score_validation.py` — scores any checkpoint on the 320 **validation**
+>   images with `evaluate()` unmodified, by pointing a shallow Dataset copy's `.test` at
+>   `.validation`. Runs free on frontier. fixed320 and validation agree to 0.02, so
+>   selection can live on validation from now on.
+> - `SW_TRAIN_PRESET` in the bundle: unset = 10,000; `cont15000` = the disjoint 15,000 warm
+>   started from a 10,000x10 checkpoint; `union25000` = both, from scratch. Split contracts
+>   follow the preset automatically.
+>
+> ### Parked, with checkpoints on frontier
+>
+> - `recovered/` — the completed 253 10,000 x 10 (resume.pt sha verified against committed.json)
+> - `recovered25/` — a 253 continuation on the disjoint 15,000, stopped at update 6,368 of
+>   15,630; resumable
+>
+> ### Next
+>
+> 1. When 252 finishes, score it on **validation** first and put it beside 253's 0.7862:
+>    same images, same 6,250 updates, supervision the only difference.
+> 2. Reproduce the peer's 0.4281 with our evaluation before writing "+82%" anywhere.
+> 3. Seeds 1 and 2 for 253 at 10,000 x 10 — nothing is a result at one seed.
+> 4. The arm that separates data from steps: 3,500 unique x 29 epochs.
+>
+> ### Renting GPUs — what measurement settled (`PV2_0131`)
+>
+> Pick on **sustained SM clock and CPU single-thread**, not bandwidth, TFLOPS, DLPerf or
+> VRAM. An H200 at 3875 GB/s ran 14.29 s/update and cost $90; a 4090 ran 10.71 and cost
+> $8.07. Disk size is fixed at creation — set 100 GB before renting. **Measure the link with
+> at least 1 GB before transferring**: a 200 MB burst read 14.5 MB/s on a host that
+> sustained 1.9, and one host advertising 165 Mbps delivered 0.02 MB/s.
+
+> ## EARLIER RESUME POINT, 2026-10-27 (superseded) — benchmark comparison, one sweep running
 >
 > **Model improvement is paused by the user's decision.** Benchmark comparison only. The
 > grid is chosen per dataset from its measured ceiling: CLEVR 32, Multi-dSprites 64,
