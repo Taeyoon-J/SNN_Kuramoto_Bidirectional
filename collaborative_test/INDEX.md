@@ -233,3 +233,20 @@ bandwidth, TFLOPS, DLPerf and VRAM do not.** An A100 at 1410 MHz would likely be
 either.
 
 The frontier row shares its card with the peer's jobs and is not a clean hardware number.
+
+## PV2_0132 — 253 at grid 64, 10,000 x 10 on CLEVR
+
+**0.7794 / 0.7308 / 0.5807** on the 320-image fixed320 set, unsupervised, one seed, against
+the peer's reported **0.4281 / 0.2778 / 0.2407** at 3,500 x 10 on the same grid. All three
+rose together.
+
+Scored again on the 320 **validation** images, which this benchmark had never scored:
+**0.7862 / 0.7513 / 0.5808** — the two disjoint sets agree to 0.02 at worst and to 0.0001
+on object IoU, so **validation can carry configuration choices from here on**.
+
+Masks come from `trace['spikes']` via `spike_synchrony_components`, not from theta or PLV
+(`evaluation.py:21-26`). `mask_opened_during_training: false`.
+
+Three limits, all load-bearing: **one seed**; the 0.4281 baseline is the peer's reported
+figure and **has not been reproduced here**; and unique images and gradient steps both rose
+2.86x together, so this does not say which one mattered. The separating arm is 3,500 x 29.
