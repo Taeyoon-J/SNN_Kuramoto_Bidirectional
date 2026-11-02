@@ -1,0 +1,83 @@
+{
+  "validation_RGB_and_activities_only": true,
+  "rows": [
+    {
+      "seed": 0,
+      "arm": "rgb",
+      "epoch": 20,
+      "validation": {
+        "rgb_mse": 0.0035179615078959614,
+        "mean_hard_groups": 27.34375
+      },
+      "validation_changed_patch_fraction": 0.0,
+      "mean_mask_entropy": 0.30969898495823145,
+      "prior_scale": 5.7377705574035645,
+      "residual_scale": 1.4195805788040161
+    },
+    {
+      "seed": 0,
+      "arm": "rgb_activity",
+      "epoch": 20,
+      "validation": {
+        "rgb_mse": 0.003344919783557998,
+        "mean_hard_groups": 27.34375
+      },
+      "validation_changed_patch_fraction": 0.0,
+      "mean_mask_entropy": 0.31879870872944593,
+      "prior_scale": 5.681328773498535,
+      "residual_scale": 1.4018619060516357
+    },
+    {
+      "seed": 0,
+      "arm": "rgb_activity_sharp",
+      "epoch": 20,
+      "validation": {
+        "rgb_mse": 0.003368277879417292,
+        "mean_hard_groups": 27.34375
+      },
+      "validation_changed_patch_fraction": 0.0,
+      "mean_mask_entropy": 0.018378453270997852,
+      "prior_scale": 8.449219703674316,
+      "residual_scale": 2.524148464202881
+    },
+    {
+      "seed": 1,
+      "arm": "rgb",
+      "epoch": 20,
+      "validation": {
+        "rgb_mse": 0.004148569041717565,
+        "mean_hard_groups": 26.1875
+      },
+      "validation_changed_patch_fraction": 0.0,
+      "mean_mask_entropy": 0.2916468237526715,
+      "prior_scale": 5.600539684295654,
+      "residual_scale": 1.6734083890914917
+    },
+    {
+      "seed": 1,
+      "arm": "rgb_activity",
+      "epoch": 16,
+      "validation": {
+        "rgb_mse": 0.004435758477484342,
+        "mean_hard_groups": 26.1875
+      },
+      "validation_changed_patch_fraction": 0.0,
+      "mean_mask_entropy": 0.2959932489320636,
+      "prior_scale": 5.594076156616211,
+      "residual_scale": 1.6124635934829712
+    },
+    {
+      "seed": 1,
+      "arm": "rgb_activity_sharp",
+      "epoch": 19,
+      "validation": {
+        "rgb_mse": 0.004330151985413977,
+        "mean_hard_groups": 26.1875
+      },
+      "validation_changed_patch_fraction": 0.0,
+      "mean_mask_entropy": 0.020864417223492637,
+      "prior_scale": 8.211000442504883,
+      "residual_scale": 2.5623891353607178
+    }
+  ]
+}

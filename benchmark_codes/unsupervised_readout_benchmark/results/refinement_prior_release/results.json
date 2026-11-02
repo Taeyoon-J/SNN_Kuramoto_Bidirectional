@@ -1,0 +1,51 @@
+{
+  "per_seed": [
+    {
+      "seed": 0,
+      "arm": "release_activity",
+      "metrics": {
+        "fg_ari": 0.8042912498718555,
+        "foreground_iou": 0.2184295654296875,
+        "matched_object_iou": 0.7288399439361862
+      },
+      "prediction_sha256": "487f7ab0638b5d5f3d5c59bee1724a9a50d0b1b4900ff2b2b960c9e427e2e309"
+    },
+    {
+      "seed": 1,
+      "arm": "release_activity",
+      "metrics": {
+        "fg_ari": 0.6793653500574554,
+        "foreground_iou": 0.2184295654296875,
+        "matched_object_iou": 0.6291733747709296
+      },
+      "prediction_sha256": "ef74f0d19a46d2473a16a101fd26808d8498c4ae44d1943a46c6a888afa076ff"
+    },
+    {
+      "seed": 2,
+      "arm": "release_activity",
+      "metrics": {
+        "fg_ari": 0.7374509467130141,
+        "foreground_iou": 0.2184295654296875,
+        "matched_object_iou": 0.66647607857401
+      },
+      "prediction_sha256": "846380b57e223c1f73d12e1be7c4f94fe1d61260b6c8a912a87076e3efdc0634"
+    }
+  ],
+  "mean": {
+    "fg_ari": 0.7403691822141084,
+    "foreground_iou": 0.2184295654296875,
+    "matched_object_iou": 0.6748297990937088
+  },
+  "selected_arm": "release_activity",
+  "selection": {
+    "release_rgb": 0.003737523456341781,
+    "release_activity": 0.0036297515562182525
+  },
+  "GT_used_for_training": false,
+  "baseline_FGARI": 0.804299,
+  "exceeded_baseline": false,
+  "head_architecture_unchanged": true,
+  "source_core_encoder_frozen": true,
+  "reason": "zero patch assignment changes in unlabelled validation diagnosed first-round prior domination",
+  "foreground_label_convention": "all region IDs positive; no designated background; rawFGIoU=GT foreground area fraction"
+}

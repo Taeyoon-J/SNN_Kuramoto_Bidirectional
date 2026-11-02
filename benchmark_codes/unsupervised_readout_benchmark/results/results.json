@@ -1,0 +1,64 @@
+{
+  "per_seed": [
+    {
+      "seed": 0,
+      "arm": "rgb",
+      "metrics": {
+        "fg_ari": 0.8594540919999745,
+        "foreground_iou": 0.2184295654296875,
+        "matched_object_iou": 0.7595792936118503
+      },
+      "baseline": {
+        "fg_ari": 0.8463990820746258,
+        "foreground_iou": 0.7658016315190833,
+        "matched_object_iou": 0.6939170374905839
+      },
+      "prediction_sha256": "e4e19aa2cb445fe93e2fd6e0c008a2b146128478084e5b17cbd23801e390fe37"
+    },
+    {
+      "seed": 1,
+      "arm": "rgb",
+      "metrics": {
+        "fg_ari": 0.7964008391083104,
+        "foreground_iou": 0.2184295654296875,
+        "matched_object_iou": 0.6999461727591333
+      },
+      "baseline": {
+        "fg_ari": 0.7709320986336607,
+        "foreground_iou": 0.6149934302630647,
+        "matched_object_iou": 0.6305234820304301
+      },
+      "prediction_sha256": "10d7f5104a0b94b769549a776988134216332e49f58f7be385e25f7d58d1de48"
+    },
+    {
+      "seed": 2,
+      "arm": "rgb",
+      "metrics": {
+        "fg_ari": 0.8090298780567146,
+        "foreground_iou": 0.2184295654296875,
+        "matched_object_iou": 0.6909784676943879
+      },
+      "baseline": {
+        "fg_ari": 0.7955655641339727,
+        "foreground_iou": 0.44913128357704135,
+        "matched_object_iou": 0.6290064055565623
+      },
+      "prediction_sha256": "6cddee7ee661329220faa937dc4453ccaa29555a70b145ef79000f6cecfea811"
+    }
+  ],
+  "mean": {
+    "fg_ari": 0.8216282697216665,
+    "foreground_iou": 0.2184295654296875,
+    "matched_object_iou": 0.7168346446884571
+  },
+  "selected_arm": "rgb",
+  "selection": {
+    "rgb": 0.003898199561566192,
+    "rgb_activity": 0.003916552834804558,
+    "rgb_activity_sharp": 0.003921438261992686
+  },
+  "GT_used_for_training": false,
+  "baseline_FGARI": 0.804299,
+  "exceeded_baseline": true,
+  "foreground_label_convention": "all groups positive; no BG designation; raw FGIoU is GT foreground fraction"
+}

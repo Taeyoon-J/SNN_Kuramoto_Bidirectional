@@ -1,4 +1,11 @@
-> Current goal is **SW0258: fixed existing core; eligible encoder/head reuse; otherwise scratch3500x10; 18 conditions**.
+> Latest completed model: **SW0259 unsupervised readout**, native32 fixed320,
+> three-seed FG-ARI **0.821628**. [Results and limitations](unsupervised_readout_benchmark/RESULTS_KO.md).
+> [Three complete checkpoints and offline inference](unsupervised_readout_benchmark/CHECKPOINTS_KO.md)
+> are included in this branch (about0.90MB per seed, all core/encoder/head/decoder weights).
+> The improvement comes from proposal/background handling; trained hard masks did not
+> change from initial proposals. RawForegroundIoU0.218430 is not semantic foreground quality.
+>
+> Historical SW0258 goal: **fixed existing core; eligible encoder/head reuse; otherwise scratch3500x10; 18 conditions**.
 > Use [the selective training instructions](selective3500_benchmark/README.md) and `run_selective3500.py`.
 > Eligibility requires the same dataset/seed,3500 unique TRAIN images and35000 exposures.
 > Reused histories are reported as inherited; they are never relabelled as a fresh3500x10 run.
