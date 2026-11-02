@@ -1,0 +1,61 @@
+{
+  "status": "passed",
+  "python": "3.10.20",
+  "torch": "2.13.0+cu130",
+  "cuda": "13.0",
+  "GPU": "NVIDIA TITAN RTX",
+  "sources": {
+    "verify.py": "33adb93d20f0fb463ca6786ab057e0f3421c045c961fec9537d87aa480400602",
+    "model.py": "11c385aad024e5ae14bd0a925702ba61da2cfc046dd6dcca34fb12e9b42f3cc9",
+    "portable.py": "11937ceb996dcf6f5b82345a7814b62525cab5391c3d80c71f06de17a1e59b5a",
+    "partition.py": "a6dd00c8f3f14ba5ff5cbf81c84c229bee02a9d3f522adc7947c21226d37d37f"
+  },
+  "reports": [
+    {
+      "seed": 0,
+      "status": "construction_mapping_encoding_routing_backward_passed",
+      "core_grid": 64,
+      "oscillator_locations": 4096,
+      "components": 4,
+      "graph_top_k": 512,
+      "native64_training_updates": 0,
+      "parent_sha256": "e72f7af5aa15dd5c6a4b18e352f49b6346e0464fe5cf9802129139a05e9ca781",
+      "full_1024_step_native64_inference_passed": true,
+      "groups": 73,
+      "prediction_sha256": "270feb1ce07b24c3b00ecf60f46ecf7f3b81dbd691981e354b8fb55895f4b029",
+      "elapsed_seconds": 35.12347057554871
+    },
+    {
+      "seed": 1,
+      "status": "construction_mapping_encoding_routing_backward_passed",
+      "core_grid": 64,
+      "oscillator_locations": 4096,
+      "components": 4,
+      "graph_top_k": 512,
+      "native64_training_updates": 0,
+      "parent_sha256": "a0cae3105acc4b19b84124a3d4b553420aef3edadd309616953dc4afb3cf191b",
+      "elapsed_seconds": 2.6923105204477906
+    },
+    {
+      "seed": 2,
+      "status": "construction_mapping_encoding_routing_backward_passed",
+      "core_grid": 64,
+      "oscillator_locations": 4096,
+      "components": 4,
+      "graph_top_k": 512,
+      "native64_training_updates": 0,
+      "parent_sha256": "ddb0fbc983df1b2788a19e262fe365aef00a5a15f707922fb2c9de6ed94196e0",
+      "elapsed_seconds": 2.3307032622396946
+    }
+  ],
+  "protocol": {
+    "unique_TRAIN_smoke_images": 1,
+    "image_id": 0,
+    "seed0_full_rollout_steps": 1024,
+    "masks_used": false,
+    "optimizer_updates": 0,
+    "metric_evaluation_performed": false
+  },
+  "local_partition_oracles": "2 passed: N-dependent energy and negative-evidence no-merge",
+  "preliminary_validation_issue_fixed": "Legacy helper required1024x1024 Q; replaced by native4096 shape validation and resolution-aware energy coefficient. Protected source unchanged."
+}

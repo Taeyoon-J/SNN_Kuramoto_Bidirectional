@@ -1,4 +1,9 @@
-> Latest verified candidate: **SW0260 context64 readout**, core32 frozen, output64,
+> New implementation: [SW0261 actual native64 core](native64_core/README.md),
+> 4096 oscillator locations, graph top-k512, native64 activity and readout.
+> Existing weights are spatially transferred at load time; no native64 training or accuracy claim.
+> Three-seed construction/mapping and seed0 full1024-step inference verified.
+>
+> Latest scored candidate: **SW0260 context64 readout**, core32 frozen, output64,
 > fixed320 three-seed FG-ARI **0.806885**, versus old259 on the same64 contract **0.802087**.
 > [Results and controls](readout64_optimization/RESULTS_KO.md),
 > [three checkpoints and inference](readout64_optimization/CHECKPOINTS_KO.md).
