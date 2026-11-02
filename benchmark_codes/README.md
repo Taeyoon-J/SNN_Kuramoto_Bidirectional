@@ -1,4 +1,11 @@
-> Latest completed model: **SW0259 unsupervised readout**, native32 fixed320,
+> Latest verified candidate: **SW0260 context64 readout**, core32 frozen, output64,
+> fixed320 three-seed FG-ARI **0.806885**, versus old259 on the same64 contract **0.802087**.
+> [Results and controls](readout64_optimization/RESULTS_KO.md),
+> [three checkpoints and inference](readout64_optimization/CHECKPOINTS_KO.md).
+> No TRAIN mask supervision; labelled validation selects checkpoints/configuration.
+> RawForegroundIoU does not identify background, and per-gating causality is not established here.
+>
+> Earlier completed model: **SW0259 unsupervised readout**, native32 fixed320,
 > three-seed FG-ARI **0.821628**. [Results and limitations](unsupervised_readout_benchmark/RESULTS_KO.md).
 > [Three complete checkpoints and offline inference](unsupervised_readout_benchmark/CHECKPOINTS_KO.md)
 > are included in this branch (about0.90MB per seed, all core/encoder/head/decoder weights).

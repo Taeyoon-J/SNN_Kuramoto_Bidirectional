@@ -1,0 +1,38 @@
+{
+  "format": "SW0260_context_head_with_SW0259_parent_v1",
+  "checkpoints": [
+    {
+      "seed": 0,
+      "arm": "context_rgb",
+      "file": "checkpoints/sw0260_context_seed0.pt",
+      "bytes": 181953,
+      "sha256": "76c92e6f710ae3ba0183738991961d466b35cf6e6b20ca55a46ec7ab02226038",
+      "parent_file": "../unsupervised_readout_benchmark/checkpoints/sw0259_seed0.pt",
+      "parent_sha256": "e72f7af5aa15dd5c6a4b18e352f49b6346e0464fe5cf9802129139a05e9ca781"
+    },
+    {
+      "seed": 1,
+      "arm": "context_rgb",
+      "file": "checkpoints/sw0260_context_seed1.pt",
+      "bytes": 181889,
+      "sha256": "4ed76838dc17511bcdbe037971d2b2810ece72f2fb5c9deee7859463a20b9431",
+      "parent_file": "../unsupervised_readout_benchmark/checkpoints/sw0259_seed1.pt",
+      "parent_sha256": "a0cae3105acc4b19b84124a3d4b553420aef3edadd309616953dc4afb3cf191b"
+    },
+    {
+      "seed": 2,
+      "arm": "context_rgb",
+      "file": "checkpoints/sw0260_context_seed2.pt",
+      "bytes": 181953,
+      "sha256": "7454c9469af0f66ee58b73f3905364537ee98aa0b6775e5c4ea452d69cc0b168",
+      "parent_file": "../unsupervised_readout_benchmark/checkpoints/sw0259_seed2.pt",
+      "parent_sha256": "ddb0fbc983df1b2788a19e262fe365aef00a5a15f707922fb2c9de6ed94196e0"
+    }
+  ],
+  "core_grid": 32,
+  "head_grid": 64,
+  "mean_FGARI": 0.8068848070073239,
+  "includes": "new head/context CNN/decoder; requires corresponding published259 parent for frozen core/encoder",
+  "TRAIN_masks_used": false,
+  "labelled_validation_selection": true
+}

@@ -1,0 +1,223 @@
+{
+  "selected_arm": "context_rgb",
+  "per_seed": [
+    {
+      "seed": 0,
+      "arm": "context_rgb",
+      "metrics": {
+        "old259_lifted64": {
+          "fg_ari": 0.8377841948582262,
+          "foreground_iou": 0.21150894165039064,
+          "matched_object_iou": 0.6938771099199746
+        },
+        "initial_structure": {
+          "fg_ari": 0.8366134217468965,
+          "foreground_iou": 0.21150894165039064,
+          "matched_object_iou": 0.7011714194825558
+        },
+        "trained": {
+          "fg_ari": 0.8470994116880345,
+          "foreground_iou": 0.21150894165039064,
+          "matched_object_iou": 0.7207516329244539
+        },
+        "zero_fine_adapter": {
+          "fg_ari": 0.8355501441750525,
+          "foreground_iou": 0.21150894165039064,
+          "matched_object_iou": 0.693378128302761
+        },
+        "coarsened_gamma": {
+          "fg_ari": 0.8361600649924119,
+          "foreground_iou": 0.21150894165039064,
+          "matched_object_iou": 0.7084130755113691
+        }
+      },
+      "protocol": {
+        "seed": 0,
+        "arm": "context_rgb",
+        "checkpoint_sha256": "76c92e6f710ae3ba0183738991961d466b35cf6e6b20ca55a46ec7ab02226038",
+        "checkpoint_file": "/work/USERS/kevinswk/experiments/SW0260_context64/extended/seed0/context_rgb/best.pt",
+        "source_checkpoint_sha256": "e72f7af5aa15dd5c6a4b18e352f49b6346e0464fe5cf9802129139a05e9ca781",
+        "prediction_sha256": "6b7abeaaa9fbeb09f68dc451266f934defd9cccce263981f2a421f91bb3163df",
+        "core_grid": 32,
+        "head_grid": 64,
+        "GT_used_for_prediction": false,
+        "selection": {
+          "arm": "context_rgb",
+          "validation_means": {
+            "context_rgb": 0.8110911579263401
+          },
+          "selection": "validation32 only",
+          "routing_variant": "contextual_fine_readout",
+          "core_grid": 32,
+          "head_grid": 64
+        },
+        "factory_file": "/work/USERS/kevinswk/experiments/SW0260_context64/code/433d53e572ff/context_model.py",
+        "factory_class": "ContextReadout",
+        "factory_sha256": "45eae5bfd26944545e551df460bf5f60b194fd2a924a72aefb87c31def611f80",
+        "old_prediction_sha256": "e4e19aa2cb445fe93e2fd6e0c008a2b146128478084e5b17cbd23801e390fe37",
+        "changed_from_old": 0.02138671875,
+        "changed_from_initial": 0.07291183471679688,
+        "fine_adapter_effect": 0.02342681884765625,
+        "fine_resolution_effect": 0.016064453125
+      }
+    },
+    {
+      "seed": 1,
+      "arm": "context_rgb",
+      "metrics": {
+        "old259_lifted64": {
+          "fg_ari": 0.7776124046954364,
+          "foreground_iou": 0.21150894165039064,
+          "matched_object_iou": 0.6415707090100085
+        },
+        "initial_structure": {
+          "fg_ari": 0.7714104371887165,
+          "foreground_iou": 0.21150894165039064,
+          "matched_object_iou": 0.6403480011637921
+        },
+        "trained": {
+          "fg_ari": 0.7768432071977471,
+          "foreground_iou": 0.21150894165039064,
+          "matched_object_iou": 0.6452834985996203
+        },
+        "zero_fine_adapter": {
+          "fg_ari": 0.7725170951103353,
+          "foreground_iou": 0.21150894165039064,
+          "matched_object_iou": 0.6406837295147066
+        },
+        "coarsened_gamma": {
+          "fg_ari": 0.7763401788265007,
+          "foreground_iou": 0.21150894165039064,
+          "matched_object_iou": 0.6448730896849391
+        }
+      },
+      "protocol": {
+        "seed": 1,
+        "arm": "context_rgb",
+        "checkpoint_sha256": "4ed76838dc17511bcdbe037971d2b2810ece72f2fb5c9deee7859463a20b9431",
+        "checkpoint_file": "/work/USERS/kevinswk/experiments/SW0260_context64/extended/seed1/context_rgb/best.pt",
+        "source_checkpoint_sha256": "a0cae3105acc4b19b84124a3d4b553420aef3edadd309616953dc4afb3cf191b",
+        "prediction_sha256": "1b177334b161c6b56ded8a184d888317ff5694584055e49b81c1d75bbc7e50f8",
+        "core_grid": 32,
+        "head_grid": 64,
+        "GT_used_for_prediction": false,
+        "selection": {
+          "arm": "context_rgb",
+          "validation_means": {
+            "context_rgb": 0.8110911579263401
+          },
+          "selection": "validation32 only",
+          "routing_variant": "contextual_fine_readout",
+          "core_grid": 32,
+          "head_grid": 64
+        },
+        "factory_file": "/work/USERS/kevinswk/experiments/SW0260_context64/code/433d53e572ff/context_model.py",
+        "factory_class": "ContextReadout",
+        "factory_sha256": "45eae5bfd26944545e551df460bf5f60b194fd2a924a72aefb87c31def611f80",
+        "old_prediction_sha256": "10d7f5104a0b94b769549a776988134216332e49f58f7be385e25f7d58d1de48",
+        "changed_from_old": 0.12960052490234375,
+        "changed_from_initial": 0.09507598876953124,
+        "fine_adapter_effect": 0.09922714233398437,
+        "fine_resolution_effect": 0.00313720703125
+      }
+    },
+    {
+      "seed": 2,
+      "arm": "context_rgb",
+      "metrics": {
+        "old259_lifted64": {
+          "fg_ari": 0.7908654409249467,
+          "foreground_iou": 0.21150894165039064,
+          "matched_object_iou": 0.6322170837015033
+        },
+        "initial_structure": {
+          "fg_ari": 0.7853980159972956,
+          "foreground_iou": 0.21150894165039064,
+          "matched_object_iou": 0.6368412272128816
+        },
+        "trained": {
+          "fg_ari": 0.79671180213619,
+          "foreground_iou": 0.21150894165039064,
+          "matched_object_iou": 0.6469142837517338
+        },
+        "zero_fine_adapter": {
+          "fg_ari": 0.7866540485660863,
+          "foreground_iou": 0.21150894165039064,
+          "matched_object_iou": 0.6316464951571197
+        },
+        "coarsened_gamma": {
+          "fg_ari": 0.7913058109142119,
+          "foreground_iou": 0.21150894165039064,
+          "matched_object_iou": 0.6381757673186529
+        }
+      },
+      "protocol": {
+        "seed": 2,
+        "arm": "context_rgb",
+        "checkpoint_sha256": "7454c9469af0f66ee58b73f3905364537ee98aa0b6775e5c4ea452d69cc0b168",
+        "checkpoint_file": "/work/USERS/kevinswk/experiments/SW0260_context64/extended/seed2/context_rgb/best.pt",
+        "source_checkpoint_sha256": "ddb0fbc983df1b2788a19e262fe365aef00a5a15f707922fb2c9de6ed94196e0",
+        "prediction_sha256": "3238feaab5d9e00fc3f4de7b579fee0ab4575089e742dc72d2d799b138445f6a",
+        "core_grid": 32,
+        "head_grid": 64,
+        "GT_used_for_prediction": false,
+        "selection": {
+          "arm": "context_rgb",
+          "validation_means": {
+            "context_rgb": 0.8110911579263401
+          },
+          "selection": "validation32 only",
+          "routing_variant": "contextual_fine_readout",
+          "core_grid": 32,
+          "head_grid": 64
+        },
+        "factory_file": "/work/USERS/kevinswk/experiments/SW0260_context64/code/433d53e572ff/context_model.py",
+        "factory_class": "ContextReadout",
+        "factory_sha256": "45eae5bfd26944545e551df460bf5f60b194fd2a924a72aefb87c31def611f80",
+        "old_prediction_sha256": "6cddee7ee661329220faa937dc4453ccaa29555a70b145ef79000f6cecfea811",
+        "changed_from_old": 0.0169097900390625,
+        "changed_from_initial": 0.11843109130859375,
+        "fine_adapter_effect": 0.02456512451171875,
+        "fine_resolution_effect": 0.0122802734375
+      }
+    }
+  ],
+  "mean": {
+    "old259_lifted64": {
+      "fg_ari": 0.8020873468262031,
+      "foreground_iou": 0.21150894165039066,
+      "matched_object_iou": 0.6558883008771622
+    },
+    "initial_structure": {
+      "fg_ari": 0.797807291644303,
+      "foreground_iou": 0.21150894165039066,
+      "matched_object_iou": 0.6594535492864099
+    },
+    "trained": {
+      "fg_ari": 0.8068848070073239,
+      "foreground_iou": 0.21150894165039066,
+      "matched_object_iou": 0.6709831384252692
+    },
+    "zero_fine_adapter": {
+      "fg_ari": 0.7982404292838247,
+      "foreground_iou": 0.21150894165039066,
+      "matched_object_iou": 0.6552361176581958
+    },
+    "coarsened_gamma": {
+      "fg_ari": 0.8012686849110415,
+      "foreground_iou": 0.21150894165039066,
+      "matched_object_iou": 0.6638206441716537
+    }
+  },
+  "core_grid": 32,
+  "head_grid": 64,
+  "FGARI_gain_over_same64_baseline": 0.004797460181120816,
+  "learned_routing_gain": 0.009077515363020927,
+  "fine_adapter_gain": 0.008644377723499241,
+  "fine_resolution_gain": 0.005616122096282372,
+  "historical_native32_FGARI": 0.8216282697216665,
+  "historical32_is_not_same_contract": true,
+  "TRAIN_masks_used": false,
+  "labelled_validation_used_for_selection": true,
+  "foreground_iou_warning": "all output IDs positive; rawFGIoU equals GT foreground area fraction"
+}

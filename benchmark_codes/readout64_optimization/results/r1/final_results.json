@@ -1,0 +1,214 @@
+{
+  "selected_arm": "local_rgb",
+  "per_seed": [
+    {
+      "seed": 0,
+      "arm": "local_rgb",
+      "metrics": {
+        "old259_lifted64": {
+          "fg_ari": 0.8377841948582262,
+          "foreground_iou": 0.21150894165039064,
+          "matched_object_iou": 0.6938771099199746
+        },
+        "initial_structure": {
+          "fg_ari": 0.8366134217468965,
+          "foreground_iou": 0.21150894165039064,
+          "matched_object_iou": 0.7011714194825558
+        },
+        "trained": {
+          "fg_ari": 0.8422690970868338,
+          "foreground_iou": 0.21150894165039064,
+          "matched_object_iou": 0.7165423932702597
+        },
+        "zero_fine_adapter": {
+          "fg_ari": 0.8377862511561853,
+          "foreground_iou": 0.21150894165039064,
+          "matched_object_iou": 0.6939191722221569
+        },
+        "coarsened_gamma": {
+          "fg_ari": 0.8342189492843914,
+          "foreground_iou": 0.21150894165039064,
+          "matched_object_iou": 0.7056379639818451
+        }
+      },
+      "protocol": {
+        "seed": 0,
+        "arm": "local_rgb",
+        "checkpoint_sha256": "7cc3684336bc31bc4e3d6134e3db7c9a7891a4aa99b247147e80e199e988db94",
+        "checkpoint_file": "/work/USERS/kevinswk/experiments/SW0260_readout64_r1/extended/seed0/local_rgb/best.pt",
+        "source_checkpoint_sha256": "e72f7af5aa15dd5c6a4b18e352f49b6346e0464fe5cf9802129139a05e9ca781",
+        "prediction_sha256": "eaadadb37a2d94b166b0503f49d0f72bb5501f7d93729eeb3299e58d5787ce40",
+        "core_grid": 32,
+        "head_grid": 64,
+        "GT_used_for_prediction": false,
+        "selection": {
+          "arm": "local_rgb",
+          "validation_means": {
+            "local_rgb": 0.8048112414428031,
+            "local_rgb_trust": 0.8028661448793097
+          },
+          "selection": "labelled validation only; no fixed320 tuning",
+          "core_grid": 32,
+          "head_grid": 64
+        },
+        "old_prediction_sha256": "e4e19aa2cb445fe93e2fd6e0c008a2b146128478084e5b17cbd23801e390fe37",
+        "changed_from_old": 0.0178436279296875,
+        "changed_from_initial": 0.06795806884765625,
+        "fine_adapter_effect": 0.017845916748046874,
+        "fine_resolution_effect": 0.014232635498046875
+      }
+    },
+    {
+      "seed": 1,
+      "arm": "local_rgb",
+      "metrics": {
+        "old259_lifted64": {
+          "fg_ari": 0.7776124046954364,
+          "foreground_iou": 0.21150894165039064,
+          "matched_object_iou": 0.6415707090100085
+        },
+        "initial_structure": {
+          "fg_ari": 0.7714104371887165,
+          "foreground_iou": 0.21150894165039064,
+          "matched_object_iou": 0.6403480011637921
+        },
+        "trained": {
+          "fg_ari": 0.7718986333316924,
+          "foreground_iou": 0.21150894165039064,
+          "matched_object_iou": 0.6403140176815311
+        },
+        "zero_fine_adapter": {
+          "fg_ari": 0.7718060931581799,
+          "foreground_iou": 0.21150894165039064,
+          "matched_object_iou": 0.6400950686545565
+        },
+        "coarsened_gamma": {
+          "fg_ari": 0.7718817215776934,
+          "foreground_iou": 0.21150894165039064,
+          "matched_object_iou": 0.640275949263906
+        }
+      },
+      "protocol": {
+        "seed": 1,
+        "arm": "local_rgb",
+        "checkpoint_sha256": "118dc4f6fb82272ba01019c000b6597e2f99d4a2f14d017b607d006dbe43df95",
+        "checkpoint_file": "/work/USERS/kevinswk/experiments/SW0260_readout64_r1/extended/seed1/local_rgb/best.pt",
+        "source_checkpoint_sha256": "a0cae3105acc4b19b84124a3d4b553420aef3edadd309616953dc4afb3cf191b",
+        "prediction_sha256": "9327bd4533a96aaaaa2a02521d6be3c00b0248cda20429f7ce5aec1983f0ab82",
+        "core_grid": 32,
+        "head_grid": 64,
+        "GT_used_for_prediction": false,
+        "selection": {
+          "arm": "local_rgb",
+          "validation_means": {
+            "local_rgb": 0.8048112414428031,
+            "local_rgb_trust": 0.8028661448793097
+          },
+          "selection": "labelled validation only; no fixed320 tuning",
+          "core_grid": 32,
+          "head_grid": 64
+        },
+        "old_prediction_sha256": "10d7f5104a0b94b769549a776988134216332e49f58f7be385e25f7d58d1de48",
+        "changed_from_old": 0.15048675537109374,
+        "changed_from_initial": 0.0624114990234375,
+        "fine_adapter_effect": 0.006938934326171875,
+        "fine_resolution_effect": 0.000408935546875
+      }
+    },
+    {
+      "seed": 2,
+      "arm": "local_rgb",
+      "metrics": {
+        "old259_lifted64": {
+          "fg_ari": 0.7908654409249467,
+          "foreground_iou": 0.21150894165039064,
+          "matched_object_iou": 0.6322170837015033
+        },
+        "initial_structure": {
+          "fg_ari": 0.7853980159972956,
+          "foreground_iou": 0.21150894165039064,
+          "matched_object_iou": 0.6368412272128816
+        },
+        "trained": {
+          "fg_ari": 0.7924578937035273,
+          "foreground_iou": 0.21150894165039064,
+          "matched_object_iou": 0.6394252277742687
+        },
+        "zero_fine_adapter": {
+          "fg_ari": 0.7903288000398558,
+          "foreground_iou": 0.21150894165039064,
+          "matched_object_iou": 0.6321766313018312
+        },
+        "coarsened_gamma": {
+          "fg_ari": 0.7874975587817391,
+          "foreground_iou": 0.21150894165039064,
+          "matched_object_iou": 0.6322509332466024
+        }
+      },
+      "protocol": {
+        "seed": 2,
+        "arm": "local_rgb",
+        "checkpoint_sha256": "aa559d7403c31956f071030785bdf00b08e8206a017121beb1049654550b04d5",
+        "checkpoint_file": "/work/USERS/kevinswk/experiments/SW0260_readout64_r1/extended/seed2/local_rgb/best.pt",
+        "source_checkpoint_sha256": "ddb0fbc983df1b2788a19e262fe365aef00a5a15f707922fb2c9de6ed94196e0",
+        "prediction_sha256": "affc5b780a1f8c49c9aae0bd47d4c96b4d487c51b4b7a3c817165a312b08a862",
+        "core_grid": 32,
+        "head_grid": 64,
+        "GT_used_for_prediction": false,
+        "selection": {
+          "arm": "local_rgb",
+          "validation_means": {
+            "local_rgb": 0.8048112414428031,
+            "local_rgb_trust": 0.8028661448793097
+          },
+          "selection": "labelled validation only; no fixed320 tuning",
+          "core_grid": 32,
+          "head_grid": 64
+        },
+        "old_prediction_sha256": "6cddee7ee661329220faa937dc4453ccaa29555a70b145ef79000f6cecfea811",
+        "changed_from_old": 0.014121246337890626,
+        "changed_from_initial": 0.11435165405273437,
+        "fine_adapter_effect": 0.014012908935546875,
+        "fine_resolution_effect": 0.010720062255859374
+      }
+    }
+  ],
+  "mean": {
+    "old259_lifted64": {
+      "fg_ari": 0.8020873468262031,
+      "foreground_iou": 0.21150894165039066,
+      "matched_object_iou": 0.6558883008771622
+    },
+    "initial_structure": {
+      "fg_ari": 0.797807291644303,
+      "foreground_iou": 0.21150894165039066,
+      "matched_object_iou": 0.6594535492864099
+    },
+    "trained": {
+      "fg_ari": 0.8022085413740179,
+      "foreground_iou": 0.21150894165039066,
+      "matched_object_iou": 0.6654272129086866
+    },
+    "zero_fine_adapter": {
+      "fg_ari": 0.7999737147847403,
+      "foreground_iou": 0.21150894165039066,
+      "matched_object_iou": 0.6553969573928482
+    },
+    "coarsened_gamma": {
+      "fg_ari": 0.7978660765479413,
+      "foreground_iou": 0.21150894165039066,
+      "matched_object_iou": 0.6593882821641178
+    }
+  },
+  "core_grid": 32,
+  "head_grid": 64,
+  "FGARI_gain_over_same64_baseline": 0.00012119454781478467,
+  "learned_routing_gain": 0.004401249729714896,
+  "fine_adapter_gain": 0.0022348265892775387,
+  "fine_resolution_gain": 0.004342464826076586,
+  "historical_native32_FGARI": 0.8216282697216665,
+  "historical32_is_not_same_contract": true,
+  "TRAIN_masks_used": false,
+  "labelled_validation_used_for_selection": true,
+  "foreground_iou_warning": "all output IDs positive; rawFGIoU equals GT foreground area fraction"
+}
