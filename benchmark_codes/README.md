@@ -1,3 +1,8 @@
+> SW0261 training: [two backward paths and runnable commands](native64_core/TRAINING_KO.md),
+> [training entrypoint](native64_core/train.py), [body/head losses and gradient isolation](native64_core/training.py).
+> Body phase/spike loss trains encoder+core; detached RGB reconstruction trains the context head.
+> No TRAIN masks. Supports pretrained fine-tuning, random initialization and Adam/RNG resume.
+>
 > New implementation: [SW0261 actual native64 core](native64_core/README.md),
 > 4096 oscillator locations, graph top-k512, native64 activity and readout.
 > Existing weights are spatially transferred at load time; no native64 training or accuracy claim.

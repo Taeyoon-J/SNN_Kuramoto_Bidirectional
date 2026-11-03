@@ -1,5 +1,11 @@
 # Exact current method
 
+This document describes the historical252/253/254 full-benchmark protocol below.
+The **261 two-path trainer** and its differences (unsupervised RGB head instead of
+supervised mask teacher/CE/Dice) are documented in
+[native64_core/TRAINING_KO.md](native64_core/TRAINING_KO.md).
+Do not treat the historical252 direct teacher path as the only encoder gradient path.
+
 ## Initialization and forward
 
 `vendor/full_benchmark/model.py:FreshModel` constructs each model from random

@@ -1,5 +1,6 @@
 """Native64 core + transferred SW0260 context readout; no output upsampling."""
 import importlib.util
+import hashlib
 import types
 from pathlib import Path
 import numpy as np
@@ -41,8 +42,14 @@ def module(name, path):
 
 
 def load(checkpoint, device='cpu', *, trainable=False):
+    saved = torch.load(checkpoint, map_location='cpu', weights_only=True)
+    trained = saved.get('format') == 'SW0261_two_path_v1'
+    base = (HERE.parent/'readout64_optimization/checkpoints'/saved['base_checkpoint']) if trained else Path(checkpoint)
+    if trained and (Path(saved['base_checkpoint']).name != saved['base_checkpoint'] or
+                    hashlib.sha256(base.read_bytes()).hexdigest() != saved['base_sha256']):
+        raise ValueError('trained checkpoint base identity differs')
     context = module('native64_parent_portable', HERE.parent/'readout64_optimization/portable.py')
-    found, head, record = context.load(checkpoint, device)
+    found, head, record = context.load(base, device)
     parent = HERE.parent/'unsupervised_readout_benchmark/checkpoints'/f"sw0259_seed{record['seed']}.pt"
     blob = torch.load(parent, map_location='cpu', weights_only=True)
     implementation = module('native64_implementation', HERE/'model.py')
@@ -51,10 +58,23 @@ def load(checkpoint, device='cpu', *, trainable=False):
     from snn_kuramoto_bidirectional.gamma_initializer import FeaturePatchGammaInitializer
     found = Native64Foundation(found, wrapped, FeaturePatchGammaInitializer(grid_size=64).to(device))
     head.routing = types.MethodType(implementation.native_routing, head)
+    if trained:
+        found.encoder.load_state_dict(saved['encoder'],strict=True)
+        found.wrapped.load_state_dict(saved['wrapped'],strict=True)
+        head.load_state_dict(saved['head'],strict=True)
+        found.feature_mean=saved['feature_mean'].to(device)
+        found.feature_std=saved['feature_std'].to(device)
+        found.feature_clip=saved['feature_clip']
+        record=dict(record,base_checkpoint=saved['base_checkpoint'],base_sha256=saved['base_sha256'],
+                    native64_head_training_updates=saved['updates'],
+                    native64_core_training_updates=0 if saved['binding']['freeze_core'] else saved['updates'],
+                    encoder_training_updates=0 if saved['binding']['freeze_encoder'] else saved['updates'],
+                    initialization=saved['binding']['initialization'])
     wrapped.requires_grad_(trainable).train(trainable)
     head.requires_grad_(trainable).train(trainable)
     return found, head, dict(record, core_grid=64, nodes=4096, graph_top_k=512,
-                            native64_training_updates=0, status='transferred_initialization')
+                            native64_training_updates=saved['updates'] if trained else 0,
+                            status='two_path_trained' if trained else 'transferred_initialization')
 
 
 def encode(found, rgb):

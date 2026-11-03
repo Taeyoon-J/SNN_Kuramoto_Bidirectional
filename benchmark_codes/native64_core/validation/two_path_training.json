@@ -1,0 +1,74 @@
+{
+  "status": "native64_default_and_two_path_resume_validation_passed",
+  "native_nodes": 4096,
+  "default_configuration": {
+    "steps": 1024,
+    "settle": 512,
+    "tail": 64,
+    "updates": 1,
+    "gradients": {
+      "encoder": 63.869836177584865,
+      "core": 16.579255453008212,
+      "head": 0.032364553120300114
+    },
+    "seconds": 96.51744472887367,
+    "head_loss_reaches_body": false
+  },
+  "diagnostic": {
+    "status": "native64_two_path_training_and_resume_passed",
+    "reports": [
+      {
+        "initialization": "pretrained",
+        "updates": 2,
+        "encoder_core_head_changed": true,
+        "isolated_gradients": true,
+        "actual_Adam_steps": 2,
+        "gradients": {
+          "encoder": 4.593686153762204,
+          "core": 1.1406110929964832,
+          "head": 0.27421012133558287
+        }
+      },
+      {
+        "initialization": "random",
+        "updates": 1,
+        "encoder_core_head_changed": true,
+        "isolated_gradients": true,
+        "actual_Adam_steps": 1,
+        "gradients": {
+          "encoder": 18944.59943302259,
+          "core": 39436.21375552433,
+          "head": 0.019523159200287507
+        }
+      }
+    ],
+    "native_nodes": 4096,
+    "steps": 64,
+    "settle": 32,
+    "tail": 4,
+    "TRAIN_images": 1,
+    "pretrained_resume_passed": true,
+    "trained_checkpoint_loader_passed": true,
+    "TRAIN_masks_used": false,
+    "performance_claim": false,
+    "default1024_tail64_update_tested": false,
+    "seconds": 312.78417032957077
+  },
+  "sources": {
+    "model.py": "11c385aad024e5ae14bd0a925702ba61da2cfc046dd6dcca34fb12e9b42f3cc9",
+    "training.py": "f52ae119b52b8d3937735ad3f728859ee1e45fdf5c6e374d8b4c2f102fed5d52",
+    "test_partition.py": "c4476fe8fc3e1b7abbe176aebd9c84c4edbb72fe9136e7389be1ba32fc949e7e",
+    "portable.py": "33d3596c196100fda44c6d7856f441a033314059b8e0812b08ce560aa599de91",
+    "verify.py": "33adb93d20f0fb463ca6786ab057e0f3421c045c961fec9537d87aa480400602",
+    "test_training.py": "8342650f3f3a0db2fd14e013eb70fd9be51437141377acbf30b3db8adac2a245",
+    "train.py": "30b4b121fcd4c145d3d49d8ddb3d9fb4522a2baa6f54215ac4523b26d1718b19",
+    "partition.py": "a6dd00c8f3f14ba5ff5cbf81c84c229bee02a9d3f522adc7947c21226d37d37f"
+  },
+  "pooling_forward_exact": true,
+  "pooling_backward_matches_CPU_reference": true,
+  "decoder_chunk_loss_and_gradient_equivalence": true,
+  "TRAIN_masks_used": false,
+  "performance_claim": false,
+  "tested_seed": 0,
+  "hardware": "NVIDIA TITAN RTX"
+}

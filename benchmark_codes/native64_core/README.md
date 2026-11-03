@@ -2,6 +2,11 @@
 
 SW0260의 **32×32 core + 64×64 readout**을 실제 **64×64 core + 64×64 readout**으로 변환한 구현입니다. 4,096개 위치마다 4개 oscillator component, dendritic state, membrane state, spike가 직접 계산됩니다. 32×32 spike나 최종 mask를 늘려 쓰지 않습니다.
 
+**학습 코드 추가:** [TRAINING_KO.md](TRAINING_KO.md)에 encoder·core·head를 학습하는
+두 역전파 경로와 실행 명령이 있습니다. 실행기는 [train.py](train.py), loss와 경로 분리는
+[training.py](training.py)입니다. 아래의 초기화·검증 기록은 기존261 변환 단계의 기록이며,
+새 학습의 성능이나 수렴을 의미하지 않습니다.
+
 ## 변경 및 초기화
 
 | 부분 | 이번 구현 |
@@ -44,7 +49,7 @@ python -B benchmark_codes/native64_core/portable.py \
 
 `portable.load(..., trainable=True)`는 core·integration·head의 가중치를 학습 가능하게 반환합니다. encoder는 기본적으로 고정입니다. core 역전파가 필요하면 `found.rollout(gamma, live_tail_steps=64)`처럼 명시해야 합니다. 기본 rollout은 추론용 `live_tail_steps=0`입니다.
 
-최종 signed partition은 기존처럼 미분 불가능합니다. 따라서 단순히 head의 RGB loss를 호출한다고 core까지 학습되는 것은 아닙니다. core 학습에는 live-tail 활동에 연결된 기존 core 목적함수 또는 별도의 미분 가능한 경로가 필요합니다. 이번 요청에서는 학습 루프를 시작하거나 새 loss를 추가하지 않았습니다.
+최종 signed partition은 기존처럼 미분 불가능합니다. 따라서 단순히 head의 RGB loss를 호출한다고 core까지 학습되는 것은 아닙니다. 새 `train.py`는 별도의 phase/spike body loss로 encoder·core를 학습하고, 활동·gamma를 detach한 RGB loss로 head를 학습합니다. 기본 native64 변환 checkpoint가 이 방식으로 이미 학습됐다는 뜻은 아닙니다.
 
 Graph와 Q는 각각 4,096×4,096입니다. 기존 32×32에 비해 pair 행렬 크기가 16배이며, 기존 정확한 geodesic 연산은 더 큰 계산량이 필요합니다. 서버에서 batch1으로 검증합니다. 큰 batch의 메모리 요구량은 별도 측정이 필요합니다.
 
