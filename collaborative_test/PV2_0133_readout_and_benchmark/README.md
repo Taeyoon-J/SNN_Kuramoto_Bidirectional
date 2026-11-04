@@ -143,3 +143,50 @@ What still differs between 0.6893 and 0.2789 is the grid (64 vs 32) and the trai
 
 Every number above is **one seed**. Tetrominoes and Multi-dSprites are zero-shot from a
 CLEVR core. Slot Attention is one published checkpoint on a render it was not trained on.
+
+## 6. The head direction is open — two fixes, both from measurements
+
+Yesterday the same learned readout scored **0.8197** on CLEVR fixed320 against 253's 0.8421,
+and its Foreground IoU was pinned at the truth foreground fraction. Two changes, each
+dictated by a measurement rather than guessed, reverse that.
+
+**A. Give the head a background candidate.** It had been fed `regions_from_output` — the
+all-ones whole-image partition — so background was never among the candidates and `argmax`
+could not pick it. `candidates()` already admits label 0 as an ordinary region ("Include ID
+0 as an ordinary region too"), so feeding **253's own partition** supplies background for
+free; the only other change is undoing the `+1` offset for that candidate on output. The
+head now starts from 253's answer and learns corrections, so it cannot collapse below it by
+construction.
+
+**B. Select arms on validation FG-ARI, not validation RGB MSE.** On CLEVR the five arms'
+RGB MSE ranked *exactly opposite* to their FG-ARI — a clean five-point inversion — so
+RGB-MSE selection chose the worst arm available. Our contract selects hyperparameters and
+thresholds on validation, labels included; what it forbids is selecting on the reserved
+evaluation split.
+
+### CLEVR, fixed320, 320 images, grid 64
+
+| | fg_ari | fg_iou | obj_iou |
+| --- | ---: | ---: | ---: |
+| 253 | 0.8421 | 0.7545 | 0.6410 |
+| **head v2** | **0.8503** | **0.7837** | **0.6706** |
+| delta | **+0.0082** | **+0.0292** | **+0.0296** |
+
+Patches changed: **2.04%**. The head is not overturning 253's partition; it is repairing a
+small number of misassignments, which is what A was designed to allow.
+
+Validation FG-ARI per arm, against the 0.8501 baseline:
+
+| arm | val fg_ari | |
+| --- | ---: | --- |
+| `local_rgb_tv` | **0.8602** | selected |
+| `local_rgb_r2` | 0.8585 | |
+| `local_rgb_spike` | 0.8553 | |
+| `local_rgb_trust` | 0.8539 | |
+| `local_rgb` | 0.8479 | the only arm below baseline |
+
+**Four of five beat the baseline, and the one that fails is pure RGB reconstruction.** The
+arms that win all add a signal that is not RGB: `tv` weights the mask's total variation by
+colour edges, `spike` ties neighbouring assignments to the core's own temporal co-firing.
+That matches what the five-point inversion already implied — RGB reconstruction alone
+points away from object grouping; it only helps when something else supplies the direction.
