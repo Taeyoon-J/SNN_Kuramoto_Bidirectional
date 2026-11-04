@@ -190,3 +190,76 @@ arms that win all add a signal that is not RGB: `tv` weights the mask's total va
 colour edges, `spike` ties neighbouring assignments to the core's own temporal co-firing.
 That matches what the five-point inversion already implied — RGB reconstruction alone
 points away from object grouping; it only helps when something else supplies the direction.
+
+## 7. The head direction is open on all three datasets
+
+Core trained on **CLEVR only**, frozen. The head retrained per dataset on 256 of that
+dataset's images with **no labels**, six minutes each, selected on that dataset's validation
+FG-ARI. Peer patch contract, 320 evaluation images, one seed.
+
+| dataset | readout | fg_ari | fg_iou | obj_iou | patches changed |
+| --- | --- | ---: | ---: | ---: | ---: |
+| **CLEVR** | 253 | 0.8421 | 0.7545 | 0.6410 | |
+| | **head v2** | **0.8503** | **0.7837** | **0.6706** | 2.04% |
+| | delta | **+0.0082** | **+0.0292** | **+0.0296** | |
+| **Tetrominoes** | 253 | 0.8580 | 0.7885 | 0.8173 | |
+| | **head v2** | **0.8586** | **0.7895** | **0.8187** | 0.57% |
+| | delta | **+0.0006** | **+0.0010** | **+0.0015** | |
+| **Multi-dSprites** | 253 | 0.6974 | 0.8177 | 0.7628 | |
+| | **head v2** | **0.7041** | **0.8213** | **0.7660** | 0.33% |
+| | delta | **+0.0067** | **+0.0036** | **+0.0032** | |
+
+**Nine of nine cells improve.** The head changes 0.33–2.04% of patches: it repairs a small
+number of misassignments rather than overturning 253's partition, which is what change A
+was built to allow.
+
+The gain tracks where there is something to repair. CLEVR, whose threshold sweep spanned
+0.0550 between `min_group` 8 and 64, gains 0.0082; Tetrominoes and Multi-dSprites, whose
+sweeps spanned 0.0030 and 0.0028, gain 0.0006 and 0.0067.
+
+**Generality, which was the point of the exercise:** the core never saw Tetrominoes or
+Multi-dSprites. Only the head was swapped, trained unsupervised on the target dataset in
+minutes. The arm chosen differs per dataset — `local_rgb_tv` on CLEVR, `local_rgb_trust` on
+the other two — which is exactly the per-dataset adaptation a learned head is supposed to
+provide and a hand-set threshold is not.
+
+## 8. The ceiling claim in section 2 applies to the pixel protocol only
+
+Section 2's ceilings (CLEVR 0.8988, Tetrominoes 0.9352) are for the **pixel** protocol,
+where the prediction is expanded back to 128×128 and scored against the original pixel
+truth. **Under the patch contract the ceiling is 1.0000 by construction** — the target is
+the truth quantised to the same 64×64 grid, so a perfect prediction matches it exactly.
+
+That is the contract this section and the Slot Attention comparison both use, and it is the
+one the benchmark should report: it removes the grid from the comparison instead of letting
+it cap one side. The earlier conclusion that "CLEVR and Tetrominoes cannot be won" holds
+only against Slot Attention's *published pixel* numbers, not against Slot Attention scored
+on our grid.
+
+## 9. Why Slot Attention drops from 0.8102 to 0.38 — not the grid
+
+Two things changed between the old 0.8102 and yesterday's 0.3808, not one. Holding the
+split fixed and moving only the grid:
+
+| grid, all on fixed320 | fg_ari | predicted foreground |
+| ---: | ---: | ---: |
+| 16 | 0.4153 | 0.8513 |
+| 32 | 0.3912 | 0.8450 |
+| 64 | 0.3808 | 0.8510 |
+
+**0.035 across a 4× change of grid.** The 0.4 gap is therefore almost entirely the
+evaluation set and targets — the old number was our own split (test ids 7000+) scored
+against `targets_v1.pt`, the new one is fixed320 (ids 1320–1639) scored against the peer
+engine's `labels64`.
+
+What does not change with the grid is the failure: at every grid Slot Attention calls
+**85% of the image foreground against a 21% truth**, and the slot designated background
+covers only 14.9% of patches. Its background is split across several slots, so no single
+slot dominates and the "largest slot is background" rule cannot find it. The old run
+measured the same 85.3%.
+
+A remaining candidate for part of the gap, not yet tested: the background rule itself. Our
+runner designates the slot covering the most patches overall; the peer's Slot64 contract
+designates the slot covering most of the one-pixel border. With a fragmented background
+those pick different slots. Both rules can be applied to the predictions already saved, at
+no GPU cost.
