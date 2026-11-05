@@ -21,6 +21,24 @@ bundle are on `patch_final`. Contract **v2**; split v1.
 > batch 16 → 6,250 updates). These are what turn every number below from a candidate into a
 > result. **Do not restart them**; check `run_s1/jobs/model253/clevr/seed1/progress.json`.
 >
+> Measured rate: **36.9 s/update on seed 1 (64 h) and 29.6 s/update on seed 2 (51 h)**, running
+> in parallel, so about **2.7 days**. The older 117 h figure was for a different job.
+>
+> **The new seeds' gradient norms look alarming and are not a bug.** Seed 0 logs ~7 at update 1
+> with a whole-run median of 3.57; seed 1 logs **2e8** and seed 2 **1.6e4**. Three facts settle
+> it. `engine.py:167` clips every gradient to norm **1.0**, and the logged `gradient_norm` is the
+> **pre-clipping** value, so every step is bounded identically across seeds.
+> `error_if_nonfinite=True` means a NaN or Inf raises rather than corrupting silently. And the
+> spread is by design: the normalization provenance is
+> `own_random_encoder_exact_selected_TRAIN_no_masks`, so each seed draws its **own** random
+> encoder (`initial_CNN_sha256` differs) and normalizes by that encoder's statistics on the
+> identical 10,000 train images (`train_ids_sha256` matches across all three), giving feature
+> std 0.2478 / 0.1337 / 0.3533.
+>
+> This is the seed variance the 3-seed protocol exists to measure. **Do not tune anything per
+> seed to make them agree** — that would invalidate the mean. If a seed's metrics come out far
+> from the others, report it with its standard deviation rather than replacing it.
+>
 > Still unstarted and still needing a decision: **retraining Slot Attention on
 > `clevr_with_masks`**. Only `model.py` and `utils.py` are present — no training loop — so the
 > loop has to be written; the published recipe is Adam 4e-4, batch 64, 10k warmup, 500k steps,
