@@ -1,0 +1,70 @@
+{
+ "label": "t",
+ "dataset": "tetrominoes",
+ "seeds": 3,
+ "per_seed_rows": [
+  {
+   "file": "ok_s0.json",
+   "dataset": "tetrominoes",
+   "arm": "local_rgb_trust",
+   "epoch": null,
+   "seed": 0,
+   "core": "/ck/seed0",
+   "fg_ari": 0.858,
+   "foreground_iou": 0.7885,
+   "matched_object_iou": 0.8173
+  },
+  {
+   "file": "ok_s1.json",
+   "dataset": "tetrominoes",
+   "arm": "local_rgb_trust",
+   "epoch": null,
+   "seed": 1,
+   "core": "/ck/seed1",
+   "fg_ari": 0.8731,
+   "foreground_iou": 0.7902,
+   "matched_object_iou": 0.824
+  },
+  {
+   "file": "ok_s2.json",
+   "dataset": "tetrominoes",
+   "arm": "local_rgb_trust",
+   "epoch": null,
+   "seed": 2,
+   "core": "/ck/seed2",
+   "fg_ari": 0.8402,
+   "foreground_iou": 0.7811,
+   "matched_object_iou": 0.8099
+  }
+ ],
+ "metrics": {
+  "fg_ari": {
+   "per_seed": [
+    0.858,
+    0.8731,
+    0.8402
+   ],
+   "mean": 0.8571,
+   "std": 0.016468454693747095
+  },
+  "foreground_iou": {
+   "per_seed": [
+    0.7885,
+    0.7902,
+    0.7811
+   ],
+   "mean": 0.7866,
+   "std": 0.004838388161361169
+  },
+  "matched_object_iou": {
+   "per_seed": [
+    0.8173,
+    0.824,
+    0.8099
+   ],
+   "mean": 0.8170666666666667,
+   "std": 0.007052895386529801
+  }
+ },
+ "note": "per-seed values, mean and standard deviation; the three metrics are never combined"
+}

@@ -43,11 +43,26 @@ Two reasons, both honest.
    meaningful at all — and my expectation is that it will show several of our reported deltas
    are inside the noise.
 
-## Guard built into the aggregator
+## Guards in the aggregator, and the one that was missing
 
-`code/agg3.py` refuses to emit a mean from fewer results than it was told to expect, and says
-why: *one checkpoint evaluated three times is never a 3-seed training mean*. It also refuses if
-the results span more than one dataset.
+`code/agg3.py` refuses to emit a mean when the results are not what an N-seed mean requires.
+The guards are **tested**, not assumed — `tests/run_guard_tests.sh` feeds it fixtures and
+checks each refusal actually fires:
+
+| case | behaviour |
+|---|---|
+| three distinct runs | accepted |
+| **one run copied three times** | **refused** |
+| two results when three expected | refused |
+| results spanning two datasets | refused |
+
+The second one was **missing until the test was written.** The README claimed the aggregator
+rejected "one checkpoint evaluated three times", but that sentence lived only inside the
+*message* of the count check — nothing implemented it. Fed three copies of one result, the
+aggregator averaged them cleanly and emitted a "3-seed mean" with standard deviation
+**0.0000**, which is precisely the artefact the contract forbids. It is now checked three
+ways: identical run identity, non-distinct seeds, and all metrics numerically identical across
+results.
 
 ## Cost
 

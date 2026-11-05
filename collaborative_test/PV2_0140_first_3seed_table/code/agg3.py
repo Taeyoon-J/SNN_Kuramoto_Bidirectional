@@ -26,7 +26,24 @@ for p in a.results:
     if blob is None:
         raise SystemExit(f'{p}: no "{a.key}" block; keys are {sorted(d)}')
     rows.append(dict(file=str(p), dataset=d.get('dataset'), arm=d.get('arm'),
-                     epoch=d.get('epoch'), **{k: float(blob[k]) for k in KEYS}))
+                     epoch=d.get('epoch'), seed=d.get('seed'),
+                     core=d.get('core_checkpoint') or d.get('source_checkpoint'),
+                     **{k: float(blob[k]) for k in KEYS}))
+
+# The failure this exists to prevent: one checkpoint scored N times, reported as an N-seed
+# training mean. Tested and found missing -- the message below used to claim this check while
+# nothing implemented it, and three copies of one result averaged cleanly to std 0.0000.
+ident = [(r['core'], r['seed']) for r in rows]
+if len(rows) > 1 and len(set(ident)) == 1:
+    raise SystemExit(f'REFUSED: all {len(rows)} results come from the same run {ident[0]}. '
+                     'One checkpoint scored N times is not an N-seed training mean.')
+present = [r['seed'] for r in rows if r['seed'] is not None]
+if len(present) == len(rows) and len(set(present)) != len(rows):
+    raise SystemExit(f'REFUSED: seeds are not distinct: {present}.')
+if len(rows) > 1 and all(
+        max(r[k] for r in rows) == min(r[k] for r in rows) for k in KEYS):
+    raise SystemExit('REFUSED: every result is numerically identical on all three metrics, '
+                     'which means one run was scored repeatedly, not several trained.')
 
 seeds = len(rows)
 if seeds != a.expect_seeds:

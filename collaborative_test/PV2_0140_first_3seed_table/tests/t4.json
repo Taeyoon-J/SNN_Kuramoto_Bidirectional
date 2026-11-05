@@ -1,0 +1,64 @@
+{
+ "label": "test",
+ "dataset": "tetrominoes",
+ "seeds": 3,
+ "per_seed_rows": [
+  {
+   "file": "same_a.json",
+   "dataset": "tetrominoes",
+   "arm": "local_rgb_trust",
+   "epoch": null,
+   "fg_ari": 0.858,
+   "foreground_iou": 0.7885,
+   "matched_object_iou": 0.8173
+  },
+  {
+   "file": "same_b.json",
+   "dataset": "tetrominoes",
+   "arm": "local_rgb_trust",
+   "epoch": null,
+   "fg_ari": 0.858,
+   "foreground_iou": 0.7885,
+   "matched_object_iou": 0.8173
+  },
+  {
+   "file": "same_c.json",
+   "dataset": "tetrominoes",
+   "arm": "local_rgb_trust",
+   "epoch": null,
+   "fg_ari": 0.858,
+   "foreground_iou": 0.7885,
+   "matched_object_iou": 0.8173
+  }
+ ],
+ "metrics": {
+  "fg_ari": {
+   "per_seed": [
+    0.858,
+    0.858,
+    0.858
+   ],
+   "mean": 0.858,
+   "std": 0.0
+  },
+  "foreground_iou": {
+   "per_seed": [
+    0.7885,
+    0.7885,
+    0.7885
+   ],
+   "mean": 0.7885,
+   "std": 0.0
+  },
+  "matched_object_iou": {
+   "per_seed": [
+    0.8173,
+    0.8173,
+    0.8173
+   ],
+   "mean": 0.8173,
+   "std": 0.0
+  }
+ },
+ "note": "per-seed values, mean and standard deviation; the three metrics are never combined"
+}
