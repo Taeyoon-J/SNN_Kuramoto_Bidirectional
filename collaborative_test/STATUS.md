@@ -3,7 +3,28 @@
 Updated 2026-11-04. Branch `patch_v2`; the shipped version, `benchmark.md` and the script
 bundle are on `patch_final`. Contract **v2**; split v1.
 
-> ## RESUME POINT, 2026-11-05 — B→A→C is closed; seeds 1 and 2 are training
+> ## RESUME POINT, 2026-11-05 (later) — 261 cores training natively per dataset
+>
+> **CLEVR seeds 1 and 2 were stopped by decision** to free the GPUs. They reached 20 and 25
+> updates of epoch 1; `run_s1/` and `run_s2/` are kept so they resume rather than restart. The
+> 3-seed requirement is still open.
+>
+> **RUNNING NOW (`PV2_0138`):** the 261 core trained **natively on each dataset** at the matched
+> 10,000 × 10 budget — `run.py --output run_261_<ds> train --dataset <ds> --model 253 --seed 0`
+> on GPUs 2 and 3, logs `core261_<ds>.log`. 29.5 and 30.5 s/update → **51 and 53 h**, so about
+> **2.2 days**. Budget verified from each run's `binding.json`: unique_TRAIN 10,000,
+> subset_seed 2553500, parent pool 35,000 — identical to 253-on-CLEVR.
+>
+> "261" here is **not** the peer's lifted native16 core. It is the core trained from scratch at
+> grid 64 by 253's unsupervised recipe, plus the SW0260 readout. There is no `--model 261`
+> because 261 is not a core variant; hence `--model 253`.
+>
+> This answers a question the transfer rows cannot: how good the method is when the core sees
+> the target domain, rather than how well CLEVR transfers. After the cores finish: cache with
+> `cache_any.py --min-group 8`, fit the 261 readout with `fit5.py`, and score on the **same 320
+> evaluation images** the transfer rows use.
+>
+> ## RESUME POINT, 2026-11-05 (earlier) — B→A→C is closed
 >
 > **B → A → C is finished.** C was attempted twice: on the inference seed (withdrawn,
 > `PV2_0135`, the rollout is deterministic) and on a horizontal mirror (`PV2_0137`, premise
