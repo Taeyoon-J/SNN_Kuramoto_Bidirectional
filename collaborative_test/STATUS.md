@@ -1,7 +1,63 @@
 # STATUS
 
-Updated 2026-11-02. Branch `patch_v2`; the shipped version, `benchmark.md` and the script
+Updated 2026-11-04. Branch `patch_v2`; the shipped version, `benchmark.md` and the script
 bundle are on `patch_final`. Contract **v2**; split v1.
+
+> ## RESUME POINT, 2026-11-04 — the head direction is open, and one seed is the wall
+>
+> `PV2_0134` finished the B → A → C sequence. The head helps on all three datasets and the
+> core is what generalises. Everything below is **seed 0**.
+>
+> ### The current best readout, patch contract at grid 64
+>
+> Core 253, grid 64, trained on CLEVR only, frozen. Head selected by rule **B′** — highest
+> validation FG-ARI among (arm, epoch) pairs whose validation Foreground IoU is within 0.01 of
+> 253's, with epoch 0 a candidate.
+>
+> | dataset | | fg_ari | fg_iou | obj_iou |
+> | --- | --- | ---: | ---: | ---: |
+> | CLEVR fixed320 | 253 | 0.8421 | 0.7545 | 0.6410 |
+> | | + head (`local_rgb_tv` ep 11) | **0.8507** | **0.7830** | **0.6709** |
+> | Tetrominoes test | 253 | 0.8580 | 0.7885 | 0.8173 |
+> | | + head (`local_rgb_trust` ep 2) | **0.8586** | **0.7895** | **0.8187** |
+> | Multi-dSprites test | 253 | 0.6974 | 0.8177 | 0.7628 |
+> | | + head (`local_rgb_trust` ep 2) | **0.7041** | **0.8213** | **0.7660** |
+>
+> Slot Attention on the same 320 CLEVR images through the same `evaluate_patch_masks`, best of
+> four background rules chosen on validation: **0.3747 / 0.2219 / 0.1165**.
+>
+> ### What is settled
+>
+> - **Change A is the whole Foreground IoU story.** With the all-ones partition the metric is
+>   pinned at the truth foreground fraction (0.2115, `+0.0000` after training); with 253's
+>   partition as the candidate set it reaches 0.7830.
+> - **Change C is dead.** Cross-seed agreement collapses; guarded, it never beats epoch 0.
+> - **Rule B needed the Foreground IoU floor.** Without it, Tetrominoes selected −0.1141 IoU.
+> - **The head is per-dataset.** The CLEVR head transferred unchanged loses on all three
+>   metrics on both other datasets.
+> - **Slot Attention's score is not a reading artifact.** All four background rules give the
+>   identical FG-ARI; its checkpoint tiles the image across 6.99 of 7 slots per frame.
+>
+> ### Resume here, in this order
+>
+> 1. **A label-free stopping rule for the head.** Reusing CLEVR's recipe with no labels works
+>    on CLEVR and Multi-dSprites and loses 0.0565 FG-ARI on Tetrominoes, purely because of the
+>    epoch count. The arm barely matters. Test a convergence criterion on the unlabelled
+>    images against the curves already saved in `PV2_0134/diagnostics/fit5/*.json`.
+> 2. **Seeds 1 and 2 of the 253 core at grid 64 on CLEVR.** Nothing above is a result at one
+>    seed. ~18.5 h per seed on a rented 4090, ~$8 each; two in parallel is about a day. Needs
+>    the user's go-ahead to spend.
+> 3. **Retrain Slot Attention on `clevr_with_masks`.** It was trained on the original CLEVR
+>    render and its 6.99-slots-per-image behaviour is consistent with a failed transfer.
+>    Beating a model that is failing to transfer is not beating the model. This is the largest
+>    fairness gap in the benchmark.
+>
+> Code for all of it is on frontier at `/work/USERS/tkim1/sw0255b/benchmark_codes`
+> (`fit4.py` C, `fit5.py` B′, `xfer.py` transfer, `recipe.py` label-free, `sa_dump.py` +
+> `sa_infer.py` + `sa_bg.py` Slot Attention), which is **not** a git checkout — the sources and
+> hashes are in `PV2_0134_head_selection_and_transfer/code/` and `artifacts.json`. The grid-64
+> activity caches are 2.6 GB at `/work/USERS/tkim1/sw0255b/ev`, and the core is world-readable
+> for the peer at `/work/USERS/tkim1/share/native64_core_253/`.
 
 > ## RESUME POINT, 2026-11-02 — the peer's grid-64 engine, trained on rented GPUs
 >

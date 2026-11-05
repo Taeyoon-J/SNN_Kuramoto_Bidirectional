@@ -1,0 +1,33 @@
+{
+  "test_id": "PV2_0134",
+  "core": {"variant": 253, "grid": 64, "nodes": 4096, "frozen": true, "trained_on": "clevr"},
+  "head": {
+    "class": "neutral_readout.head.NeutralRegionHead",
+    "logits": "(prior + 2*tanh((sim - mean)/std)).masked_fill(~allowed, -1e4)",
+    "prior_scale": {"value": 4.0, "trainable": false},
+    "residual_scale": {"value": 0.0, "trainable": false},
+    "content_encoder": {"trainable": false, "reason": "removes the direct embedding-to-RGB gradient bypass"},
+    "context_adapter": {"channels": [8, 16, 32], "zero_init_last": true},
+    "decoder": {"in": 34, "hidden": 64, "out": 3, "activation": "SiLU", "head": "Sigmoid"},
+    "candidates": "regions_253 (spike-clustering support merge), background id 0 included as an ordinary candidate -- change A"
+  },
+  "arms": {
+    "local_rgb":       {"radius": 1, "tv": 0.0,  "spike": 0.0,  "anchor": 0.0},
+    "local_rgb_tv":    {"radius": 1, "tv": 0.01, "spike": 0.0,  "anchor": 0.0},
+    "local_rgb_spike": {"radius": 1, "tv": 0.0,  "spike": 0.01, "anchor": 0.0},
+    "local_rgb_trust": {"radius": 1, "tv": 0.0,  "spike": 0.01, "anchor": 0.002},
+    "local_rgb_r2":    {"radius": 2, "tv": 0.01, "spike": 0.01, "anchor": 0.002}
+  },
+  "change_c_arms": {
+    "plain":       {"radius": 1, "rgb": 0.0, "tv": 0.0,  "seed": 1.0, "ent": 0.0, "size": 0.0},
+    "ent":         {"radius": 1, "rgb": 0.0, "tv": 0.0,  "seed": 1.0, "ent": 1.0, "size": 0.0},
+    "size":        {"radius": 1, "rgb": 0.0, "tv": 0.0,  "seed": 1.0, "ent": 0.0, "size": 1.0},
+    "size_rgb_tv": {"radius": 1, "rgb": 1.0, "tv": 0.01, "seed": 1.0, "ent": 0.0, "size": 1.0},
+    "size_weak":   {"radius": 1, "rgb": 0.0, "tv": 0.0,  "seed": 0.1, "ent": 0.0, "size": 1.0},
+    "size_r2":     {"radius": 2, "rgb": 0.0, "tv": 0.0,  "seed": 1.0, "ent": 0.0, "size": 1.0}
+  },
+  "training": {"optimiser": "Adam", "lr": 0.003, "grad_clip": 1.0, "temperature": 0.5, "epochs": 20, "val_every": 1, "microbatch": 1},
+  "selection": {"rule": "B'", "metric": "validation fg_ari", "iou_floor": 0.01, "epoch_0_candidate": true},
+  "recipe_mode": {"arm": "local_rgb_tv", "epochs": 11, "validation_used": false},
+  "slot_attention": {"num_slots": 7, "num_iterations": 3, "resolution": [128, 128], "inference_seed": 0, "preprocess": "none (dataset.rgb is already 128x128)", "background_rules": ["global_largest", "image_largest", "border_largest", "border_union"]}
+}

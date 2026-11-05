@@ -250,3 +250,49 @@ Masks come from `trace['spikes']` via `spike_synchrony_components`, not from the
 Three limits, all load-bearing: **one seed**; the 0.4281 baseline is the peer's reported
 figure and **has not been reproduced here**; and unique images and gradient steps both rose
 2.86x together, so this does not say which one mattered. The separating arm is 3,500 x 29.
+
+---
+
+## PV2_0134 — what the head is worth, and what a new dataset costs
+
+`PV2_0134_head_selection_and_transfer/` — completed, seed 0, patch contract at grid 64.
+
+Three findings, two of them negative.
+
+**Change C fails.** Training the head to agree with itself across rollout seeds has a trivial
+minimum — one candidate for every node makes both seeds agree perfectly — and the first sweep
+hit it exactly, every arm reaching the identical validation FG-ARI whatever its rgb and tv
+weights (0.4954 on CLEVR against 253's 0.8501). With entropy and size-distribution guards
+added, **no arm on any dataset beat its own epoch 0**.
+
+**It exposed a defect in change B.** Selecting on validation FG-ARI alone accepted a head at
+**+0.0010 FG-ARI and −0.1141 Foreground IoU** on Tetrominoes. Rule **B′** adds a Foreground
+IoU floor (within 0.01 of 253's, on validation) and makes epoch 0 a candidate so the rule can
+decline to move. It changes nothing on CLEVR and moves `local_rgb` on Tetrominoes from epoch 0
+(0.6717 FG-IoU) to epoch 14 (0.7858).
+
+**The head does not transfer; the core does.** One head fitted on CLEVR, loaded unchanged,
+loses on all three metrics on both other datasets (Tetrominoes −0.0321 / −0.1068 / −0.0349).
+That is the architecture the generalisation claim already assumed, but it has to be said the
+right way round.
+
+Under B′, on the same 320 images with the same evaluation function:
+
+| | fg_ari | fg_iou | obj_iou |
+| --- | ---: | ---: | ---: |
+| Slot Attention (one published checkpoint, best of four background rules) | 0.3747 | 0.2219 | 0.1165 |
+| 253 core alone | 0.8421 | 0.7545 | 0.6410 |
+| 253 core + head | **0.8507** | **0.7830** | **0.6709** |
+
+A new dataset costs 256 unlabelled images and about a minute — **plus a labelled validation
+split to stop at the right epoch**. Reusing CLEVR's recipe with no labels at all reproduces
+the refit result on CLEVR to four decimals and improves all three on Multi-dSprites, but loses
+0.0565 FG-ARI on Tetrominoes, whose own choice is epoch 2 rather than 11. A label-free
+stopping rule is the next experiment.
+
+Slot Attention's low score is **not** a background-rule artifact: all four rules give the
+identical FG-ARI, because they only touch patches the truth calls background and FG-ARI
+excludes those. Its checkpoint uses 6.99 of 7 slots on every image with near-equal shares —
+it is tiling, not segmenting, and the same pattern appears in the older centre-crop run, so it
+is not caused by our frame choice. It was trained on the original CLEVR render, not
+`clevr_with_masks`; **retraining it on our render is the largest remaining fairness gap.**

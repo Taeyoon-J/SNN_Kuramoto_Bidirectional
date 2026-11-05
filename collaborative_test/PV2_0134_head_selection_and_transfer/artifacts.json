@@ -1,0 +1,55 @@
+{
+  "test_id": "PV2_0134",
+  "note": "caches, checkpoints and logs stay out of git; this records where they are and their hashes",
+  "code": {
+    "root": "/work/USERS/tkim1/sw0255b/benchmark_codes",
+    "in_git": false,
+    "sha256": {
+      "fit4.py": "9152b64615831aa7a4daa3572c558d90f49b1634fcd8798cf21a964d7cb5e684",
+      "fit5.py": "1d43ba167803c8f8b5e0774e0acbde51f0b14dab77ef4c5a9e5cc00bc6523e5b",
+      "xfer.py": "35ab75f2922232ba7ca0d2635e208b43955fb0744797059bac00e9737688e72c",
+      "recipe.py": "94d891701304e99991a560278713fb53588e9b32300cda4bc43869e102bfec78",
+      "sa_dump.py": "04e6412912c6412d5bb7471b44d23898fe627a97de2e03aaf58aba51621caae9",
+      "sa_infer.py": "19de29649c9fdd62902b894d0af9b75d8447288a9a8e13bc2907842068aec51e",
+      "sa_bg.py": "fc5b237010f7808983bcb334e58dd623da204bd53f73720737a39e1b39c153ae",
+      "cache_seed2.py": "64b0f6e71721df693844b61a630e50862533c2dc2a1d841dc374f4ee8d2d7618"
+    }
+  },
+  "core_checkpoint": {
+    "path": "/work/USERS/tkim1/share/native64_core_253/resume.pt",
+    "bytes": 336219420,
+    "sha256_prefix": "5543bf541e35174c7b988925b089bb19",
+    "readable_by_peer": true,
+    "note": "world-readable under /work/USERS/tkim1, which is tkim1:acm drwxr-x--x; peer kevinswk is in group acm, so no download is needed"
+  },
+  "activity_caches": {
+    "path": "/work/USERS/tkim1/sw0255b/ev",
+    "bytes": "2.6G",
+    "contents": "features, gamma, rgb, regions_253, regions_all per image; the three *_train dirs also hold features_b, gamma_b, regions_b from a second rollout at inference_seed = 777000 + image_id",
+    "subdirs": ["clevr_train", "clevr_validation", "clevr_fixed320", "tetrominoes_train", "tetrominoes_validation", "tetrominoes_test", "multi_dsprites_train", "multi_dsprites_validation", "multi_dsprites_test"]
+  },
+  "head_checkpoints": {
+    "path": "/work/USERS/tkim1/sw0255b/fit5",
+    "bytes": "3.0M",
+    "selected": {
+      "clevr": "clevr_253_local_rgb_tv.pt (epoch 11)",
+      "tetrominoes": "tetrominoes_253_local_rgb_trust.pt (epoch 2)",
+      "multi_dsprites": "multi_dsprites_253_local_rgb_trust.pt (epoch 2)"
+    }
+  },
+  "change_c_checkpoints": {"path": "/work/USERS/tkim1/sw0255b/fit4", "bytes": "2.6M"},
+  "slot_attention": {
+    "checkpoint_dir": "/work/USERS/tkim1/baselines/slot_attention",
+    "checkpoint_sha256_prefix": "7a703bcda0761e528a9f94a3d576bd6a",
+    "raw_slot_maps": {
+      "slots64_fixed320.npz": "b104a085de95c96c3d92df8d6713f5ef",
+      "slots64_validation.npz": "03c3ae9a662fd394f8f98d100899de13"
+    },
+    "note": "raw, before any background remapping, so the rule can be re-chosen without re-running inference"
+  },
+  "logs": {
+    "path": "/work/USERS/tkim1/sw0255b",
+    "files": ["go4_a.log", "go4_b.log", "go5_a.log", "go5_b.log", "xfer_go.log", "recipe_go.log", "sa_go.log"]
+  },
+  "results_copied_into_git": "diagnostics/ in this directory holds every result json"
+}
