@@ -65,15 +65,23 @@ if manager.latest_checkpoint:
 
 
 def learning_rate(s):
-    """Linear warmup then exponential decay, as published."""
-    warm = a.lr * tf.cast(s, tf.float32) / float(a.warmup) if a.warmup else a.lr
-    lr = tf.cond(s < a.warmup, lambda: warm, lambda: tf.constant(a.lr, tf.float32))
-    return lr * a.decay_rate ** (tf.cast(s, tf.float32) / float(a.decay_steps))
+    """Linear warmup then exponential decay, as published.
+
+    Written with plain tf ops so it is safe both inside and outside the traced step. A zero
+    warmup is allowed and means "no warmup", rather than dividing by zero.
+    """
+    f = tf.cast(s, tf.float32)
+    base = tf.constant(a.lr, tf.float32)
+    if a.warmup > 0:
+        base = base * tf.minimum(f / float(a.warmup), 1.0)
+    return base * a.decay_rate ** (f / float(a.decay_steps))
 
 
 @tf.function
 def train_step(images, lr):
-    optimizer.learning_rate = lr
+    # .assign, not rebinding: in TF 2.15 the optimizer's learning_rate is a tf.Variable, and
+    # assigning a tensor to the attribute inside a traced function does not take effect.
+    optimizer.learning_rate.assign(lr)
     with tf.GradientTape() as tape:
         recon_combined, recons, masks, slots = net(images, training=True)
         loss = sa_utils.l2_loss(images, recon_combined)
@@ -82,8 +90,11 @@ def train_step(images, lr):
     return loss
 
 
+# Reseeded per session, so a resumed run repeats an earlier data order. Harmless for a
+# randomly sampled batch, and recorded here rather than hidden.
 rng = np.random.RandomState(a.seed)
 started = time.time(); losses = []
+start_step = int(step)
 log = out/'training.jsonl'
 while int(step) < a.steps:
     idx = rng.randint(0, n, size=a.batch)
@@ -96,7 +107,8 @@ while int(step) < a.steps:
             f.write(json.dumps(dict(step=s, loss=float(np.mean(losses[-100:])),
                                     lr=float(learning_rate(step)), seconds=el))+'\n')
         if s % 1000 == 0:
-            rate = el/max(s - 0, 1)
+            rate = el/max(s - start_step, 1)      # this session's steps, not all sessions'
+
             print(f'  step {s}/{a.steps}  loss {np.mean(losses[-100:]):.5f}  '
                   f'{rate:.3f} s/step  {(a.steps-s)*rate/3600:.1f} h left', flush=True)
     if s % a.save_every == 0 or s == a.steps:

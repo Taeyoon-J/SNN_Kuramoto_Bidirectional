@@ -40,8 +40,11 @@ if ! $PY $B/benchmark_codes/cache_any.py --help 2>&1 | grep -q -- "--job"; then
   $PY $B/benchmark_codes/cache_any.py --help 2>&1 | head -20
   exit 1
 fi
+# Exactly the counts the existing ev/ caches use for these datasets -- train 256,
+# validation 160, test 320 -- so the head is fitted and selected by the identical procedure
+# and the only difference from the transfer rows is what the core trained on.
 for sp in train validation test; do
-  case $sp in train) N=256;; *) N=320;; esac
+  case $sp in train) N=256;; validation) N=160;; test) N=320;; esac
   $PY $B/benchmark_codes/cache_any.py $CFG --run $RUN --job $RUN/jobs/model253/$DS/seed0 \
       --dataset $DS --split $sp --count $N --min-group 8 \
       --out $B/ev261/${DS}_$sp || { echo "CHAIN_ABORT: caching $sp failed"; exit 1; }
