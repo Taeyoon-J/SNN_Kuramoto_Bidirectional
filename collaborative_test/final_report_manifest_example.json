@@ -1,0 +1,37 @@
+{
+ "dataset": "clevr",
+ "eval_split": "fixed320",
+ "n_images": 320,
+ "rows": [
+  {
+   "label": "Slot Attention, published checkpoint (TRANSFER, trained on the original CLEVR render, single checkpoint)",
+   "files": [
+    "sa/bg_rules.json"
+   ],
+   "key": "fixed320",
+   "kind": "reference_transfer"
+  },
+  {
+   "label": "Slot Attention, retrained on clevr_with_masks, N steps",
+   "files": [],
+   "key": "head",
+   "kind": "reference_matched"
+  },
+  {
+   "label": "253 core alone",
+   "files": [
+    "fit5/clevr.json"
+   ],
+   "key": "baseline_253",
+   "kind": "ours"
+  },
+  {
+   "label": "253 core + 261 readout (label-free recipe)",
+   "files": [
+    "fit5/recipe_clevr.json"
+   ],
+   "key": "head_recipe",
+   "kind": "ours"
+  }
+ ]
+}
