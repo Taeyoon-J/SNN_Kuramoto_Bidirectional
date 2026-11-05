@@ -265,7 +265,8 @@ hit it exactly, every arm reaching the identical validation FG-ARI whatever its 
 weights (0.4954 on CLEVR against 253's 0.8501). With entropy and size-distribution guards
 added, **no arm on any dataset beat its own epoch 0**.
 
-**It exposed a defect in change B.** Selecting on validation FG-ARI alone accepted a head at
+**It did expose a real defect in change B**, independent of the above because the offending
+head was C's epoch 0 — before any update. Selecting on validation FG-ARI alone accepted a head at
 **+0.0010 FG-ARI and −0.1141 Foreground IoU** on Tetrominoes. Rule **B′** adds a Foreground
 IoU floor (within 0.01 of 253's, on validation) and makes epoch 0 a candidate so the rule can
 decline to move. It changes nothing on CLEVR and moves `local_rgb` on Tetrominoes from epoch 0
@@ -296,3 +297,29 @@ excludes those. Its checkpoint uses 6.99 of 7 slots on every image with near-equ
 it is tiling, not segmenting, and the same pattern appears in the older centre-crop run, so it
 is not caused by our frame choice. It was trained on the original CLEVR render, not
 `clevr_with_masks`; **retraining it on our render is the largest remaining fairness gap.**
+
+
+---
+
+## PV2_0135 — the rollout is deterministic, so PV2_0134's change C is withdrawn
+
+`PV2_0135_rollout_is_deterministic/` — completed. A correction, not a new result.
+
+One image rolled out three times at seeds 0, 777003 and 12345 from the same checkpoint in eval
+mode gives **bitwise identical** `gamma`, `q`, `adjacency`, `trace['spikes']` and
+`trace['component_spikes']` — max difference 0.000e+00 on every tensor, over a full
+`(1, 4096, 1024)` spike trace of 290,599 spikes. `FreshModel.forward` seeds both generators but
+nothing downstream draws from them.
+
+So PV2_0134's change C could not have worked: `features_b` and `gamma_b` in the cache are
+identical to the first pass, and `regions_b` is `regions_all` because `cache_seed2.py` passes
+`np.ones(...)` as the merge support. C's symmetric KL compared a tensor with itself.
+
+Withdrawn: C's result and the claim that cross-seed agreement does not help. Unaffected:
+change A's isolation, rule B′ and its motivation (the −0.1141 Foreground IoU head was C's
+**epoch 0**, before any training), the transfer result, the recipe result, the Slot Attention
+rule sweep, and the three-dataset table — none of them read that cache.
+
+Kept as a positive: determinism makes every cache, diagnostic and score in this project exactly
+reproducible from checkpoint plus image, with no seed to record and no averaging over draws —
+the opposite of Slot Attention, which resamples its slots on every forward pass.

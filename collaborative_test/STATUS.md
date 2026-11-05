@@ -31,7 +31,11 @@ bundle are on `patch_final`. Contract **v2**; split v1.
 > - **Change A is the whole Foreground IoU story.** With the all-ones partition the metric is
 >   pinned at the truth foreground fraction (0.2115, `+0.0000` after training); with 253's
 >   partition as the candidate set it reaches 0.7830.
-> - **Change C is dead.** Cross-seed agreement collapses; guarded, it never beats epoch 0.
+> - **Change C is withdrawn, not refuted** (`PV2_0135`). The 253 rollout is **deterministic in
+>   `inference_seed`** — three seeds give bitwise identical gamma, q, adjacency and spikes — so
+>   the second-seed cache held no second seed and C's objective measured nothing. Seed
+>   invariance is unavailable for this core. The `features_b` / `gamma_b` / `regions_b` fields
+>   in `ev/*_train` are junk; do not read them.
 > - **Rule B needed the Foreground IoU floor.** Without it, Tetrominoes selected −0.1141 IoU.
 > - **The head is per-dataset.** The CLEVR head transferred unchanged loses on all three
 >   metrics on both other datasets.
@@ -42,8 +46,11 @@ bundle are on `patch_final`. Contract **v2**; split v1.
 >
 > 1. **A label-free stopping rule for the head.** Reusing CLEVR's recipe with no labels works
 >    on CLEVR and Multi-dSprites and loses 0.0565 FG-ARI on Tetrominoes, purely because of the
->    epoch count. The arm barely matters. Test a convergence criterion on the unlabelled
->    images against the curves already saved in `PV2_0134/diagnostics/fit5/*.json`.
+>    epoch count. The arm barely matters. One of the two candidates is gone — cross-seed
+>    agreement needs a stochastic rollout and there isn't one — so the live candidate is
+>    **stability**: the fraction of patches whose predicted label changes between epochs, on
+>    unlabelled training images. `stop.py` computes it; its second-seed path must be removed
+>    first.
 > 2. **Seeds 1 and 2 of the 253 core at grid 64 on CLEVR.** Nothing above is a result at one
 >    seed. ~18.5 h per seed on a rented 4090, ~$8 each; two in parallel is about a day. Needs
 >    the user's go-ahead to spend.

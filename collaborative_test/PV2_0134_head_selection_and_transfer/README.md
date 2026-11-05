@@ -7,6 +7,22 @@ checkpoint on the same images through the same evaluation function
 **Evaluation** peer patch contract, `evaluate_patch_masks`, grid 64, ceiling 1.0
 **Seeds** one. Every number here is seed 0 and is a candidate, not a result.
 
+> ## CORRECTION, see PV2_0135
+>
+> **Change C's result below is withdrawn.** The second-seed cache it relied on contains no
+> second seed: `features_b` and `gamma_b` are bitwise identical to the first pass, `regions_b`
+> is `regions_all` rather than a second-seed 253 partition, and the 253 rollout turns out to be
+> fully deterministic in `inference_seed` — three seeds give bitwise identical gamma, q,
+> adjacency, spikes and component spikes. C's objective therefore compared the head against the
+> same tensor, so the symmetric KL was identically zero and measured nothing. Seed invariance is
+> not an available signal for this core; whether it would help a stochastic rollout is untested.
+>
+> Everything else in this test stands, because nothing else read that cache. In particular the
+> Tetrominoes **−0.1141 Foreground IoU** observation that motivated rule B′ came from C's
+> **epoch 0** — the head before any update, with no second-seed tensor involved — so B′'s
+> motivation and B′ itself are unaffected. So are change A's isolation, the transfer result, the
+> recipe result, the Slot Attention rule sweep and the three-dataset table.
+
 ## Hypothesis
 
 PV2_0133 opened the head direction: with change A (background as an ordinary candidate) and
@@ -14,14 +30,18 @@ change B (arms selected on validation FG-ARI), nine of nine metric cells improve
 three datasets. This test asks the three questions that leaves.
 
 1. **C.** Does cross-seed agreement give the head an unsupervised objective that beats the
-   reconstruction losses?
+   reconstruction losses? *(The premise was false — see the correction above and PV2_0135.)*
 2. **Transfer.** Does one head, fitted on CLEVR, carry to the other datasets unchanged?
 3. **Cost.** If it does not, what does a new dataset actually cost — and is any of that cost
    labels?
 
 ## What happened
 
-### Change C is a negative result, and it exposed a defect in change B
+### Change C — withdrawn, but it exposed a real defect in change B
+
+> Everything in this subsection about C is superseded by PV2_0135: the two "seeds" were the same
+> rollout, so the objective measured nothing and the collapse described below is drift under a
+> term with no content. The B-rule defect it surfaced is independent of that and is real.
 
 The idea: the rollout is stochastic in its inference seed, so one image under two seeds gives
 two activity traces of the same scene. A grouping that tracks real objects should survive the
