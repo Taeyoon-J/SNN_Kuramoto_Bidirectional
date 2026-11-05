@@ -3,7 +3,31 @@
 Updated 2026-11-04. Branch `patch_v2`; the shipped version, `benchmark.md` and the script
 bundle are on `patch_final`. Contract **v2**; split v1.
 
-> ## RESUME POINT, 2026-11-04 — the head direction is open, and one seed is the wall
+> ## RESUME POINT, 2026-11-05 — B→A→C is closed; seeds 1 and 2 are training
+>
+> **B → A → C is finished.** C was attempted twice: on the inference seed (withdrawn,
+> `PV2_0135`, the rollout is deterministic) and on a horizontal mirror (`PV2_0137`, premise
+> verified, and a real negative — every arm on every dataset refuses to move, 0–1 of 21 epochs
+> pass the Foreground IoU floor, because the core's grouping fragments 3 → 273 regions under
+> mirroring). The head direction is open; invariance is not the way through it.
+>
+> **What works**, and what the benchmark should report: change A, rule B′, and one fixed
+> label-free recipe — arm `local_rgb_trust`, 2 epochs, chosen across the three validation
+> splits — refit on each dataset's **unlabelled** images only. All nine metric cells improve.
+>
+> **RUNNING NOW:** seeds 1 and 2 of the 253 core on CLEVR at grid 64, frontier GPUs 2 and 3,
+> `run.py --output run_s{1,2} train --dataset clevr --model 253 --seed {1,2}`, logs
+> `seed1.log` / `seed2.log`. Default preset matches seed 0 exactly (10,000 unique × 10 epochs,
+> batch 16 → 6,250 updates). These are what turn every number below from a candidate into a
+> result. **Do not restart them**; check `run_s1/jobs/model253/clevr/seed1/progress.json`.
+>
+> Still unstarted and still needing a decision: **retraining Slot Attention on
+> `clevr_with_masks`**. Only `model.py` and `utils.py` are present — no training loop — so the
+> loop has to be written; the published recipe is Adam 4e-4, batch 64, 10k warmup, 500k steps,
+> which is days per seed on a TITAN RTX. Until that row exists the honest headline is "we beat
+> the published checkpoint transferred to our render".
+
+> ## RESUME POINT, 2026-11-04 — the head direction is open (superseded by the entry above)
 >
 > `PV2_0134` finished the B → A → C sequence. The head helps on all three datasets and the
 > core is what generalises. Everything below is **seed 0**.

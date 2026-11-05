@@ -323,3 +323,38 @@ rule sweep, and the three-dataset table — none of them read that cache.
 Kept as a positive: determinism makes every cache, diagnostic and score in this project exactly
 reproducible from checkpoint plus image, with no seed to record and no averaging over draws —
 the opposite of Slot Attention, which resamples its slots on every forward pass.
+
+
+---
+
+## PV2_0137 — change C, finished: mirror invariance is harmful, not just unhelpful
+
+`PV2_0137_change_C_mirror/` — completed. **Closes the B → A → C sequence.**
+
+PV2_0135 withdrew the first change C because the rollout is deterministic in `inference_seed`.
+A horizontal mirror is an invariance that does exist: the encoder is a learned CNN, the Kuramoto
+coupling carries a learned direction term over ordered node pairs, and the spike clustering then
+runs on different activity.
+
+The premise was verified before the experiment was believed, which is the lesson of PV2_0135.
+Un-mirroring the mirrored rollout and comparing: features differ by **0.89 relative**, gamma by
+0.23–0.26 — genuinely different runs. But the region counts warn what is coming: **3 coherent
+regions become 273**, and foreground agreement after un-mirroring is only 0.91 / 0.63 / 0.46 of
+patches on three sample images. Under mirroring the core's synchrony structure fragments.
+
+Six arms, 21 epochs, collapse guards retained, rule B′ selecting:
+
+| dataset | arms selecting epoch 0 | epochs passing the Foreground IoU floor |
+| --- | ---: | ---: |
+| CLEVR | 6 of 6 | 1 of 21 |
+| Tetrominoes | 6 of 6 | 0 of 21 |
+| Multi-dSprites | 6 of 6 | 1 of 21 |
+
+Not one trained epoch under any weighting survived the floor on Tetrominoes. So the result is
+stronger than "does not help": **mirror-agreement training destroys figure-ground separation
+within one epoch**, which is what the 3 → 273 fragmentation predicts.
+
+Two things this settles. The head direction is open but **invariance is not the route through
+it** — what works is change A, rule B′ and the fixed label-free recipe. And the core's grouping
+is **strongly orientation-dependent**, which is a concrete thing to try fixing with mirror
+augmentation if the core is ever retrained.
