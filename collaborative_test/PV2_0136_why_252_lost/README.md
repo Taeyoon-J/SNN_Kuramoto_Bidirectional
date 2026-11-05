@@ -140,7 +140,9 @@ logging, read from both runs' own files.
 Separately from the 252 analysis, this round answered the cost question PV2_0134 left open.
 B′ independently chose **arm `local_rgb_trust` at epoch 2** on both Tetrominoes and
 Multi-dSprites validation. Fixing that single recipe and refitting on each dataset's
-**unlabelled** images only improves all nine metric cells:
+**unlabelled** images only improves all nine metric cells — though `PV2_0141` shows only four
+of the nine clear the measurable wobble, so what is *established* is CLEVR's three metrics and
+Multi-dSprites' FG-ARI, not all nine:
 
 | dataset | 253 | + head, no labels from this dataset | delta |
 |---|---|---|---|

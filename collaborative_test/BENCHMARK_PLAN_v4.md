@@ -36,7 +36,11 @@ new dataset using **only its unlabelled images**, and improves all nine metric c
 | Tetrominoes | 0.8580 / 0.7885 / 0.8173 | 0.8586 / 0.7895 / 0.8187 | +0.0006 / +0.0010 / +0.0015 |
 | Multi-dSprites | 0.6974 / 0.8177 / 0.7628 | 0.7041 / 0.8213 / 0.7660 | +0.0067 / +0.0036 / +0.0032 |
 
-**This is the configuration the benchmark should report**, because it is the one whose cost we
+**This is the configuration the benchmark should report** (but see `PV2_0141`: only 4 of
+these 9 cells clear the measurable wobble — CLEVR's three and Multi-dSprites' FG-ARI. The
+others are not established at seed 0.)
+
+**Originally stated as** —, because it is the one whose cost we
 can state honestly: a frozen CLEVR-trained core, plus 256 unlabelled images and about a minute
 per new dataset. The recipe was selected across the three **validation** splits, which the
 contract permits; no evaluation split was involved in choosing it.

@@ -358,3 +358,36 @@ Two things this settles. The head direction is open but **invariance is not the 
 it** — what works is change A, rule B′ and the fixed label-free recipe. And the core's grouping
 is **strongly orientation-dependent**, which is a concrete thing to try fixing with mirror
 augmentation if the core is ever retrained.
+
+
+---
+
+## PV2_0141 — how much of "all nine cells improve" is actually established
+
+`PV2_0141_how_much_is_noise/` — completed. Analysis only; no GPU, no server.
+
+Every number we hold is seed 0, so none has an error bar, and Tetrominoes' gain was **+0.0006**
+FG-ARI. The `fit5` runs recorded the full per-epoch validation curve for every arm, which gives
+a lower bound on the noise: how much the score moves when nothing changes except where training
+stopped, or which arm was picked.
+
+**4 of 9 reported cells clear twice that wobble.**
+
+| dataset | fg_ari | fg_iou | obj_iou |
+| --- | :-: | :-: | :-: |
+| CLEVR | clears | clears | clears |
+| Tetrominoes | inside | inside | inside |
+| Multi-dSprites | clears | inside | inside |
+
+Tetrominoes clears none: its arm spread on FG-ARI is 0.0453, seventy-five times the +0.0006 we
+reported. And this understates the true noise — real seed variance also redraws the encoder,
+which we know matters (the three CLEVR seeds' feature std is 0.2478 / 0.1337 / 0.3533).
+
+So **"all nine cells improve" is true in sign and misleading as a claim.** What seed 0 supports
+is CLEVR on all three metrics and Multi-dSprites' FG-ARI. That is still a real generalisation
+result — a CLEVR-trained core plus a label-free head improves grouping on a dataset it never
+trained on — but it rests on four cells, not nine.
+
+It also reframes the seeds: they are not a formality for the contract. **Five of our nine
+headline cells are currently indistinguishable from noise**, and seeds are the only thing that
+can settle them.
