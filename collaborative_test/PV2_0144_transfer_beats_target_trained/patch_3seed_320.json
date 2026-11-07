@@ -1,0 +1,112 @@
+{
+ "tetrominoes": {
+  "rows": [
+   {
+    "seed": 0,
+    "n": 320,
+    "fg_ari": 0.781162412658319,
+    "foreground_iou": 0.701506626171855,
+    "matched_object_iou": 0.7430551931133317
+   },
+   {
+    "seed": 1,
+    "n": 320,
+    "fg_ari": 0.8078934775323823,
+    "foreground_iou": 0.7692974077046174,
+    "matched_object_iou": 0.7869046446950911
+   },
+   {
+    "seed": 2,
+    "n": 320,
+    "fg_ari": 0.7299637236021063,
+    "foreground_iou": 0.7822788477960414,
+    "matched_object_iou": 0.7676117218178558
+   }
+  ],
+  "metrics": {
+   "fg_ari": {
+    "per_seed": [
+     0.781162412658319,
+     0.8078934775323823,
+     0.7299637236021063
+    ],
+    "mean": 0.7730065379309359,
+    "std": 0.03959987823636479
+   },
+   "foreground_iou": {
+    "per_seed": [
+     0.701506626171855,
+     0.7692974077046174,
+     0.7822788477960414
+    ],
+    "mean": 0.7510276272241713,
+    "std": 0.043374838393121874
+   },
+   "matched_object_iou": {
+    "per_seed": [
+     0.7430551931133317,
+     0.7869046446950911,
+     0.7676117218178558
+    ],
+    "mean": 0.7658571865420929,
+    "std": 0.021977315498729343
+   }
+  },
+  "note": "grid 32 lifted to 64 by exact np.repeat; 3,500x10 budget; patch protocol, same evaluate_patch_masks and targets as our rows"
+ },
+ "multi_dsprites": {
+  "rows": [
+   {
+    "seed": 0,
+    "n": 320,
+    "fg_ari": 0.28540305700552604,
+    "foreground_iou": 0.14439155957944813,
+    "matched_object_iou": 0.0956587840010538
+   },
+   {
+    "seed": 1,
+    "n": 320,
+    "fg_ari": 0.3840051237512994,
+    "foreground_iou": 0.2610127662883488,
+    "matched_object_iou": 0.2044352138126336
+   },
+   {
+    "seed": 2,
+    "n": 320,
+    "fg_ari": 0.21987195429721287,
+    "foreground_iou": 0.24709003288667813,
+    "matched_object_iou": 0.12762487991457136
+   }
+  ],
+  "metrics": {
+   "fg_ari": {
+    "per_seed": [
+     0.28540305700552604,
+     0.3840051237512994,
+     0.21987195429721287
+    ],
+    "mean": 0.29642671168467943,
+    "std": 0.08262000393745383
+   },
+   "foreground_iou": {
+    "per_seed": [
+     0.14439155957944813,
+     0.2610127662883488,
+     0.24709003288667813
+    ],
+    "mean": 0.217498119584825,
+    "std": 0.06369370034162192
+   },
+   "matched_object_iou": {
+    "per_seed": [
+     0.0956587840010538,
+     0.2044352138126336,
+     0.12762487991457136
+    ],
+    "mean": 0.14257295924275293,
+    "std": 0.055907617793459895
+   }
+  },
+  "note": "grid 32 lifted to 64 by exact np.repeat; 3,500x10 budget; patch protocol, same evaluate_patch_masks and targets as our rows"
+ }
+}

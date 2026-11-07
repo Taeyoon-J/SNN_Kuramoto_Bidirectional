@@ -1,6 +1,10 @@
 # PV2_0140 — the project's first genuine 3-seed table, from cores already on disk
 
-**Status** planned, code written and not yet run
+**Status** **superseded by PV2_0144** — this plan cannot work
+**Why** the cores are grid 32 (`kuramoto.omega` is `(1024, 4)`) and `cache_any.py` is
+`GRID = 64`, which builds a model expecting `(4096, 4)`; the `state_dict` load fails outright.
+PV2_0144 gets the same three-seed table by scoring the 32×32 predictions that were already
+saved, lifted to 64 exactly as Slot Attention's grid-16 and grid-32 runs were.
 **Blocked on** a frontier login, and it should queue behind `PV2_0138` rather than contend
 for the same GPUs
 
