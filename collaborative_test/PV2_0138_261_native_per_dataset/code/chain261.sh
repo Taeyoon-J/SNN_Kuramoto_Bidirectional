@@ -45,18 +45,20 @@ fi
 # and the only difference from the transfer rows is what the core trained on.
 for sp in train validation test; do
   case $sp in train) N=256;; validation) N=160;; test) N=320;; esac
-  $PY $B/benchmark_codes/cache_any.py $CFG --run $RUN --job $RUN/jobs/model253/$DS/seed0 \
+  # --run is the DATA root (connect_inputs needs the populated one); --job is this
+  # dataset's own core checkpoint. Keeping them separate is the whole point of the flag.
+  $PY $B/benchmark_codes/cache_any.py $CFG --run $B/run --job $RUN/jobs/model253/$DS/seed0 \
       --dataset $DS --split $sp --count $N --min-group 8 \
       --out $B/ev261/${DS}_$sp || { echo "CHAIN_ABORT: caching $sp failed"; exit 1; }
 done
 
 # 3. fit the 261 readout under rule B', and also the fixed label-free recipe
 mkdir -p $B/fit261
-$PY $B/benchmark_codes/fit5.py $CFG --run $RUN --dataset $DS --regions 253 \
+$PY $B/benchmark_codes/fit5.py $CFG --run $B/run --dataset $DS --regions 253 \
     --train-cache $B/ev261/${DS}_train --val-cache $B/ev261/${DS}_validation \
     --eval-cache $B/ev261/${DS}_test --eval-split test \
     --epochs 20 --val-every 1 --iou-floor 0.01 --out $B/fit261/$DS.json || exit 1
-$PY $B/benchmark_codes/recipe.py $CFG --run $RUN --dataset $DS \
+$PY $B/benchmark_codes/recipe.py $CFG --run $B/run --dataset $DS \
     --train-cache $B/ev261/${DS}_train --eval-cache $B/ev261/${DS}_test --eval-split test \
     --arm local_rgb_trust --epochs 2 --out $B/fit261/recipe_$DS.json || exit 1
 

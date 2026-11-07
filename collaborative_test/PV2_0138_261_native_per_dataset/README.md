@@ -62,6 +62,50 @@ CUDA_VISIBLE_DEVICES=3 $PY $B/benchmark_codes/run.py \
 Logs `core261_tetrominoes.log`, `core261_multi_dsprites.log`. Measured **29.5 s/update
 (51.1 h)** and **30.5 s/update (52.9 h)**; in parallel on GPUs 2 and 3, about **2.2 days**.
 
+## The head is per-dataset too
+
+Every part of a `261 on Tetrominoes` row comes from Tetrominoes. The core trains on
+Tetrominoes from random init with nothing carried over from CLEVR; the head is then fitted on
+**Tetrominoes' own unlabelled training images**, selected on Tetrominoes' validation split, and
+scored on Tetrominoes' test split. Same for Multi-dSprites. Nothing crosses between datasets.
+
+That is also true of the rows this is compared against: the PV2_0134 transfer rows are a
+**CLEVR core with the head refit on the target dataset**. So in both columns the head is local,
+and the single difference between them is what the **core** trained on — which is what makes
+the comparison readable.
+
+The head has to be refit per core in any case: it reads the core's activity, so a different
+core needs its own head. A head fitted on one core cannot be moved to another.
+
+What uses labels and what does not:
+
+| | labels from the evaluated dataset |
+|---|---|
+| core training | none — unsupervised |
+| head training loss | none — rgb, tv, spike, anchor |
+| head arm/epoch under rule B′ | **yes**, that dataset's validation FG-ARI |
+| head under the fixed recipe | none |
+
+So the `recipe` row is label-free end to end, and the `B′` row costs a labelled validation
+split. Both are reported.
+
+## The blocker that was predicted, found, and fixed
+
+`cache_any.py:34` read
+
+```python
+job = Path(a.run)/'jobs/model253/clevr/seed0'
+```
+
+hardcoded to **clevr/seed0**, exactly as `PV2_0138`'s precondition warned. `--run` was doing two
+unrelated jobs at once: the data root for `connect_inputs` and the checkpoint location. It now
+takes a separate `--job`, defaulting to the old path so existing commands are unchanged, and it
+exits with a clear message if no `resume.pt` is there.
+
+Verified on the same image (id 7000) rather than assumed: caching from the Tetrominoes core
+gives features differing by **0.86 relative** from the CLEVR core's, different gamma, and
+**117 regions against 15**. The flag genuinely loads the per-dataset core.
+
 ## Steps after the cores finish
 
 1. Cache activity (`features`, `gamma`, `regions_253`, `regions_all`) with `cache_any.py`

@@ -30,11 +30,11 @@ for DS in tetrominoes multi_dsprites; do
       case $sp in train) N=256;; validation) N=160;; test) N=320;; esac
       O=$B/ev3500/${DS}_s${S}_$sp
       [ -d $O ] && continue
-      $PY $B/benchmark_codes/cache_any.py $CFG --run $OLD --job $J \
+      $PY $B/benchmark_codes/cache_any.py $CFG --run $B/run --job $J \
           --dataset $DS --split $sp --count $N --min-group 8 --out $O || exit 1
     done
     mkdir -p $B/fit3500
-    $PY $B/benchmark_codes/recipe.py $CFG --run $OLD --dataset $DS \
+    $PY $B/benchmark_codes/recipe.py $CFG --run $B/run --dataset $DS \
         --train-cache $B/ev3500/${DS}_s${S}_train \
         --eval-cache $B/ev3500/${DS}_s${S}_test --eval-split test \
         --arm local_rgb_trust --epochs 2 \
