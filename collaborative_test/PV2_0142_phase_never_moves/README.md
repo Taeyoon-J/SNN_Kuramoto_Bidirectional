@@ -1,8 +1,25 @@
 # PV2_0142 — on Tetrominoes and Multi-dSprites, the 253 recipe never moves `phase_primary`
 
-**Status** completed (analysis of eight runs' own training logs)
+**Status** completed, then **corrected** — see the box below
+**Correction** the six 3,500×10 runs are **grid 32**, not grid 64, so comparing their loss
+terms against the grid-64 CLEVR core mixes 1,024 nodes with 4,096. The finding survives on the
+two grid-64 runs alone, but on two runs rather than eight, and the gradient-norm contrast is
+partly a node-count artefact. Found by a question about PV2_0143's scores.
 **Found while** resuming `PV2_0138` after the Nov 6 reboot
 **Bearing on** what the `PV2_0138` per-dataset cores can be expected to produce
+
+> ## CORRECTION
+>
+> `native_model_grid` in each of the six finished runs' `result.json` is **32**. Our CLEVR
+> reference is **64**. `phase_primary` and `positive_spike` are summed over the node set, so at
+> grid 32 they run over 1,024 nodes against 4,096 — their absolute values and their gradient
+> magnitudes are not comparable across the two, and the four-to-eight-order-of-magnitude
+> gradient-norm gap I highlighted is partly that, not only cancellation.
+>
+> **What survives.** The two currently running cores are grid 64 on the identical config to
+> CLEVR's, and they show the same flat `phase_primary` (+1.5% and −3.4% at 66%, against CLEVR's
+> −46.1% at the same point). So the observation holds — but on **two** like-for-like runs, not
+> eight, and the six grid-32 rows below are supporting context rather than evidence at our grid.
 
 ## The observation
 

@@ -1,8 +1,34 @@
 # PV2_0143 — `positive_spike`, not `phase_primary`, is the term that tracks performance
 
-**Status** completed (scores already on disk; no new training)
+**Status** completed, then **substantially weakened** — see the box below
+**Correction** these cores are **grid 32**; the conclusion linking `positive_spike` to
+performance is cross-grid and is not established. What survives is narrower.
 **Answers** the question PV2_0142 left open, and answers it against both of my readings
 **Also** the first real seed spread this project has measured
+
+> ## CORRECTION
+>
+> The six cores scored here are **grid 32** (`native_model_grid: 32`), evaluated under the
+> **pixel** protocol on **1,000** images at a **3,500 × 10** budget. The CLEVR row I set beside
+> them is **grid 64**, **patch** protocol, 320 images, 10,000 × 10.
+>
+> **Withdrawn.** The claim that `positive_spike` is the term tracking performance *across the
+> three datasets*. It rests on placing grid-32 scores next to a grid-64 core, and the loss terms
+> are not comparable across node counts.
+>
+> **Still standing**, because both rows share grid, protocol, image count, budget and have three
+> seeds each: at grid 32, a **Tetrominoes-trained core works (0.7436) and a
+> Multi-dSprites-trained core does not (0.2789)**, a 2.7× gap far outside the standard
+> deviations. That contrast is real and is the useful part of this record.
+>
+> **Still standing**, and the most important part: the measured **seed spread**, fg_ari std
+> **0.0465** and **0.0813**. It is from a different grid and protocol, so it is an indication of
+> scale rather than our error bar — but it is the only real seed spread in this project, and it
+> is 77× and 12× our reported Tetrominoes and Multi-dSprites head gains.
+>
+> **What would settle the question** is the comparison now running: grid-64 cores at 10,000 × 10
+> trained on each dataset, scored under the patch protocol on the same 320 images as the
+> CLEVR-transfer rows. That is `PV2_0138`, about 16 h out.
 
 ## The question
 
