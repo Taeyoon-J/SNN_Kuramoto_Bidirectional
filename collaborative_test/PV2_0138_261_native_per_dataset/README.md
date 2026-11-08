@@ -148,6 +148,41 @@ Scored from the engine's own saved predictions with `score_any.py`, so no cachin
 this row. Both sides are **seed 0**, and this is **core only** — the head rows follow when
 `chain261.sh` finishes.
 
+## Why the target-trained core is worse — training works, it just does not get as far
+
+The obvious reading of PV2_0142 was that the loss gives no signal on this dataset, because
+`phase_primary` never descended. **Scoring the untrained core refutes that.**
+
+| Tetrominoes core | fg_ari | foreground_iou | matched_object_iou | regions/image |
+|---|---|---|---|---|
+| **untrained** (`initial.pt`) | **0.0100** | 0.0909 | 0.0048 | 361.5 |
+| trained, grid 64, 10,000 × 10 | **0.5298** | 0.6179 | 0.4417 | 135.8 |
+| trained, grid 32, 3,500 × 10 | 0.7730 ± 0.0396 | 0.7510 | 0.7659 | 6–25 |
+| CLEVR core, frozen, never saw this data | **0.8580** | 0.7885 | 0.8173 | ~15 |
+
+**Training lifts FG-ARI from 0.0100 to 0.5298 — a factor of 53** — and cuts regions per image
+from 361.5 to 135.8. The loss is doing a great deal of work. It simply does not reach where
+CLEVR training reaches. The learning came through `positive_spike`, which fell 33% on this
+dataset; only `phase_primary` stayed flat.
+
+So the diagnosis is **not** a broken or uninformative loss. It is that **CLEVR supplies this loss
+with a far richer signal than Tetrominoes does**:
+
+| | objects/image | native pixels | `phase_primary` start | reached |
+|---|---|---|---|---|
+| CLEVR | 6.4 | 128×128 | 4.64, far above its floor | **0.8580** |
+| Tetrominoes | 3.0 | 35×35 | 2.62, near where CLEVR *ends* (2.46) | 0.5298 / 0.7730 |
+
+Two things stack on Tetrominoes: less structure for the loss to exploit, and at grid 64 a
+**3.34× oversampling** of a 35×35 image by 4,096 nodes, which is what drives fragmentation
+(136 regions at grid 64 against 6–25 at grid 32, and the score moves with it). Multi-dSprites is
+exactly 1:1 at grid 64, so oversampling cannot be the general explanation — only the
+Tetrominoes-specific amplifier.
+
+**This is the mechanism behind the generalisation result.** The CLEVR-trained core is not better
+because CLEVR is "closer" to these datasets. It is better because CLEVR is the dataset rich
+enough for this objective to learn grouping well, and what it learns then carries.
+
 ## The comparison this produces
 
 | dataset | core trained on | fg_ari | fg_iou | obj_iou |
