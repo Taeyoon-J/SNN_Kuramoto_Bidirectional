@@ -1,6 +1,6 @@
 --- a/vendor/full_benchmark/engine.py
 +++ b/vendor/full_benchmark/engine.py
-@@ -17,9 +17,16 @@
+@@ -17,9 +17,20 @@
  from full_benchmark.evaluation import evaluate
  
  PRESET=os.environ.get('SW_TRAIN_PRESET','')
@@ -14,11 +14,73 @@
 -if WARM:
 +if PRESET=='cont5000':
 +    PRESET_UNIQUE,PRESET_EPOCHS=5000,10
-+    PRESET_UPDATES,PRESET_SEEN=6250+313*10,100000+50000     # 9,380 / 150,000 cumulative
++    # One cont5000 stage ADDS this much. The absolute total depends on what the resumed
++    # checkpoint already carried, so it is computed below rather than fixed here -- otherwise
++    # the first continuation passes and every chained one aborts on the final assertion.
++    PRESET_ADD_UPDATES,PRESET_ADD_SEEN=313*10,50000        # 3,130 / 50,000 per stage
++    PRESET_UPDATES,PRESET_SEEN=None,None
 +elif WARM:
      PRESET_UNIQUE,PRESET_EPOCHS=15000,10
      PRESET_UPDATES,PRESET_SEEN=6250+938*10,100000+150000    # 15,630 / 250,000 cumulative
  elif SCRATCH25:
+@@ -112,6 +123,7 @@
+     head_optimizer=torch.optim.Adam([g for g in groups if g['name']=='mask_head']) if model.head is not None else None
+     coverage={name:0. for name,p in model.named_parameters() if p.requires_grad}
+     updates=0;seen=0;next_epoch=0;next_offset=0
++    expect_updates,expect_seen=PRESET_UPDATES,PRESET_SEEN
+     resume_path=out/'resume.pt'
+     if resume_path.exists():
+         resume=torch.load(resume_path,map_location='cuda:0',weights_only=True)
+@@ -119,13 +131,27 @@
+         model.load_state_dict(resume['model']);optimizer.load_state_dict(resume['optimizer'])
+         if head_optimizer:head_optimizer.load_state_dict(resume['head_optimizer'])
+         coverage=resume['gradient_coverage'];updates=resume['updates'];seen=resume['images_seen']
++        if PRESET=='cont5000':
++            # chainable: this stage must end one cont5000 increment above whatever it resumed
++            expect_updates,expect_seen=updates+PRESET_ADD_UPDATES,seen+PRESET_ADD_SEEN
++            print(f'cont5000: resumed at {updates} updates / {seen} images; '
++                  f'this stage targets {expect_updates} / {expect_seen}',flush=True)
+         next_epoch=resume['next_epoch'];next_offset=resume['next_offset']
+         if WARM and next_epoch*len(dataset.train)+next_offset!=seen:
+             # Entering the warm start: the prior run's epoch counter indexes its own
+             # 10,000-image schedule and cannot index this one. Restart epochs at 0 while
+             # carrying updates and images_seen forward -- the optimizer step count must stay
+             # continuous, because the restore assert at the end compares it against updates.
+-            assert updates==6250 and seen==100000,(updates,seen)
++            if PRESET=='cont5000':
++                # the base core, or the base core plus a whole number of cont5000 stages
++                k_u,k_s=updates-6250,seen-100000
++                assert k_u>=0 and k_s>=0 and k_u%PRESET_ADD_UPDATES==0 \
++                       and k_s%PRESET_ADD_SEEN==0 and k_u//PRESET_ADD_UPDATES==k_s//PRESET_ADD_SEEN, \
++                       ('cont5000 must resume the base 6250/100000 core or a whole number of '
++                        'cont5000 stages past it',updates,seen)
++                print(f'cont5000: entering stage {k_u//PRESET_ADD_UPDATES+1}',flush=True)
++            else:
++                assert updates==6250 and seen==100000,(updates,seen)
+             next_epoch=0;next_offset=0
+         else:
+             assert next_epoch*len(dataset.train)+next_offset==seen
+@@ -175,7 +201,7 @@
+                 stream.write(json.dumps(dict(update=updates,epoch=epoch+1,ids=selected.tolist(),loss=accumulated_loss,parts=parts_sum,
+                     gradient_norm=float(norm),images_seen=seen,seconds=time.time()-started),allow_nan=False)+'\n')
+         if admission:break
+-    assert seen==(4 if admission else PRESET_SEEN) and updates==(2 if admission else PRESET_UPDATES),(seen,updates)
++    assert seen==(4 if admission else expect_seen) and updates==(2 if admission else expect_updates),(seen,updates)
+     inactive=[name for name,value in coverage.items() if value==0]
+     assert not inactive,('inactive active parameter tensors',inactive)
+     changes={name:float((p.detach().cpu()-initial_values[name]).abs().max()) for name,p in model.named_parameters() if p.requires_grad}
+@@ -190,9 +216,10 @@
+     if head_optimizer:assert {int(s['step'].item()) for s in head_optimizer.state.values()}=={updates}
+     c.write(out/'training_report.json',dict(binding_sha256=binding_sha,initial_sha256=initial_sha,updates=updates,images_seen=seen,
+         unique_TRAIN=PRESET_UNIQUE,epochs_completed=0 if admission else PRESET_EPOCHS,
++        cont5000_stage_added=dict(updates=PRESET_ADD_UPDATES,images_seen=PRESET_ADD_SEEN) if PRESET=='cont5000' else None,
+         train_preset=PRESET or 'first10000',
+         warm_start='10,000x10 = 100,000 exposures, 6,250 updates' if WARM else None,
+-        total_exposures=PRESET_SEEN,
++        total_exposures=seen if PRESET=='cont5000' else PRESET_SEEN,
+         schedule_note='two consecutive halves, not one shuffled run' if WARM else None,
+         diagnostic_only=admission,
+         active_tensor_gradient_coverage=coverage,parameter_changes=changes,optimizer_resume_verified=True,
 --- a/vendor/full_benchmark/data.py
 +++ b/vendor/full_benchmark/data.py
 @@ -40,7 +40,17 @@

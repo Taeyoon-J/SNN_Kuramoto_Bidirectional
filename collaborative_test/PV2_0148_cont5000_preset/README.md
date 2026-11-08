@@ -2,12 +2,19 @@
 
 **Status** implemented and smoke-tested; **not yet run for real, and not yet pushed** — it
 edits the peer's vendored engine, so it is flagged before landing.
-**Purpose** the plan is to take the finished 10,000 × 10 CLEVR grid-64 core and continue
-training it for 5,000 × 10 on Tetrominoes and on Multi-dSprites.
+**Purpose** take the finished 10,000 × 10 CLEVR grid-64 core and continue it for 5,000 × 10 on
+Tetrominoes, then continue *that* for 5,000 × 10 on Multi-dSprites — **sequential and
+cumulative**, one core that has seen all three, with the intermediate checkpoint pulled down
+between stages.
+
+Parallel is not an option here and that distinction matters: running the two continuations side
+by side would produce **two separate branch models**, not one core that learned both. Sequential
+chaining is what gives a single cumulative core, so one GPU is enough.
 
 ## What was blocking it
 
-Two things, both now solved.
+**Three** things, all now solved. Two of them would have fired only at the *second* stage, after
+the first had already spent 5–9 h.
 
 **1. There was no 5,000 preset.** `data.py` accepted only the default (10,000), `cont15000` and
 `union25000`, and raised `ValueError` on anything else.
@@ -19,6 +26,13 @@ binding assertions at `:100` and `:118` so a checkpoint from another dataset loa
 schedule. So the weights carry over while the data changes. `cont15000` simply never pointed it
 at another dataset.
 
+**3. Two guards hardcoded the single-stage case.** `engine.py:185` asserts the final
+`updates`/`seen` equal module constants, and `updates`/`seen` are carried forward from the
+resumed checkpoint (`:122`), so a fixed 9,380 / 150,000 is correct for stage 1 and wrong for
+every stage after. And `engine.py:145` guards warm-start entry with
+`updates==6250 and seen==100000`, which admits only the base core. Both were found by
+fabricating a stage-1 checkpoint instead of waiting 9 h to discover them.
+
 ## The change
 
 Additive only; no existing preset's behaviour moves. Full diff in `code.patch`, backups on the
@@ -28,9 +42,28 @@ server at `*.py.bak`.
   `PRESET_UNIQUE, PRESET_EPOCHS = 5000, 10` with cumulative
   `PRESET_UPDATES, PRESET_SEEN = 6250+313*10, 100000+50000` → **9,380 / 150,000**.
   313 updates per epoch is 5,000/16 = 312.5 rounded the way `cont15000` rounds 937.5 to 938.
+- `engine.py`: the stage increment is a constant (`PRESET_ADD_UPDATES, PRESET_ADD_SEEN =
+  313*10, 50000`) and the **expected totals are computed from what was resumed**, so the chain
+  works at any depth. `training_report.json` records the real cumulative `seen` and the stage
+  increment rather than a fixed constant.
+- `engine.py`: the warm-start entry guard now admits, **for `cont5000` only**, the base core or
+  the base core plus a whole number of cont5000 stages. `cont15000`'s strict
+  `updates==6250 and seen==100000` is untouched.
 - `data.py`: `cont5000` takes `first[:5000]` — the first 5,000 of the **same**
   `RandomState(2553500)` draw the default preset uses, so the run sees a strict subset of the
   10,000 and the ids stay reproducible.
+
+## Chaining verified without spending the 9 h
+
+`chaintest.py` fabricates a checkpoint at each stage's entry point and runs the engine far
+enough to print its computed targets:
+
+```
+stage 1: resumed  6250/100000 -> targets  9380/150000   entering stage 1
+stage 2: resumed  9380/150000 -> targets 12510/200000   entering stage 2
+```
+
+Both pass. Before the fixes, stage 2 aborted with `AssertionError: (9380, 150000)`.
 
 ## Smoke test — it works
 
@@ -73,12 +106,14 @@ single uncontended forward costs the same on both (1.75 s CLEVR, 1.74 s Tetromin
 CLEVR seed 0's clean full run recorded **10.66 s/update** (66,602 s / 6,250) where the recent
 contended runs read 29–33 s/update.
 
-| | per dataset | both | cost |
+| | per stage | both stages | cost |
 |---|---|---|---|
-| frontier, uncontended basis (10.66 s/upd) | 9.3 h | 18.5 h sequential | $0 |
-| frontier, current load (29.4 s/upd, measured) | 25.6 h | 25.6 h in parallel | $0 |
-| **RTX 4090, 1 GPU sequential** | **5–9 h** | **9–18.5 h** | **$3–8** |
-| **RTX 4090, 2 GPUs parallel** | 5–9 h | **5–9 h wall clock** | **$3–8** |
+| frontier, uncontended basis (10.66 s/upd) | 9.3 h | 18.5 h | $0 |
+| frontier, current load (29.4 s/upd, measured) | 25.6 h | 51 h | $0 |
+| **RTX 4090, one GPU** | **5–9 h** | **10–18 h** | **$4–8** |
+
+**One GPU is enough** — the stages are sequential by construction, so a second GPU would sit
+idle.
 
 The case for renting is the **dedicated machine**, not raw speed: frontier's 2.8× spread is
 contention, which a rental removes, and the 4090's higher clock helps on top because this
@@ -90,11 +125,25 @@ about a minute.
 Upload is ~760 MB (inputs 250 MB + core 513 MB). **Test the link with ≥1 GB first**: a host that
 read 200 MB at 14.5 MB/s sustained only 1.9 MB/s.
 
+## Evaluation design — the question a cumulative core raises
+
+A core that has seen all three datasets has to be scored on all three, because the real question
+is whether continuing cost it what it already had:
+
+| after stage | score | the number to watch |
+|---|---|---|
+| 1 (CLEVR + Tetrominoes) | Tetrominoes **and CLEVR** | does CLEVR's 0.8421 survive? |
+| 2 (+ Multi-dSprites) | all three | do 0.8421 and stage 1's Tetrominoes figure both survive? |
+
+The intermediate checkpoint is pulled down between stages, so each can be scored at that point.
+About 30 min per dataset with `score_any.py` and the existing cache path.
+
 ## Before this lands
 
-It modifies `vendor/full_benchmark/{engine,data}.py`, which is the peer's bundle. The change is
-additive and backed up, but it should be agreed before pushing, and the peer should see
-`code.patch`.
+It modifies `vendor/full_benchmark/{engine,data}.py` in **three** places, which is the peer's
+bundle. Every change is additive or scoped to `PRESET=='cont5000'`; no existing preset's
+behaviour moves, and `*.py.bak` holds the originals on the server. It should be agreed before
+pushing, and the peer should see `code.patch`.
 
 ## Reproduce
 
