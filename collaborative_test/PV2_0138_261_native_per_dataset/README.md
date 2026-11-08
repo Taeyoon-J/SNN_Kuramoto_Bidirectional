@@ -118,6 +118,36 @@ gives features differing by **0.86 relative** from the CLEVR core's, different g
    **1,000** validation and 1,000 evaluation ids available; extending both columns to the full
    1,000 is a follow-up, and must be done for *both* or neither.
 
+## RESULT — Tetrominoes, core only, no confounds left
+
+Grid 64, 10,000 × 10 on both sides, same 320 evaluation images, same `evaluate_patch_masks`.
+The only difference is what the core trained on.
+
+| dataset | core trained on | fg_ari | foreground_iou | matched_object_iou |
+|---|---|---|---|---|
+| Tetrominoes | **CLEVR**, frozen, never saw this dataset | **0.8580** | **0.7885** | **0.8173** |
+| Tetrominoes | **itself**, 10,000 × 10 | 0.5298 | 0.6179 | 0.4417 |
+| | difference | **+0.3282** | **+0.1706** | **+0.3756** |
+
+**The CLEVR-trained core wins by 0.33 FG-ARI** — more than **8×** the measured seed standard
+deviation on this dataset (0.0396, PV2_0144), so this is not seed noise.
+
+And more data at a finer grid made the target-trained core **worse**, not better:
+
+| comparison | CLEVR core | target-trained | gap |
+|---|---|---|---|
+| grid 32, 3,500 × 10 (PV2_0144) | 0.8580 | 0.7730 ± 0.0396 | +0.085 |
+| **grid 64, 10,000 × 10 (this run)** | **0.8580** | **0.5298** | **+0.328** |
+
+**The symptom is over-segmentation.** The target-trained core produces **135.8 regions per image
+on average** (median 129, max 336) on scenes with roughly three objects; the CLEVR core gives
+**15** on the same image. That matches PV2_0142 exactly: `phase_primary` never descended on this
+dataset, and a core that never organised its phase structure fragments instead of grouping.
+
+Scored from the engine's own saved predictions with `score_any.py`, so no caching was needed for
+this row. Both sides are **seed 0**, and this is **core only** — the head rows follow when
+`chain261.sh` finishes.
+
 ## The comparison this produces
 
 | dataset | core trained on | fg_ari | fg_iou | obj_iou |
