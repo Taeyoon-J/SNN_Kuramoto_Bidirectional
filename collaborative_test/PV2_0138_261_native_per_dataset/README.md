@@ -118,7 +118,20 @@ gives features differing by **0.86 relative** from the CLEVR core's, different g
    **1,000** validation and 1,000 evaluation ids available; extending both columns to the full
    1,000 is a follow-up, and must be done for *both* or neither.
 
-## RESULT — both datasets, core only, no confounds left
+> ## CORRECTION — the first version of this comparison was confounded
+>
+> The target-trained rows were first taken from the **engine's own** saved predictions, which
+> use `min_group_size = 8 if grid==32 else 32` (`vendor/full_benchmark/evaluation.py:25`), while
+> the CLEVR-core rows came from `cache_any.py --min-group 8`. Six other readout parameters
+> matched (`foreground_threshold` 0.5, `synchrony_threshold` 0.5, `settle` 512, `background`
+> largest_component, `affinity_mode` spike, `spatial_grid_size` 64) but **`min_group_size` did
+> not**, and that parameter matters — an earlier sweep moved all three CLEVR metrics with it.
+>
+> So "the only difference is what the core trained on" was **false**: there were two differences.
+> The rows below are the corrected ones, re-cached at `min_group 8` on both sides, with the 320
+> image ids verified identical. **The gap widened** rather than closed.
+
+## RESULT — both datasets, core only, confounds removed and verified
 
 Grid 64, 10,000 × 10 on every row, the same 320 evaluation images, the same
 `evaluate_patch_masks`. The only difference between a pair of rows is **what the core trained
@@ -130,8 +143,60 @@ on**.
 | Tetrominoes | itself | 0.5298 | 0.6179 | 0.4417 |
 | | **difference** | **+0.3282** | +0.1706 | +0.3756 |
 | **Multi-dSprites** | **CLEVR**, frozen, never saw it | **0.6974** | **0.8177** | **0.7628** |
-| Multi-dSprites | itself | 0.1758 | 0.0309 | **0.0019** |
-| | **difference** | **+0.5216** | **+0.7868** | **+0.7609** |
+| Multi-dSprites | itself | **0.1201** | **0.0597** | **0.0050** |
+| | **difference** | **+0.5773** | **+0.7580** | **+0.7578** |
+
+Multi-dSprites regions per image: **7.6** from the CLEVR core against **413.6** from the
+target-trained one, on a truth of **2.5 objects**. At `min_group 32` the target-trained core
+read 0.1758 / 0.0309 / 0.0019 with 282.8 regions; matching the parameter to 8 moved it to
+0.1201 / 0.0597 / 0.0050 with 413.6 regions, so the correction **widened** the gap.
+
+### What is controlled, and the one thing that is not
+
+| | matched |
+|---|---|
+| core architecture and variant (253) | yes |
+| budget (10,000 × 10, 6,250 updates) | yes |
+| grid (64) | yes |
+| all seven readout parameters, `min_group` included | yes |
+| the 320 evaluation image ids | yes, verified equal |
+| evaluation function | yes |
+| **training data** | **no — the variable under test** |
+| random initialisation (each run draws its own encoder) | **no** |
+
+Initialisation is the remaining uncontrolled difference. The measured seed standard deviation on
+Multi-dSprites is **0.0826** (PV2_0144); the gap is **0.5773**, seven times that. On Tetrominoes
+the std is 0.0396 against a gap of 0.33, eight times. Initialisation does not account for either.
+
+### Corroborated by records written before this run
+
+These numbers are not a surprise; they reproduce what the project already held.
+`BENCHMARK_PLAN_v3.md` had recorded Multi-dSprites as the standing weak point at **0.2817** in
+our own pipeline and **0.2789 ± 0.0813** over three seeds in the peer engine at grid 32 *trained
+on Multi-dSprites*, while **a CLEVR-only grid-64 core reached 0.6893** on the same pixel protocol
+over 1,000 TEST images. Our new 0.6974 (320 images) and 0.1201 sit in those two families. PLAN_v3
+item 3 was literally "train the core on Multi-dSprites at grid 64 … this separates grid from
+training data" — and the answer is that **the grid was never the problem; training on
+Multi-dSprites is**.
+
+For Multi-dSprites, `Dataset.labels(ids,'test')` and `Dataset.pixels(ids)` are **identical**
+(both 64×64), verified — so for this dataset the patch protocol *is* the pixel protocol and the
+ceiling of 1.0 is real, making these rows directly comparable with published pixel numbers.
+
+### The peer's higher Multi-dSprites numbers are supervised
+
+`PV2_0128` already carries a correction on this, issued after the peer clarified: none of their
+Multi-dSprites rows is unsupervised.
+
+| Multi-dSprites, pixel FG-ARI | supervision | |
+|---|---|---|
+| **ours, CLEVR-trained, zero-shot** | **unsupervised** | **0.6974** |
+| peer zero-shot, TEST1000 | CLEVR **mask-supervised** source | 0.6833 |
+| peer zero-shot, TEST360 | same | 0.6979 |
+| peer adapted, TEST1000 | **+ target-mask supervision** | 0.7701 |
+
+So our unsupervised CLEVR core lands on the peer's **mask-supervised** zero-shot numbers. That is
+the comparison worth making, and it is only available because the protocol coincides here.
 
 The Multi-dSprites core trained on its own data essentially failed — matched-object IoU
 **0.0019**, with **282.8 regions per image** against a truth of **2.5 objects**. And
