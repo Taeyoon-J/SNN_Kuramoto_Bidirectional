@@ -140,8 +140,12 @@ on**.
 | dataset | core trained on | fg_ari | foreground_iou | matched_object_iou |
 |---|---|---|---|---|
 | **Tetrominoes** | **CLEVR**, frozen, never saw it | **0.8580** | **0.7885** | **0.8173** |
-| Tetrominoes | itself | 0.5298 | 0.6179 | 0.4417 |
-| | **difference** | **+0.3282** | +0.1706 | +0.3756 |
+| Tetrominoes | itself | **0.5448** | **0.6217** | **0.4434** |
+| | **difference** | **+0.3132** | +0.1668 | +0.3739 |
+
+Tetrominoes regions per image: **22.1** from the CLEVR core against **168.5** from the
+target-trained one, truth **3.0 objects**. Matching `min_group` to 8 barely moved this row
+(0.5298 → 0.5448); on Multi-dSprites it moved a lot, and in both cases the conclusion held.
 | **Multi-dSprites** | **CLEVR**, frozen, never saw it | **0.6974** | **0.8177** | **0.7628** |
 | Multi-dSprites | itself | **0.1201** | **0.0597** | **0.0050** |
 | | **difference** | **+0.5773** | **+0.7580** | **+0.7578** |
@@ -209,6 +213,39 @@ On both datasets, more data at a finer grid made the target-trained core **worse
 |---|---|---|
 | Tetrominoes | 0.7730 ± 0.0396 | **0.5298** |
 | Multi-dSprites | 0.2964 ± 0.0826 | **0.1758** |
+
+### With the head on — and the head matters here, unlike on a good core
+
+The head was refit on the target-trained core's **own** activity (it cannot be moved between
+cores; a head reads the core's features, and the two differ by 0.86 relative on the same image).
+
+| Tetrominoes, target-trained core | fg_ari | foreground_iou | matched_object_iou | patches changed |
+|---|---|---|---|---|
+| core alone | 0.5448 | 0.6217 | 0.4434 | |
+| **+ head, rule B′** (`local_rgb`, epoch 0) | **0.5578** | **0.6995** | **0.6184** | 16.9% |
+| | +0.0130 | **+0.0778** | **+0.1750** | |
+| + head, fixed label-free recipe | 0.5293 | **0.7668** | 0.5878 | 8.9% |
+| | **−0.0155** | **+0.1451** | +0.1443 | |
+
+This is the opposite of what the head does on the CLEVR core, where it changes 0.3–2% of patches
+and its gains sit inside the noise. On a **weak** core it changes **16.9%** and lifts
+matched-object IoU by **+0.1750** — it is partially repairing what the core fragmented.
+
+It also exercised rule B′ properly. The label-free recipe trades **−0.0155 FG-ARI for +0.1451
+Foreground IoU** — the opposite direction from the stated preference — so B′ declined it and took
+`local_rgb` at epoch 0, which raises all three. That is the guard doing its job.
+
+**But the head cannot close the gap.** Best head on the target-trained core, against the CLEVR
+core alone:
+
+| Tetrominoes | fg_ari | foreground_iou | matched_object_iou |
+|---|---|---|---|
+| CLEVR core, **no head** | **0.8580** | **0.7885** | **0.8173** |
+| target-trained core + best head | 0.5578 | 0.6995 | 0.6184 |
+| | **+0.3002** | +0.0890 | +0.1989 |
+
+A head recovers some of a broken core's partition and nowhere near all of it. The
+generalisation lives in the core, and this is the sharpest evidence for that yet.
 
 ### `positive_spike` descent predicts everything, now properly controlled
 
