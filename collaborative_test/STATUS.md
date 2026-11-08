@@ -29,7 +29,8 @@ bundle are on `patch_final`. Contract **v2**; split v1.
 >
 > **Still unapproved and goal-blocking:** our own CLEVR seeds 1 and 2 (rented ~$20, or free on
 > frontier but sequential); Slot Attention at its published 500k-step recipe (`PV2_0139`, code
-> written, unrun); whether to push the `cont5000` vendored-engine change (local commit `f7118fb`).
+> written, unrun). The `cont5000` vendored-engine change is already on `origin/patch_v2` as
+> `f7118fb`; nothing is waiting to be pushed.
 >
 
 > ## RESUME POINT, 2026-11-05 (later) — 261 cores training natively per dataset
