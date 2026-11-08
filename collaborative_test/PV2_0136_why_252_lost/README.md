@@ -147,7 +147,7 @@ Multi-dSprites' FG-ARI, not all nine:
 | dataset | 253 | + head, no labels from this dataset | delta |
 |---|---|---|---|
 | CLEVR fixed320 | 0.8421 / 0.7545 / 0.6410 | **0.8468 / 0.7574 / 0.6456** | +0.0047 / +0.0029 / +0.0046 |
-| Tetrominoes test | 0.8580 / 0.7885 / 0.8173 | **0.8586 / 0.7895 / 0.8187** | +0.0006 / +0.0010 / +0.0015 |
+| Tetrominoes test | 0.8580 / 0.7885 / 0.8173 | 0.8586 / 0.7895 / 0.8187 | **withdrawn (PV2_0146)** — head seed 0 only; over 5 head seeds −0.0020 / +0.0003 / −0.0008 |
 | Multi-dSprites test | 0.6974 / 0.8177 / 0.7628 | **0.7041 / 0.8213 / 0.7660** | +0.0067 / +0.0036 / +0.0032 |
 
 The recipe was chosen on the three **validation** splits, which the contract permits; no

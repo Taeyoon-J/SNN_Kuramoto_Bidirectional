@@ -33,7 +33,7 @@ new dataset using **only its unlabelled images**, and improves all nine metric c
 | dataset | 253 | + head, label-free | delta |
 |---|---|---|---|
 | CLEVR | 0.8421 / 0.7545 / 0.6410 | 0.8468 / 0.7574 / 0.6456 | +0.0047 / +0.0029 / +0.0046 |
-| Tetrominoes | 0.8580 / 0.7885 / 0.8173 | 0.8586 / 0.7895 / 0.8187 | +0.0006 / +0.0010 / +0.0015 |
+| Tetrominoes | 0.8580 / 0.7885 / 0.8173 | 0.8586 / 0.7895 / 0.8187 | ~~+0.0006 / +0.0010 / +0.0015~~ **withdrawn, PV2_0146: over 5 head seeds the gain is −0.0020 / +0.0003 / −0.0008, inside the noise** |
 | Multi-dSprites | 0.6974 / 0.8177 / 0.7628 | 0.7041 / 0.8213 / 0.7660 | +0.0067 / +0.0036 / +0.0032 |
 
 **This is the configuration the benchmark should report** (but see `PV2_0141`: only 4 of
