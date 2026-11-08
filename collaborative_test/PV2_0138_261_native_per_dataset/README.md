@@ -118,7 +118,50 @@ gives features differing by **0.86 relative** from the CLEVR core's, different g
    **1,000** validation and 1,000 evaluation ids available; extending both columns to the full
    1,000 is a follow-up, and must be done for *both* or neither.
 
-## RESULT — Tetrominoes, core only, no confounds left
+## RESULT — both datasets, core only, no confounds left
+
+Grid 64, 10,000 × 10 on every row, the same 320 evaluation images, the same
+`evaluate_patch_masks`. The only difference between a pair of rows is **what the core trained
+on**.
+
+| dataset | core trained on | fg_ari | foreground_iou | matched_object_iou |
+|---|---|---|---|---|
+| **Tetrominoes** | **CLEVR**, frozen, never saw it | **0.8580** | **0.7885** | **0.8173** |
+| Tetrominoes | itself | 0.5298 | 0.6179 | 0.4417 |
+| | **difference** | **+0.3282** | +0.1706 | +0.3756 |
+| **Multi-dSprites** | **CLEVR**, frozen, never saw it | **0.6974** | **0.8177** | **0.7628** |
+| Multi-dSprites | itself | 0.1758 | 0.0309 | **0.0019** |
+| | **difference** | **+0.5216** | **+0.7868** | **+0.7609** |
+
+The Multi-dSprites core trained on its own data essentially failed — matched-object IoU
+**0.0019**, with **282.8 regions per image** against a truth of **2.5 objects**. And
+Multi-dSprites is **exactly 1:1** at grid 64 (64×64 pixels, 4,096 nodes), so oversampling cannot
+excuse it.
+
+On both datasets, more data at a finer grid made the target-trained core **worse**:
+
+| | grid 32, 3,500 × 10 | grid 64, 10,000 × 10 |
+|---|---|---|
+| Tetrominoes | 0.7730 ± 0.0396 | **0.5298** |
+| Multi-dSprites | 0.2964 ± 0.0826 | **0.1758** |
+
+### `positive_spike` descent predicts everything, now properly controlled
+
+PV2_0143 claimed this and it was withdrawn for mixing grids. All three cores below are grid 64
+at 10,000 × 10, each scored on its own dataset under the patch protocol, so the comparison is
+finally like-for-like:
+
+| core trained on | `positive_spike` | score on its own data |
+|---|---|---|
+| CLEVR | **−83.2%** | **0.8421** |
+| Tetrominoes | −33.3% | 0.5298 |
+| Multi-dSprites | **−0.1%** | 0.1758 |
+
+Strictly monotone. **How far the spike term descends decides how well the core works** — and it
+is the term whose gradient path reaches the spikes the score is read from. `phase_primary`, which
+is flat on both non-CLEVR datasets, predicts nothing.
+
+## Tetrominoes detail
 
 Grid 64, 10,000 × 10 on both sides, same 320 evaluation images, same `evaluate_patch_masks`.
 The only difference is what the core trained on.
