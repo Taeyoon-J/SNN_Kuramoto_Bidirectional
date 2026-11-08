@@ -265,9 +265,16 @@ over the candidate axis; the arithmetic is identical, only peak memory differs.
 
 | Multi-dSprites, target-trained core | fg_ari | foreground_iou | matched_object_iou | patches changed |
 |---|---|---|---|---|
-| core alone | 0.1201 | 0.0597 | 0.0050 | |
-| + head, fixed label-free recipe | **0.1631** | **0.2002** | **0.1255** | 1.88% |
-| | **+0.0429** | **+0.1404** | **+0.1205** | |
+| core alone | 0.1201 | 0.0597 | **0.0050** | |
+| + head, fixed label-free recipe | 0.1631 | 0.2002 | 0.1255 | 1.88% |
+| **+ head, rule B′** (`local_rgb`, **epoch 0**) | **0.3269** | **0.2844** | **0.5219** | 23.8% |
+| | **+0.2068** | **+0.2247** | **+0.5169** | |
+
+**Matched-object IoU goes from 0.0050 to 0.5219 — a factor of 104.** And B′ selected **epoch
+0**, the head before any update, so this is not learned weights: it is the head's *architecture*
+— a background candidate plus locality-radius-constrained reassignment, which is change A —
+recovering a partition the core had shattered into 415 pieces. The same structure is worth
+almost nothing on a core that already groups well (0.3–2% of patches on the CLEVR core).
 
 ### The complete table — core and head, both datasets
 
@@ -277,13 +284,22 @@ over the candidate axis; the arithmetic is identical, only peak memory differs.
 | | target-trained core | 0.5448 | 0.6217 | 0.4434 |
 | | target-trained core + head | 0.5578 | 0.6995 | 0.6184 |
 | **Multi-dSprites** | **CLEVR core, no head** | **0.6974** | **0.8177** | **0.7628** |
+| | CLEVR core + head (B′) | **0.7041** | **0.8213** | **0.7660** |
 | | target-trained core | 0.1201 | 0.0597 | 0.0050 |
-| | target-trained core + head | 0.1631 | 0.2002 | 0.1255 |
+| | target-trained core + head (B′) | 0.3269 | 0.2844 | 0.5219 |
 
-The head repairs a lot of a broken core — on Multi-dSprites +0.1404 Foreground IoU and +0.1205
-matched-object IoU — and still finishes **0.5343 FG-ARI behind the CLEVR core carrying no head at
-all**. On Tetrominoes the shortfall is 0.3002. **A head cannot substitute for a core that learned
-to group.**
+Best configuration against best configuration, both sides with their own B′ head:
+
+| dataset | CLEVR core + head | target-trained core + head | CLEVR advantage |
+|---|---|---|---|
+| Tetrominoes | 0.8580 (head withdrawn, PV2_0146) | 0.5578 | **+0.3002** |
+| Multi-dSprites | 0.7041 | 0.3269 | **+0.3772** |
+
+The head repairs a great deal of a broken core — on Multi-dSprites matched-object IoU rises
+**104×**, from 0.0050 to 0.5219 — and the CLEVR core still finishes **0.30–0.38 FG-ARI ahead**.
+**A head cannot substitute for a core that learned to group**, and the amount it repairs is a
+measure of how broken the core was: 23.8% of patches moved on the fragmented core against 0.3–2%
+on the CLEVR one.
 
 ### `positive_spike` descent predicts everything, now properly controlled
 

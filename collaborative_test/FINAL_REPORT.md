@@ -50,11 +50,18 @@ initialisation differ.
 | | **CLEVR advantage** | **+0.3002** | +0.0890 | +0.1989 | | |
 | **Multi-dSprites** | **CLEVR** | **0.6974** | **0.8177** | **0.7628** | 7.6 | 2.5 |
 | | itself | 0.1201 | 0.0597 | 0.0050 | 413.6 | |
-| | itself + head | 0.1631 | 0.2002 | 0.1255 | | |
-| | **CLEVR advantage** | **+0.5343** | +0.6175 | +0.6373 | | |
+| | itself + head (B′, epoch 0) | 0.3269 | 0.2844 | 0.5219 | | |
+| | **CLEVR advantage** (both with their own head) | **+0.3772** | +0.5369 | +0.2441 | | |
 
-Against the best configuration on each side, the CLEVR core with **no head** beats the
-target-trained core **with** its head by **0.3002** and **0.5343** FG-ARI.
+Best configuration against best configuration, each side carrying its own B′ head, the CLEVR
+core still leads by **+0.3002** (Tetrominoes) and **+0.3772** (Multi-dSprites) FG-ARI.
+
+**What the head repairs is a measure of how broken the core was.** On the fragmented
+Multi-dSprites core it lifts matched-object IoU **104×** (0.0050 → 0.5219) and moves **23.8%** of
+patches; on the CLEVR core the same structure moves 0.3–2% and gains hundredths. B′ selected
+**epoch 0** there — the head before any update — so the repair comes from the architecture (a
+background candidate plus locality-constrained reassignment, change A), not from learned
+weights.
 
 **Confidence.** All four rows are seed 0, so there is no error bar on them directly. The nearest
 measured core-seed standard deviations are **0.0396** (Tetrominoes) and **0.0826**
