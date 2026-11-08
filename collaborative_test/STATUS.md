@@ -1,7 +1,36 @@
 # STATUS
 
-Updated 2026-11-04. Branch `patch_v2`; the shipped version, `benchmark.md` and the script
+Updated 2026-11-08. Branch `patch_v2`; the shipped version, `benchmark.md` and the script
 bundle are on `patch_final`. Contract **v2**; split v1.
+
+> ## RESUME POINT, 2026-11-08 — AKOrN measured on our budget; two cont5000 branches running
+>
+> **`PV2_0150` is done and is the strongest baseline row we have.** AKOrN (attn) trained on the
+> same 10,000 CLEVR images at 100,000 exposures, evaluated on all three reserved splits by our
+> evaluation function: **0.4688 / 0.5141 / 0.4249 FG-ARI** on CLEVR / Tetrominoes /
+> Multi-dSprites, against our **0.8468 / 0.8580 / 0.6974**. Nine of nine cells ours. Its own
+> metric agrees with our scorer to ≤0.0011. Trained on Multi-dSprites itself it reaches only
+> 0.4511, so the margin is not an out-of-domain artefact.
+>
+> **The caveat to carry:** 100,000 exposures is **1/210** of AKOrN's published recipe (300
+> epochs × ~70,000 images). This is a data-efficiency result, as `PV2_0149` is for Slot
+> Attention at 1/320. Protocol B for AKOrN is unrun; it is cheap on our 10,000 (~3.5 h) and
+> ~24 h on the full set. **AKOrN seeds 1 and 2 cost 7 min each and should be run before the
+> table is quoted.**
+>
+> **RUNNING NOW — two independent cont5000 branches** from the CLEVR 253 core (5,000 × 10 each,
+> parallel, not chained):
+> - Tetrominoes, on the rented 4090;
+> - Multi-dSprites, frontier **GPU 2** (28.7 s/update; 2.5× slower than the 4090 on an
+>   uncontended box, cause unknown).
+>
+> When each finishes, score it on **its own dataset and on CLEVR** — the question is whether
+> 0.8421 on CLEVR survives continued training elsewhere.
+>
+> **Still unapproved and goal-blocking:** our own CLEVR seeds 1 and 2 (rented ~$20, or free on
+> frontier but sequential); Slot Attention at its published 500k-step recipe (`PV2_0139`, code
+> written, unrun); whether to push the `cont5000` vendored-engine change (local commit `f7118fb`).
+>
 
 > ## RESUME POINT, 2026-11-05 (later) — 261 cores training natively per dataset
 >

@@ -1,0 +1,107 @@
+{
+ "test_id": "PV2_0150",
+ "status": "completed",
+ "date": "2026-11-08",
+ "branch": "patch_v2",
+ "base_commit": "17d0fde931ff4da908bfa904bcf91aac52ea9651",
+ "parents": ["PV2_0149", "PV2_0137", "PV2_0138"],
+ "ported_from_peer": null,
+ "hypothesis": "A baseline trained on the target dataset does not test our generalisation claim. Train AKOrN on CLEVR alone, on our exact exposure budget, and evaluate it on all three reserved splits the way our frozen core is evaluated.",
+ "changed_variable": "which dataset the baseline trains on (CLEVR, not the target), holding exposures, train ids, evaluation ids, grid and evaluation function fixed",
+ "success_criterion": "our CLEVR-trained core beats the CLEVR-trained AKOrN on all three metrics on all three datasets",
+ "outcome": "met at seed 0: 9 of 9 cells",
+
+ "data": {
+  "split_manifest_version": "fixed320 reserved evaluation, not an independent original-paper TEST split",
+  "evaluation_contract_version": "collaborative_test/evaluation_contract.md at 17d0fde",
+  "grid": 64,
+  "protocol": "patch contract: truth quantised to the grid, predictions reduced to the grid by patch majority vote, never expanded to pixels",
+  "train_ids": "the identical 10,000 drawn by np.random.RandomState(2553500).choice(Dataset.train, 10000, replace=False) that the 253 core trained on",
+  "validation_ids": "Dataset.validation (clevr 320, tetrominoes 1000, multi_dsprites 1000)",
+  "evaluation_ids": "np.asarray(Dataset.test)[:320] for every dataset",
+  "truth_tensor": "Dataset.labels(ids, split) at grid 64, np.repeat-ed x2 to 128 inside the npz; NOT Dataset.pixels / the raw h5 mask",
+  "npz_sha256": {
+   "data/clevr_with_masks/clevr_train.npz": "31ee9b748bd6d7f587212fc849e0d88d76081898b5036072b1b88601dfe6d67a",
+   "data/clevr_with_masks/clevr_eval320.npz": "2aab681011e8b3bf75bf62eccb40033947fce3be19b042202334cb9b280fcc58",
+   "data/ours/tetrominoes_eval320_128.npz": "0e2e0f549a6da8816f4ed644a336ae434a436a5fa4c92f18eb006a216a8201d3",
+   "data/ours/dsprites_eval320_128.npz": "7e393e15702e015a80a974cbbb2ae54d4839563571a30981307cadaecbddce1b"
+  }
+ },
+
+ "baseline": {
+  "repo": "https://github.com/autonomousvision/akorn",
+  "commit": "eabbe2728c5b83836ce44f6d780b7cc37eea2a31",
+  "commit_date": "2025-10-22",
+  "clone_path": "/work/USERS/tkim1/baselines/_clone/akorn",
+  "model": "AKOrN (attn)",
+  "seed": 0,
+  "configs": {
+   "clevr": "--model=akorn --J=attn --L=1 --ch=256 --psize=8 --c_norm=none --epochs=10",
+   "multi_dsprites": "--model=akorn --J=attn --L=1 --ch=128 --psize=4 --c_norm=none --epochs=10"
+  },
+  "published_config_deviation": "epochs only: CLEVR 300 -> 10, dSprites 50 -> 10, to match 100,000 exposures",
+  "batch": 250,
+  "batches_per_epoch": 40,
+  "exposures": 100000,
+  "published_exposures_clevr": "~21,000,000 (300 epochs x ~70,000 train images) = 210x this run",
+  "eval_cluster_count": "fixed per dataset by eval_obj.py: 4 tetrominoes, 7 dsprites, 11 clevr -- a dataset-level constant, not per-image truth",
+  "checkpoint_sha256": {
+   "runs/ours_clevr_akorn_attn/ema_model.pth": "638dd4e0dc428bb11dc55b153b9efee5b22e5a953af247eb84d3c86fe1178d10",
+   "runs/ours_dsprites_akorn_attn/ema_model.pth": "5b1dc9e308e4accd5ca13c85d41c95ffb1067f2d821d594ce67f9610699d62b8"
+  },
+  "logs": [
+   "/work/USERS/tkim1/baselines/_clone/akorn/akorn_clevr.log",
+   "/work/USERS/tkim1/baselines/_clone/akorn/akorn_dsprites.log"
+  ],
+  "loss_curve_clevr": [6.232, null, null, null, null, 5.597, 5.509, 5.424, 5.222, 5.116],
+  "loss_curve_dsprites": [5.306, 4.530, 4.295, 4.231, 4.188, null, null, 3.977, 3.955, 3.900]
+ },
+
+ "ours_for_comparison": {
+  "core": "/work/USERS/tkim1/share/native64_core_253/{resume.pt,initial.pt}",
+  "core_sha256_prefix": "e56b1a4219ab606b35952dab99ce0623",
+  "core_updates": 6250,
+  "core_exposures": 100032,
+  "core_trained_on": "clevr 10,000 x 10, grid 64",
+  "head_clevr": "/work/USERS/tkim1/sw0255b/fit5/recipe2_clevr.pt",
+  "tetrominoes_and_multi_dsprites_rows": "core only, no head (PV2_0137)",
+  "seed": 0
+ },
+
+ "environment": {
+  "host": "frontier.med.unc.edu",
+  "gpu": "NVIDIA TITAN RTX (index 3, uuid GPU-6801a3dc-cde3-86c6-d665-6d9ecf063a1e)",
+  "python": "/work/USERS/tkim1/envs/miniforge3/envs/snn/bin/python (3.10)",
+  "torch": "2.13.0+cu130",
+  "cuda": "13.0",
+  "added_packages": ["scikit-learn 1.7.2", "tensorboard"],
+  "wall_clock": {"clevr_train": "~7 min", "dsprites_train": "~3.5 min", "all_six_evals": "~2 min"}
+ },
+
+ "code": {
+  "new_files": [
+   "benchmark_codes/bg_any.py -- background-rule selection on validation for any hard-partition baseline, same four rules and same selection as sa_bg.py",
+   "benchmark_codes/to_grid64.py -- patch majority vote reducing a finer-than-grid partition to the grid",
+   "baselines/akorn_clevr_data.py -- our CLEVR splits in AKOrN npz format",
+   "baselines/akorn_data128.py -- tetrominoes / multi_dsprites eval frames at 128 with the truth lifted x2",
+   "baselines/akorn_val_data.py -- the grid-64-label variants used for the dSprites-trained row"
+  ],
+  "modified_in_clone": [
+   "eval_dump.py -- a copy of eval_obj.py with shuffle=False in the generic eval loader and a prediction dump appended; eval_obj.py itself untouched"
+  ],
+  "unmodified": ["train_obj.py", "eval_obj.py", "source/**"]
+ },
+
+ "artifacts_note": "checkpoints, npz data and logs stay out of git; see artifacts.json",
+ "limitations": [
+  "seed 0 on both sides; the contract judges 3-seed means",
+  "AKOrN at 1/210 of its published budget is not the model its authors report (published 3-seed means: tetrominoes 88.6+-1.7, dsprites 78.3+-1.3, clevr 91.0+-0.5, on the pixel protocol and the full official test splits)",
+  "AKOrN is given a fixed per-dataset cluster count our readout does not get",
+  "fixed320 is a reserved evaluation split, not an independent original-paper test split"
+ ],
+ "next": [
+  "AKOrN seeds 1 and 2 (7 min per CLEVR run) before this table is quoted",
+  "decide protocol B for AKOrN: 300 epochs on our 10,000 (~3.5 h) or on the full 70,000 (~24 h)",
+  "our own CLEVR seeds 1 and 2 remain the expensive unapproved item"
+ ]
+}

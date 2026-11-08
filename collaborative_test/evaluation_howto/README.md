@@ -102,6 +102,34 @@ for p in sorted(C.glob('[0-9]*.pt')):
 np.savez('core253_clevr_fixed320.npz', pred=np.stack(pred), ids=np.array(ids, dtype=np.int64))
 ```
 
+## Two helpers for scoring a baseline (`PV2_0150`)
+
+`score_any.py` assumes your prediction is already on the grid and already uses background id 0.
+A clustering baseline usually satisfies neither, so two scripts here close the gap, and both are
+part of the contract rather than conveniences:
+
+| script | what it does |
+|---|---|
+| `to_grid64.py` | reduces a partition **finer** than the grid to the grid by the contract's **patch majority vote**, ties to the smaller label id. The contract's `np.repeat` lift handles predictions coarser than the grid; this is the same rule in the other direction. Nothing is ever expanded to pixels. |
+| `bg_any.py` | picks which cluster id means background, out of the **same four rules** `sa_bg.py` fixed in advance (`global_largest`, `image_largest`, `border_largest`, `border_union`), **on validation**, FG-ARI first and Foreground IoU as the tie-break. It then reports the selected rule on `fixed320` and every rule as a labelled diagnostic. |
+
+`bg_any.py` is `sa_bg.py` generalised: any model whose readout is a hard partition with
+arbitrary ids, any dataset, predictions in an npz under `preds` and ids either in the same npz
+or in the source data npz via `--val-ids` / `--eval-ids`.
+
+```bash
+python to_grid64.py --inp preds128.npz --out preds_g64.npz
+python bg_any.py --val val_g64.npz --eval eval320_g64.npz \
+  --val-ids val_data.npz --eval-ids eval320_data.npz --dataset multi_dsprites \
+  --code <path>/benchmark_codes --config <path>/benchmark_codes/configs/frontier.json \
+  --run <path>/run --out bg.json
+```
+
+All four rules give the **identical FG-ARI** on every dataset we have tried, because they only
+relabel patches the truth calls background and FG-ARI excludes those. So the rule choice moves
+Foreground IoU and matched-object IoU only — which is exactly why it must not be made on the
+split you report.
+
 ## Where things are (frontier)
 
 ```

@@ -391,3 +391,38 @@ trained on — but it rests on four cells, not nine.
 It also reframes the seeds: they are not a formality for the contract. **Five of our nine
 headline cells are currently indistinguishable from noise**, and seeds are the only thing that
 can settle them.
+
+---
+
+## PV2_0150 — AKOrN trained on CLEVR, tested on all three, on our exact budget
+
+`PV2_0150_akorn_generalisation/` — completed, seed 0 on both sides.
+
+AKOrN is the comparison that matters: same mechanism family (Kuramoto), and published 3-seed
+means on exactly our three datasets that are **above ours** — Tetrominoes 88.6±1.7, dSprites
+78.3±1.3, CLEVR 91.0±0.5. `PV2_0149` had only trained it on the target dataset, which does not
+test our claim, because ours is a generalisation claim. So it was trained on the **same 10,000
+CLEVR images**, on the same 100,000 exposures, and evaluated on all three reserved splits the
+way our frozen core is.
+
+| dataset | ours (CLEVR-trained) | AKOrN (CLEVR-trained) |
+| --- | --- | --- |
+| CLEVR | **0.8468 / 0.7574 / 0.6456** | 0.4688 / 0.3061 / 0.2990 |
+| Tetrominoes, zero-shot | **0.8580 / 0.7885 / 0.8173** | 0.5141 / 0.7621 / 0.4491 |
+| Multi-dSprites, zero-shot | **0.6974 / 0.8177 / 0.7628** | 0.4249 / 0.6342 / 0.5567 |
+
+**Nine of nine cells go to us**, narrowest Tetrominoes FG-IoU (+0.0264), widest CLEVR
+matched-object IoU (+0.3466, +116%). AKOrN trained on Multi-dSprites *itself* reaches only
+0.4511 / 0.6898 / 0.6130 there — so the margin is not an out-of-domain artefact, and **which
+dataset AKOrN trained on barely matters** (0.4249 vs 0.4511).
+
+**The limit is the budget, and it is large.** AKOrN's recipe is 300 epochs over ~70,000 CLEVR
+images, about **21,000,000 exposures — 210× what we gave it**, the same shape of caveat
+`PV2_0149` carries for Slot Attention at 1/320. This licenses a **data-efficiency** claim, now
+against a much stronger baseline, and nothing about who wins at 21M exposures. Protocol B for
+AKOrN has not been run.
+
+Its own `eval_obj.py` FG-ARI and ours agree to ≤0.0011 on every cell, which is the check that
+the headline table is not an artefact of our scorer. Two new helpers make that possible and are
+now in `evaluation_howto/`: `to_grid64.py` (patch majority vote, for a prediction *finer* than
+the grid) and `bg_any.py` (`sa_bg.py` generalised to any dataset and any hard partition).
