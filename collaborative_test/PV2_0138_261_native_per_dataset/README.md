@@ -247,6 +247,44 @@ core alone:
 A head recovers some of a broken core's partition and nowhere near all of it. The
 generalisation lives in the core, and this is the sharpest evidence for that yet.
 
+### Multi-dSprites with the head — and the head fit was impossible until it was chunked
+
+The head fit **crashed with CUDA out-of-memory**, and the cause is the fragmentation itself:
+
+| core | candidates/image, mean | max | decoder tensor at the max |
+|---|---|---|---|
+| CLEVR core, same images | **20.0** | 38 | 0.02 GiB |
+| target-trained Multi-dSprites | **415.0** | **1,834** | 0.95 GiB, and backward keeps it |
+| target-trained Tetrominoes | 172.4 | 258 | 0.13 GiB (fit, barely) |
+
+`fit5` materialises `[candidates, 4096, 34]` in the decoder. At 1,834 candidates that plus the
+retained activations overflows 23 GiB. **The core is so fragmented that the readout is
+infeasible at standard settings** — which is a result in its own right, not a bug.
+`code/head_chunk.py` recovers a number by evaluating the decoder in gradient-checkpointed chunks
+over the candidate axis; the arithmetic is identical, only peak memory differs.
+
+| Multi-dSprites, target-trained core | fg_ari | foreground_iou | matched_object_iou | patches changed |
+|---|---|---|---|---|
+| core alone | 0.1201 | 0.0597 | 0.0050 | |
+| + head, fixed label-free recipe | **0.1631** | **0.2002** | **0.1255** | 1.88% |
+| | **+0.0429** | **+0.1404** | **+0.1205** | |
+
+### The complete table — core and head, both datasets
+
+| dataset | configuration | fg_ari | foreground_iou | matched_object_iou |
+|---|---|---|---|---|
+| **Tetrominoes** | **CLEVR core, no head** | **0.8580** | **0.7885** | **0.8173** |
+| | target-trained core | 0.5448 | 0.6217 | 0.4434 |
+| | target-trained core + head | 0.5578 | 0.6995 | 0.6184 |
+| **Multi-dSprites** | **CLEVR core, no head** | **0.6974** | **0.8177** | **0.7628** |
+| | target-trained core | 0.1201 | 0.0597 | 0.0050 |
+| | target-trained core + head | 0.1631 | 0.2002 | 0.1255 |
+
+The head repairs a lot of a broken core — on Multi-dSprites +0.1404 Foreground IoU and +0.1205
+matched-object IoU — and still finishes **0.5343 FG-ARI behind the CLEVR core carrying no head at
+all**. On Tetrominoes the shortfall is 0.3002. **A head cannot substitute for a core that learned
+to group.**
+
 ### `positive_spike` descent predicts everything, now properly controlled
 
 PV2_0143 claimed this and it was withdrawn for mixing grids. All three cores below are grid 64
