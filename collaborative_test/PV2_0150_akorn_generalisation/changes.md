@@ -45,15 +45,16 @@ vote, which is the contract's own patch rule, and the verification below bounds 
 **Verification** AKOrN's own FG-ARI (its `eval_obj.py`, its `calc_fgari_score`, at 128) against
 ours (after this reduction, at grid 64), on the same images:
 
-| cell | AKOrN's own | ours after reduction | diff |
+| cell (seed 0) | AKOrN's own | ours after reduction | diff |
 |---|---|---|---|
-| CLEVR | 0.4699 | 0.4688 | −0.0011 |
-| Tetrominoes | 0.5146 | 0.5141 | −0.0005 |
-| Multi-dSprites | 0.4259 | 0.4249 | −0.0010 |
-| Multi-dSprites, dSprites-trained (already grid 64, factor 1) | 0.4511 | 0.4511 | 0.0000 |
+| CLEVR | 0.6035 | 0.6027 | −0.0008 |
+| Tetrominoes | 0.5680 | 0.5676 | −0.0004 |
+| Multi-dSprites | 0.4353 | 0.4343 | −0.0010 |
+| Multi-dSprites, dSprites-trained (already grid 64, factor 1) | 0.4562 | 0.4562 | 0.0000 |
 
-The factor-1 row is exact, as it must be. The three factor-2 rows cost AKOrN ≤0.0011 FG-ARI,
-two orders of magnitude below the gaps in the headline table.
+The factor-1 row is exact, as it must be. The three factor-2 rows cost AKOrN ≤0.0010 FG-ARI,
+two orders of magnitude below the gaps in the headline table. The seed-1234 runs give the same
+picture (≤0.0011).
 
 ### `collaborative_test/PV2_0150_akorn_generalisation/akorn_{clevr_data,data128,val_data}.py`
 
@@ -96,6 +97,19 @@ clone shows only the new `eval_dump.py`, the new `data/` files and `runs/`.
 `scikit-learn 1.7.2` and `tensorboard` installed into `/work/USERS/tkim1/envs/miniforge3/envs/snn`.
 `source/evals/objs/fgari.py:2` imports `sklearn.metrics.adjusted_rand_score`; the env did not
 have it. Neither package is imported by any of our own code paths.
+
+## A correction, after the record was first pushed
+
+The first AKOrN runs were launched without `--seed`. `train_obj.py:75` defaults to
+`--seed 1234`, so the numbers in the first version of this record were that seed, not seed 0,
+even though they were labelled seed 0. Both AKOrN runs were retrained with `--seed=0` and
+rescored, and the record now carries seed 0 as the headline with the 1234 runs kept in
+`metrics.csv` as a second seed.
+
+It changed the numbers materially — CLEVR FG-ARI 0.4688 → 0.6027 — so it is worth stating what
+it did and did not change: **the conclusion is unchanged** (9 of 9 cells still ours), and the
+two seeds now bound AKOrN's own noise at this budget, which is the more useful thing to have.
+Our margin exceeds that spread on every dataset.
 
 ## Related test IDs
 

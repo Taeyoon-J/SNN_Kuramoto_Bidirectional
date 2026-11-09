@@ -3,29 +3,40 @@
 Updated 2026-11-08. Branch `patch_v2`; the shipped version, `benchmark.md` and the script
 bundle are on `patch_final`. Contract **v2**; split v1.
 
-> ## RESUME POINT, 2026-11-08 — AKOrN measured on our budget; two cont5000 branches running
+> ## RESUME POINT, 2026-11-08 — AKOrN measured at seed 0; Tetrominoes cont5000 finished
 >
-> **`PV2_0150` is done and is the strongest baseline row we have.** AKOrN (attn) trained on the
-> same 10,000 CLEVR images at 100,000 exposures, evaluated on all three reserved splits by our
-> evaluation function: **0.4688 / 0.5141 / 0.4249 FG-ARI** on CLEVR / Tetrominoes /
-> Multi-dSprites, against our **0.8468 / 0.8580 / 0.6974**. Nine of nine cells ours. Its own
-> metric agrees with our scorer to ≤0.0011. Trained on Multi-dSprites itself it reaches only
-> 0.4511, so the margin is not an out-of-domain artefact.
+> **`PV2_0150` is done and is the strongest baseline row we have.** AKOrN (attn), seed 0,
+> trained on the same 10,000 CLEVR images at 100,000 exposures, evaluated on all three reserved
+> splits by our evaluation function: **0.6027 / 0.5676 / 0.4343 FG-ARI** on CLEVR / Tetrominoes
+> / Multi-dSprites, against our **0.8468 / 0.8580 / 0.6974**. **Nine of nine cells ours.** Its
+> own metric agrees with our scorer to ≤0.0010. Trained on Multi-dSprites itself it reaches only
+> 0.4562, so the margin is not an out-of-domain artefact.
+>
+> A second AKOrN seed exists (its default 1234, from the first runs, launched before `--seed`
+> was passed — the first push of PV2_0150 mislabelled those as seed 0 and has been corrected).
+> It bounds AKOrN's noise: FG-ARI spread **0.1339 / 0.0535 / 0.0094**. Every margin above
+> exceeds its spread. Two AKOrN seeds against one of ours is still not a 3-seed comparison.
 >
 > **The caveat to carry:** 100,000 exposures is **1/210** of AKOrN's published recipe (300
 > epochs × ~70,000 images). This is a data-efficiency result, as `PV2_0149` is for Slot
 > Attention at 1/320. Protocol B for AKOrN is unrun; it is cheap on our 10,000 (~3.5 h) and
-> ~24 h on the full set. **AKOrN seeds 1 and 2 cost 7 min each and should be run before the
-> table is quoted.**
+> ~24 h on the full set.
 >
-> **RUNNING NOW — two independent cont5000 branches** from the CLEVR 253 core (5,000 × 10 each,
-> parallel, not chained):
-> - Tetrominoes, on the rented 4090;
-> - Multi-dSprites, frontier **GPU 2** (28.7 s/update; 2.5× slower than the 4090 on an
->   uncontended box, cause unknown).
+> **Tetrominoes cont5000 is FINISHED and the checkpoint is safe on frontier.** The rented 4090
+> completed 9,380 updates / 150,000 exposures (unique_TRAIN 5,000, cont5000_stage_added 3,130
+> updates / 50,000 images). It crashed *after* training, in `engine.py:229`'s post-training
+> `evaluate()` → `preflight`, because `targets_tetrominoes_grid32.pt` was never shipped to that
+> box; the training result is unaffected. Pulled to
+> `/work/USERS/tkim1/share/cont5000_tetrominoes/` and the hash verified end to end
+> (`ca8546b47432067a390c368f734996ace066923e1be5dd77b9dad8055c433ceb`). **The rented instance
+> can be destroyed.** `initial.pt` is in the same directory and is required to load it.
 >
-> When each finishes, score it on **its own dataset and on CLEVR** — the question is whether
-> 0.8421 on CLEVR survives continued training elsewhere.
+> **NOT YET SCORED:** that Tetrominoes checkpoint, on Tetrominoes **and on CLEVR** — the
+> question is whether 0.8421 on CLEVR survives continued training elsewhere. Cache it with
+> `cache_any.py --min-group 8 --job <that dir>`, then `fit5.py`, then score on the same 320 ids.
+>
+> **RUNNING NOW:** the Multi-dSprites cont5000 branch on frontier **GPU 2**, ~23 h left at
+> 28.7 s/update (2.5× slower than the 4090 on an uncontended box, cause unknown).
 >
 > **Still unapproved and goal-blocking:** our own CLEVR seeds 1 and 2 (rented ~$20, or free on
 > frontier but sequential); Slot Attention at its published 500k-step recipe (`PV2_0139`, code

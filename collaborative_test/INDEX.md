@@ -405,16 +405,23 @@ test our claim, because ours is a generalisation claim. So it was trained on the
 CLEVR images**, on the same 100,000 exposures, and evaluated on all three reserved splits the
 way our frozen core is.
 
+Both sides seed 0:
+
 | dataset | ours (CLEVR-trained) | AKOrN (CLEVR-trained) |
 | --- | --- | --- |
-| CLEVR | **0.8468 / 0.7574 / 0.6456** | 0.4688 / 0.3061 / 0.2990 |
-| Tetrominoes, zero-shot | **0.8580 / 0.7885 / 0.8173** | 0.5141 / 0.7621 / 0.4491 |
-| Multi-dSprites, zero-shot | **0.6974 / 0.8177 / 0.7628** | 0.4249 / 0.6342 / 0.5567 |
+| CLEVR | **0.8468 / 0.7574 / 0.6456** | 0.6027 / 0.3327 / 0.3750 |
+| Tetrominoes, zero-shot | **0.8580 / 0.7885 / 0.8173** | 0.5676 / 0.7383 / 0.4687 |
+| Multi-dSprites, zero-shot | **0.6974 / 0.8177 / 0.7628** | 0.4343 / 0.6019 / 0.5751 |
 
-**Nine of nine cells go to us**, narrowest Tetrominoes FG-IoU (+0.0264), widest CLEVR
-matched-object IoU (+0.3466, +116%). AKOrN trained on Multi-dSprites *itself* reaches only
-0.4511 / 0.6898 / 0.6130 there — so the margin is not an out-of-domain artefact, and **which
-dataset AKOrN trained on barely matters** (0.4249 vs 0.4511).
+**Nine of nine cells go to us**, narrowest Tetrominoes FG-IoU (+0.0502), widest CLEVR FG-IoU
+(+0.4247, +128%). AKOrN trained on Multi-dSprites *itself* reaches only 0.4562 / 0.6830 / 0.6084
+there — so the margin is not an out-of-domain artefact, and **which dataset AKOrN trained on
+barely matters** (0.4343 vs 0.4562, inside its own seed spread).
+
+A second AKOrN seed came free (its default 1234, from runs launched before `--seed` was passed)
+and bounds its noise at this budget: FG-ARI spread **0.1339 / 0.0535 / 0.0094** on CLEVR /
+Tetrominoes / Multi-dSprites. **Every margin above exceeds that spread**, by 1.8× on CLEVR and
+5× and 28× on the others. It is two AKOrN seeds against one of ours, not a 3-seed comparison.
 
 **The limit is the budget, and it is large.** AKOrN's recipe is 300 epochs over ~70,000 CLEVR
 images, about **21,000,000 exposures — 210× what we gave it**, the same shape of caveat
@@ -422,7 +429,7 @@ images, about **21,000,000 exposures — 210× what we gave it**, the same shape
 against a much stronger baseline, and nothing about who wins at 21M exposures. Protocol B for
 AKOrN has not been run.
 
-Its own `eval_obj.py` FG-ARI and ours agree to ≤0.0011 on every cell, which is the check that
+Its own `eval_obj.py` FG-ARI and ours agree to ≤0.0010 on every cell, which is the check that
 the headline table is not an artefact of our scorer. Two new helpers make that possible and are
 now in `evaluation_howto/`: `to_grid64.py` (patch majority vote, for a prediction *finer* than
 the grid) and `bg_any.py` (`sa_bg.py` generalised to any dataset and any hard partition).

@@ -1,9 +1,13 @@
-test,model,trained_on,evaluated_on,split,n,grid,protocol,seed,exposures,fg_ari,foreground_iou,matched_object_iou,bg_rule,own_fg_ari,own_mbo,note
-PV2_0150,akorn_attn,clevr,clevr,fixed320,320,64,patch,0,100000,0.4688,0.3061,0.2990,border_largest,0.4699,0.3456,published config ch=256 psize=8 / epochs 300->10
-PV2_0150,akorn_attn,clevr,tetrominoes,fixed320,320,64,patch,0,100000,0.5141,0.7621,0.4491,image_largest,0.5146,0.5342,zero-shot
-PV2_0150,akorn_attn,clevr,multi_dsprites,fixed320,320,64,patch,0,100000,0.4249,0.6342,0.5567,image_largest,0.4259,0.5712,zero-shot
-PV2_0150,akorn_attn,multi_dsprites,multi_dsprites,fixed320,320,64,patch,0,100000,0.4511,0.6898,0.6130,image_largest,0.4511,0.6198,published config ch=128 psize=4 / epochs 50->10
-PV2_0137,253_core_plus_head,clevr,clevr,fixed320,320,64,patch,0,100032,0.8468,0.7574,0.6456,,,,ours / for comparison
-PV2_0137,253_core_only,clevr,tetrominoes,fixed320,320,64,patch,0,100032,0.8580,0.7885,0.8173,,,,ours / zero-shot
-PV2_0137,253_core_only,clevr,multi_dsprites,fixed320,320,64,patch,0,100032,0.6974,0.8177,0.7628,,,,ours / zero-shot
-PV2_0138,253_core_only,multi_dsprites,multi_dsprites,fixed320,320,64,patch,0,100032,0.1201,0.0597,0.0050,,,,ours / target-trained / min_group 8
+test,model,trained_on,evaluated_on,split,n,grid,protocol,seed,exposures,fg_ari,foreground_iou,matched_object_iou,bg_rule,own_fg_ari,own_mbo,pred_fg,note
+PV2_0150,akorn_attn,clevr,clevr,fixed320,320,64,patch,0,100000,0.6027,0.3327,0.3750,image_largest,0.6035,0.4175,0.6140,headline / published config ch=256 psize=8 / epochs 300->10
+PV2_0150,akorn_attn,clevr,tetrominoes,fixed320,320,64,patch,0,100000,0.5676,0.7383,0.4687,image_largest,0.5680,0.5465,0.2800,headline / zero-shot
+PV2_0150,akorn_attn,clevr,multi_dsprites,fixed320,320,64,patch,0,100000,0.4343,0.6019,0.5751,image_largest,0.4353,0.5858,0.1798,headline / zero-shot
+PV2_0150,akorn_attn,multi_dsprites,multi_dsprites,fixed320,320,64,patch,0,100000,0.4562,0.6830,0.6084,image_largest,0.4562,0.6160,0.1200,target-trained / ch=128 psize=4 / epochs 50->10
+PV2_0150,akorn_attn,clevr,clevr,fixed320,320,64,patch,1234,100000,0.4688,0.3061,0.2990,border_largest,0.4699,0.3456,0.6880,second seed / AKOrN default / spread only
+PV2_0150,akorn_attn,clevr,tetrominoes,fixed320,320,64,patch,1234,100000,0.5141,0.7621,0.4491,image_largest,0.5146,0.5342,0.2810,second seed / AKOrN default / spread only
+PV2_0150,akorn_attn,clevr,multi_dsprites,fixed320,320,64,patch,1234,100000,0.4249,0.6342,0.5567,image_largest,0.4259,0.5712,0.1361,second seed / AKOrN default / spread only
+PV2_0150,akorn_attn,multi_dsprites,multi_dsprites,fixed320,320,64,patch,1234,100000,0.4511,0.6898,0.6130,image_largest,0.4511,0.6198,0.1174,second seed / AKOrN default / spread only
+PV2_0137,253_core_plus_head,clevr,clevr,fixed320,320,64,patch,0,100032,0.8468,0.7574,0.6456,,,,,ours / for comparison
+PV2_0137,253_core_only,clevr,tetrominoes,fixed320,320,64,patch,0,100032,0.8580,0.7885,0.8173,,,,,ours / zero-shot
+PV2_0137,253_core_only,clevr,multi_dsprites,fixed320,320,64,patch,0,100032,0.6974,0.8177,0.7628,,,,,ours / zero-shot
+PV2_0138,253_core_only,multi_dsprites,multi_dsprites,fixed320,320,64,patch,0,100032,0.1201,0.0597,0.0050,,,,,ours / target-trained / min_group 8

@@ -26,21 +26,27 @@ cd $A
 
 # ---------------------------------------------------------------- 2. train (CLEVR only)
 # Published config; only --epochs changed, 300 -> 10, to match 100,000 exposures.
+# --seed=0 is NOT optional: train_obj.py:75 defaults to 1234, and the first runs here went out
+# without it. Both seeds are kept (see metrics.csv) but the headline rows are seed 0, to match
+# our own core's seed.
+cat > /work/USERS/tkim1/baselines/run_seed0.sh <<'SH'
+set -e
+cd /work/USERS/tkim1/baselines/_clone/akorn
+P=/work/USERS/tkim1/envs/miniforge3/envs/snn/bin/python
+$P -u train_obj.py --exp_name=s0_clevr_akorn_attn --data=clevr --seed=0 \
+  --model=akorn --J=attn --L=1 --ch=256 --psize=8 --epochs=10 --c_norm=none
+ln -sf $PWD/data/ours/dsprites_eval320.npz data/multi_dsprites/colored_on_grayscale_test.npz
+$P -u train_obj.py --exp_name=s0_dsprites_akorn_attn --data=dsprites --seed=0 \
+  --model=akorn --J=attn --L=1 --ch=128 --psize=4 --epochs=10 --c_norm=none
+echo ALL_TRAINING_DONE
+SH
 setsid nohup env CUDA_VISIBLE_DEVICES=$G PYTHONUNBUFFERED=1 \
-  $P -u train_obj.py --exp_name=ours_clevr_akorn_attn --data=clevr \
-  --model=akorn --J=attn --L=1 --ch=256 --psize=8 --epochs=10 --c_norm=none \
-  > $A/akorn_clevr.log 2>&1 < /dev/null &
-# ~7 min. 40 batches x 250 x 10 epochs = 100,000 exposures.
-
-# the target-trained comparison row, published config, --epochs 50 -> 10
-setsid nohup env CUDA_VISIBLE_DEVICES=$G PYTHONUNBUFFERED=1 \
-  $P -u train_obj.py --exp_name=ours_dsprites_akorn_attn --data=dsprites \
-  --model=akorn --J=attn --L=1 --ch=128 --psize=4 --epochs=10 --c_norm=none \
-  > $A/akorn_dsprites.log 2>&1 < /dev/null &
+  bash /work/USERS/tkim1/baselines/run_seed0.sh > $A/akorn_seed0.log 2>&1 < /dev/null &
+# ~11 min for both. 40 batches x 250 x 10 epochs = 100,000 exposures each.
 
 # ---------------------------------------------------------------- 3. wrap the checkpoint
 # train_obj.py writes the final ema as a bare state_dict; eval_obj.py wants it wrapped.
-for R in ours_clevr_akorn_attn ours_dsprites_akorn_attn; do
+for R in s0_clevr_akorn_attn s0_dsprites_akorn_attn; do
   $P -c "
 import torch
 d = torch.load('runs/$R/ema_model.pth', weights_only=True, map_location='cpu')
@@ -50,12 +56,12 @@ done
 # ---------------------------------------------------------------- 4. predictions
 # eval_dump.py is a copy of eval_obj.py with shuffle=False in the generic eval loader (so the
 # dumped order matches the id order) and a prediction dump appended. eval_obj.py is untouched.
-M="--model=akorn --model_path=runs/ours_clevr_akorn_attn/ema_wrapped.pth --J=attn --L=1 --T=8 \
+M="--model=akorn --model_path=runs/s0_clevr_akorn_attn/ema_wrapped.pth --J=attn --L=1 --T=8 \
    --ch=256 --psize=8 --c_norm=none --model_imsize=128"
 
 for S in val eval320; do
   ln -sf $PWD/data/clevr_with_masks/clevr_$S.npz data/clevr_with_masks/clevr_test.npz
-  DUMP=$B/akornC_clevr_$S.npz CUDA_VISIBLE_DEVICES=$G $P -u eval_dump.py \
+  DUMP=$B/s0C_clevr_$S.npz CUDA_VISIBLE_DEVICES=$G $P -u eval_dump.py \
     --data=clevr --data_imsize=128 $M
 done
 
@@ -66,7 +72,7 @@ for D in dsprites tetrominoes; do
   esac
   for S in val128 eval320_128; do
     ln -sf $PWD/data/ours/${D}_${S}.npz $LINK
-    DUMP=$B/akornC_${D}_${S}.npz CUDA_VISIBLE_DEVICES=$G $P -u eval_dump.py \
+    DUMP=$B/s0C_${D}_${S}.npz CUDA_VISIBLE_DEVICES=$G $P -u eval_dump.py \
       --data=$D --data_imsize=128 $M
   done
 done
@@ -74,15 +80,15 @@ done
 # the dSprites-trained row runs at its own published resolution (64)
 for S in val eval320; do
   ln -sf $PWD/data/ours/dsprites_$S.npz data/multi_dsprites/colored_on_grayscale_test.npz
-  DUMP=$B/akorn_dsprites_$S.npz CUDA_VISIBLE_DEVICES=$G $P -u eval_dump.py \
-    --model=akorn --data=dsprites --model_path=runs/ours_dsprites_akorn_attn/ema_wrapped.pth \
+  DUMP=$B/s0_dsprites_$S.npz CUDA_VISIBLE_DEVICES=$G $P -u eval_dump.py \
+    --model=akorn --data=dsprites --model_path=runs/s0_dsprites_akorn_attn/ema_wrapped.pth \
     --model_imsize=64 --J=attn --L=1 --T=8 --ch=128 --psize=4 --c_norm=none
 done
 
 # ---------------------------------------------------------------- 5. reduce to the grid
-for F in akornC_clevr_val akornC_clevr_eval320 \
-         akornC_dsprites_val128 akornC_dsprites_eval320_128 \
-         akornC_tetrominoes_val128 akornC_tetrominoes_eval320_128; do
+for F in s0C_clevr_val s0C_clevr_eval320 \
+         s0C_dsprites_val128 s0C_dsprites_eval320_128 \
+         s0C_tetrominoes_val128 s0C_tetrominoes_eval320_128; do
   $P -u $C/to_grid64.py --inp $B/$F.npz --out $B/${F}_g64.npz
 done
 
@@ -90,15 +96,15 @@ done
 O=$A/data/ours; CL=$A/data/clevr_with_masks
 score () {  # name val eval val-ids eval-ids dataset
   $P -u $C/bg_any.py --val "$2" --eval "$3" --val-ids "$4" --eval-ids "$5" \
-     --dataset "$6" --code $C --config $CFG --run $RUN --out $B/akornC_$1_bg.json
+     --dataset "$6" --code $C --config $CFG --run $RUN --out $B/s0_$1_bg.json
 }
-score clevr          $B/akornC_clevr_val_g64.npz              $B/akornC_clevr_eval320_g64.npz \
+score clevr          $B/s0C_clevr_val_g64.npz              $B/s0C_clevr_eval320_g64.npz \
                      $CL/clevr_val.npz                        $CL/clevr_eval320.npz            clevr
-score tetrominoes    $B/akornC_tetrominoes_val128_g64.npz     $B/akornC_tetrominoes_eval320_128_g64.npz \
+score tetrominoes    $B/s0C_tetrominoes_val128_g64.npz     $B/s0C_tetrominoes_eval320_128_g64.npz \
                      $O/tetrominoes_val128.npz                $O/tetrominoes_eval320_128.npz   tetrominoes
-score multi_dsprites $B/akornC_dsprites_val128_g64.npz        $B/akornC_dsprites_eval320_128_g64.npz \
+score multi_dsprites $B/s0C_dsprites_val128_g64.npz        $B/s0C_dsprites_eval320_128_g64.npz \
                      $O/dsprites_val128.npz                   $O/dsprites_eval320_128.npz      multi_dsprites
 
-$P -u $C/bg_any.py --val $B/akorn_dsprites_val.npz --eval $B/akorn_dsprites_eval320.npz \
+$P -u $C/bg_any.py --val $B/s0_dsprites_val.npz --eval $B/s0_dsprites_eval320.npz \
    --val-ids $O/dsprites_val.npz --eval-ids $O/dsprites_eval320.npz \
-   --dataset multi_dsprites --code $C --config $CFG --run $RUN --out $B/akorn_dsprites_bg.json
+   --dataset multi_dsprites --code $C --config $CFG --run $RUN --out $B/s0_dsprites_target_bg.json
