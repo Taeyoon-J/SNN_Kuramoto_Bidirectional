@@ -433,3 +433,40 @@ Its own `eval_obj.py` FG-ARI and ours agree to ≤0.0010 on every cell, which is
 the headline table is not an artefact of our scorer. Two new helpers make that possible and are
 now in `evaluation_howto/`: `to_grid64.py` (patch majority vote, for a prediction *finer* than
 the grid) and `bg_any.py` (`sa_bg.py` generalised to any dataset and any hard partition).
+
+---
+
+## PV2_0151 — the whole baseline field at our budget, nine of nine against the best per cell
+
+`PV2_0151_baseline_field/` — completed, seed 0 everywhere.
+
+PV2_0150 beat one baseline, and one baseline can be the wrong one. ItrSA and AKOrN (conv) live in
+the same repo, so adding them costs nothing, and the bar becomes the **best baseline in each cell
+separately** — a composite no single model achieves.
+
+All CLEVR-trained, 100,000 exposures, our evaluation, the same reserved 320 ids. Our rows are the
+**core alone, no head**.
+
+| model | CLEVR | Tetrominoes (zero-shot) | Multi-dSprites (zero-shot) |
+| --- | --- | --- | --- |
+| **ours, 253 core** | **0.8421 / 0.7545 / 0.6410** | **0.8580 / 0.7885 / 0.8173** | **0.6974 / 0.8177 / 0.7628** |
+| AKOrN (attn) | 0.6027 / 0.3327 / 0.3750 | 0.5676 / 0.7383 / 0.4687 | 0.4343 / 0.6019 / 0.5751 |
+| AKOrN (conv) | 0.6046 / 0.4219 / 0.2769 | 0.7202 / 0.7540 / 0.5913 | 0.4055 / 0.6834 / 0.5434 |
+| ItrSA | 0.5794 / 0.2787 / 0.3853 | 0.6319 / 0.7137 / 0.5687 | 0.4817 / 0.2489 / 0.6093 |
+| Slot Attention | 0.2872 / 0.2220 / 0.0801 | not run | not run |
+| **best baseline per cell** | 0.6046 / 0.4219 / 0.3853 | 0.7202 / 0.7540 / 0.5913 | 0.4817 / 0.6834 / 0.6093 |
+| **our margin** | +0.2375 / +0.3326 / +0.2557 | +0.1378 / **+0.0345** / +0.2260 | +0.2157 / +0.1343 / +0.1535 |
+
+**Which baseline is second depends on the dataset** — conv wins Tetrominoes, ItrSA wins
+Multi-dSprites, attn wins nothing outright. That is what models look like when they have not
+learned anything transferable. Ours is first in all nine, and the only row whose predicted
+foreground tracks the truth on CLEVR (0.2001 vs 0.2115; every baseline over-claims by 2–3.4×).
+
+**The one cell to distrust:** Tetrominoes Foreground IoU, **+0.0345**, with no seed spread
+measured for AKOrN (conv).
+
+**And one place the budget excuse runs out.** AKOrN (conv) at 1/210 of its budget **already
+matches its published CLEVR number** (60.5 vs 59.0±4.3) and nearly its Tetrominoes one (72.1 vs
+76.4±0.8). So beating it on Tetrominoes is not a data-efficiency artefact — it is the first cell
+in this line of work where "give it its full budget" does not answer. ItrSA (58.1 vs 82.5±1.7)
+and AKOrN attn (60.4 vs 91.0±0.5) are still starved, and there the caveat stands.

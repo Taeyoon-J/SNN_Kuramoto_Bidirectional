@@ -1,0 +1,111 @@
+{
+ "test_id": "PV2_0151",
+ "status": "completed",
+ "date": "2026-11-08",
+ "branch": "patch_v2",
+ "base_commit": "b581bb3",
+ "parents": ["PV2_0150", "PV2_0149", "PV2_0137"],
+ "hypothesis": "One baseline can be the wrong one. Add the two models that live in the same repo and ask whether ANY baseline in this field beats us in ANY cell at 100,000 exposures.",
+ "changed_variable": "the baseline architecture; train ids, exposures, seed, evaluation ids, grid, evaluation function and background-rule selection all held fixed",
+ "success_criterion": "our CLEVR-trained core beats the best baseline PER CELL on all three metrics on all three datasets",
+ "outcome": "met at seed 0: 9 of 9 cells against a best-per-cell composite of three different models; narrowest margin Tetrominoes foreground_iou +0.0345, flagged as unsettled",
+
+ "data": {
+  "split_manifest_version": "fixed320 reserved evaluation, not an independent original-paper TEST split",
+  "evaluation_contract_version": "collaborative_test/evaluation_contract.md at 17d0fde",
+  "grid": 64,
+  "protocol": "patch contract: truth quantised to the grid, predictions reduced to the grid by patch majority vote, never expanded to pixels",
+  "train_ids": "the identical 10,000 drawn by np.random.RandomState(2553500).choice(Dataset.train, 10000, replace=False) that the 253 core trained on",
+  "evaluation_ids": "np.asarray(Dataset.test)[:320] for every dataset",
+  "truth_tensor": "Dataset.labels(ids, split) at grid 64, np.repeat-ed x2 to 128 inside the npz -- the same tensor our evaluation function uses",
+  "npz_reused_from": "PV2_0150 (identical files, unchanged)"
+ },
+
+ "baselines": [
+  {"name": "ItrSA",
+   "repo": "https://github.com/autonomousvision/akorn",
+   "commit": "eabbe2728c5b83836ce44f6d780b7cc37eea2a31",
+   "config": "--model=vit --L=1 --gta=False --T=8 --ch=256 --psize=8 --epochs=10 --batchsize=128 --seed=0",
+   "published_config": "--ch=256 --psize=8 --epochs=300, accelerate launch --num_processes=$NUM_GPUS",
+   "deviations": ["epochs 300 -> 10, to match 100,000 exposures",
+                  "batchsize 256 -> 128: 256 OOMs on one 23.47 GiB TITAN RTX (20.73 GiB already in use); the published recipe is multi-GPU and train_obj.py:224 divides the batch by the process count. The exposure budget is epochs x 10,000 and does not depend on batch size."],
+   "batches_per_epoch": 79,
+   "exposures": 100000,
+   "checkpoint_sha256": {"runs/s0_clevr_itrsa/ema_model.pth": "c344d7d00b85db0fcfae8553bd1c608a8650f9d06ce788d1a4256755cf663443"},
+   "loss_curve": [5.517, 5.441, 5.428, 5.410, 5.412, 5.369, 5.355, 5.333, 5.294, 5.355],
+   "published_3seed_fg_ari": {"tetrominoes": "85.8+-0.8", "dsprites": "68.1+-1.4", "clevr": "82.5+-1.7"},
+   "ours_at_this_budget_fg_ari": {"tetrominoes": 63.2, "dsprites": 48.3, "clevr": 58.1},
+   "budget_note": "far below its published numbers; the 1/210 caveat applies"},
+  {"name": "AKOrN (conv)",
+   "repo": "https://github.com/autonomousvision/akorn",
+   "commit": "eabbe2728c5b83836ce44f6d780b7cc37eea2a31",
+   "config": "--model=akorn --J=conv --L=1 --ksize=7 --ch=256 --psize=8 --c_norm=none --epochs=10 --batchsize=128 --seed=0",
+   "published_config": "--J=conv --L=1 --ksize=7 --ch=256 --psize=8 --epochs=300",
+   "deviations": ["epochs 300 -> 10", "batchsize 256 -> 128, same 128 as ItrSA so the two rows are mutually comparable"],
+   "batches_per_epoch": 79,
+   "exposures": 100000,
+   "checkpoint_sha256": {"runs/s0_clevr_akorn_conv/ema_model.pth": "180900c2f10b6541f3190040c44d1f7019044532eca5d4f29b8d5e4c83ea17f5"},
+   "loss_curve": [5.531, 5.452, 5.401, 5.336, 5.269, 5.227, 5.128, 5.026, 5.013, 4.932],
+   "published_3seed_fg_ari": {"tetrominoes": "76.4+-0.8", "dsprites": "63.8+-7.7", "clevr": "59.0+-4.3"},
+   "ours_at_this_budget_fg_ari": {"tetrominoes": 72.1, "dsprites": 40.7, "clevr": 60.5},
+   "budget_note": "ALREADY AT its published CLEVR number (60.5 vs 59.0+-4.3) and near its Tetrominoes one (72.1 vs 76.4+-0.8). For this model the budget is not the binding constraint, so the 'give it its full budget' objection does not cover our Tetrominoes margin over it."}
+ ],
+
+ "ours_for_comparison": {
+  "core": "/work/USERS/tkim1/share/native64_core_253/{resume.pt,initial.pt}",
+  "core_sha256_prefix": "e56b1a4219ab606b35952dab99ce0623",
+  "core_updates": 6250,
+  "core_exposures": 100032,
+  "readout": "core alone, no head -- regions_253 out of the cache, scored by evaluate_patch_masks",
+  "scorer_validated": "score_cache.py reproduces the published reference rows exactly: CLEVR 0.8421/0.7545/0.6410 and Tetrominoes 0.8580/0.7885/0.8173",
+  "seed": 0
+ },
+
+ "results_ours_evaluation": {
+  "itrsa": {"clevr": [0.5794, 0.2787, 0.3853], "tetrominoes": [0.6319, 0.7137, 0.5687], "multi_dsprites": [0.4817, 0.2489, 0.6093]},
+  "akorn_conv": {"clevr": [0.6046, 0.4219, 0.2769], "tetrominoes": [0.7202, 0.7540, 0.5913], "multi_dsprites": [0.4055, 0.6834, 0.5434]},
+  "best_baseline_per_cell": {"clevr": [0.6046, 0.4219, 0.3853], "tetrominoes": [0.7202, 0.7540, 0.5913], "multi_dsprites": [0.4817, 0.6834, 0.6093]},
+  "our_margin_over_best": {"clevr": [0.2375, 0.3326, 0.2557], "tetrominoes": [0.1378, 0.0345, 0.2260], "multi_dsprites": [0.2157, 0.1343, 0.1535]}
+ },
+ "own_metric_agreement_fg_ari": "ours vs each model's own eval_obj.py: <=0.0013 on every cell",
+
+ "predicted_foreground_fixed320": {
+  "clevr": {"truth": 0.2115, "ours": 0.2001, "akorn_attn": 0.6140, "akorn_conv": 0.4355, "itrsa": 0.7218},
+  "tetrominoes": {"truth": 0.2368, "ours": 0.2842, "akorn_attn": 0.2800, "akorn_conv": 0.2997, "itrsa": 0.2787},
+  "multi_dsprites": {"truth": 0.0943, "ours": 0.0841, "akorn_attn": 0.1798, "akorn_conv": 0.1070, "itrsa": 0.4988}
+ },
+
+ "environment": {
+  "host": "frontier.med.unc.edu",
+  "gpu": "NVIDIA TITAN RTX (index 3, uuid GPU-6801a3dc-cde3-86c6-d665-6d9ecf063a1e), shared with a CPU-bound cache job using 2.4 GiB and 0% GPU",
+  "python": "/work/USERS/tkim1/envs/miniforge3/envs/snn/bin/python (3.10)",
+  "torch": "2.13.0+cu130",
+  "wall_clock": {"itrsa_train": "~3 min", "akorn_conv_train": "~3 min", "all_evals": "~6 min"}
+ },
+
+ "code": {
+  "new_files": ["collaborative_test/evaluation_howto/score_cache.py -- score a cached core's own partition (regions_253) with no head, the code path the PV2_0137 reference rows came from; validated against both of them"],
+  "reused": ["evaluation_howto/bg_any.py", "evaluation_howto/to_grid64.py", "the clone's eval_dump.py"],
+  "unmodified_in_clone": ["train_obj.py", "eval_obj.py", "source/**"]
+ },
+
+ "corrections_to_earlier_records": [
+  "PV2_0150 README and commands.sh said 'Batch 250 x 40 batches x 10 epochs = 100,000 exposures exactly'. The argument default is 256, not 250, with a partial final batch, and PairDataset feeds two views per sample. The exposure count (10 passes over 10,000 unique images) is right; the arithmetic as written was not. No PV2_0150 number changes."
+ ],
+
+ "limitations": [
+  "seed 0 everywhere; the contract judges 3-seed means",
+  "Tetrominoes foreground_iou margin is +0.0345 and we have no seed spread for AKOrN (conv): treat that single cell as unsettled",
+  "no seed spread at all for ItrSA or AKOrN (conv)",
+  "ItrSA, AKOrN (attn) and Slot Attention are all far from their published numbers at this budget; AKOrN (conv) is not",
+  "Slot Attention was never run on Tetrominoes or Multi-dSprites",
+  "mBO here is not comparable to published mBO: the truth fed to the models is the grid quantisation, not the true pixel mask",
+  "fixed320 is a reserved evaluation split, not an independent original-paper test split"
+ ],
+ "next": [
+  "a second seed for AKOrN (conv): it is the one baseline that is not budget-limited and it owns our narrowest margin (7 min)",
+  "Slot Attention on Tetrominoes and Multi-dSprites to complete its row",
+  "our own CLEVR seeds 1 and 2 remain the expensive unapproved item",
+  "Rotating Features and the complex autoencoders still need their own environments and loaders"
+ ]
+}

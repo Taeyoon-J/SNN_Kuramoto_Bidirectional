@@ -135,7 +135,11 @@ Our side is **one seed**. The contract judges 3-seed means and that bar is unmet
   run-to-run spread and brackets both settings).
 - **Model config is AKOrN's published one.** Only the epoch count changed, to match exposures:
   CLEVR `--ch=256 --psize=8`, 10 epochs instead of 300; Multi-dSprites `--ch=128 --psize=4`,
-  10 epochs instead of 50. Batch 250 × 40 batches × 10 epochs = 100,000 exposures exactly.
+  10 epochs instead of 50. The exposure budget is 10 passes over 10,000 unique images = 100,000
+  exposures; it does not depend on batch size. (`--batchsize` defaults to **256**, so an epoch is
+  40 batches with a partial last one, and `train_obj.py:241` notes `PairDataset` feeds two views
+  per sample, so the real forward is twice the batch. An earlier version of this file said
+  "batch 250 × 40 batches", which was wrong in the arithmetic though not in the exposure count.)
 - **Final-epoch checkpoints are saved bare.** `train_obj.py` writes `ema_model.pth` as a plain
   `state_dict` while `eval_obj.py` expects `{"model_state_dict": ...}` (that is what the
   periodic `save_model` writes). We wrap it into `ema_wrapped.pth`; no weights change.

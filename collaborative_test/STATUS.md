@@ -3,6 +3,29 @@
 Updated 2026-11-08. Branch `patch_v2`; the shipped version, `benchmark.md` and the script
 bundle are on `patch_final`. Contract **v2**; split v1.
 
+> ## RESUME POINT, 2026-11-08 (latest) — the baseline field is done; nine of nine
+>
+> **`PV2_0151`: four baselines, all CLEVR-trained at 100,000 exposures, and we beat the best of
+> them in each cell separately.** ItrSA and AKOrN (conv) were added on GPU 3 (free in practice:
+> the cache job there is CPU-bound and leaves the GPU at 0%). Best-baseline-per-cell is a
+> composite of three different models and we are above it everywhere:
+>
+> | | CLEVR | Tetrominoes | Multi-dSprites |
+> |---|---|---|---|
+> | ours (core alone) | 0.8421/0.7545/0.6410 | 0.8580/0.7885/0.8173 | 0.6974/0.8177/0.7628 |
+> | best baseline per cell | 0.6046/0.4219/0.3853 | 0.7202/0.7540/0.5913 | 0.4817/0.6834/0.6093 |
+>
+> **Distrust exactly one cell:** Tetrominoes Foreground IoU, +0.0345, no seed spread for AKOrN
+> (conv). A second conv seed costs 7 min and should be the next baseline run.
+>
+> **AKOrN (conv) is the one baseline the budget excuse does not cover** — at 1/210 of its budget
+> it already matches its published CLEVR number (60.5 vs 59.0±4.3). ItrSA and AKOrN (attn) are
+> still far from theirs, so for those two the 1/210 caveat stands.
+>
+> New scorer: `evaluation_howto/score_cache.py` scores our core with **no head** out of a cache
+> directory, and reproduces both published reference rows exactly. Use it to put a new core
+> beside them without fitting a head first.
+>
 > ## RESUME POINT, 2026-11-08 — AKOrN measured at seed 0; Tetrominoes cont5000 finished
 >
 > **`PV2_0150` is done and is the strongest baseline row we have.** AKOrN (attn), seed 0,
@@ -35,8 +58,11 @@ bundle are on `patch_final`. Contract **v2**; split v1.
 > question is whether 0.8421 on CLEVR survives continued training elsewhere. Cache it with
 > `cache_any.py --min-group 8 --job <that dir>`, then `fit5.py`, then score on the same 320 ids.
 >
-> **RUNNING NOW:** the Multi-dSprites cont5000 branch on frontier **GPU 2**, ~23 h left at
-> 28.7 s/update (2.5× slower than the 4090 on an uncontended box, cause unknown).
+> **RUNNING NOW:** the Multi-dSprites cont5000 branch on frontier **GPU 2** — 7,096 of 9,380
+> updates (846 of the 3,130 added), 29 s/update, **~18 h left**. And on GPU 3, caching the
+> finished Tetrominoes cont5000 core: tetro validation 160 / test 320 and CLEVR validation 320 /
+> fixed320 320, ~10.6 s/frame while sharing CPU with the baselines, so **~3.3 h** for all 1,120
+> frames. Score it with `score_cache.py` against CLEVR **0.8421** and Tetrominoes **0.8580**.
 >
 > **Still unapproved and goal-blocking:** our own CLEVR seeds 1 and 2 (rented ~$20, or free on
 > frontier but sequential); Slot Attention at its published 500k-step recipe (`PV2_0139`, code

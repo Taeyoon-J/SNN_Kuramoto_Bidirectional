@@ -42,7 +42,8 @@ echo ALL_TRAINING_DONE
 SH
 setsid nohup env CUDA_VISIBLE_DEVICES=$G PYTHONUNBUFFERED=1 \
   bash /work/USERS/tkim1/baselines/run_seed0.sh > $A/akorn_seed0.log 2>&1 < /dev/null &
-# ~11 min for both. 40 batches x 250 x 10 epochs = 100,000 exposures each.
+# ~11 min for both. 10 passes over 10,000 unique images = 100,000 exposures each; the budget
+# does not depend on batch size (--batchsize defaults to 256, 40 batches with a partial last).
 
 # ---------------------------------------------------------------- 3. wrap the checkpoint
 # train_obj.py writes the final ema as a bare state_dict; eval_obj.py wants it wrapped.

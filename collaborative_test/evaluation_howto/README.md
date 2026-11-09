@@ -113,6 +113,18 @@ part of the contract rather than conveniences:
 | `to_grid64.py` | reduces a partition **finer** than the grid to the grid by the contract's **patch majority vote**, ties to the smaller label id. The contract's `np.repeat` lift handles predictions coarser than the grid; this is the same rule in the other direction. Nothing is ever expanded to pixels. |
 | `bg_any.py` | picks which cluster id means background, out of the **same four rules** `sa_bg.py` fixed in advance (`global_largest`, `image_largest`, `border_largest`, `border_union`), **on validation**, FG-ARI first and Foreground IoU as the tie-break. It then reports the selected rule on `fixed320` and every rule as a labelled diagnostic. |
 
+A third script, `score_cache.py`, scores **our own** core with no head at all: it reads a
+`cache_any.py` directory, takes `regions_253` and calls `evaluate_patch_masks` on it. That is the
+code path the core-only reference rows came from, and it reproduces them exactly — CLEVR
+0.8421 / 0.7545 / 0.6410 and Tetrominoes 0.8580 / 0.7885 / 0.8173 — so a new core can be put
+beside them without fitting a head first.
+
+```bash
+python score_cache.py --cache <cache dir> --dataset tetrominoes --split test \
+  --code <path>/benchmark_codes --config <path>/benchmark_codes/configs/frontier.json \
+  --run <path>/run
+```
+
 `bg_any.py` is `sa_bg.py` generalised: any model whose readout is a hard partition with
 arbitrary ids, any dataset, predictions in an npz under `preds` and ids either in the same npz
 or in the source data npz via `--val-ids` / `--eval-ids`.
