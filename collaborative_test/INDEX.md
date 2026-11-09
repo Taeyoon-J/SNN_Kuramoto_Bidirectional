@@ -453,9 +453,14 @@ All CLEVR-trained, 100,000 exposures, our evaluation, the same reserved 320 ids.
 | AKOrN (attn) | 0.6027 / 0.3327 / 0.3750 | 0.5676 / 0.7383 / 0.4687 | 0.4343 / 0.6019 / 0.5751 |
 | AKOrN (conv) | 0.6046 / 0.4219 / 0.2769 | 0.7202 / 0.7540 / 0.5913 | 0.4055 / 0.6834 / 0.5434 |
 | ItrSA | 0.5794 / 0.2787 / 0.3853 | 0.6319 / 0.7137 / 0.5687 | 0.4817 / 0.2489 / 0.6093 |
-| Slot Attention | 0.2872 / 0.2220 / 0.0801 | not run | not run |
+| Slot Attention | 0.2872 / 0.2220 / 0.0801 | 0.1739 / 0.2192 / 0.1071 | 0.1930 / 0.0876 / 0.0680 |
 | **best baseline per cell** | 0.6046 / 0.4219 / 0.3853 | 0.7202 / 0.7540 / 0.5913 | 0.4817 / 0.6834 / 0.6093 |
 | **our margin** | +0.2375 / +0.3326 / +0.2557 | +0.1378 / **+0.0345** / +0.2260 | +0.2157 / +0.1343 / +0.1535 |
+
+Slot Attention is **last in all nine**, and its zero-shot rows are *worse* than its CLEVR one
+(0.1739 and 0.1930 against 0.2872): it calls 84% and 85% of the image foreground against truths
+of 24% and 9%. Its checkpoint needed no retraining — the PV2_0149 CLEVR one, run as-is, which is
+the condition our own transfer rows are in.
 
 **Which baseline is second depends on the dataset** — conv wins Tetrominoes, ItrSA wins
 Multi-dSprites, attn wins nothing outright. That is what models look like when they have not

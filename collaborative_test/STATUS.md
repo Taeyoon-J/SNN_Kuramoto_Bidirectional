@@ -15,6 +15,11 @@ bundle are on `patch_final`. Contract **v2**; split v1.
 > | ours (core alone) | 0.8421/0.7545/0.6410 | 0.8580/0.7885/0.8173 | 0.6974/0.8177/0.7628 |
 > | best baseline per cell | 0.6046/0.4219/0.3853 | 0.7202/0.7540/0.5913 | 0.4817/0.6834/0.6093 |
 >
+> Slot Attention's row is now complete too: its CLEVR exposure-matched checkpoint run zero-shot
+> gives **0.1739 / 0.2192 / 0.1071** on Tetrominoes and **0.1930 / 0.0876 / 0.0680** on
+> Multi-dSprites — last in all nine, and worse off its training set than on it. No retraining was
+> needed, so this cost nothing.
+>
 > **Distrust exactly one cell:** Tetrominoes Foreground IoU, +0.0345, no seed spread for AKOrN
 > (conv). A second conv seed costs 7 min and should be the next baseline run.
 >

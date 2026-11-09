@@ -28,7 +28,7 @@ have always been (`PV2_0137`).
 | AKOrN (attn) | 0.6027 / 0.3327 / 0.3750 | 0.5676 / 0.7383 / 0.4687 | 0.4343 / 0.6019 / 0.5751 |
 | AKOrN (conv) | 0.6046 / 0.4219 / 0.2769 | 0.7202 / 0.7540 / 0.5913 | 0.4055 / 0.6834 / 0.5434 |
 | ItrSA | 0.5794 / 0.2787 / 0.3853 | 0.6319 / 0.7137 / 0.5687 | 0.4817 / 0.2489 / 0.6093 |
-| Slot Attention | 0.2872 / 0.2220 / 0.0801 | not run | not run |
+| Slot Attention | 0.2872 / 0.2220 / 0.0801 | 0.1739 / 0.2192 / 0.1071 | 0.1930 / 0.0876 / 0.0680 |
 | **best baseline, per cell** | 0.6046 / 0.4219 / 0.3853 | 0.7202 / 0.7540 / 0.5913 | 0.4817 / 0.6834 / 0.6093 |
 | **our margin over the best** | **+0.2375 / +0.3326 / +0.2557** | **+0.1378 / +0.0345 / +0.2260** | **+0.2157 / +0.1343 / +0.1535** |
 
@@ -52,6 +52,11 @@ conv variant at all. **Treat that single cell as unsettled.** The other eight ma
   foreground where the truth says 21%**, and 50% on Multi-dSprites against a truth of 9%.
 - **AKOrN (attn)** is the best baseline on CLEVR matched-object IoU after ItrSA and middling
   everywhere else, despite being the variant with the best published numbers.
+- **Slot Attention is last in all nine cells**, and its two zero-shot rows are *worse* than its
+  CLEVR row on FG-ARI (0.1739 and 0.1930 against 0.2872). It calls **84.0% and 84.9% of the
+  image foreground** where the truth says 23.7% and 9.4% — the tiling behaviour `PV2_0149`
+  showed is not CLEVR-specific and does not improve on simpler renders. Its checkpoint here is
+  the exposure-matched CLEVR one from `PV2_0149`, run zero-shot with **no retraining**.
 
 So the field does not have a consistent second place: **which baseline is second depends on the
 dataset**, which is the behaviour of models that have not yet learned anything transferable.
@@ -108,8 +113,10 @@ one baseline for which the budget excuse does not apply.
 - **3-seed means on our side.** Everything here is seed 0. The contract judges 3-seed means.
 - **Protocol B** for attn, ItrSA and Slot Attention, which are all far from their published
   numbers at this budget.
-- **Slot Attention on Tetrominoes and Multi-dSprites**, never run; its CLEVR row is the only one.
 - **Any seed spread** for ItrSA and AKOrN (conv). One seed each.
+
+Slot Attention's row is now complete: its CLEVR-trained exposure-matched checkpoint was run
+zero-shot on both other datasets, needing no training, and it is last in all nine cells.
 
 ## Deviations from the published recipes, and why
 
@@ -137,11 +144,11 @@ is fixed in this commit.
 
 Predicted foreground fraction against the truth's, selected rule, fixed320:
 
-| dataset | truth fg | ours | AKOrN attn | AKOrN conv | ItrSA |
-|---|---|---|---|---|---|
-| CLEVR | 0.2115 | 0.2001 | 0.6140 | 0.4355 | 0.7218 |
-| Tetrominoes | 0.2368 | 0.2842 | 0.2800 | 0.2997 | 0.2787 |
-| Multi-dSprites | 0.0943 | 0.0841 | 0.1798 | 0.1070 | 0.4988 |
+| dataset | truth fg | ours | AKOrN attn | AKOrN conv | ItrSA | Slot Attention |
+|---|---|---|---|---|---|---|
+| CLEVR | 0.2115 | 0.2001 | 0.6140 | 0.4355 | 0.7218 | 0.7047 |
+| Tetrominoes | 0.2368 | 0.2842 | 0.2800 | 0.2997 | 0.2787 | 0.8396 |
+| Multi-dSprites | 0.0943 | 0.0841 | 0.1798 | 0.1070 | 0.4988 | 0.8486 |
 
 **Only our core gets the foreground fraction right on CLEVR and Multi-dSprites** (0.2001 against
 0.2115, and 0.0841 against 0.0943 — the only row that ever *under*-claims); every baseline
@@ -153,7 +160,8 @@ FG-ARI is the best of the baselines — a reminder of why the three metrics are 
 
 ## Interpretation
 
-The field at this budget sits at **0.40–0.72 FG-ARI** and has no stable ordering: AKOrN (conv)
+The field at this budget sits at **0.17–0.72 FG-ARI** and has no stable ordering above Slot
+Attention, which is last everywhere: AKOrN (conv)
 wins Tetrominoes, ItrSA wins Multi-dSprites, AKOrN (attn) wins nothing outright. Our core is
 first in all nine cells, and the only one whose predicted foreground tracks the truth on CLEVR.
 
@@ -168,8 +176,7 @@ facts belong in the same sentence.
 1. **Seeds, on our side.** Nothing in PV2_0149–0151 changes the fact that our side is one seed.
 2. **A second seed for AKOrN (conv)**, because it is the one baseline that is not budget-limited
    and it owns our narrowest margin. 7 min.
-3. **Slot Attention on Tetrominoes and Multi-dSprites**, to complete its row.
-4. Rotating Features and the complex autoencoders still need their own environments and loaders.
+3. Rotating Features and the complex autoencoders still need their own environments and loaders.
 
 ## Reproduce
 
