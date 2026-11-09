@@ -27,6 +27,15 @@ bundle are on `patch_final`. Contract **v2**; split v1.
 > it already matches its published CLEVR number (60.5 vs 59.0±4.3). ItrSA and AKOrN (attn) are
 > still far from theirs, so for those two the 1/210 caveat stands.
 >
+> **`BENCHMARK_PLAN_v5.md` replaces v4** and is the answer to "how should our benchmark testing
+> go". Four changes of design, not just numbers: the headline is quoted against a
+> **best-baseline-per-cell** composite (no single reference, because which baseline is second
+> depends on the dataset); each baseline carries **its own published figure and a budget
+> verdict**, so a data-efficiency claim is never mistaken for more; the **predicted foreground
+> fraction** is promoted to a required column, being the fastest separator of tiling from
+> segmenting; and the **narrowest cell is named every time**. v4's worry that Slot Attention's
+> score was domain shift is retired by PV2_0149.
+>
 > New scorer: `evaluation_howto/score_cache.py` scores our core with **no head** out of a cache
 > directory, and reproduces both published reference rows exactly. Use it to put a new core
 > beside them without fitting a head first.

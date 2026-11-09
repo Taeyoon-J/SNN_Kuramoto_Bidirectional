@@ -1,5 +1,11 @@
 # Benchmark plan v4
 
+> **Superseded by `BENCHMARK_PLAN_v5.md`** (after PV2_0137-PV2_0151). v4's central caution --
+> that Slot Attention's weak score might be domain shift rather than the model -- was tested
+> and retired: retraining it on our render at a matched budget reproduces the same tiling.
+> v4's single-reference-column design is also replaced, because which baseline comes second
+> turns out to depend on the dataset. Kept for the record; read v5 for what to do.
+
 Supersedes v3. Written after PV2_0133–PV2_0136. v3 settled the protocol; v4 settles what we
 must still do before the comparison is one we would defend, and in what order.
 
