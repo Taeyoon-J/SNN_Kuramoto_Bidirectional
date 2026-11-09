@@ -1,7 +1,38 @@
 # STATUS
 
-Updated 2026-11-08. Branch `patch_v2`; the shipped version, `benchmark.md` and the script
+Updated 2026-11-09. Branch `patch_v2`; the shipped version, `benchmark.md` and the script
 bundle are on `patch_final`. Contract **v2**; split v1.
+
+
+> ## RESUME POINT, 2026-11-09 — cont5000 Tetrominoes is scored; core seeds are off the table
+>
+> **DECISION: core seeds 1 and 2 will not be run.** Everything in this project is seed 0 and is
+> reported as such. The three-seed line in the contract is not met and the write-up says so.
+>
+> **`PV2_0152` is the answer to "beat 253 through the core".** Continuing the finished CLEVR core
+> for 5,000 × 10 on Tetrominoes beats the base core's **FG-ARI on both datasets at once** —
+> Tetrominoes +0.0095 (0.8580 → 0.8675) and CLEVR +0.0085 (0.8421 → 0.8505) — with and without
+> the head. On Tetrominoes all three metrics rise (FG-IoU +0.0308, reproduced +0.0328 on
+> validation). **The cost is CLEVR matched-object IoU, −0.0203**, plus CLEVR FG-IoU −0.0093.
+>
+> Mechanism: it **merges**. Mean regions fall on both datasets (Tetrominoes 21.1 → 17.9, CLEVR
+> 8.0 → 6.6, truth ~3). On Tetrominoes that removes splinters; on CLEVR it has begun joining
+> objects, which raises a pairwise measure (FG-ARI) and lowers the one that punishes merged
+> objects (matched-object IoU). If cont5000 is adopted, that regression is reported, never
+> averaged away.
+>
+> Head, re-measured on the new core over 5 head seeds: clears its own noise in **one metric per
+> dataset** (Tetrominoes obj-IoU +0.0022; CLEVR fg_ari +0.0021) and still fails to help
+> Tetrominoes FG-ARI. Every conclusion is carried by the core.
+>
+> **RUNNING:** the Multi-dSprites cont5000 branch, frontier GPU 2, **8,943 of 9,380 updates
+> (epoch 9 of 10), ~3.5 h out.** When it lands, run the same four rows on Multi-dSprites and
+> CLEVR — that says whether the merging effect is general or a property of Tetrominoes' sparse
+> render. The pipeline to copy is `/work/USERS/tkim1/finish_261.sh`.
+>
+> Artifacts: core `/work/USERS/tkim1/share/cont5000_tetrominoes/` (sha256 `ca8546b4…`), caches
+> `/work/USERS/tkim1/sw0255b/ev_cont_tetro/`, results `.../cont5000_tetrominoes/results/`.
+>
 
 > ## RESUME POINT, 2026-11-08 (latest) — the baseline field is done; nine of nine
 >

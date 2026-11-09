@@ -475,3 +475,44 @@ matches its published CLEVR number** (60.5 vs 59.0±4.3) and nearly its Tetromin
 76.4±0.8). So beating it on Tetrominoes is not a data-efficiency artefact — it is the first cell
 in this line of work where "give it its full budget" does not answer. ItrSA (58.1 vs 82.5±1.7)
 and AKOrN attn (60.4 vs 91.0±0.5) are still starved, and there the caveat stands.
+
+---
+
+## PV2_0152 — cont5000 beats 253 on FG-ARI on both datasets, and costs CLEVR object IoU
+
+`PV2_0152_cont5000_tetrominoes/` — completed. One core seed each side; ± is head
+re-initialisation variance only.
+
+The head direction is closed on Tetrominoes (`PV2_0146`), so the instruction was to beat 253
+through the **core**. `cont5000` continues the finished CLEVR core for **5,000 × 10 = 50,000 more
+exposures on Tetrominoes**, nothing else changed.
+
+**Tetrominoes test 320** — all three up:
+
+| metric | base core | base +head | cont core | cont +head | Δ core |
+| --- | --- | --- | --- | --- | --- |
+| fg_ari | 0.8580 | 0.8560±0.0033 | **0.8675** | **0.8665±0.0014** | **+0.0095** |
+| foreground_iou | 0.7885 | 0.7888±0.0005 | **0.8193** | **0.8206±0.0008** | **+0.0308** |
+| matched_object_iou | 0.8173 | 0.8165±0.0016 | **0.8213** | **0.8235±0.0010** | +0.0041 |
+
+**CLEVR fixed320** — the surprise, and the cost:
+
+| metric | base core | base +head | cont core | cont +head | Δ core |
+| --- | --- | --- | --- | --- | --- |
+| fg_ari | 0.8421 | 0.8468±0.0004 | **0.8505** | **0.8526±0.0008** | **+0.0085** |
+| foreground_iou | 0.7545 | 0.7575±0.0003 | 0.7452 | 0.7468±0.0022 | −0.0093 |
+| matched_object_iou | 0.6410 | 0.6460±0.0005 | 0.6207 | 0.6252±0.0024 | **−0.0203** |
+
+**It beats 253 on FG-ARI on both datasets at once** (+0.0095, +0.0085), which is what was asked,
+through the core, with the head closed. The accepted trade is CLEVR FG-IoU −0.0093. **The loss
+not covered by that trade is CLEVR matched-object IoU, −0.0203** — the largest movement in either
+table, 4× the FG-IoU loss.
+
+**Mechanism: it merges.** Mean regions per image fall on *both* datasets — Tetrominoes 21.1 →
+17.9, CLEVR 8.0 → 6.6, against a truth of about 3. On Tetrominoes that removes spurious
+splinters and both grouping and coverage improve. On CLEVR it has begun joining objects to each
+other: FG-ARI (a pairwise partition measure) rises, while matched-object IoU — the one metric
+that punishes two true objects landing in one region — falls. Same cause, opposite sign.
+
+The Tetrominoes FG-IoU gain is the most robust number here: +0.0308 on test, independently
++0.0328 on validation 160 before the evaluation split was touched.
