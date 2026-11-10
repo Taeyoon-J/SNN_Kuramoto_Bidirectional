@@ -1,10 +1,47 @@
 # STATUS
 
-Updated 2026-11-09 (late). Branch `patch_v2`; the shipped version, `benchmark.md` and the script
+Updated 2026-11-10. Branch `patch_v2`; the shipped version, `benchmark.md` and the script
 bundle are on `patch_final`. Contract **v2**; split v1.
 
 
 
+
+
+> ## RESUME POINT, 2026-11-10 — T sweep done; scaling curve restarted after two bugs of mine
+>
+> **`PV2_0154` (T sweep, CLEVR, settle = T//2): T = 512 is free.** FG-ARI −0.0019 against
+> T = 1024 and Foreground IoU *improves* +0.0049. T = 256 costs 0.02–0.03; T = 128 collapses
+> (−0.26) and under-claims foreground for the first time (0.1148 against a truth of 0.2115).
+> **512 is the right default for anything new.**
+>
+> **The cost motive is dead.** Per frame: 10.8 s at T=1024, 10.0 at 512, 8.8 at 256, 8.7 at 128 —
+> an 8× cut in steps buys 19%, and the free 1024→512 step buys 7%. The rollout is not the
+> bottleneck; per-image fixed cost is. My claim that cost is "linear in T" was wrong.
+>
+> Side finding worth keeping: the head's value tracks how broken the core is, now shown by
+> degrading **one** core instead of comparing two — head Δ FG-ARI +0.0047 at T=1024 and
+> **+0.1530 at T=128**, 33×. That is `PV2_0147` on a cleaner axis.
+>
+> **`PV2_0155` (scaling curve) had TWO bugs, both mine, both fixed; it is rerunning on GPU 1.**
+> 1. `complete.json` is a per-run marker and `engine.py:104` returns immediately when present, so
+>    after stage 1 wrote it, stages 2–8 returned in two seconds without training — the "curve" was
+>    one point repeated eight times.
+> 2. The deeper one: `engine.py:90-104` treats `binding.json` as immutable within a run and
+>    demands a signed `runtime_migration.json` if it changes. Each stage legitimately changes
+>    `train_ids`, so a chained single-directory run **cannot work by design**. `cont5000` chains
+>    only because every stage reuses the same `first[:5000]`.
+>
+> `scale_curve2.sh` gives **each stage its own run directory**, seeded with the previous stage's
+> `resume.pt`/`initial.pt`, and **aborts if the chain does not advance by exactly 630 updates** —
+> the guard that would have caught bug 1 in two seconds. Verified live: stage 2 trains
+> (6,880 → 6,885 → target 7,510) and its ids are `second[1000:2000]`, **zero overlap** with
+> stage 1's `second[0:1000]`.
+>
+> **The one real point from the broken run survives:** base + 1,000 unseen images × 10
+> (6,880 updates / 110,000 exposures) gives CLEVR **0.8426 / 0.7539 / 0.6427** against base
+> 0.8421 / 0.7545 / 0.6410 — **+0.0005 / −0.0006 / +0.0017, i.e. nothing.** 1,000 images is too
+> small an increment to move this core; `cont5000`'s 5,000 moved FG-ARI +0.0084.
+>
 
 > ## RESUME POINT, 2026-11-09 (late) — three datasets done; neither cont core replaces 253
 >

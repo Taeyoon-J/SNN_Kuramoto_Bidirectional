@@ -618,3 +618,38 @@ term** (zero matches for decoder/reconstruct/deconv/upsample); the objective is
 Every baseline we compare against reconstructs the image, and a reconstruction loss penalises
 splitting one object in two. Ours contains no such pressure, so nothing stops one tetromino
 becoming seven mutually-synchronous fragments. The count errors are a consequence of the design.
+
+---
+
+## PV2_0154 — the rollout can be halved for free, and halving it saves nothing
+
+`PV2_0154_t_sweep/` — completed (second run; the first was wrong). CLEVR only, one seed,
+`settle = T//2`.
+
+| T | core fg_ari/fg_iou/obj_iou | +head | regions | pred fg | Δ core fg_ari |
+| --- | --- | --- | --- | --- | --- |
+| 1024 | 0.8421/0.7545/0.6410 | 0.8468/0.7575/0.6460 | 8.0 | 0.2001 | — |
+| **512** | **0.8402/0.7594/0.6340** | 0.8437/0.7628/0.6387 | 9.8 | 0.1936 | **−0.0019** |
+| 256 | 0.8159/0.7358/0.6084 | 0.8233/0.7473/0.6179 | 13.3 | 0.1851 | −0.0262 |
+| 128 | 0.5796/0.4988/0.3985 | 0.7326/0.7117/0.5298 | 12.5 | 0.1148 | −0.2625 |
+
+**T = 512 is free** — FG-ARI −0.0019, below any noise scale here, and Foreground IoU *improves*
++0.0049. A quarter costs 0.02–0.03; an eighth collapses. So 512 is the right default for anything
+new.
+
+**But the cost motive is dead, and it was my error.** Per-frame: 10.8 s at 1024, 10.0 at 512, 8.8
+at 256, 8.7 at 128. **An 8× cut in rollout steps buys 19%**; the free 1024→512 step buys 7%. The
+rollout is not the bottleneck — per-image fixed cost is (encoder, graph, merge, I/O). I had
+written that cost was "linear in T, so ~1.4 s/frame at 128". It is not.
+
+**Two side findings.** Shorter windows **fragment more** (regions 8.0 → 9.8 → 13.3 against a truth
+of 6.36), and at T=128 the readout **under-claims foreground for the first time** (0.1148 against
+0.2115). And the head's value tracks how broken the core is, now shown by degrading one core
+rather than comparing two: head Δ FG-ARI is +0.0047 at T=1024 and **+0.1530 at T=128**, 33×. That
+is `PV2_0147`'s result on a cleaner axis.
+
+**The first run was wrong**: exactly 0.0000 at every reduced T, because `cache_any.py` had
+`spike_synchrony_components(..., settle=512, ...)` hardcoded — a third hardcoded `settle` my patch
+missed, having stated in its own docstring that three places must move together. At T ≤ 512 the
+foreground came back empty and `partition.py:40` returned all-background. Fixed, default-T path
+re-verified bit-identical, rerun. Bad log kept as `t_sweep_WRONG_settle512.log`.
