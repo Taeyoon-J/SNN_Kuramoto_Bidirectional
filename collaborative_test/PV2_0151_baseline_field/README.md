@@ -30,6 +30,9 @@ have always been (`PV2_0137`).
 | ItrSA | 0.5794 / 0.2787 / 0.3853 | 0.6319 / 0.7137 / 0.5687 | 0.4817 / 0.2489 / 0.6093 |
 | Slot Attention | 0.2872 / 0.2220 / 0.0801 | 0.1739 / 0.2192 / 0.1071 | 0.1930 / 0.0876 / 0.0680 |
 | **AKOrN (attn) + up-tiling ×4** | 0.6326 / 0.3468 / 0.3636 | 0.5484 / 0.7230 / 0.4167 | 0.5505 / 0.6539 / 0.6348 |
+| CtCAE | 0.2357 / 0.2148 / 0.0964 | 0.2681 / 0.2420 / 0.2034 | 0.3079 / 0.1158 / 0.1609 |
+| CAE++ | 0.2838 / 0.2193 / 0.0882 | 0.2715 / 0.2452 / 0.1901 | 0.2648 / 0.1048 / 0.1125 |
+| CAE | 0.1091 / 0.2008 / 0.0634 | 0.1526 / 0.2305 / 0.1192 | 0.1200 / 0.1038 / 0.0630 |
 | **best baseline, per cell** | 0.6326 / 0.4219 / 0.3853 | 0.7202 / 0.7540 / 0.5913 | 0.5505 / 0.6834 / 0.6348 |
 | **our margin over the best** | **+0.2095 / +0.3326 / +0.2557** | **+0.1378 / +0.0345 / +0.2260** | **+0.1469 / +0.1343 / +0.1280** |
 
@@ -82,6 +85,63 @@ conv variant at all. **Treat that single cell as unsettled.** The other eight ma
 So the field does not have a consistent second place: **which baseline is second depends on the
 dataset**, which is the behaviour of models that have not yet learned anything transferable.
 Ours is the only row that is first in all nine.
+
+### The synchrony-binding family, and the oracle we had to remove first
+
+CAE, CAE++ and CtCAE come from one repo ([agopal42/ctcae](https://github.com/agopal42/ctcae),
+commit `d550fa4`) that already supports all three of our datasets. Before any of it could be put
+in the table above, one thing had to be dealt with.
+
+**Their evaluation reads the number of clusters off the ground truth of each image.**
+`models/ctcae_eval.py:85,97`:
+
+```python
+num_clusters_img = int(len(torch.unique(labels_true[img_idx])))
+k_means = KMeans(n_clusters=num_clusters_img, n_init=10, random_state=seed).fit(in_phase)
+```
+
+`syncx/utils/utils_eval.py:159,172` is the same code, so SynCx inherits it. Under our contract
+that is an **oracle** — "anything that used the true object count or the true masks to pick a
+cluster count or a threshold is an oracle result and is reported separately as a diagnostic" —
+and it is a **stronger** form than AKOrN's, which fixes k to a per-dataset constant (4/7/11)
+rather than reading it per image. We watched it happen in a smoke run: KMeans was called with
+`n_clusters` 8 on one image and 5 on the next.
+
+**So the published CAE / CAE++ / CtCAE figures, and SynCx's comparison table that carries them,
+are oracle numbers.** Our 0.6974 on Multi-dSprites was obtained without knowing the object
+count. The two were never the same measurement.
+
+The rows above remove the oracle: `ctcae_eval_ours.py` reproduces their feature space exactly
+(their own `phase_to_cartesian_coordinates` on their own `complex_phase` and
+`clip_and_rescale(complex_magnitude, phase_mask_threshold)`, imported from their code) and
+changes one thing — **k is a per-dataset constant, chosen on validation** out of {4, 7, 11},
+the same constants AKOrN's own evaluator hardcodes, so the two baseline families are scored
+under one rule. The background rule is then chosen on validation by `bg_any.py` as for every
+other baseline.
+
+| model | k chosen on validation | selected background rule |
+|---|---|---|
+| CtCAE | 11 / 11 / 11 | border_largest / border_union / image_largest |
+| CAE++ | 11 / 11 / 7 | image_largest / border_largest / border_largest |
+| CAE | 11 / 11 / 4 | border_union / border_union / image_largest |
+
+All three land **below Slot Attention** and take no best-per-cell cell. Their predicted
+foreground runs **0.47–0.97** against truths of 0.09–0.24: they are not finding a background at
+all. Note that this is the family whose published Multi-dSprites numbers (0.05 / 0.51 / 0.56)
+sat around and above ours in the old comparison table — with the oracle, and at 64× the budget.
+
+**Their budget verdict, by their own metric** (`ARI-FG` as their `train.py` prints it, with the
+oracle still in place, on CLEVR test):
+
+| model | ours at 1/64 budget | published CLEVR | starved? |
+|---|---|---|---|
+| CAE | **0.1025** | 0.04 | **no — already past it** |
+| CAE++ | 0.1674 | 0.27 | yes |
+| CtCAE | 0.1203 | 0.54 | yes |
+
+The same shape as AKOrN's: the weakest variant of a family reaches its published number at a
+small fraction of the budget, and the stronger variants do not. Their default is 100,000 steps
+× batch 64 = 6,400,000 exposures, so 1,563 steps is **1/64** of their recipe.
 
 ### Each model's own metric, for comparability
 

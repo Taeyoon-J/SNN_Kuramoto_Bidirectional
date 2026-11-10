@@ -142,6 +142,64 @@
     "multi_dsprites": 0.1162
    },
    "budget_note": "far below its published numbers, so the 1/210 caveat applies to this row too"
+  },
+  {
+   "name": "CAE / CAE++ / CtCAE",
+   "repo": "https://github.com/agopal42/ctcae",
+   "commit": "d550fa4de08af28fbca96526e69c527e5c004018",
+   "paper": "Stanic, Gopalakrishnan, Irie, Schmidhuber, NeurIPS 2023, arXiv 2305.15001",
+   "config": "the repo's own *_clevr_64x64 profiles we added, mirroring its *_dsprites_64x64 architecture; -max_iterations 1563 -batch_size 64 -seed 0",
+   "exposures": 100032,
+   "published_default": "100,000 steps x batch 64 = 6,400,000 exposures, so this is 1/64 of their recipe",
+   "ORACLE_REMOVED": {
+    "what_they_do": "models/ctcae_eval.py:85,97 sets KMeans n_clusters to len(unique(labels_true[img])) -- the per-image ground-truth object count. syncx/utils/utils_eval.py:159,172 is the same code.",
+    "why_it_matters": "stronger than AKOrN's per-dataset constant (4/7/11); under our contract a per-image true count is an oracle and cannot sit in a comparable row",
+    "what_we_did": "ctcae_eval_ours.py reproduces their feature space by importing their own phase_to_cartesian_coordinates and clip_and_rescale, and replaces k with a per-dataset constant chosen on validation out of {4,7,11} -- the constants AKOrN's evaluator hardcodes, so both baseline families are scored under one rule",
+    "k_selected_on_validation": {
+     "ctcae": {
+      "clevr": 11,
+      "tetrominoes": 11,
+      "multi_dsprites": 11
+     },
+     "caepp": {
+      "clevr": 11,
+      "tetrominoes": 11,
+      "multi_dsprites": 7
+     },
+     "cae": {
+      "clevr": 11,
+      "tetrominoes": 11,
+      "multi_dsprites": 4
+     }
+    },
+    "validation_subsample": "first 320 frames of each validation split, so the cost of choosing k does not scale with the 1,000-frame Tetrominoes/Multi-dSprites splits; it only ever decides a hyperparameter"
+   },
+   "published_3seed_fg_ari_multi_dsprites_ORACLE": {
+    "cae": 0.05,
+    "caepp": 0.51,
+    "ctcae": 0.56,
+    "source": "SynCx comparison table, arXiv 2405.17283 -- and obtained with the oracle above"
+   },
+   "own_metric_clevr_test_ARI_FG_oracle_still_in": {
+    "cae": 0.1025,
+    "caepp": 0.1674,
+    "ctcae": 0.1203
+   },
+   "budget_note": "CAE already exceeds its published CLEVR number (0.1025 vs 0.04) at 1/64 of the budget; CAE++ and CtCAE do not (0.1674 vs 0.27, 0.1203 vs 0.54)",
+   "repo_fixes_needed": [
+    "data.py: CLEVR crop((64,29,256,221)) removed -- it assumes the 320x240 EMORL render; our frames are already 128x128 square",
+    "data.py: DATASET_IMG_RESOLUTION set to (64,64) for all three -- CLEVR's 96 does not divide our grid 64",
+    "train.py: added *_clevr_64x64 and *_tetrominoes_64x64 profiles reusing the repo's own *_dsprites_64x64 architecture",
+    "train.py: log_dir referenced args.model, which does not exist, so the use_wandb=0 path crashed (upstream bug)",
+    "data.py: torch._utils._accumulate was removed after the pinned torch 1.13; replaced with itertools.accumulate",
+    "environment: wandb and opencv installed; torch/triton caches moved off the NFS home, which gave stale-handle failures"
+   ],
+   "unmodified": [
+    "models/**",
+    "utils.py",
+    "utils_plot.py",
+    "utils_contrastive.py"
+   ]
   }
  ],
  "ours_for_comparison": {
@@ -330,6 +388,7 @@
  "next": [
   "a second seed for AKOrN (conv): it is the one baseline that is not budget-limited and it owns our narrowest margin (7 min)",
   "our own CLEVR seeds 1 and 2 remain the expensive unapproved item",
-  "Rotating Features and the complex autoencoders still need their own environments and loaders"
+  "SynCx (agopal42/syncx, same author and the same data/eval structure) is the cheapest remaining baseline; its published Multi-dSprites 0.82 is one of only two figures above ours and it carries the same per-image oracle",
+  "Rotating Features is the other figure above ours (0.84, SynCx's reproduction); its official repo supports 4Shapes/FoodSeg103/Pascal only, so it needs a loader written before it can be run at all"
  ]
 }

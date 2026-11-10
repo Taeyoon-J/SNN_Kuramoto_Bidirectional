@@ -17,6 +17,15 @@ PV2_0137,253_core_only,clevr,multi_dsprites,fixed320,320,64,patch,0,100032,16,0.
 PV2_0151,akorn_attn_uptile4,clevr,clevr,fixed320,320,64,patch,0,100000,256,0.6326,0.3468,0.3636,border_largest,0.6333,,0.6122,eval-time --saccade_r 4 / no retraining / best cell on CLEVR fg_ari
 PV2_0151,akorn_attn_uptile4,clevr,tetrominoes,fixed320,320,64,patch,0,100000,256,0.5484,0.7230,0.4167,image_largest,0.5488,,0.2919,zero-shot / worse than plain attn here
 PV2_0151,akorn_attn_uptile4,clevr,multi_dsprites,fixed320,320,64,patch,0,100000,256,0.5505,0.6539,0.6348,image_largest,0.5511,,0.1501,zero-shot / best cell on mds fg_ari and obj_iou
+PV2_0151,ctcae,clevr,clevr,fixed320,320,64,patch,0,100032,64,0.2357,0.2148,0.0964,border_largest,0.1203,,0.9203,oracle removed / k=11 on validation / 1/64 of its 100k-step recipe
+PV2_0151,ctcae,clevr,tetrominoes,fixed320,320,64,patch,0,100032,64,0.2681,0.2420,0.2034,border_union,,,0.9691,zero-shot / oracle removed / k=11
+PV2_0151,ctcae,clevr,multi_dsprites,fixed320,320,64,patch,0,100032,64,0.3079,0.1158,0.1609,image_largest,,,0.4736,zero-shot / oracle removed / k=11
+PV2_0151,caepp,clevr,clevr,fixed320,320,64,patch,0,100032,64,0.2838,0.2193,0.0882,image_largest,0.1674,,0.6895,oracle removed / k=11
+PV2_0151,caepp,clevr,tetrominoes,fixed320,320,64,patch,0,100032,64,0.2715,0.2452,0.1901,border_largest,,,0.9378,zero-shot / oracle removed / k=11
+PV2_0151,caepp,clevr,multi_dsprites,fixed320,320,64,patch,0,100032,64,0.2648,0.1048,0.1125,border_largest,,,0.8932,zero-shot / oracle removed / k=7
+PV2_0151,cae,clevr,clevr,fixed320,320,64,patch,0,100032,64,0.1091,0.2008,0.0634,border_union,0.1025,,0.9380,oracle removed / k=11 / its own metric 0.1025 already exceeds its published 0.04
+PV2_0151,cae,clevr,tetrominoes,fixed320,320,64,patch,0,100032,64,0.1526,0.2305,0.1192,border_union,,,0.9602,zero-shot / oracle removed / k=11
+PV2_0151,cae,clevr,multi_dsprites,fixed320,320,64,patch,0,100032,64,0.1200,0.1038,0.0630,image_largest,,,0.6080,zero-shot / oracle removed / k=4
 PV2_0151,BEST_BASELINE_PER_CELL,clevr,clevr,fixed320,320,64,patch,0,100000,,0.6326,0.4219,0.3853,,,,,composite of uptile4 / akorn_conv / itrsa
 PV2_0151,BEST_BASELINE_PER_CELL,clevr,tetrominoes,fixed320,320,64,patch,0,100000,,0.7202,0.7540,0.5913,,,,,all three from akorn_conv
 PV2_0151,BEST_BASELINE_PER_CELL,clevr,multi_dsprites,fixed320,320,64,patch,0,100000,,0.5505,0.6834,0.6348,,,,,composite of uptile4 / akorn_conv / uptile4
