@@ -95,10 +95,50 @@ generous noise assumption, and they point in opposite directions.
 | scored by | `evaluation_howto/score_cache.py` and `headseed.py`, both on `regions_253` |
 | full table | `CROSS_SUMMARY.txt` in this directory |
 
+## Recommendation: adopt `cont5000(Tetrominoes)`
+
+Leaving this as "a decision for someone else" was the wrong place to stop, because the deciding
+number had not been computed. The replacement criterion used above — win every cell against the
+*base core* — is not the criterion the project's claim rests on. The claim is the margin over the
+**best baseline per cell** (`PV2_0151`), and what matters there is the **weakest cell**, since that
+is the one that fails first.
+
+| core | cells won vs best baseline | **weakest cell** |
+|---|---|---|
+| base 253 | 9 / 9 | +0.0345 |
+| cont5000(Multi-dSprites) | 9 / 9 | +0.0459 |
+| **cont5000(Tetrominoes)** | **9 / 9** | **+0.0653** |
+
+All three win nine of nine. `cont5000(Tetrominoes)` **nearly doubles the weakest link**, +0.0345 →
++0.0653 (+89%), and that cell — Tetrominoes Foreground IoU — is the one `PV2_0151` singled out as
+the only unsettled margin in the whole comparison. The FG-ARI-first priority and the
+maximise-the-weakest-cell criterion pick the same core, which is the cleanest form this decision
+could have taken.
+
+Its nine margins in full:
+
+| dataset | fg_ari | foreground_iou | matched_object_iou |
+|---|---|---|---|
+| CLEVR | +0.2179 | +0.3233 | +0.2354 |
+| Tetrominoes | +0.1473 | **+0.0653** | +0.2300 |
+| Multi-dSprites | +0.1637 | +0.1355 | +0.1213 |
+
+**The cost, stated precisely.** CLEVR matched-object IoU falls 0.6410 → 0.6207 against our own
+previous core. It does **not** fall against any baseline: it is still +0.2354 over the best of
+eight. So adopting this core weakens no comparative claim and strengthens the weakest one. The
+regression is real, is against ourselves, and is reported rather than averaged away — as is
+Multi-dSprites matched-object IoU, −0.0067.
+
+**What adoption does not fix.** `PV2_0157`: this core predicts 17.94 objects on Tetrominoes
+against a truth of 3, with exact-match 0.003. It is the best core we have on the patch metrics and
+it still cannot count. Adoption changes which numbers we report, not that limitation.
+
+**One core seed**, as everywhere in this project.
+
 ## Next
 
-1. **Decide explicitly** whether FG-ARI-first promotes `cont5000(Tetrominoes)` over 253, given
-   the CLEVR matched-object IoU regression. That is a judgement about the goal, not a measurement.
+1. If the recommendation is taken, recompute `PV2_0151`'s table against this core (done above for
+   the margins) and say in the final report which core the headline uses.
 2. If it is promoted, `PV2_0151`'s nine-of-nine margins are recomputed against it — six of the
    nine baseline cells would widen and three (CLEVR FG-IoU, CLEVR obj-IoU, Multi-dSprites obj-IoU)
    would narrow.

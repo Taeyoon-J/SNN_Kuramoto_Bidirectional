@@ -16,7 +16,23 @@ bundle are on `patch_final`. Contract **v2**; split v1.
 > **On the stated FG-ARI-first priority the adoption candidate is cont5000(Tetrominoes)**, which
 > raises FG-ARI on all three (+0.0084 / +0.0095 / +0.0168) for CLEVR FG-IoU −0.0093 (allowed) and
 > obj-IoU −0.0203 (a named regression). PV2_0152 had called it disqualified; withdrawn.
-> **This is a decision to take explicitly, not a result to assume.**
+> **RECOMMENDATION (PV2_0156): adopt `cont5000(Tetrominoes)` as the reported core.** Leaving this
+> open was the wrong place to stop — the deciding number had not been computed. The claim rests on
+> the margin over the **best baseline per cell**, where the **weakest cell** fails first:
+>
+> | core | cells won | weakest cell |
+> |---|---|---|
+> | base 253 | 9/9 | +0.0345 |
+> | cont5000(Multi-dSprites) | 9/9 | +0.0459 |
+> | **cont5000(Tetrominoes)** | **9/9** | **+0.0653** |
+>
+> All three win 9/9; this one nearly **doubles the weakest link** (+89%), and that cell —
+> Tetrominoes Foreground IoU — is the only margin PV2_0151 flagged as unsettled. FG-ARI-first and
+> maximise-the-weakest-cell pick the same core.
+>
+> The cost: CLEVR matched-object IoU 0.6410 → 0.6207 **against our own previous core**; against
+> baselines it is still +0.2354 over the best of eight. So no comparative claim weakens.
+> It does not fix PV2_0157: this core still predicts 17.94 objects on Tetrominoes against 3.
 >
 > Off-diagonal surprise: continuing on **Tetrominoes** improves **Multi-dSprites** more (+0.0168)
 > than continuing on Multi-dSprites does (+0.0058) — evidence against reading cont5000 as domain
@@ -38,7 +54,21 @@ bundle are on `patch_final`. Contract **v2**; split v1.
 > objective is `primary + 5.*spike`. Every baseline we measured reconstructs the image, and a
 > reconstruction loss penalises splitting one object in two; ours contains no such pressure.
 >
-> **RUNNING:** `PV2_0154` T sweep on GPU 2 (CLEVR only, T 512/256/128, settle = T//2) and
+> **`PV2_0154` T SWEEP — first run WAS WRONG, rerun completed but unread.** The first pass gave
+> exactly 0.0000 on all three metrics at every reduced T. Cause: `cache_any.py` had
+> `spike_synchrony_components(..., settle=512, ...)` hardcoded — a third hardcoded `settle` my
+> patch missed — so at T<=512 the foreground came back empty and `partition.py:40` returned
+> all-background. Fixed (settle follows T//2), default-T regression re-verified bit-identical, and
+> the sweep rerun to completion. **Its `SUMMARY.txt` has not been read yet: the VPN dropped.** The
+> bad log is kept as `t_sweep_WRONG_settle512.log`.
+>
+> **One T-sweep finding already stands, and it kills the premise:** per-frame time is 9.2 s at
+> T=512, 8.8 s at 256, 8.7 s at 128 — an 8x cut in rollout steps buys **6%**. The rollout is not
+> the bottleneck; per-image overhead (encoder, graph, merge, I/O) is. "Shorten T to make everything
+> cheaper" is dead; only "does a shorter window still work" remains, and that is what the unread
+> SUMMARY.txt answers.
+>
+> **RUNNING:** `PV2_0154` T sweep rerun on GPU 2 (CLEVR only, T 512/256/128, settle = T//2) and
 > `PV2_0155` scaling curve on GPU 1 (cont1000: +1,000 **unseen** images x 10 epochs per stage,
 > 8 stages, ~50 h, scoring core + head + object count at every stage). GPU 0 is left alone: it
 > carries a compute process whose PID is not visible to us.
