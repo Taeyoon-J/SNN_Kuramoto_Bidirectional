@@ -70,8 +70,14 @@ Mean regions per image, against a truth of about 3:
 
 | dataset | base core | cont core | truth |
 |---|---|---|---|
-| Tetrominoes | 21.1 | **17.9** | ~3 |
-| CLEVR | 8.0 | **6.6** | ~3 |
+| Tetrominoes | 21.1 | **17.9** | 3.00 |
+| CLEVR | 8.0 | **6.6** | **6.36** |
+
+> **Correction (`PV2_0157`): CLEVR's truth is 6.36 objects per image, not ~3.** The earlier "~3"
+> was Tetrominoes' figure carried across by mistake, and it inverts this paragraph's argument:
+> 6.6 is not over-merged, it is the most accurate count of any core we have (MAE 1.99), and it
+> still has the worst matched-object IoU. So the loss below cannot be caused by joining objects.
+> `PV2_0157` measures this directly.
 
 Continued training **reduces fragmentation on both datasets**, including the one it never saw
 more of. Predicted foreground moves with it: Tetrominoes 0.2842 → 0.2661 against a truth of

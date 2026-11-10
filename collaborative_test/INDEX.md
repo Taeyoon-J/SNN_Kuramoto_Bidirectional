@@ -555,3 +555,66 @@ CLEVR.
 Still missing: **this core on Tetrominoes, and the Tetrominoes core on Multi-dSprites.** Each
 continued core has been scored on its own dataset and on CLEVR only, so neither can enter the
 three-dataset headline table yet.
+
+---
+
+## PV2_0156 — both continued cores on all three datasets: neither replaces 253
+
+`PV2_0156_cont5000_three_datasets/` — completed, one core seed.
+
+Each branch had been scored on its own dataset and CLEVR only. The two missing cells, filled:
+
+| core | CLEVR Δ | Tetrominoes Δ | Multi-dSprites Δ |
+| --- | --- | --- | --- |
+| cont5000(Multi-dSprites) | +0.0088/+0.0047/+0.0261 | **−0.0129**/+0.0114/**−0.0066** | +0.0058/+0.0119/+0.0130 |
+| cont5000(Tetrominoes) | +0.0084/**−0.0093**/**−0.0203** | +0.0095/+0.0308/+0.0040 | **+0.0168**/+0.0012/**−0.0067** |
+
+**Neither wins all nine**, so under the fixed criterion neither replaces 253. `PV2_0153`'s
+"best configuration this project has" is **withdrawn**: with Tetrominoes measured, that core loses
+two cells.
+
+**On the stated priority the better core is the other one.** FG-ARI first, Foreground IoU may give
+a little: `cont5000(Tetrominoes)` raises FG-ARI on **all three** datasets (+0.0084 / +0.0095 /
++0.0168) at the cost of CLEVR Foreground IoU −0.0093 and matched-object IoU −0.0203. `PV2_0152`
+had treated it as disqualified; that is withdrawn too.
+
+**And one result neither branch predicted:** a core continued on **Tetrominoes** improves
+**Multi-dSprites** more (+0.0168) than a core continued on Multi-dSprites does (+0.0058) — the
+largest FG-ARI gain in the test, and off-diagonal. That is evidence against reading `cont5000` as
+domain adaptation.
+
+---
+
+## PV2_0157 — object-count accuracy: the head halves it, and Tetrominoes never gets it right
+
+`PV2_0157_object_count/` — completed. The measurement no contract metric provides.
+
+True objects per image: CLEVR **6.36**, Tetrominoes **3.00**, Multi-dSprites **2.49**.
+(`PV2_0152` and `PV2_0153` both gave CLEVR as "~3.0" — Tetrominoes' figure, carried across by
+mistake. Both corrected.)
+
+| core | dataset | truth | pred | exact | MAE |
+| --- | --- | --- | --- | --- | --- |
+| base 253 | CLEVR | 6.36 | 8.04 | 0.175 | 2.88 |
+| base 253 | **Tetrominoes** | 3.00 | **21.07** | **0.000** | 18.07 |
+| base 253 | Multi-dSprites | 2.49 | 6.62 | 0.281 | 4.56 |
+| cont5000(Tetro) | CLEVR | 6.36 | **6.65** | 0.184 | **1.99** |
+| cont5000(mdS) | CLEVR | 6.36 | 9.90 | 0.144 | 4.20 |
+| base 253 **+head** | CLEVR | 6.36 | **12.90** | **0.035** | 6.59 |
+
+**Three findings.** (a) **The head buys its metric gains by splitting**: it raises the predicted
+count on every row without exception and cuts `exact` three- to five-fold. Its gains on the three
+contract metrics are +0.003 to +0.026, and none of those metrics can see this cost. (b)
+**Tetrominoes is a total failure at counting** — our best FG-ARI cell (0.8580) predicts 21 objects
+against a truth of exactly 3, `exact` precisely 0.000 across all 320 images. "The model groups the
+patches correctly" is true there; "the model finds the objects" is not. (c) **Count accuracy and
+matched-object IoU are inverted** on CLEVR (6.65/1.99 → worst obj-IoU; 9.90/4.20 → best), which
+settles `PV2_0152`'s withdrawn mechanism directly: the branch that loses obj-IoU has the *most
+accurate* count, so it cannot be merging objects away.
+
+**Why this is expected.** `model.py` and `loss.py` contain **no decoder and no reconstruction
+term** (zero matches for decoder/reconstruct/deconv/upsample); the objective is
+`primary + 5.*spike` over PLV structure and spike synchrony, and for 253 `self.head` is `None`.
+Every baseline we compare against reconstructs the image, and a reconstruction loss penalises
+splitting one object in two. Ours contains no such pressure, so nothing stops one tetromino
+becoming seven mutually-synchronous fragments. The count errors are a consequence of the design.

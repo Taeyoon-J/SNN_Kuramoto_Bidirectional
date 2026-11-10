@@ -1,9 +1,48 @@
 # STATUS
 
-Updated 2026-11-09 (evening). Branch `patch_v2`; the shipped version, `benchmark.md` and the script
+Updated 2026-11-09 (late). Branch `patch_v2`; the shipped version, `benchmark.md` and the script
 bundle are on `patch_final`. Contract **v2**; split v1.
 
 
+
+
+> ## RESUME POINT, 2026-11-09 (late) — three datasets done; neither cont core replaces 253
+>
+> **`PV2_0156`: both continued cores are now scored on all three datasets, and neither wins all
+> nine cells.** cont5000(Multi-dSprites) is 7/9 (loses Tetrominoes FG-ARI −0.0129 and obj-IoU
+> −0.0066); cont5000(Tetrominoes) is 6/9. `PV2_0153`'s "best configuration this project has" is
+> **withdrawn** — it rested on two datasets.
+>
+> **On the stated FG-ARI-first priority the adoption candidate is cont5000(Tetrominoes)**, which
+> raises FG-ARI on all three (+0.0084 / +0.0095 / +0.0168) for CLEVR FG-IoU −0.0093 (allowed) and
+> obj-IoU −0.0203 (a named regression). PV2_0152 had called it disqualified; withdrawn.
+> **This is a decision to take explicitly, not a result to assume.**
+>
+> Off-diagonal surprise: continuing on **Tetrominoes** improves **Multi-dSprites** more (+0.0168)
+> than continuing on Multi-dSprites does (+0.0058) — evidence against reading cont5000 as domain
+> adaptation.
+>
+> **`PV2_0157`: object-count accuracy, and it is the worst news in the project.** The head raises
+> the predicted count on every row and cuts exact-match three- to five-fold (CLEVR 0.175 → 0.035);
+> its gains on the three contract metrics are +0.003 to +0.026 and **none of them can see this
+> cost**. On Tetrominoes — our best FG-ARI cell, 0.8580 — the core predicts **21.07 objects against
+> a truth of exactly 3, with exact-match 0.000 across all 320 images.** Count accuracy and
+> matched-object IoU are inverted on CLEVR.
+>
+> Also corrected: `PV2_0152` and `PV2_0153` both gave CLEVR's true object count as "~3.0". It is
+> **6.36**; 3.0 is Tetrominoes'. The correction inverts those records' region-count arguments and
+> both now carry it.
+>
+> **Why the counts are bad is structural, and worth stating in the paper**: `model.py` and
+> `loss.py` have **no decoder and no reconstruction term**, and for 253 `self.head` is `None`. The
+> objective is `primary + 5.*spike`. Every baseline we measured reconstructs the image, and a
+> reconstruction loss penalises splitting one object in two; ours contains no such pressure.
+>
+> **RUNNING:** `PV2_0154` T sweep on GPU 2 (CLEVR only, T 512/256/128, settle = T//2) and
+> `PV2_0155` scaling curve on GPU 1 (cont1000: +1,000 **unseen** images x 10 epochs per stage,
+> 8 stages, ~50 h, scoring core + head + object count at every stage). GPU 0 is left alone: it
+> carries a compute process whose PID is not visible to us.
+>
 
 > ## RESUME POINT, 2026-11-09 (evening) — the Multi-dSprites branch is the best core we have
 >

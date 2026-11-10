@@ -43,6 +43,16 @@ With the head, all three CLEVR deltas clear twice the head-seed standard deviati
 **`cont5000(Multi-dSprites)` + head is the best configuration this project has: CLEVR
 0.8543 / 0.7609 / 0.6723 against the previous best 0.8468 / 0.7574 / 0.6456.**
 
+> **WITHDRAWN (`PV2_0156`).** That sentence rested on two datasets. Scored on Tetrominoes as
+> well, this core **loses two of nine cells** (FG-ARI −0.0129, matched-object IoU −0.0066), so it
+> is not the best configuration and does not meet the replacement criterion. On the stated
+> FG-ARI-first priority the better core is the *other* branch, `cont5000(Tetrominoes)`, which
+> raises FG-ARI on all three datasets. See `PV2_0156`.
+>
+> The CLEVR truth in the table below is also corrected from "~3.0" to **6.36** (`PV2_0157`),
+> which strengthens rather than weakens the refutation: the Tetrominoes branch's 6.6 is the most
+> accurate object count we have measured, so its matched-object IoU loss cannot be over-merging.
+
 ## This refutes PV2_0152's mechanism, and the diagnostic says why
 
 PV2_0152 attributed its Tetrominoes gain and its CLEVR object-IoU loss to one cause — fewer
@@ -50,7 +60,7 @@ regions. The two branches disagree on exactly that:
 
 | | base core | cont5000 **Tetrominoes** | cont5000 **Multi-dSprites** | truth |
 |---|---|---|---|---|
-| mean regions on CLEVR | 8.0 | **6.6** | **9.9** | ~3.0 |
+| mean regions on CLEVR | 8.0 | **6.6** | **9.9** | **6.36** |
 | CLEVR matched_object_iou | 0.6410 | 0.6207 (**−0.0203**) | 0.6671 (**+0.0261**) | |
 | CLEVR predicted foreground | 0.2001 | 0.2033 | 0.2205 | 0.2115 |
 
