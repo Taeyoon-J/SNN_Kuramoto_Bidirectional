@@ -14,9 +14,12 @@ PV2_0151,slot_attention,clevr,multi_dsprites,fixed320,320,64,patch,0,100032,64,0
 PV2_0137,253_core_only,clevr,clevr,fixed320,320,64,patch,0,100032,16,0.8421,0.7545,0.6410,,,,0.2001,ours / core alone / min_group 8
 PV2_0137,253_core_only,clevr,tetrominoes,fixed320,320,64,patch,0,100032,16,0.8580,0.7885,0.8173,,,,0.2842,ours / zero-shot / core alone
 PV2_0137,253_core_only,clevr,multi_dsprites,fixed320,320,64,patch,0,100032,16,0.6974,0.8177,0.7628,,,,0.0841,ours / zero-shot / core alone
-PV2_0151,BEST_BASELINE_PER_CELL,clevr,clevr,fixed320,320,64,patch,0,100000,,0.6046,0.4219,0.3853,,,,,composite of akorn_conv / akorn_conv / itrsa
+PV2_0151,akorn_attn_uptile4,clevr,clevr,fixed320,320,64,patch,0,100000,256,0.6326,0.3468,0.3636,border_largest,0.6333,,0.6122,eval-time --saccade_r 4 / no retraining / best cell on CLEVR fg_ari
+PV2_0151,akorn_attn_uptile4,clevr,tetrominoes,fixed320,320,64,patch,0,100000,256,0.5484,0.7230,0.4167,image_largest,0.5488,,0.2919,zero-shot / worse than plain attn here
+PV2_0151,akorn_attn_uptile4,clevr,multi_dsprites,fixed320,320,64,patch,0,100000,256,0.5505,0.6539,0.6348,image_largest,0.5511,,0.1501,zero-shot / best cell on mds fg_ari and obj_iou
+PV2_0151,BEST_BASELINE_PER_CELL,clevr,clevr,fixed320,320,64,patch,0,100000,,0.6326,0.4219,0.3853,,,,,composite of uptile4 / akorn_conv / itrsa
 PV2_0151,BEST_BASELINE_PER_CELL,clevr,tetrominoes,fixed320,320,64,patch,0,100000,,0.7202,0.7540,0.5913,,,,,all three from akorn_conv
-PV2_0151,BEST_BASELINE_PER_CELL,clevr,multi_dsprites,fixed320,320,64,patch,0,100000,,0.4817,0.6834,0.6093,,,,,composite of itrsa / akorn_conv / itrsa
-PV2_0151,OUR_MARGIN_OVER_BEST,clevr,clevr,fixed320,320,64,patch,0,,,0.2375,0.3326,0.2557,,,,,
+PV2_0151,BEST_BASELINE_PER_CELL,clevr,multi_dsprites,fixed320,320,64,patch,0,100000,,0.5505,0.6834,0.6348,,,,,composite of uptile4 / akorn_conv / uptile4
+PV2_0151,OUR_MARGIN_OVER_BEST,clevr,clevr,fixed320,320,64,patch,0,,,0.2095,0.3326,0.2557,,,,,
 PV2_0151,OUR_MARGIN_OVER_BEST,clevr,tetrominoes,fixed320,320,64,patch,0,,,0.1378,0.0345,0.2260,,,,,narrowest cell in the table is foreground_iou +0.0345
-PV2_0151,OUR_MARGIN_OVER_BEST,clevr,multi_dsprites,fixed320,320,64,patch,0,,,0.2157,0.1343,0.1535,,,,,
+PV2_0151,OUR_MARGIN_OVER_BEST,clevr,multi_dsprites,fixed320,320,64,patch,0,,,0.1469,0.1343,0.1280,,,,,up-tiling closed a third of the fg_ari margin here

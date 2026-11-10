@@ -29,8 +29,29 @@ have always been (`PV2_0137`).
 | AKOrN (conv) | 0.6046 / 0.4219 / 0.2769 | 0.7202 / 0.7540 / 0.5913 | 0.4055 / 0.6834 / 0.5434 |
 | ItrSA | 0.5794 / 0.2787 / 0.3853 | 0.6319 / 0.7137 / 0.5687 | 0.4817 / 0.2489 / 0.6093 |
 | Slot Attention | 0.2872 / 0.2220 / 0.0801 | 0.1739 / 0.2192 / 0.1071 | 0.1930 / 0.0876 / 0.0680 |
-| **best baseline, per cell** | 0.6046 / 0.4219 / 0.3853 | 0.7202 / 0.7540 / 0.5913 | 0.4817 / 0.6834 / 0.6093 |
-| **our margin over the best** | **+0.2375 / +0.3326 / +0.2557** | **+0.1378 / +0.0345 / +0.2260** | **+0.2157 / +0.1343 / +0.1535** |
+| **AKOrN (attn) + up-tiling ×4** | 0.6326 / 0.3468 / 0.3636 | 0.5484 / 0.7230 / 0.4167 | 0.5505 / 0.6539 / 0.6348 |
+| **best baseline, per cell** | 0.6326 / 0.4219 / 0.3853 | 0.7202 / 0.7540 / 0.5913 | 0.5505 / 0.6834 / 0.6348 |
+| **our margin over the best** | **+0.2095 / +0.3326 / +0.2557** | **+0.1378 / +0.0345 / +0.2260** | **+0.1469 / +0.1343 / +0.1280** |
+
+### AKOrN's own strongest setting, included so the objection cannot be raised
+
+AKOrN's authors report their best numbers with **up-tiling ×4**, which is `--saccade_r 4` — an
+**evaluation-time** option, so the seed-0 checkpoints above were reused unchanged with no
+retraining. Its published 3-seed FG-ARI in that configuration is the highest in their table
+(Tetrominoes 93.1, dSprites 87.1, CLEVR 94.6), so leaving it out would have been giving them
+less than their best.
+
+It is not uniformly better at our budget:
+
+| dataset | attn | attn + up-tiling ×4 | Δ fg_ari |
+|---|---|---|---|
+| CLEVR | 0.6027 / 0.3327 / 0.3750 | 0.6326 / 0.3468 / 0.3636 | **+0.0299** |
+| Tetrominoes | 0.5676 / 0.7383 / 0.4687 | 0.5484 / 0.7230 / 0.4167 | **−0.0192** |
+| Multi-dSprites | 0.4343 / 0.6019 / 0.5751 | 0.5505 / 0.6539 / 0.6348 | **+0.1162** |
+
+**It closes a third of our Multi-dSprites FG-ARI margin** (+0.2157 → +0.1469) and a sixth of the
+matched-object IoU one (+0.1535 → +0.1280), takes the best CLEVR FG-ARI cell from AKOrN (conv),
+and *loses* on Tetrominoes. Nine of nine still holds, and the narrowest cell is unchanged.
 
 **Nine cells out of nine, against the best baseline in each cell separately.** The best-per-cell
 row is a composite of three different models — no single baseline achieves it — so this is a
@@ -176,7 +197,15 @@ facts belong in the same sentence.
 1. **Seeds, on our side.** Nothing in PV2_0149–0151 changes the fact that our side is one seed.
 2. **A second seed for AKOrN (conv)**, because it is the one baseline that is not budget-limited
    and it owns our narrowest margin. 7 min.
-3. Rotating Features and the complex autoencoders still need their own environments and loaders.
+3. **Rotating Features and the complex autoencoders need more than an environment.** An earlier
+   version of this note (and `PV2_0149`) called them lower value "because their published numbers
+   are already directly comparable on Multi-dSprites". That reasoning is weaker than stated:
+   those figures come from **SynCx's comparison table** (arXiv 2405.17283,
+   `BENCHMARK_PLAN.md:97`), not from each model's own paper, and the official Rotating Features
+   repo (commit `7a2f38f`) supports **4Shapes, FoodSeg103 and Pascal VOC only** — no dSprites
+   support anywhere in it. Its 0.84, the one published number above ours on Multi-dSprites, is
+   therefore **a third-party reproduction we cannot check without writing a loader and a training
+   config ourselves.** That raises its value, not lowers it; it also raises its cost.
 
 ## Reproduce
 

@@ -12,7 +12,7 @@
  "hypothesis": "One baseline can be the wrong one. Add the two models that live in the same repo and ask whether ANY baseline in this field beats us in ANY cell at 100,000 exposures.",
  "changed_variable": "the baseline architecture; train ids, exposures, seed, evaluation ids, grid, evaluation function and background-rule selection all held fixed",
  "success_criterion": "our CLEVR-trained core beats the best baseline PER CELL on all three metrics on all three datasets",
- "outcome": "met at seed 0: 9 of 9 cells against a best-per-cell composite of three different models; narrowest margin Tetrominoes foreground_iou +0.0345, flagged as unsettled",
+ "outcome": "met at seed 0: 9 of 9 cells against a best-per-cell composite of three different models, AKOrN's own strongest setting (up-tiling x4) included; narrowest margin Tetrominoes foreground_iou +0.0345, flagged as unsettled",
  "data": {
   "split_manifest_version": "fixed320 reserved evaluation, not an independent original-paper TEST split",
   "evaluation_contract_version": "collaborative_test/evaluation_contract.md at 17d0fde",
@@ -115,6 +115,33 @@
    ],
    "published_3seed_fg_ari": "not reported by its authors on these three datasets at this protocol",
    "budget_note": "PV2_0149 already showed 320x more data moves its CLEVR FG-ARI only 0.2872 -> 0.3747 with Foreground IoU identical to four decimals, so the budget is not what limits it"
+  },
+  {
+   "name": "AKOrN (attn) + up-tiling x4",
+   "repo": "https://github.com/autonomousvision/akorn",
+   "commit": "eabbe2728c5b83836ce44f6d780b7cc37eea2a31",
+   "config": "the seed-0 attn checkpoint, re-evaluated with --saccade_r=4 --batchsize=80",
+   "retrained": false,
+   "note": "up-tiling x4 is eval_obj.py's --saccade_r (default 1, help text 'Uptiling factor'), so this needed no training. It is the configuration AKOrN's authors report as their best, which is why it is included: leaving it out would have given them less than their best.",
+   "checkpoint_sha256": {
+    "runs/s0_clevr_akorn_attn/ema_model.pth": "af8bd92fba6d25decffbe2eb9a91b85e5f8b3b5da01a8fa0d9570d09a2852dbe"
+   },
+   "published_3seed_fg_ari": {
+    "tetrominoes": "93.1+-0.3",
+    "dsprites": "87.1+-1.0",
+    "clevr": "94.6+-0.7"
+   },
+   "ours_at_this_budget_fg_ari": {
+    "tetrominoes": 54.8,
+    "dsprites": 55.1,
+    "clevr": 63.3
+   },
+   "effect_vs_plain_attn_fg_ari": {
+    "clevr": 0.0299,
+    "tetrominoes": -0.0192,
+    "multi_dsprites": 0.1162
+   },
+   "budget_note": "far below its published numbers, so the 1/210 caveat applies to this row too"
   }
  ],
  "ours_for_comparison": {
@@ -163,7 +190,7 @@
   },
   "best_baseline_per_cell": {
    "clevr": [
-    0.6046,
+    0.6326,
     0.4219,
     0.3853
    ],
@@ -173,14 +200,14 @@
     0.5913
    ],
    "multi_dsprites": [
-    0.4817,
+    0.5505,
     0.6834,
-    0.6093
+    0.6348
    ]
   },
   "our_margin_over_best": {
    "clevr": [
-    0.2375,
+    0.2095,
     0.3326,
     0.2557
    ],
@@ -190,9 +217,9 @@
     0.226
    ],
    "multi_dsprites": [
-    0.2157,
+    0.1469,
     0.1343,
-    0.1535
+    0.128
    ]
   },
   "slot_attention_zero_shot": {
@@ -211,6 +238,23 @@
     0.0876,
     0.068
    ]
+  },
+  "akorn_attn_uptile4": {
+   "clevr": [
+    0.6326,
+    0.3468,
+    0.3636
+   ],
+   "tetrominoes": [
+    0.5484,
+    0.723,
+    0.4167
+   ],
+   "multi_dsprites": [
+    0.5505,
+    0.6539,
+    0.6348
+   ]
   }
  },
  "own_metric_agreement_fg_ari": "ours vs each model's own eval_obj.py: <=0.0013 on every cell",
@@ -221,7 +265,8 @@
    "akorn_attn": 0.614,
    "akorn_conv": 0.4355,
    "itrsa": 0.7218,
-   "slot_attention": 0.7047
+   "slot_attention": 0.7047,
+   "akorn_attn_uptile4": 0.6122
   },
   "tetrominoes": {
    "truth": 0.2368,
@@ -229,7 +274,8 @@
    "akorn_attn": 0.28,
    "akorn_conv": 0.2997,
    "itrsa": 0.2787,
-   "slot_attention": 0.8396
+   "slot_attention": 0.8396,
+   "akorn_attn_uptile4": 0.2919
   },
   "multi_dsprites": {
    "truth": 0.0943,
@@ -237,7 +283,8 @@
    "akorn_attn": 0.1798,
    "akorn_conv": 0.107,
    "itrsa": 0.4988,
-   "slot_attention": 0.8486
+   "slot_attention": 0.8486,
+   "akorn_attn_uptile4": 0.1501
   }
  },
  "environment": {
@@ -269,7 +316,8 @@
  },
  "corrections_to_earlier_records": [
   "PV2_0150 README and commands.sh said 'Batch 250 x 40 batches x 10 epochs = 100,000 exposures exactly'. The argument default is 256, not 250, with a partial final batch, and PairDataset feeds two views per sample. The exposure count (10 passes over 10,000 unique images) is right; the arithmetic as written was not. No PV2_0150 number changes.",
-  "PV2_0151's own first draft listed Slot Attention's CLEVR background rule as global_largest with a predicted foreground of 0.8510. A_bg_rules.json says the selected rule was border_largest and the predicted foreground 0.7047; 0.8510 is the global_largest figure quoted in sa_bg.py's docstring. Corrected before the first push of the Slot Attention rows. No metric value changes."
+  "PV2_0151's own first draft listed Slot Attention's CLEVR background rule as global_largest with a predicted foreground of 0.8510. A_bg_rules.json says the selected rule was border_largest and the predicted foreground 0.7047; 0.8510 is the global_largest figure quoted in sa_bg.py's docstring. Corrected before the first push of the Slot Attention rows. No metric value changes.",
+  "PV2_0149 and this record's first draft justified deprioritising Rotating Features and the complex autoencoders on the grounds that 'their published numbers are already directly comparable on Multi-dSprites'. Checked: those figures come from SynCx's comparison table (arXiv 2405.17283, recorded at BENCHMARK_PLAN.md:97), not from each model's own paper, and the official Rotating Features repo (loeweX/RotatingFeatures, commit 7a2f38f) supports 4Shapes, FoodSeg103 and Pascal VOC only, with zero mentions of dSprites or multi-object-datasets. Its 0.84 is a third-party reproduction that is not checkable from the authors' code without a new loader and training config. No measured value in any record changes."
  ],
  "limitations": [
   "seed 0 everywhere; the contract judges 3-seed means",

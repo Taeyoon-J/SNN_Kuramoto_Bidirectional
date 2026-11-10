@@ -146,14 +146,22 @@ For Multi-dSprites, `Dataset.labels` and `Dataset.pixels` are the **identical 64
 (verified), so our grid-64 number *is* the pixel number and comparison with the published
 unsupervised synchrony family is legitimate:
 
-| model (unsupervised, pixel ARI-FG) | Multi-dSprites |
-|---|---|
-| CAE | 0.05 |
-| CAE++ | 0.51 |
-| CtCAE | 0.56 |
-| **ours, CLEVR-trained, zero-shot** | **0.6974** |
-| SynCx | 0.82 |
-| Rotating Features | 0.84 |
+| model (unsupervised, pixel ARI-FG) | Multi-dSprites | source |
+|---|---|---|
+| CAE | 0.05 | SynCx table |
+| CAE++ | 0.51 | SynCx table |
+| CtCAE | 0.56 | SynCx table |
+| **ours, CLEVR-trained, zero-shot** | **0.6974** | measured here |
+| SynCx | 0.82 ± 0.01 | its own paper |
+| Rotating Features | 0.84 ± 0.03 | **SynCx's reproduction, not its authors' own number** |
+
+**Sourcing, stated because it limits the comparison.** Every competitor figure in this table
+comes from one third-party table — SynCx, arXiv 2405.17283 (recorded at `BENCHMARK_PLAN.md:97`)
+— not from each model's own paper. For Rotating Features that matters concretely: its official
+repo (`loeweX/RotatingFeatures`, commit `7a2f38f`) supports **4Shapes, FoodSeg103 and Pascal VOC
+only**, with **zero mentions of dSprites or multi-object-datasets anywhere in it**. So 0.84 is
+not reproducible from the authors' code without writing a new loader and training config, and it
+is the one number above ours that we cannot currently check.
 
 Fourth of six, where our records previously had this dataset as *"loses, at a grid where winning
 was impossible."* **Ours is the only zero-shot row** — every other trained on Multi-dSprites. It
