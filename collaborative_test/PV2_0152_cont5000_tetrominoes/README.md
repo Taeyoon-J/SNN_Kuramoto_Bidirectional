@@ -60,6 +60,12 @@ little lower"; it is 4× the CLEVR FG-IoU loss and 41× the base head's std on t
 
 ## Why: it merges, and merging helps one metric and hurts another
 
+> **The general form of this section is WITHDRAWN (`PV2_0153`).** The same procedure on
+> Multi-dSprites *raises* CLEVR's region count (8.0 → 9.9, against 6.6 here) and *raises* CLEVR
+> matched-object IoU by +0.0261, where this branch lost 0.0203. So continued training does not
+> reduce fragmentation as such; it did on this branch. Everything below is the correct reading
+> of the Tetrominoes branch and nothing more.
+
 Mean regions per image, against a truth of about 3:
 
 | dataset | base core | cont core | truth |
@@ -130,9 +136,9 @@ CLEVR degrades measurably.
 
 ## Next
 
-1. **The Multi-dSprites branch** is at 8,943 of 9,380 updates (epoch 9 of 10), about 3.5 h out.
-   The same four rows on Multi-dSprites and CLEVR will say whether the merging effect is general
-   or a property of Tetrominoes' very sparse render.
+1. **Done (`PV2_0153`): the merging effect is NOT general.** The Multi-dSprites branch improves
+   all six cells, including the CLEVR matched-object IoU this branch lost. Of the two branches,
+   that one is the better core and this one is the cautionary case.
 2. **If `cont5000` is adopted, CLEVR matched-object IoU has to be reported as a regression**, not
    folded into an average. The three metrics are never combined, which is exactly why this test
    is readable at all.

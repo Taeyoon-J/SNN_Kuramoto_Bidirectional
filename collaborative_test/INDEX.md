@@ -516,3 +516,42 @@ that punishes two true objects landing in one region — falls. Same cause, oppo
 
 The Tetrominoes FG-IoU gain is the most robust number here: +0.0308 on test, independently
 +0.0328 on validation 160 before the evaluation split was touched.
+
+---
+
+## PV2_0153 — continuing on Multi-dSprites beats 253 on all six cells, and refutes PV2_0152
+
+`PV2_0153_cont5000_multi_dsprites/` — completed. One core seed each side; ± is head
+re-initialisation variance only.
+
+The identical procedure as `PV2_0152` — the finished CLEVR core, +5,000 × 10 = 50,000 more
+exposures — but on **Multi-dSprites**. PV2_0152 paid for its gains with CLEVR matched-object IoU
+(−0.0203) and explained that by merging. This branch pays nothing.
+
+| | Multi-dSprites test 320 | CLEVR fixed320 |
+| --- | --- | --- |
+| base core | 0.6974 / 0.8177 / 0.7628 | 0.8421 / 0.7545 / 0.6410 |
+| **cont core** | **0.7032 / 0.8296 / 0.7758** | **0.8509 / 0.7592 / 0.6671** |
+| Δ core | **+0.0058 / +0.0119 / +0.0130** | **+0.0088 / +0.0047 / +0.0261** |
+| base + head | 0.7037±0.0011 / 0.8234±0.0027 / 0.7687±0.0023 | 0.8468±0.0004 / 0.7575±0.0003 / 0.6460±0.0005 |
+| **cont + head** | **0.7063±0.0009 / 0.8306±0.0015 / 0.7776±0.0008** | **0.8543±0.0003 / 0.7609±0.0004 / 0.6723±0.0007** |
+
+**Six of six up, and the largest gain is the cell PV2_0152 lost** — CLEVR matched-object IoU
++0.0261 here against −0.0203 there. All three CLEVR head deltas clear twice the head-seed std.
+**`cont5000(Multi-dSprites)` + head is the best configuration in this project: CLEVR
+0.8543 / 0.7609 / 0.6723.**
+
+**PV2_0152's mechanism is withdrawn as a general claim.** Mean regions on CLEVR: base 8.0,
+Tetrominoes branch **6.6** (object IoU fell), Multi-dSprites branch **9.9** (object IoU rose).
+Continued training does not reduce fragmentation as such — it did on that branch. What the two
+share is the FG-ARI direction (+0.0095, +0.0088 on CLEVR); everything else depends on the
+continuation dataset. Multi-dSprites has 2–5 regions per image against CLEVR's 3–11; Tetrominoes
+has exactly 4 every time, and it is the branch that regressed.
+
+**The head direction, closed on Tetrominoes (`PV2_0146`), is open on this core**: it clears its
+own noise in five of six cells here against three of six on the base core, and in all three on
+CLEVR.
+
+Still missing: **this core on Tetrominoes, and the Tetrominoes core on Multi-dSprites.** Each
+continued core has been scored on its own dataset and on CLEVR only, so neither can enter the
+three-dataset headline table yet.

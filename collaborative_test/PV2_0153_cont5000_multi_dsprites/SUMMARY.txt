@@ -1,0 +1,23 @@
+cont5000(mds) = CLEVR 10,000x10 core, then +5,000x10 on Multi-dSprites.
+Head: fixed label-free recipe (local_rgb_trust, 2 epochs), 5 head seeds.
+Core alone is seed 0, one core. Compare with PV2_0152, the Tetrominoes branch.
+
+===== multi_dsprites test 320
+metric                base core         base +head  cont core         cont +head    d core    d head
+fg_ari                   0.6974       0.7037+-0.0011     0.7032       0.7063+-0.0009   +0.0058   +0.0026
+foreground_iou           0.8177       0.8234+-0.0027     0.8296       0.8306+-0.0015   +0.0119   +0.0072
+matched_object_iou       0.7628       0.7687+-0.0023     0.7758       0.7776+-0.0008   +0.0130   +0.0089
+  mean regions 7.9   predicted fg 0.0855   truth fg 0.0943
+
+===== clevr fixed320
+metric                base core         base +head  cont core         cont +head    d core    d head
+fg_ari                   0.8421       0.8468+-0.0004     0.8509       0.8543+-0.0003   +0.0088   +0.0075
+foreground_iou           0.7545       0.7575+-0.0003     0.7592       0.7609+-0.0004   +0.0047   +0.0034
+matched_object_iou       0.6410       0.6460+-0.0005     0.6671       0.6723+-0.0007   +0.0261   +0.0263
+  mean regions 9.9   predicted fg 0.2205   truth fg 0.2115
+  PV2_0152 (Tetrominoes branch) on this dataset: 0.8505 / 0.7452 / 0.6207
+  -> same direction?  yes NO NO
+
+READ THIS WITH CARE: one core seed on each side. The +-values are HEAD re-initialisation
+variance with the core held fixed; they are not core seed variance and must not be quoted
+as an error bar on the core comparison. Core seeds 1 and 2 were not run, by decision.

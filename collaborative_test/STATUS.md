@@ -1,8 +1,39 @@
 # STATUS
 
-Updated 2026-11-09. Branch `patch_v2`; the shipped version, `benchmark.md` and the script
+Updated 2026-11-09 (evening). Branch `patch_v2`; the shipped version, `benchmark.md` and the script
 bundle are on `patch_final`. Contract **v2**; split v1.
 
+
+
+> ## RESUME POINT, 2026-11-09 (evening) — the Multi-dSprites branch is the best core we have
+>
+> **`PV2_0153`: `cont5000(Multi-dSprites)` beats the base core on ALL SIX cells**, with and
+> without the head. Multi-dSprites 0.7032 / 0.8296 / 0.7758 and CLEVR 0.8509 / 0.7592 / 0.6671,
+> against base 0.6974 / 0.8177 / 0.7628 and 0.8421 / 0.7545 / 0.6410. With the head, CLEVR
+> **0.8543 / 0.7609 / 0.6723** — the best configuration measured in this project, and all three
+> CLEVR head deltas clear twice the head-seed std.
+>
+> **It refutes `PV2_0152`'s mechanism.** That branch (Tetrominoes) lost CLEVR matched-object IoU
+> −0.0203 and blamed merging; this one *gains* +0.0261 there, and CLEVR mean regions go the other
+> way (base 8.0, Tetrominoes branch 6.6, Multi-dSprites branch 9.9). The "it merges" paragraph is
+> withdrawn as a general claim and marked as such in PV2_0152.
+>
+> **The head direction is open on this core** — five of six cells clear head-seed noise against
+> three of six on the base core — which is the other branch of the standing instruction.
+>
+> **THE GAP TO CLOSE NEXT, and it is small:** each continued core has been scored on **its own
+> dataset and CLEVR only**. Missing: `cont5000(Multi-dSprites)` on **Tetrominoes**, and
+> `cont5000(Tetrominoes)` on **Multi-dSprites**. Until both exist neither core can enter the
+> three-dataset headline table. Copy `/work/USERS/tkim1/finish_mds.sh`; the cores are at
+> `/work/USERS/tkim1/sw0255b/run_br_mds/jobs/model253/multi_dsprites/seed0/` (sha256
+> `5fda9486…`) and `/work/USERS/tkim1/share/cont5000_tetrominoes/` (sha256 `ca8546b4…`).
+> Each missing cell is one 320-frame cache (~1 h) plus a 256-frame train cache for the head.
+>
+> **Baselines are at eight** (`PV2_0151`): Slot Attention, AKOrN attn / conv / attn+up-tiling×4,
+> ItrSA, CAE, CAE++, CtCAE. Nine of nine against the best-per-cell composite. The CAE family
+> needed a **per-image oracle removed** first — their eval reads the true object count into
+> KMeans — so their published figures, and SynCx's table that carries them, are oracle numbers.
+>
 
 > ## RESUME POINT, 2026-11-09 — cont5000 Tetrominoes is scored; core seeds are off the table
 >
