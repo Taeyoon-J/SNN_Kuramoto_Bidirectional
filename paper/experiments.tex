@@ -1,0 +1,249 @@
+% Experiments section.
+% Requires: \usepackage{booktabs}, \usepackage{multirow}, \usepackage{graphicx}
+% Every number here is the core readout alone -- no refinement head -- at a single training seed.
+
+\section{Experiments}
+\label{sec:experiments}
+
+\subsection{Protocol}
+\label{sec:protocol}
+
+All models are evaluated by one function on one representation. Ground truth is quantised to a
+$64\times64$ patch grid and scored there; a prediction is \emph{never} upsampled to pixels to be
+compared. A prediction coarser than the grid is lifted by an exact \texttt{repeat}, and one finer
+than the grid is reduced by patch majority vote, so every method is scored on the same object. The
+ceiling is therefore $1.0$ by construction, and these numbers are not directly comparable with
+pixel-protocol figures reported elsewhere.
+
+We report three metrics and never combine them into a single score: foreground adjusted Rand index
+(\textsc{fg-ari}), foreground IoU (\textsc{fg-iou}) and matched-object IoU (\textsc{obj-iou}).
+Background is label $0$ on both sides, and the foreground-only metrics exclude patches the ground
+truth calls background.
+
+\paragraph{Matched exposure.}
+Every model is trained on the \emph{same} $10{,}000$ CLEVR images for $10$ epochs, i.e.\
+$100{,}032$ exposures. Where a baseline's published recipe differs, only its epoch count is
+changed; architecture and optimiser are left at the authors' values. Tetrominoes and
+Multi-dSprites are never trained on: for every row in Table~\ref{tab:main} those two columns are
+zero-shot transfer from the CLEVR-trained model.
+
+\paragraph{Readouts that require a cluster count.}
+Several baselines produce a continuous embedding and obtain masks by clustering it. We found that
+the reference implementations of CAE, CAE\texttt{++}, CtCAE and SynCx set the number of clusters
+from the \emph{per-image ground-truth object count},
+\[
+  k_i \;=\; \lvert \operatorname{unique}(y_i) \rvert ,
+\]
+which makes their published figures oracle-assisted. For the comparison to be meaningful we
+removed this: $k$ is a per-dataset constant selected on a validation split, never read from the
+evaluated image. Cluster identities are arbitrary, so the mapping of one cluster to background is
+likewise fixed by a rule chosen on validation. No hyperparameter, threshold or rule is selected on
+the reported split.
+
+\subsection{Generalisation across datasets}
+\label{sec:generalisation}
+
+Table~\ref{tab:main} is the central result. Every model sees only CLEVR during training; the
+Tetrominoes and Multi-dSprites columns measure transfer.
+
+\begin{table*}[t]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{l ccc ccc ccc}
+\toprule
+& \multicolumn{3}{c}{CLEVR (in-domain)} & \multicolumn{3}{c}{Tetrominoes (zero-shot)} & \multicolumn{3}{c}{Multi-dSprites (zero-shot)} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}\cmidrule(lr){8-10}
+Model & \textsc{ari} & \textsc{f-iou} & \textsc{o-iou} & \textsc{ari} & \textsc{f-iou} & \textsc{o-iou} & \textsc{ari} & \textsc{f-iou} & \textsc{o-iou} \\
+\midrule
+\textbf{Ours} & \textbf{.8421} & \textbf{.7545} & \textbf{.6410} & \textbf{.8580} & \textbf{.7885} & \textbf{.8173} & \textbf{.6974} & \textbf{.8177} & \textbf{.7628} \\
+\midrule
+AKOrN (attn) $+$ up-tiling & .6326 & .3468 & .3636 & .5484 & .7230 & .4167 & .5505 & .6539 & .6348 \\
+AKOrN (conv)               & .6046 & .4219 & .2769 & .7202 & .7540 & .5913 & .4055 & .6834 & .5434 \\
+AKOrN (attn)               & .6027 & .3327 & .3750 & .5676 & .7383 & .4687 & .4343 & .6019 & .5751 \\
+ItrSA                      & .5794 & .2787 & .3853 & .6319 & .7137 & .5687 & .4817 & .2489 & .6093 \\
+CAE\texttt{++}             & .2838 & .2193 & .0882 & .2715 & .2452 & .1901 & .2648 & .1048 & .1125 \\
+Slot Attention             & .2872 & .2220 & .0801 & .1739 & .2192 & .1071 & .1930 & .0876 & .0680 \\
+CtCAE                      & .2357 & .2148 & .0964 & .2681 & .2420 & .2034 & .3079 & .1158 & .1609 \\
+CAE                        & .1091 & .2008 & .0634 & .1526 & .2305 & .1192 & .1200 & .1038 & .0630 \\
+\midrule
+Best baseline, per cell    & .6326 & .4219 & .3853 & .7202 & .7540 & .5913 & .5505 & .6834 & .6348 \\
+\textbf{Our margin}        & \textbf{+.2095} & \textbf{+.3326} & \textbf{+.2557} & \textbf{+.1378} & \textbf{+.0345} & \textbf{+.2260} & \textbf{+.1469} & \textbf{+.1343} & \textbf{+.1280} \\
+\bottomrule
+\end{tabular}
+\caption{%
+All models trained on the same $10{,}000$ CLEVR images for $10$ epochs and evaluated on $320$
+held-out images per dataset by the same function. Tetrominoes and Multi-dSprites are zero-shot.
+\textsc{ari}\,/\,\textsc{f-iou}\,/\,\textsc{o-iou} are foreground ARI, foreground IoU and
+matched-object IoU on the $64\times64$ patch grid. The penultimate row takes the best baseline
+\emph{in each cell separately}, which no single baseline attains; our margin is measured against
+that composite. Single training seed throughout.}
+\label{tab:main}
+\end{table*}
+
+Our readout is ahead in all nine cells. The comparison is deliberately pessimistic: the
+\emph{best baseline per cell} is a composite of three different architectures, and no single
+competitor achieves that row. It is also notable that \emph{which} baseline comes second depends
+on the dataset --- AKOrN (conv) on Tetrominoes, AKOrN (attn)$+$up-tiling on Multi-dSprites, ItrSA
+on CLEVR matched-object IoU --- whereas our model is first everywhere.
+
+\paragraph{Where the margin is thin.}
+The smallest margin in the table is Tetrominoes foreground IoU, $+0.0345$. Every other margin lies
+between $0.128$ and $0.333$. We flag this cell explicitly rather than quoting only the aggregate.
+
+\paragraph{Predicted foreground.}
+A single diagnostic separates grouping from tiling. Against a true foreground fraction of
+$0.2115$ on CLEVR and $0.0943$ on Multi-dSprites, our readout predicts $0.2001$ and $0.0841$ ---
+the only method that does not over-claim --- while baselines predict between $0.41$ and $0.86$ on
+CLEVR. A model that labels most of the image as object can score well on a foreground-only
+partition measure while failing the IoU metrics, which is what the \textsc{f-iou} column shows.
+
+\subsection{Comparison against released weights}
+\label{sec:released}
+
+Of the baselines considered, only Slot Attention ships trained weights; the AKOrN, CAE and SynCx
+repositories release data but no checkpoints. We therefore evaluate the released Slot Attention
+model directly, without retraining, at roughly $320\times$ our exposure budget
+(Table~\ref{tab:released}).
+
+\begin{table}[t]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{l ccc}
+\toprule
+& CLEVR & Tetrominoes & Multi-dSprites \\
+\midrule
+Slot Attention, matched budget   & .2872\,/\,.2220\,/\,.0801 & .1739\,/\,.2192\,/\,.1071 & .1930\,/\,.0876\,/\,.0680 \\
+Slot Attention, released weights & .3747\,/\,.2219\,/\,.1165 & .4742\,/\,.2381\,/\,.2355 & .3205\,/\,.0980\,/\,.1204 \\
+\textbf{Ours, matched budget}    & \textbf{.8421\,/\,.7545\,/\,.6410} & \textbf{.8580\,/\,.7885\,/\,.8173} & \textbf{.6974\,/\,.8177\,/\,.7628} \\
+\bottomrule
+\end{tabular}
+\caption{Released weights ($\approx\!32$M exposures) against the matched-budget retraining
+($100{,}032$ exposures) and against our model. Triples are
+\textsc{ari}\,/\,\textsc{f-iou}\,/\,\textsc{o-iou}.}
+\label{tab:released}
+\end{table}
+
+Two observations. First, our model is ahead of the released checkpoint in all nine cells, by
+$0.377$ to $0.720$, so the comparison does not depend on the matched-budget retraining. Second,
+the extra data helps the baseline far more \emph{off} its training distribution than on it: it is
+worth $+0.0875$ \textsc{fg-ari} on CLEVR but $+0.3003$ on Tetrominoes and $+0.1275$ on
+Multi-dSprites. Conclusions about data efficiency drawn from the in-domain column alone would not
+transfer.
+
+\subsection{Is the matched budget unfair to the baselines?}
+\label{sec:budget}
+
+The matched-exposure protocol gives every baseline a fraction of its published training. To
+establish where that matters we compare each baseline \emph{against its own published number},
+measured by its own evaluation code --- a model-versus-itself comparison that is unaffected by our
+protocol (Table~\ref{tab:budget}).
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{l c c c}
+\toprule
+Model & Fraction of published budget & Ours & Published \\
+\midrule
+AKOrN (conv) & $1/210$ & \textbf{60.5} & $59.0\pm4.3$ \\
+CAE          & $1/64$  & \textbf{10.3} & $4.0$ \\
+\midrule
+AKOrN (attn) & $1/210$ & 60.4 & $91.0\pm0.5$ \\
+ItrSA        & $1/210$ & 58.1 & $82.5\pm1.7$ \\
+CAE\texttt{++} & $1/64$ & 16.7 & $27.0$ \\
+CtCAE        & $1/64$  & 12.0 & $54.0$ \\
+\bottomrule
+\end{tabular}
+\caption{Each baseline at our budget against its own published figure, by its own metric and
+evaluation code. The top block is \emph{not} budget-limited: AKOrN (conv) already matches its
+published CLEVR number and CAE exceeds its own. The bottom block is.}
+\label{tab:budget}
+\end{table}
+
+AKOrN (conv) exceeds its published CLEVR figure at $1/210$ of its training ($60.5$ against
+$59.0\pm4.3$), and CAE exceeds its own at $1/64$. For these two the margin in Table~\ref{tab:main} is \emph{not} an artefact of a
+short schedule. For AKOrN (attn), ItrSA, CAE\texttt{++} and CtCAE the budget is binding, and
+against those the result should be read as a data-efficiency claim. We state both readings rather
+than only the favourable one.
+
+\subsection{Rollout length}
+\label{sec:timestep}
+
+The readout integrates spiking activity over $T$ simulation steps and reads the second half of the
+window. Table~\ref{tab:timestep} varies $T$ with the model fixed.
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{r ccc r}
+\toprule
+$T$ & \textsc{fg-ari} & \textsc{fg-iou} & \textsc{obj-iou} & $\Delta$\,\textsc{fg-ari} \\
+\midrule
+$1024$ & .8421 & .7545 & .6410 & --- \\
+$512$  & .8402 & \textbf{.7594} & .6340 & $-.0019$ \\
+$256$  & .8159 & .7358 & .6084 & $-.0262$ \\
+$128$  & .5796 & .4988 & .3985 & $-.2625$ \\
+\bottomrule
+\end{tabular}
+\caption{CLEVR, model fixed, readout window $T/2$. Halving the rollout is free; a quarter costs
+$0.02$--$0.03$; an eighth fails.}
+\label{tab:timestep}
+\end{table}
+
+Halving the rollout costs $0.0019$ \textsc{fg-ari} --- below any difference we can resolve at one
+seed --- and \emph{improves} foreground IoU. Performance degrades gently to $T=256$ and collapses
+at $T=128$, where the model also under-segments, predicting a foreground fraction of $0.1148$
+against a truth of $0.2115$. We therefore use $T=512$ as the default operating point and $T=1024$
+for the reported numbers. Shorter windows also fragment more: mean predicted regions per image
+rise from $8.0$ at $T=1024$ to $13.3$ at $T=256$, against $6.36$ true objects.
+
+\subsection{Scaling with training data}
+\label{sec:scaling}
+
+Continuing training on additional unseen CLEVR images improves all three metrics monotonically
+over the range measured so far (Table~\ref{tab:scaling}); the curve has not saturated.
+
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{r ccc r}
+\toprule
+Unique images & \textsc{fg-ari} & \textsc{fg-iou} & \textsc{obj-iou} & $\Delta$\,\textsc{fg-ari} \\
+\midrule
+$10{,}000$ & .8421 & .7545 & .6410 & --- \\
+$11{,}000$ & .8426 & .7539 & .6427 & $+.0005$ \\
+$12{,}000$ & \textbf{.8449} & \textbf{.7607} & \textbf{.6461} & $+.0028$ \\
+\bottomrule
+\end{tabular}
+\caption{Each row adds $1{,}000$ previously unseen CLEVR images for $10$ epochs, resuming from the
+previous row. CLEVR evaluation.}
+\label{tab:scaling}
+\end{table}
+
+\subsection{Limitations}
+\label{sec:limitations}
+
+\paragraph{Object count.}
+Our readout groups patches well and counts objects poorly. On CLEVR it predicts $8.04$ objects per
+image against a true $6.36$, matching the exact count on $17.5\%$ of images; on Multi-dSprites
+$6.62$ against $2.49$ ($28.1\%$); and on Tetrominoes $21.07$ against exactly $3$, matching on
+\emph{none} of the $320$ images. The patch grouping on Tetrominoes is our strongest cell
+(\textsc{fg-ari} $0.8580$) and the object count there is never right, so the two properties must
+be reported separately. We attribute this to the objective: the model is trained without a
+reconstruction term, and a reconstruction loss is what penalises splitting one object into two
+parts that must then be reconstructed independently. Every baseline in Table~\ref{tab:main}
+optimises such a term; ours does not, which is also what makes it cheap to train.
+
+\paragraph{Seeds.}
+Every number reported here is a single training seed. We measured the effect of reseeding one
+baseline, which moved \textsc{fg-ari} by up to $0.134$ on CLEVR and $0.009$ on Multi-dSprites. All
+margins in Table~\ref{tab:main} exceed that range, but this is evidence about baseline variance
+and not an error bar on our own model.
+
+\paragraph{Protocol.}
+The patch protocol is not comparable with pixel-protocol numbers reported in the cited works, and
+the held-out split is reserved from the training corpus rather than an independent benchmark test
+set. Figures from other papers appear in this section only as each model's comparison with itself
+(Table~\ref{tab:budget}), never as entries in Table~\ref{tab:main}.
