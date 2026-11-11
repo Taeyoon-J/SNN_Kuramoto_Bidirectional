@@ -1,5 +1,6 @@
 % Experiments section.
-% Requires: \usepackage{booktabs}, \usepackage{multirow}, \usepackage{graphicx}
+% Requires ONLY: \usepackage{booktabs}
+% (no amsmath, no multirow, no graphicx -- the one display formula uses plain LaTeX)
 % Every number here is the core readout alone -- no refinement head -- at a single training seed.
 
 \section{Experiments}
@@ -32,7 +33,7 @@ Several baselines produce a continuous embedding and obtain masks by clustering 
 the reference implementations of CAE, CAE\texttt{++}, CtCAE and SynCx set the number of clusters
 from the \emph{per-image ground-truth object count},
 \[
-  k_i \;=\; \lvert \operatorname{unique}(y_i) \rvert ,
+  k_i \;=\; \bigl| \mathrm{unique}(y_i) \bigr| ,
 \]
 which makes their published figures oracle-assisted. For the comparison to be meaningful we
 removed this: $k$ is a per-dataset constant selected on a validation split, never read from the
