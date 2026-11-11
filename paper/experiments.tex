@@ -1,6 +1,27 @@
-% Experiments section.
-% Requires ONLY: \usepackage{booktabs}
-% (no amsmath, no multirow, no graphicx -- the one display formula uses plain LaTeX)
+% Experiments section -- AAAI-27 (two-column, US Letter).
+%
+% PREAMBLE: this file adds ONE package to whatever the AAAI kit loads:
+%     \usepackage{booktabs}
+% booktabs only defines \toprule/\midrule/\bottomrule/\cmidrule and touches nothing in the
+% page layout, so it is compatible with the kit's restrictions. If your reviewers' build does
+% not have it, replace \toprule \midrule \bottomrule with \hline and \cmidrule(lr){a-b}
+% with \cline{a-b}; nothing else changes.
+%
+% AAAI CONFORMANCE, checked against the submission rules:
+%   - no geometry, no hyperref, no fontenc -- none are used here
+%   - no \vspace, \hspace or any macro that alters margins, font size or line spacing
+%   - no \includegraphics, so no trim/clip and no image-format question
+%   - no page numbers, headers or footers set here
+%   - two-column assumed: tab:main and tab:released span both columns via table*;
+%     tab:budget, tab:timestep and tab:scaling are sized to fit one 3.3in column
+%   - \small inside a float is ordinary table sizing, not a layout change
+%
+% PAGE BUDGET -- read this before including all of it. AAAI-27 allows 7 content pages.
+% Five floats (two full-width) occupy roughly 1.5 pages. If the section must be shorter,
+% cut in this order: (1) tab:scaling -- three points, state it in one sentence instead;
+% (2) tab:budget -- the two "not budget-limited" rows can be a sentence; (3) tab:released ->
+% supplementary. tab:main and tab:timestep are the two that carry the claims.
+%
 % Every number here is the core readout alone -- no refinement head -- at a single training seed.
 
 \section{Experiments}
@@ -107,7 +128,7 @@ repositories release data but no checkpoints. We therefore evaluate the released
 model directly, without retraining, at roughly $320\times$ our exposure budget
 (Table~\ref{tab:released}).
 
-\begin{table}[t]
+\begin{table*}[t]
 \centering
 \small
 \setlength{\tabcolsep}{4pt}
@@ -124,7 +145,7 @@ Slot Attention, released weights & .3747\,/\,.2219\,/\,.1165 & .4742\,/\,.2381\,
 ($100{,}032$ exposures) and against our model. Triples are
 \textsc{ari}\,/\,\textsc{f-iou}\,/\,\textsc{o-iou}.}
 \label{tab:released}
-\end{table}
+\end{table*}
 
 Two observations. First, our model is ahead of the released checkpoint in all nine cells, by
 $0.377$ to $0.720$, so the comparison does not depend on the matched-budget retraining. Second,
@@ -146,7 +167,7 @@ protocol (Table~\ref{tab:budget}).
 \small
 \begin{tabular}{l c c c}
 \toprule
-Model & Fraction of published budget & Ours & Published \\
+Model & Budget & Ours & Published \\
 \midrule
 AKOrN (conv) & $1/210$ & \textbf{60.5} & $59.0\pm4.3$ \\
 CAE          & $1/64$  & \textbf{10.3} & $4.0$ \\
@@ -158,8 +179,10 @@ CtCAE        & $1/64$  & 12.0 & $54.0$ \\
 \bottomrule
 \end{tabular}
 \caption{Each baseline at our budget against its own published figure, by its own metric and
-evaluation code. The top block is \emph{not} budget-limited: AKOrN (conv) already matches its
-published CLEVR number and CAE exceeds its own. The bottom block is.}
+evaluation code. \emph{Budget} is the fraction of the published training schedule our
+matched-exposure protocol gives it. The top block is \emph{not} budget-limited: AKOrN (conv)
+exceeds its published CLEVR number at $1/210$ of its schedule and CAE exceeds its own at $1/64$.
+The bottom block is.}
 \label{tab:budget}
 \end{table}
 
@@ -211,15 +234,16 @@ over the range measured so far (Table~\ref{tab:scaling}); the curve has not satu
 \small
 \begin{tabular}{r ccc r}
 \toprule
-Unique images & \textsc{fg-ari} & \textsc{fg-iou} & \textsc{obj-iou} & $\Delta$\,\textsc{fg-ari} \\
+Images & \textsc{fg-ari} & \textsc{fg-iou} & \textsc{obj-iou} & $\Delta$\,\textsc{fg-ari} \\
 \midrule
 $10{,}000$ & .8421 & .7545 & .6410 & --- \\
 $11{,}000$ & .8426 & .7539 & .6427 & $+.0005$ \\
 $12{,}000$ & \textbf{.8449} & \textbf{.7607} & \textbf{.6461} & $+.0028$ \\
 \bottomrule
 \end{tabular}
-\caption{Each row adds $1{,}000$ previously unseen CLEVR images for $10$ epochs, resuming from the
-previous row. CLEVR evaluation.}
+\caption{\emph{Images} is the cumulative count of unique training images. Each row adds $1{,}000$
+previously unseen CLEVR images for $10$ epochs, resuming from the previous row. CLEVR
+evaluation.}
 \label{tab:scaling}
 \end{table}
 
