@@ -1,0 +1,192 @@
+% Method section -- AAAI-27.
+%
+% Changes made for the AAAI kit, all mechanical:
+%   - Manual section numbers removed ("2. Method" -> "Method"). main_aaai.tex sets
+%     \setcounter{secnumdepth}{2}, so LaTeX numbers these itself and the numbers stay
+%     correct if a section is inserted ahead of this one. Put the numbers back by hand
+%     only if you also set secnumdepth to 0.
+%   - "(Dan and Wu 2026)" -> \citep{dan2026oscillatory}; the entry is in references.bib
+%     and aaai2027.bst renders it in AAAI's author-year style.
+%   - The hand-written "\section*{References}" and its single entry are gone: references
+%     belong in main.tex via \bibliography, not in an \input'ed section.
+%   - \clearpage removed -- the kit forbids it ("No page breaks of any kind").
+%   - \end{document} removed -- this file is \input'ed.
+%   - Appendix removed as requested, with its three \begin{table*} symbol tables.
+%     The \label{eq:...} marks are kept so the appendix can be re-attached unchanged.
+%
+% NEEDS, beyond what aaai2027.sty loads: \usepackage{amsmath} (gathered, aligned,
+% \operatorname, \boldsymbol, \eqref). It is not on the kit's forbidden list.
+
+\section{Method}
+\label{sec:method}
+
+Our model generates a separate mask for each discovered object by grouping image patches with
+similar temporal spike patterns. Inspired by S$^2$-Net \citep{dan2026oscillatory}, it converts an
+image into patch activations and uses coupled oscillators to regulate when patches spike.
+
+\subsection{From Images to Neural Activations}
+
+\subsubsection{Patch activation.}
+We encode an RGB image with eight convolutional filters, normalize and bound the feature maps, and
+pool them into patch activations. The patch activation, $\gamma_i$, represents patch $i$. The patch
+indices, $i$ and $j$, identify image patches; the component index, $a$, identifies an oscillator
+component; and the time index, $t$, identifies a simulation step.
+
+\subsubsection{Patch connection graph.}
+To connect related patches, we combine feature agreement with the paths between them.
+\begin{equation}
+S_{ij}=\frac{\boldsymbol z_i^\top\boldsymbol z_j}{\tau}-r\,d(i,j).
+\end{equation}
+The connection score, $S_{ij}$, compares the normalized patch embeddings, $\boldsymbol z_i$ and
+$\boldsymbol z_j$, using the temperature, $\tau$, and penalizes the geodesic distance, $d(i,j)$,
+using the spatial cost weight, $r$. $\tau$ and $r$ are derived from trainable scalars.
+
+We normalize the strongest connections and make their weights reciprocal.
+\begin{equation}
+\begin{gathered}
+ B_{ij}=G\,\operatorname{softmax}_{j\in\mathcal N_i}(S_{ij}),\\
+ A_{ij}=\frac{B_{ij}+B_{ji}}{2}.
+\end{gathered}
+\end{equation}
+For each patch $i$, the neighbor set, $\mathcal N_i$, contains the 512 patches with the highest
+connection scores, $S_{ij}$. The connection gain, $G$, is derived from a trainable scalar. The
+normalized connection weight, $B_{ij}$, is zero for unselected neighbors. The symmetric connection
+weight, $A_{ij}$, defines the patch graph.
+
+\subsubsection{Input phase.}
+A bounded phase input supplies image information to each oscillator.
+\begin{equation}
+\begin{gathered}
+\boldsymbol u_i=W_{\mathrm{drive}}\gamma_i,\\
+\boldsymbol\phi_i=\pi\tanh(W_\phi\,\bar{\boldsymbol u}_i),\qquad
+\boldsymbol\theta_i(0)=\boldsymbol\phi_i.
+\end{gathered}
+\end{equation}
+The projection matrix, $W_{\mathrm{drive}}\in\mathbb R^{4\times8}$, and the phase gain,
+$W_\phi\in\mathbb R$, are trainable weights. The projected input, $\boldsymbol u_i$, is
+standardized to obtain $\bar{\boldsymbol u}_i$. The sensory drive, $\boldsymbol\phi_i$,
+initializes the oscillator phase, $\boldsymbol\theta_i(0)$.
+
+\subsection{Recurrent Core}
+
+\subsubsection{Kuramoto layer.}
+Oscillators coordinate their phases through intrinsic drift, patch interactions, and sensory drive.
+\begin{equation}
+\begin{aligned}
+\boldsymbol\theta_i(t+1)={}&\boldsymbol\theta_i(t)+\Delta t\Bigl(
+\boldsymbol\omega_i+f\boldsymbol\phi_i\\
+&+\boldsymbol\kappa_i\odot\sin(\boldsymbol\phi_i-\boldsymbol\theta_i(t))\\
+&+\frac{K}{N}\sum_j\bar A_{ij}\sin\bigl(
+\boldsymbol\theta_j(t)-\boldsymbol\theta_i(t)-\alpha_{ij}\bigr)\Bigr).
+\end{aligned}
+\end{equation}
+The \textbf{natural frequency}, $\boldsymbol\omega_i$, gives each oscillator its intrinsic rate of
+phase change. The \textbf{coupling term}, the sum over $j$, adjusts the phase according to other
+patches, using the corrected connection weight, $\bar A_{ij}$, and the phase lag, $\alpha_{ij}$.
+The \textbf{drive term} uses the sensory drive, $\boldsymbol\phi_i$, to adjust frequency through
+$f$ and to pull the phase toward the input when the drive strength, $\boldsymbol\kappa_i$, is
+positive. The coupling scale, $K$, is normalized by the patch count, $N$. The time step, $\Delta
+t$, scales the update, and $\odot$ denotes elementwise multiplication. The parameters
+$\boldsymbol\omega_i$, $f$, and $\boldsymbol\kappa_i$ are trainable.
+
+\subsubsection{Sinusoidal gating.}
+The patch rhythm controls how oscillatory signals enter the spiking core.
+\begin{equation}
+\begin{gathered}
+\bar\theta_i(t)=\frac{1}{4}\sum_{a=1}^4\theta_{ia}(t),\\
+g_i(t)=\frac{1+\sin(\bar\theta_i(\max(0,t-2)))}{2}.
+\end{gathered}
+\end{equation}
+\begin{equation}
+\boldsymbol x_i(t)=g_i(t)\sin(\boldsymbol\theta_i(t)).
+\end{equation}
+The mean patch phase, $\bar\theta_i(t)$, summarizes the four oscillator phases in a patch. The
+delayed gate, $g_i(t)$, controls signal transmission using the patch phase from two steps earlier.
+The gated phase feature, $\boldsymbol x_i(t)$, carries the modulated oscillations to the dendritic
+layer.
+
+\subsubsection{Dendritic layer.}
+Four branches process the rhythmic input and previous spike before combining their responses.
+\begin{equation}
+\boldsymbol v_{ia}(t)=U\begin{pmatrix}x_{ia}(t)\\s_{ia}(t-1)\end{pmatrix}+\boldsymbol b.
+\end{equation}
+The branch input, $\boldsymbol v_{ia}(t)$, combines the gated feature, $x_{ia}(t)$, and the
+previous emitted spike, $s_{ia}(t-1)$. The previous spike provides top-down feedback from the
+spiking output to the dendritic branches. The projection weight, $U\in\mathbb R^{4\times2}$, and
+the bias, $\boldsymbol b\in\mathbb R^4$, are trainable.
+
+The provisional branch state, $\widehat{\boldsymbol h}_{ia}(t)$, balances the previous state and
+the current branch input through the retention vector, $\boldsymbol\beta_i$:
+\begin{equation}\label{eq:branch-provisional}
+\begin{aligned}
+\widehat{\boldsymbol h}_{ia}(t)={}&\boldsymbol\beta_i\odot\boldsymbol h_{ia}(t-1)\\
+&+(1-\boldsymbol\beta_i)\odot\boldsymbol v_{ia}(t).
+\end{aligned}
+\end{equation}
+\begin{equation}
+\begin{aligned}
+\boldsymbol h_{ia}(t)={}&\boldsymbol h_{ia}(t-1)
++\bigl(1-\eta_a(1-g_i(t))\bigr)\\
+&\quad{}\cdot\bigl(\widehat{\boldsymbol h}_{ia}(t)-\boldsymbol h_{ia}(t-1)\bigr),\\
+H_{ia}(t)={}&\sum_{b=1}^{4}h_{iab}(t).
+\end{aligned}
+\end{equation}
+The branch state, $\boldsymbol h_{ia}(t)$, moves toward the provisional branch state,
+$\widehat{\boldsymbol h}_{ia}(t)$, according to the gate and the trainable modulation weight,
+$\eta_a$. The branch index, $b$, selects an entry of $\boldsymbol h_{ia}(t)$; the membrane input,
+$H_{ia}(t)$, sums all four entries.
+
+\subsubsection{Membrane layer.}
+The provisional membrane voltage, $\widehat V_{ia}(t)$, balances the previous voltage and the
+current membrane input through the retention coefficient, $\lambda_i$, then subtracts a reset
+proportional to the previous spike:
+\begin{equation}\label{eq:membrane-provisional}
+\begin{aligned}
+\widehat V_{ia}(t)={}&\lambda_iV_{ia}(t-1)+(1-\lambda_i)H_{ia}(t)\\
+&-\vartheta_a s_{ia}(t-1).
+\end{aligned}
+\end{equation}
+\begin{equation}
+\begin{aligned}
+V_{ia}(t)={}&V_{ia}(t-1)+\bigl(1-\xi_a(1-g_i(t))\bigr)\\
+&\quad{}\cdot\bigl(\widehat V_{ia}(t)-V_{ia}(t-1)\bigr).
+\end{aligned}
+\end{equation}
+\begin{equation}
+\begin{gathered}
+e_{ia}(t)=\operatorname{ind}(V_{ia}(t)>\vartheta_a),\\
+s_{ia}(t)=g_i(t)e_{ia}(t).
+\end{gathered}
+\end{equation}
+The membrane voltage, $V_{ia}(t)$, moves toward the provisional voltage, $\widehat V_{ia}(t)$,
+according to the gate and the trainable modulation weight, $\xi_a$. The firing threshold,
+$\vartheta_a$, is derived from a trainable parameter. The indicator function, $\operatorname{ind}$,
+produces the binary firing event, $e_{ia}(t)$, which the gate scales to produce the emitted spike,
+$s_{ia}(t)$.
+
+\subsection{Spike Grouping and Mask Generation}
+
+We mean-center and L2-normalize the final 512 emitted spike samples for each oscillator component.
+The component correlation, $\rho_{ija}$, sums the products of corresponding samples in the
+normalized traces:
+\begin{equation}\label{eq:spike-correlation}
+\rho_{ija}=\operatorname{clip}\left(
+  \sum_{m=1}^{512} r_{ia,m}\,r_{ja,m},-1,1\right),
+\end{equation}
+where the sample index, $m$, runs over the retained time window. To obtain the patch affinity,
+$Q_{ij}$, we replace negative correlations with zero and multiply the resulting values across the
+four components. We form connected components by linking patch pairs with $Q_{ij}\geq0.5$, discard
+components smaller than 32 patches, and treat the largest remaining component as background.
+
+We start the retained foreground patches as singleton groups and merge spatially adjacent groups
+using
+\begin{equation}
+\begin{gathered}
+E_{ij}=\left(1+\frac{N\bar A_{ij}}{G}\right)\log\frac{Q'_{ij}}{1-Q'_{ij}},\\
+\Delta(\mathcal C,\mathcal D)=\sum_{i\in\mathcal C}\sum_{j\in\mathcal D}E_{ij}.
+\end{gathered}
+\end{equation}
+The stabilized affinity, $Q'_{ij}$, determines the sign of the merge evidence, $E_{ij}$. The merge
+score, $\Delta(\mathcal C,\mathcal D)$, sums the evidence between the candidate patch groups,
+$\mathcal C$ and $\mathcal D$. Groups are merged while their score is positive. Each final group
+produces an object mask.

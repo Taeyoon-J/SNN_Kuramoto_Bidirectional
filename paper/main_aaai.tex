@@ -31,15 +31,20 @@
 \usepackage{caption} % DO NOT CHANGE THIS AND DO NOT ADD ANY OPTIONS TO IT
 \frenchspacing  % DO NOT CHANGE THIS
 
-% Recommended for better-looking tables -- the kit's own wording. experiments.tex
-% needs this one and nothing else.
+% Recommended for better-looking tables -- the kit's own wording.
 \usepackage{booktabs}
+% aaai2027.sty does NOT load amsmath, and method.tex needs it: gathered, aligned,
+% \operatorname, \boldsymbol and \eqref all come from it. Not on the kit's forbidden list.
+\usepackage{amsmath}
 
 \pdfinfo{
 /TemplateVersion (2027.1)
 }
 
-\setcounter{secnumdepth}{0} % May be changed to 1 or 2 if section numbers are desired.
+% 2 so that \section/\subsection/\subsubsection are numbered automatically. method.tex
+% was written with manual numbers ("2. Method", "2.1 ..."); those were removed so the
+% numbering follows the actual section order. Set this to 0 only if you also put them back.
+\setcounter{secnumdepth}{2}
 
 \title{Kuramoto SNN Object Recognition}
 
@@ -58,8 +63,10 @@
 \section{Introduction}
 % TODO
 
+\input{method}
+
 \input{experiments}
 
-\bibliography{aaai2027}
+\bibliography{references}
 
 \end{document}
