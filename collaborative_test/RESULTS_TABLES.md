@@ -64,7 +64,7 @@ truth averages **6.36** objects per image.
 |---|---|---|---|---|---|
 | 10,000 | 0.8421 | 0.7545 | 0.6410 | — | 0.175 |
 | 11,000 | 0.8426 | 0.7539 | 0.6427 | +0.0005 | 0.203 |
-| 12,000 | -1 | -1 | -1 | -1 | -1 |
+| **12,000** | **0.8449** | **0.7607** | **0.6461** | **+0.0028** | **0.209** |
 | 13,000 | -1 | -1 | -1 | -1 | -1 |
 | 14,000 | -1 | -1 | -1 | -1 | -1 |
 | 15,000 | -1 | -1 | -1 | -1 | -1 |
@@ -72,9 +72,16 @@ truth averages **6.36** objects per image.
 | 17,000 | -1 | -1 | -1 | -1 | -1 |
 | 18,000 | -1 | -1 | -1 | -1 | -1 |
 
-**Status:** 12,000 is training now; 13,000–18,000 queued (`PV2_0155`, ~7 h per row). The first
-increment moved FG-ARI by **+0.0005** — nothing. For scale, `cont5000` (5,000 extra images) moved
-it **+0.0084**, so 1,000 may be below this curve's resolution.
+With the label-free head (5 seeds, mean): 10,000 → 0.8468 / 0.7575 / 0.6460;
+11,000 → 0.8467 / 0.7570 / 0.6479; 12,000 → **0.8486 / 0.7645 / 0.6506**.
+
+**Status:** 13,000 is training; 14,000–18,000 queued (`PV2_0155`, ~7 h per row).
+
+**It is rising, monotonically, and has not converged.** +0.0005 then +0.0028 on FG-ARI, and all
+three metrics up at 12,000. Object-count accuracy rises too (0.175 → 0.203 → 0.209) while mean
+regions stay at 7.9 against a truth of 6.36 — so the extra data is sharpening the partition
+rather than changing how much it splits. Two increments is not a convergence estimate; the
+remaining six rows are what answer that.
 
 > The graph of FG-ARI against train data is the deliverable here; with two points there is no
 > curve yet.
