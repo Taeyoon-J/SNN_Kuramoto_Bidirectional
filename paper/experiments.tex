@@ -16,6 +16,14 @@
 %     tab:budget, tab:timestep and tab:scaling are sized to fit one 3.3in column
 %   - \small inside a float is ordinary table sizing, not a layout change
 %
+% FLOAT PLACEMENT: table* uses [!t] and table uses [!tb]. The "!" tells LaTeX to
+% ignore \topfraction/\totalnumber/\dbltopfraction for that float, which is what
+% makes five floats queue up and get flushed together at the \FloatBarrier that
+% aaai2027.sty:422 puts before the bibliography. "b" is not available to table* --
+% bottom placement for a spanning float needs stfloats, which the kit forbids.
+% These are placement specifiers, not style changes, so they are permitted.
+% If tables still bunch, the real fix is fewer of them -- see the page budget below.
+%
 % PAGE BUDGET -- read this before including all of it. AAAI-27 allows 7 content pages.
 % Five floats (two full-width) occupy roughly 1.5 pages. If the section must be shorter,
 % cut in this order: (1) tab:scaling -- three points, state it in one sentence instead;
@@ -68,7 +76,7 @@ the reported split.
 Table~\ref{tab:main} is the central result. Every model sees only CLEVR during training; the
 Tetrominoes and Multi-dSprites columns measure transfer.
 
-\begin{table*}[t]
+\begin{table*}[!t]
 \centering
 \small
 \setlength{\tabcolsep}{4pt}
@@ -128,7 +136,7 @@ repositories release data but no checkpoints. We therefore evaluate the released
 model directly, without retraining, at roughly $320\times$ our exposure budget
 (Table~\ref{tab:released}).
 
-\begin{table*}[t]
+\begin{table*}[!t]
 \centering
 \small
 \setlength{\tabcolsep}{4pt}
@@ -162,7 +170,7 @@ establish where that matters we compare each baseline \emph{against its own publ
 measured by its own evaluation code --- a model-versus-itself comparison that is unaffected by our
 protocol (Table~\ref{tab:budget}).
 
-\begin{table}[t]
+\begin{table}[!tb]
 \centering
 \small
 \begin{tabular}{l c c c}
@@ -198,7 +206,7 @@ than only the favourable one.
 The readout integrates spiking activity over $T$ simulation steps and reads the second half of the
 window. Table~\ref{tab:timestep} varies $T$ with the model fixed.
 
-\begin{table}[t]
+\begin{table}[!tb]
 \centering
 \small
 \begin{tabular}{r ccc r}
@@ -229,7 +237,7 @@ rise from $8.0$ at $T=1024$ to $13.3$ at $T=256$, against $6.36$ true objects.
 Continuing training on additional unseen CLEVR images improves all three metrics monotonically
 over the range measured so far (Table~\ref{tab:scaling}); the curve has not saturated.
 
-\begin{table}[t]
+\begin{table}[!tb]
 \centering
 \small
 \begin{tabular}{r ccc r}
