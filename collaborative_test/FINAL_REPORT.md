@@ -40,6 +40,48 @@ The score comes from a classifier on spikes (`spike_synchrony_components` →
 `foreground_induced_merge`), with no head required for those two numbers. A head adds a small,
 reproducible gain on CLEVR and Multi-dSprites and nothing measurable on Tetrominoes.
 
+### 1.1 Beating 253 — `cont5000(Tetrominoes)`
+
+The head direction is **closed on Tetrominoes** (`PV2_0146`: −0.0020 / +0.0003 / −0.0008 over
+five head seeds), so the instruction for that case was to beat 253 **through the core**.
+Continuing the finished CLEVR core for **5,000 × 10 = 50,000 more exposures on Tetrominoes**
+does it, by the stated rule — FG-ARI first, Foreground IoU may give a little:
+
+| dataset | 253 core | **cont5000(Tetrominoes)** | Δ |
+|---|---|---|---|
+| CLEVR fixed320 | 0.8421 / 0.7545 / 0.6410 | **0.8505** / 0.7452 / 0.6207 | **+0.0084** / −0.0093 / **−0.0203** |
+| Tetrominoes test | 0.8580 / 0.7885 / 0.8173 | **0.8675 / 0.8193 / 0.8213** | **+0.0095** / +0.0308 / +0.0040 |
+| Multi-dSprites test | 0.6974 / 0.8177 / 0.7628 | **0.7142 / 0.8189** / 0.7561 | **+0.0168** / +0.0012 / −0.0067 |
+
+**FG-ARI rises on all three datasets.** Foreground IoU falls only on CLEVR, by 0.0093, which the
+instruction explicitly permits. The same holds with the head (`PV2_0156`).
+
+**Why this core and not the other branch.** `cont5000(Multi-dSprites)` wins more cells against the
+base core (7/9 against 6/9) but **loses Tetrominoes FG-ARI** (−0.0129), so it fails the stated
+rule. More decisively, the project's claim is the margin over the **best baseline per cell**, where
+the **weakest cell** fails first:
+
+| core | cells won vs best baseline | **weakest cell** |
+|---|---|---|
+| 253 | 9 / 9 | +0.0345 |
+| cont5000(Multi-dSprites) | 9 / 9 | +0.0459 |
+| **cont5000(Tetrominoes)** | **9 / 9** | **+0.0653** |
+
+All three win nine of nine; this one **nearly doubles the weakest link** (+89%), and that cell —
+Tetrominoes Foreground IoU — is the one margin `PV2_0151` flagged as unsettled. FG-ARI-first and
+maximise-the-weakest-cell select the same core.
+
+**The cost, named rather than averaged away.** CLEVR matched-object IoU falls 0.6410 → 0.6207
+**against our own previous core**; against baselines it is still +0.2354 over the best of eight,
+so no comparative claim weakens. Multi-dSprites matched-object IoU −0.0067 likewise.
+
+**What it does not fix.** `PV2_0157`: this core predicts **17.94 objects on Tetrominoes against a
+truth of 3**, exact-match 0.003. It is the best core we have on the patch metrics and it still
+cannot count. Adoption changes which numbers we report, not that.
+
+**One core seed**, as everywhere here. This is a reversible reporting choice: every base-253 row
+in this document is kept beside it.
+
 ---
 
 ## 2. The controlled test — is a CLEVR-trained core really better than a core trained on the target?
