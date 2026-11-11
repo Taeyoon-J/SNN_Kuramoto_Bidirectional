@@ -92,7 +92,7 @@ columns; they are given in the `trained info` column instead, as context, not as
 | | CLEVR AG-ARI | CLEVR FG-IoU | CLEVR Obj-IoU | Tetro AG-ARI | Tetro FG-IoU | Tetro Obj-IoU | mdS AG-ARI | mdS FG-IoU | mdS Obj-IoU | trained info |
 |---|---|---|---|---|---|---|---|---|---|---|
 | **253** | **0.8421** | **0.7545** | **0.6410** | **0.8580** | **0.7885** | **0.8173** | **0.6974** | **0.8177** | **0.7628** | CLEVR 10,000 × 10 = 100,032 exposures. **This is our full recipe**, so rows 1 and 4 are the same for us. |
-| Slot Attention | 0.3747 | 0.2219 | 0.1165 | -1 | -1 | -1 | -1 | -1 | -1 | published checkpoint, ~32M exposures (320×), trained on the **original CLEVR render**, not ours. Transfer, single checkpoint. |
+| Slot Attention | 0.3747 | 0.2219 | 0.1165 | **0.4742** | **0.2381** | **0.2355** | **0.3205** | **0.0980** | **0.1204** | published checkpoint, ~32M exposures (320×), trained on the **original CLEVR render**, not ours. Transfer, single checkpoint. All three datasets measured. |
 | AKOrN (conv) | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | published: 300 epochs × ~70k ≈ 21M exposures (210×). Published 3-seed FG-ARI (pixel protocol): Tetro 76.4±0.8, dSprites 63.8±7.7, CLEVR 59.0±4.3 |
 | AKOrN (attn) | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | same budget. Published 3-seed: 88.6±1.7 / 78.3±1.3 / 91.0±0.5 |
 | AKOrN attn + up-tiling ×4 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | same budget, eval-time option. Published 3-seed: 93.1±0.3 / 87.1±1.0 / 94.6±0.7 |
@@ -124,9 +124,23 @@ CAE family: 64× the runs already done, ~18 h per model. Slot Attention: its 500
 (`PV2_0139`, written, unrun). Each also needs evaluating on all three datasets.
 
 **Slot Attention is the only baseline whose authors released weights**, which is why it is the only
-non-`-1` row here — and its Tetrominoes and Multi-dSprites cells are still `-1` because that
-checkpoint has only been run on CLEVR. Those two are cheap (inference only) and are the single
-easiest thing left in this table.
+non-`-1` row here. Its Tetrominoes and Multi-dSprites cells are now measured too (inference only,
+no training), and they change what that row says:
+
+| Slot Attention | CLEVR | Tetrominoes | Multi-dSprites |
+|---|---|---|---|
+| retrained on our render, our budget (100,032 exp.) | 0.2872 / 0.2220 / 0.0801 | 0.1739 / 0.2192 / 0.1071 | 0.1930 / 0.0876 / 0.0680 |
+| **published checkpoint (~32M exp.)** | 0.3747 / 0.2219 / 0.1165 | **0.4742 / 0.2381 / 0.2355** | **0.3205 / 0.0980 / 0.1204** |
+| our 253 core | **0.8421 / 0.7545 / 0.6410** | **0.8580 / 0.7885 / 0.8173** | **0.6974 / 0.8177 / 0.7628** |
+
+**The budget matters far more off its training set than on it.** On CLEVR the extra 320× of data
+buys +0.0875 FG-ARI; zero-shot it buys **+0.3003 on Tetrominoes (2.7×)** and +0.1275 on
+Multi-dSprites (1.7×). `PV2_0149`'s "320× more data barely moves it" was measured on CLEVR only
+and does not hold for transfer — noted there.
+
+**We beat the published checkpoint on all nine cells**, by +0.3769 to +0.7197. So "we beat Slot
+Attention" now holds against its own released weights on three datasets, not only against the
+version retrained at our budget.
 
 **One row already answers part of it.** At 1/64 of its budget CAE **exceeds** its published CLEVR
 number by its own metric (0.1025 vs 0.04), and AKOrN (conv) at 1/210 **matches** its published

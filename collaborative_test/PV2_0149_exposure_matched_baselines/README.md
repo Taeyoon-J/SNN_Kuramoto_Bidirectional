@@ -20,6 +20,13 @@ TITAN RTX. Its background rule was chosen on validation out of the same four fix
 
 ## The finding that matters more
 
+> **QUALIFIED (2026-11-10).** What follows was measured on **CLEVR only**, and it does not hold
+> for transfer. Run zero-shot on the other two datasets, the published checkpoint beats the
+> exposure-matched one by a wide margin: Tetrominoes FG-ARI **0.4742 vs 0.1739 (2.7×)** and
+> Multi-dSprites **0.3205 vs 0.1930 (1.7×)**. So the extra 320× of data buys +0.0875 on the
+> render it trained on and **+0.3003 off it**. The sentence below is true of CLEVR and false as a
+> general statement about the budget. Full rows in `RESULTS_TABLES.md`.
+
 **Giving Slot Attention 320× more data barely moves it on our render**: FG-ARI 0.2872 → 0.3747,
 and Foreground IoU is *identical* to four decimals (0.2220 → 0.2219). Both checkpoints use
 **6.89 and 6.91 of 7 slots per image** with near-equal shares:
