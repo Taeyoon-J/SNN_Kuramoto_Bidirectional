@@ -40,7 +40,11 @@ The score comes from a classifier on spikes (`spike_synchrony_components` →
 `foreground_induced_merge`), with no head required for those two numbers. A head adds a small,
 reproducible gain on CLEVR and Multi-dSprites and nothing measurable on Tetrominoes.
 
-### 1.1 Beating 253 — `cont5000(Tetrominoes)`
+### 1.1 A core that beats 253 under the stated rule — `cont5000(Tetrominoes)`
+
+> **Status: found and measured, NOT adopted.** The headline rows above are still the 253 core.
+> Switching the reported core is the user's call and has not been made; this section is the
+> answer to "find a way to beat 253", with the evidence for it and the one regression it costs.
 
 The head direction is **closed on Tetrominoes** (`PV2_0146`: −0.0020 / +0.0003 / −0.0008 over
 five head seeds), so the instruction for that case was to beat 253 **through the core**.
@@ -79,8 +83,8 @@ so no comparative claim weakens. Multi-dSprites matched-object IoU −0.0067 lik
 truth of 3**, exact-match 0.003. It is the best core we have on the patch metrics and it still
 cannot count. Adoption changes which numbers we report, not that.
 
-**One core seed**, as everywhere here. This is a reversible reporting choice: every base-253 row
-in this document is kept beside it.
+**One core seed**, as everywhere here. Nothing above this section has been rewritten: every
+base-253 row stands, so adopting or declining this core is a one-line change either way.
 
 ---
 
