@@ -1,4 +1,4 @@
-table,row,CLEVR_AG_ARI,CLEVR_FG_IoU,CLEVR_Obj_IoU,Tetro_AG_ARI,Tetro_FG_IoU,Tetro_Obj_IoU,mdS_AG_ARI,mdS_FG_IoU,mdS_Obj_IoU,extra,trained_info
+table,row,CLEVR_AG_ARI,CLEVR_FG_IoU,CLEVR_Obj_IoU,Tetro_AG_ARI,Tetro_FG_IoU,Tetro_Obj_IoU,mdS_AG_ARI,mdS_FG_IoU,mdS_Obj_IoU,checkpoint_status,trained_info
 1_interusability,253,0.8421,0.7545,0.6410,0.8580,0.7885,0.8173,0.6974,0.8177,0.7628,,CLEVR 10000x10
 1_interusability,Slot Attention,0.2872,0.2220,0.0801,0.1739,0.2192,0.1071,0.1930,0.0876,0.0680,,CLEVR 10000x10
 1_interusability,AKOrN (conv),0.6046,0.4219,0.2769,0.7202,0.7540,0.5913,0.4055,0.6834,0.5434,,CLEVR 10000x10
@@ -22,11 +22,11 @@ table,row,CLEVR_AG_ARI,CLEVR_FG_IoU,CLEVR_Obj_IoU,Tetro_AG_ARI,Tetro_FG_IoU,Tetr
 3_scale,17000,-1,-1,-1,,,,,,,-1,queued
 3_scale,18000,-1,-1,-1,,,,,,,-1,queued
 4_optimal,253,0.8421,0.7545,0.6410,0.8580,0.7885,0.8173,0.6974,0.8177,0.7628,,CLEVR 10000x10 = 100032 exposures / this IS our full recipe
-4_optimal,Slot Attention,0.3747,0.2219,0.1165,-1,-1,-1,-1,-1,-1,,published checkpoint ~32M exposures / original CLEVR render / transfer
-4_optimal,AKOrN (conv),-1,-1,-1,-1,-1,-1,-1,-1,-1,,300ep x 70k = ~21M (210x) / published pixel-protocol 76.4 63.8 59.0
-4_optimal,AKOrN (attn),-1,-1,-1,-1,-1,-1,-1,-1,-1,,same / published 88.6 78.3 91.0
-4_optimal,AKOrN attn+up-tiling,-1,-1,-1,-1,-1,-1,-1,-1,-1,,same / published 93.1 87.1 94.6
-4_optimal,ItrSA,-1,-1,-1,-1,-1,-1,-1,-1,-1,,same / published 85.8 68.1 82.5
-4_optimal,CAE++,-1,-1,-1,-1,-1,-1,-1,-1,-1,,100k steps x 64 = 6.4M (64x) / published dSprites 0.51 WITH ORACLE
-4_optimal,CtCAE,-1,-1,-1,-1,-1,-1,-1,-1,-1,,same / published dSprites 0.56 WITH ORACLE
-4_optimal,CAE,-1,-1,-1,-1,-1,-1,-1,-1,-1,,same / published dSprites 0.05 WITH ORACLE
+4_optimal,Slot Attention,0.3747,0.2219,0.1165,-1,-1,-1,-1,-1,-1,PUBLIC CHECKPOINT USED,published checkpoint ~32M exposures / original CLEVR render / the ONLY baseline whose authors released weights / Tetro+mdS not yet run on it
+4_optimal,AKOrN (conv),-1,-1,-1,-1,-1,-1,-1,-1,-1,NO PUBLIC CHECKPOINT,300ep x 70k = ~21M (210x) / published pixel-protocol 76.4 63.8 59.0 / authors release no weights: no releases on GitHub and no weight URL in the repo
+4_optimal,AKOrN (attn),-1,-1,-1,-1,-1,-1,-1,-1,-1,NO PUBLIC CHECKPOINT,same / published 88.6 78.3 91.0 / same repo, no weights released
+4_optimal,AKOrN attn+up-tiling,-1,-1,-1,-1,-1,-1,-1,-1,-1,NO PUBLIC CHECKPOINT,same / published 93.1 87.1 94.6 / eval-time option on a checkpoint that is not released
+4_optimal,ItrSA,-1,-1,-1,-1,-1,-1,-1,-1,-1,NO PUBLIC CHECKPOINT,same / published 85.8 68.1 82.5 / same repo, no weights released
+4_optimal,CAE++,-1,-1,-1,-1,-1,-1,-1,-1,-1,NO PUBLIC CHECKPOINT,100k steps x 64 = 6.4M (64x) / published dSprites 0.51 WITH ORACLE / ctcae release public-init has zero assets
+4_optimal,CtCAE,-1,-1,-1,-1,-1,-1,-1,-1,-1,NO PUBLIC CHECKPOINT,same / published dSprites 0.56 WITH ORACLE / ctcae release public-init has zero assets
+4_optimal,CAE,-1,-1,-1,-1,-1,-1,-1,-1,-1,NO PUBLIC CHECKPOINT,same / published dSprites 0.05 WITH ORACLE / ComplexAutoEncoder has no releases

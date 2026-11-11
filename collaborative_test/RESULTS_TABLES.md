@@ -101,9 +101,32 @@ columns; they are given in the `trained info` column instead, as context, not as
 | CtCAE | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | same budget. Published dSprites 0.56, **oracle** |
 | CAE | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | -1 | same budget. Published dSprites 0.05, **oracle** |
 
+### Published checkpoints: searched, and there are none
+
+The cheap way to fill this table would be to take each author's released weights and run only our
+evaluation on them. **That is not available for any model except Slot Attention.** Checked on
+2026-11-10, three ways:
+
+| repo | README weight links | GitHub releases | any weight URL in the tree |
+|---|---|---|---|
+| `autonomousvision/akorn` | none | **no releases** | only `mae_pretrain_vit_base.pth`, an ImageNet MAE backbone, not a segmentation checkpoint |
+| `agopal42/ctcae` | none (data only, zenodo 4895643) | `public-init`, **zero assets** | none |
+| `agopal42/syncx` | none (data only) | `public-init`, **zero assets** | none |
+| `loeweX/RotatingFeatures` | none (data only) | **no releases** | none |
+| `loeweX/ComplexAutoEncoder` | none (data only) | **no releases** | none |
+
+Every download link in all five repositories points at a **dataset**, not at weights. So the
+eight `-1` rows cannot be filled by evaluation alone — each one requires training the model at its
+published budget ourselves, which is the cost below.
+
 **What it would cost to fill.** AKOrN: ~3.5 h per model on our 10,000, or ~24 h on the full 70,000.
 CAE family: 64× the runs already done, ~18 h per model. Slot Attention: its 500k-step recipe
-(`PV2_0139`, written, unrun). Each also needs re-evaluating on all three datasets.
+(`PV2_0139`, written, unrun). Each also needs evaluating on all three datasets.
+
+**Slot Attention is the only baseline whose authors released weights**, which is why it is the only
+non-`-1` row here — and its Tetrominoes and Multi-dSprites cells are still `-1` because that
+checkpoint has only been run on CLEVR. Those two are cheap (inference only) and are the single
+easiest thing left in this table.
 
 **One row already answers part of it.** At 1/64 of its budget CAE **exceeds** its published CLEVR
 number by its own metric (0.1025 vs 0.04), and AKOrN (conv) at 1/210 **matches** its published
