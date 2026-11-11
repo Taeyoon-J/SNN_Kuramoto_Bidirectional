@@ -1,57 +1,54 @@
 % ---------------------------------------------------------------------------
-% AAAI-27 main file.
+% AAAI-27 submission. Preamble copied from the kit's AnonymousSubmission2027.tex;
+% the lines marked "DO NOT CHANGE THIS" are the kit's own words, not mine.
 %
-% WHY YOUR TABLES DID NOT SPAN: \documentclass{article} is ONE column, and
-% table* only spans when the document has two. The AAAI style file sets two
-% columns for you; until you have it, \documentclass[letterpaper,twocolumn]{article}
-% reproduces the layout closely enough to check the tables.
+% WHY YOUR TABLES DID NOT SPAN BOTH COLUMNS: your main.tex used
+% \documentclass{article}, which is ONE column, and table* only spans when the
+% document has two. aaai2027.sty creates the two columns automatically -- the
+% kit's own text: "The aaai2027.sty file will automatically create these columns
+% for you." So with this preamble the spanning works with no option added.
 %
-% GET THE KIT: https://aaai.org/authorkit27/
-% The style file's NAME differs between sources (aaai27.sty vs aaai2027.sty) --
-% use whatever the kit actually ships and fix the two lines marked <<< below.
-% Do not install it from CTAN/TeX Live; it is distributed only by AAAI.
+% FILES NEEDED BESIDE THIS ONE (both are in this directory, taken from the kit at
+% https://aaai.org/authorkit27/ ):
+%     aaai2027.sty   aaai2027.bst
+% Re-download the kit yourself before submitting and diff these two, in case AAAI
+% revises them.
 %
-% DOUBLE BLIND: AAAI-27 review is anonymous. The \author block below is the
-% anonymous one. Keep your real names in a separate camera-ready file; a
-% submission carrying author names can be desk-rejected.
-%
-% AAAI RESTRICTIONS THIS FILE RESPECTS:
-%   - no geometry, no hyperref, no fontenc (all three are prohibited)
-%   - no package or macro that changes margins, font size or line spacing
-%   - booktabs is the only addition beyond the kit; it defines rule commands only
+% DOUBLE BLIND: review is anonymous and the \author block below is the kit's
+% anonymous one. Keep real names only in a camera-ready copy.
 % ---------------------------------------------------------------------------
 
-\documentclass[letterpaper]{article}
+\documentclass[letterpaper]{article} % DO NOT CHANGE THIS
+\usepackage[submission]{aaai2027}  % DO NOT CHANGE THIS
+% The serif, sans-serif, and monospaced fonts are loaded automatically by
+% aaai2027.sty (newtxtext, helvet, courier). DO NOT add \usepackage{times},
+% \usepackage{helvet}, \usepackage{courier}, or any other font package.
+\usepackage[hyphens]{url}  % DO NOT CHANGE THIS
+\usepackage{graphicx} % DO NOT CHANGE THIS
+\urlstyle{rm} % DO NOT CHANGE THIS
+\def\UrlFont{\rm}  % DO NOT CHANGE THIS
+\usepackage{natbib}  % DO NOT CHANGE THIS AND DO NOT ADD ANY OPTIONS TO IT
+\usepackage{caption} % DO NOT CHANGE THIS AND DO NOT ADD ANY OPTIONS TO IT
+\frenchspacing  % DO NOT CHANGE THIS
 
-% <<< FROM THE KIT. Use the kit's own filename, and keep [submission] while the
-% <<< paper is under review -- it is what produces the anonymous layout.
-\usepackage[submission]{aaai27}
-
-% The kit normally loads these itself; keep them only if the kit does not.
-\usepackage{times}
-\usepackage{helvet}
-\usepackage{courier}
-\usepackage[hyphens]{url}
-\usepackage{graphicx}
-\urlstyle{rm}
-\def\UrlFont{\rm}
-\usepackage{natbib}
-\usepackage{caption}
-\frenchspacing
-\setlength{\pdfpagewidth}{8.5in}
-\setlength{\pdfpageheight}{11in}
-
-% The one package this paper adds. Rule commands only; no layout effect.
+% Recommended for better-looking tables -- the kit's own wording. experiments.tex
+% needs this one and nothing else.
 \usepackage{booktabs}
 
-% ---------------------------------------------------------------------------
-\begin{document}
+\pdfinfo{
+/TemplateVersion (2027.1)
+}
+
+\setcounter{secnumdepth}{0} % May be changed to 1 or 2 if section numbers are desired.
 
 \title{Kuramoto SNN Object Recognition}
 
-% Anonymous for review. Swap in the real block only for camera-ready.
-\author{Anonymous Submission}
+\author{
+    % Anonymous for review. The real block goes in the camera-ready file only.
+    Anonymous Submission
+}
 
+\begin{document}
 \maketitle
 
 \begin{abstract}
@@ -63,7 +60,6 @@
 
 \input{experiments}
 
-\bibliographystyle{aaai27}   % <<< the kit's .bst, same name question as above
-\bibliography{references}
+\bibliography{aaai2027}
 
 \end{document}
