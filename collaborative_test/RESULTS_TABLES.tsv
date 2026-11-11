@@ -1,0 +1,44 @@
+# Paste blocks for the spreadsheet. TAB-separated, because Excel splits clipboard
+# text on tabs and not on commas -- that is why the csv rows landed in one cell.
+# Copy a block (or a single line) and paste onto the first value cell of that row.
+# Row order matches the sheet exactly. -1 means not measured.
+
+### TABLE 1  interusability (9 rows x 9 cols): 253, Slot Attention, AKOrN(conv), AKOrN(attn), AKOrN attn+up-tiling, ItrSA, CAE++, CtCAE, CAE
+0.8421	0.7545	0.6410	0.8580	0.7885	0.8173	0.6974	0.8177	0.7628
+0.2872	0.2220	0.0801	0.1739	0.2192	0.1071	0.1930	0.0876	0.0680
+0.6046	0.4219	0.2769	0.7202	0.7540	0.5913	0.4055	0.6834	0.5434
+0.6027	0.3327	0.3750	0.5676	0.7383	0.4687	0.4343	0.6019	0.5751
+0.6326	0.3468	0.3636	0.5484	0.7230	0.4167	0.5505	0.6539	0.6348
+0.5794	0.2787	0.3853	0.6319	0.7137	0.5687	0.4817	0.2489	0.6093
+0.2838	0.2193	0.0882	0.2715	0.2452	0.1901	0.2648	0.1048	0.1125
+0.2357	0.2148	0.0964	0.2681	0.2420	0.2034	0.3079	0.1158	0.1609
+0.1091	0.2008	0.0634	0.1526	0.2305	0.1192	0.1200	0.1038	0.0630
+
+### TABLE 2  optimal timestep (4 rows x 3 cols): 1024, 512, 256, 128
+0.8421	0.7545	0.6410
+0.8402	0.7594	0.6340
+0.8159	0.7358	0.6084
+0.5796	0.4988	0.3985
+
+### TABLE 3  best performance (9 rows x 5 cols): 10,000 / 11,000 / ... / 18,000
+0.8421	0.7545	0.6410	-	0.1750
+0.8426	0.7539	0.6427	0.0005	0.2030
+0.8449	0.7607	0.6461	0.0028	0.2090
+-1	-1	-1	-1	-1
+-1	-1	-1	-1	-1
+-1	-1	-1	-1	-1
+-1	-1	-1	-1	-1
+-1	-1	-1	-1	-1
+-1	-1	-1	-1	-1
+
+### TABLE 4  optimally trained (9 rows x 9 cols + trained info), same row order as table 1
+0.8421	0.7545	0.6410	0.8580	0.7885	0.8173	0.6974	0.8177	0.7628	CLEVR 10,000x10 = 100,032 exposures (this IS our full recipe)
+0.3747	0.2219	0.1165	0.4742	0.2381	0.2355	0.3205	0.0980	0.1204	published checkpoint, ~32M exposures, original CLEVR render (the only baseline with released weights)
+-1	-1	-1	-1	-1	-1	-1	-1	-1	no public checkpoint; 300ep x ~70k = ~21M exposures; published pixel-protocol 76.4 / 63.8 / 59.0
+-1	-1	-1	-1	-1	-1	-1	-1	-1	no public checkpoint; same budget; published 88.6 / 78.3 / 91.0
+-1	-1	-1	-1	-1	-1	-1	-1	-1	no public checkpoint; same budget; published 93.1 / 87.1 / 94.6
+-1	-1	-1	-1	-1	-1	-1	-1	-1	no public checkpoint; same budget; published 85.8 / 68.1 / 82.5
+-1	-1	-1	-1	-1	-1	-1	-1	-1	no public checkpoint; 100k steps x 64 = 6.4M exposures; published dSprites 0.51 WITH ORACLE
+-1	-1	-1	-1	-1	-1	-1	-1	-1	no public checkpoint; same budget; published dSprites 0.56 WITH ORACLE
+-1	-1	-1	-1	-1	-1	-1	-1	-1	no public checkpoint; same budget; published dSprites 0.05 WITH ORACLE
+
