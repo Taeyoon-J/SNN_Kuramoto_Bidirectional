@@ -1,96 +1,154 @@
 % Architecture figure -- AAAI-27, spans both columns.
 %
-% NEEDS in the preamble, beyond the kit and booktabs/amsmath:
+% PREAMBLE:
 %     \usepackage{tikz}
-%     \usetikzlibrary{arrows.meta,positioning,fit,backgrounds,calc}
-% tikz is not on the kit's forbidden list, and it draws vectors rather than
-% including an image file, so the kit's image-format and trim/clip rules do not apply.
+%     \usetikzlibrary{arrows.meta,calc}
+% (that is all it uses: Latex arrow tips and the ($...$) coordinate arithmetic)
+% tikz is not on the kit's forbidden list, and it draws vectors rather than including an
+% image file, so the kit's image-format and trim/clip rules do not apply.
 %
-% WHAT THIS DRAWS, and what it deliberately does not:
-%   top-down  theta -> gate g(t) -> dendrite/membrane     (macro modulates micro)
-%   bottom-up s(t-1) -> dendritic branch input            (spikes modulate the next branch step)
-% There is NO arrow from the spiking layer into the Kuramoto layer, because the trained
-% configuration has none: graph_feedback_strength = 0 and spike_pulse_gain = 0
-% (hyperparameter.py:95,112), and the rollout raises if either is non-zero
-% (sw240/rollout.py:13-15). The graph is built once from gamma and held for the whole
-% rollout. Drawing a loop into the oscillators would show something the model does not do.
+% WHAT IS DRAWN, and what deliberately is not:
+%   top-down   theta -> gate g(t) -> dendrite/membrane      (macro modulates micro)
+%   bottom-up  s(t-1) -> dendritic branch input             (closed inside the micro scale)
+% No arrow enters the Kuramoto layer from below. The trained configuration has
+% graph_feedback_strength = 0 and spike_pulse_gain = 0 (hyperparameter.py:95,112), and
+% late_rollout raises if either is non-zero (sw240/rollout.py:13-15): the graph is built once
+% from gamma and held for the whole rollout.
 %
-% Symbols match method.tex exactly: gamma, A, phi, theta, g(t), x(t), h, V, s(t), rho, Q.
+% Symbols match method.tex: gamma, A, phi, theta, g(t), x(t), s(t), rho, Q.
 
 \begin{figure*}[!t]
 \centering
 \begin{tikzpicture}[
-  font=\small,
-  box/.style   = {draw, rounded corners=2pt, align=center, inner sep=4pt, minimum height=8mm},
-  stage/.style = {box, fill=black!4, text width=23mm},
-  macro/.style = {box, fill=violet!10, draw=violet!60, text width=34mm},
-  micro/.style = {box, fill=teal!10,   draw=teal!60,   text width=34mm},
-  panel/.style = {box, fill=black!2, text width=31mm},
-  flow/.style  = {-{Latex[length=2mm]}, thick},
-  td/.style    = {-{Latex[length=2.6mm]}, very thick, violet!70},
-  bu/.style    = {-{Latex[length=2.6mm]}, very thick, teal!70},
-  lbl/.style   = {font=\scriptsize, align=center, inner sep=1pt}
+  font=\scriptsize,
+  macro/.style = {rounded corners=3pt, draw=violet!55, fill=violet!7,  line width=.6pt},
+  micro/.style = {rounded corners=3pt, draw=teal!55,   fill=teal!7,    line width=.6pt},
+  plain/.style = {rounded corners=3pt, draw=black!30,  fill=black!3,   line width=.6pt},
+  ttl/.style   = {font=\scriptsize\bfseries, align=center},
+  sub/.style   = {font=\tiny, align=center, text=black!65},
+  td/.style    = {-{Latex[length=2.4mm,width=2mm]}, line width=1.5pt, violet!65},
+  bu/.style    = {-{Latex[length=2.4mm,width=2mm]}, line width=1.5pt, teal!65},
+  go/.style    = {-{Latex[length=1.8mm]}, line width=.8pt, black!55}
 ]
 
-% ---------------------------------------------------------------- left: encoding
-\node[stage] (img)  {Image\\$128\times128$};
-\node[stage, right=5mm of img] (enc) {Encoder\\8 filters};
-\node[stage, right=5mm of enc] (gam) {Patch activations\\$\gamma$, $64\times64$};
-\draw[flow] (img) -- (enc);
-\draw[flow] (enc) -- (gam);
+% ============================================================ 1. input and patches
+\begin{scope}[shift={(0,0)}]
+  \draw[plain] (-0.55,-1.65) rectangle (2.35,1.75);
+  \node[ttl] at (0.9,1.5) {Image $\to$ patches};
+  % three stacked encoder planes
+  \foreach \i/\c in {0/black!12, 1/black!20, 2/black!30}{
+    \draw[fill=\c, draw=black!45, line width=.4pt]
+      ($(0.0,0.45)+(\i*0.16,\i*0.16)$) -- ($(1.1,0.45)+(\i*0.16,\i*0.16)$)
+      -- ($(1.45,0.95)+(\i*0.16,\i*0.16)$) -- ($(0.35,0.95)+(\i*0.16,\i*0.16)$) -- cycle;}
+  \node[sub] at (0.9,0.18) {encoder, 8 filters};
+  % patch grid, coloured as activations
+  \foreach \x in {0,...,5}{\foreach \y in {0,...,3}{
+    \pgfmathsetmacro\v{20+55*abs(sin(\x*47+\y*83))}
+    \fill[orange!\v!white, draw=black!25, line width=.2pt]
+      (0.18+\x*0.28,-1.42+\y*0.28) rectangle (0.42+\x*0.28,-1.18+\y*0.28);}}
+  \node[sub] at (0.9,-1.60) {$\gamma$, $64\times64$};
+\end{scope}
 
-% ---------------------------------------------------------------- what gamma produces
-\node[box, fill=black!4, above right=4mm and 7mm of gam, text width=30mm] (graph)
-  {Coupling graph $A$\\[-1pt]{\scriptsize feature $+$ geodesic, top-512}};
-\node[box, fill=black!4, below right=4mm and 7mm of gam, text width=30mm] (drive)
-  {Sensory drive $\phi$\\[-1pt]{\scriptsize $\pi\tanh(W_\phi\bar{\boldsymbol u})$}};
-\draw[flow] (gam.east) -- ++(3mm,0) |- (graph.west);
-\draw[flow] (gam.east) -- ++(3mm,0) |- (drive.west);
+% ============================================================ 2. graph and drive
+\node[plain, minimum width=20mm, minimum height=8mm, align=center] (graph) at (3.9,0.85)
+  {\textbf{graph} $A$\\[-2pt]{\tiny feature $+$ geodesic}};
+\node[plain, minimum width=20mm, minimum height=8mm, align=center] (drive) at (3.9,-0.85)
+  {\textbf{drive} $\phi$\\[-2pt]{\tiny $\pi\tanh(W_\phi\bar{\boldsymbol u})$}};
+\draw[go] (2.4,0.1) -- (2.95,0.85);
+\draw[go] (2.4,0.1) -- (2.95,-0.85);
+\node[sub, text=black!50] at (3.9,-1.55) {fixed once per image};
 
-% ---------------------------------------------------------------- centre: the two scales
-\node[macro, right=10mm of graph] (kur)
-  {\textbf{Macro-scale}\\[1pt]Kuramoto coordination\\[-1pt]
-   {\scriptsize $\theta(t{+}1)=\theta+\Delta t(\omega+f\phi+\kappa\sin(\phi-\theta)+\tfrac{K}{N}\sum A\sin(\theta_j-\theta_i-\alpha))$}};
-\node[micro, below=20mm of kur] (snn)
-  {\textbf{Micro-scale}\\[1pt]Dendrites $\to$ membrane $\to$ spikes\\[-1pt]
-   {\scriptsize $h\to V\to s(t)=g(t)\,\mathrm{ind}(V>\vartheta)$}};
+% ============================================================ 3. macro scale: oscillator ring
+\begin{scope}[shift={(7.6,1.15)}]
+  \draw[macro] (-1.75,-1.2) rectangle (1.75,1.3);
+  \node[ttl, text=violet!70] at (0,1.05) {Macro-scale: Kuramoto coordination};
+  % coupling chords
+  \foreach \a/\b in {0/120, 40/200, 80/280, 160/320}{
+    \draw[violet!30, line width=.4pt] (\a:0.62) -- (\b:0.62);}
+  \draw[violet!45, line width=.7pt] (0,0) circle (0.62);
+  % oscillators, filled by phase -- two synchronised groups
+  \foreach \a/\p in {0/90, 40/88, 80/85, 120/20, 160/18, 200/22, 240/86, 280/89, 320/15}{
+    \fill[violet!\p!white, draw=violet!65, line width=.35pt] (\a:0.62) circle (0.11);}
+  % rotation hint
+  \draw[-{Latex[length=1.4mm]}, violet!60] (300:0.85) arc (300:345:0.85);
+  \node[sub, text=violet!70] at (0,-0.95)
+    {$\theta_{t+1}\!=\!\theta\!+\!\Delta t(\omega\!+\!f\phi\!+\!\kappa\sin(\phi\!-\!\theta)\!+\!\tfrac{K}{N}\textstyle\sum A\sin(\theta_j\!-\!\theta_i\!-\!\alpha))$};
+\end{scope}
+\draw[go] (graph) -- (5.9,1.3);
+\draw[go] (drive) -- (5.9,0.45);
 
-\draw[flow] (graph.east) -- (kur.west);
-\draw[flow] (drive.east) -| ([xshift=-6mm]kur.south west) -- ([xshift=-6mm]kur.south west) -- (kur.south west);
+% ============================================================ 4. top-down gate
+\draw[td] (7.0,-0.1) -- (7.0,-1.25);
+\begin{scope}[shift={(7.35,-0.72)}]
+  \fill[violet!12, draw=violet!40, line width=.3pt] (0,-0.3) rectangle (1.75,0.32);
+  % one cycle of the gate, with the open half shaded
+  \fill[violet!25] (0.1,0) -- plot[domain=0:180,samples=30] ({0.1+\x/180*0.8},{0.09*sin(\x)}) -- cycle;
+  \draw[violet!75, line width=.6pt] plot[domain=0:360,samples=60] ({0.1+\x/360*1.55},{0.09*sin(\x)});
+  \node[sub, text=violet!75, anchor=west] at (0.08,0.22) {gate $g(t)$, 2-step delay};
+\end{scope}
 
-% top-down: gating
-\draw[td] ([xshift=-9mm]kur.south) -- node[lbl, left=1pt, text=violet!80]
-  {\textbf{Top-down}\\gating $g(t)$\\[-1pt]2-step delay\\$x=g\sin\theta$} ([xshift=-9mm]snn.north);
+% ============================================================ 5. micro scale: spikes
+\begin{scope}[shift={(7.6,-2.6)}]
+  \draw[micro] (-1.75,-1.05) rectangle (1.75,1.1);
+  \node[ttl, text=teal!65] at (0,0.88) {Micro-scale: spiking dynamics};
+  % four component rasters
+  \foreach \r/\off in {0/0.45, 1/0.15, 2/-0.15, 3/-0.45}{
+    \draw[black!25, line width=.3pt] (-1.5,\off) -- (1.5,\off);
+    \foreach \s in {0,...,11}{
+      \pgfmathsetmacro\h{0.06+0.16*abs(sin(\s*61+\r*97))}
+      \pgfmathsetmacro\keep{abs(sin(\s*61+\r*97))}
+      \ifdim\keep pt>0.45pt
+        \draw[teal!75, line width=.7pt] (-1.4+\s*0.25,\off) -- (-1.4+\s*0.25,\off+\h);
+      \fi}}
+  \node[sub, text=teal!70, anchor=west] at (-1.68,-0.72)
+    {$x\!=\!g\sin\theta\ \to$ dendrites $h$ $\to$ membrane $V$ $\to$ spikes $s(t)$};
+\end{scope}
 
-% bottom-up: spike feedback into the next branch input -- stays inside the micro scale,
-% which is why it curves back into the same block and not up into the oscillators.
-\draw[bu] (snn.east) .. controls +(12mm,6mm) and +(12mm,-6mm) ..
-  node[lbl, right=1pt, text=teal!80] {\textbf{Bottom-up}\\spike feedback\\$s(t{-}1)\!\to\!$ branch} (snn.north east);
+% bottom-up: spikes re-enter the branch input, a loop inside the micro scale
+\draw[bu] (8.7,-3.5) to[out=-55,in=-125,looseness=1.5] (6.5,-3.5);
+\node[sub, text=teal!75] at (7.6,-4.08) {\textbf{bottom-up:} $s(t{-}1)\to$ branch input};
+\node[sub, text=violet!75, anchor=west] at (5.0,-0.72) {\textbf{top-down}};
 
-% ---------------------------------------------------------------- right: readout
-\node[panel, right=22mm of kur] (sync)
-  {\textbf{Phase synchrony}\\[-1pt]{\scriptsize $\theta$ clusters by object}};
-\node[panel, right=22mm of snn] (corr)
-  {\textbf{Spike correlation}\\[-1pt]{\scriptsize $\rho\!\to\!Q=\prod_a\max(\rho_a,0)$}};
-\node[box, fill=black!4, below=7mm of corr, text width=31mm] (mask)
-  {\textbf{Object masks}\\[-1pt]{\scriptsize connected components $\to$ greedy merge}};
+% ============================================================ 6. readout
+% correlation matrix
+\begin{scope}[shift={(11.1,-2.35)}]
+  \draw[plain] (-0.35,-0.75) rectangle (1.85,1.35);
+  \node[ttl] at (0.75,1.12) {spike correlation};
+  \foreach \x in {0,...,5}{\foreach \y in {0,...,5}{
+    \pgfmathsetmacro\v{((\x<3 && \y<3) || (\x>2 && \y>2)) ?
+        45+45*abs(sin(\x*37+\y*53)) : 5+14*abs(sin(\x*29+\y*41))}
+    \fill[teal!\v!white, draw=black!15, line width=.15pt]
+      (0.05+\x*0.26,-0.55+\y*0.26) rectangle (0.29+\x*0.26,-0.31+\y*0.26);}}
+  \node[sub, anchor=north] at (0.75,-0.58) {$Q=\prod_a\max(\rho_a,0)$};
+\end{scope}
+\draw[go] (9.4,-2.6) -- (10.7,-2.0);
 
-\draw[flow, violet!70] (kur.east) -- (sync.west);
-\draw[flow, teal!70] (snn.east) -- (corr.west);
-\draw[flow] (corr) -- (mask);
+% object masks
+\begin{scope}[shift={(11.1,0.55)}]
+  \draw[plain] (-0.35,-0.95) rectangle (1.85,1.25);
+  \node[ttl] at (0.75,1.02) {object masks};
+  \draw[black!20, line width=.3pt] (0.05,-0.75) rectangle (1.65,0.85);
+  \fill[orange!55, draw=orange!75, line width=.3pt] (0.25,0.15) rectangle (0.75,0.65);
+  \fill[blue!35, draw=blue!60, line width=.3pt] (0.85,0.25) circle (0.26);
+  \fill[green!40!black!55, draw=green!45!black, line width=.3pt] (0.55,-0.55) rectangle (1.35,-0.15);
+  \node[sub, anchor=north] at (0.75,-0.78) {components $\to$ greedy merge};
+\end{scope}
+\draw[go] (12.0,-0.95) -- (12.0,-0.42);
 
-% synchrony is a diagnostic, not the scored output
-\node[lbl, below=1mm of sync, text=black!55] {diagnostic only};
+% synchrony is a diagnostic, never the score
+\node[plain, align=center, minimum width=20mm, text=black!60] (diag) at (11.1,2.55)
+  {\footnotesize phase synchrony\\[-2pt]{\tiny \emph{diagnostic, never scored}}};
+\draw[go, dashed, black!35] (9.35,1.6) -- (10.1,2.4);
 
 \end{tikzpicture}
 \caption{%
 Signal flow. An image is encoded into patch activations $\gamma$, which fix both the coupling
 graph $A$ and the sensory drive $\phi$ once per image. Oscillator phases $\theta$ evolve under
-Kuramoto coupling on $A$ (macro-scale) and gate the spiking layer through $g(t)$, a two-step
-delayed function of the mean patch phase (top-down). Within the spiking layer the previous spike
-$s(t{-}1)$ re-enters the dendritic branch input (bottom-up). Object masks are read from
-\emph{spike} correlations: $\rho$ over the settled window, combined across the four components
-into the affinity $Q$, then connected components and a greedy merge. Phase synchrony is reported
-as a diagnostic and is never the scored output.}
+Kuramoto coupling on $A$; the ring shows two groups that have fallen into phase, which is what
+the model uses to bind patches. The mean patch phase gates the spiking layer two steps later
+(\textbf{top-down}, violet), and within that layer the previous spike re-enters the dendritic
+branch input (\textbf{bottom-up}, teal). Masks are read from \emph{spike} correlations: $\rho$
+over the settled window, combined across the four components into the affinity $Q$, whose
+block structure yields the groups. Phase synchrony is reported only as a diagnostic.}
 \label{fig:architecture}
 \end{figure*}
