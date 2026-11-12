@@ -64,24 +64,42 @@ truth averages **6.36** objects per image.
 |---|---|---|---|---|---|
 | 10,000 | 0.8421 | 0.7545 | 0.6410 | — | 0.175 |
 | 11,000 | 0.8426 | 0.7539 | 0.6427 | +0.0005 | 0.203 |
-| **12,000** | **0.8449** | **0.7607** | **0.6461** | **+0.0028** | **0.209** |
-| 13,000 | -1 | -1 | -1 | -1 | -1 |
-| 14,000 | -1 | -1 | -1 | -1 | -1 |
-| 15,000 | -1 | -1 | -1 | -1 | -1 |
+| 12,000 | 0.8449 | 0.7607 | 0.6461 | +0.0028 | 0.209 |
+| 13,000 | 0.8460 | 0.7637 | 0.6470 | +0.0039 | 0.200 |
+| **14,000** | **0.8469** | 0.7652 | 0.6524 | **+0.0048** | **0.228** |
+| 15,000 | 0.8459 | **0.7702** | **0.6534** | +0.0038 | 0.225 |
 | 16,000 | -1 | -1 | -1 | -1 | -1 |
 | 17,000 | -1 | -1 | -1 | -1 | -1 |
 | 18,000 | -1 | -1 | -1 | -1 | -1 |
 
-With the label-free head (5 seeds, mean): 10,000 → 0.8468 / 0.7575 / 0.6460;
-11,000 → 0.8467 / 0.7570 / 0.6479; 12,000 → **0.8486 / 0.7645 / 0.6506**.
+With the label-free head (5 seeds, mean), FG-ARI tracks the core: 0.8468, 0.8467, 0.8486,
+0.8495, **0.8505**, 0.8497.
 
-**Status:** 13,000 is training; 14,000–18,000 queued (`PV2_0155`, ~7 h per row).
+**Status:** 16,000 is training; 17,000–18,000 queued (`PV2_0155`, ~7 h per row).
 
-**It is rising, monotonically, and has not converged.** +0.0005 then +0.0028 on FG-ARI, and all
-three metrics up at 12,000. Object-count accuracy rises too (0.175 → 0.203 → 0.209) while mean
-regions stay at 7.9 against a truth of 6.36 — so the extra data is sharpening the partition
-rather than changing how much it splits. Two increments is not a convergence estimate; the
-remaining six rows are what answer that.
+**The three metrics saturate at different rates, which is the finding.** FG-ARI climbs to
+**0.8469 at 14,000** and then falls 0.0010 — step-to-step it goes +0.0005, +0.0023, +0.0011,
++0.0009, **−0.0010**. Foreground IoU and matched-object IoU do not turn: +0.0157 and +0.0124 over
+the whole range, still rising at 15,000. So more in-domain data stops improving *how* patches are
+grouped well before it stops improving *where the boundaries fall*. One down-tick of 0.0010 at a
+single seed is not proof of saturation; the three remaining rows settle it.
+
+Mean regions hold at 7.7–8.0 against a truth of 6.36 across the whole range, so the extra data
+sharpens the partition without changing how much it splits.
+
+### The comparison that matters more
+
+The same 5,000 extra images buy twice as much when they come from a **different** dataset:
+
+| 5,000 extra images from | CLEVR FG-ARI change |
+|---|---|
+| CLEVR (in-domain, this table at 15,000) | **+0.0038** |
+| Tetrominoes (`PV2_0152`, `cont5000`) | **+0.0084** |
+
+Out-of-domain continuation improves CLEVR **2.2×** more than in-domain continuation at an
+identical budget. This is the second piece of evidence against reading `cont5000` as domain
+adaptation — `PV2_0156` found the first, that continuing on Tetrominoes improves Multi-dSprites
+more than continuing on Multi-dSprites does.
 
 > The graph of FG-ARI against train data is the deliverable here; with two points there is no
 > curve yet.

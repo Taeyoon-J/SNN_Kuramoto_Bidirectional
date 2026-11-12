@@ -186,10 +186,23 @@ for the reported numbers. Shorter windows also fragment more: mean predicted reg
 rise from $8.0$ at $T=1024$ to $13.3$ at $T=256$, against $6.36$ true objects.
 
 \paragraph{Scaling with training data.}
-Continuing training on additional unseen CLEVR images improves all three metrics monotonically
-over the range measured, and the curve has not saturated: $10{,}000$ images give
-$.8421/.7545/.6410$, $11{,}000$ give $.8426/.7539/.6427$, and $12{,}000$ give
-$.8449/.7607/.6461$ --- $+.0005$ then $+.0028$ on \textsc{fg-ari}.
+Continuing training on additional unseen CLEVR images, in steps of $1{,}000$, separates the three
+metrics. \textsc{fg-ari} rises from $.8421$ at $10{,}000$ images to $.8469$ at $14{,}000$ and then
+falls to $.8459$ at $15{,}000$; its step-to-step changes are $+.0005$, $+.0023$, $+.0011$,
+$+.0009$, $-.0010$. Foreground IoU and matched-object IoU do not turn over the same range,
+gaining $+.0157$ and $+.0124$ and still rising at $15{,}000$. More in-domain data therefore stops
+improving \emph{how} patches are grouped well before it stops improving \emph{where the
+boundaries fall}. Mean predicted regions hold at $7.7$--$8.0$ throughout, against $6.36$ true
+objects, so the extra data sharpens the partition without changing how much it splits. A single
+$0.0010$ decrease at one seed is not proof of saturation, and we report it as the shape of the
+curve rather than a converged value.
+
+\paragraph{In-domain data is not the most useful data.}
+The same $5{,}000$ additional images buy more than twice as much when they come from a different
+dataset. Continuing on CLEVR raises CLEVR \textsc{fg-ari} by $+.0038$; continuing on Tetrominoes
+instead raises it by $+.0084$, a $2.2\times$ larger gain at an identical budget. Together with
+the transfer result in Table~\ref{tab:main}, this argues that the model is not fitting a domain
+but learning a grouping rule that the extra renders refine.
 
 \subsection{Limitations}
 \label{sec:limitations}
