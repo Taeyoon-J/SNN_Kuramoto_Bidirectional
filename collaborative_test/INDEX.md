@@ -653,3 +653,28 @@ is `PV2_0147`'s result on a cleaner axis.
 missed, having stated in its own docstring that three places must move together. At T ≤ 512 the
 foreground came back empty and `partition.py:40` returned all-background. Fixed, default-T path
 re-verified bit-identical, rerun. Bad log kept as `t_sweep_WRONG_settle512.log`.
+
+
+---
+
+## BENCHMARK_PLAN_v6 — object count becomes a required metric
+
+Supersedes v5, after `PV2_0154`–`PV2_0157`. v5's protocol and comparison design stand; what
+changes is what must be reported.
+
+1. **Object count is a fourth required metric.** The head raises the predicted count on every row
+   and cuts exact-match three- to five-fold (CLEVR 0.175 → 0.035) while *improving* all three
+   contract metrics by +0.003 to +0.026. None of the three can see that cost. On Tetrominoes the
+   core predicts 21.07 objects against a truth of 3, exact-match 0.000 across 320 images — so
+   "the model groups the patches correctly" is supported there and "the model finds the objects"
+   is not.
+2. **Count accuracy and matched-object IoU are inverted**, monotonically, across three cores. One
+   is not a proxy for the other, and `PV2_0152`'s over-merging explanation is withdrawn because
+   the core that lost obj-IoU has the *most accurate* count.
+3. **No core enters a comparison until it is scored on all three datasets.** `PV2_0153` called a
+   core the project's best on two datasets; the third lost it two of nine cells.
+4. **`T=512` is the default** (−0.0019 FG-ARI, +0.0049 Foreground IoU), and shortening the
+   rollout saves almost nothing: an 8× cut buys 19%, because per-image fixed cost dominates.
+5. **In-domain data is not the most useful data**, from two independent measurements: +5,000
+   CLEVR images buy +0.0038 CLEVR FG-ARI while +5,000 Tetrominoes images buy +0.0084, and
+   continuing on Tetrominoes improves Multi-dSprites more than continuing on Multi-dSprites does.

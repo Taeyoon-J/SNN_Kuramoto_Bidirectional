@@ -1,5 +1,13 @@
 # Benchmark plan v5
 
+> **Superseded by `BENCHMARK_PLAN_v6.md`** (after PV2_0154-PV2_0157). v5's protocol (§1) and
+> its comparison design (§2: best-baseline-per-cell, narrowest cell, per-model budget
+> verdict) stand unchanged. What v6 adds is a **fourth required metric, object count** --
+> v5 does not mention it, and PV2_0157 showed the three contract metrics cannot see what
+> the head costs there. v6 also adds: score a core on all three datasets before comparing
+> it, T=512 as the default rollout, and the finding that out-of-domain data improves a
+> dataset more than in-domain data does.
+
 Supersedes v4. Written after PV2_0137–PV2_0151.
 
 v4 was written when the reference column held **one** model, and that model was a published
