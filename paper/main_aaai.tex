@@ -36,6 +36,11 @@
 % aaai2027.sty does NOT load amsmath, and method.tex needs it: gathered, aligned,
 % \operatorname, \boldsymbol and \eqref all come from it. Not on the kit's forbidden list.
 \usepackage{amsmath}
+% For figure_architecture.tex. tikz is not on the kit's forbidden list, and it draws
+% vectors rather than including an image file, so the image-format and trim/clip rules
+% do not apply to it.
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,fit,backgrounds,calc}
 
 \pdfinfo{
 /TemplateVersion (2027.1)
