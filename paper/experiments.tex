@@ -32,6 +32,18 @@
 % training seed. The paper does not describe or report any post-hoc refinement stage, so
 % none of these figures include one -- do not paste in numbers from the internal records
 % that do, because they are a different configuration and would not match Method.
+%
+% MINIMUM REGION SIZE (added after the first draft, see \paragraph{Minimum region size}):
+% tab:main is now reported WITH the rule at f = 0.01, applied to every model including the
+% baselines. tab:timestep and the scaling paragraph are WITHOUT it, and say so, because they
+% are within-model comparisons. The without-rule numbers for tab:main, if they are ever
+% needed: ours .8421/.7545/.6410 (CLEVR), .8580/.7885/.8173 (Tetrominoes),
+% .6974/.8177/.7628 (Multi-dSprites); best-baseline CLEVR foreground IoU .4219.
+%
+% DO NOT put akornC_* numbers in this table. Those files are the superseded AKOrN (attn) run
+% at the repository's default seed 1234 (CLEVR fg_ari .4688); the seed-0 rerun this paper
+% reports is in the s0_* files (CLEVR .6027/.3327/.3750). Reading akornC_tetrominoes would
+% put foreground IoU .7621 in the best-baseline row and understate the margin.
 
 \section{Experiments}
 \label{sec:experiments}
@@ -71,6 +83,19 @@ evaluated image. Cluster identities are arbitrary, so the mapping of one cluster
 likewise fixed by a rule chosen on validation. No hyperparameter, threshold or rule is selected on
 the reported split.
 
+\paragraph{Minimum region size.}
+\label{sec:minsize}
+Our readout emits a sizeable number of single-patch regions: $22.8\%$ of all predicted regions on
+CLEVR validation, $27.0\%$ on Tetrominoes and $56.2\%$ on Multi-dSprites, where the \emph{median}
+predicted region is one patch. They arise after the synchrony grouping, when the greedy merge
+splits a spatially scattered synchronous component into pieces, and they inflate the object count
+without materially affecting the partition. We therefore discard any predicted region smaller
+than a fraction $f$ of that image's predicted foreground, reassigning it to background. The rule
+is scale-free, reads no ground truth, and $f$ is a single constant fixed on CLEVR validation as
+the largest value whose FG-ARI loss stays under $0.005$ and whose matched-object IoU loss stays
+under $0.01$, giving $f=0.01$. The same $f$ is applied unchanged to Tetrominoes and
+Multi-dSprites --- no target-domain data is used to set it --- and to every baseline.
+
 \subsection{Generalisation across datasets}
 \label{sec:generalisation}
 
@@ -87,7 +112,7 @@ Tetrominoes and Multi-dSprites columns measure transfer.
 \cmidrule(lr){2-4}\cmidrule(lr){5-7}\cmidrule(lr){8-10}
 Model & \textsc{ari} & \textsc{f-iou} & \textsc{o-iou} & \textsc{ari} & \textsc{f-iou} & \textsc{o-iou} & \textsc{ari} & \textsc{f-iou} & \textsc{o-iou} \\
 \midrule
-\textbf{Ours} & \textbf{.8421} & \textbf{.7545} & \textbf{.6410} & \textbf{.8580} & \textbf{.7885} & \textbf{.8173} & \textbf{.6974} & \textbf{.8177} & \textbf{.7628} \\
+\textbf{Ours} & \textbf{.8408} & \textbf{.7528} & \textbf{.6387} & \textbf{.8568} & \textbf{.7950} & \textbf{.8170} & \textbf{.6966} & \textbf{.8190} & \textbf{.7625} \\
 \midrule
 AKOrN (attn) $+$ up-tiling & .6326 & .3468 & .3636 & .5484 & .7230 & .4167 & .5505 & .6539 & .6348 \\
 AKOrN (conv)               & .6046 & .4219 & .2769 & .7202 & .7540 & .5913 & .4055 & .6834 & .5434 \\
@@ -98,17 +123,21 @@ Slot Attention             & .2872 & .2220 & .0801 & .1739 & .2192 & .1071 & .19
 CtCAE                      & .2357 & .2148 & .0964 & .2681 & .2420 & .2034 & .3079 & .1158 & .1609 \\
 CAE                        & .1091 & .2008 & .0634 & .1526 & .2305 & .1192 & .1200 & .1038 & .0630 \\
 \midrule
-Best baseline, per cell    & .6326 & .4219 & .3853 & .7202 & .7540 & .5913 & .5505 & .6834 & .6348 \\
-\textbf{Our margin}        & \textbf{+.2095} & \textbf{+.3326} & \textbf{+.2557} & \textbf{+.1378} & \textbf{+.0345} & \textbf{+.2260} & \textbf{+.1469} & \textbf{+.1343} & \textbf{+.1280} \\
+Best baseline, per cell    & .6326 & .4267 & .3853 & .7202 & .7540 & .5913 & .5505 & .6834 & .6348 \\
+\textbf{Our margin}        & \textbf{+.2082} & \textbf{+.3261} & \textbf{+.2534} & \textbf{+.1366} & \textbf{+.0410} & \textbf{+.2257} & \textbf{+.1461} & \textbf{+.1356} & \textbf{+.1277} \\
 \bottomrule
 \end{tabular}
 \caption{%
 All models trained on the same $10{,}000$ CLEVR images for $10$ epochs and evaluated on $320$
 held-out images per dataset by the same function. Tetrominoes and Multi-dSprites are zero-shot.
 \textsc{ari}\,/\,\textsc{f-iou}\,/\,\textsc{o-iou} are foreground ARI, foreground IoU and
-matched-object IoU on the $64\times64$ patch grid. The penultimate row takes the best baseline
-\emph{in each cell separately}, which no single baseline attains; our margin is measured against
-that composite. Single training seed throughout.}
+matched-object IoU on the $64\times64$ patch grid. Every model, ours included, has the
+minimum-region-size rule of Section~\ref{sec:minsize} applied at the single value $f=0.01$ fixed
+on CLEVR validation. It leaves the baseline rows unchanged to three decimals except AKOrN (conv)
+on CLEVR foreground IoU, which improves from $.4219$ to $.4267$; the penultimate row uses the
+better of the two for every baseline cell we measured. That row takes the best baseline \emph{in
+each cell separately}, which no single baseline attains; our margin is measured against that
+composite. Single training seed throughout.}
 \label{tab:main}
 \end{table*}
 
@@ -119,12 +148,12 @@ on the dataset --- AKOrN (conv) on Tetrominoes, AKOrN (attn)$+$up-tiling on Mult
 on CLEVR matched-object IoU --- whereas our model is first everywhere.
 
 \paragraph{Where the margin is thin.}
-The smallest margin in the table is Tetrominoes foreground IoU, $+0.0345$. Every other margin lies
-between $0.128$ and $0.333$. We flag this cell explicitly rather than quoting only the aggregate.
+The smallest margin in the table is Tetrominoes foreground IoU, $+0.0410$. Every other margin lies
+between $0.128$ and $0.326$. We flag this cell explicitly rather than quoting only the aggregate.
 
 \paragraph{Predicted foreground.}
 A single diagnostic separates grouping from tiling. Against a true foreground fraction of
-$0.2115$ on CLEVR and $0.0943$ on Multi-dSprites, our readout predicts $0.2001$ and $0.0841$ ---
+$0.2115$ on CLEVR and $0.0943$ on Multi-dSprites, our readout predicts $0.1988$ and $0.0827$ ---
 the only method that does not over-claim --- while baselines predict between $0.41$ and $0.86$ on
 CLEVR. A model that labels most of the image as object can score well on a foreground-only
 partition measure while failing the IoU metrics, which is what the \textsc{f-iou} column shows.
@@ -177,7 +206,9 @@ $128$  & .5796 & .4988 & .3985 & $-.2625$ \\
 \bottomrule
 \end{tabular}
 \caption{CLEVR, model fixed, readout window $T/2$. Halving the rollout is free; a quarter costs
-$0.02$--$0.03$; an eighth fails.}
+$0.02$--$0.03$; an eighth fails. This table and the scaling figures below are reported
+\emph{without} the minimum-region-size rule, because both are within-model comparisons at a
+fixed readout and the rule would shift every row by the same small amount.}
 \label{tab:timestep}
 \end{table}
 
@@ -189,16 +220,17 @@ for the reported numbers. Shorter windows also fragment more: mean predicted reg
 rise from $8.0$ at $T=1024$ to $13.3$ at $T=256$, against $6.36$ true objects.
 
 \paragraph{Scaling with training data.}
-Continuing training on additional unseen CLEVR images, in steps of $1{,}000$, separates the three
-metrics. \textsc{fg-ari} rises from $.8421$ at $10{,}000$ images to $.8469$ at $14{,}000$ and then
-falls to $.8459$ at $15{,}000$; its step-to-step changes are $+.0005$, $+.0023$, $+.0011$,
-$+.0009$, $-.0010$. Foreground IoU and matched-object IoU do not turn over the same range,
-gaining $+.0157$ and $+.0124$ and still rising at $15{,}000$. More in-domain data therefore stops
-improving \emph{how} patches are grouped well before it stops improving \emph{where the
-boundaries fall}. Mean predicted regions hold at $7.7$--$8.0$ throughout, against $6.36$ true
-objects, so the extra data sharpens the partition without changing how much it splits. A single
-$0.0010$ decrease at one seed is not proof of saturation, and we report it as the shape of the
-curve rather than a converged value.
+Continuing training on additional unseen CLEVR images, in steps of $1{,}000$ from $10{,}000$ to
+$18{,}000$, separates the three metrics. \textsc{fg-ari} runs
+$.8421$, $.8426$, $.8449$, $.8460$, $.8469$, $.8459$, $.8456$, $.8470$, $.8461$: it gains
+$.0028$ over the first two steps and then stays inside a band of $.0021$ for the remaining six,
+with no trend. Foreground IoU runs $.7545$ to $.7755$ and matched-object IoU $.6410$ to $.6579$,
+both still rising at $18{,}000$ and neither turning. More in-domain data therefore stops improving
+\emph{how} patches are grouped at around $12{,}000$ images while it is still improving \emph{where
+the boundaries fall}. Mean predicted regions hold at $7.7$--$8.0$ throughout, against $6.36$ true
+objects, so the extra data sharpens the partition without changing how much it splits. The
+\textsc{fg-ari} band is one seed wide and we read it as flat rather than converged; the two IoU
+curves have not been run far enough to find their own ceiling.
 
 \paragraph{In-domain data is not the most useful data.}
 The same $5{,}000$ additional images buy more than twice as much when they come from a different
@@ -207,19 +239,84 @@ instead raises it by $+.0084$, a $2.2\times$ larger gain at an identical budget.
 the transfer result in Table~\ref{tab:main}, this argues that the model is not fitting a domain
 but learning a grouping rule that the extra renders refine.
 
+\subsection{Spike timing, measured}
+\label{sec:timing}
+
+The two measurements summarised in Section 3.2, in full. Both run on the first $40$ images of
+the CLEVR reserved split, on the same rollouts, so they are directly comparable.
+
+\paragraph{Validity of the ablation.}
+The affinity $Q$ is recomputed here from \texttt{component\_spikes} rather than taken from the
+model, so that a modified spike trace can be fed through the same arithmetic. On the unshifted
+control the recomputed $Q$ agrees with the model's own to $6.7\times10^{-6}$ maximum absolute
+difference over all $4096^2$ entries, so the ablations differ from the control in exactly one
+thing.
+
+\paragraph{Separability.}
+Ground-truth labels are used only to sort patch pairs into three groups and never to set a
+threshold or a count. Averaged over the $40$ images, the affinity is $0.891\pm0.111$ for pairs
+inside one object, $0.047\pm0.048$ for pairs in different objects, and $0.099\pm0.106$ for
+object--background pairs. The within-object value is nineteen times the across-object value, and
+the across-object value sits near the floor of the measure.
+
+\paragraph{Per-patch circular shift.}
+Each patch's four component traces are rolled by one offset drawn uniformly over the readout
+window, independently per patch. Rate, waveform and within-patch structure survive; only the
+alignment between patches is destroyed. The graph, the foreground threshold, the component
+floor, the background heuristic and the greedy merge are untouched.
+
+\begin{table}[!tb]
+\centering
+\small
+\begin{tabular}{l ccc r}
+\toprule
+& \textsc{fg-ari} & \textsc{fg-iou} & \textsc{obj-iou} & regions \\
+\midrule
+control            & .8648 & .8028 & .6925 & 7.8 \\
+per-patch shift    & .0735 & .7358 & .0325 & 562.3 \\
+gates, not spikes  & .8648 & .8028 & .6925 & 7.8 \\
+\bottomrule
+\end{tabular}
+\caption{First $40$ CLEVR reserved images. Destroying cross-patch timing collapses the
+partition (\textsc{fg-ari}, \textsc{obj-iou}) while barely moving foreground detection, which
+is rate-based. Substituting the phase gates for the spikes changes nothing at all.}
+\label{tab:timing}
+\end{table}
+
+\paragraph{Gates in place of spikes.}
+The third row replaces \texttt{component\_spikes} with \texttt{component\_gates} and changes
+nothing else. Every mask is reproduced exactly, on all $40$ images and to every digit of all
+three metrics. The reason is visible in the traces: with $s_{ia}=g_ie_{ia}$, the firing
+indicator $e$ equals $1$ in $99.992\%$ of settled steps, the correlation between $s$ and $g$ is
+$0.9997$, and the $0.008\%$ of steps where the neuron is silent never change a thresholded
+decision. The timing that the shift ablation shows to be necessary is therefore the timing of
+the oscillatory gate. The spiking layer carries it without loss, but the readout cannot tell
+the two apart, and no claim should be made for the threshold nonlinearity on this evidence.
+
 \subsection{Limitations}
 \label{sec:limitations}
 
 \paragraph{Object count.}
-Our readout groups patches well and counts objects poorly. On CLEVR it predicts $8.04$ objects per
-image against a true $6.36$, matching the exact count on $17.5\%$ of images; on Multi-dSprites
-$6.62$ against $2.49$ ($28.1\%$); and on Tetrominoes $21.07$ against exactly $3$, matching on
-\emph{none} of the $320$ images. The patch grouping on Tetrominoes is our strongest cell
-(\textsc{fg-ari} $0.8580$) and the object count there is never right, so the two properties must
-be reported separately. We attribute this to the objective: the model is trained without a
-reconstruction term, and a reconstruction loss is what penalises splitting one object into two
-parts that must then be reconstructed independently. Every baseline in Table~\ref{tab:main}
-optimises such a term; ours does not, which is also what makes it cheap to train.
+Our readout groups patches better than it counts objects. With the minimum-region-size rule it
+predicts $5.15$ objects per image on CLEVR against a true $6.36$, matching the exact count on
+$25.0\%$ of images; $2.64$ against $2.49$ on Multi-dSprites ($53.1\%$); and $5.28$ against exactly
+$3$ on Tetrominoes ($9.4\%$). Without the rule the same model predicts $8.04$, $6.62$ and $21.07$,
+matching on $17.5\%$, $28.1\%$ and \emph{none} of the $320$ Tetrominoes images, so most of the
+count error was single-patch fragments rather than genuine over-segmentation. Letting $f$ be
+chosen on each dataset's own validation split instead of transferred from CLEVR removes most of
+the remainder --- $f=0.10$ gives $3.02$ predicted objects on Tetrominoes, $86.9\%$ exact, and
+raises foreground IoU further to $.8066$ --- but that uses target-domain labels, so we report the
+transferred value as the headline.
+
+Two cautions about this metric. First, Tetrominoes contains exactly three objects in every image,
+so a model that always answers three is exactly right on every image without grouping anything:
+the fixed-$k$ baselines all score $100\%$ there, CtCAE included at \textsc{fg-ari} $0.0756$. The
+count is only informative where the true count varies, and on Multi-dSprites, where it does, the
+same baselines score $0\%$ exact against our $53.1\%$. Second, the residual error is a predicted
+consequence of the objective: the model is trained without a reconstruction term, and a
+reconstruction loss is what penalises splitting one object into two parts that must then be
+reconstructed independently. Every baseline in Table~\ref{tab:main} optimises such a term; ours
+does not, which is also what makes it cheap to train.
 
 \paragraph{Seeds.}
 Every number reported here is a single training seed. We measured the effect of reseeding one
@@ -231,4 +328,4 @@ and not an error bar on our own model.
 The patch protocol is not comparable with pixel-protocol numbers reported in the cited works, and
 the held-out split is reserved from the training corpus rather than an independent benchmark test
 set. Figures from other papers appear in this section only as each model's comparison with itself
-(Section~\ref{sec:fairness}), never as entries in Table~\ref{tab:main}.
+(the baseline-fairness comparison), never as entries in Table~\ref{tab:main}.

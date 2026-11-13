@@ -1,0 +1,590 @@
+% ============================================================================
+% MERGED PAPER. Your Model253_Paper_With_Abstract.tex is the master for everything
+% down to the References; this file is that text with four changes, each marked
+% "MERGE:" so you can see and reverse any of them.
+%
+%  1. \affiliations{} ADDED. aaai2027.sty:132 defines \aaai@affiliations only when
+%     \affiliations is called, and \maketitle (sty:169,207) uses it unconditionally,
+%     so without it the build dies with "Undefined control sequence" at \maketitle.
+%     Under [submission] nothing it contains is printed.
+%
+%  2. \clearpage REMOVED before the Appendix. The AAAI-27 kit forbids page breaks
+%     of any kind; leaving it in risks a desk reject.
+%
+%  3. "The supplementary document" -> "Appendix E/F/G". There is no separate
+%     supplementary PDF any more: that material is in this file's appendix, which
+%     is excluded from the page limit, keeps the submission to one file, and lets
+%     \ref{tab:main} resolve, which it cannot across two documents.
+%
+%  4. THREE APPENDIX SECTIONS ADDED at the end:
+%       E  Evaluation conditions  (appendix_evaluation.tex, hand-written)
+%       F  Additional experiments (generated from experiments.tex)
+%       G  Supplementary tables   (generated from supplementary.tex)
+%     F and G are produced by split_experiments.py -- run it after editing either
+%     source. E is edited directly.
+% ============================================================================
+
+\pdfoutput=1
+\documentclass[letterpaper]{article}
+\usepackage[submission]{aaai2027}
+\usepackage[hyphens]{url}
+\usepackage{graphicx}
+\urlstyle{rm}
+\def\UrlFont{\rm}
+\usepackage{natbib}
+\usepackage{caption}
+\usepackage{amsmath,amssymb,booktabs,array}
+\frenchspacing
+\pdfinfo{/TemplateVersion (2027.1)}
+\setcounter{secnumdepth}{0}
+\title{Object Discovery from Spike Timing in an Oscillatory Spiking Network}
+\author{Anonymous submission}
+\affiliations{Anonymous Institution}  % MERGE 1 -- required even when anonymous
+\begin{document}
+\maketitle
+\begin{abstract}
+We investigate whether temporal spike patterns can guide object discovery in static images. Our oscillatory spiking network maps image patches to coupled oscillators that modulate spiking, then combines spike train similarity with image-derived connectivity to produce object masks. The network trains without ground-truth masks and requires no prespecified object count at inference. Under a shared patch-level evaluation protocol, the model achieves a foreground adjusted Rand index of 0.841 on CLEVR, compared with 0.633 for the strongest evaluated baseline on that metric. Trained only on CLEVR, it also outperforms the evaluated baselines on Tetrominoes and Multi-dSprites without additional training.
+\end{abstract}
+\section{1. Introduction}
+Object-centric models such as Slot Attention bind distributed image features by assigning them to shared object representations (Locatello et al. 2020). Oscillatory models such as AKOrN introduce synchronization into feature processing and obtain object masks by clustering the resulting representations (Miyato et al. 2025). These approaches leave open a complementary question: can the timing of neural activity itself tell us which regions belong to the same object?
+
+Neurons send signals to other cells through brief electrical pulses called action potentials, or spikes. Both how often a neuron fires and when it fires can matter. For example, cortical neurons can produce reproducible spike timings when presented with the same fluctuating input (Mainen and Sejnowski 1995).
+
+Brain rhythms can make neurons more likely to fire at some points in a cycle than at others. When two populations synchronize, those windows can align, making their spikes more likely to occur near one another (Fries 2005). In cat visual cortex, the strength of synchrony between sites depended on how their local stimuli formed a larger pattern (Gray et al. 1989). Inspired by this idea, S$^2$-Net (Dan and Wu 2026) uses coupled oscillators to regulate spiking and illustrates temporal binding in synthetic scenes.
+
+We hypothesize that when oscillators representing patches of the same object synchronize, their downstream neurons produce similar spike patterns.
+
+\section{2. Method}
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{Model253_Architecture_Academic.pdf}
+\caption{Model overview. CNN patch features define a patch graph and input phases. The oscillatory spiking core runs for $T$ steps, and the readout combines temporal spike similarity with graph connectivity to group patches into object masks.}
+\label{fig:model253}
+\end{figure*}
+We hypothesize that synchronization among oscillators representing patches of the same object leads to similar temporal spike patterns. To test this hypothesis, we map image patches to coupled oscillators and, inspired by S$^2$-Net (Dan and Wu 2026), use their phase dynamics to gate spiking activity. We group patches by the similarity of their spike patterns to produce a mask for each discovered object.
+
+\subsection{2.1 From Images to Neural Activations}
+\subsubsection{2.1.1 Patch activation}
+We encode an RGB image with eight convolutional filters, normalize and bound the feature maps, and pool them into a patch activation tensor $\gamma\in\mathbb R^{64\times64\times8}$. Each patch $i$ has an eight-dimensional activation vector $\gamma_i\in\mathbb R^8$. The patch indices, $i$ and $j$, identify image patches; the component index, $a$, identifies an oscillator component; and the time index, $t$, identifies a simulation step.
+
+\subsubsection{2.1.2 Patch connection graph}
+In its neuroimaging setting, S$^2$-Net (Dan and Wu 2026) uses structural connectivity to set how strongly brain regions interact. We apply the same principle to images: a weighted graph controls how strongly patch oscillators influence one another, with edge weights based on feature similarity and geodesic distance.
+\begin{equation}
+S_{ij}=\frac{\boldsymbol z_i^\top\boldsymbol z_j}{\tau}-r\,d(i,j).
+\end{equation}
+The connection score, $S_{ij}$, compares the normalized patch embeddings, $\boldsymbol z_i$ and $\boldsymbol z_j$, using the temperature, $\tau$, and penalizes the geodesic distance, $d(i,j)$, using the spatial cost weight, $r$. $\tau$ and $r$ are derived from trainable scalars.
+
+We normalize the strongest connections and make their weights reciprocal.
+\begin{equation}
+\begin{gathered}
+ B_{ij}=G\,\operatorname{softmax}_{j\in\mathcal N_i}(S_{ij}),\\
+ A_{ij}=\frac{B_{ij}+B_{ji}}{2}.
+\end{gathered}
+\end{equation}
+For each patch $i$, the neighbor set, $\mathcal N_i$, contains the 512 patches with the highest connection scores, $S_{ij}$. The connection gain, $G$, is derived from a trainable scalar. The normalized connection weight, $B_{ij}$, is zero for unselected neighbors. The symmetric connection weight, $A_{ij}$, defines the patch graph.
+
+\subsubsection{2.1.3 Input phase}
+We project each patch activation with the trainable weight $W_{\mathrm{drive}}$, standardize the result, and scale it with the trainable gain $W_\phi$. A scaled tanh bounds the sensory drive, $\boldsymbol\phi_i$, to $[-\pi,\pi]$. We use the bounded drive as the initial oscillator phase (Eq.~\eqref{eq:input-phase}).
+
+\subsection{2.2 Recurrent Core}
+\subsubsection{2.2.1 Kuramoto layer}
+The Kuramoto layer coordinates oscillator phases across patches through intrinsic drift, patch coupling, and sensory drive. Each patch has a phase vector $\boldsymbol\theta_i(t)\in\mathbb R^4$, with one entry per oscillator.
+\begin{equation}
+\begin{aligned}
+\boldsymbol\theta_i(t+1)={}&\boldsymbol\theta_i(t)+\Delta t\Bigl(
+\boldsymbol\omega_i+f\boldsymbol\phi_i\\
+&+\boldsymbol\kappa_i\odot\sin(\boldsymbol\phi_i-\boldsymbol\theta_i(t))\\
+&+\frac{K}{N}\sum_j\bar A_{ij}\sin\bigl(
+\boldsymbol\theta_j(t)-\boldsymbol\theta_i(t)-\alpha_{ij}\bigr)\Bigr).
+\end{aligned}
+\end{equation}
+The \textbf{natural frequency}, $\boldsymbol\omega_i$, gives each oscillator its intrinsic rate of phase change. The \textbf{coupling term}, the sum over $j$, adjusts the phase according to other patches, using the corrected connection weight, $\bar A_{ij}$, and the phase lag, $\alpha_{ij}$. The \textbf{drive term} uses the sensory drive, $\boldsymbol\phi_i$, to adjust frequency through $f$ and to pull the phase toward the input when the drive strength, $\boldsymbol\kappa_i$, is positive. The coupling scale, $K$, is normalized by the patch count, $N$. The time step, $\Delta t$, scales the update, and $\odot$ denotes elementwise multiplication. The parameters $\boldsymbol\omega_i$, $f$, and $\boldsymbol\kappa_i$ are trainable.
+
+\subsubsection{2.2.2 Sinusoidal gating}
+The sinusoidal gating layer modulates the signal sent to the dendrites using a delayed phase. Each patch has one scalar gate $g_i(t)\in[0,1]$, shared by its four oscillator components.
+\begin{equation}
+\begin{gathered}
+g_i(t)=\frac{1+\sin(\bar\theta_i(\max(0,t-d)))}{2}.
+\end{gathered}
+\end{equation}
+\begin{equation}
+\boldsymbol x_i(t)=g_i(t)\sin(\boldsymbol\theta_i(t)).
+\end{equation}
+The gate $g_i(t)$ uses the mean phase of the four oscillators (Eq.~\eqref{eq:mean-phase}) with a phase delay of $d$ steps to modulate the dendritic input $\boldsymbol x_i(t)$.
+
+\subsubsection{2.2.3 Dendritic layer}
+The dendritic layer integrates the gated input and spike feedback through four branches, whose states are summed to drive the membrane.
+\begin{equation}
+\boldsymbol v_{ia}(t)=U\begin{pmatrix}x_{ia}(t)\\s_{ia}(t-1)\end{pmatrix}+\boldsymbol b.
+\end{equation}
+The branch input, $\boldsymbol v_{ia}(t)$, combines the gated feature, $x_{ia}(t)$, and the previous emitted spike, $s_{ia}(t-1)$. The previous spike provides top-down feedback from the spiking output to the dendritic branches. The projection weight, $U\in\mathbb R^{4\times2}$, and the bias, $\boldsymbol b\in\mathbb R^4$, are trainable.
+
+The provisional state $\widehat{\boldsymbol h}_{ia}(t)$ balances the previous state and current input using $\boldsymbol\beta_i$ (Eq.~\eqref{eq:branch-provisional}).
+
+\begin{equation}
+\begin{aligned}
+\boldsymbol h_{ia}(t)={}&\boldsymbol h_{ia}(t-1)
++\bigl(1-\eta_a(1-g_i(t))\bigr)\\
+&\quad{}\cdot\bigl(\widehat{\boldsymbol h}_{ia}(t)-\boldsymbol h_{ia}(t-1)\bigr),\\
+H_{ia}(t)={}&\sum_{b=1}^{4}h_{iab}(t).
+\end{aligned}
+\end{equation}
+The gate and trainable weight $\eta_a$ scale the state change. Summing over branches $b$ yields the membrane input $H_{ia}(t)$.
+
+\subsubsection{2.2.4 Membrane layer}
+The membrane layer accumulates dendritic input and generates spikes when its voltage crosses a threshold. The provisional voltage $\widehat V_{ia}(t)$ combines the previous voltage and current input using $\lambda_i$, with a reset from the previous spike (Eq.~\eqref{eq:membrane-provisional}).
+
+\begin{equation}
+\begin{aligned}
+V_{ia}(t)={}&V_{ia}(t-1)+\bigl(1-\xi_a(1-g_i(t))\bigr)\\
+&\quad{}\cdot\bigl(\widehat V_{ia}(t)-V_{ia}(t-1)\bigr).
+\end{aligned}
+\end{equation}
+\begin{equation}
+\begin{gathered}
+e_{ia}(t)=\operatorname{ind}(V_{ia}(t)>\vartheta_a),\\
+s_{ia}(t)=g_i(t)e_{ia}(t).
+\end{gathered}
+\end{equation}
+The gate and trainable weight $\xi_a$ scale the voltage change. A threshold $\vartheta_a$ derived from a trainable parameter defines the binary event $e_{ia}(t)$; gating that event gives the emitted spike $s_{ia}(t)$.
+
+\subsection{2.3 Spike Grouping and Mask Generation}
+For each oscillator component, we mean-center and L2-normalize the spike trace from the last 512 simulation time steps. For patches $i$ and $j$, the correlation $\rho_{ija}$ is higher when their spike activity tends to be above or below its respective average at the same time (Eq.~\eqref{eq:spike-correlation}). We compute the patch affinity, $Q_{ij}$, by multiplying the four correlations after clipping negative values to zero. A high affinity thus requires agreement across all four components: any nonpositive correlation makes $Q_{ij}$ zero.
+
+We form connected components by linking patch pairs with $Q_{ij}\geq0.5$ and discard components smaller than 32 patches. As a heuristic, we treat the largest remaining component as background.
+
+We start the retained foreground patches as singleton groups and merge spatially adjacent groups using
+\begin{equation}
+\begin{gathered}
+E_{ij}=\left(1+\frac{N\bar A_{ij}}{G}\right)\log\frac{Q'_{ij}}{1-Q'_{ij}},\\
+\Delta(\mathcal C,\mathcal D)=\sum_{i\in\mathcal C}\sum_{j\in\mathcal D}E_{ij}.
+\end{gathered}
+\end{equation}
+The stabilized affinity, $Q'_{ij}$, determines the sign of the merge evidence, $E_{ij}$. The merge score, $\Delta(\mathcal C,\mathcal D)$, sums the evidence between the candidate patch groups, $\mathcal C$ and $\mathcal D$. Groups are merged while their score is positive. Each final group produces an object mask.
+
+\section{3. Experiments}
+\begin{table*}[t]
+\centering
+\small
+\begin{tabular}{lrrrrrrrrr}
+\toprule
+& \multicolumn{3}{c}{CLEVR (in-domain)} & \multicolumn{3}{c}{Tetrominoes (zero-shot)} & \multicolumn{3}{c}{Multi-dSprites (zero-shot)} \\
+Model & ari & f-iou & o-iou & ari & f-iou & o-iou & ari & f-iou & o-iou \\
+\midrule
+Ours & .8408 & .7528 & .6387 & .8568 & .7950 & .8170 & .6966 & .8190 & .7625 \\
+AKOrN (attn) + up-tiling & .6326 & .3468 & .3636 & .5484 & .7230 & .4167 & .5505 & .6539 & .6348 \\
+AKOrN (conv) & .6046 & .4219 & .2769 & .7202 & .7540 & .5913 & .4055 & .6834 & .5434 \\
+AKOrN (attn) & .6027 & .3327 & .3750 & .5676 & .7383 & .4687 & .4343 & .6019 & .5751 \\
+ItrSA & .5794 & .2787 & .3853 & .6319 & .7137 & .5687 & .4817 & .2489 & .6093 \\
+CAE++ & .2838 & .2193 & .0882 & .2715 & .2452 & .1901 & .2648 & .1048 & .1125 \\
+Slot Attention & .2872 & .2220 & .0801 & .1739 & .2192 & .1071 & .1930 & .0876 & .0680 \\
+CtCAE & .2357 & .2148 & .0964 & .2681 & .2420 & .2034 & .3079 & .1158 & .1609 \\
+CAE & .1091 & .2008 & .0634 & .1526 & .2305 & .1192 & .1200 & .1038 & .0630 \\
+Best baseline, per cell & .6326 & .4267 & .3853 & .7202 & .7540 & .5913 & .5505 & .6834 & .6348 \\
+Our margin & +.2082 & +.3261 & +.2534 & +.1366 & +.0410 & +.2257 & +.1461 & +.1356 & +.1277 \\
+\bottomrule
+\end{tabular}
+\caption{All models trained on the same 10,000 CLEVR images for 10 epochs and evaluated on 320 held-out images per dataset by the same function. Tetrominoes and Multi-dSprites are zero-shot. ari / f-iou / o-iou are foreground ARI, foreground IoU and matched-object IoU on the 64 \ensuremath{\times} 64 patch grid. Every model, ours included, has the minimum-region-size rule of Section 3.1 applied at the single value f = 0.01 fixed on CLEVR validation. It leaves the baseline rows unchanged to three decimals except AKOrN (conv) on CLEVR foreground IoU, which improves from .4219 to .4267; the penultimate row uses the better of the two for every baseline cell we measured. That row takes the best baseline in each cell separately, which no single baseline attains; our margin is measured against that composite. Single training seed throughout. Appendix E states the evaluation conditions and which split fixed each model's free choices.}
+\label{tab:main}
+\end{table*}
+\subsection{3.1 Protocol}
+All models are evaluated by one function on one representation. Ground truth is quantised to a 64 \ensuremath{\times} 64 patch grid and
+scored there; a prediction is never upsampled to pixels to be
+compared. A prediction coarser than the grid is lifted by an
+exact repeat, and one finer than the grid is reduced by patch
+majority vote, so every method is scored on the same object.
+The ceiling is therefore 1.0 by construction, and these numbers are not directly comparable with pixel-protocol figures
+reported elsewhere.
+
+We report three metrics and never combine them into
+a single score: foreground adjusted Rand index (fg-ari),
+foreground IoU (fg-iou) and matched-object IoU (obj-iou).
+Background is label 0 on both sides, and the foreground-only
+metrics exclude patches the ground truth calls background.
+They differ in what they can see: fg-ari scores only
+patches whose \emph{ground truth} is foreground, so claiming
+background as object is invisible to it, while fg-iou compares
+the two foreground sets and is the metric that charges for it.
+Appendix E gives exact definitions.
+
+Matched exposure. Every model is trained on the same
+10,000 CLEVR images for 10 epochs, i.e. 100,032 exposures.
+Where a baseline's published recipe differs, only its epoch
+count is changed; architecture and optimiser are left at the
+authors' values. Tetrominoes and Multi-dSprites are never
+trained on: for every row in Table 1 those two columns are
+zero-shot transfer from the CLEVR-trained model.
+
+Readouts that require a cluster count. Several baselines obtain masks by clustering a continuous embedding, and the
+reference implementations of CAE, CAE++, CtCAE and
+SynCx set the number of clusters from the per-image
+ground-truth object count, \(k_i=|\operatorname{unique}(y_i)|\),
+which makes their published figures oracle-assisted. We removed this: k becomes a per-dataset constant, and the mapping of one cluster to background a rule --- both fixed on
+\emph{each target dataset's own} validation split, a weaker
+transfer condition than ours. Appendix E states which split
+fixed what, per model. No choice of any model is made on
+the reported split.
+
+Minimum region size. Our readout emits many single-patch
+regions: 22.8\% of all predicted regions on CLEVR validation,
+27.0\% on Tetrominoes and 56.2\% on Multi-dSprites, where
+the median region is one patch. They appear when the greedy
+merge splits a spatially scattered synchronous component,
+and they inflate the object count without materially changing
+the partition. We discard any predicted region smaller than a
+fraction f of that image's predicted foreground. The rule is
+scale-free and reads no ground truth; f = 0.01 is fixed on
+CLEVR validation as the largest value costing under 0.005
+FG-ARI and 0.01 matched-object IoU, then applied unchanged
+to both transfer datasets and to every baseline.
+
+\subsection{3.2 Generalisation across datasets}
+Table 1 is the central result. Every model sees only CLEVR
+during training; the Tetrominoes and Multi-dSprites columns
+measure transfer.
+
+Our readout is ahead in all nine cells. The comparison is
+deliberately pessimistic: the best baseline per cell is a composite of three different architectures, and no single competitor achieves that row. It is also notable that which baseline
+comes second depends on the dataset --- AKOrN (conv)
+on Tetrominoes, AKOrN (attn)+up-tiling on Multi-dSprites,
+ItrSA on CLEVR matched-object IoU --- whereas our model
+is first everywhere.
+
+Where the margin is thin. The smallest margin in the table
+is Tetrominoes foreground IoU, +0.0410. Every other margin
+lies between 0.128 and 0.326. We flag this cell explicitly
+rather than quoting only the aggregate.
+
+Does the grouping come from timing? Two measurements
+on 40 CLEVR images answer the hypothesis of Section 1.
+First, grouping patch pairs by ground truth --- used only to
+group, never to set a threshold --- the affinity $Q$ averages
+0.891 \ensuremath{\pm} 0.111 within one object against
+0.047 \ensuremath{\pm} 0.048 across objects and
+0.099 \ensuremath{\pm} 0.106 between object and background,
+a nineteenfold separation. Second, we circularly shift each
+patch's spike trace by its own random offset inside the readout
+window, leaving the graph, the foreground rule and the merge
+untouched; this keeps every patch's firing rate and waveform
+and destroys only the alignment between patches. FG-ARI
+falls from 0.865 to 0.074 and the mean predicted regions rise
+from 7.8 to 562, while foreground IoU falls only from 0.803
+to 0.736, the foreground test being rate-based and shiftinvariant. What collapses is the partition, not the detection:
+the grouping is carried by relative timing.
+
+Predicted foreground. Against a true foreground fraction of
+0.2115 on CLEVR and 0.0943 on Multi-dSprites, our readout predicts 0.1988 and 0.0827 --- the only method that does
+not over-claim --- while baselines predict between 0.41 and
+0.86 on CLEVR, which is the error the f-iou column charges
+and fg-ari cannot see.
+
+Are the baselines handicapped? Slot Attention's released
+weights, at roughly 320\ensuremath{\times} our budget, still lose all nine cells
+by 0.377 to 0.720, and two of the six baselines reach their
+own published scores at 1/210 and 1/64 of their schedules,
+so those rows are not artefacts of the short budget; for the
+other four the result is a data-efficiency claim. Appendix F
+gives both comparisons in full, with the rollout-length and
+data-scaling studies, and Appendix G the per-model tables.
+
+\subsection{3.3 Limitations}
+
+Object count. Our readout groups patches better than it
+counts objects. With the rule it predicts 5.15 objects per
+image on CLEVR against a true 6.36, exact on 25.0\% of
+images; 2.64 against 2.49 on Multi-dSprites (53.1\%); and
+5.28 against exactly 3 on Tetrominoes (9.4\%). Without it the
+same model predicts 8.04, 6.62 and 21.07, exact on 17.5\%,
+28.1\% and none of the 320 Tetrominoes images, so most of
+the error was single-patch fragments, not over-segmentation.
+Choosing f on each dataset's own validation rather than transferring it removes most of the rest --- f = 0.10 gives 3.02
+objects on Tetrominoes, 86.9\% exact, and foreground IoU
+.8066 --- but that reads target labels, so the transferred value
+is the headline.
+
+Two cautions. Tetrominoes contains exactly three objects in
+every image, so always answering three is right on every
+image without grouping anything: the fixed-k baselines all
+score 100\% there, CtCAE included at fg-ari 0.0756. The
+count is informative only where the true count varies, and on
+Multi-dSprites, where it does, those baselines score 0\% exact
+against our 53.1\%. And the residual error follows from the
+objective: we train without a reconstruction term, which is
+what would penalise splitting an object into parts that must
+each be reconstructed. Every baseline in Table 1 optimises one; ours does not.
+
+Spikes, or the gate that carries them. Over the readout window the firing indicator $e$ in $s_{ia}=g_ie_{ia}$ equals 1 in
+99.99\% of steps, so $s$ follows the gate $g$ with correlation
+0.9997, and the identical readout run on the gates reproduces
+every mask exactly. The timing shown above to be necessary
+is the timing of the oscillatory gate; the spiking layer transmits
+it faithfully but contributes nothing the readout distinguishes.
+A readout that uses the threshold crossings themselves is the
+obvious next step.
+
+Seeds. Every number here is a single training seed. Reseeding one baseline moved fg-ari by up to 0.134 on CLEVR and
+0.009 on Multi-dSprites; all margins in Table 1 exceed that,
+but this is evidence about baseline variance, not an error bar
+on our own model.
+
+Protocol. The patch protocol is not comparable with pixelprotocol numbers in the cited works, and the held-out split is
+reserved from the training corpus rather than an independent
+benchmark test set. Figures from other papers appear only as
+each model's comparison with itself (Appendix F), never as
+entries in Table 1.
+
+\section{4. Conclusion}
+An oscillatory spiking network can group image patches into object masks without mask supervision during training or a prespecified object count at inference. Under a shared evaluation protocol, it achieved 0.841 FG-ARI on CLEVR versus 0.633 for the best evaluated baseline and outperformed the evaluated baselines on Tetrominoes and Multi-dSprites without additional training. These results support the use of temporal spike patterns as a cue for object discovery. The 1,024-step rollout is computationally demanding, and mask quality and object count accuracy can still improve. Beyond segmentation, the spike patterns provide a temporal representation for each discovered object. Future work can test whether these patterns encode object attributes, whether relative firing order reflects spatial relationships, and whether patterns across successive video frames support object tracking.
+
+\section*{References}
+Dan, T.; and Wu, G. 2026. From Cortical Synchronous Rhythm to Brain Inspired Learning Mechanism: An Oscillatory Spiking Neural Network with Time-Delayed Coordination. arXiv:2605.01656.
+
+Fries, P. 2005. A mechanism for cognitive dynamics: neuronal communication through neuronal coherence. \textit{Trends in Cognitive Sciences}, 9(10): 474--480.
+
+Gray, C. M.; K\"onig, P.; Engel, A. K.; and Singer, W. 1989. Oscillatory responses in cat visual cortex exhibit inter-columnar synchronization which reflects global stimulus properties. \textit{Nature}, 338: 334--337.
+
+Locatello, F.; Weissenborn, D.; Unterthiner, T.; Mahendran, A.; Heigold, G.; Uszkoreit, J.; Dosovitskiy, A.; and Kipf, T. 2020. Object-Centric Learning with Slot Attention. In \textit{Advances in Neural Information Processing Systems}.
+
+Mainen, Z. F.; and Sejnowski, T. J. 1995. Reliability of spike timing in neocortical neurons. \textit{Science}, 268(5216): 1503--1506.
+
+Miyato, T.; L\"owe, S.; Geiger, A.; and Welling, M. 2025. Artificial Kuramoto Oscillatory Neurons. In \textit{International Conference on Learning Representations}.
+
+% MERGE 2: \clearpage removed here -- the kit forbids page breaks of any kind.
+\section{Appendix}
+\setcounter{equation}{0}
+\renewcommand{\theequation}{A\arabic{equation}}
+
+\subsection{A Sensory Representation and Graph Details}
+The input is a $128\times128$ RGB image scaled by $\frac{1}{255}$. A single $3\times3$ convolution with eight trainable filters, unit stride, and no padding produces $126\times126\times8$ feature maps. There is no post-convolution activation. All eight channels share a scalar mean $\mu$ and standard deviation $\sigma$, estimated once from the initial encoder on training RGB images. We use $\sigma=\sqrt{\max(\operatorname{Var}(F),10^{-8})}$, where $F$ pools feature values over training images, channels, and spatial positions. We standardize with these fixed statistics and clip the result to $[-3,3]$. Adaptive average pooling produces a $64\times64$ grid, yielding $N=4096$ patch vectors with eight features each.
+
+The bias-free trainable projection $W$ gives the embedding
+\begin{equation}
+\boldsymbol z_i=\frac{W\gamma_i}{\max(\lVert W\gamma_i\rVert_2,\varepsilon)}.
+\end{equation}
+For grid coordinates $p_i$, the scaled spatial distance and local traversal cost are
+\begin{equation}
+\begin{aligned}
+d_{\mathrm{sp}}(i,j)&=\frac{\lVert p_i-p_j\rVert_2}{4},\\
+c_{ij}&=d_{\mathrm{sp}}(i,j)[1+8(1-\boldsymbol z_i^\top\boldsymbol z_j)^2].
+\end{aligned}
+\end{equation}
+Set $d_{ij}^{(0)}=c_{ij}$ when $d_{\mathrm{sp}}(i,j)\le1.5$ and 16 otherwise. With $\tau_{\mathrm{geo}}=0.5$, three updates ($m=0,1,2$) give
+\begin{equation}
+\begin{aligned}
+u_{ij}^{(m)}&=-\tau_{\mathrm{geo}}\log\sum_k\exp\left(-\frac{d_{ik}^{(m)}+d_{kj}^{(m)}}{\tau_{\mathrm{geo}}}\right)\\
+&\quad+\tau_{\mathrm{geo}}\log4,\\
+d_{ij}^{(m+1)}&=\min(d_{ij}^{(m)},u_{ij}^{(m)}),\\
+d(i,j)&=\min(d_{ij}^{(3)},16).
+\end{aligned}
+\end{equation}
+With learned scalars $\ell_\tau,\ell_G,\ell_r$, the graph parameters are
+\begin{equation}
+\begin{aligned}
+\tau&=\max(\exp(\ell_\tau),0.001),\qquad G=\exp(\ell_G),\\
+r&=\operatorname{softplus}(\ell_r)=\log(1+\exp(\ell_r)).
+\end{aligned}
+\end{equation}
+Each patch selects its 512 highest-scoring connections before normalization. Symmetrization can increase its degree beyond 512.
+
+The trainable projection, $W_{\mathrm{drive}}$, maps eight features to four components without bias. Its output is standardized over all $4N$ patch-component entries of the current image with a standard deviation floor of $10^{-6}$. The trainable scalar, $W_\phi$, scales this input before tanh bounds the drive between $-\pi$ and $\pi$. The drive and graph remain fixed during a rollout. The input phase is computed as
+\begin{equation}\label{eq:input-phase}
+\begin{gathered}
+\boldsymbol u_i=W_{\mathrm{drive}}\gamma_i,\\
+\boldsymbol\phi_i=\pi\tanh(W_\phi\,\bar{\boldsymbol u}_i),\qquad
+\boldsymbol\theta_i(0)=\boldsymbol\phi_i.
+\end{gathered}
+\end{equation}
+
+\subsection{B Recurrent Dynamics}
+\subsubsection{B1 Coupling Correction and Phase Lag}
+The corrected graph stabilizes inverse connection costs and gives zero graph entries a small residual weight:
+\begin{equation}
+\begin{gathered}
+\bar A=\operatorname{ReLU}\left(\frac{A+A^\top}{2}\right)+10^{-6},\\
+C_{ij}=\frac{1}{\bar A_{ij}}.
+\end{gathered}
+\end{equation}
+\begin{equation}
+\begin{gathered}
+\bar C_{ij}=\frac{C_{ij}-\min C}{\max C-\min C+10^{-6}},\\
+\alpha_{ij}=\tanh(R_{ij}-R_{ji})\bar C_{ij}.
+\end{gathered}
+\end{equation}
+The inverse connection cost, $C_{ij}$, is normalized over all patch pairs to obtain $\bar C_{ij}$. The trainable directional matrix, $R$, determines the direction of the phase lag, $\alpha_{ij}$, through its antisymmetric difference. The inverse cost sets the lag scale. This permits coordinated phases with nonzero offsets. The lag is shared by all four components.
+
+The natural frequency, $\boldsymbol\omega_i$, controls intrinsic angular drift. The drive adjusts frequency through $f\boldsymbol\phi_i$ and provides sine forcing toward $\boldsymbol\phi_i$ when the drive strength, $\boldsymbol\kappa_i$, is positive. Coupling, drive, and drift act together; phase is not required to converge to the input phase. The coupling scale, $K$, equals $N$, and the time step, $\Delta t$, is 0.1.
+
+\subsubsection{B2 Rhythmic Gating and Branch Integration}
+We set the phase delay to $d=2$ simulation steps. The scalar gate, $g_i(t)$, is shared across the patch's four components and has no trainable parameters.
+
+The mean patch phase averages the four component phases:
+\begin{equation}\label{eq:mean-phase}
+\bar\theta_i(t)=\frac{1}{4}\sum_{a=1}^4\theta_{ia}(t).
+\end{equation}
+
+Each branch state vector has four entries. The retention vector, $\boldsymbol\beta_i$, is obtained by applying sigmoid to the trainable retention vector, $\boldsymbol k_i$. The provisional branch state is
+\begin{equation}\label{eq:branch-provisional}
+\begin{aligned}
+\widehat{\boldsymbol h}_{ia}(t)={}&\boldsymbol\beta_i\odot\boldsymbol h_{ia}(t-1)\\
+&+(1-\boldsymbol\beta_i)\odot\boldsymbol v_{ia}(t).
+\end{aligned}
+\end{equation}
+Retention is shared across oscillator components of the same patch, while their branch states remain separate. Modulating the full increment also controls leakage and spike recurrence, which would continue if only the current input were gated. Summing the four entries combines branch responses without averaging oscillator components.
+
+\subsubsection{B3 Membrane Update and Spike Emission}
+The provisional membrane voltage is
+\begin{equation}\label{eq:membrane-provisional}
+\begin{aligned}
+\widehat V_{ia}(t)={}&\lambda_iV_{ia}(t-1)+(1-\lambda_i)H_{ia}(t)\\
+&-\vartheta_a s_{ia}(t-1).
+\end{aligned}
+\end{equation}
+The membrane retention, $\lambda_i$, is the sigmoid of the trainable patch parameter, $\ell_i$. The firing threshold, $\vartheta_a$, is 0.06 times the exponential of the trainable component parameter, $q_a$. Membrane resistance is fixed to one. The subtractive reset is proportional to the previous emitted spike and does not force voltage to zero.
+
+When the gate is exactly zero, the previous voltage is retained. Otherwise, the gated update is applied before thresholding. The binary firing event, $e_{ia}(t)$, is multiplied by the gate to produce the emitted spike, $s_{ia}(t)$, which enters the next branch input and membrane reset. Dendritic and membrane states and the previous spike start at zero. The rollout uses 1024 steps.
+
+\subsection{C Temporal Affinity and Object Masks}
+We retain steps $\mathcal T=\{512,\ldots,1023\}$ and index them by $m=1,\ldots,512$. Centering and L2 normalization give
+\begin{equation}
+\begin{aligned}
+\mu_{ia}&=\frac{1}{512}\sum_{t\in\mathcal T}s_{ia}(t),\\
+r_{ia,m}&=\frac{s_{ia}(511+m)-\mu_{ia}}{\max\left(\sqrt{\sum_{t\in\mathcal T}(s_{ia}(t)-\mu_{ia})^2},10^{-8}\right)}.
+\end{aligned}
+\end{equation}
+A constant trace becomes zero. The component correlation and patch affinity are
+\begin{equation}\label{eq:spike-correlation}
+\rho_{ija}=\operatorname{clip}\left(
+  \sum_{m=1}^{512} r_{ia,m}\,r_{ja,m},-1,1\right),
+\end{equation}
+
+\begin{equation}
+Q_{ij}=\prod_{a=1}^{4}\max(\rho_{ija},0).
+\end{equation}
+Centering removes the baseline and normalization reduces sensitivity to absolute scale. The product requires positive temporal agreement in every component; one nonpositive correlation makes the affinity zero. The affinity is not a calibrated same-object probability.
+
+Connected components of $Q\geq0.5$ determine the initial support without a spatial adjacency constraint. Components smaller than 32 patches are discarded, and the largest remaining component is treated as background. Removed patches are not recovered. The retained support is reset to singleton patches before merging.
+
+The stabilized affinity is
+\begin{equation}
+Q'=\operatorname{clip}\left(\frac{Q+Q^\top}{2},10^{-6},1-10^{-6}\right).
+\end{equation} The merge evidence, $E$, is symmetrized and its diagonal set to zero. The log-odds term gives positive evidence above 0.5 and negative evidence below 0.5. Graph weights change its magnitude without changing its sign. Merge scores sum all cross-group pairs. Only groups adjacent on the four-neighbor grid are candidates. The largest positive candidate is merged until none remains.
+
+The hard label, $y_i$, identifies the final foreground group or equals zero for excluded patches. The binary object mask, $M_k$, selects the patches assigned to group $k$ on the $64\times64$ grid. The 32-patch threshold is not reapplied after merging. If no foreground survives, the output is all background.
+
+\subsection{D Training Details}
+\subsubsection{D1 Initialization and optimization}
+We train the Native64 encoder and recurrent core jointly from random initialization without loading a pretrained checkpoint. The shared dendritic bias starts at zero. Training uses RGB images without segmentation masks, object counts, or reconstruction targets.
+
+We compute the objective separately for each image and average the resulting losses across images. After accumulating gradients, we clip the global $\ell_2$ norm across trainable parameters to 1 and apply Adam. The encoder and the other active parameter groups use separate fixed learning rates. The legacy geodesic contrast parameter is excluded from optimization because the forward operator uses a fixed contrast.
+
+\subsubsection{D2 Rollout and gradient window}
+We simulate 1,024 steps per image. Both losses use steps 512--1023 (zero-based), but recurrent backpropagation covers only steps 960--1023. The first 960 steps run without gradient tracking, and the recurrent states are detached at the boundary. The earlier steps in the loss window still contribute to the statistics. The image graph, sensory drive, and factorized coupling are computed with gradients enabled and reused in the final 64 steps, so the loss can reach the encoder through the graph and drive. The phase loss propagates through the Kuramoto dynamics, while the spike loss also trains the dendritic and membrane parameters through the emitted spike traces. A multi-Gaussian surrogate derivative supports backpropagation through the binary spike threshold. Connected-component filtering and greedy merging are used for inference and do not enter the training objective.
+
+\subsubsection{D3 Phase and spike statistics}
+The phase loss uses a phase-locking value (PLV) matrix $P$. Using the arithmetic mean phase $\bar\theta_i(t)$ from Eq.~\eqref{eq:mean-phase}, define $\delta_{ij}(t)=\bar\theta_i(t)-\bar\theta_j(t)$ and let $\langle\cdot\rangle_t$ denote the mean over steps 512--1023. Then
+\begin{equation}
+\begin{aligned}
+R_{ij}^{\mathrm{plv}}&=\langle\cos\delta_{ij}(t)\rangle_t,\qquad
+I_{ij}^{\mathrm{plv}}=\langle\sin\delta_{ij}(t)\rangle_t,\\
+P_{ij}&=\operatorname{clip}\left(
+\sqrt{(R_{ij}^{\mathrm{plv}})^2+(I_{ij}^{\mathrm{plv}})^2+10^{-12}},
+0,1\right).
+\end{aligned}
+\end{equation}
+A high PLV reflects a stable phase difference, which need not be zero. The spike loss uses the affinity matrix $Q$ from Appendix C, computed from the emitted, gated spikes over the same window. Unlike $P$, $Q$ multiplies the nonnegative correlations of four separate spike traces.
+
+\subsubsection{D4 Loss function}
+For $X\in\{P,Q\}$, let $\langle\cdot\rangle_{\ne}$ be the mean over all $N(N-1)$ ordered off-diagonal pairs. We use the same criterion for both matrices:
+\begin{equation}
+\begin{aligned}
+\mathcal C(X)={}&6L_{\mathrm{bim}}(X)+10L_{\mathrm{bal}}(X)\\
+&+0.5L_{\mathrm{coh}}(X)+L_{\mathrm{col}}(X),\\
+L={}&\mathcal C(P)+5\mathcal C(Q).
+\end{aligned}
+\end{equation}
+Let $\mu_X=\langle X_{ij}\rangle_{\ne}$ and $v_X=\langle(X_{ij}-\mu_X)^2\rangle_{\ne}$. The bimodality, balance, and collapse terms are
+\begin{equation}
+\begin{aligned}
+L_{\mathrm{bim}}(X)&=\langle X_{ij}(1-X_{ij})\rangle_{\ne},\\
+L_{\mathrm{bal}}(X)&=(\mu_X-0.867)^2,\\
+L_{\mathrm{col}}(X)&=-\log(v_X+10^{-4}).
+\end{aligned}
+\end{equation}
+The first favors affinities near zero or one; the second targets a fixed mean affinity of 0.867; the third penalizes low off-diagonal variance. The target is a pairwise affinity prior, not a target for object count or foreground area. The logarithmic penalty is finite at zero variance.
+
+For spatial coherence, we reshape the off-diagonal row means $a_i=(N-1)^{-1}\sum_{j\ne i}X_{ij}$ into a $64\times64$ field $a_{r,c}$ and use
+\begin{equation}
+\begin{aligned}
+L_{\mathrm{coh}}(X)={}&
+\operatorname{mean}_{r,c}|a_{r+1,c}-a_{r,c}|\\
+&+\operatorname{mean}_{r,c}|a_{r,c+1}-a_{r,c}|.
+\end{aligned}
+\end{equation}
+Each mean includes only valid adjacent pairs in its direction. This term smooths each patch's mean affinity to the other patches; it does not operate on the final masks.
+
+% MERGE 4: Appendices E (evaluation conditions), F (additional experiments) and
+% G (per-model tables). F and G are generated by split_experiments.py.
+\input{appendix_evaluation}
+\input{appendix_experiments}
+
+\begin{table*}[t]
+\centering
+\begin{tabular}{@{}p{1.65in}p{1.1in}p{3.85in}@{}}
+\toprule
+Symbol & Shape & Meaning and status\\
+\midrule
+$\gamma$ & $N\times8$ & Computed patch activations\\
+$W$ & $16\times8$ & Trainable graph projection\\
+$\boldsymbol z_i$ & 16 & Computed normalized patch embedding\\
+$S,d,c$ & $N\times N$ each & Computed scores, geodesic distances, and local costs\\
+$\tau,r,G$ & Scalar each & Positive values derived from trainable scalars\\
+$A,B$ & $N\times N$ each & Computed connection matrices\\
+$W_{\mathrm{drive}},W_\phi$ & $4\times8$; scalar & Trainable input projection and phase gain\\
+$\boldsymbol u,\bar{\boldsymbol u},\boldsymbol\phi$ & $N\times4$ each & Computed input representations\\
+\bottomrule
+\end{tabular}
+\caption{Variable meanings, shapes, and parameter status for the sensory representation.}
+\end{table*}
+
+\begin{table*}[t]
+\centering
+\begin{tabular}{@{}p{1.65in}p{1.1in}p{3.85in}@{}}
+\toprule
+Symbol & Shape & Meaning and status\\
+\midrule
+$\boldsymbol\theta(t),\boldsymbol\omega,\boldsymbol\kappa$ & $N\times4$ each & Dynamic phase; trainable natural frequencies and drive strengths\\
+$f$ & Scalar & Trainable frequency gain\\
+$K,\Delta t$ & Scalar each & Fixed coupling scale and time step\\
+$R$ & $N\times N$ & Trainable directional matrix\\
+$\bar A,C,\bar C,\alpha$ & $N\times N$ each & Computed corrected graph, inverse costs, normalized costs, and lags\\
+$\bar\theta(t),g(t)$ & $N$ each & Computed mean phases and gates\\
+$\boldsymbol x(t)$ & $N\times4$ & Computed gated features\\
+$U,\boldsymbol b$ & $4\times2$; 4 & Trainable branch projection and bias\\
+$\boldsymbol v_{ia}(t),\boldsymbol h_{ia}(t),\widehat{\boldsymbol h}_{ia}(t)$ & 4 each & Computed branch input and states\\
+$\boldsymbol k,\boldsymbol\beta$ & $N\times4$ each & Trainable retention parameters and their sigmoid transforms\\
+$\eta,\xi$ & 4 each & Trainable dendritic and membrane modulation weights\\
+$H(t),V(t),\widehat V(t),e(t),s(t)$ & $N\times4$ each & Computed membrane input, voltages, events, and spikes\\
+$\ell,\lambda$ & $N$ each & Trainable retention parameters and their sigmoid transforms\\
+$q,\vartheta$ & 4 each & Trainable threshold parameters and their derived thresholds\\
+\bottomrule
+\end{tabular}
+\caption{Variable meanings, shapes, and parameter status for the recurrent core.}
+\end{table*}
+
+\begin{table*}[t]
+\centering
+\begin{tabular}{@{}p{1.65in}p{1.1in}p{3.85in}@{}}
+\toprule
+Symbol & Shape & Meaning and status\\
+\midrule
+$\boldsymbol r_{ia}$ & 512 & Computed normalized temporal trace\\
+$\rho$ & $N\times N\times4$ & Computed component correlations\\
+$Q,Q',E$ & $N\times N$ each & Computed affinity, stabilized affinity, and signed evidence\\
+$\Delta$ & Scalar per pair & Computed merge score\\
+$y$ & $N$ or $64\times64$ & Computed hard labels\\
+$M_k$ & $N$ or $64\times64$ & Computed binary mask for object group $k$\\
+\bottomrule
+\end{tabular}
+\caption{Variable meanings, shapes, and parameter status for the mask readout.}
+\end{table*}
+\end{document}

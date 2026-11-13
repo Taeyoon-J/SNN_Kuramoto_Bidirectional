@@ -1,0 +1,81 @@
+% Appendix E -- evaluation conditions. Hand-written; not generated.
+%
+% Everything here is read off the implementation, not recalled:
+%   patch_fg_ari            collaborative_test/evaluation.py:114
+%   patch_foreground_iou    collaborative_test/evaluation.py:145
+%   patch_matched_object_iou collaborative_test/evaluation.py:160
+% The per-model tuning splits are read from the baselines' own *_bg.json records,
+% which store the selected background rule together with the validation split and
+% the image count it was selected on.
+
+\subsection{E Evaluation Conditions}
+
+\subsubsection{E1 What each metric can and cannot see}
+All three metrics take two aligned integer label maps on the $64\times64$ patch grid, with
+background as label $0$ on both sides. They differ in which patches they look at, and the
+difference decides which errors are charged.
+
+\textbf{Foreground ARI} restricts both label maps to the patches whose \emph{ground truth} is
+foreground, and computes the adjusted Rand index of the two partitions of that set. Predicted
+background is kept as an ordinary cluster inside it, so predicting background on a true object
+is charged; but patches whose ground truth is background are removed before scoring, so
+\emph{labelling background as object is invisible to this metric}. An image with fewer than two
+true foreground patches is undefined and excluded; a degenerate pair of identical partitions
+scores $1$.
+
+\textbf{Foreground IoU} merges every non-background identity on each side into one set and
+reports $|{\hat F}\cap F|/|{\hat F}\cup F|$ over patches. False foreground enters the union and
+nothing else, so this is the metric that charges for claiming background as object --- the error
+FG-ARI cannot see. Both sets empty scores $1$; exactly one empty scores $0$. This is why
+Table~\ref{tab:main} is read with the two together: a method that labels most of the image as
+object can hold a respectable FG-ARI while its foreground IoU collapses, which is what the
+\textsc{f-iou} column shows for the baselines that predict $0.41$ to $0.86$ foreground against a
+truth of $0.2115$.
+
+\textbf{Matched-object IoU} solves a one-to-one Hungarian assignment between predicted and true
+objects maximising total IoU, sums the matched IoUs and divides by the number of \emph{true}
+objects, so an unmatched true object contributes zero. Background is not matched. False
+foreground enlarges the unions of the objects it touches, but \emph{extra predicted objects carry
+no direct penalty} beyond going unmatched. Over-segmentation is therefore not charged by this
+metric, which is the reason object count is reported separately in Section 3.3 rather than
+treated as covered by it. No true objects gives an undefined score; predictions empty against a
+non-empty truth gives $0$.
+
+Undefined images are excluded per metric and the remainder averaged, so the three metrics can
+rest on slightly different image counts; the counts are recorded with every result. No weighted
+combination of the three is formed anywhere.
+
+\subsubsection{E2 Which split fixed each free choice}
+Every method has choices that are not learned by its training objective, and a transfer claim is
+only as strong as the data used to fix them. \emph{Not trained on the target} and \emph{not tuned
+on the target} are different statements, and they do not hold equally for every row of
+Table~\ref{tab:main}.
+
+\textbf{Ours.} One free scalar: the minimum-region-size fraction $f$. It is fixed at $0.01$ on the
+\emph{CLEVR} validation split and applied unchanged to Tetrominoes and Multi-dSprites. No
+Tetrominoes or Multi-dSprites data, labelled or unlabelled, enters any choice we make. Everything
+else in the readout --- the $Q\ge0.5$ link threshold, the 32-patch component floor, the
+largest-component background heuristic, the rollout length and the readout window --- is fixed
+before these datasets are touched and is identical across all three.
+
+\textbf{Baselines.} Two free choices, and \emph{both are fixed on the target dataset's own
+validation split}: the number of clusters $k$ and the rule mapping one cluster to background.
+The background rule is selected from four candidates (global-largest, image-largest,
+border-largest, border-union) by validation FG-ARI with foreground IoU as tie-break, separately
+for each model and each dataset. For the CAE family $k$ is likewise selected per dataset from
+$\{4,7,11\}$, and the selection does not land on the same value everywhere: CAE\texttt{++} uses
+$k=11$ on CLEVR and Tetrominoes but $k=7$ on Multi-dSprites, and CAE uses $11$, $11$ and $4$. For
+AKOrN, ItrSA and Slot Attention the slot count is the architecture's own and is left at the
+authors' value, but the background rule is still chosen on the target's validation split. The
+selection used $320$ validation images on CLEVR, and $1{,}000$ on Tetrominoes and Multi-dSprites
+for the AKOrN family, $320$ for the CAE family.
+
+The asymmetry runs in the baselines' favour, not ours: on the two transfer datasets they are
+allowed to see target labels to set $k$ and the background mapping, and we are not. We state it
+here rather than leaving "zero-shot" to carry both meanings at once. Removing the oracle that the
+reference implementations of CAE, CAE\texttt{++}, CtCAE and SynCx use --- setting $k_i$ from the
+per-image ground-truth object count --- is a separate and stricter correction, described in
+Section 3.1; a per-dataset constant chosen on validation is what replaces it.
+
+No hyperparameter, threshold or rule of any model is selected on the $320$ reserved images that
+Table~\ref{tab:main} reports. Those images are read once, after every choice is frozen.

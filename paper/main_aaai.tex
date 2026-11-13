@@ -36,6 +36,10 @@
 % aaai2027.sty does NOT load amsmath, and method.tex needs it: gathered, aligned,
 % \operatorname, \boldsymbol and \eqref all come from it. Not on the kit's forbidden list.
 \usepackage{amsmath}
+% \mathbb (method.tex:68,69,118,119 -- "\in\mathbb R") comes from amssymb, NOT amsmath.
+% amssymb is not in the sty's enforced forbidden list (aaai2027.sty:436-500). Note that
+% bbm IS forbidden there, for Type 3 fonts; amssymb's \mathbb is Type 1, so it is fine.
+\usepackage{amssymb}
 % For figure_architecture.tex. tikz is not on the kit's forbidden list, and it draws
 % vectors rather than including an image file, so the image-format and trim/clip rules
 % do not apply to it.
@@ -56,6 +60,15 @@
 \author{
     % Anonymous for review. The real block goes in the camera-ready file only.
     Anonymous Submission
+}
+
+% REQUIRED, even when anonymous. aaai2027.sty:132 defines \aaai@affiliations only
+% when \affiliations is called, and \maketitle uses it unconditionally (sty:169,207),
+% so omitting this is a fatal "Undefined control sequence" at \maketitle. Under
+% [submission] the sty wraps the contents in \if T\showauthors@on ... \fi, so nothing
+% here is printed during review; fill it in for the camera-ready version.
+\affiliations{
+    Anonymous Institution
 }
 
 \begin{document}
