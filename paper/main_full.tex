@@ -59,7 +59,7 @@ We hypothesize that when oscillators representing patches of the same object syn
 \caption{Model overview. CNN patch features define a patch graph and input phases. The oscillatory spiking core runs for $T$ steps, and the readout combines temporal spike similarity with graph connectivity to group patches into object masks.}
 \label{fig:model253}
 \end{figure*}
-Figure~\ref{fig:model253} shows the signal flow. A convolutional encoder turns the image into patch activations, which define a patch connection graph and an input phase for every oscillator. The oscillators evolve as a Kuramoto system on that graph, and their phase gates a dendritic and membrane cascade that emits spikes. The readout groups patches by the temporal similarity of those traces and merges the groups along the graph, one mask per discovered object. The oscillator-gated core follows S$^2$-Net (Dan and Wu 2026).
+As shown in Figure~\ref{fig:model253}, we map image patches to coupled oscillators and use their phase dynamics to modulate spiking. We then combine temporal similarity with image-derived connectivity to group patches into object masks.
 
 \subsection{2.1 From Images to Neural Activations}
 \subsubsection{2.1.1 Patch activation}
@@ -206,19 +206,19 @@ compares the two sets over their union, so false foreground
 enters the denominator; it is the metric that charges the error
 fg-ari cannot see. Appendix E gives exact definitions.
 
-Matched exposure. Every model is trained on the same
+\textbf{Matched exposure.} Every model is trained on the same
 10,000 CLEVR images for 10 epochs; for our model that is
 6,250 updates at batch 16, i.e. 100,000 image exposures.
 Where a baseline's published recipe differs, only its epoch
 count is changed; architecture and optimiser are left at the
 authors' values. Tetrominoes and Multi-dSprites are never
-trained on: for every row in Table 1 those two columns are
+trained on: for every row in Table~1 those two columns are
 zero-shot transfer from the CLEVR-trained model. Training on
 the target and tuning on the target are separate conditions,
 and they do not hold equally for every row --- Appendix E
 states which split fixed each model's free choices.
 
-Readouts that require a cluster count. Several baselines obtain masks by clustering a continuous embedding, and the
+\textbf{Readouts that require a cluster count.} Several baselines obtain masks by clustering a continuous embedding, and the
 reference implementations of CAE, CAE++, CtCAE and
 SynCx set the number of clusters from the per-image
 ground-truth object count, \(k_i=|\operatorname{unique}(y_i)|\),
@@ -227,7 +227,7 @@ dataset's own} validation split --- a weaker transfer condition
 than ours. No choice of any model is made on the reported
 split.
 
-Minimum region size. Our readout emits many single-patch
+\textbf{Minimum region size.} Our readout emits many single-patch
 regions --- 22.8\% of predicted regions on CLEVR validation,
 27.0\% on Tetrominoes, 56.2\% on Multi-dSprites --- which
 appear when the greedy merge splits a scattered synchronous
@@ -251,18 +251,34 @@ foreground IoU, +0.0410; every other margin lies between
 0.128 and 0.326, and we flag that cell rather than quoting
 only the aggregate.
 
-What carries the grouping? Three measurements on the first
-40 CLEVR reserved images, on the same rollouts, answer the
-hypothesis of Section 1 in sequence.
+\textbf{Predicted foreground.} Against true fractions of 0.2115 on
+CLEVR and 0.0943 on Multi-dSprites, our readout predicts
+0.1988 and 0.0827 against the baselines' 0.41 to 0.86 on
+CLEVR: the only method that does not over-claim.
 
-\emph{The pattern.} Grouping patch pairs by ground truth ---
+\textbf{Budget and released weights.} Slot Attention's released
+weights, at roughly 320\ensuremath{\times} our exposure budget, score lower in
+all nine cells, by 0.377 to 0.720. Two of the six baselines
+reach their own published scores at 1/210 and 1/64 of their
+schedules, so those rows are not artefacts of the shortened
+schedule; for the other four the comparison is a
+data-efficiency claim. Appendix F gives both in full with the
+rollout-length and data-scaling studies, Appendix G the
+per-model tables.
+
+\subsection{3.3 What carries the grouping?}
+Three measurements on the first 40 CLEVR reserved images, on
+the same rollouts, answer the hypothesis of Section 1 in
+sequence.
+
+\textbf{The pattern.} Grouping patch pairs by ground truth ---
 used only to group, never to set a threshold or a count --- the
 affinity $Q$ averages 0.891 \ensuremath{\pm} 0.111 within
 one object, 0.047 \ensuremath{\pm} 0.048 across objects and
 0.099 \ensuremath{\pm} 0.106 between object and background,
 a nineteenfold separation.
 
-\emph{Is the alignment necessary?} We roll each patch's four
+\textbf{Is the alignment necessary?} We roll each patch's four
 component traces by its own offset over the readout window,
 preserving every patch's rate and waveform and destroying
 only the alignment between patches. The readout's rules are
@@ -276,7 +292,7 @@ it compares only the \emph{union} of predicted non-background
 patches against the true foreground, and shattering one region
 into many leaves that union nearly unchanged.
 
-\emph{Which signal carries it?} With $s_{ia}=g_ie_{ia}$, the
+\textbf{Which signal carries it?} With $s_{ia}=g_ie_{ia}$, the
 firing indicator $e$ equals 1 in 99.99\% of settled steps, so
 $s$ follows the oscillatory gate $g$ at correlation 0.9997,
 and the identical readout run on the gates reproduces every
@@ -286,24 +302,9 @@ spiking layer without loss; on this evidence no separate
 grouping information can be attributed to the firing
 threshold.
 
-Predicted foreground. Against true fractions of 0.2115 on
-CLEVR and 0.0943 on Multi-dSprites, our readout predicts
-0.1988 and 0.0827 against the baselines' 0.41 to 0.86 on
-CLEVR: the only method that does not over-claim.
+\subsection{3.4 Limitations}
 
-Budget and released weights. Slot Attention's released
-weights, at roughly 320\ensuremath{\times} our exposure budget, score lower in
-all nine cells, by 0.377 to 0.720. Two of the six baselines
-reach their own published scores at 1/210 and 1/64 of their
-schedules, so those rows are not artefacts of the shortened
-schedule; for the other four the comparison is a
-data-efficiency claim. Appendix F gives both in full with the
-rollout-length and data-scaling studies, Appendix G the
-per-model tables.
-
-\subsection{3.3 Limitations}
-
-Object count. Our readout groups patches better than it
+\textbf{Object count.} Our readout groups patches better than it
 counts objects: with the rule it predicts 5.15 objects per
 image on CLEVR against a true 6.36 (exact on 25.0\%), 2.64
 against 2.49 on Multi-dSprites (53.1\%) and 5.28 against
@@ -314,7 +315,7 @@ target's own validation removes most of the rest --- f = 0.10
 gives 3.02 objects on Tetrominoes, 86.9\% exact --- but that
 reads target labels, so the transferred value is the headline.
 
-Two cautions. Tetrominoes contains exactly three objects in
+\textbf{Two cautions.} Tetrominoes contains exactly three objects in
 every image, so always answering three is right without
 grouping anything: the fixed-k baselines all score 100\%
 there, CtCAE included at fg-ari 0.0756. The count is
@@ -323,24 +324,24 @@ Multi-dSprites it does --- those baselines score 0\% exact
 against our 53.1\%. The residual error also follows from the
 objective: we train without a reconstruction term, which is
 what penalises splitting an object into parts. Every baseline
-in Table 1 optimises one; ours does not.
+in Table~1 optimises one; ours does not.
 
-Spiking nonlinearity. The firing indicator is saturated over
-the readout window (Section 3.2), so our evidence supports
+\textbf{Spiking nonlinearity.} The firing indicator is saturated over
+the readout window (Section 3.3), so our evidence supports
 oscillatory timing and does not isolate a contribution from
 the threshold nonlinearity. Whether a sparser firing regime
 would add grouping information is a question about the
 training objective, which places no constraint on the rate.
 
-Seeds. Every number here is a single training seed. Reseeding one baseline moved fg-ari by up to 0.134 on CLEVR;
-all margins in Table 1 exceed that, but this is evidence about
+\textbf{Seeds.} Every number here is a single training seed. Reseeding one baseline moved fg-ari by up to 0.134 on CLEVR;
+all margins in Table~1 exceed that, but this is evidence about
 baseline variance, not an error bar on our own model.
 
-Protocol. The held-out split is reserved from the training
+\textbf{Protocol.} The held-out split is reserved from the training
 corpus rather than an independent benchmark test set, and
 figures from other papers appear only as each model's
 comparison with itself (Appendix F), never as entries in
-Table 1.
+Table~1.
 
 \section{4. Conclusion}
 An oscillatory spiking network can group image patches into object masks without mask supervision during training or a prespecified object count at inference. Under a shared evaluation protocol it reached 0.841 FG-ARI on CLEVR against 0.633 for the best evaluated baseline, and scored higher on Tetrominoes and Multi-dSprites without additional training, at a single training seed. Ablations place the grouping signal in the cross-patch alignment of the oscillatory gate rather than in the firing threshold, so the result supports relative oscillatory timing as a cue for object discovery. The rollout is costly, counting is weaker than grouping, and whether the gated traces also support object tracking is left to future work.\label{pg:body-end}
