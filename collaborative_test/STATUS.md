@@ -7,6 +7,30 @@ bundle are on `patch_final`. Contract **v2**; split v1.
 
 
 
+> ## RESULT, 2026-11-12 — the spike-event readout does not work on this checkpoint (`PV2_0160`)
+>
+> The attempt to resolve `PV2_0159`'s conflict with `CLAUDE.md` — final mask from a classifier on
+> spikes or membrane, not a phase readout — **failed, and the reason is in the objective.**
+>
+> Raising the firing threshold at inference and building the affinity from the binary crossings
+> `e` peaks at a 30% firing rate: fg_ari **.5622** against the control's **.8798** on the same 20
+> images, obj_iou .4473 against .7264, and **85 regions against 7.45**. Five times the trained
+> threshold (0.06) still leaves 87% of steps firing, so the 99.992% firing rate is where training
+> put the operating point, not a near-miss.
+>
+> Cause: the spike loss is defined on `s = g·e` and `s` is dominated by `g`. **Nothing in the
+> objective ever put pressure on `e`** — no rate term, no sparsity term, no loss on the crossings
+> — so the membrane saturated above threshold. The model learned to use the gate and leave the
+> spike mechanism switched on.
+>
+> **So the CLAUDE.md condition cannot be met by re-reading this core.** It needs a training
+> change: the spike term defined on `e`, or a firing-rate target holding the membrane near
+> threshold. That is a core change and has not been made. Until then the paper's wording stands.
+>
+> Worth keeping: with *only* binary crossings and no gate amplitude, the readout still reaches
+> .5622 / .6150 / .4473 — above Slot Attention's CLEVR row on all three. Not a table claim: 20
+> images against the baselines' 320, and this subset is easier (control .8798 vs .8421 at 320).
+
 > ## DECISION, 2026-11-12 — the head direction is closed, by the user's call
 >
 > **The head will not be in the paper.** Decided by the user; not a measurement result, and it
