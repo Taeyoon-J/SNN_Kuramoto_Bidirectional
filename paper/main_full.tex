@@ -37,13 +37,13 @@
 \frenchspacing
 \pdfinfo{/TemplateVersion (2027.1)}
 \setcounter{secnumdepth}{0}
-\title{Object Discovery from Oscillatory Timing in a Spiking Network}
+\title{KAIROS: Object Discovery from Oscillatory Timing in a Spiking Network}
 \author{Anonymous submission}
 \affiliations{Anonymous Institution}  % MERGE 1 -- required even when anonymous
 \begin{document}
 \maketitle
 \begin{abstract}
-We investigate whether the relative timing of oscillatory activity can guide object discovery in static images. Our spiking network maps image patches to coupled oscillators whose phase gates a spiking core, then groups patches by the temporal similarity of the emitted traces together with image-derived connectivity. The network trains without ground-truth masks and requires no prespecified object count at inference. Under a shared patch-level evaluation protocol, the model achieves a foreground adjusted Rand index of 0.841 on CLEVR, compared with 0.633 for the strongest evaluated baseline on that metric. Trained only on CLEVR, it also outperforms the evaluated baselines on Tetrominoes and Multi-dSprites without additional training. Ablations locate the grouping signal in cross-patch temporal alignment: destroying it collapses the partition, while substituting the oscillatory gate for the spike traces changes no mask.
+We investigate whether the relative timing of oscillatory activity can guide object discovery in static images. We present KAIROS (Kuramoto Assemblies Inferred from Rhythmic Oscillatory Synchrony), a spiking network whose coupled oscillators gate a spiking core and group image patches by the temporal similarity of the emitted traces and image-derived connectivity. The network trains without ground-truth masks and requires no prespecified object count at inference. Under a shared patch-level protocol it reaches a foreground adjusted Rand index of 0.841 on CLEVR against 0.633 for the strongest evaluated baseline, and scores higher on Tetrominoes and Multi-dSprites without additional training. Ablations locate the grouping signal in cross-patch temporal alignment: destroying it collapses the partition, while substituting the oscillatory gate for the spike traces changes no mask.
 \end{abstract}
 \section{1. Introduction}
 Object-centric models such as Slot Attention bind distributed image features by assigning them to shared object representations (Locatello et al. 2020). Oscillatory models such as AKOrN add synchronization to feature processing and obtain masks by clustering the resulting representations (Miyato et al. 2025). Both leave open a complementary question: can the timing of neural activity itself tell us which regions belong to the same object?
@@ -56,7 +56,7 @@ We hypothesize that when oscillators representing patches of the same object syn
 \begin{figure*}[t]
 \centering
 \includegraphics[width=\textwidth]{Model253_Architecture_Academic.pdf}
-\caption{Model overview. CNN patch features define a patch graph and input phases. The oscillatory spiking core runs for $T$ steps, and the readout combines temporal spike similarity with graph connectivity to group patches into object masks.}
+\caption{KAIROS overview. CNN patch features define a patch graph and input phases. The oscillatory spiking core runs for $T$ steps, and the readout combines temporal spike similarity with graph connectivity to group patches into object masks.}
 \label{fig:model253}
 \end{figure*}
 As shown in Figure~\ref{fig:model253}, we map image patches to coupled oscillators and use their phase dynamics to modulate spiking. We then combine temporal similarity with image-derived connectivity to group patches into object masks.
@@ -169,7 +169,7 @@ The stabilized affinity, $Q'_{ij}$, determines the sign of the merge evidence, $
 & \multicolumn{3}{c}{CLEVR (in-domain)} & \multicolumn{3}{c}{Tetrominoes (zero-shot)} & \multicolumn{3}{c}{Multi-dSprites (zero-shot)} \\
 Model & ari & f-iou & o-iou & ari & f-iou & o-iou & ari & f-iou & o-iou \\
 \midrule
-\textbf{Ours} & \textbf{.8408} & \textbf{.7528} & \textbf{.6387} & \textbf{.8568} & \textbf{.7950} & \textbf{.8170} & \textbf{.6966} & \textbf{.8190} & \textbf{.7625} \\
+\textbf{KAIROS (ours)} & \textbf{.8408} & \textbf{.7528} & \textbf{.6387} & \textbf{.8568} & \textbf{.7950} & \textbf{.8170} & \textbf{.6966} & \textbf{.8190} & \textbf{.7625} \\
 \midrule
 AKOrN (attn) + up-tiling & .6326 & .3468 & .3636 & .5484 & .7230 & .4167 & .5505 & .6539 & .6348 \\
 AKOrN (conv) & .6046 & .4219 & .2769 & .7202 & .7540 & .5913 & .4055 & .6834 & .5434 \\
@@ -346,7 +346,7 @@ comparison with itself (Appendix F), never as entries in
 Table~1.
 
 \section{4. Conclusion}
-An oscillatory spiking network can group image patches into object masks without mask supervision during training or a prespecified object count at inference. Under a shared evaluation protocol it reached 0.841 FG-ARI on CLEVR against 0.633 for the best evaluated baseline, and scored higher on Tetrominoes and Multi-dSprites without additional training, at a single training seed. Ablations place the grouping signal in the cross-patch alignment of the oscillatory gate rather than in the firing threshold, so the result supports relative oscillatory timing as a cue for object discovery. The rollout is costly, counting is weaker than grouping, and whether the gated traces also support object tracking is left to future work.\label{pg:body-end}
+KAIROS shows that an oscillatory spiking network can group image patches into object masks without mask supervision during training or a prespecified object count at inference. Under a shared evaluation protocol it reached 0.841 FG-ARI on CLEVR against 0.633 for the best evaluated baseline, and scored higher on Tetrominoes and Multi-dSprites without additional training, at a single training seed. Ablations place the grouping signal in the cross-patch alignment of the oscillatory gate rather than in the firing threshold, so the result supports relative oscillatory timing as a cue for object discovery. The rollout is costly, counting is weaker than grouping, and whether the gated traces also support object tracking is left to future work.\label{pg:body-end}
 
 % page-budget probes: pg:body-end must resolve to page 4 or lower (4-page main text).
 %   grep 'newlabel{pg:' main_full.aux   after a build.
