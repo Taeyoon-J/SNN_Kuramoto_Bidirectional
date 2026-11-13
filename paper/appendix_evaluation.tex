@@ -54,9 +54,10 @@ Table~\ref{tab:main}.
 \textbf{Ours.} One free scalar: the minimum-region-size fraction $f$. It is fixed at $0.01$ on the
 \emph{CLEVR} validation split and applied unchanged to Tetrominoes and Multi-dSprites. No
 Tetrominoes or Multi-dSprites data, labelled or unlabelled, enters any choice we make. Everything
-else in the readout --- the $Q\ge0.5$ link threshold, the 32-patch component floor, the
-largest-component background heuristic, the rollout length and the readout window --- is fixed
-before these datasets are touched and is identical across all three.
+else in the readout --- the $Q\ge0.5$ link threshold, the 8-patch component floor (itself
+selected on CLEVR validation), the largest-component background heuristic, the rollout length
+and the readout window --- is fixed before these datasets are touched and is identical across
+all three.
 
 \textbf{Baselines.} Two free choices, and \emph{both are fixed on the target dataset's own
 validation split}: the number of clusters $k$ and the rule mapping one cluster to background.
@@ -76,6 +77,11 @@ here rather than leaving "zero-shot" to carry both meanings at once. Removing th
 reference implementations of CAE, CAE\texttt{++}, CtCAE and SynCx use --- setting $k_i$ from the
 per-image ground-truth object count --- is a separate and stricter correction, described in
 Section 3.1; a per-dataset constant chosen on validation is what replaces it.
+
+The minimum-region-size rule is offered to every model on the same terms, and it is not a private
+advantage: applied at $f=0.01$ it leaves every baseline row of Table~\ref{tab:main} unchanged to
+three decimals except AKOrN (conv) on CLEVR foreground IoU, which improves from $.4219$ to
+$.4267$; the best-baseline row uses the better of the two for every baseline cell we measured.
 
 No hyperparameter, threshold or rule of any model is selected on the $320$ reserved images that
 Table~\ref{tab:main} reports. Those images are read once, after every choice is frozen.

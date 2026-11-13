@@ -36,16 +36,17 @@ def find(prefix):
     raise SystemExit('anchor not found in experiments.tex: ' + prefix)
 
 
-i33 = find(r'\subsection{Are the baselines handicapped?}')
+i33 = find(r'\subsection{Budget and released weights}')
 i35 = find(r'\subsection{Limitations}')
 app = '\n'.join(src[i33:i35])
 
 for a, b in [
-    (r'\subsection{Are the baselines handicapped?}',
+    (r'\subsection{Budget and released weights}',
      '\\subsection{F Additional Experiments}\n'
-     '\\subsubsection{F1 Are the baselines handicapped?}'),
+     '\\subsubsection{F1 Budget and released weights}'),
     (r'\subsection{Rollout length}', r'\subsubsection{F2 Rollout length and data scaling}'),
-    (r'\subsection{Spike timing, measured}', r'\subsubsection{F3 Spike timing, measured}'),
+    (r'\subsection{Oscillatory timing, measured}',
+     r'\subsubsection{F3 Oscillatory timing, measured}'),
     ('Full figures are in the supplementary\ndocument.', 'Full figures are in Appendix~G.'),
 ]:
     if a not in app:

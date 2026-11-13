@@ -3,19 +3,19 @@
 % the four-page main text; Appendix G is the per-model tables.
 %
 \subsection{F Additional Experiments}
-\subsubsection{F1 Are the baselines handicapped?}
+\subsubsection{F1 Budget and released weights}
 \label{sec:fairness}
 
-Two objections to Table~\ref{tab:main} deserve measurements rather than argument: that the
-baselines are evaluated away from their published setting, and that the matched budget starves
+Two conditions on Table~\ref{tab:main} deserve measurements rather than argument: that the
+baselines are evaluated away from their published setting, and that the matched budget limits
 them.
 
 \paragraph{Released weights.}
 Only Slot Attention ships trained weights; the AKOrN, CAE and SynCx repositories release data but
 no checkpoints. Evaluated directly, at roughly $320\times$ our exposure budget, its released model
 scores $.3747/.2219/.1165$ on CLEVR, $.4742/.2381/.2355$ on Tetrominoes and $.3205/.0980/.1204$
-on Multi-dSprites. We remain ahead in all nine cells, by $0.377$ to $0.720$, so the comparison
-does not rest on our retraining of it. The extra data also helps it far more \emph{off} its
+on Multi-dSprites. Our model scores higher in all nine cells, by $0.377$ to $0.720$, so the
+comparison does not rest on our retraining of it. The extra data also helps it far more \emph{off} its
 training distribution than on it --- worth $+.0875$ \textsc{fg-ari} on CLEVR but $+.3003$ on
 Tetrominoes and $+.1275$ on Multi-dSprites --- so a data-efficiency conclusion drawn from an
 in-domain column alone would not transfer.
@@ -83,11 +83,13 @@ instead raises it by $+.0084$, a $2.2\times$ larger gain at an identical budget.
 the transfer result in Table~\ref{tab:main}, this argues that the model is not fitting a domain
 but learning a grouping rule that the extra renders refine.
 
-\subsubsection{F3 Spike timing, measured}
+\subsubsection{F3 Oscillatory timing, measured}
 \label{sec:timing}
 
-The two measurements summarised in Section 3.2, in full. Both run on the first $40$ images of
-the CLEVR reserved split, on the same rollouts, so they are directly comparable.
+The three measurements summarised in Section 3.2, in full. All run on the first $40$ images of
+the CLEVR reserved split, on the same rollouts, so they are directly comparable. They are
+reported in the order they answer the hypothesis: which pattern is observed, whether its
+temporal alignment is necessary, and which signal carries it.
 
 \paragraph{Validity of the ablation.}
 The affinity $Q$ is recomputed here from \texttt{component\_spikes} rather than taken from the
@@ -106,8 +108,15 @@ the across-object value sits near the floor of the measure.
 \paragraph{Per-patch circular shift.}
 Each patch's four component traces are rolled by one offset drawn uniformly over the readout
 window, independently per patch. Rate, waveform and within-patch structure survive; only the
-alignment between patches is destroyed. The graph, the foreground threshold, the component
-floor, the background heuristic and the greedy merge are untouched.
+alignment between patches is destroyed.
+
+The readout's \emph{rules} are unchanged --- the image-conditioned graph, the $Q\ge0.5$ link
+threshold, the $8$-patch component floor, the largest-component background heuristic and the
+greedy merge --- but every quantity they operate on is recomputed from the shifted traces. In
+particular the foreground is \emph{not} held fixed and is \emph{not} rate-based: the readout
+passes every patch to the grouping step as a candidate and takes the largest surviving synchrony
+component as background, so the foreground decision is itself a function of the shifted affinity.
+The ablation therefore re-runs the whole readout and differs from the control in one input only.
 
 \begin{table}[!tb]
 \centering
@@ -121,9 +130,13 @@ per-patch shift    & .0735 & .7358 & .0325 & 562.3 \\
 gates, not spikes  & .8648 & .8028 & .6925 & 7.8 \\
 \bottomrule
 \end{tabular}
-\caption{First $40$ CLEVR reserved images. Destroying cross-patch timing collapses the
-partition (\textsc{fg-ari}, \textsc{obj-iou}) while barely moving foreground detection, which
-is rate-based. Substituting the phase gates for the spikes changes nothing at all.}
+\caption{First $40$ CLEVR reserved images. Destroying cross-patch timing collapses the partition
+(\textsc{fg-ari}, \textsc{obj-iou}) while barely moving foreground IoU. The whole readout,
+foreground decision included, is recomputed from the shifted traces; foreground IoU survives
+because it compares only the \emph{union} of predicted non-background patches against the true
+foreground and is invariant to how that union is partitioned, and shattering one region into
+$562$ leaves the union nearly unchanged. Substituting the phase gates for the spikes changes
+nothing at all.}
 \label{tab:timing}
 \end{table}
 
@@ -170,7 +183,7 @@ Slot Attention, released weights & .3747\,/\,.2219\,/\,.1165 & .4742\,/\,.2381\,
 \bottomrule
 \end{tabular}
 \caption{Released weights ($\approx\!32$M exposures) against the matched-budget retraining
-($100{,}032$ exposures) and against our model. Triples are
+($100{,}000$ exposures) and against our model. Triples are
 \textsc{ari}\,/\,\textsc{f-iou}\,/\,\textsc{o-iou}. All three rows are reported
 \emph{without} the minimum-region-size rule, so the released and retrained Slot Attention
 rows are compared on identical terms; Table~1 of the main paper applies the rule to every

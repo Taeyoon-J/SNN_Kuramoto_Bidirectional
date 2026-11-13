@@ -60,15 +60,23 @@ pixel-protocol figures reported elsewhere.
 
 We report three metrics and never combine them into a single score: foreground adjusted Rand index
 (\textsc{fg-ari}), foreground IoU (\textsc{fg-iou}) and matched-object IoU (\textsc{obj-iou}).
-Background is label $0$ on both sides, and the foreground-only metrics exclude patches the ground
-truth calls background.
+Background is label $0$ on both sides. They differ in which patches they look at:
+\textsc{fg-ari} restricts both label maps to the patches whose \emph{ground truth} is foreground
+and scores the two partitions of that set, so a patch the truth calls background is removed
+before scoring and predicting an object there is invisible to it, while \textsc{fg-iou} merges
+every non-background identity on each side and compares the two sets over the union of predicted
+and true foreground, which makes it the metric that charges for that error. Appendix~E gives
+exact definitions.
 
 \paragraph{Matched exposure.}
-Every model is trained on the \emph{same} $10{,}000$ CLEVR images for $10$ epochs, i.e.\
-$100{,}032$ exposures. Where a baseline's published recipe differs, only its epoch count is
-changed; architecture and optimiser are left at the authors' values. Tetrominoes and
-Multi-dSprites are never trained on: for every row in Table~\ref{tab:main} those two columns are
-zero-shot transfer from the CLEVR-trained model.
+Every model is trained on the \emph{same} $10{,}000$ CLEVR images for $10$ epochs. For our model
+that is $6{,}250$ updates at batch $16$, i.e.\ $100{,}000$ image exposures; a baseline whose batch
+size does not divide $10{,}000$ sees a few more through its loader's rounding. Where a baseline's
+published recipe differs, only its epoch count is changed; architecture and optimiser are left at
+the authors' values. Tetrominoes and Multi-dSprites are never trained on: for every row in
+Table~\ref{tab:main} those two columns are zero-shot transfer from the CLEVR-trained model.
+Training on the target and tuning on the target are separate conditions and do not hold equally
+for every row; Appendix~E states which split fixed each model's free choices.
 
 \paragraph{Readouts that require a cluster count.}
 Several baselines produce a continuous embedding and obtain masks by clustering it. We found that
@@ -78,10 +86,12 @@ from the \emph{per-image ground-truth object count},
   k_i \;=\; \bigl| \mathrm{unique}(y_i) \bigr| ,
 \]
 which makes their published figures oracle-assisted. For the comparison to be meaningful we
-removed this: $k$ is a per-dataset constant selected on a validation split, never read from the
-evaluated image. Cluster identities are arbitrary, so the mapping of one cluster to background is
-likewise fixed by a rule chosen on validation. No hyperparameter, threshold or rule is selected on
-the reported split.
+removed this: $k$ is a per-dataset constant selected on that dataset's own validation split, never
+read from the evaluated image. Cluster identities are arbitrary, so the mapping of one cluster to
+background is likewise fixed by a rule chosen on the same validation split. That is a weaker
+transfer condition than ours, where the one free scalar is fixed on CLEVR validation and
+transferred unchanged. No hyperparameter, threshold or rule of any model is selected on the
+reported split.
 
 \paragraph{Minimum region size.}
 \label{sec:minsize}
@@ -137,15 +147,18 @@ on CLEVR validation. It leaves the baseline rows unchanged to three decimals exc
 on CLEVR foreground IoU, which improves from $.4219$ to $.4267$; the penultimate row uses the
 better of the two for every baseline cell we measured. That row takes the best baseline \emph{in
 each cell separately}, which no single baseline attains; our margin is measured against that
-composite. Single training seed throughout.}
+composite. Single training seed throughout. All models train on CLEVR only, but the conditions
+are not symmetric: the baselines' cluster count and background mapping are selected on each
+target dataset's own validation split, while our one free scalar is fixed on CLEVR validation and
+transferred unchanged (Appendix~E).}
 \label{tab:main}
 \end{table*}
 
-Our readout is ahead in all nine cells. The comparison is deliberately pessimistic: the
-\emph{best baseline per cell} is a composite of three different architectures, and no single
-competitor achieves that row. It is also notable that \emph{which} baseline comes second depends
-on the dataset --- AKOrN (conv) on Tetrominoes, AKOrN (attn)$+$up-tiling on Multi-dSprites, ItrSA
-on CLEVR matched-object IoU --- whereas our model is first everywhere.
+Under the matched training budget, our model scored higher on all nine dataset--metric
+combinations, at a single training seed. The reference row takes the \emph{best baseline per cell}
+separately, so it is a composite of three different architectures that no single baseline attains.
+\emph{Which} baseline is second depends on the dataset --- AKOrN (conv) on Tetrominoes, AKOrN
+(attn)$+$up-tiling on Multi-dSprites, ItrSA on CLEVR matched-object IoU.
 
 \paragraph{Where the margin is thin.}
 The smallest margin in the table is Tetrominoes foreground IoU, $+0.0410$. Every other margin lies
@@ -158,19 +171,19 @@ the only method that does not over-claim --- while baselines predict between $0.
 CLEVR. A model that labels most of the image as object can score well on a foreground-only
 partition measure while failing the IoU metrics, which is what the \textsc{f-iou} column shows.
 
-\subsection{Are the baselines handicapped?}
+\subsection{Budget and released weights}
 \label{sec:fairness}
 
-Two objections to Table~\ref{tab:main} deserve measurements rather than argument: that the
-baselines are evaluated away from their published setting, and that the matched budget starves
+Two conditions on Table~\ref{tab:main} deserve measurements rather than argument: that the
+baselines are evaluated away from their published setting, and that the matched budget limits
 them.
 
 \paragraph{Released weights.}
 Only Slot Attention ships trained weights; the AKOrN, CAE and SynCx repositories release data but
 no checkpoints. Evaluated directly, at roughly $320\times$ our exposure budget, its released model
 scores $.3747/.2219/.1165$ on CLEVR, $.4742/.2381/.2355$ on Tetrominoes and $.3205/.0980/.1204$
-on Multi-dSprites. We remain ahead in all nine cells, by $0.377$ to $0.720$, so the comparison
-does not rest on our retraining of it. The extra data also helps it far more \emph{off} its
+on Multi-dSprites. Our model scores higher in all nine cells, by $0.377$ to $0.720$, so the
+comparison does not rest on our retraining of it. The extra data also helps it far more \emph{off} its
 training distribution than on it --- worth $+.0875$ \textsc{fg-ari} on CLEVR but $+.3003$ on
 Tetrominoes and $+.1275$ on Multi-dSprites --- so a data-efficiency conclusion drawn from an
 in-domain column alone would not transfer.
@@ -239,11 +252,13 @@ instead raises it by $+.0084$, a $2.2\times$ larger gain at an identical budget.
 the transfer result in Table~\ref{tab:main}, this argues that the model is not fitting a domain
 but learning a grouping rule that the extra renders refine.
 
-\subsection{Spike timing, measured}
+\subsection{Oscillatory timing, measured}
 \label{sec:timing}
 
-The two measurements summarised in Section 3.2, in full. Both run on the first $40$ images of
-the CLEVR reserved split, on the same rollouts, so they are directly comparable.
+The three measurements summarised in Section 3.2, in full. All run on the first $40$ images of
+the CLEVR reserved split, on the same rollouts, so they are directly comparable. They are
+reported in the order they answer the hypothesis: which pattern is observed, whether its
+temporal alignment is necessary, and which signal carries it.
 
 \paragraph{Validity of the ablation.}
 The affinity $Q$ is recomputed here from \texttt{component\_spikes} rather than taken from the
@@ -262,8 +277,15 @@ the across-object value sits near the floor of the measure.
 \paragraph{Per-patch circular shift.}
 Each patch's four component traces are rolled by one offset drawn uniformly over the readout
 window, independently per patch. Rate, waveform and within-patch structure survive; only the
-alignment between patches is destroyed. The graph, the foreground threshold, the component
-floor, the background heuristic and the greedy merge are untouched.
+alignment between patches is destroyed.
+
+The readout's \emph{rules} are unchanged --- the image-conditioned graph, the $Q\ge0.5$ link
+threshold, the $8$-patch component floor, the largest-component background heuristic and the
+greedy merge --- but every quantity they operate on is recomputed from the shifted traces. In
+particular the foreground is \emph{not} held fixed and is \emph{not} rate-based: the readout
+passes every patch to the grouping step as a candidate and takes the largest surviving synchrony
+component as background, so the foreground decision is itself a function of the shifted affinity.
+The ablation therefore re-runs the whole readout and differs from the control in one input only.
 
 \begin{table}[!tb]
 \centering
@@ -277,9 +299,13 @@ per-patch shift    & .0735 & .7358 & .0325 & 562.3 \\
 gates, not spikes  & .8648 & .8028 & .6925 & 7.8 \\
 \bottomrule
 \end{tabular}
-\caption{First $40$ CLEVR reserved images. Destroying cross-patch timing collapses the
-partition (\textsc{fg-ari}, \textsc{obj-iou}) while barely moving foreground detection, which
-is rate-based. Substituting the phase gates for the spikes changes nothing at all.}
+\caption{First $40$ CLEVR reserved images. Destroying cross-patch timing collapses the partition
+(\textsc{fg-ari}, \textsc{obj-iou}) while barely moving foreground IoU. The whole readout,
+foreground decision included, is recomputed from the shifted traces; foreground IoU survives
+because it compares only the \emph{union} of predicted non-background patches against the true
+foreground and is invariant to how that union is partitioned, and shattering one region into
+$562$ leaves the union nearly unchanged. Substituting the phase gates for the spikes changes
+nothing at all.}
 \label{tab:timing}
 \end{table}
 

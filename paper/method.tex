@@ -179,7 +179,9 @@ normalized traces:
 where the sample index, $m$, runs over the retained time window. To obtain the patch affinity,
 $Q_{ij}$, we replace negative correlations with zero and multiply the resulting values across the
 four components. We form connected components by linking patch pairs with $Q_{ij}\geq0.5$, discard
-components smaller than 32 patches, and treat the largest remaining component as background.
+components smaller than 8 patches, a floor selected on CLEVR validation, and treat the largest
+remaining component as background. Every patch enters this step as a candidate; no firing-rate
+test is applied, so the foreground is defined entirely by the synchrony structure.
 
 We start the retained foreground patches as singleton groups and merge spatially adjacent groups
 using
