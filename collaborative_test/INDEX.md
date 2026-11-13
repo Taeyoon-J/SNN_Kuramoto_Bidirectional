@@ -678,3 +678,36 @@ changes is what must be reported.
 5. **In-domain data is not the most useful data**, from two independent measurements: +5,000
    CLEVR images buy +0.0038 CLEVR FG-ARI while +5,000 Tetrominoes images buy +0.0084, and
    continuing on Tetrominoes improves Multi-dSprites more than continuing on Multi-dSprites does.
+
+## PV2_0155 / PV2_0158 / PV2_0159 — and BENCHMARK_PLAN_v7
+
+6. **The scaling curve does not turn** (`PV2_0155`, nine points to 18,000 images). v6's reading
+   — FG-ARI peaks at 14,000 and declines — is **withdrawn**: 17,000 scores .8470, higher. FG-ARI
+   is flat inside one seed's noise from 12,000; Foreground IoU (+.0210) and matched-object IoU
+   (+.0169) are still climbing at 18,000.
+7. **Most of the object-count error was single-patch fragments** (`PV2_0158`). They are 22.8% /
+   27.0% / **56.2%** of all predicted regions on the three datasets, and on Multi-dSprites the
+   *median* predicted region is one patch. Discarding regions below 1% of an image's predicted
+   foreground — one scalar, fixed on CLEVR validation, transferred — costs ≤0.0024 on any metric
+   cell, *improves* Foreground IoU on both transfer datasets, and cuts count MAE 1.6–7.9×. The
+   same rule gives the baselines nothing, so it is not a private advantage.
+8. **Object-count accuracy is degenerate where the true count is constant** (`PV2_0158`). Every
+   fixed-k baseline scores 100% exact on Tetrominoes, CtCAE included at FG-ARI 0.0799, because
+   "always answer three" is always right there. Required metric, but only informative where the
+   count varies.
+9. **The grouping is carried by relative timing** (`PV2_0159`). Rolling each patch's spike trace
+   by its own random offset — rate, waveform and graph untouched — takes FG-ARI .8648 → .0735
+   and regions 7.8 → 562, while Foreground IoU falls only .803 → .736 because the foreground
+   test is a mean and a rotation does not change a mean.
+10. **But the spikes are the gate** (`PV2_0159`). The identical readout on `component_gates`
+   reproduces every mask to 16 significant figures: `e` is 1 in 99.992% of settled steps, so
+   `s` follows `g` at correlation 0.9997 and `g` is a deterministic function of the phase. The
+   readout is a phase readout wearing a spike's clothes; the paper now says so.
+11. **"Not trained on the target" ≠ "not tuned on the target"** (`PV2_0158`). The baselines'
+   cluster count *and* background mapping are both fixed on each target dataset's own validation
+   split (CAE++ uses k = 11/11/**7**); ours is one scalar fixed on CLEVR validation and
+   transferred. The asymmetry favours them, and we were not stating it.
+12. **`BENCHMARK_PLAN_v7`** answers the three standing questions about 252 — identical budget,
+   cancelling gradients, supervision that reaches only a detached head — and sets out how the
+   benchmark should be run. `PV2_0136` had the measurements since October; v7 is where they
+   finally land in a plan.
