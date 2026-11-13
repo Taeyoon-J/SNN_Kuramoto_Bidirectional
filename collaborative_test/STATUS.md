@@ -7,6 +7,25 @@ bundle are on `patch_final`. Contract **v2**; split v1.
 
 
 
+> ## DECISION, 2026-11-12 — the head direction is closed, by the user's call
+>
+> **The head will not be in the paper.** Decided by the user; not a measurement result, and it
+> ends the branch the standing goal opens ("head 방향이 닫힌다면 core는 그대로 두고 253을
+> 능가할 방법"). Do not re-open it or re-run head experiments without being asked.
+>
+> What the measurements had said, for whoever reads this later: the head's gain on the three
+> contract metrics is +0.003 to +0.026, established on only four of nine cells (`PV2_0141`),
+> withdrawn entirely on Tetrominoes over five head seeds (`PV2_0146`); it raises the predicted
+> object count on every row and cuts exact-count match three- to fivefold (`PV2_0157`, CLEVR
+> 8.04 -> 12.90 predicted, exact .175 -> .035); and its value tracks how broken the core is
+> (`PV2_0154`: ΔFG-ARI +0.0047 at T=1024, +0.1530 at T=128). With object count a required
+> metric since v6, the head was already net-negative. The decision is consistent with that.
+>
+> **So the goal's remaining path is "keep the core, beat 253", and `PV2_0158` is the answer
+> on record**: the minimum-region-size rule, core untouched, at most .0024 off any metric cell,
+> Foreground IoU *up* on both transfer datasets, count MAE down 1.6-7.9x, and the narrowest
+> cell widened +.0345 -> +.0410.
+
 > ## RESUME POINT, 2026-11-12 — scaling curve finished; two readout findings; paper assembled
 >
 > **`PV2_0155` scaling curve complete, nine points to 18,000 images.** v6's "FG-ARI peaks at
