@@ -110,41 +110,8 @@ g_i(t)=\frac{1+\sin(\bar\theta_i(\max(0,t-d)))}{2}.
 \end{equation}
 The gate $g_i(t)$ uses the mean phase of the four oscillators (Eq.~\eqref{eq:mean-phase}) with a phase delay of $d$ steps to modulate the dendritic input $\boldsymbol x_i(t)$.
 
-\subsubsection{2.2.3 Dendritic layer}
-The dendritic layer integrates the gated input and spike feedback through four branches, whose states are summed to drive the membrane.
-\begin{equation}
-\boldsymbol v_{ia}(t)=U\begin{pmatrix}x_{ia}(t)\\s_{ia}(t-1)\end{pmatrix}+\boldsymbol b.
-\end{equation}
-The branch input, $\boldsymbol v_{ia}(t)$, combines the gated feature, $x_{ia}(t)$, and the previous emitted spike, $s_{ia}(t-1)$. The previous spike provides top-down feedback from the spiking output to the dendritic branches. The projection weight, $U\in\mathbb R^{4\times2}$, and the bias, $\boldsymbol b\in\mathbb R^4$, are trainable.
-
-The provisional state $\widehat{\boldsymbol h}_{ia}(t)$ balances the previous state and current input using $\boldsymbol\beta_i$ (Eq.~\eqref{eq:branch-provisional}).
-
-\begin{equation}
-\begin{aligned}
-\boldsymbol h_{ia}(t)={}&\boldsymbol h_{ia}(t-1)
-+\bigl(1-\eta_a(1-g_i(t))\bigr)\\
-&\quad{}\cdot\bigl(\widehat{\boldsymbol h}_{ia}(t)-\boldsymbol h_{ia}(t-1)\bigr),\\
-H_{ia}(t)={}&\sum_{b=1}^{4}h_{iab}(t).
-\end{aligned}
-\end{equation}
-The gate and trainable weight $\eta_a$ scale the state change. Summing over branches $b$ yields the membrane input $H_{ia}(t)$.
-
-\subsubsection{2.2.4 Membrane layer}
-The membrane layer accumulates dendritic input and generates spikes when its voltage crosses a threshold. The provisional voltage $\widehat V_{ia}(t)$ combines the previous voltage and current input using $\lambda_i$, with a reset from the previous spike (Eq.~\eqref{eq:membrane-provisional}).
-
-\begin{equation}
-\begin{aligned}
-V_{ia}(t)={}&V_{ia}(t-1)+\bigl(1-\xi_a(1-g_i(t))\bigr)\\
-&\quad{}\cdot\bigl(\widehat V_{ia}(t)-V_{ia}(t-1)\bigr).
-\end{aligned}
-\end{equation}
-\begin{equation}
-\begin{gathered}
-e_{ia}(t)=\operatorname{ind}(V_{ia}(t)>\vartheta_a),\\
-s_{ia}(t)=g_i(t)e_{ia}(t).
-\end{gathered}
-\end{equation}
-The gate and trainable weight $\xi_a$ scale the voltage change. A threshold $\vartheta_a$ derived from a trainable parameter defines the binary event $e_{ia}(t)$; gating that event gives the emitted spike $s_{ia}(t)$.
+\subsubsection{2.2.3 From Gated Activity to Spikes}
+Four dendritic branches integrate the current gated input with top-down feedback from the previous spike. Each branch balances its previous state with an update computed from these inputs, and the oscillatory gate modulates how much the state changes. The branch outputs are summed to drive the membrane. The membrane similarly balances its previous voltage with an update driven by the current dendritic input, with the gate modulating the size of the voltage change. When the voltage exceeds a threshold, the membrane generates a spike event, and the gate scales the emitted output. Appendix~B provides the full update equations.
 
 \subsection{2.3 Spike Grouping and Mask Generation}
 For each oscillator component, we mean-center and L2-normalize the spike trace from the last 512 simulation time steps. For patches $i$ and $j$, the correlation $\rho_{ija}$ is higher when their spike activity tends to be above or below its respective average at the same time (Eq.~\eqref{eq:spike-correlation}). We compute the patch affinity, $Q_{ij}$, by multiplying the four correlations after clipping negative values to zero. A high affinity thus requires agreement across all four components: any nonpositive correlation makes $Q_{ij}$ zero.
@@ -436,11 +403,26 @@ The mean patch phase averages the four component phases:
 \bar\theta_i(t)=\frac{1}{4}\sum_{a=1}^4\theta_{ia}(t).
 \end{equation}
 
+The branch input combines the gated feature, $x_{ia}(t)$, with the previous emitted spike, $s_{ia}(t-1)$, through the trainable projection, $U\in\mathbb R^{4\times2}$, and the trainable bias, $\boldsymbol b\in\mathbb R^4$:
+\begin{equation}\label{eq:branch-input}
+\boldsymbol v_{ia}(t)=U\begin{pmatrix}x_{ia}(t)\\s_{ia}(t-1)\end{pmatrix}+\boldsymbol b.
+\end{equation}
+The previous spike is the top-down feedback from the spiking output to the dendritic branches.
+
 Each branch state vector has four entries. The retention vector, $\boldsymbol\beta_i$, is obtained by applying sigmoid to the trainable retention vector, $\boldsymbol k_i$. The provisional branch state is
 \begin{equation}\label{eq:branch-provisional}
 \begin{aligned}
 \widehat{\boldsymbol h}_{ia}(t)={}&\boldsymbol\beta_i\odot\boldsymbol h_{ia}(t-1)\\
 &+(1-\boldsymbol\beta_i)\odot\boldsymbol v_{ia}(t).
+\end{aligned}
+\end{equation}
+The gate and the trainable modulation weight, $\eta_a$, set how much of the increment toward the provisional state is applied, and summing the four entries gives the membrane input, $H_{ia}(t)$, where $b$ indexes an entry of $\boldsymbol h_{ia}(t)$:
+\begin{equation}\label{eq:branch-update}
+\begin{aligned}
+\boldsymbol h_{ia}(t)={}&\boldsymbol h_{ia}(t-1)
++\bigl(1-\eta_a(1-g_i(t))\bigr)\\
+&\quad{}\cdot\bigl(\widehat{\boldsymbol h}_{ia}(t)-\boldsymbol h_{ia}(t-1)\bigr),\\
+H_{ia}(t)={}&\sum_{b=1}^{4}h_{iab}(t).
 \end{aligned}
 \end{equation}
 Retention is shared across oscillator components of the same patch, while their branch states remain separate. Modulating the full increment also controls leakage and spike recurrence, which would continue if only the current input were gated. Summing the four entries combines branch responses without averaging oscillator components.
@@ -455,7 +437,22 @@ The provisional membrane voltage is
 \end{equation}
 The membrane retention, $\lambda_i$, is the sigmoid of the trainable patch parameter, $\ell_i$. The firing threshold, $\vartheta_a$, is 0.06 times the exponential of the trainable component parameter, $q_a$. Membrane resistance is fixed to one. The subtractive reset is proportional to the previous emitted spike and does not force voltage to zero.
 
-When the gate is exactly zero, the previous voltage is retained. Otherwise, the gated update is applied before thresholding. The binary firing event, $e_{ia}(t)$, is multiplied by the gate to produce the emitted spike, $s_{ia}(t)$, which enters the next branch input and membrane reset. Dendritic and membrane states and the previous spike start at zero. The rollout uses 1024 steps.
+As in the branch update, the gate and the trainable modulation weight, $\xi_a$, set how much of the increment toward the provisional voltage is applied, and the thresholded voltage is gated to give the emitted spike:
+\begin{equation}\label{eq:membrane-update}
+\begin{aligned}
+V_{ia}(t)={}&V_{ia}(t-1)+\bigl(1-\xi_a(1-g_i(t))\bigr)\\
+&\quad{}\cdot\bigl(\widehat V_{ia}(t)-V_{ia}(t-1)\bigr).
+\end{aligned}
+\end{equation}
+\begin{equation}\label{eq:spike-emission}
+\begin{gathered}
+e_{ia}(t)=\operatorname{ind}(V_{ia}(t)>\vartheta_a),\\
+s_{ia}(t)=g_i(t)e_{ia}(t),
+\end{gathered}
+\end{equation}
+where $\operatorname{ind}$ is the indicator function and $e_{ia}(t)$ is the binary firing event.
+
+When the gate is exactly zero, the previous voltage is retained. Otherwise, the gated update is applied before thresholding. The emitted spike, $s_{ia}(t)$, enters the next branch input and membrane reset. Dendritic and membrane states and the previous spike start at zero. The rollout uses 1024 steps.
 
 \subsection{C Temporal Affinity and Object Masks}
 We retain steps $\mathcal T=\{512,\ldots,1023\}$ and index them by $m=1,\ldots,512$. Centering and L2 normalization give
