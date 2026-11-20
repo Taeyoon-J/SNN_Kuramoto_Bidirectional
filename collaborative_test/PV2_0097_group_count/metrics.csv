@@ -1,0 +1,28 @@
+[22:43] === PV2_0097: a term for the number of groups, at 32x32 ===
+[22:43] true objects 6.49, participation-ratio target 7.5 (objects + background)
+[22:43] PV2_0094 at 8 epochs is not measured; weight 0 here is the control
+[00:40] --- GC_w0  117 min  loss: 62.774777 -> 34.887907 ---
+[00:40]     collapse: 4.72 4.03 3.76 3.43 3.20 2.88 2.66 2.58 
+[02:37] --- GC_w5  117 min  loss: 4886719003572959073796096.000000 -> 42.464097 ---
+[02:37]     collapse: 6.40 4.33 4.01 3.58 3.23 3.14 2.75 2.54 
+    final plv_group_count=0.152732
+[04:34] --- GC_w20  116 min  loss: 19546876014291840590151680.000000 -> 2198.321809 ---
+[04:34]     collapse: 7.37 7.28 7.06 7.00 6.33 4.38 3.91 3.72 
+    final plv_group_count=21.286149
+[04:34] 
+[04:34] label                        fg_ari   fg_iou  obj_iou   groups  pred_fg
+GC_w0                      0.7734 0.7571 0.7047 15.6950 0.1469 
+GC_w5                      0.7839 0.7809 0.6955 13.6200 0.1408 
+GC_w20                     0.8095 0.3485 0.6679 10.9650 0.4065 
+[04:39] 
+control (weight 0): fg_ari 0.7734  fg_iou 0.7571  obj_iou 0.7047  groups 15.70  pred_fg 0.1469
+true objects 6.49
+
+  weight 5    fg_ari +0.0105  fg_iou +0.0238  obj_iou -0.0092  groups 15.70 -> 13.62  pred_fg 0.1408
+  weight 20   fg_ari +0.0361  fg_iou -0.4086  obj_iou -0.0368  groups 15.70 -> 10.96  pred_fg 0.4065
+
+THE GROUP-COUNT TERM MOVES THE GROUP COUNT: 15.70 -> 13.62 at weight 5,
+fg_ari +0.0105, staying calibrated at 0.1408.
+Run the full 40 epochs at this weight, then compare with grid 16 at
+matched extent, then seeds 1 and 2.
+[04:39] === PV2_0097 DONE ===

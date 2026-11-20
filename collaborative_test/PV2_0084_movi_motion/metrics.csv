@@ -1,0 +1,20 @@
+# MOVi-A pilot, NEW CONTRACT -- not comparable with contract v1. Separation is
+# ORACLE-GUIDED (object membership from MOVi-A masks). Standardisation statistics from
+# train rows only. The smoke rows are first-epoch losses; spike_plv_collapse = 9.210340
+# is log(10^4), the clamp floor, meaning no spikes at all.
+stage,item,cos_within,cos_between,ratio,note
+separation,appearance_raw,0.0021,0.0544,0.0380,raw RGB patch means
+separation,motion_raw,0.1040,0.7137,0.1457,frame difference
+separation,appearance_standardised,0.0419,0.5012,0.0837,2x contract v1's margin
+separation,motion_standardised,0.1056,0.7170,0.1473,1.4x standardised appearance
+separation,app_plus_0.25_motion,0.0440,0.5140,0.0856,best weight by ratio
+separation,app_plus_4.0_motion,0.0956,0.6988,0.1368,ratio worsens with weight
+separation,contract_v1_gamma,0.0142,0.2483,0.0571,the descriptor behind 0.7250
+separation,oracle,0.0000,1.0000,0.0000,
+motion_by_gap,gap_2,,,,8.8% of pixels change instance label
+motion_by_gap,gap_6,,,,16.8%
+motion_by_gap,gap_12,,,,18.8%
+motion_by_gap,gap_23,,,,18.1%
+smoke,appearance_3ch,,,,loss 28.25 spike_plv_collapse 2.11 healthy
+smoke,app_motion_6ch,,,,loss 89.93 spike_plv_collapse 9.210340 dead
+smoke,app_motion_graph_only,,,,loss 85.15 spike_plv_collapse 8.30 dead

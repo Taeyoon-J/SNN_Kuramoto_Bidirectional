@@ -1,0 +1,31 @@
+{
+ "split": "test",
+ "images": 300,
+ "contract_version": 1,
+ "manifest_version": 1,
+ "checkpoint": "/work/USERS/tkim1/runs/GEOPC_s2/core.pt",
+ "classifier": "spike_synchrony_components",
+ "background": "largest_component",
+ "foreground_threshold": 0.15,
+ "synchrony_threshold": 0.01,
+ "target_foreground": null,
+ "min_group_size": 2,
+ "metrics": {
+  "fg_ari": 0.5771968487997867,
+  "foreground_iou": 0.41252884276296203,
+  "matched_object_iou": 0.40273080131909267
+ },
+ "valid_count": {
+  "fg_ari": 300,
+  "foreground_iou": 300,
+  "matched_object_iou": 300
+ },
+ "diagnostics": {
+  "spike_rate": 0.4225005581974983,
+  "groups_per_image_mean": 7.973333333333334,
+  "images_with_no_group": 0,
+  "plv_mean": 0.35168665647506714,
+  "predicted_foreground_fraction": 0.2915494740009308,
+  "target_foreground_fraction": 0.1254947930574417
+ }
+}

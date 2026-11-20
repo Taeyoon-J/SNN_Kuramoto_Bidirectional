@@ -1,0 +1,26 @@
+[20:27] === PV2_0104: graph freeze at 32x32, three seeds sharing seed 0's graph ===
+[22:11] FRZ_s2 103 min  collapse 2.246742
+[22:11] 
+[22:11] label              fg_ari   fg_iou  obj_iou   groups  pred_fg
+seed 0             0.7699 0.7531 0.7017 15.8367 0.1512 
+seed 1             0.6777 0.6895 0.6357 16.8067 0.1306 
+seed 2             0.6853 0.6963 0.6390 16.8600 0.1288 
+[22:40] 
+16x16 published:        0.7239 / 0.7251 / 0.4951 at pred_fg 0.1290
+32x32 unfrozen (PV2_0102): 0.5894 / 0.4876 / 0.5007  (std .2599 on fg_ari)
+
+  seed 0  0.7699 / 0.7531 / 0.7017  groups 15.84  pred_fg 0.1512
+  seed 1  0.6777 / 0.6895 / 0.6357  groups 16.81  pred_fg 0.1306
+  seed 2  0.6853 / 0.6963 / 0.6390  groups 16.86  pred_fg 0.1288
+
+  MEAN    0.7110 +- 0.0512 | 0.7130 +- 0.0349 | 0.6588 +- 0.0372 | pred_fg 0.1369
+
+  spread on fg_ari: 0.0512 frozen against 0.2599 unfrozen
+  beats 16x16 on: obj_iou
+  calibrated: True (pred_fg 0.1369)
+
+The freeze does what PV2_0044 did at grid 16: it closes the spread. The
+mean does not clear 16x16 on all three, so 32x32's honest offer is a large
+obj_iou gain against a foreground-IoU loss -- a different operating point,
+not a strictly better model.
+[22:40] === PV2_0104 DONE ===

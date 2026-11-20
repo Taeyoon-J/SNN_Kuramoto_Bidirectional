@@ -1,0 +1,18 @@
+# Evaluation only, three graph-frozen checkpoints, validation 300, contract v1,
+# window 1024/512, spike-classifier masks. spectral k is a fixed group count, never
+# the true object count. Target foreground fraction 0.118. Baseline configuration
+# (connected components) 3-seed: 0.7250 / 0.7188 / 0.4953. Slot 3-seed: 0.6635 /
+# 0.1184 / 0.0869.
+k,seed_checkpoint,fg_ari,fg_iou,obj_iou,groups,pred_foreground
+12,FZG_s0,0.7346,0.4484,0.6081,11.0000,0.4200
+12,BIM6_s1,0.7364,0.4253,0.6216,11.0000,0.4520
+12,FZG_s2,0.7432,0.4502,0.6117,11.0000,0.4120
+14,FZG_s0,0.7573,0.3510,0.6415,13.0000,0.5312
+14,BIM6_s1,0.7562,0.3266,0.6551,13.0000,0.5729
+14,FZG_s2,0.7573,0.3572,0.6475,13.0000,0.5228
+16,FZG_s0,0.7721,0.2646,0.6640,15.0000,0.6441
+16,BIM6_s1,0.7672,0.2396,0.6705,15.0000,0.6830
+16,FZG_s2,0.7666,0.2802,0.6648,15.0000,0.6312
+20,FZG_s0,0.7734,0.1744,0.6885,19.0000,0.7994
+20,BIM6_s1,0.7720,0.1561,0.6944,19.0000,0.8267
+20,FZG_s2,0.7701,0.1736,0.6909,19.0000,0.7990

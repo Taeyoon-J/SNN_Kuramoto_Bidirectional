@@ -1,0 +1,15 @@
+# MOVi-A contract (movi-1). NOT comparable with contract v1. 1,000 train scenes, 250
+# validation, gap 6, seed 0, 40 epochs. Target foreground 0.1061; the calibration
+# criterion is predicted foreground below 0.20, which only the population-threshold rows
+# meet. Motion affinity: 23.3% of patches pass the magnitude gate, 6.0% of pairs survive,
+# affinity mean 0.505 std 0.376.
+motion_weight,threshold,fg_ari,fg_iou,obj_iou,pred_foreground,loss_end,motion_term,calibrated
+0,absolute,0.4181,0.1350,0.2682,0.5847,23.4764,,no
+10,absolute,0.4150,0.1349,0.2566,0.5916,25.6208,0.2033,no
+100,absolute,0.5090,0.1358,0.3455,0.6145,43.1363,0.1810,no
+0,population_k1,0.3042,0.2031,0.2150,0.1788,,,yes
+100,population_k1,0.0823,0.1170,0.1419,0.1419,,,yes
+0,population_k2,0.0734,0.1313,0.1457,0.1370,,,yes
+100,population_k2,0.0196,0.0870,0.0740,0.0524,,,yes
+0,population_k3,0.0000,0.0000,0.0000,0.0000,,,degenerate
+100,population_k3,0.0000,0.0000,0.0000,0.0000,,,degenerate

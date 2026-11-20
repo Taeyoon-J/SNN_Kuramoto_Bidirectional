@@ -1,0 +1,11 @@
+# Seed 0, validation 300, contract v1, window 1024/512. "eval p1" rows are the control:
+# the same trained checkpoint read with the original linear cost, which isolates whether
+# the damage is in the weights or in the evaluation. Power-1 reference loss 32.49 ->
+# 17.86; power-1 training chose contrast 2.1732. Target foreground ~0.118.
+trained_power,eval_power,fg_ari,fg_iou,obj_iou,pred_foreground,loss_end,learned_contrast
+1.0,1.0,0.7239,0.7251,0.4951,0.1290,17.8649,2.1732
+1.0,2.0_contrast8,0.7327,0.7255,0.5033,0.1291,17.8649,8.0000
+2.0,2.0,0.4268,0.4115,0.3035,0.1371,16.7125,1.9588
+2.0,1.0,0.4249,0.4136,0.3052,0.1405,16.7125,1.9588
+3.0,3.0,0.5248,0.4353,0.3493,0.1804,16.7959,1.9584
+3.0,1.0,0.5254,0.4221,0.3584,0.1883,16.7959,1.9584

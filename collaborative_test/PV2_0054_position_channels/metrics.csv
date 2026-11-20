@@ -1,0 +1,14 @@
+# FAILED RUN, kept for the record. Not a measurement of position: the absolute
+# membrane threshold fired nothing because _to_phase standardises jointly over
+# channels, so two extra channels rescaled the appearance signal. Identical values
+# across all nine rows. Rescue by population threshold at inference: 0.0100 -> 0.5577.
+position_weight,sync,fg_ari,fg_iou,obj_iou,groups_per_image,pred_foreground,final_loss
+0.5,0.02,0.0033,0.0000,0.0000,0.0000,0.0000,85.9879
+0.5,0.05,0.0033,0.0000,0.0000,0.0000,0.0000,85.9879
+0.5,0.20,0.0033,0.0000,0.0000,0.0000,0.0000,85.9879
+1,0.02,0.0033,0.0000,0.0000,0.0000,0.0000,85.9213
+1,0.05,0.0033,0.0000,0.0000,0.0000,0.0000,85.9213
+1,0.20,0.0033,0.0000,0.0000,0.0000,0.0000,85.9213
+2,0.02,0.0033,0.0000,0.0000,0.0000,0.0000,85.4801
+2,0.05,0.0033,0.0000,0.0000,0.0000,0.0000,85.4801
+2,0.20,0.0033,0.0000,0.0000,0.0000,0.0000,85.4801

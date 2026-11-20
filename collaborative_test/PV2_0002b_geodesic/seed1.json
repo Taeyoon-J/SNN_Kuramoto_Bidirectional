@@ -1,0 +1,30 @@
+{
+ "split": "test",
+ "images": 300,
+ "contract_version": 1,
+ "manifest_version": 1,
+ "checkpoint": "/work/USERS/tkim1/runs/GEO_s3_c2_s1/core.pt",
+ "classifier": "spike_synchrony_components",
+ "background": "largest_component",
+ "foreground_threshold": 0.15,
+ "synchrony_threshold": 0.5,
+ "min_group_size": 2,
+ "metrics": {
+  "fg_ari": 0.45681811955251495,
+  "foreground_iou": 0.22111040274867017,
+  "matched_object_iou": 0.29545224361551015
+ },
+ "valid_count": {
+  "fg_ari": 300,
+  "foreground_iou": 300,
+  "matched_object_iou": 300
+ },
+ "diagnostics": {
+  "spike_rate": 0.2650567938884099,
+  "groups_per_image_mean": 7.6466666666666665,
+  "images_with_no_group": 0,
+  "plv_mean": 0.38350263237953186,
+  "predicted_foreground_fraction": 0.3718098998069763,
+  "target_foreground_fraction": 0.1254947930574417
+ }
+}

@@ -1,0 +1,33 @@
+{
+ "split": "test",
+ "images": 300,
+ "oracle_graph": false,
+ "readout": "spikes",
+ "contract_version": 1,
+ "manifest_version": 1,
+ "checkpoint": "/work/USERS/tkim1/runs/SPLV_w5_s1/core.pt",
+ "classifier": "spike_synchrony_components",
+ "background": "largest_component",
+ "foreground_threshold": 0.15,
+ "synchrony_threshold": 0.2,
+ "target_foreground": null,
+ "min_group_size": 2,
+ "metrics": {
+  "fg_ari": 0.643215695964836,
+  "foreground_iou": 0.7317320386954903,
+  "matched_object_iou": 0.45419994199851355
+ },
+ "valid_count": {
+  "fg_ari": 300,
+  "foreground_iou": 300,
+  "matched_object_iou": 300
+ },
+ "diagnostics": {
+  "spike_rate": 0.31748923162619275,
+  "groups_per_image_mean": 5.423333333333333,
+  "images_with_no_group": 3,
+  "plv_mean": 0.7443303465843201,
+  "predicted_foreground_fraction": 0.12665364146232605,
+  "target_foreground_fraction": 0.1254947930574417
+ }
+}

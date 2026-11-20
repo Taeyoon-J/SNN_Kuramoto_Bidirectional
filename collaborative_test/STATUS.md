@@ -1,0 +1,1178 @@
+# STATUS
+
+Updated 2026-11-12. Branch `patch_v2`; the shipped version, `benchmark.md` and the script
+bundle are on `patch_final`. Contract **v2**; split v1.
+
+
+
+
+
+> ## RESULT, 2026-11-12 — the spike-event readout does not work on this checkpoint (`PV2_0160`)
+>
+> The attempt to resolve `PV2_0159`'s conflict with `CLAUDE.md` — final mask from a classifier on
+> spikes or membrane, not a phase readout — **failed, and the reason is in the objective.**
+>
+> Raising the firing threshold at inference and building the affinity from the binary crossings
+> `e` peaks at a 30% firing rate: fg_ari **.5622** against the control's **.8798** on the same 20
+> images, obj_iou .4473 against .7264, and **85 regions against 7.45**. Five times the trained
+> threshold (0.06) still leaves 87% of steps firing, so the 99.992% firing rate is where training
+> put the operating point, not a near-miss.
+>
+> Cause: the spike loss is defined on `s = g·e` and `s` is dominated by `g`. **Nothing in the
+> objective ever put pressure on `e`** — no rate term, no sparsity term, no loss on the crossings
+> — so the membrane saturated above threshold. The model learned to use the gate and leave the
+> spike mechanism switched on.
+>
+> **So the CLAUDE.md condition cannot be met by re-reading this core.** It needs a training
+> change: the spike term defined on `e`, or a firing-rate target holding the membrane near
+> threshold. That is a core change and has not been made. Until then the paper's wording stands.
+>
+> Worth keeping: with *only* binary crossings and no gate amplitude, the readout still reaches
+> .5622 / .6150 / .4473 — above Slot Attention's CLEVR row on all three. Not a table claim: 20
+> images against the baselines' 320, and this subset is easier (control .8798 vs .8421 at 320).
+
+> ## DECISION, 2026-11-12 — the head direction is closed, by the user's call
+>
+> **The head will not be in the paper.** Decided by the user; not a measurement result, and it
+> ends the branch the standing goal opens ("head 방향이 닫힌다면 core는 그대로 두고 253을
+> 능가할 방법"). Do not re-open it or re-run head experiments without being asked.
+>
+> What the measurements had said, for whoever reads this later: the head's gain on the three
+> contract metrics is +0.003 to +0.026, established on only four of nine cells (`PV2_0141`),
+> withdrawn entirely on Tetrominoes over five head seeds (`PV2_0146`); it raises the predicted
+> object count on every row and cuts exact-count match three- to fivefold (`PV2_0157`, CLEVR
+> 8.04 -> 12.90 predicted, exact .175 -> .035); and its value tracks how broken the core is
+> (`PV2_0154`: ΔFG-ARI +0.0047 at T=1024, +0.1530 at T=128). With object count a required
+> metric since v6, the head was already net-negative. The decision is consistent with that.
+>
+> **So the goal's remaining path is "keep the core, beat 253", and `PV2_0158` is the answer
+> on record**: the minimum-region-size rule, core untouched, at most .0024 off any metric cell,
+> Foreground IoU *up* on both transfer datasets, count MAE down 1.6-7.9x, and the narrowest
+> cell widened +.0345 -> +.0410.
+
+> ## RESUME POINT, 2026-11-12 — scaling curve finished; two readout findings; paper assembled
+>
+> **`PV2_0155` scaling curve complete, nine points to 18,000 images.** v6's "FG-ARI peaks at
+> 14,000 then turns down" is **withdrawn** — 17,000 scores .8470, higher than 14,000. FG-ARI is
+> flat inside one seed's noise from 12,000 on; Foreground IoU (.7545 → .7755) and matched-object
+> IoU (.6410 → .6579) are still climbing at 18,000.
+>
+> **`PV2_0158` minimum region size.** 22.8 / 27.0 / **56.2%** of predicted regions are a single
+> patch; on Multi-dSprites the median predicted region is one patch. Discarding regions below
+> `f = 0.01` of an image's predicted foreground — fixed on CLEVR validation, transferred
+> unchanged — costs ≤.0024 on any cell, *improves* Foreground IoU on both transfer datasets, and
+> cuts count MAE 1.6–7.9×. **Narrowest cell Tetrominoes Foreground IoU widens +.0345 → +.0410.**
+> Offered to every baseline: they gain nothing (one exception, AKOrN conv CLEVR f-iou
+> .4219 → .4267, now in the composite row).
+>
+> **`PV2_0159` spike timing.** Per-patch circular shift: FG-ARI .8648 → **.0735**, regions
+> 7.8 → 562, Foreground IoU only .803 → .736. The grouping is relative timing.
+> **But the identical readout on `component_gates` reproduces every mask to 16 significant
+> figures** — `e` is 1 in 99.992% of settled steps, `corr(s, g) = 0.9997`. The readout is a
+> phase readout in all but name. Paper says so (§3.3, Appendix F3); `CLAUDE.md`'s "no phase
+> readout as the final mask" is therefore **not satisfied in spirit**, and the next experiment
+> (a readout on the firing events `e`) is what would fix it.
+>
+> **`BENCHMARK_PLAN_v7`** finally lands `PV2_0136`'s October measurements in a plan: 252 and 253
+> had identical budgets; 252's core got 3.7× the gradient and moved 0.62× as far; its supervision
+> reached only a detached head while the one term that did reach the core degraded 62×. Also the
+> tuning-split asymmetry (baselines tune `k` and background on each target's own validation; we
+> transfer one scalar from CLEVR) and the count-metric degeneracy on Tetrominoes.
+>
+> **Paper assembled** in `paper/`: `main_full.tex` → `main_full.pdf`, 11 pages, main text exactly
+> 4, 0 errors / 0 overfull / 0 undefined. Appendices E (evaluation conditions), F (additional
+> experiments), G (tables) generated by `split_experiments.py`. MacTeX is installed locally, so
+> renders can be checked before pushing.
+>
+> **Open:** abstract is written; ItrSA / CAE family / SynCx are still uncited in the paper's
+> reference list. Core seeds 1 and 2 remain declined, so the `CLAUDE.md` 3-seed criterion is
+> not met and every number says "seed 0".
+
+> ## RESUME POINT, 2026-11-10 — T sweep done; scaling curve restarted after two bugs of mine
+>
+> **`PV2_0154` (T sweep, CLEVR, settle = T//2): T = 512 is free.** FG-ARI −0.0019 against
+> T = 1024 and Foreground IoU *improves* +0.0049. T = 256 costs 0.02–0.03; T = 128 collapses
+> (−0.26) and under-claims foreground for the first time (0.1148 against a truth of 0.2115).
+> **512 is the right default for anything new.**
+>
+> **The cost motive is dead.** Per frame: 10.8 s at T=1024, 10.0 at 512, 8.8 at 256, 8.7 at 128 —
+> an 8× cut in steps buys 19%, and the free 1024→512 step buys 7%. The rollout is not the
+> bottleneck; per-image fixed cost is. My claim that cost is "linear in T" was wrong.
+>
+> Side finding worth keeping: the head's value tracks how broken the core is, now shown by
+> degrading **one** core instead of comparing two — head Δ FG-ARI +0.0047 at T=1024 and
+> **+0.1530 at T=128**, 33×. That is `PV2_0147` on a cleaner axis.
+>
+> **`PV2_0155` (scaling curve) had TWO bugs, both mine, both fixed; it is rerunning on GPU 1.**
+> 1. `complete.json` is a per-run marker and `engine.py:104` returns immediately when present, so
+>    after stage 1 wrote it, stages 2–8 returned in two seconds without training — the "curve" was
+>    one point repeated eight times.
+> 2. The deeper one: `engine.py:90-104` treats `binding.json` as immutable within a run and
+>    demands a signed `runtime_migration.json` if it changes. Each stage legitimately changes
+>    `train_ids`, so a chained single-directory run **cannot work by design**. `cont5000` chains
+>    only because every stage reuses the same `first[:5000]`.
+>
+> `scale_curve2.sh` gives **each stage its own run directory**, seeded with the previous stage's
+> `resume.pt`/`initial.pt`, and **aborts if the chain does not advance by exactly 630 updates** —
+> the guard that would have caught bug 1 in two seconds. Verified live: stage 2 trains
+> (6,880 → 6,885 → target 7,510) and its ids are `second[1000:2000]`, **zero overlap** with
+> stage 1's `second[0:1000]`.
+>
+> **The one real point from the broken run survives:** base + 1,000 unseen images × 10
+> (6,880 updates / 110,000 exposures) gives CLEVR **0.8426 / 0.7539 / 0.6427** against base
+> 0.8421 / 0.7545 / 0.6410 — **+0.0005 / −0.0006 / +0.0017, i.e. nothing.** 1,000 images is too
+> small an increment to move this core; `cont5000`'s 5,000 moved FG-ARI +0.0084.
+>
+
+> ## RESUME POINT, 2026-11-09 (late) — three datasets done; neither cont core replaces 253
+>
+> **`PV2_0156`: both continued cores are now scored on all three datasets, and neither wins all
+> nine cells.** cont5000(Multi-dSprites) is 7/9 (loses Tetrominoes FG-ARI −0.0129 and obj-IoU
+> −0.0066); cont5000(Tetrominoes) is 6/9. `PV2_0153`'s "best configuration this project has" is
+> **withdrawn** — it rested on two datasets.
+>
+> **On the stated FG-ARI-first priority the adoption candidate is cont5000(Tetrominoes)**, which
+> raises FG-ARI on all three (+0.0084 / +0.0095 / +0.0168) for CLEVR FG-IoU −0.0093 (allowed) and
+> obj-IoU −0.0203 (a named regression). PV2_0152 had called it disqualified; withdrawn.
+> **RECOMMENDATION (PV2_0156): adopt `cont5000(Tetrominoes)` as the reported core.** Leaving this
+> open was the wrong place to stop — the deciding number had not been computed. The claim rests on
+> the margin over the **best baseline per cell**, where the **weakest cell** fails first:
+>
+> | core | cells won | weakest cell |
+> |---|---|---|
+> | base 253 | 9/9 | +0.0345 |
+> | cont5000(Multi-dSprites) | 9/9 | +0.0459 |
+> | **cont5000(Tetrominoes)** | **9/9** | **+0.0653** |
+>
+> All three win 9/9; this one nearly **doubles the weakest link** (+89%), and that cell —
+> Tetrominoes Foreground IoU — is the only margin PV2_0151 flagged as unsettled. FG-ARI-first and
+> maximise-the-weakest-cell pick the same core.
+>
+> The cost: CLEVR matched-object IoU 0.6410 → 0.6207 **against our own previous core**; against
+> baselines it is still +0.2354 over the best of eight. So no comparative claim weakens.
+> It does not fix PV2_0157: this core still predicts 17.94 objects on Tetrominoes against 3.
+>
+> Off-diagonal surprise: continuing on **Tetrominoes** improves **Multi-dSprites** more (+0.0168)
+> than continuing on Multi-dSprites does (+0.0058) — evidence against reading cont5000 as domain
+> adaptation.
+>
+> **`PV2_0157`: object-count accuracy, and it is the worst news in the project.** The head raises
+> the predicted count on every row and cuts exact-match three- to five-fold (CLEVR 0.175 → 0.035);
+> its gains on the three contract metrics are +0.003 to +0.026 and **none of them can see this
+> cost**. On Tetrominoes — our best FG-ARI cell, 0.8580 — the core predicts **21.07 objects against
+> a truth of exactly 3, with exact-match 0.000 across all 320 images.** Count accuracy and
+> matched-object IoU are inverted on CLEVR.
+>
+> Also corrected: `PV2_0152` and `PV2_0153` both gave CLEVR's true object count as "~3.0". It is
+> **6.36**; 3.0 is Tetrominoes'. The correction inverts those records' region-count arguments and
+> both now carry it.
+>
+> **Why the counts are bad is structural, and worth stating in the paper**: `model.py` and
+> `loss.py` have **no decoder and no reconstruction term**, and for 253 `self.head` is `None`. The
+> objective is `primary + 5.*spike`. Every baseline we measured reconstructs the image, and a
+> reconstruction loss penalises splitting one object in two; ours contains no such pressure.
+>
+> **`PV2_0154` T SWEEP — first run WAS WRONG, rerun completed but unread.** The first pass gave
+> exactly 0.0000 on all three metrics at every reduced T. Cause: `cache_any.py` had
+> `spike_synchrony_components(..., settle=512, ...)` hardcoded — a third hardcoded `settle` my
+> patch missed — so at T<=512 the foreground came back empty and `partition.py:40` returned
+> all-background. Fixed (settle follows T//2), default-T regression re-verified bit-identical, and
+> the sweep rerun to completion. **Its `SUMMARY.txt` has not been read yet: the VPN dropped.** The
+> bad log is kept as `t_sweep_WRONG_settle512.log`.
+>
+> **One T-sweep finding already stands, and it kills the premise:** per-frame time is 9.2 s at
+> T=512, 8.8 s at 256, 8.7 s at 128 — an 8x cut in rollout steps buys **6%**. The rollout is not
+> the bottleneck; per-image overhead (encoder, graph, merge, I/O) is. "Shorten T to make everything
+> cheaper" is dead; only "does a shorter window still work" remains, and that is what the unread
+> SUMMARY.txt answers.
+>
+> **RUNNING:** `PV2_0154` T sweep rerun on GPU 2 (CLEVR only, T 512/256/128, settle = T//2) and
+> `PV2_0155` scaling curve on GPU 1 (cont1000: +1,000 **unseen** images x 10 epochs per stage,
+> 8 stages, ~50 h, scoring core + head + object count at every stage). GPU 0 is left alone: it
+> carries a compute process whose PID is not visible to us.
+>
+
+> ## RESUME POINT, 2026-11-09 (evening) — the Multi-dSprites branch is the best core we have
+>
+> **`PV2_0153`: `cont5000(Multi-dSprites)` beats the base core on ALL SIX cells**, with and
+> without the head. Multi-dSprites 0.7032 / 0.8296 / 0.7758 and CLEVR 0.8509 / 0.7592 / 0.6671,
+> against base 0.6974 / 0.8177 / 0.7628 and 0.8421 / 0.7545 / 0.6410. With the head, CLEVR
+> **0.8543 / 0.7609 / 0.6723** — the best configuration measured in this project, and all three
+> CLEVR head deltas clear twice the head-seed std.
+>
+> **It refutes `PV2_0152`'s mechanism.** That branch (Tetrominoes) lost CLEVR matched-object IoU
+> −0.0203 and blamed merging; this one *gains* +0.0261 there, and CLEVR mean regions go the other
+> way (base 8.0, Tetrominoes branch 6.6, Multi-dSprites branch 9.9). The "it merges" paragraph is
+> withdrawn as a general claim and marked as such in PV2_0152.
+>
+> **The head direction is open on this core** — five of six cells clear head-seed noise against
+> three of six on the base core — which is the other branch of the standing instruction.
+>
+> **THE GAP TO CLOSE NEXT, and it is small:** each continued core has been scored on **its own
+> dataset and CLEVR only**. Missing: `cont5000(Multi-dSprites)` on **Tetrominoes**, and
+> `cont5000(Tetrominoes)` on **Multi-dSprites**. Until both exist neither core can enter the
+> three-dataset headline table. Copy `/work/USERS/tkim1/finish_mds.sh`; the cores are at
+> `/work/USERS/tkim1/sw0255b/run_br_mds/jobs/model253/multi_dsprites/seed0/` (sha256
+> `5fda9486…`) and `/work/USERS/tkim1/share/cont5000_tetrominoes/` (sha256 `ca8546b4…`).
+> Each missing cell is one 320-frame cache (~1 h) plus a 256-frame train cache for the head.
+>
+> **Baselines are at eight** (`PV2_0151`): Slot Attention, AKOrN attn / conv / attn+up-tiling×4,
+> ItrSA, CAE, CAE++, CtCAE. Nine of nine against the best-per-cell composite. The CAE family
+> needed a **per-image oracle removed** first — their eval reads the true object count into
+> KMeans — so their published figures, and SynCx's table that carries them, are oracle numbers.
+>
+
+> ## RESUME POINT, 2026-11-09 — cont5000 Tetrominoes is scored; core seeds are off the table
+>
+> **DECISION: core seeds 1 and 2 will not be run.** Everything in this project is seed 0 and is
+> reported as such. The three-seed line in the contract is not met and the write-up says so.
+>
+> **`PV2_0152` is the answer to "beat 253 through the core".** Continuing the finished CLEVR core
+> for 5,000 × 10 on Tetrominoes beats the base core's **FG-ARI on both datasets at once** —
+> Tetrominoes +0.0095 (0.8580 → 0.8675) and CLEVR +0.0085 (0.8421 → 0.8505) — with and without
+> the head. On Tetrominoes all three metrics rise (FG-IoU +0.0308, reproduced +0.0328 on
+> validation). **The cost is CLEVR matched-object IoU, −0.0203**, plus CLEVR FG-IoU −0.0093.
+>
+> Mechanism: it **merges**. Mean regions fall on both datasets (Tetrominoes 21.1 → 17.9, CLEVR
+> 8.0 → 6.6, truth ~3). On Tetrominoes that removes splinters; on CLEVR it has begun joining
+> objects, which raises a pairwise measure (FG-ARI) and lowers the one that punishes merged
+> objects (matched-object IoU). If cont5000 is adopted, that regression is reported, never
+> averaged away.
+>
+> Head, re-measured on the new core over 5 head seeds: clears its own noise in **one metric per
+> dataset** (Tetrominoes obj-IoU +0.0022; CLEVR fg_ari +0.0021) and still fails to help
+> Tetrominoes FG-ARI. Every conclusion is carried by the core.
+>
+> **RUNNING:** the Multi-dSprites cont5000 branch, frontier GPU 2, **8,943 of 9,380 updates
+> (epoch 9 of 10), ~3.5 h out.** When it lands, run the same four rows on Multi-dSprites and
+> CLEVR — that says whether the merging effect is general or a property of Tetrominoes' sparse
+> render. The pipeline to copy is `/work/USERS/tkim1/finish_261.sh`.
+>
+> Artifacts: core `/work/USERS/tkim1/share/cont5000_tetrominoes/` (sha256 `ca8546b4…`), caches
+> `/work/USERS/tkim1/sw0255b/ev_cont_tetro/`, results `.../cont5000_tetrominoes/results/`.
+>
+
+> ## RESUME POINT, 2026-11-08 (latest) — the baseline field is done; nine of nine
+>
+> **`PV2_0151`: four baselines, all CLEVR-trained at 100,000 exposures, and we beat the best of
+> them in each cell separately.** ItrSA and AKOrN (conv) were added on GPU 3 (free in practice:
+> the cache job there is CPU-bound and leaves the GPU at 0%). Best-baseline-per-cell is a
+> composite of three different models and we are above it everywhere:
+>
+> | | CLEVR | Tetrominoes | Multi-dSprites |
+> |---|---|---|---|
+> | ours (core alone) | 0.8421/0.7545/0.6410 | 0.8580/0.7885/0.8173 | 0.6974/0.8177/0.7628 |
+> | best baseline per cell | 0.6046/0.4219/0.3853 | 0.7202/0.7540/0.5913 | 0.4817/0.6834/0.6093 |
+>
+> Slot Attention's row is now complete too: its CLEVR exposure-matched checkpoint run zero-shot
+> gives **0.1739 / 0.2192 / 0.1071** on Tetrominoes and **0.1930 / 0.0876 / 0.0680** on
+> Multi-dSprites — last in all nine, and worse off its training set than on it. No retraining was
+> needed, so this cost nothing.
+>
+> **Distrust exactly one cell:** Tetrominoes Foreground IoU, +0.0345, no seed spread for AKOrN
+> (conv). A second conv seed costs 7 min and should be the next baseline run.
+>
+> **AKOrN (conv) is the one baseline the budget excuse does not cover** — at 1/210 of its budget
+> it already matches its published CLEVR number (60.5 vs 59.0±4.3). ItrSA and AKOrN (attn) are
+> still far from theirs, so for those two the 1/210 caveat stands.
+>
+> **`BENCHMARK_PLAN_v5.md` replaces v4** and is the answer to "how should our benchmark testing
+> go". Four changes of design, not just numbers: the headline is quoted against a
+> **best-baseline-per-cell** composite (no single reference, because which baseline is second
+> depends on the dataset); each baseline carries **its own published figure and a budget
+> verdict**, so a data-efficiency claim is never mistaken for more; the **predicted foreground
+> fraction** is promoted to a required column, being the fastest separator of tiling from
+> segmenting; and the **narrowest cell is named every time**. v4's worry that Slot Attention's
+> score was domain shift is retired by PV2_0149.
+>
+> New scorer: `evaluation_howto/score_cache.py` scores our core with **no head** out of a cache
+> directory, and reproduces both published reference rows exactly. Use it to put a new core
+> beside them without fitting a head first.
+>
+> ## RESUME POINT, 2026-11-08 — AKOrN measured at seed 0; Tetrominoes cont5000 finished
+>
+> **`PV2_0150` is done and is the strongest baseline row we have.** AKOrN (attn), seed 0,
+> trained on the same 10,000 CLEVR images at 100,000 exposures, evaluated on all three reserved
+> splits by our evaluation function: **0.6027 / 0.5676 / 0.4343 FG-ARI** on CLEVR / Tetrominoes
+> / Multi-dSprites, against our **0.8468 / 0.8580 / 0.6974**. **Nine of nine cells ours.** Its
+> own metric agrees with our scorer to ≤0.0010. Trained on Multi-dSprites itself it reaches only
+> 0.4562, so the margin is not an out-of-domain artefact.
+>
+> A second AKOrN seed exists (its default 1234, from the first runs, launched before `--seed`
+> was passed — the first push of PV2_0150 mislabelled those as seed 0 and has been corrected).
+> It bounds AKOrN's noise: FG-ARI spread **0.1339 / 0.0535 / 0.0094**. Every margin above
+> exceeds its spread. Two AKOrN seeds against one of ours is still not a 3-seed comparison.
+>
+> **The caveat to carry:** 100,000 exposures is **1/210** of AKOrN's published recipe (300
+> epochs × ~70,000 images). This is a data-efficiency result, as `PV2_0149` is for Slot
+> Attention at 1/320. Protocol B for AKOrN is unrun; it is cheap on our 10,000 (~3.5 h) and
+> ~24 h on the full set.
+>
+> **Tetrominoes cont5000 is FINISHED and the checkpoint is safe on frontier.** The rented 4090
+> completed 9,380 updates / 150,000 exposures (unique_TRAIN 5,000, cont5000_stage_added 3,130
+> updates / 50,000 images). It crashed *after* training, in `engine.py:229`'s post-training
+> `evaluate()` → `preflight`, because `targets_tetrominoes_grid32.pt` was never shipped to that
+> box; the training result is unaffected. Pulled to
+> `/work/USERS/tkim1/share/cont5000_tetrominoes/` and the hash verified end to end
+> (`ca8546b47432067a390c368f734996ace066923e1be5dd77b9dad8055c433ceb`). **The rented instance
+> can be destroyed.** `initial.pt` is in the same directory and is required to load it.
+>
+> **NOT YET SCORED:** that Tetrominoes checkpoint, on Tetrominoes **and on CLEVR** — the
+> question is whether 0.8421 on CLEVR survives continued training elsewhere. Cache it with
+> `cache_any.py --min-group 8 --job <that dir>`, then `fit5.py`, then score on the same 320 ids.
+>
+> **RUNNING NOW:** the Multi-dSprites cont5000 branch on frontier **GPU 2** — 7,096 of 9,380
+> updates (846 of the 3,130 added), 29 s/update, **~18 h left**. And on GPU 3, caching the
+> finished Tetrominoes cont5000 core: tetro validation 160 / test 320 and CLEVR validation 320 /
+> fixed320 320, ~10.6 s/frame while sharing CPU with the baselines, so **~3.3 h** for all 1,120
+> frames. Score it with `score_cache.py` against CLEVR **0.8421** and Tetrominoes **0.8580**.
+>
+> **Still unapproved and goal-blocking:** our own CLEVR seeds 1 and 2 (rented ~$20, or free on
+> frontier but sequential); Slot Attention at its published 500k-step recipe (`PV2_0139`, code
+> written, unrun). The `cont5000` vendored-engine change is already on `origin/patch_v2` as
+> `f7118fb`; nothing is waiting to be pushed.
+>
+
+> ## RESUME POINT, 2026-11-05 (later) — 261 cores training natively per dataset
+>
+> **CLEVR seeds 1 and 2 were stopped by decision** to free the GPUs. They reached 20 and 25
+> updates of epoch 1; `run_s1/` and `run_s2/` are kept so they resume rather than restart. The
+> 3-seed requirement is still open.
+>
+> **RUNNING NOW (`PV2_0138`):** the 261 core trained **natively on each dataset** at the matched
+> 10,000 × 10 budget — `run.py --output run_261_<ds> train --dataset <ds> --model 253 --seed 0`
+> on GPUs 2 and 3, logs `core261_<ds>.log`. 29.5 and 30.5 s/update → **51 and 53 h**, so about
+> **2.2 days**. Budget verified from each run's `binding.json`: unique_TRAIN 10,000,
+> subset_seed 2553500, parent pool 35,000 — identical to 253-on-CLEVR.
+>
+> "261" here is **not** the peer's lifted native16 core. It is the core trained from scratch at
+> grid 64 by 253's unsupervised recipe, plus the SW0260 readout. There is no `--model 261`
+> because 261 is not a core variant; hence `--model 253`.
+>
+> This answers a question the transfer rows cannot: how good the method is when the core sees
+> the target domain, rather than how well CLEVR transfers. After the cores finish: cache with
+> `cache_any.py --min-group 8`, fit the 261 readout with `fit5.py`, and score on the **same 320
+> evaluation images** the transfer rows use.
+>
+> ## RESUME POINT, 2026-11-05 (earlier) — B→A→C is closed
+>
+> **B → A → C is finished.** C was attempted twice: on the inference seed (withdrawn,
+> `PV2_0135`, the rollout is deterministic) and on a horizontal mirror (`PV2_0137`, premise
+> verified, and a real negative — every arm on every dataset refuses to move, 0–1 of 21 epochs
+> pass the Foreground IoU floor, because the core's grouping fragments 3 → 273 regions under
+> mirroring). The head direction is open; invariance is not the way through it.
+>
+> **What works**, and what the benchmark should report: change A, rule B′, and one fixed
+> label-free recipe — arm `local_rgb_trust`, 2 epochs, chosen across the three validation
+> splits — refit on each dataset's **unlabelled** images only. All nine metric cells improve.
+>
+> **RUNNING NOW:** seeds 1 and 2 of the 253 core on CLEVR at grid 64, frontier GPUs 2 and 3,
+> `run.py --output run_s{1,2} train --dataset clevr --model 253 --seed {1,2}`, logs
+> `seed1.log` / `seed2.log`. Default preset matches seed 0 exactly (10,000 unique × 10 epochs,
+> batch 16 → 6,250 updates). These are what turn every number below from a candidate into a
+> result. **Do not restart them**; check `run_s1/jobs/model253/clevr/seed1/progress.json`.
+>
+> Measured rate: **36.9 s/update on seed 1 (64 h) and 29.6 s/update on seed 2 (51 h)**, running
+> in parallel, so about **2.7 days**. The older 117 h figure was for a different job.
+>
+> **The new seeds' gradient norms look alarming and are not a bug.** Seed 0 logs ~7 at update 1
+> with a whole-run median of 3.57; seed 1 logs **2e8** and seed 2 **1.6e4**. Three facts settle
+> it. `engine.py:167` clips every gradient to norm **1.0**, and the logged `gradient_norm` is the
+> **pre-clipping** value, so every step is bounded identically across seeds.
+> `error_if_nonfinite=True` means a NaN or Inf raises rather than corrupting silently. And the
+> spread is by design: the normalization provenance is
+> `own_random_encoder_exact_selected_TRAIN_no_masks`, so each seed draws its **own** random
+> encoder (`initial_CNN_sha256` differs) and normalizes by that encoder's statistics on the
+> identical 10,000 train images (`train_ids_sha256` matches across all three), giving feature
+> std 0.2478 / 0.1337 / 0.3533.
+>
+> This is the seed variance the 3-seed protocol exists to measure. **Do not tune anything per
+> seed to make them agree** — that would invalidate the mean. If a seed's metrics come out far
+> from the others, report it with its standard deviation rather than replacing it.
+>
+> Still unstarted and still needing a decision: **retraining Slot Attention on
+> `clevr_with_masks`**. Only `model.py` and `utils.py` are present — no training loop — so the
+> loop has to be written; the published recipe is Adam 4e-4, batch 64, 10k warmup, 500k steps,
+> which is days per seed on a TITAN RTX. Until that row exists the honest headline is "we beat
+> the published checkpoint transferred to our render".
+
+> ## RESUME POINT, 2026-11-04 — the head direction is open (superseded by the entry above)
+>
+> `PV2_0134` finished the B → A → C sequence. The head helps on all three datasets and the
+> core is what generalises. Everything below is **seed 0**.
+>
+> ### The current best readout, patch contract at grid 64
+>
+> Core 253, grid 64, trained on CLEVR only, frozen. Head selected by rule **B′** — highest
+> validation FG-ARI among (arm, epoch) pairs whose validation Foreground IoU is within 0.01 of
+> 253's, with epoch 0 a candidate.
+>
+> | dataset | | fg_ari | fg_iou | obj_iou |
+> | --- | --- | ---: | ---: | ---: |
+> | CLEVR fixed320 | 253 | 0.8421 | 0.7545 | 0.6410 |
+> | | + head (`local_rgb_tv` ep 11) | **0.8507** | **0.7830** | **0.6709** |
+> | Tetrominoes test | 253 | 0.8580 | 0.7885 | 0.8173 |
+> | | + head (`local_rgb_trust` ep 2) | **0.8586** | **0.7895** | **0.8187** |
+> | Multi-dSprites test | 253 | 0.6974 | 0.8177 | 0.7628 |
+> | | + head (`local_rgb_trust` ep 2) | **0.7041** | **0.8213** | **0.7660** |
+>
+> Slot Attention on the same 320 CLEVR images through the same `evaluate_patch_masks`, best of
+> four background rules chosen on validation: **0.3747 / 0.2219 / 0.1165**.
+>
+> ### What is settled
+>
+> - **Change A is the whole Foreground IoU story.** With the all-ones partition the metric is
+>   pinned at the truth foreground fraction (0.2115, `+0.0000` after training); with 253's
+>   partition as the candidate set it reaches 0.7830.
+> - **Change C is withdrawn, not refuted** (`PV2_0135`). The 253 rollout is **deterministic in
+>   `inference_seed`** — three seeds give bitwise identical gamma, q, adjacency and spikes — so
+>   the second-seed cache held no second seed and C's objective measured nothing. Seed
+>   invariance is unavailable for this core. The `features_b` / `gamma_b` / `regions_b` fields
+>   in `ev/*_train` are junk; do not read them.
+> - **Rule B needed the Foreground IoU floor.** Without it, Tetrominoes selected −0.1141 IoU.
+> - **The head is per-dataset.** The CLEVR head transferred unchanged loses on all three
+>   metrics on both other datasets.
+> - **Slot Attention's score is not a reading artifact.** All four background rules give the
+>   identical FG-ARI; its checkpoint tiles the image across 6.99 of 7 slots per frame.
+>
+> ### Resume here, in this order
+>
+> 1. **A label-free stopping rule for the head.** Reusing CLEVR's recipe with no labels works
+>    on CLEVR and Multi-dSprites and loses 0.0565 FG-ARI on Tetrominoes, purely because of the
+>    epoch count. The arm barely matters. One of the two candidates is gone — cross-seed
+>    agreement needs a stochastic rollout and there isn't one — so the live candidate is
+>    **stability**: the fraction of patches whose predicted label changes between epochs, on
+>    unlabelled training images. `stop.py` computes it; its second-seed path must be removed
+>    first.
+> 2. **Seeds 1 and 2 of the 253 core at grid 64 on CLEVR.** Nothing above is a result at one
+>    seed. ~18.5 h per seed on a rented 4090, ~$8 each; two in parallel is about a day. Needs
+>    the user's go-ahead to spend.
+> 3. **Retrain Slot Attention on `clevr_with_masks`.** It was trained on the original CLEVR
+>    render and its 6.99-slots-per-image behaviour is consistent with a failed transfer.
+>    Beating a model that is failing to transfer is not beating the model. This is the largest
+>    fairness gap in the benchmark.
+>
+> Code for all of it is on frontier at `/work/USERS/tkim1/sw0255b/benchmark_codes`
+> (`fit4.py` C, `fit5.py` B′, `xfer.py` transfer, `recipe.py` label-free, `sa_dump.py` +
+> `sa_infer.py` + `sa_bg.py` Slot Attention), which is **not** a git checkout — the sources and
+> hashes are in `PV2_0134_head_selection_and_transfer/code/` and `artifacts.json`. The grid-64
+> activity caches are 2.6 GB at `/work/USERS/tkim1/sw0255b/ev`, and the core is world-readable
+> for the peer at `/work/USERS/tkim1/share/native64_core_253/`.
+
+> ## RESUME POINT, 2026-11-02 — the peer's grid-64 engine, trained on rented GPUs
+>
+> Work moved to the peer's `benchmark_codes` bundle (`5372351`, every variant at grid 64)
+> run on **rented Vast GPUs**, because frontier's four TITAN RTX cards are occupied by the
+> peer's own multi-day jobs and measured **117 h** for a job a rented RTX 4090 does in 18.5.
+>
+> ### Results in hand
+>
+> **253, CLEVR, grid 64, 10,000 x 10, seed 0, unsupervised** (`PV2_0132`):
+>
+> | | fixed320 | validation |
+> | --- | ---: | ---: |
+> | FG-ARI | **0.7794** | 0.7862 |
+> | foreground IoU | **0.7308** | 0.7513 |
+> | matched-object IoU | **0.5807** | 0.5808 |
+>
+> against the peer's **reported** 0.4281 / 0.2778 / 0.2407 at 3,500 x 10 on the same grid.
+> One seed. The baseline has **not** been reproduced here, and unique images and gradient
+> steps both rose 2.86x together, so this does not say which caused the gain.
+>
+> Do not compare these with the 0.6668 CLEVR row below: that is grid 32, 1000 test images,
+> our own pipeline. Different evaluation set and different code.
+>
+> ### Running
+>
+> **252, CLEVR, grid 64, 10,000 x 10, seed 0 — SUPERVISED** on a rented RTX 4090
+> (Montana, m:24711, Ryzen 9 7950X3D). 17.8 s/update, 6,250 updates, ~31 h, ~$15.
+> Under supervisor (`/opt/supervisor-scripts/train252.sh`), restart capped at 4 stalled
+> starts; an outside watch runs on frontier. Same 10,000 images and same budget as the 253
+> run above, so the pair differs **only** in supervision. 252 cannot share a row with 253 or
+> with Slot Attention.
+>
+> ### Tools built this session
+>
+> - `benchmark_codes/score_validation.py` — scores any checkpoint on the 320 **validation**
+>   images with `evaluate()` unmodified, by pointing a shallow Dataset copy's `.test` at
+>   `.validation`. Runs free on frontier. fixed320 and validation agree to 0.02, so
+>   selection can live on validation from now on.
+> - `SW_TRAIN_PRESET` in the bundle: unset = 10,000; `cont15000` = the disjoint 15,000 warm
+>   started from a 10,000x10 checkpoint; `union25000` = both, from scratch. Split contracts
+>   follow the preset automatically.
+>
+> ### Parked, with checkpoints on frontier
+>
+> - `recovered/` — the completed 253 10,000 x 10 (resume.pt sha verified against committed.json)
+> - `recovered25/` — a 253 continuation on the disjoint 15,000, stopped at update 6,368 of
+>   15,630; resumable
+>
+> ### Next
+>
+> 1. When 252 finishes, score it on **validation** first and put it beside 253's 0.7862:
+>    same images, same 6,250 updates, supervision the only difference.
+> 2. Reproduce the peer's 0.4281 with our evaluation before writing "+82%" anywhere.
+> 3. Seeds 1 and 2 for 253 at 10,000 x 10 — nothing is a result at one seed.
+> 4. The arm that separates data from steps: 3,500 unique x 29 epochs.
+>
+> ### Renting GPUs — what measurement settled (`PV2_0131`)
+>
+> Pick on **sustained SM clock and CPU single-thread**, not bandwidth, TFLOPS, DLPerf or
+> VRAM. An H200 at 3875 GB/s ran 14.29 s/update and cost $90; a 4090 ran 10.71 and cost
+> $8.07. Disk size is fixed at creation — set 100 GB before renting. **Measure the link with
+> at least 1 GB before transferring**: a 200 MB burst read 14.5 MB/s on a host that
+> sustained 1.9, and one host advertising 165 Mbps delivered 0.02 MB/s.
+
+> ## EARLIER RESUME POINT, 2026-10-27 (superseded) — benchmark comparison, one sweep running
+>
+> **Model improvement is paused by the user's decision.** Benchmark comparison only. The
+> grid is chosen per dataset from its measured ceiling: CLEVR 32, Multi-dSprites 64,
+> Tetrominoes 32 (35px admits no 64 cells).
+>
+> ### The table
+>
+> | dataset | grid | ceiling | ours, pixel FG-ARI | supervision |
+> | --- | ---: | ---: | ---: | --- |
+> | CLEVR | 32 | 0.8406 | **0.6668 ± 0.0506**, 3 seeds, 1000 test | unsupervised |
+> | Tetrominoes | 32 | 0.9409 | **0.9478 ± 0.0171**, 3 seeds, 300 validation | unsupervised |
+> | Multi-dSprites | 64 | 1.0000 | **0.2817**, 1 seed, 300 validation | unsupervised |
+>
+> Tetrominoes' three share seed 0's graph (`PV2_0044` freeze) after one independent seed
+> died; CLEVR's three share one graph the same way. Both disclosed.
+>
+> ### Running
+>
+> `sweep2.sh` on GPU 3: Multi-dSprites grid 64, `threshold {.05,.10,.30,.50}` ×
+> `min_group_size {2,8,32}`, 150 validation images, no training. Log `sweep2.out`.
+> Half a day or more — a grid-64 evaluation is about an hour per combination.
+>
+> ### What the peer's REQUEST_0008 answer changed
+>
+> **They hold no unsupervised number.** Both their rows come from a CLEVR mask-supervised
+> SW0240 source; "기존 checkpoint" is that source evaluated zero-shot. Our earlier claim that
+> their unsupervised result beat ours is withdrawn in `PV2_0128`. Their readout is a
+> different algorithm, not a different setting: threshold 0.50, min_group_size 32, top-k 512,
+> a 29,128-parameter mask-supervised encoder, and a `foreground_induced_merge` stage we do
+> not have.
+>
+> ### Next, after the sweep
+>
+> 1. If the sweep moves the number, re-run Multi-dSprites and Tetrominoes on **TEST
+>    7000–7999** to align with the peer's split. `evaluate_model.py` has **no offset flag**,
+>    and grid-64 affinity for 1000 images is `[1000,4096,4096]` = 67 GB with `torch.cat`
+>    doubling it, so test at grid 64 needs an `--offset` and chunked aggregation. Started,
+>    then paused.
+> 2. If it does not, the cause is the encoder or the merge stage. The merge stage is a code
+>    port and needs its own test — `PV2_0107b` lost matched-object IoU with a different merge
+>    rule.
+>
+> ### Do not re-run
+>
+> `PV2_0125`, the per-dataset ceilings, the target/manifest rebuild (8/8 preflight on five
+> dataset × grid configurations), the `--eval-batch 25` and `--affinity-chunk` regressions
+> (both reproduced 0.9362 / 0.6914 / 0.7817 / 0.3004 exactly), `pixel_truth_test1000.pt`, the
+> CLEVR 3-seed test evaluation, the first readout sweep (nine combinations, swept the wrong
+> direction, 0.2292–0.2361), and Multi-dSprites grid 64 at the default readout.
+
+> ## INCIDENT, 2026-10-19 — `/export_home/tkim1` is faulted
+>
+> `ls`, `stat` and `df` on `/export_home/tkim1` all return **`Input/output error`**. This is a
+> filesystem fault on the server's home mount, not a permissions or VPN problem: `/work` is
+> healthy and answers normally in the same session. **It needs the machine's administrator.**
+>
+> ### What survives
+>
+> | | where | state |
+> | --- | --- | --- |
+> | every checkpoint | `/work/USERS/tkim1/runs/` | safe |
+> | gamma tensors, targets, split manifest copy | `/work/USERS/tkim1/` | safe |
+> | all result files (`pv2_*_results.txt`) | `/work/USERS/tkim1/runs/` | safe |
+> | `collaborative_test/` records and scripts | git, `origin/patch_v2` | safe |
+> | `PV2_0098` and `PV2_0110` training | GPUs 2 and 3 | **still running** — already resident in memory, reading from `/work` and writing checkpoints to `/work` |
+>
+> ### What is at risk
+>
+> **`patch_v2` has never tracked `snn_kuramoto_bidirectional/`.** Only `collaborative_test/`
+> is in the branch. The peer branch `patch_v2_sw` *does* track the model package; ours does
+> not. So the only current copy of our model source was on the faulted mount.
+>
+> The local working tree has a copy, but it is dated **2026-10-03** — sixteen days stale, and
+> missing `geodesic_chunk`/`_relax` and `coupling_balance`.
+>
+> Recent model-source changes are recoverable from their experiment diffs, which are in git:
+> `PV2_0088_grid32_enablers/code.patch` (geodesic chunking) and
+> `PV2_0092_signed_coupling/code.patch` (signed coupling). They need a correct base.
+>
+> ### Restored into git from this session, before they could be lost
+>
+> - `evaluate_model.py`: `_merge_groups` plus `--merge-threshold` and `--merge-rounds`. These
+>   had never been committed and existed only on the faulted mount.
+> - `figparts.py`: the row x column phase-alignment panels.
+> - `panels.py` and `peer_data.py` are **not** restored and are not in git.
+>
+> ### Recovery attempted and FAILED — the stale copy cannot evaluate
+>
+> The local tree was staged to `/work/USERS/tkim1/code/` (via a tar pipe; `rsync` cannot be
+> used while the remote login shell fails to read its `.bashrc` on the faulted mount) and the
+> mandated regression row was run: `BIM6_s1`, grid 16, validation 300, expecting
+> `0.7239 0.7251 0.4951`. It did not reach a number:
+>
+> ```
+> TypeError: S2NetHyperparameters.__init__() got an unexpected keyword argument
+>            'graph_extra_channels'
+> ```
+>
+> The evaluator passes 20 hyperparameters; the 2026-10-03 package accepts 68 fields and is
+> missing **7** of the 20: `coupling_balance`, `dendrite_per_region`, `geodesic_base`,
+> `geodesic_chunk`, `geodesic_power`, `membrane_threshold_k`, `membrane_threshold_mode`.
+>
+> These are not inert flags. `geodesic_base` and `geodesic_power` (`PV2_0076`, `PV2_0078`),
+> the population membrane threshold (`PV2_0094`) and `dendrite_per_region` all changed what
+> the model computes, and `BIM6_s1` was trained under them. Only two of the seven have a diff
+> in git — `PV2_0088_grid32_enablers/code.patch` and `PV2_0092_signed_coupling/code.patch`.
+> **The other five exist nowhere but the faulted mount.** Reconstructing them by guessing
+> would load the weights into a model that computes something else, which is the exact
+> failure the regression row is there to catch.
+>
+> So: evaluation cannot be restored until `/export_home` comes back. Training checkpoints are
+> unaffected and keep accumulating on `/work`.
+>
+> ### Two findings while blocked
+>
+> **`PV2_0098` is interrupted, not completed.** Both arms trained; neither could be scored,
+> because the evaluator is on the faulted mount. DS_1000 ended at loss 16.673826 / collapse
+> 2.154499, DS_6000 at **14.429044 / 1.954825** — six times the data gives a clearly better
+> training signal and *no patch metric at all*. The checkpoints are intact on `/work`; the
+> test resumes by scoring them.
+>
+> **Graph feedback costs ~27x the wall clock.** `PV2_0110`'s control ran 40 epochs in 23 min
+> (0.58 min/epoch). The `--graph-feedback-strength 0.5` arm is at epoch 5 after 78 min
+> (15.6 min/epoch) — `update_alignment` runs at every one of the 64 timesteps. Projected
+> ~10 h for this arm alone, against 23 min for the control. It is training healthily
+> (`spike_plv_collapse` 2.293 → 2.283 → 2.262, falling), so it is left running: GPU 3 is ours
+> and idle, and the mount being down means nothing else can use it. But the cost is itself a
+> result — if graph feedback needs 27x the compute, it has to earn far more than a marginal
+> gain to be worth keeping, and that judgement can be made before the numbers arrive.
+>
+> ### `REVIEW_0007` changes the next experiment
+>
+> The peer branch moved 81 tests past what `REVIEW_0006` covered (SW_0157..SW_0236 at
+> `790ec4f`). Two things matter here.
+>
+> **`SW_0234` reproduced our route map on their own data.** Merge .885762, coverage .883696,
+> both **.911458** — superadditive past .90, as `PV2_0106` found at .9329. Different grid,
+> different split, different supervision. The decomposition is a property of the readout.
+>
+> **Their oracle merge also loses Object IoU** (.674313 → .667059), and theirs chooses pairs
+> *with the truth*. Our `PV2_0107b` lost .0285 with a label-free merger and could be blamed on
+> pair selection; theirs cannot. **`PV2_0111` as scoped — complete linkage against mean
+> linkage — is withdrawn.** The hypothesis behind it is dead.
+>
+> **Coverage moves first, and its shape is now constrained.** `SW_0207`, their label-free
+> foreground head, widened the support of existing groups: foreground IoU +.171275, FG-ARI
+> −.053863, Object IoU down, closed. `SW_0234`'s oracle recovery instead creates **new groups
+> for objects missed entirely** and gains all three. So: a coverage stage may instantiate
+> groups for unclaimed regions and may not widen groups that already exist.
+>
+> Their headline — SW0227 beating Slot on all three as three-seed means — is on their declared
+> **mask-supervised** leaderboard, on a reused validation split, on their contract. Nothing
+> from it is portable to our column.
+>
+> ### `PV2_0112` is specified, implemented and offline-verified — it needs only a server
+>
+> The third part of the standing goal is no longer a plan sentence. `PV2_0112` exists:
+> `_coverage_groups` in `evaluate_model.py` with `--coverage-quantile`, and
+> `test_coverage.py` passing **8/8 on CPU torch** against a synthetic grid. The pre-registered
+> gate is in its README — all three metrics up, `patch_matched_object_iou` specifically up,
+> predicted foreground at or below 0.20 — together with the falsification that closes it.
+>
+> The test earned its keep before any GPU time: the first implementation admitted patches at
+> `act >= quantile_value`, and because the background is 87.5% of an image the quantile value
+> *is* the background value, so it recovered **238 of 256 patches as one object**. Strict `>`
+> fixes it and is equivalent where activity is continuous.
+>
+> It runs **after** the merge stage, never before — covering first would let the merger absorb
+> the recovered groups into existing ones, which is `SW_0207`'s failure by another route.
+>
+> ### Resume point
+>
+> 1. When `/export_home` returns, **first** copy `snn_kuramoto_bidirectional/` off it and commit
+>    it to `patch_v2`. Never work another experiment with the model source untracked.
+> 2. If it does not return, rebuild the package from the 2026-10-03 local copy plus the two
+>    `code.patch` files, and re-verify against a known checkpoint by re-scoring `PV2_0104`
+>    seed 0 — it must reproduce 0.7699 / 0.7531 / 0.7017 before anything below it is read.
+> 3. `PV2_0098` (data scale) and `PV2_0110` (bidirectional feedback) finish on their own; read
+>    `/work/USERS/tkim1/runs/pv2_0098_results.txt` and `pv2_0110_results.txt`.
+>
+
+> ## Resume point, 2026-10-14 — access lost, not compute
+>
+> **The VPN tunnel to the 152.19.x.x subnet died.** Both `raptor` (152.19.10.112) and
+> `frontier` (152.19.10.80) fail with `Can't assign requested address` and lose 100% of
+> pings, while the open internet is fine and the `utun8` route entry is still present.
+> Nothing is wrong on the server; the jobs below are detached with `nohup` and keep
+> running. Reconnect the VPN and the results are one command away.
+>
+> ### What is waiting on the server
+>
+> | job | file to read | state when contact was lost |
+> | --- | --- | --- |
+> | `PV2_0092` signed coupling | `/work/USERS/tkim1/runs/pv2_0092_results.txt` | balance 0.0 and 0.25 done, 0.5 and 1.0 running |
+> | `PV2_0093` grid-32 spike path | `/work/USERS/tkim1/runs/pv2_0093_results.txt` | queued; polls for `signed.sh` to end, then runs three 8-epoch arms |
+>
+> Both append as they go, so nothing is lost. `PV2_0092`'s control is healthy — balance
+> 0.0 trained 23.52 -> 17.00 at `spike_plv_collapse` 2.157, balance 0.25 23.66 -> 17.05 at
+> 2.142 — so the comparison can carry a verdict, unlike `PV2_0085`'s.
+>
+> ### The one command to run on reconnection
+>
+> ```
+> ssh frontier 'cat /work/USERS/tkim1/runs/pv2_0092_results.txt;
+>               cat /work/USERS/tkim1/runs/pv2_0093_results.txt'
+> ```
+>
+> `PV2_0092` prints its own gate verdict at the end. The gate was registered before the
+> run (`PROPOSAL_0.9_v2.md`): the fg_ari gain must appear at predicted foreground at or
+> below 0.20, must not be bought with foreground IoU, and `patch_matched_object_iou` must
+> move too.
+>
+> ### Then
+>
+> 1. If signed coupling passes at seed 0, retrain at seeds 1 and 2, select on validation,
+>    read test once. If it fails, record it as the fifth mechanism-level improvement that
+>    did not convert, and the remaining route is `PV2_0086`'s motion term at seeds 1 and 2
+>    with extent matched.
+> 2. `PV2_0093` decides which knob keeps the 32x32 spike path alive. Hypothesis B — that
+>    `--graph-spatial-decay` is in grid units and 0.35 is twice the intended decay at this
+>    grid — is **untested, not refuted**; `PV2_0089`'s eval-time test of it was a no-op
+>    because `spatial_rate` is an `nn.Parameter` restored by `load_state_dict`.
+> 3. `PV2_0091`, our extent dial against aligned Slot Attention's operating point
+>    (0.8102 fg_ari at predicted foreground 0.8531), was stopped at one row for being too
+>    slow under GPU contention. Redo it cheaply: `--limit 150 --num-time-steps 512`,
+>    spectral k from 6 to 32. It is the measurement that would settle whether the readout
+>    alone can close the gap.
+> 4. Nothing portable is pending from the peer; `REVIEW_0006` covers through `ce923f1`.
+>    Their SW_0156 is signed coupling too, inference-only on a frozen checkpoint, with no
+>    outcome yet. A split verdict between their arm and ours would itself be the finding.
+
+> ## Correction, `PV2_0090`
+>
+> **The claim that we beat Slot Attention on all three metrics does not survive.**
+> The baseline was run through the published centre crop, which on a 240x320 frame
+> is the centre 240x240, so its 16x16 prediction map and the 16x16 target map
+> described **different regions of the image** -- column `c` up to 40 px, two target
+> columns, apart. Correcting it, on test, three seeds x three seeded draws:
+>
+> | metric | ours (best) | Slot, crop | Slot, aligned | verdict |
+> | --- | --- | --- | --- | --- |
+> | `patch_fg_ari` | 0.7603 | 0.6656 | **0.8102** | **Slot leads by 0.0499** |
+> | `patch_foreground_iou` | **0.7132** | 0.1151 | 0.1151 | ours, +0.5981 |
+> | `patch_matched_object_iou` | **0.6598** | 0.0874 | 0.1025 | ours, +0.5573 |
+>
+> Our own numbers are unchanged; the error was in the baseline harness and ran in
+> our favour. The 0.75 bar is still cleared in absolute terms (0.7603). The fg_ari
+> **lead** is gone. The two IoU results stand and are the part of this project that
+> does not depend on a tie-break: Slot Attention predicts 85% foreground against an
+> 11.8% target under every preprocessing tried.
+>
+> Everything below this box predates the correction. Read the Slot Attention column
+> in it as the **crop** column above.
+
+## Where things stand
+
+Active goal, three parts: exceed **0.75** `patch_fg_ari`; review and apply the peer's
+results; and if 0.75 is unreachable, find a route to **0.9+** keeping SNN + Kuramoto
+bidirectional.
+
+**Parts 1 and 2 are met. Part 3 is not.**
+
+| goal condition | state |
+| --- | --- |
+| fg_ari 0.75 | **met** — 0.7533 on test, 3 seeds (`PV2_0061`) |
+| beat Slot Attention on all three | **NOT met** -- `PV2_0090` corrected the baseline; aligned Slot leads fg_ari 0.8102 vs 0.7603. The two IoU wins stand |
+| apply the peer's positive results | **done** — graph freeze ported (`PV2_0044`), 0.7059 -> 0.7250 |
+| a demonstrated route to 0.9 | **not met**; 21 routes closed, the 0.9671 'feasibility' withdrawn (`PV2_0072`), failure explained arithmetically (`PV2_0075`) |
+
+### The test result (`PV2_0061`), read once
+
+Test IDs 7000-7999, **all 1000 images**, from classifier masks on the model's own
+spikes, spectral k=14 with one background cluster.
+
+| metric | ours k=14, power 2 | matched Slot | absolute | relative |
+| --- | --- | --- | --- | --- |
+| `patch_fg_ari` | **0.7603** +- 0.0003 | 0.6663 +- 0.1108 | +0.0940 | +14.1% |
+| `patch_foreground_iou` | **0.3373** +- 0.0207 | 0.1177 +- 0.0101 | +0.2196 | +186.6% |
+| `patch_matched_object_iou` | **0.6598** +- 0.0061 | 0.0871 +- 0.0040 | +0.5727 | +657.6% |
+
+Per seed, ours: 0.7600 / 0.7605 / 0.7604. Slot: 0.7265 / 0.7340 / 0.5385. The
+superlinear geodesic step cost (`PV2_0076`) adds +0.0070 / +0.0015 / +0.0049 over
+`PV2_0061`'s 0.7533 / 0.3358 / 0.6549 at the same readout, and the connected-component
+configuration improves with it too, 0.7258 / 0.7124 / 0.5029 -> **0.7300 / 0.7132 /
+0.5050**. This is the second test read of the session; the first was `PV2_0061`.
+
+The same checkpoints read through connected components give **0.7258 / 0.7124 /
+0.5029** on the same images — also beating Slot on all three, foreground IoU twice as
+high, fg_ari below 0.75.
+
+**What k=14 costs:** -0.3767 foreground IoU against that configuration, and predicted
+foreground of 0.556 against a target of ~0.118. fg_ari is computed over true-foreground
+patches only, so a wider predicted foreground can only help it; `PV2_0059` and
+`PV2_0060` map the whole dial (k=12 fg_ari 0.7381 at fg_iou 0.4413; k=20 fg_ari 0.7718
+at fg_iou 0.1680). k was chosen on validation, which the contract permits.
+
+**Evidence the score comes from spikes:** the spectral readout clusters
+`_spike_affinity(spikes, components)`, `--readout` stays at its default `spikes`, and
+`PV2_0043` measured binary spike timing carrying that affinity at r = 0.9822
+(0.9808 / 0.9807 on these checkpoints). `--spectral-k 14` is a fixed group count;
+`--spectral-oracle-k` is the oracle variant and is not used.
+
+**Limitations:** the three seeds share one graph through `PV2_0044`'s freeze, so they
+are not three fully independent runs; the Slot baseline ran 320 epochs against the
+official 457 and is a lower bound, with its weak seed 2 (0.5385) dragging the mean,
+so a better-trained Slot could close the fg_ari gap while leaving both IoU gaps intact.
+
+## The Slot Attention comparison
+
+`PV2_0049`, the official architecture trained on our own train split, three seeds,
+each evaluated under three seeded inference draws:
+
+| metric | ours (3-seed) | matched SA (3-seed) | absolute | relative |
+| --- | --- | --- | --- | --- |
+| `patch_fg_ari` | **0.7250** | 0.6635 +- 0.1090 | +0.0615 | +9.3% |
+| `patch_foreground_iou` | **0.7188** | 0.1184 +- 0.0093 | +0.6004 | +507% |
+| `patch_matched_object_iou` | **0.4953** | 0.0869 +- 0.0037 | +0.4084 | +470% |
+
+Ahead on all three. Three caveats travel with it: the baseline ran 320 epochs
+against the official 457, so it is a **lower bound** on Slot Attention; our three
+seeds **share one graph** through `PV2_0044`'s freeze, so the variance the graph
+contributes is removed by construction; and this is validation, not test.
+
+Inference noise is ~0.005 per checkpoint against 0.1090 across checkpoints, so the
+weak seed is the checkpoint and not the draw. `PV2_0047` claimed the opposite from
+two seeds with unseeded inference and is superseded.
+
+## What is closed
+
+**The architecture is not the limit.** `PV2_0034` ran oracle features through this
+pipeline unchanged and reached **0.9754**; the encoder costs 0.27. `PV2_0035/0036`
+split that loss: within-object spread 0.465 -> 0.000 is worth +0.170, the
+between-object margin carries the rest.
+
+**Graph quality is spent** — a ground-truth coupling graph is worth +0.06
+(`PV2_0005`).
+
+**Seven feature routes**: DINOv2 worse, label-free clustering worse,
+self-bootstrapping circular (+0.006), encoder capacity diverges, slot-term defaults
+already optimal, end-to-end alone 0.6779, frozen core collapses.
+
+**Data scale**, both ways. `PV2_0048`: more images at matched compute gives 0.6779
+-> 0.5983 -> 0.4790. `PV2_0051`: the scale-invariant separation ratio improved only
+7% relative, so the encoder did not get better either, and the 27-hour
+full-convergence run was cancelled rather than run.
+
+**The integration window.** `PV2_0052`: +0.0005 going from 1024 to 4096, inside the
+seed spread. It also confirms 0.7250 is not an artifact of the window.
+
+## What is open — part 3, the route to 0.9
+
+**Not met, but the target is now exact and a correction matters more than the rest.**
+
+### `PV2_0005` was wrong, and I leaned on it all session
+
+`PV2_0066` split the two paths features take into the dynamics. Feeding oracle features
+to the **graph alone** gives **0.9671 / 0.9353 / 0.7584 at predicted foreground 0.1121**
+— 94% of the total oracle gain, and the first fg_ari gain in this project that does
+**not** come with foreground over-prediction. Through theta initialisation alone it is
+only +0.0922.
+
+`PV2_0005` had reported an oracle coupling graph worth +0.06, and I repeated "the graph
+is spent" throughout. That test forced the **final coupling matrix**, bypassing the
+generator's projection, cosine, top-k, geodesic relaxation and spatial decay. Given
+oracle **features** instead, that machinery amplifies them. **Nearly all the headroom
+is in the graph**, not in theta initialisation and not outside the graph.
+
+### What the 0.9671 actually measures — corrected by `PV2_0072`
+
+`make_oracle_gamma.py` builds its tensor as `codes[true_labels]`, so the oracle gamma is
+the **answer** rather than better features. 0.9671 / 0.9353 / 0.7584 therefore measures
+how faithfully the readout **transcribes a grouping it is handed**, not whether these
+dynamics can discover one. I had written it as "the 0.9 target is reachable by this
+architecture unmodified"; **that does not follow and is withdrawn.**
+
+What `PV2_0072` does establish is sharper and more useful. Feeding the graph a grouping
+corrupted to a known degree:
+
+| input fg_ari | output fg_ari | gain |
+| --- | --- | --- |
+| 1.0000 | 0.9678 | -0.032 |
+| 0.7525 | 0.7766 | +0.024 |
+| 0.4205 | 0.5087 | +0.088 |
+| 0.0416 | 0.1933 | **+0.152** |
+
+**The pipeline repairs damaged groupings**, strongly for badly damaged ones, with the
+crossing where output = input near 0.85-0.88.
+
+But `PV2_0073` iterates the model's **own** grouping through the same path and it
+converges at **0.7274** in one step (+0.0035, inside the seed spread). The two results
+reconcile through the error type: `PV2_0072`'s corruption is random, so its errors are
+spatially **incoherent** -- a wrong patch among right ones, exactly what the geodesic
+relaxation and distance prior are built to repair. The model's own errors are spatially
+**coherent**: whole objects merged, which `PV2_0053` measured in 38.8% of images. A
+merged pair is internally consistent, so there is nothing local to fix.
+
+**The amplification is real but acts on the wrong error type.** That is why nineteen
+routes failed: each tried to reduce the amount of error, while the pipeline can only
+remove error of a kind it does not make.
+
+### Fourteen routes have failed to produce it, and they fail in two opposite ways
+
+`PV2_0067` sent every transform to the graph alone, with the phase path on real gamma:
+
+| graph gamma | cos_between | fg_ari | fg_iou | pred_fg |
+| --- | --- | --- | --- | --- |
+| real | 0.2483 | 0.7250 | 0.7188 | **0.1299** |
+| whitened eps=0.1 | **0.6900** | 0.7602 | 0.2256 | 0.4861 |
+| smoothed | 0.2113 | 0.7196 | **0.7618** | **0.1178** |
+| oracle (diagnostic) | **1.0000** | **0.9671** | **0.9353** | **0.1121** |
+
+The margin can be enlarged (whitening, 0.2483 -> 0.7693) but only by widening predicted
+foreground to 0.45-0.49 — **and that happens even confined to the graph**, so the phase
+path was never the obstacle. Calibration can be kept (smoothing, 0.1178) but only
+without a margin gain. Oracle codes are one-hot per object, orthogonal between objects
+by construction; no fixed transform of appearance features reproduces that, and a
+trained one would need object identity.
+
+Three separate transforms also improved a separation statistic without improving fg_ari
+in the calibrated regime (`PV2_0058`, `PV2_0062`, `PV2_0064`), so separation statistics
+are not sufficient statistics for the score — they bound the problem without pointing
+at a solution.
+
+### Sixteen routes, and what each kind of failure says
+
+| route | result |
+| --- | --- |
+| eleven on feature geometry | closed; three improved a separation statistic without moving fg_ari (`PV2_0058`, `PV2_0062`, `PV2_0064`) |
+| transforms confined to the graph (`PV2_0067`) | margin without calibration, or calibration without margin |
+| the matched Slot encoder's features (`PV2_0065`) | within-object cosine 0.0019, near the oracle's zero; between-object 0.0316, eight times too small; fg_ari 0.0604 |
+| reconstruction training the graph, features frozen (`PV2_0068`) | optimisation worked (loss 18.06 vs 17.86) but best calibrated 0.7175, -0.0064 |
+| the graph fed its own groups as one-hot (`PV2_0069`) | **0.7239 in, 0.7199 out** -- a fixed point, no amplification |
+
+`PV2_0069` is the sharpest of these. Oracle one-hot codes into the graph give 0.9671;
+one-hot codes built from the model's own 0.7239-accurate groups give 0.7199. The graph
+does not amplify its own estimate, so no iterative scheme climbs, and the errors in the
+predicted groups are exactly the errors that survive it.
+
+What the oracle supplies is **instance identity**. Every label-free route tried either
+reproduces its geometry without the information, or is a fixed point at the accuracy it
+starts from.
+
+### `PV2_0070`, the last route I had named as untested
+
+Cross-view consistency: view two is view one under per-image per-channel gain/offset
+jitter plus noise, so the partition is unchanged and the two views' PLV matrices must
+agree. `PV2_0057` had identified shading as the main source of within-object spread, and
+a consistency objective is the one kind of signal that does not admit `PV2_0069`'s fixed
+point, since agreeing on a wrong grouping is not free when the views differ in the
+nuisance that caused the error.
+
+**The term worked and the score fell.** `view_consistency` drops from 0.004486 to
+0.001360-0.002252, so the dynamics became 2-3x more invariant to the jitter, and every
+arm stayed calibrated (predicted foreground 0.115-0.134) — this failure is not
+over-prediction. Best is 0.6757 at weight 200, **-0.0482** on the bar; weight 1000
+collapses to 0.3989.
+
+The direction suggests something sharper: **part of what the model uses is
+shading-correlated**, so forcing invariance removes usable signal. `PV2_0058`, where
+chromaticity removes the same factor analytically, scored below the baseline too.
+
+### The pattern across seventeen routes
+
+Anything that makes the features more regular — lower within-object spread, a bigger
+margin, invariance to a nuisance — leaves fg_ari where it was or lowers it. The oracle's
+gain comes from its codes **being** instance identity, and the structural reason no
+label-free procedure here produces that is in the data: these are single static renders,
+so nothing in the input distinguishes two same-coloured objects except spatial
+separation, which the pipeline already uses.
+
+### The arithmetic of the failure (`PV2_0074`, `PV2_0075`)
+
+`_geodesic_distance` exists to separate same-coloured objects -- "walking between them
+crosses background, so the route is what tells them apart" -- and its strength is a
+**learned** parameter, so `PV2_0071` could not vary it. Written directly into the
+checkpoint, the learned 2.17 turns out to be the best of 0.5 through 32 (best +0.0007,
+noise; 32 gives 0.6406). Groups per image climb 5.46 -> 6.59 as it rises, so objects do
+split, and fg_ari falls, so the splits miss the boundaries.
+
+`PV2_0075` says why, in adjacent-pair dissimilarity, which is all the geodesic sees:
+
+| pair type | mean `1 - cosine` |
+| --- | --- |
+| within one object | 0.0331 |
+| **background to background** | **0.0054** |
+| object to background | 0.1743 |
+| between two objects | 0.1587 |
+
+The wall is real -- crossing into background costs **5.27x** a shading step inside an
+object. **The corridor is the problem**: background-to-background is six times *cheaper*
+than a within-object step, so the route between two same-coloured objects is two thin
+walls with a nearly frictionless corridor. At the learned contrast a wall step costs
+1.378, a background step 1.012 and a within-object step 1.072, so reaching an object six
+patches away costs about 6.8 while crossing a six-patch-wide object costs 6.4 -- nearly
+a tie, which is the merge.
+
+The contrast cannot fix it because it multiplies `(1 - similarity)` **uniformly**:
+raising it scales walls and shading steps together, and objects with shading gradients
+split before the walls dominate.
+
+### `PV2_0076` is a readout correction, not a training change (`PV2_0077`)
+
+Training under the superlinear cost gives 0.4268 at power 2 and 0.5248 at power 3,
+against the 0.7239 bar. The control settles where the damage is: the same checkpoints
+evaluated at power 1 give 0.4249 and 0.5254, so the **weights** are bad, not the
+evaluation. The loss meanwhile went *down* -- 16.71 and 16.80 against 17.86 -- so the
+objective was satisfied better while the score collapsed, the pattern `PV2_0055` recorded
+for position in the graph. And training **lowered** the contrast, 2.1732 -> 1.9588,
+choosing to rely on the geodesic selectivity less rather than more; the prediction that it
+would prefer a stronger one was wrong.
+
+So the sharper cost is a better **readout** of the graph these weights produce and a worse
+**objective** to fit them with. `PV2_0076`'s +0.0070 on test stands as a post-hoc
+correction.
+
+### The toll, and a fourth mispredicted arithmetic (`PV2_0078`)
+
+`PV2_0075`'s other candidate, a per-step toll on the corridor, turns out to be the
+leading `1` already in the cost. Lowering it should have helped: at power 2 and contrast
+8 the route to an object six patches away costs 6.48 against 6.05 for crossing a
+six-patch object, a ratio of 1.07, and at base 0.1 those become 1.09 and 0.654, ratio
+1.66.
+
+It does not. In the calibrated regime base 1.0 is the best of 1.0 down to 0.02, trading a
+little fg_ari for a little foreground IoU monotonically. The spectral rows look like a
++0.0140 gain and are not: predicted foreground goes 0.5423 -> 0.6522 while foreground IoU
+falls 0.0796, the extent dial again, and the automated check missed it because the
+spectral readout never sits below the 0.20 threshold.
+
+That is the **fourth** time a geometric or arithmetic quantity improved without the score
+following (`PV2_0058`, `PV2_0062`, `PV2_0064`, here). The common thread: these quantities
+are computed on ground-truth object pairs, while the readout acts on whatever the dynamics
+produce, and a barrier in the cost matrix still has to survive the rollout, the gate, the
+membrane threshold and the component extraction. `PV2_0076` is the only change of this
+family that transferred, and `PV2_0077` showed it works only outside the objective.
+
+### The dynamics, and the pattern that now has five instances (`PV2_0079`)
+
+The Kuramoto dynamics were the last untouched axis. `osc_dim` 8 scores 0.5670, 16 never
+trains (loss 86, the dead-membrane regime), coupling 64 gives 0.6088 and 1024 diverges.
+**osc_dim 4 and k 256 are already the best of these**, and the hypothesis that four phase
+dimensions are too few for 6.32 objects is refuted.
+
+The losses explain it, but not the way I first wrote. **osc_dim 8 reached 14.19 against
+the baseline's 17.86 and scored 0.5670**, and `PV2_0080` then found **osc_dim 3 reaches
+16.21 for 0.6783** — lower loss, worse score, on the *small* side. So the pattern is not
+extra capacity creating degenerate solutions; reducing capacity does the same thing.
+
+| setting | loss | fg_ari |
+| --- | --- | --- |
+| osc_dim 3 | 16.21 | 0.6783 |
+| **osc_dim 4** | **17.86** | **0.7239** |
+| osc_dim 8 | 14.19 | 0.5670 |
+
+**The operating point has a relatively high loss and the best score**, so the objective
+and the metric are **decoupled around it**. Ten instances now fit that (`PV2_0055`,
+`PV2_0058`, `PV2_0068`, `PV2_0077`, `PV2_0079`, `PV2_0080` and all four arms of
+`PV2_0081`), and the constraint it puts on future work is sharp: **lowering this loss is
+not evidence of progress.**
+
+I also read it as reframing `PV2_0044`'s graph freeze into "constraint is the lever".
+`PV2_0081` corrects that: at the **same seed** the graph freeze gives 0.7235 against the
+untouched 0.7239, so its +0.019 was in the 3-seed mean, by rescuing the weak seed from
+0.6639. It reduced **seed variance** rather than improving any seed, and no other
+component freeze helps either.
+
+`PV2_0081` also found that **1,325 of 69,042 trainable parameters (1.9%) match full
+training** — `kuramoto` and `graph_generator` frozen together, leaving only the dendrite,
+membrane and gamma projection, scores 0.7249. The 67,585 `kuramoto` parameters contribute
+nothing measurable once their graph is held with them, and freezing `kuramoto` alone drops
+to 0.6858 because the graph then drifts from the dynamics it was fitted to. There is very
+little here for an optimiser to improve, which is consistent with every capacity and
+constraint experiment failing.
+
+### Exhausted, and the obstacle stated precisely
+
+Twenty-eight interventions across twenty-five numbered routes: features 11, graph 8,
+geodesic cost 3, readout 2, dynamics 4. One transferred (`PV2_0076`, +0.0070 on test), and
+only outside the objective (`PV2_0077`).
+
+1. The oracle numbers measure **transcription**, not discovery (`PV2_0072`).
+2. The pipeline repairs spatially **incoherent** damage; its own errors are coherent
+   object merges and it is a fixed point on those at 0.727 (`PV2_0073`).
+3. The geodesic barrier is two thin walls (5.27x) with a corridor six times cheaper than a
+   within-object step, and no shape of the cost fixes that without splitting objects
+   (`PV2_0075`, `PV2_0078`).
+4. Five changes reached a lower loss and a worse score, so the objective admits degenerate
+   solutions that more capacity makes easier to find.
+
+### Start here for part 3
+
+`PROPOSAL_0.9.md` is the one route left, costed and written to be run: independent object
+motion as the signal, the existing consistency term pointed at frame pairs, contract v1
+and the architecture untouched. **It needs a decision** — it adds data this project does
+not use. `PV2_0082` and `PV2_0083` removed the two alternatives that were not the model
+(the metric and the input resolution), so there is nothing else outstanding.
+
+`ROUTE_MAP_0.9.md` holds the consolidated map: the five structural findings and all 27
+closed routes, with the protocol devices that caught wrong conclusions. It exists because
+after 27 routes I nearly re-ran one that was already closed at `PV2_0016-18` — check it
+before spending compute.
+
+### Resume here
+
+Within the architecture, the next thing to change is `_geodesic_distance` itself: a step
+cost **superlinear** in dissimilarity, or a fixed per-step toll so a long cheap corridor
+costs something. Both are core changes rather than parameter choices, and the margin is
+tight -- within-object 0.0331 against wall 0.1743, with the usable window for a
+selective threshold roughly between 6 and 30, already sampled at 8 for 0.7183.
+
+Outside the architecture, part 3 needs what a single static render does not contain:
+motion, or several views of one scene.
+
+## Where the peer stands
+
+Their branch moved to 32x32 = 1024 patches under its own contract. Three-seed
+native32: **0.7819 / 0.6054 / 0.5970** against their matched Slot32 **0.7817 /
+0.2044 / 0.2032** -- ahead on all three, but the FG-ARI margin is **+0.0003** while
+their Slot32 seed spread is **0.1353**, so FG-ARI is a tie and the win is the IoUs.
+Scores are not poolable with ours (128x128 vs 240x320, 4px vs 15x20 patches, 70,000
+vs 6,000 training IDs). Of 25 new records none carries a positive, reproduced,
+promotable result; their incumbent is unchanged at SW0097.
+
+One mechanism does transfer: Slot Attention's foreground IoU is 0.2044 on their
+contract and 0.1184 on ours. Across two resolutions, two label rules and two
+budgets it still over-predicts foreground, and that is where both branches' real
+advantage comes from.
+
+## Resume point
+
+Parts 1 and 2 are done and on the test split. Part 3 is the open work: a training
+signal that geometry cannot satisfy, with the peer's SW0139 result the thing to read
+first.
+
+Verified and reusable: `--spectral-k` on the graph-frozen checkpoints is the fg_ari /
+foreground-IoU dial (`PV2_0059`, `PV2_0060`); `graph_extra_channels` routes trailing
+gamma channels to the coupling graph alone and is a no-op at 0; the evaluator reads
+both gamma widths from the checkpoint and takes `--save-predictions` on both readout
+branches; `run_slot_attention.py` takes a `--seed` and is bitwise reproducible.
+
+**Every experiment script opens with a regression row** re-scoring an existing
+checkpoint, and nothing below it is read unless that reproduces its recorded value.
+`PV2_0055` is why: a patch broke the graph-selection chain so the learned graph was
+replaced by the static one at `graph_extra_channels = 0`, scoring 0.0033 instead of
+0.7239 — a bug that fired only in the configuration every existing result uses, while
+the new-path smoke test passed. `PV2_0061` ran that gate on validation **before** the
+test split was touched.
+
+Compute: GPUs 2 and 3 only, 0 and 1 are the collaborator's — but check actual
+occupancy before dispatch, since other users do appear on 2 and 3; an evaluation was
+lost to OOM against another user's 22.5 GiB on GPU 3. Heavy runs queue behind a gate
+that waits for a clear GPU.

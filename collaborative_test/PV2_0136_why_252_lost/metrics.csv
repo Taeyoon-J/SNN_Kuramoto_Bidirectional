@@ -1,0 +1,12 @@
+test_id,dataset,eval_split,n_images,method,selection_rule,arm,epoch,labels_from_eval_dataset,fg_ari,foreground_iou,matched_object_iou,patches_changed,seed
+PV2_0136,clevr,fixed320,320,253_core_only,,,,none,0.8421,0.7545,0.6410,,0
+PV2_0136,clevr,fixed320,320,core_plus_head,universal_label_free_recipe,local_rgb_trust,2,none,0.8468,0.7574,0.6456,0.0049,0
+PV2_0136,tetrominoes,test,320,253_core_only,,,,none,0.8580,0.7885,0.8173,,0
+PV2_0136,tetrominoes,test,320,core_plus_head,universal_label_free_recipe,local_rgb_trust,2,none,0.8586,0.7895,0.8187,0.0057,0
+PV2_0136,multi_dsprites,test,320,253_core_only,,,,none,0.6974,0.8177,0.7628,,0
+PV2_0136,multi_dsprites,test,320,core_plus_head,universal_label_free_recipe,local_rgb_trust,2,none,0.7041,0.8213,0.7660,0.0033,0
+PV2_0136,clevr,160_fixed320_historical,160,252_core_u3000,,,,train_masks,0.4454,0.2021225,0.4662,,0
+PV2_0136,clevr,160_fixed320_historical,160,252_core_u4000,,,,train_masks,0.4675,0.2021225,0.4787,,0
+PV2_0136,clevr,160_fixed320_historical,160,252_core_u5000,,,,train_masks,0.5010,0.2021225,0.4953,,0
+PV2_0136,clevr,160_fixed320_historical,160,252_core_u6000,,,,train_masks,0.5166,0.2021225,0.5101,,0
+PV2_0136,clevr,160_fixed320_historical,160,252_core_u6250,,,,train_masks,0.5239,0.2021225,0.5172,,0

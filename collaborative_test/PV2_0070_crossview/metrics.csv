@@ -1,0 +1,12 @@
+# Seed 0, validation 300, contract v1, window 1024/512, spike-classifier masks.
+# View two is view one under per-image per-channel gain/offset jitter plus elementwise
+# noise; the partition is unchanged by construction. The term is added beside the
+# existing objective. Target foreground ~0.118; a gain counts only below 0.20, and
+# every arm here stayed calibrated, so the failure is not over-prediction.
+arm,view_weight,fg_ari,fg_iou,obj_iou,pred_foreground,final_view_consistency,loss_start,loss_end
+bar_no_term,0,0.7239,0.7251,0.4951,0.1290,,32.4879,17.8649
+CV_w50,50,0.6514,0.6675,0.4620,0.1339,,,
+CV_w200,200,0.6757,0.7101,0.4767,0.1197,0.001360,,
+CV_w1000,1000,0.3989,0.3591,0.2489,0.1153,,,
+CV_init200,200,0.6751,0.6911,0.4715,0.1236,0.002252,27.5007,17.2304
+oracle_graph_diagnostic,,0.9671,0.9353,0.7584,0.1121,,,

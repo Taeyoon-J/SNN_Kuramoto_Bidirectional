@@ -1,0 +1,23 @@
+=== PV2_0121: Tier 1, grid 32, seed 0, 100 validation images, patch contract ===
+
+dataset              fg_ari   fg_iou  obj_iou   groups  pred_fg   true_fg
+tetrominoes          0.9445   0.6814   0.7925  10.8600   0.2984    0.2363
+multi_dsprites       (training)
+
+context, NOT directly comparable (different datasets and/or protocols)
+  our CLEVR best, patch contract, 3 seeds        0.7603
+  our CLEVR grid 32 seed 0 obj_iou               0.7017
+  published synchrony family on CLEVR, PIXEL ARI-FG:
+    CAE .04   CAE++ .27   CtCAE .54   SynCx .59   Rotating Features .65
+  SynCx on Tetrominoes, PIXEL protocol            0.89
+
+predicted foreground 0.2984 against a true 0.2363 is 26% over; PV2_0119 measured that
+fg_ari rises for free when foreground is over-predicted and foreground IoU pays for it.
+matched-object IoU cannot be bought that way and is 0.7925, above our CLEVR 0.7017.
+
+data pipeline, all verified before this run:
+  input encoder   224 parameters, unsupervised reconstruction, TRAIN split only
+                  loss 0.016649 -> 0.000571
+  gamma           (8000, 8, 1024) mean 0.0000 std 1.0000
+  targets         foreground 0.2363, purity 0.9941, ties 1.2%, mask axis EHW (measured)
+  preflight       8/8

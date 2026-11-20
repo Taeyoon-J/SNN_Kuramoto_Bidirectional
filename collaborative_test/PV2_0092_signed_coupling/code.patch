@@ -1,0 +1,52 @@
+--- /tmp/gg_before_signed.py	2026-10-13 17:33:43.981254744 -0400
++++ snn_kuramoto_bidirectional/graph_generator.py	2026-10-13 17:33:44.013010731 -0400
+@@ -61,6 +61,7 @@
+         geodesic_temperature=0.5,
+         geodesic_cap=16.0,
+         geodesic_chunk=0,
++        coupling_balance=0.0,
+         feedback_strength=0.0,
+         feedback_momentum=0.9,
+     ):
+@@ -114,6 +115,11 @@
+         # rows of the relaxation formed at once; 0 keeps the
+         # original single-shot [B,N,N,N] tensor exactly as it was
+         self.geodesic_chunk = int(geodesic_chunk)
++        # Fraction of each row's uniform share subtracted from its top-k softmax.
++        # 0.0 is the original strictly-attractive adjacency; 1.0 makes every row sum
++        # to zero, so a node's least similar admitted neighbours repel it. See
++        # PV2_0092.
++        self.coupling_balance = float(coupling_balance)
+         self.geodesic_contrast = nn.Parameter(
+             torch.tensor(_inverse_softplus(float(geodesic_contrast)))
+         ) if int(geodesic_steps) > 0 else None
+@@ -155,7 +161,12 @@
+ 
+         num_nodes = logits.size(-1)
+         values, indices = logits.topk(min(self.top_k, num_nodes), dim=-1)
+-        weights = values.softmax(dim=-1) * self.log_coupling_gain.exp()
++        weights = values.softmax(dim=-1)
++        if self.coupling_balance != 0.0:
++            # subtract the uniform share: what was "attracted less" becomes repelled,
++            # and the row's total drive is conserved rather than always positive
++            weights = weights - self.coupling_balance * weights.mean(dim=-1, keepdim=True)
++        weights = weights * self.log_coupling_gain.exp()
+         adjacency = torch.zeros_like(logits).scatter_(-1, indices, weights)
+         return 0.5 * (adjacency + adjacency.transpose(1, 2))
+ 
+--- hyperparameter.py ---
+138-    geodesic_chunk: int = 0
+139-    # Signed coupling. 0.0 keeps the strictly non-negative adjacency every result so
+140-    # far used; 1.0 makes each row of the top-k softmax sum to zero. See PV2_0092.
+141:    coupling_balance: float = 0.0
+--- s2net_cls.py ---
+171:                coupling_balance=float(getattr(hparams, "coupling_balance", 0.0)),
+--- train_s2net_core.py ---
+737:    parser.add_argument("--coupling-balance", type=float, default=0.0,
+738-                        help="subtract this fraction of each coupling row's uniform "
+739-                             "share, so dissimilar admitted neighbours repel. 0.0 is "
+740-                             "the original strictly-attractive graph.")
+741-    parser.add_argument("--geodesic-chunk", type=int, default=0,
+--- evaluate_model.py ---
+129:        coupling_balance=args.coupling_balance,
+175:    ap.add_argument("--coupling-balance", type=float, default=0.0,

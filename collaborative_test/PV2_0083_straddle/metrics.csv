@@ -1,0 +1,9 @@
+# DIAGNOSTIC. Predictions from the published configuration (BIM6_s1, connected components,
+# window 1024/512) on validation 300; patch membership from the TRUE masks, so the split
+# is oracle-guided while the predictions are the model's own. Agreement maps each
+# predicted group to the target label it most often coincides with, since predicted ids
+# are arbitrary.
+patch_class,agreement,patches,share_of_foreground,share_of_total_error
+all_foreground,0.7636,9032,1.000,1.000
+holds_one_object,0.7979,7470,0.827,0.707
+holds_two_or_more,0.5999,1562,0.173,0.293

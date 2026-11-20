@@ -1,0 +1,10 @@
+# Trained runs, seed 0, 40 epochs, validation 300, contract v1, window 1024/512. The two
+# axes are varied separately: osc_dim at k 256, coupling at osc_dim 4. Reference loss
+# 32.49 -> 17.86. A loss BELOW the reference with a worse score is the degenerate-solution
+# pattern (fifth instance). Target foreground ~0.118.
+osc_dim,k,fg_ari,fg_iou,obj_iou,pred_foreground,loss_start,loss_end,note
+4,256,0.7239,0.7251,0.4951,0.1290,32.4879,17.8649,bar
+8,256,0.5670,0.5719,0.4338,0.1810,86.6674,14.1895,lower loss worse score
+16,256,0.0033,0.0000,0.0000,0.0000,87.1843,86.0660,never trained, dead membrane
+4,64,0.6088,0.7122,0.4398,0.1121,24.3578,17.1671,converged, weaker repair
+4,1024,0.3331,0.2384,0.2023,0.1121,35.8799,80.7820,diverged

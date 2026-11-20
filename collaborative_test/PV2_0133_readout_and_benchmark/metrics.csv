@@ -1,0 +1,18 @@
+model,dataset,split,count,grid,protocol,fg_ari,foreground_iou,matched_object_iou,predicted_foreground,seeds,supervision,note
+253,clevr,fixed320,320,64,patch,0.8421,0.7545,0.6410,0.2001,1,unsupervised,min_group_size=8 selected on validation
+253,clevr,fixed320,320,64,patch,0.8332,0.7433,0.5990,0.1982,1,unsupervised,min_group_size=32 engine default
+253,clevr,fixed320,320,64,pixel,0.7889,0.7423,0.6185,0.2001,1,unsupervised,min_group_size=8
+252,clevr,fixed320,320,64,patch,0.5213,0.2115,0.5184,,1,supervised,core did not learn; phase_primary flat
+slot_attention,clevr,fixed320,320,64,patch,0.3808,0.2022,0.1053,0.8510,1,unsupervised,published ckpt-500; clevr_with_masks render not its own
+slot_attention,clevr,fixed320,320,32,patch,0.3912,0.2028,0.1070,0.8450,1,unsupervised,same checkpoint at a coarser grid
+253,tetrominoes,test,320,64,patch,0.8580,0.7885,0.8173,0.2842,1,unsupervised,zero-shot from a CLEVR-trained core
+253,multi_dsprites,test,320,64,patch,0.6974,0.8177,0.7628,0.0841,1,unsupervised,zero-shot from a CLEVR-trained core
+253,multi_dsprites,test,1000,64,pixel,0.6893,0.8193,0.7540,0.0860,1,unsupervised,zero-shot; same protocol and count as the 0.2789 three-seed row
+253,tetrominoes,test,1000,32,pixel,0.7436,0.7425,0.7510,,3,unsupervised,trained on tetrominoes 3500x10; mean of 3 seeds
+253,multi_dsprites,test,1000,32,pixel,0.2789,0.2232,0.1414,,3,unsupervised,trained on multi_dsprites 3500x10; mean of 3 seeds
+240,tetrominoes,test,1000,64,pixel,0.0002,0.0086,0.0037,,1,supervised,dead seed
+ceiling,clevr,fixed320,320,64,pixel,0.8988,0.9215,0.8772,,,,quantisation ceiling: data property not a model score
+ceiling,clevr,fixed320,320,32,pixel,0.8823,0.8801,0.8179,,,,
+ceiling,tetrominoes,test,320,32,pixel,0.9352,0.9558,0.9548,,,,grid 64 impossible: native pixels are 35x35
+ceiling,multi_dsprites,test,320,64,pixel,1.0000,1.0000,1.0000,,,,native labels are already 64x64
+ceiling,multi_dsprites,test,320,32,pixel,0.6017,0.8753,0.8400,,,,

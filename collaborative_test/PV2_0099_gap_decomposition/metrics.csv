@@ -1,0 +1,34 @@
+[00:13] === PV2_0099: how much of the peer gap is the contract? ===
+[00:13] same checkpoints throughout; only the measurement moves
+[00:13] 
+[00:13] --- ground truth, four variants ---
+whole (240, 320)  crop (240, 240) at offset (0,40)
+  whole  grid 16  foreground 0.118  objects/image 6.32  -> gt_whole_grid16.pt
+  whole  grid 32  foreground 0.121  objects/image 6.64  -> gt_whole_grid32.pt
+  crop   grid 16  foreground 0.152  objects/image 6.49  -> gt_crop_grid16.pt
+  crop   grid 32  foreground 0.156  objects/image 6.63  -> gt_crop_grid32.pt
+[00:14] 
+[00:14] --- Slot Attention predictions at grid 32 (grid 16 exists from PV2_0090) ---
+[00:20]   seed 0 done
+[00:21]   seed 1 done
+[00:22]   seed 2 done
+[00:22] 
+Slot Attention, validation 300, three seeds. Same checkpoints in every cell.
+
+contract                         fg_ari   fg_iou  obj_iou
+  crop frame, grid 16            0.7195   0.1475   0.1083
+  crop frame, grid 32            0.7234   0.1512   0.1053
+  whole frame, grid 16           0.8065   0.1157   0.1017
+  whole frame, grid 32           0.8134   0.1195   0.0972
+
+decomposition on fg_ari, same model throughout:
+  grid 16: whole 0.8065 -> crop 0.7195   (crop is worth -0.0870)
+  grid 32: whole 0.8134 -> crop 0.7234   (crop is worth -0.0900)
+  whole frame: grid 16 0.8065 -> grid 32 0.8134  (finer grid is worth +0.0069)
+  crop:        grid 16 0.7195 -> grid 32 0.7234  (finer grid is worth +0.0040)
+
+  our contract's geometry -> peer-like geometry: -0.0831 on fg_ari
+  PV2_0046 puts the LABEL RULE alone at 0.19, and the full observed
+  cross-contract difference on one checkpoint was 0.6195 -> 0.8946 = 0.275.
+  So geometry -0.0831 + label rule ~0.19 accounts for 0.1069 of that 0.275.
+[00:23] === PV2_0099 DONE ===

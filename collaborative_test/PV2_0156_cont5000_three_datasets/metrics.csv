@@ -1,0 +1,19 @@
+test,core,readout,evaluated_on,split,n,grid,protocol,core_seed,head_seeds,fg_ari,foreground_iou,matched_object_iou,d_fg_ari,d_fg_iou,d_obj_iou,note
+PV2_0137,253_base,core_only,clevr,fixed320,320,64,patch,0,,0.8421,0.7545,0.6410,,,,base
+PV2_0137,253_base,core_only,tetrominoes,test,320,64,patch,0,,0.8580,0.7885,0.8173,,,,base
+PV2_0137,253_base,core_only,multi_dsprites,test,320,64,patch,0,,0.6974,0.8177,0.7628,,,,base
+PV2_0153,cont5000_multi_dsprites,core_only,clevr,fixed320,320,64,patch,0,,0.8509,0.7592,0.6671,0.0088,0.0047,0.0261,all three up
+PV2_0156,cont5000_multi_dsprites,core_only,tetrominoes,test,320,64,patch,0,,0.8451,0.7999,0.8107,-0.0129,0.0114,-0.0066,NEW CELL / two regressions
+PV2_0153,cont5000_multi_dsprites,core_only,multi_dsprites,test,320,64,patch,0,,0.7032,0.8296,0.7758,0.0058,0.0119,0.0130,all three up
+PV2_0152,cont5000_tetrominoes,core_only,clevr,fixed320,320,64,patch,0,,0.8505,0.7452,0.6207,0.0084,-0.0093,-0.0203,fg_ari up / two down
+PV2_0152,cont5000_tetrominoes,core_only,tetrominoes,test,320,64,patch,0,,0.8675,0.8193,0.8213,0.0095,0.0308,0.0040,all three up
+PV2_0156,cont5000_tetrominoes,core_only,multi_dsprites,test,320,64,patch,0,,0.7142,0.8189,0.7561,0.0168,0.0012,-0.0067,NEW CELL / largest fg_ari gain anywhere
+PV2_0146,253_base,head_recipe2,clevr,fixed320,320,64,patch,0,5,0.8468,0.7575,0.6460,,,,base + head
+PV2_0146,253_base,head_recipe2,tetrominoes,test,320,64,patch,0,5,0.8560,0.7888,0.8165,,,,base + head
+PV2_0146,253_base,head_recipe2,multi_dsprites,test,320,64,patch,0,5,0.7037,0.8234,0.7687,,,,base + head
+PV2_0153,cont5000_multi_dsprites,head_recipe2,clevr,fixed320,320,64,patch,0,5,0.8543,0.7609,0.6723,0.0075,0.0034,0.0263,
+PV2_0156,cont5000_multi_dsprites,head_recipe2,tetrominoes,test,320,64,patch,0,5,0.8430,0.8042,0.8134,-0.0130,0.0154,-0.0031,NEW CELL
+PV2_0153,cont5000_multi_dsprites,head_recipe2,multi_dsprites,test,320,64,patch,0,5,0.7063,0.8306,0.7776,0.0026,0.0072,0.0089,
+PV2_0152,cont5000_tetrominoes,head_recipe2,clevr,fixed320,320,64,patch,0,5,0.8526,0.7468,0.6252,0.0058,-0.0107,-0.0208,
+PV2_0152,cont5000_tetrominoes,head_recipe2,tetrominoes,test,320,64,patch,0,5,0.8665,0.8206,0.8235,0.0105,0.0318,0.0070,
+PV2_0156,cont5000_tetrominoes,head_recipe2,multi_dsprites,test,320,64,patch,0,5,0.7171,0.8207,0.7603,0.0134,-0.0027,-0.0084,NEW CELL

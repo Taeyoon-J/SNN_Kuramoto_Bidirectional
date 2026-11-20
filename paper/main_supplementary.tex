@@ -1,0 +1,48 @@
+% ---------------------------------------------------------------------------
+% Supplementary document -- compiles to its OWN PDF, separate from the paper.
+%
+% AAAI-27 takes the supplementary as a separate upload, not as extra pages of the
+% main PDF, which is why supplementary.tex is deliberately NOT \input by
+% main_aaai.tex. Compile this file to produce that second PDF.
+%
+%     pdflatex main_supplementary
+%
+% Same kit, same restrictions, same anonymity: no author names here either.
+% ---------------------------------------------------------------------------
+
+\documentclass[letterpaper]{article} % DO NOT CHANGE THIS
+\usepackage[submission]{aaai2027}  % DO NOT CHANGE THIS
+\usepackage[hyphens]{url}  % DO NOT CHANGE THIS
+\usepackage{graphicx} % DO NOT CHANGE THIS
+\urlstyle{rm} % DO NOT CHANGE THIS
+\def\UrlFont{\rm}  % DO NOT CHANGE THIS
+\usepackage{natbib}  % DO NOT CHANGE THIS AND DO NOT ADD ANY OPTIONS TO IT
+\usepackage{caption} % DO NOT CHANGE THIS AND DO NOT ADD ANY OPTIONS TO IT
+\frenchspacing  % DO NOT CHANGE THIS
+
+\usepackage{booktabs}
+\usepackage{amsmath}
+
+\pdfinfo{
+/TemplateVersion (2027.1)
+}
+
+\setcounter{secnumdepth}{2}
+
+\title{Supplementary Material:\\KAIROS: Object Discovery from Oscillatory Timing}
+\author{Anonymous Submission}
+% REQUIRED even when anonymous: aaai2027.sty:132 defines \aaai@affiliations only when
+% \affiliations is called, and \maketitle (sty:169,207) uses it unconditionally, so
+% omitting it is a fatal "Undefined control sequence".
+\affiliations{Anonymous Institution}
+
+\begin{document}
+\maketitle
+
+% NOTE: this separate supplementary PDF is no longer part of the submission. Everything
+% it used to carry now lives in the appendix of main_full.tex (Appendix E and F), which is
+% excluded from the page limit and keeps the submission to one file. This file is kept only
+% so the tables can still be built on their own if a venue ever asks for a separate upload.
+\input{supplementary}
+
+\end{document}

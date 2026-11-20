@@ -1,0 +1,83 @@
+{
+  "test_id": "PV2_0134",
+  "status": "completed",
+  "date": "2026-11-04",
+  "branch": "patch_v2",
+  "parent_test": "PV2_0133",
+  "base_commit": "40113d6",
+  "evaluation": {
+    "contract": "peer patch contract",
+    "function": "mod_benchmark.evaluation.evaluate_patch_masks",
+    "grid": 64,
+    "ceiling": 1.0,
+    "note": "ground truth is quantised to the grid and scored there; no predicted mask is ever expanded to pixels"
+  },
+  "data": {
+    "clevr": {"source": "clevr_with_masks", "train_ids": 256, "validation_ids": 320, "eval_split": "fixed320", "eval_ids": "1320-1639 (320)"},
+    "tetrominoes": {"train_ids": 256, "validation_ids": 160, "eval_split": "test", "eval_ids": 320},
+    "multi_dsprites": {"train_ids": 256, "validation_ids": 160, "eval_split": "test", "eval_ids": 320},
+    "split_source": "/work/USERS/tkim1/sw0255b/readout_cache/binding.json",
+    "warning": "same image ids and order for every row in metrics.csv and for Slot Attention"
+  },
+  "core": {
+    "variant": 253,
+    "grid": 64,
+    "seed": 0,
+    "trained_on": "clevr only",
+    "core_updates": 6250,
+    "core_images_seen": 100000,
+    "checkpoint": "/work/USERS/tkim1/share/native64_core_253/resume.pt",
+    "checkpoint_sha256_prefix": "5543bf541e35174c7b988925b089bb19",
+    "frozen": true,
+    "note": "the core is never updated in this test; only the readout head is trained"
+  },
+  "readout": {
+    "optimiser": "Adam",
+    "lr": 0.003,
+    "grad_clip": 1.0,
+    "temperature": 0.5,
+    "epochs_searched": "0-20",
+    "arms": ["local_rgb", "local_rgb_tv", "local_rgb_spike", "local_rgb_trust", "local_rgb_r2"],
+    "head_seed": 259000,
+    "adapter_seed": 262000,
+    "decoder_seed": 259100,
+    "torch_manual_seed": 1000,
+    "frozen_in_head": ["prior_scale", "residual_scale", "content_encoder"],
+    "selection": {
+      "rule": "B'",
+      "metric": "validation fg_ari",
+      "constraint": "validation foreground_iou >= 253's validation foreground_iou - 0.01",
+      "epoch_0_is_a_candidate": true
+    }
+  },
+  "reference": {
+    "model": "Slot Attention",
+    "checkpoint": "ckpt-500, single published checkpoint",
+    "checkpoint_sha256_prefix": "7a703bcda0761e528a9f94a3d576bd6a",
+    "num_slots": 7,
+    "num_iterations": 3,
+    "inference_seed": 0,
+    "is_3_seed_mean": false,
+    "trained_on": "original CLEVR render, not clevr_with_masks",
+    "background_rule": "border_largest, selected on validation with ties broken on foreground_iou"
+  },
+  "environment": {
+    "host": "frontier",
+    "gpus_used": [2, 3],
+    "gpu": "NVIDIA TITAN RTX",
+    "driver": "610.57.04",
+    "torch_env": "/work/USERS/tkim1/envs/miniforge3/envs/snn",
+    "torch": "2.13.0+cu130",
+    "cuda": "13.0",
+    "tf_env": "/work/USERS/tkim1/envs/miniforge3/envs/tfgpu",
+    "tensorflow": "2.15.1",
+    "slot_attention_inference_device": "cpu"
+  },
+  "seeds_reported": [0],
+  "is_3_seed_mean": false,
+  "limitations": [
+    "one seed; nothing here is a result until seeds 1 and 2 of the 253 core exist at grid 64",
+    "Slot Attention is one published checkpoint trained on a different CLEVR render; its 6.99-slots-per-image tiling is consistent with a failed transfer, and retraining it on clevr_with_masks should precede any headline claim",
+    "the 0.01 foreground_iou floor in B' is a stated tolerance, not a derived one"
+  ]
+}

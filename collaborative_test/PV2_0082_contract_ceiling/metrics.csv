@@ -1,0 +1,10 @@
+# ORACLE-GUIDED DIAGNOSTIC, no model involved. Validation rows 6000-6299, 16x16 grid,
+# 15x20 patches, scored against targets_v1 with the contract's own evaluate_patch_masks.
+# Each rule labels patches from the TRUE pixel masks, so disagreement with targets_v1 is
+# the labelling convention rather than model error. 17.29% of foreground patches contain
+# two or more objects; 0.96% contain three or more.
+rule,fg_ari,fg_iou,obj_iou,note
+majority_ties_low,1.0000,1.0000,1.0000,contract v1 itself -- reproduction check
+majority_ties_high,0.9996,0.9956,0.9966,tie-break flipped
+largest_object_any,1.0000,0.5099,0.4853,any object beats background
+object_needs_half,0.9756,0.9731,0.9626,object must hold half the patch

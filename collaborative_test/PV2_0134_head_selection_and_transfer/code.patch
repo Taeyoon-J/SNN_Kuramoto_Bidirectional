@@ -1,0 +1,839 @@
+# PV2_0134 -- this experiment's diff.
+# benchmark_codes is not a git checkout, so the sources are also kept verbatim in code/.
+# fit5.py is derived from fit3.py (PV2_0133); everything else is new.
+
+--- a/benchmark_codes/fit3.py	2026-11-04 23:08:01
++++ b/benchmark_codes/fit5.py	2026-11-04 23:08:02
+@@ -12,6 +12,17 @@
+    the truth foreground fraction on every dataset.
+ B  arms are selected by validation FG-ARI. On CLEVR the five arms' RGB MSE ranked exactly
+    opposite to FG-ARI, so RGB-MSE selection picked the worst of them.
++
++B' corrects B. Selecting on FG-ARI alone has no opinion about how much of the image is
++   called foreground, and change C found what that costs: on Tetrominoes it chose a head
++   scoring +0.0010 FG-ARI and -0.1141 Foreground IoU, because nothing in the rule objected.
++   FG-ARI may rise at some cost in Foreground IoU, but a tenth of it is not a small cost.
++   So B' takes the highest validation FG-ARI among the (arm, epoch) pairs whose validation
++   Foreground IoU is within `--iou-floor` of 253's, and epoch 0 -- the head before any
++   update -- is one of the candidates, so the rule can decline to move at all.
++
++   The floor is a stated tolerance, not a tuned quantity, and it is applied on validation.
++   Both rules' choices are recorded, so the cost of the correction is visible.
+ """
+ import argparse, copy, json, sys, time
+ from pathlib import Path
+@@ -20,29 +31,36 @@
+ from torch import nn
+ from torch.nn import functional as F
+ 
+-ap = argparse.ArgumentParser()
+-ap.add_argument('--code', required=True); ap.add_argument('--config', required=True)
+-ap.add_argument('--run', required=True); ap.add_argument('--dataset', required=True)
+-ap.add_argument('--train-cache', required=True); ap.add_argument('--val-cache', required=True)
+-ap.add_argument('--eval-cache', required=True); ap.add_argument('--eval-split', required=True)
+-ap.add_argument('--regions', choices=['all','253'], default='253')
+-ap.add_argument('--epochs', type=int, default=20); ap.add_argument('--out', required=True)
+-ap.add_argument('--val-every', type=int, default=2)
+-a = ap.parse_args()
+-CODE = Path(a.code); sys.path.insert(0, str(CODE/'vendor')); sys.path.insert(0, str(CODE))
+-import portable_runtime as pr
+-config = pr.configure(a.config); output = pr.connect_inputs(config, a.run)
+-from full_benchmark.data import Dataset
+-from mod_benchmark import common as c
+-from neutral_readout.head import NeutralRegionHead, candidates
++def parse():
++  ap = argparse.ArgumentParser()
++  ap.add_argument('--code', required=True); ap.add_argument('--config', required=True)
++  ap.add_argument('--run', required=True); ap.add_argument('--dataset', required=True)
++  ap.add_argument('--train-cache', required=True); ap.add_argument('--val-cache', required=True)
++  ap.add_argument('--eval-cache', required=True); ap.add_argument('--eval-split', required=True)
++  ap.add_argument('--regions', choices=['all','253'], default='253')
++  ap.add_argument('--epochs', type=int, default=20); ap.add_argument('--out', required=True)
++  ap.add_argument('--val-every', type=int, default=1)
++  ap.add_argument('--iou-floor', type=float, default=.01,
++                  help="how far below 253's validation Foreground IoU a candidate may fall")
++  return ap.parse_args()
+ 
+ GRID, NODES = 64, 4096
++
++
++def connect(a):
++    """Put the benchmark package on the path and open the data root. Importing this module
++    must not do it, so that the transfer test can reuse `Readout` without running anything."""
++    CODE = Path(a.code); sys.path.insert(0, str(CODE/'vendor')); sys.path.insert(0, str(CODE))
++    import portable_runtime as pr
++    config = pr.configure(a.config)
++    return pr.connect_inputs(config, a.run)
++
++
+ ARMS = {'local_rgb': dict(radius=1, tv=0., spike=0., anchor=0.),
+         'local_rgb_tv': dict(radius=1, tv=.01, spike=0., anchor=0.),
+         'local_rgb_spike': dict(radius=1, tv=0., spike=.01, anchor=0.),
+         'local_rgb_trust': dict(radius=1, tv=0., spike=.01, anchor=.002),
+         'local_rgb_r2': dict(radius=2, tv=.01, spike=.01, anchor=.002)}
+-KEY = 'regions_253' if a.regions == '253' else 'regions_all'
+ 
+ 
+ class ContextAdapter(nn.Module):
+@@ -59,6 +77,8 @@
+ 
+ class Readout(nn.Module):
+     def __init__(self, seed, arm):
++        # imported here, not at module scope: the package is only on the path after connect()
++        from neutral_readout.head import NeutralRegionHead
+         super().__init__(); self.cfg = ARMS[arm]
+         base = NeutralRegionHead(seed=259000+seed); self.head = base
+         self.head.prior_scale.requires_grad_(False); self.head.residual_scale.requires_grad_(False)
+@@ -111,14 +131,15 @@
+         return out.reshape(GRID, GRID).cpu().numpy().astype(np.int64)
+ 
+ 
+-def load(folder):
++def load(folder, key):
++    from neutral_readout.head import candidates
+     rows = []
+     for p in sorted(Path(folder).glob('[0-9]*.pt')):
+         d = torch.load(p, map_location='cpu', weights_only=True)
+         rgb = d['rgb'].float().div(255.).permute(2,0,1)[None]
+         rgb = F.adaptive_avg_pool2d(rgb, GRID)[0].permute(1,2,0).reshape(NODES,3).cuda()
+         f = d['features'].cuda()
+-        reg = (d[KEY] if KEY in d else d['regions']).numpy()
++        reg = (d[key] if key in d else d['regions']).numpy()
+         masks, prior = candidates(f, reg)              # no learned parameters: compute once
+         lab = torch.as_tensor(reg, device=f.device, dtype=torch.long).flatten()
+         row = dict(features=f, gamma=d['gamma'].cuda(), rgb=rgb, regions=reg,
+@@ -132,57 +153,87 @@
+         rows.append(row)
+     return rows
+ 
+-t0 = time.time()
+-train, val, ev = load(a.train_cache), load(a.val_cache), load(a.eval_cache)
+-print(f"{a.dataset} regions={a.regions}: train {len(train)} val {len(val)} eval {len(ev)} "
+-      f"(candidates precomputed in {time.time()-t0:.0f}s)", flush=True)
++def main(a, output):
++    t0 = time.time()
++    key = 'regions_253' if a.regions == '253' else 'regions_all'
++    from full_benchmark.data import Dataset
++    from mod_benchmark import common as c
++    train, val, ev = (load(a.train_cache, key), load(a.val_cache, key),
++                      load(a.eval_cache, key))
++    print(f"{a.dataset} regions={a.regions}: train {len(train)} val {len(val)} eval {len(ev)} "
++          f"(candidates precomputed in {time.time()-t0:.0f}s)", flush=True)
+ 
+-dataset = Dataset(a.dataset, output); metric = c.benchmark_module('evaluation')
+-KEYS = ('fg_ari','foreground_iou','matched_object_iou')
+-def score(rows, preds, split):
+-    ids = np.array([r['image_id'] for r in rows])
+-    tgt = torch.from_numpy(dataset.labels(ids, split))
+-    s = metric.evaluate_patch_masks(torch.from_numpy(np.stack(preds).astype(np.int64)), tgt)
+-    return {k: float(s['mean'][k]) for k in KEYS}
++    dataset = Dataset(a.dataset, output); metric = c.benchmark_module('evaluation')
++    KEYS = ('fg_ari','foreground_iou','matched_object_iou')
++    def score(rows, preds, split):
++        ids = np.array([r['image_id'] for r in rows])
++        tgt = torch.from_numpy(dataset.labels(ids, split))
++        s = metric.evaluate_patch_masks(torch.from_numpy(np.stack(preds).astype(np.int64)), tgt)
++        return {k: float(s['mean'][k]) for k in KEYS}
+ 
+-VS = 'validation'; ES = a.eval_split
+-base_val = score(val, [r['regions'] for r in val], VS)
+-base_ev = score(ev, [r['regions'] for r in ev], ES)
+-print(f"253 baseline   val {base_val['fg_ari']:.4f}/{base_val['foreground_iou']:.4f}/{base_val['matched_object_iou']:.4f}"
+-      f"   eval {base_ev['fg_ari']:.4f}/{base_ev['foreground_iou']:.4f}/{base_ev['matched_object_iou']:.4f}", flush=True)
++    VS = 'validation'; ES = a.eval_split
++    base_val = score(val, [r['regions'] for r in val], VS)
++    base_ev = score(ev, [r['regions'] for r in ev], ES)
++    print(f"253 baseline   val {base_val['fg_ari']:.4f}/{base_val['foreground_iou']:.4f}/{base_val['matched_object_iou']:.4f}"
++          f"   eval {base_ev['fg_ari']:.4f}/{base_ev['foreground_iou']:.4f}/{base_ev['matched_object_iou']:.4f}", flush=True)
+ 
+-report = {}
+-for arm in ARMS:
+-    torch.manual_seed(1000); m = Readout(0, arm).cuda()
+-    opt = torch.optim.Adam([p for p in m.parameters() if p.requires_grad], lr=.003)
+-    best = (-1., None, None); t1 = time.time()
+-    for e in range(a.epochs):
+-        m.train()
+-        for r in train:
+-            loss, _ = m(r); opt.zero_grad(set_to_none=True); loss.backward()
+-            torch.nn.utils.clip_grad_norm_([p for p in m.parameters() if p.requires_grad], 1.); opt.step()
+-        if (e+1) % a.val_every == 0 or e == a.epochs-1:
++    report = {}
++    for arm in ARMS:
++        torch.manual_seed(1000); m = Readout(0, arm).cuda()
++        opt = torch.optim.Adam([p for p in m.parameters() if p.requires_grad], lr=.003)
++        t1 = time.time(); curve = []
++        def record(epoch):
+             m.eval(); v = score(val, [m.predict(r) for r in val], VS)
+-            if v['fg_ari'] > best[0]:
+-                best = (v['fg_ari'], e+1, {k: t.detach().cpu().clone() for k, t in m.state_dict().items()})
+-    report[arm] = dict(val_fg_ari=best[0], epoch=best[1])
+-    print(f"  {arm:18s} val fg_ari {best[0]:.4f} at epoch {best[1]}   ({time.time()-t1:.0f}s)", flush=True)
+-    torch.save(dict(model=best[2], epoch=best[1], val_fg_ari=best[0], arm=arm, regions=a.regions),
+-               Path(a.out).parent/f'{a.dataset}_{a.regions}_{arm}.pt')
++            curve.append(dict(epoch=epoch, **v))
++            return v
++        record(0)                                   # the head before any update is a candidate
++        states = {0: {k: t.detach().cpu().clone() for k, t in m.state_dict().items()}}
++        for e in range(a.epochs):
++            m.train()
++            for r in train:
++                loss, _ = m(r); opt.zero_grad(set_to_none=True); loss.backward()
++                torch.nn.utils.clip_grad_norm_([p for p in m.parameters() if p.requires_grad], 1.); opt.step()
++            if (e+1) % a.val_every == 0 or e == a.epochs-1:
++                record(e+1)
++                states[e+1] = {k: t.detach().cpu().clone() for k, t in m.state_dict().items()}
++        floor = base_val['foreground_iou'] - a.iou_floor
++        allowed = [c_ for c_ in curve if c_['foreground_iou'] >= floor]
++        bprime = max(allowed or curve, key=lambda c_: c_['fg_ari'])
++        bonly = max(curve, key=lambda c_: c_['fg_ari'])
++        report[arm] = dict(curve=curve, selected=bprime, b_only=bonly,
++                           iou_floor=floor, candidates_allowed=len(allowed))
++        print(f"  {arm:18s} B' epoch {bprime['epoch']:2d} val {bprime['fg_ari']:.4f}/"
++              f"{bprime['foreground_iou']:.4f}/{bprime['matched_object_iou']:.4f}"
++              f"   | B alone would take epoch {bonly['epoch']:2d} "
++              f"({bonly['fg_ari']:.4f}/{bonly['foreground_iou']:.4f})"
++              f"   {len(allowed)}/{len(curve)} pass the floor   ({time.time()-t1:.0f}s)", flush=True)
++        torch.save(dict(model=states[bprime['epoch']], arm=arm, regions=a.regions,
++                        selected=bprime, curve=curve),
++                   Path(a.out).parent/f'{a.dataset}_{a.regions}_{arm}.pt')
+ 
+-pick = max(report, key=lambda k: report[k]['val_fg_ari'])
+-blob = torch.load(Path(a.out).parent/f'{a.dataset}_{a.regions}_{pick}.pt', map_location='cuda:0', weights_only=True)
+-m = Readout(0, pick).cuda().eval(); m.load_state_dict(blob['model'])
+-preds = [m.predict(r) for r in ev]
+-head_ev = score(ev, preds, ES)
+-moved = float(np.mean([(p != r['regions']).mean() for p, r in zip(preds, ev)]))
+-print(f"\nselected by validation FG-ARI: {pick} (val {report[pick]['val_fg_ari']:.4f})")
+-print(f"{'':10s} {'fg_ari':>9s} {'fg_iou':>9s} {'obj_iou':>9s}")
+-print(f"{'253':10s} {base_ev['fg_ari']:9.4f} {base_ev['foreground_iou']:9.4f} {base_ev['matched_object_iou']:9.4f}")
+-print(f"{'head v2':10s} {head_ev['fg_ari']:9.4f} {head_ev['foreground_iou']:9.4f} {head_ev['matched_object_iou']:9.4f}")
+-print(f"{'delta':10s} {head_ev['fg_ari']-base_ev['fg_ari']:+9.4f} {head_ev['foreground_iou']-base_ev['foreground_iou']:+9.4f} "
+-      f"{head_ev['matched_object_iou']-base_ev['matched_object_iou']:+9.4f}   changed {moved:.4f}", flush=True)
+-Path(a.out).write_text(json.dumps(dict(dataset=a.dataset, regions=a.regions, arm=pick, epoch=blob['epoch'],
+-    arms=report, baseline_253=base_ev, head_v2=head_ev, validation_253=base_val,
+-    patches_changed=moved, eval_count=len(ev)), indent=1)+'\n')
+-print("FIT3 DONE ->", a.out, flush=True)
++    pick = max(report, key=lambda k: report[k]['selected']['fg_ari'])
++    blob = torch.load(Path(a.out).parent/f'{a.dataset}_{a.regions}_{pick}.pt',
++                      map_location='cuda:0', weights_only=True)
++    m = Readout(0, pick).cuda().eval(); m.load_state_dict(blob['model'])
++    preds = [m.predict(r) for r in ev]
++    head_ev = score(ev, preds, ES)
++    moved = float(np.mean([(p != r['regions']).mean() for p, r in zip(preds, ev)]))
++    sel = report[pick]['selected']
++    print(f"\nselected by B' (validation FG-ARI, Foreground IoU floor "
++          f"{report[pick]['iou_floor']:.4f}): {pick} epoch {sel['epoch']}")
++    print(f"{'':10s} {'fg_ari':>9s} {'fg_iou':>9s} {'obj_iou':>9s}")
++    print(f"{'253':10s} {base_ev['fg_ari']:9.4f} {base_ev['foreground_iou']:9.4f} {base_ev['matched_object_iou']:9.4f}")
++    print(f"{'head':10s} {head_ev['fg_ari']:9.4f} {head_ev['foreground_iou']:9.4f} {head_ev['matched_object_iou']:9.4f}")
++    print(f"{'delta':10s} {head_ev['fg_ari']-base_ev['fg_ari']:+9.4f} "
++          f"{head_ev['foreground_iou']-base_ev['foreground_iou']:+9.4f} "
++          f"{head_ev['matched_object_iou']-base_ev['matched_object_iou']:+9.4f}   changed {moved:.4f}", flush=True)
++    Path(a.out).write_text(json.dumps(dict(dataset=a.dataset, regions=a.regions, rule="B'",
++        iou_floor=a.iou_floor, arm=pick, epoch=sel['epoch'], arms=report,
++        baseline_253_validation=base_val, baseline_253=base_ev, head=head_ev,
++        patches_changed=moved, eval_count=len(ev)), indent=1)+'\n')
++    print("FIT5 DONE ->", a.out, flush=True)
++
++
++if __name__ == '__main__':
++    args = parse()
++    main(args, connect(args))
+--- /dev/null	2026-11-04 23:08:01
++++ b/benchmark_codes/fit4.py	2026-11-04 23:08:01
+@@ -0,0 +1,226 @@
++#!/usr/bin/env python3
++"""Change C: train the head to agree with itself across rollout seeds.
++
++A and B opened the direction -- nine of nine metric cells up across three datasets. What
++still limits it is the objective. Across five arms on CLEVR, validation RGB MSE ranked
++exactly inverse to FG-ARI, so RGB reconstruction points away from grouping; it only helps
++when `tv` or `spike` supplies the direction.
++
++Seed invariance is a signal with no such defect. The rollout is stochastic in its inference
++seed, so one image under two seeds gives two traces of the same scene. A grouping that
++tracks real objects is the same under both; one that tracks rollout noise is not. There is
++no colour-reconstruction shortcut: nothing rewards painting a smooth field.
++
++The loss is symmetric KL between the two seeds' soft assignments, after matching candidate
++sets -- both seeds share the same `regions` input, so the candidate index spaces align.
++
++That term alone collapses, and the first run of this file showed it: validation FG-ARI fell
++to 0.4954 on CLEVR and 0.6817 on Tetrominoes, identically for every arm whatever its rgb and
++tv weights. The reason is that agreement has a trivial minimum. Assign every node to one
++candidate and the two seeds agree perfectly, so the KL reaches zero while the partition
++carries no information. rgb and tv do not resist it; they are optimised by a smooth field,
++which is what collapse produces.
++
++So the objective needs a term that makes collapse expensive. The marginal over candidates,
++averaged across nodes, is what collapse destroys -- it becomes a point mass. Two guards are
++tried against the unguarded control: `ent` maximises that marginal's entropy, and `size`
++holds it near the 253 partition's own size distribution, KL(size253 || marginal), which says
++reassign nodes if you must but do not change how much of the image each region owns.
++
++Selection also now includes epoch 0, the head before any update. If no epoch beats it, the
++honest answer is that C does not help, and change B's rule returns the untrained head rather
++than the least bad trained one.
++"""
++import argparse, copy, json, sys, time
++from pathlib import Path
++import numpy as np
++import torch
++from torch import nn
++from torch.nn import functional as F
++
++ap = argparse.ArgumentParser()
++ap.add_argument('--code', required=True); ap.add_argument('--config', required=True)
++ap.add_argument('--run', required=True); ap.add_argument('--dataset', required=True)
++ap.add_argument('--train-cache', required=True); ap.add_argument('--val-cache', required=True)
++ap.add_argument('--eval-cache', required=True); ap.add_argument('--eval-split', required=True)
++ap.add_argument('--epochs', type=int, default=20); ap.add_argument('--out', required=True)
++ap.add_argument('--val-every', type=int, default=1)
++a = ap.parse_args()
++CODE = Path(a.code); sys.path.insert(0, str(CODE/'vendor')); sys.path.insert(0, str(CODE))
++import portable_runtime as pr
++config = pr.configure(a.config); output = pr.connect_inputs(config, a.run)
++from full_benchmark.data import Dataset
++from mod_benchmark import common as c
++from neutral_readout.head import NeutralRegionHead, candidates
++
++GRID, NODES = 64, 4096
++# weight on the seed-agreement term; rgb keeps the decoder honest, tv the boundaries
++ARMS = {'plain':        dict(radius=1, rgb=0., tv=0.,  seed=1.0, ent=0., size=0.),
++        'ent':          dict(radius=1, rgb=0., tv=0.,  seed=1.0, ent=1., size=0.),
++        'size':         dict(radius=1, rgb=0., tv=0.,  seed=1.0, ent=0., size=1.),
++        'size_rgb_tv':  dict(radius=1, rgb=1., tv=.01, seed=1.0, ent=0., size=1.),
++        'size_weak':    dict(radius=1, rgb=0., tv=0.,  seed=0.1, ent=0., size=1.),
++        'size_r2':      dict(radius=2, rgb=0., tv=0.,  seed=1.0, ent=0., size=1.)}
++
++
++class ContextAdapter(nn.Module):
++    def __init__(self, seed, dilation=1):
++        super().__init__()
++        with torch.random.fork_rng(devices=[]):
++            torch.manual_seed(262000+seed)
++            self.net = nn.Sequential(nn.Conv2d(8,16,3,padding=dilation,dilation=dilation), nn.SiLU(),
++                                     nn.Conv2d(16,32,3,padding=dilation,dilation=dilation,bias=False))
++            nn.init.zeros_(self.net[-1].weight)
++    def forward(self, g):
++        return self.net(g.reshape(GRID,GRID,8).permute(2,0,1)[None])[0].permute(1,2,0).reshape(NODES,32)
++
++
++class Readout(nn.Module):
++    def __init__(self, seed, arm):
++        super().__init__(); self.cfg = ARMS[arm]
++        base = NeutralRegionHead(seed=259000+seed); self.head = base
++        self.head.prior_scale.requires_grad_(False); self.head.residual_scale.requires_grad_(False)
++        self.content_encoder = copy.deepcopy(base.embedding).requires_grad_(False)
++        with torch.random.fork_rng(devices=[]):
++            torch.manual_seed(259100+seed)
++            self.decoder = nn.Sequential(nn.Linear(34,64), nn.SiLU(), nn.Linear(64,64), nn.SiLU(),
++                                         nn.Linear(64,3), nn.Sigmoid())
++        self.fine = ContextAdapter(seed)
++        axis = (torch.arange(GRID, dtype=torch.float32)+.5)/(GRID/2)-1
++        yy, xx = torch.meshgrid(axis, axis, indexing='ij')
++        self.register_buffer('xy', torch.stack([xx.flatten(), yy.flatten()], -1))
++
++    def logits_from(self, feats, gamma, masks, prior, allowed):
++        z = F.normalize(self.head.embedding(feats) + self.fine(gamma), dim=-1)
++        proto = F.normalize(masks @ z / masks.sum(1,keepdim=True).clamp_min(1), dim=-1)
++        sim = proto @ z.T; w = allowed.float()
++        mean = (sim*w).sum(0)/w.sum(0).clamp_min(1)
++        std = (((sim-mean).square()*w).sum(0)/w.sum(0).clamp_min(1)).clamp_min(.0025).sqrt()
++        return (prior + 2.*((sim-mean)/std).tanh()).masked_fill(~allowed, -1e4)
++
++    def logits(self, r):
++        return self.logits_from(r['features'], r['gamma'], r['masks'], r['prior'],
++                                r[f"allowed{self.cfg['radius']}"])
++
++    def forward(self, r):
++        logits = self.logits(r); p = (logits/.5).softmax(0)
++        loss = torch.zeros((), device=logits.device)
++        if self.cfg['rgb']:
++            with torch.no_grad(): content = self.content_encoder(r['features'])
++            latent = (p @ content)/p.sum(1,keepdim=True).clamp_min(1e-6)
++            dec = self.decoder(torch.cat([latent[:,None].expand(-1,NODES,-1),
++                                          self.xy[None].expand(len(p),-1,-1)],-1))
++            loss = loss + self.cfg['rgb']*F.mse_loss((p[:,:,None]*dec).sum(0), r['rgb'])
++        if self.cfg['tv']:
++            grid = p.reshape(-1,GRID,GRID); tgt = r['rgb'].reshape(GRID,GRID,3); tv = []
++            for A,B,ca,cb in [(grid[:,:,1:],grid[:,:,:-1],tgt[:,1:],tgt[:,:-1]),
++                              (grid[:,1:,:],grid[:,:-1,:],tgt[1:,:],tgt[:-1,:])]:
++                tv.append(((A-B).abs().sum(0)*((ca-cb).square().sum(-1)/.02).neg().exp()).mean())
++            loss = loss + self.cfg['tv']*sum(tv)/2
++        if self.cfg['ent'] or self.cfg['size']:
++            marginal = p.mean(1).clamp_min(1e-8)
++            if self.cfg['ent']:
++                loss = loss + self.cfg['ent']*(marginal*marginal.log()).sum()
++            if self.cfg['size']:
++                # KL(size253 || marginal): costly exactly where collapse drops a region
++                loss = loss + self.cfg['size']*(r['size_prior']*(r['size_prior'].clamp_min(1e-8).log()
++                                                                 - marginal.log())).sum()
++        if self.cfg['seed'] and 'features_b' in r:
++            # the second seed shares this image's candidate set, so index spaces align
++            lb = self.logits_from(r['features_b'], r['gamma_b'], r['masks'], r['prior'],
++                                  r[f"allowed{self.cfg['radius']}"])
++            la, lbv = (logits/.5).log_softmax(0), (lb/.5).log_softmax(0)
++            pa, pb = la.exp(), lbv.exp()
++            agree = .5*(F.kl_div(lbv, pa, reduction='batchmean', log_target=False)
++                        + F.kl_div(la, pb, reduction='batchmean', log_target=False))
++            loss = loss + self.cfg['seed']*agree
++        return loss, loss.detach()
++
++    @torch.no_grad()
++    def predict(self, r):
++        win = self.logits(r).argmax(0); original = r['original']
++        out = torch.zeros_like(win); n = len(original)
++        out[win < n] = original[win[win < n]]
++        extra = win >= n
++        if extra.any(): out[extra] = int(original.max()) + 1 + (win[extra] - n)
++        return out.reshape(GRID, GRID).cpu().numpy().astype(np.int64)
++
++
++def load(folder, want_b=False):
++    rows = []
++    for p in sorted(Path(folder).glob('[0-9]*.pt')):
++        d = torch.load(p, map_location='cpu', weights_only=True)
++        rgb = d['rgb'].float().div(255.).permute(2,0,1)[None]
++        rgb = F.adaptive_avg_pool2d(rgb, GRID)[0].permute(1,2,0).reshape(NODES,3).cuda()
++        f = d['features'].cuda(); reg = d['regions_253'].numpy()
++        masks, prior = candidates(f, reg)
++        lab = torch.as_tensor(reg, device=f.device, dtype=torch.long).flatten()
++        row = dict(features=f, gamma=d['gamma'].cuda(), rgb=rgb, regions=reg,
++                   masks=masks.float(), prior=prior, original=torch.unique(lab),
++                   image_id=int(d['image_id']),
++                   size_prior=(masks.float().sum(1)/masks.float().sum()))
++        for rad in (1, 2):
++            row[f'allowed{rad}'] = F.max_pool2d(masks.float().reshape(-1,1,GRID,GRID),
++                                                2*rad+1, stride=1, padding=rad).flatten(1).bool()
++        if want_b and 'features_b' in d:
++            row['features_b'] = d['features_b'].cuda(); row['gamma_b'] = d['gamma_b'].cuda()
++        rows.append(row)
++    return rows
++
++t0 = time.time()
++train, val, ev = load(a.train_cache, True), load(a.val_cache), load(a.eval_cache)
++nb = sum('features_b' in r for r in train)
++print(f"{a.dataset}: train {len(train)} ({nb} with a second seed) val {len(val)} eval {len(ev)} "
++      f"({time.time()-t0:.0f}s)", flush=True)
++assert nb == len(train), f'second seed missing for {len(train)-nb} images'
++
++dataset = Dataset(a.dataset, output); metric = c.benchmark_module('evaluation')
++KEYS = ('fg_ari','foreground_iou','matched_object_iou')
++def score(rows, preds, split):
++    ids = np.array([r['image_id'] for r in rows])
++    s = metric.evaluate_patch_masks(torch.from_numpy(np.stack(preds).astype(np.int64)),
++                                    torch.from_numpy(dataset.labels(ids, split)))
++    return {k: float(s['mean'][k]) for k in KEYS}
++
++base_val = score(val, [r['regions'] for r in val], 'validation')
++base_ev = score(ev, [r['regions'] for r in ev], a.eval_split)
++print(f"253 baseline   val {base_val['fg_ari']:.4f}   eval {base_ev['fg_ari']:.4f}/"
++      f"{base_ev['foreground_iou']:.4f}/{base_ev['matched_object_iou']:.4f}", flush=True)
++
++report = {}
++for arm in ARMS:
++    torch.manual_seed(1000); m = Readout(0, arm).cuda()
++    opt = torch.optim.Adam([p for p in m.parameters() if p.requires_grad], lr=.003)
++    best = (-1., None, None); t1 = time.time()
++    m.eval(); v0 = score(val, [m.predict(r) for r in val], 'validation')
++    best = (v0['fg_ari'], 0, {k: t.detach().cpu().clone() for k, t in m.state_dict().items()})
++    for e in range(a.epochs):
++        m.train()
++        for r in train:
++            loss, _ = m(r); opt.zero_grad(set_to_none=True); loss.backward()
++            torch.nn.utils.clip_grad_norm_([p for p in m.parameters() if p.requires_grad], 1.); opt.step()
++        if (e+1) % a.val_every == 0 or e == a.epochs-1:
++            m.eval(); v = score(val, [m.predict(r) for r in val], 'validation')
++            if v['fg_ari'] > best[0]:
++                best = (v['fg_ari'], e+1, {k: t.detach().cpu().clone() for k, t in m.state_dict().items()})
++    report[arm] = dict(val_fg_ari=best[0], epoch=best[1], val_fg_ari_epoch0=v0['fg_ari'])
++    print(f"  {arm:14s} val fg_ari {best[0]:.4f} at epoch {best[1]}"
++          f"   (epoch 0 was {v0['fg_ari']:.4f})   ({time.time()-t1:.0f}s)", flush=True)
++    torch.save(dict(model=best[2], epoch=best[1], val_fg_ari=best[0], arm=arm),
++               Path(a.out).parent/f'{a.dataset}_C_{arm}.pt')
++
++pick = max(report, key=lambda k: report[k]['val_fg_ari'])
++blob = torch.load(Path(a.out).parent/f'{a.dataset}_C_{pick}.pt', map_location='cuda:0', weights_only=True)
++m = Readout(0, pick).cuda().eval(); m.load_state_dict(blob['model'])
++preds = [m.predict(r) for r in ev]
++head_ev = score(ev, preds, a.eval_split)
++moved = float(np.mean([(p != r['regions']).mean() for p, r in zip(preds, ev)]))
++print(f"\nselected: {pick} (val {report[pick]['val_fg_ari']:.4f})")
++print(f"{'253':10s} {base_ev['fg_ari']:9.4f} {base_ev['foreground_iou']:9.4f} {base_ev['matched_object_iou']:9.4f}")
++print(f"{'head C':10s} {head_ev['fg_ari']:9.4f} {head_ev['foreground_iou']:9.4f} {head_ev['matched_object_iou']:9.4f}")
++print(f"{'delta':10s} {head_ev['fg_ari']-base_ev['fg_ari']:+9.4f} {head_ev['foreground_iou']-base_ev['foreground_iou']:+9.4f} "
++      f"{head_ev['matched_object_iou']-base_ev['matched_object_iou']:+9.4f}   changed {moved:.4f}", flush=True)
++Path(a.out).write_text(json.dumps(dict(dataset=a.dataset, change='C seed-invariance', arm=pick,
++    epoch=blob['epoch'], arms=report, baseline_253=base_ev, head_C=head_ev,
++    patches_changed=moved, eval_count=len(ev)), indent=1)+'\n')
++print("FIT4 DONE ->", a.out, flush=True)
+--- /dev/null	2026-11-04 23:08:01
++++ b/benchmark_codes/xfer.py	2026-11-04 23:08:02
+@@ -0,0 +1,70 @@
++#!/usr/bin/env python3
++"""Does ONE head, fitted on CLEVR, carry to the other datasets unchanged?
++
++The claim this project wants to make is that the core trained on CLEVR still finds objects
++elsewhere, with the head as the cheap per-dataset part. Fitting a head per dataset, which is
++what fit5 does, does not test that claim -- it tests whether a head helps at all.
++
++This does test it. The CLEVR head is loaded as it was selected, with no refitting, no
++per-dataset arm choice and no per-dataset epoch choice, and run on Tetrominoes and
++Multi-dSprites. Three columns are then comparable on the same images:
++
++  253             the core's own partition, no head
++  head (own)      a head fitted on that dataset        -- fit5, the per-dataset cost
++  head (CLEVR)    the CLEVR head, unchanged            -- this file, zero per-dataset cost
++
++If the third column holds up, the head is not a per-dataset component at all and the
++generalisation claim is about the core. If it collapses, the head is doing dataset-specific
++work and that has to be said plainly.
++"""
++import argparse, json, sys
++from pathlib import Path
++import numpy as np
++import torch
++
++sys.path.insert(0, str(Path(__file__).resolve().parent))
++import fit5
++
++ap = argparse.ArgumentParser()
++ap.add_argument('--code', required=True); ap.add_argument('--config', required=True)
++ap.add_argument('--run', required=True)
++ap.add_argument('--checkpoint', required=True, help='a head saved by fit5')
++ap.add_argument('--dataset', required=True); ap.add_argument('--eval-cache', required=True)
++ap.add_argument('--eval-split', required=True); ap.add_argument('--regions', default='253')
++ap.add_argument('--out', required=True)
++a = ap.parse_args()
++output = fit5.connect(a)
++from full_benchmark.data import Dataset
++from mod_benchmark import common as c
++
++blob = torch.load(a.checkpoint, map_location='cuda:0', weights_only=True)
++arm = blob['arm']
++m = fit5.Readout(0, arm).cuda().eval(); m.load_state_dict(blob['model'])
++print(f"head from {Path(a.checkpoint).name}: arm {arm}, epoch {blob['selected']['epoch']}, "
++      f"selected on its own dataset's validation split", flush=True)
++
++key = 'regions_253' if a.regions == '253' else 'regions_all'
++ev = fit5.load(a.eval_cache, key)
++dataset = Dataset(a.dataset, output); metric = c.benchmark_module('evaluation')
++KEYS = ('fg_ari','foreground_iou','matched_object_iou')
++ids = np.array([r['image_id'] for r in ev])
++target = torch.from_numpy(dataset.labels(ids, a.eval_split))
++def score(preds):
++    s = metric.evaluate_patch_masks(torch.from_numpy(np.stack(preds).astype(np.int64)), target)
++    return {k: float(s['mean'][k]) for k in KEYS}
++
++base = score([r['regions'] for r in ev])
++preds = [m.predict(r) for r in ev]
++head = score(preds)
++moved = float(np.mean([(p != r['regions']).mean() for p, r in zip(preds, ev)]))
++print(f"\n{a.dataset} ({len(ev)} images, split {a.eval_split})")
++print(f"{'':16s} {'fg_ari':>9s} {'fg_iou':>9s} {'obj_iou':>9s}")
++print(f"{'253':16s} {base['fg_ari']:9.4f} {base['foreground_iou']:9.4f} {base['matched_object_iou']:9.4f}")
++print(f"{'head (CLEVR)':16s} {head['fg_ari']:9.4f} {head['foreground_iou']:9.4f} {head['matched_object_iou']:9.4f}")
++print(f"{'delta':16s} {head['fg_ari']-base['fg_ari']:+9.4f} "
++      f"{head['foreground_iou']-base['foreground_iou']:+9.4f} "
++      f"{head['matched_object_iou']-base['matched_object_iou']:+9.4f}   changed {moved:.4f}", flush=True)
++Path(a.out).write_text(json.dumps(dict(dataset=a.dataset, source_checkpoint=str(a.checkpoint),
++    arm=arm, source_epoch=blob['selected']['epoch'], refitted=False,
++    baseline_253=base, head_clevr=head, patches_changed=moved, eval_count=len(ev)), indent=1)+'\n')
++print('XFER DONE ->', a.out, flush=True)
+--- /dev/null	2026-11-04 23:08:01
++++ b/benchmark_codes/recipe.py	2026-11-04 23:08:02
+@@ -0,0 +1,82 @@
++#!/usr/bin/env python3
++"""Fit a head on a new dataset with no labels from that dataset at all.
++
++The CLEVR head's weights do not transfer: on Tetrominoes it loses 0.0321 FG-ARI and 0.1068
++Foreground IoU, on Multi-dSprites 0.0377 and 0.0124. So the head is per-dataset. The
++question that leaves is what a new dataset actually costs.
++
++fit5 refits it, but fit5 chooses the arm and the epoch on that dataset's validation FG-ARI,
++and FG-ARI needs labels. The training losses are unsupervised; the selection is not, and
++calling the result label-free would be wrong.
++
++This separates the two. The recipe -- which arm, how many epochs -- is fixed once on CLEVR
++and reused verbatim. Only the unlabelled images of the new dataset are used, through the
++same unsupervised losses. Nothing from the new dataset's labels enters at any point, so if
++the numbers hold, a new dataset costs 256 unlabelled images and about a minute.
++
++Selection cannot be replaced by the training loss, which was checked: across CLEVR's five
++arms, validation RGB MSE ranked exactly inverse to FG-ARI. Fixing the recipe is the way
++around that, not minimising the loss.
++"""
++import argparse, json, sys, time
++from pathlib import Path
++import numpy as np
++import torch
++
++sys.path.insert(0, str(Path(__file__).resolve().parent))
++import fit5
++
++ap = argparse.ArgumentParser()
++ap.add_argument('--code', required=True); ap.add_argument('--config', required=True)
++ap.add_argument('--run', required=True); ap.add_argument('--dataset', required=True)
++ap.add_argument('--train-cache', required=True); ap.add_argument('--eval-cache', required=True)
++ap.add_argument('--eval-split', required=True); ap.add_argument('--regions', default='253')
++ap.add_argument('--arm', required=True); ap.add_argument('--epochs', type=int, required=True)
++ap.add_argument('--out', required=True)
++a = ap.parse_args()
++output = fit5.connect(a)
++from full_benchmark.data import Dataset
++from mod_benchmark import common as c
++
++key = 'regions_253' if a.regions == '253' else 'regions_all'
++train, ev = fit5.load(a.train_cache, key), fit5.load(a.eval_cache, key)
++print(f"{a.dataset}: {len(train)} unlabelled training images, {len(ev)} evaluation images")
++print(f"recipe fixed on CLEVR: arm {a.arm}, {a.epochs} epochs, no validation use", flush=True)
++
++torch.manual_seed(1000)
++m = fit5.Readout(0, a.arm).cuda()
++opt = torch.optim.Adam([p for p in m.parameters() if p.requires_grad], lr=.003)
++t0 = time.time()
++for e in range(a.epochs):
++    m.train()
++    for r in train:
++        loss, _ = m(r); opt.zero_grad(set_to_none=True); loss.backward()
++        torch.nn.utils.clip_grad_norm_([p for p in m.parameters() if p.requires_grad], 1.); opt.step()
++m.eval()
++print(f"trained in {time.time()-t0:.0f}s", flush=True)
++
++dataset = Dataset(a.dataset, output); metric = c.benchmark_module('evaluation')
++KEYS = ('fg_ari','foreground_iou','matched_object_iou')
++ids = np.array([r['image_id'] for r in ev])
++target = torch.from_numpy(dataset.labels(ids, a.eval_split))
++def score(preds):
++    s = metric.evaluate_patch_masks(torch.from_numpy(np.stack(preds).astype(np.int64)), target)
++    return {k: float(s['mean'][k]) for k in KEYS}
++base = score([r['regions'] for r in ev])
++preds = [m.predict(r) for r in ev]
++head = score(preds)
++moved = float(np.mean([(p != r['regions']).mean() for p, r in zip(preds, ev)]))
++print(f"\n{a.dataset} ({len(ev)} images, split {a.eval_split})")
++print(f"{'':18s} {'fg_ari':>9s} {'fg_iou':>9s} {'obj_iou':>9s}")
++print(f"{'253':18s} {base['fg_ari']:9.4f} {base['foreground_iou']:9.4f} {base['matched_object_iou']:9.4f}")
++print(f"{'head (recipe)':18s} {head['fg_ari']:9.4f} {head['foreground_iou']:9.4f} {head['matched_object_iou']:9.4f}")
++print(f"{'delta':18s} {head['fg_ari']-base['fg_ari']:+9.4f} "
++      f"{head['foreground_iou']-base['foreground_iou']:+9.4f} "
++      f"{head['matched_object_iou']-base['matched_object_iou']:+9.4f}   changed {moved:.4f}", flush=True)
++torch.save(dict(model=m.state_dict(), arm=a.arm,
++                selected=dict(epoch=a.epochs, rule='recipe fixed on CLEVR, no validation use')),
++           Path(a.out).with_suffix('.pt'))
++Path(a.out).write_text(json.dumps(dict(dataset=a.dataset, arm=a.arm, epochs=a.epochs,
++    labels_from_this_dataset='none', baseline_253=base, head_recipe=head,
++    patches_changed=moved, eval_count=len(ev)), indent=1)+'\n')
++print('RECIPE DONE ->', a.out, flush=True)
+--- /dev/null	2026-11-04 23:08:01
++++ b/benchmark_codes/sa_dump.py	2026-11-04 23:08:02
+@@ -0,0 +1,25 @@
++#!/usr/bin/env python3
++"""Dump the exact frames and ids of a split, so Slot Attention can be run in its own env.
++
++The TensorFlow environment here has no torch, and our Dataset needs it, so the two halves
++cannot share a process. This half writes the frames; `sa_infer.py` reads them.
++"""
++import argparse, sys
++from pathlib import Path
++import numpy as np
++
++ap = argparse.ArgumentParser()
++ap.add_argument('--code', required=True); ap.add_argument('--config', required=True)
++ap.add_argument('--run', required=True); ap.add_argument('--split', required=True)
++ap.add_argument('--out', required=True)
++a = ap.parse_args()
++CODE = Path(a.code); sys.path.insert(0, str(CODE/'vendor')); sys.path.insert(0, str(CODE))
++import portable_runtime as pr
++config = pr.configure(a.config); output = pr.connect_inputs(config, a.run)
++from full_benchmark.data import Dataset
++dataset = Dataset('clevr', output)
++ids = np.asarray(dataset.test if a.split == 'fixed320' else dataset.validation)
++rgb = np.asarray(dataset.rgb(ids))
++assert rgb.shape[1:] == (128, 128, 3) and rgb.dtype == np.uint8, (rgb.shape, rgb.dtype)
++np.savez(a.out, rgb=rgb, ids=ids, split=a.split)
++print(f'{a.split}: {len(ids)} frames {rgb.shape} -> {a.out}', flush=True)
+--- /dev/null	2026-11-04 23:08:01
++++ b/benchmark_codes/sa_infer.py	2026-11-04 23:08:02
+@@ -0,0 +1,61 @@
++#!/usr/bin/env python3
++"""Run the published Slot Attention checkpoint on dumped frames and save the RAW slot map.
++
++Slot Attention at our grid scores Foreground IoU 0.2022 against a truth foreground of
++0.2115, calling 85.1% of the image foreground. A model that calls four times too much of the
++image an object is not being read correctly, and the one free choice in reading it is which
++slot counts as background: slot ids are arbitrary, so the contract's background id 0 has to
++be assigned by a rule.
++
++So the slot map is saved before any remapping, and `sa_bg.py` chooses the rule on the
++validation split -- never on fixed320 -- exactly as the contract requires of a threshold.
++
++The frames come from `dataset.rgb`, already 128x128, the resolution Slot Attention was
++published at and the same frames our core is given. There is no crop and no resize, so grid
++cell (r, c) means the identical pixels in the prediction and in the target.
++"""
++import argparse, sys
++from pathlib import Path
++import numpy as np
++
++ap = argparse.ArgumentParser()
++ap.add_argument('--frames', required=True); ap.add_argument('--checkpoint-dir', required=True)
++ap.add_argument('--model-dir', required=True); ap.add_argument('--grid', type=int, default=64)
++ap.add_argument('--num-slots', type=int, default=7); ap.add_argument('--seed', type=int, default=0)
++ap.add_argument('--out', required=True)
++a = ap.parse_args()
++
++blob = np.load(a.frames); images, ids = blob['rgb'], blob['ids']
++print(f"{blob['split']}: {len(ids)} frames", flush=True)
++import tensorflow as tf
++for dev in tf.config.list_physical_devices('GPU'):
++    tf.config.experimental.set_memory_growth(dev, True)
++# Slot Attention resamples its slots from slots_mu + exp(slots_log_sigma)*normal on every
++# forward pass, so inference is stochastic; seeding makes the run reproducible.
++tf.random.set_seed(a.seed); np.random.seed(a.seed)
++sys.path.insert(0, a.model_dir)
++import model as sa_model
++net = sa_model.build_model(resolution=(128,128), batch_size=1, num_slots=a.num_slots,
++                           num_iterations=3, model_type='object_discovery')
++ckpt = tf.train.Checkpoint(network=net)
++manager = tf.train.CheckpointManager(ckpt, a.checkpoint_dir, max_to_keep=1)
++ckpt.restore(manager.latest_checkpoint)
++print('restored from', manager.latest_checkpoint, flush=True)
++
++GRID, ph = a.grid, 128 // a.grid
++slots = np.zeros((len(ids), GRID, GRID), dtype=np.int64)
++for i, img in enumerate(images):
++    x = img.astype(np.float32)/255.*2. - 1.            # the published scaling, [-1, 1]
++    _, _, masks, _ = net(x[None])
++    assign = np.argmax(np.asarray(masks)[0, ..., 0], axis=0)
++    tiles = assign.reshape(GRID, ph, GRID, ph).transpose(0,2,1,3).reshape(GRID, GRID, -1)
++    slots[i] = np.apply_along_axis(
++        lambda t: np.bincount(t, minlength=a.num_slots).argmax(), 2, tiles)
++    if (i+1) % 80 == 0: print(f'  {i+1} frames', flush=True)
++
++sizes = np.stack([np.bincount(s.reshape(-1), minlength=a.num_slots) for s in slots])
++np.savez(a.out, slots=slots, ids=ids, num_slots=a.num_slots, split=str(blob['split']))
++share = sizes.sum(0)/sizes.sum()
++print('\nshare of all patches by slot: ' + '  '.join(f'{k}:{v:.3f}' for k, v in enumerate(share)))
++print('slots used per image, mean:', float((sizes > 0).sum(1).mean()))
++print('wrote', a.out, flush=True)
+--- /dev/null	2026-11-04 23:08:01
++++ b/benchmark_codes/sa_bg.py	2026-11-04 23:08:02
+@@ -0,0 +1,116 @@
++#!/usr/bin/env python3
++"""Choose Slot Attention's background rule on validation, then report it on fixed320.
++
++Slot ids are arbitrary, so mapping one of them to the contract's background id 0 is a free
++choice, and the choice is worth a lot: under "the slot covering the most patches overall",
++Slot Attention calls 85.1% of the image foreground where the truth is 21.2%, which is most
++of why its foreground IoU reads 0.2022.
++
++Four rules are fixed before looking at any number, and the winner is picked by validation
++FG-ARI -- the same rule, on the same split, that picks our own head's arm and epoch. The
++fixed320 column is then the selected rule's score and nothing is tuned on it.
++
++  global_largest   the slot with the most patches across the whole split (what we used)
++  image_largest    per image, the slot with the most patches
++  border_largest   per image, the slot owning the most patches on the frame border
++  border_union     per image, every slot with over half its patches on the border
++
++`border_union` is the only one that can merge a split background, which is the failure the
++others cannot fix: with 7 slots on an unfamiliar render, one object-slot set can carve the
++floor into pieces, and then no single-slot rule can recover a background at all.
++"""
++import argparse, json, sys
++from pathlib import Path
++import numpy as np
++import torch
++
++ap = argparse.ArgumentParser()
++ap.add_argument('--val', required=True); ap.add_argument('--eval', required=True)
++ap.add_argument('--code', required=True); ap.add_argument('--config', required=True)
++ap.add_argument('--run', required=True); ap.add_argument('--out', required=True)
++a = ap.parse_args()
++CODE = Path(a.code); sys.path.insert(0, str(CODE/'vendor')); sys.path.insert(0, str(CODE))
++import portable_runtime as pr
++config = pr.configure(a.config); output = pr.connect_inputs(config, a.run)
++from full_benchmark.data import Dataset
++from mod_benchmark import common as c
++dataset = Dataset('clevr', output); metric = c.benchmark_module('evaluation')
++KEYS = ('fg_ari','foreground_iou','matched_object_iou')
++
++
++def border_mask(g):
++    m = np.zeros((g, g), bool); m[0] = m[-1] = True; m[:, 0] = m[:, -1] = True
++    return m
++
++
++def relabel(slots, background_ids, K):
++    """Send every slot in background_ids to 0 and compact the rest."""
++    out = np.zeros_like(slots)
++    for i, (s, bg) in enumerate(zip(slots, background_ids)):
++        nxt = 1
++        for k in range(K):
++            if k in bg: continue
++            hit = s == k
++            if hit.any(): out[i][hit] = nxt; nxt += 1
++    return out
++
++
++def apply_rule(slots, K, rule):
++    g = slots.shape[-1]; b = border_mask(g); bg = []
++    if rule == 'global_largest':
++        k = np.bincount(slots.reshape(-1), minlength=K).argmax()
++        bg = [{int(k)}] * len(slots)
++    for s in slots:
++        size = np.bincount(s.reshape(-1), minlength=K)
++        if rule == 'image_largest':
++            bg.append({int(size.argmax())})
++        elif rule == 'border_largest':
++            bg.append({int(np.bincount(s[b], minlength=K).argmax())})
++        elif rule == 'border_union':
++            on = np.bincount(s[b], minlength=K)
++            pick = {int(k) for k in range(K) if size[k] and on[k] > .5*size[k]}
++            bg.append(pick or {int(size.argmax())})
++    return relabel(slots, bg, K)
++
++
++def score(pred, ids, split):
++    s = metric.evaluate_patch_masks(torch.from_numpy(pred.astype(np.int64)),
++                                    torch.from_numpy(dataset.labels(ids, split)))
++    row = {k: float(s['mean'][k]) for k in KEYS}
++    row['predicted_foreground'] = float((pred > 0).mean())
++    return row
++
++
++RULES = ('global_largest','image_largest','border_largest','border_union')
++val, ev = np.load(a.val), np.load(a.eval)
++K = int(val['num_slots'])
++truth_val = float((dataset.labels(val['ids'], 'validation') > 0).mean())
++truth_ev = float((dataset.labels(ev['ids'], 'fixed320') > 0).mean())
++print(f"truth foreground: validation {truth_val:.4f}   fixed320 {truth_ev:.4f}\n")
++report = {}
++for rule in RULES:
++    v = score(apply_rule(val['slots'], K, rule), val['ids'], 'validation')
++    report[rule] = dict(validation=v)
++    print(f"  {rule:15s} val fg_ari {v['fg_ari']:.4f}  fg_iou {v['foreground_iou']:.4f}  "
++          f"obj_iou {v['matched_object_iou']:.4f}  predicted fg {v['predicted_foreground']:.4f}")
++# Every rule gives the identical FG-ARI: the rules only relabel or merge slots that lie on
++# the border, and those patches are background in the truth, which FG-ARI excludes. So FG-ARI
++# cannot separate them, and the tie breaks on Foreground IoU -- the choice most favourable to
++# the baseline, still decided on validation alone.
++pick = max(RULES, key=lambda r: (round(report[r]['validation']['fg_ari'], 6),
++                                 report[r]['validation']['foreground_iou']))
++e = score(apply_rule(ev['slots'], K, pick), ev['ids'], 'fixed320')
++report[pick]['fixed320'] = e
++print(f"\nselected on validation FG-ARI, ties broken on Foreground IoU: {pick}")
++print(f"fixed320: fg_ari {e['fg_ari']:.4f}  fg_iou {e['foreground_iou']:.4f}  "
++      f"obj_iou {e['matched_object_iou']:.4f}  predicted fg {e['predicted_foreground']:.4f}")
++# also report every rule on fixed320, labelled as diagnostic, so the spread is visible
++print('\ndiagnostic -- every rule on fixed320 (not used for selection):')
++for rule in RULES:
++    d = score(apply_rule(ev['slots'], K, rule), ev['ids'], 'fixed320')
++    report[rule]['fixed320_diagnostic'] = d
++    print(f"  {rule:15s} {d['fg_ari']:.4f}  {d['foreground_iou']:.4f}  {d['matched_object_iou']:.4f}  "
++          f"predicted fg {d['predicted_foreground']:.4f}")
++Path(a.out).write_text(json.dumps(dict(selected=pick, rules=report, num_slots=K,
++    truth_foreground=dict(validation=truth_val, fixed320=truth_ev)), indent=1)+'\n')
++print('\nSA_BG DONE ->', a.out, flush=True)

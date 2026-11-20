@@ -1,0 +1,25 @@
+=== PV2_0115: figure/ground term on the spikes. 8-epoch screen, seed 0, grid 16, contract v1 ===
+regression row passed first: BIM6_s1 -> 0.7239 0.7251 0.4951 (exact)
+
+arm                     wall   collapse   gamma_contrast   fg_ari   fg_iou  obj_iou   groups  pred_fg
+GCON_ctrl (weight 0)      --   2.243208   --               0.6945   0.3652   0.4666   6.0700   0.3699
+GCON_w1  (weight 1.0)  40min   2.161409   -0.319388        0.6580   0.3605   0.4567   6.2667   0.3530
+GCON_w5  (weight 5.0)  40min   2.517546   -0.501309        0.7015   0.4544   0.4851   6.4567   0.3122
+
+delta vs control        fg_ari    fg_iou   obj_iou   pred_fg
+  weight 1.0           -0.0365   -0.0047  -0.0099   -0.0169
+  weight 5.0           +0.0070   +0.0892  +0.0185   -0.0577
+
+MECHANISM CHECK (registered before the run; auc_check.py, 60 validation images)
+  activity-vs-foreground AUC, and the mean activity of each population
+  checkpoint    AUC     mean act FG   mean act BG   separation
+  GCON_ctrl    0.503    0.4960        0.4989        -0.0029
+  GCON_w1      0.485    0.4974        0.5028        -0.0055
+  GCON_w5      0.585    0.5037        0.4986        +0.0051
+
+  gate: treatment must beat the control's AUC.  w5 PASSES (0.503 -> 0.585).  w1 FAILS.
+
+reference measured before the run: gamma deviation separates foreground at AUC 0.947
+  -- but that was measured at GRID 32 and these arms are grid 16, so 0.947 is NOT
+  the ceiling for them. The corr_to_auc.py prediction of 0.751 at correlation 0.50
+  came from that wrong reference and overshot the measured 0.585.

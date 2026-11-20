@@ -1,0 +1,43 @@
+=== PV2_0114: figure/ground budget, seed 0 / GC_w0, 60 validation images, grid 32 ===
+measured from the production readout's saved predictions; oracle diagnostic
+
+confusion, per image (1024 patches)
+  true foreground        118.0
+  predicted foreground   143.4
+  true positives         111.6
+  false positives         31.8    22.2% of predicted
+  false negatives          6.4     5.4% of true
+
+foreground IoU
+  as is                               0.7450
+  all misses recovered                0.7879   +0.0428
+  all false positives removed         0.9456   +0.2006
+  both                                1.0000
+  ratio, FP cost : FN cost                4.7x
+
+patch_purity of the cells (fraction of the cell's pixels belonging to its label)
+  population          n      mean     p10      p25      p50      p75
+  covered FG       6697    0.9170  0.6604  0.8750  1.0000  1.0000
+  missed  FG        385    0.7678  0.5286  0.6000  0.7500  1.0000
+  background      54358    0.9877  1.0000  1.0000  1.0000  1.0000
+
+narrow-majority cells (purity < 0.6)
+  covered FG        5.4%
+  missed  FG       23.1%     4.3x enrichment
+
+share of the miss attributable to grid ambiguity
+  purity < 0.55    14.3%
+  purity < 0.60    23.1%
+  purity < 0.70    40.5%
+
+ties among missed 0.5%   among covered 0.1%
+
+coverage by object size (373 objects, median size 13 patches)
+  size bucket       n   mean coverage   fully lost   mean activity
+  1-2             3        83.3%          0.0%         0.2020
+  3-5            65        88.2%          1.5%         0.1910
+  6-10          102        90.7%          0.0%         0.1895
+  11-20          66        91.7%          1.5%         0.1970
+  21-40          95        96.5%          0.0%         0.1966
+  41+            42        95.6%          0.0%         0.1996
+  per-object mean coverage 0.9243   per-patch 0.9456   claimed by nothing 0.5%

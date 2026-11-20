@@ -1,0 +1,58 @@
+{
+  "test_id": "PV2_0131",
+  "status": "completed",
+  "kind": "infrastructure measurement, not a model experiment",
+  "date": "2026-10-31",
+  "branch": "patch_v2",
+  "workload": {
+    "variant": 253,
+    "dataset": "clevr",
+    "seed": 0,
+    "grid": 64,
+    "unique_train": 10000,
+    "epochs": 10,
+    "effective_batch": 16,
+    "microbatch": 1,
+    "total_rollout_steps": 1024,
+    "target_updates": 6250,
+    "target_exposures": 100000
+  },
+  "code": {
+    "bundle": "peer benchmark_codes @ 5372351",
+    "vendored_files_modified": 3,
+    "vendored_files_unchanged": 74,
+    "modified": [
+      "vendor/snn_kuramoto_bidirectional/kuramoto_layer.py (fused coupling, torch.equal True, rollout gradient 7.9e-08 vs control 2.09e-08)",
+      "vendor/full_benchmark/data.py (TRAIN 3500 -> 10000)",
+      "vendor/full_benchmark/engine.py (exposure budget follows the subset)"
+    ],
+    "unlocked_also_modified": [
+      "portable_runtime.py (selected_preflight 3500 -> 10000; stale 5500 total -> 12000)",
+      "contracts/clevr_split.json (train_ids regenerated to the 10,000 draw)"
+    ]
+  },
+  "measurement": "one 300 s window per machine, read from the engine's own optimizer_updates counter; frontier read from training.jsonl updates 2-9 with update 1 discarded as warmup",
+  "frontier_caveat": "GPU 3 also carried the peer's 240 and 253 and our 32x32 multi_dsprites; contention and hardware are NOT separated in that row",
+  "split_verification": {
+    "question": "does a different numpy reproduce the frontier TRAIN draw?",
+    "frontier_numpy": "2.2.6",
+    "instance_numpy": "2.5.4",
+    "method": "compared the running job's bound ids against contracts/clevr_split.json",
+    "train": "10000 vs 10000 IDENTICAL",
+    "validation": "320 vs 320 IDENTICAL",
+    "evaluation": "320 vs 320 IDENTICAL",
+    "overlaps": "train/val 0, train/eval 0, val/eval 0"
+  },
+  "environment_deviation": {
+    "accepted": true,
+    "reason": "first 64x64 10,000x10 run; no earlier arm it must stay bit-comparable with",
+    "frontier_recorded": {"python": "3.10.20", "torch": "2.13.0+cu130", "numpy": "2.2.6", "scipy": "1.15.3", "h5py": "3.16.0", "pillow": "12.3.0"},
+    "instance_actual": {"python": "3.12.15", "torch": "2.14.1+cu132", "numpy": "2.5.4", "pillow": "13.0.0", "scipy": "installed", "h5py": "installed"}
+  },
+  "rejected_by_measurement": {
+    "physical_microbatch_4": "gradient 4.06e-02 after 1024 steps, gamma_phase_gain 2.07",
+    "fp16_coupling": "4.79e-02 after 1024 steps, and slower end to end (18.0 s vs 17.1 s)",
+    "sparse_coupling_topk512": "relu(A)+1e-6 carries maximal phase lag; zeroing is not a no-op"
+  },
+  "claims_no_metric": true
+}

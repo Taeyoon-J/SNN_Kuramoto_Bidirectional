@@ -1,0 +1,9 @@
+test,core,readout,dataset,split,n,grid,T,settle,core_seed,head_seeds,fg_ari,foreground_iou,matched_object_iou,d_fg_ari,d_fg_iou,d_obj_iou,mean_regions,pred_fg,sec_per_frame,note
+PV2_0137,253_base,core_only,clevr,fixed320,320,64,1024,512,0,,0.8421,0.7545,0.6410,,,,8.0,0.2001,10.8,reference
+PV2_0154,253_base,core_only,clevr,fixed320,320,64,512,256,0,,0.8402,0.7594,0.6340,-0.0019,0.0049,-0.0070,9.8,0.1936,10.0,halving is free
+PV2_0154,253_base,core_only,clevr,fixed320,320,64,256,128,0,,0.8159,0.7358,0.6084,-0.0262,-0.0187,-0.0326,13.3,0.1851,8.8,
+PV2_0154,253_base,core_only,clevr,fixed320,320,64,128,64,0,,0.5796,0.4988,0.3985,-0.2625,-0.2557,-0.2425,12.5,0.1148,8.7,collapse / severe foreground under-claim
+PV2_0146,253_base,head_recipe2,clevr,fixed320,320,64,1024,512,0,5,0.8468,0.7575,0.6460,0.0047,0.0030,0.0050,,,,head delta vs its own core
+PV2_0154,253_base,head_recipe2,clevr,fixed320,320,64,512,256,0,5,0.8437,0.7628,0.6387,0.0035,0.0034,0.0047,,,,head delta vs its own core
+PV2_0154,253_base,head_recipe2,clevr,fixed320,320,64,256,128,0,5,0.8233,0.7473,0.6179,0.0074,0.0115,0.0095,,,,head delta vs its own core
+PV2_0154,253_base,head_recipe2,clevr,fixed320,320,64,128,64,0,5,0.7326,0.7117,0.5298,0.1530,0.2129,0.1313,,,,head delta 33x its full-length value / confirms PV2_0147

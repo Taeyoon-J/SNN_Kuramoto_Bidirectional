@@ -1,0 +1,47 @@
+[15:05] === PV2_0090 test re-score: Slot Attention, 1000 test images, 3 seeds x 3 draws ===
+[15:14]   seed 0 done
+[15:23]   seed 1 done
+[15:31]   seed 2 done
+
+test split, IDs 7000-7999, 1000 images
+                             fg_ari   fg_iou  obj_iou   pred_fg
+  seed 0 crop               0.7221   0.1149   0.0919    0.8526
+  seed 1 crop               0.7347   0.1148   0.0868    0.8530
+  seed 2 crop               0.5401   0.1158   0.0835    0.8534
+  MEAN crop                  0.6656   0.1151   0.0874    0.8530
+    std over seeds           0.1089   0.0005   0.0042
+  seed 0 resize             0.8815   0.1150   0.1116    0.8524
+  seed 1 resize             0.8833   0.1151   0.0997    0.8530
+  seed 2 resize             0.6658   0.1153   0.0964    0.8538
+  MEAN resize                0.8102   0.1151   0.1025    0.8531
+    std over seeds           0.1250   0.0002   0.0080
+
+against ours (test, 3 seeds, PV2_0061 + PV2_0076):
+                           fg_ari   fg_iou  obj_iou
+  ours spectral k=14         0.7603   0.3373   0.6598
+  ours components            0.7300   0.7132   0.5050
+  Slot crop                  0.6656   0.1151   0.0874
+  Slot resize                0.8102   0.1151   0.1025
+
+  ours spectral k=14    beats aligned Slot on: fg_iou, obj_iou
+  ours components       beats aligned Slot on: fg_iou, obj_iou
+[15:31] === PV2_0090 TEST DONE ===
+[14:58] === PV2_0090: does the centre crop cost Slot Attention its score? ===
+[15:01] 
+[15:01] grid 16, validation 300, seeded inference. Target foreground 0.1133.
+                       fg_ari   fg_iou  obj_iou   pred_fg
+  seed 0 crop       0.7286   0.1156   0.0913    0.8509
+  seed 1 crop       0.7289   0.1149   0.0875    0.8509
+  seed 2 crop       0.5470   0.1158   0.0845    0.8518
+  MEAN crop            0.6682   0.1154   0.0878    0.8512   (std 0.1049 on fg_ari)
+  seed 0 resize     0.8718   0.1169   0.1101    0.8491
+  seed 1 resize     0.8797   0.1142   0.0979    0.8538
+  seed 2 resize     0.6680   0.1160   0.0970    0.8534
+  MEAN resize          0.8065   0.1157   0.1017    0.8521   (std 0.1200 on fg_ari)
+
+resize - crop:  fg_ari +0.1383  fg_iou +0.0003  obj_iou +0.0139  pred_fg +0.0009
+
+THE CROP COSTS SLOT ATTENTION. Every published comparison used the crop,
+so our margin is overstated by this much and the baseline has to be
+re-scored under the aligned preprocessing before any claim stands.
+[15:01] === PV2_0090 DONE ===

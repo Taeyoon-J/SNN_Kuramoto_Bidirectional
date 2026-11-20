@@ -1,0 +1,11 @@
+# ORACLE-GUIDED DIAGNOSTIC, not a score. Validation 300. "unseparable" is the share
+# of images where some object pair's centroids sit closer together than the objects
+# are internally spread -- pairs the graph's feature cosine cannot keep apart.
+code,position_weight,within,between,min_pair,unseparable_fraction,min_pair_over_within
+gamma_8ch,0.00,0.4590,1.7812,0.7024,0.388,1.530
+gamma_plus_pos,0.25,0.4716,1.7910,0.7304,0.375,1.549
+gamma_plus_pos,0.50,0.4989,1.8185,0.7920,0.284,1.588
+gamma_plus_pos,1.00,0.5755,1.9157,0.9466,0.181,1.645
+gamma_plus_pos,2.00,0.7687,2.2278,1.2526,0.077,1.630
+gamma_plus_pos,4.00,1.2166,3.1021,1.7802,0.043,1.463
+oracle,n/a,0.0000,3.9462,2.4765,0.000,inf

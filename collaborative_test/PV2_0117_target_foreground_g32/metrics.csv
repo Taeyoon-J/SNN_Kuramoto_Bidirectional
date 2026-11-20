@@ -1,0 +1,30 @@
+=== PV2_0117: --target-foreground at grid 32, contract v2, validation 300 ===
+checkpoints GC_w0 / RSC_freeze / FRZ_s2 (PV2_0104's three seeds)
+
+label                             fg_ari   fg_iou  obj_iou   groups  pred_fg
+seed 0, no dial                   0.7699   0.7531   0.7017  15.8367   0.1512
+seed 0, target-fg 0.13            0.4309   0.4972   0.4655  27.6633   0.1501
+seed 0, target-fg 0.1152          0.4771   0.5372   0.4987  25.0600   0.1453
+seed 0, target-fg 0.10            0.5247   0.5740   0.5293  22.4833   0.1404
+seed 1, no dial                   0.6777   0.6895   0.6357  16.8067   0.1306
+seed 1, target-fg 0.13            0.3853   0.4446   0.4069  26.8033   0.1362
+seed 1, target-fg 0.1152          0.4039   0.4610   0.4197  25.8300   0.1335
+seed 1, target-fg 0.10            0.4369   0.4946   0.4479  24.1633   0.1304
+seed 2, no dial                   0.6853   0.6963   0.6390  16.8600   0.1288
+seed 2, target-fg 0.13            0.4074   0.4650   0.4256  26.2933   0.1369
+seed 2, target-fg 0.1152          0.4245   0.4823   0.4393  25.1133   0.1325
+seed 2, target-fg 0.10            0.4535   0.5112   0.4617  23.4333   0.1287
+
+THREE-SEED MEANS
+                      fg_ari    fg_iou   obj_iou   groups   pred_fg
+no dial               0.7110    0.7130    0.6588    16.50    0.1369
+target 0.13           0.4079    0.4689    0.4327    26.92    0.1411
+target 0.1152         0.4352    0.4935    0.4526    25.33    0.1371
+target 0.10           0.4717    0.5266    0.4796    23.36    0.1332
+
+delta vs no dial      fg_ari    fg_iou   obj_iou
+  target 0.13        -0.3031   -0.2441   -0.2261
+  target 0.1152      -0.2758   -0.2195   -0.2062
+  target 0.10        -0.2393   -0.1864   -0.1792
+
+the no-dial row reproduces PV2_0104 exactly: 0.7110 / 0.7130 / 0.6588 at pred_fg 0.1369

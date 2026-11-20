@@ -1,0 +1,15 @@
+# ORACLE-GUIDED DIAGNOSTIC, not a score. Validation 300, 16x16 grid. Scale is removed
+# per image by s2net_cls.py:413, so w/b is the comparable quantity. The lower block is
+# the same measurement on the tensors actually built for PV2_0058, after train-only
+# per-channel standardisation.
+stage,input,dim,within,between,w_over_b
+patch_statistics,raw_rgb,3,0.0465,0.2169,0.2144
+patch_statistics,chromaticity,3,0.0197,0.1805,0.1093
+patch_statistics,chroma_plus_luma,4,0.0324,0.2027,0.1598
+patch_statistics,log_rgb_centred,3,0.1644,0.7885,0.2085
+patch_statistics,unit_rgb,3,0.0323,0.2953,0.1095
+patch_statistics,current_gamma,8,0.3369,1.6592,0.2030
+patch_statistics,oracle,-,0.0000,3.9462,0.0000
+built_tensor,wm10k_full,8,0.3369,1.6592,0.2030
+built_tensor,chroma3,3,0.5951,5.4583,0.1090
+built_tensor,chroma11,11,0.7113,5.7397,0.1239

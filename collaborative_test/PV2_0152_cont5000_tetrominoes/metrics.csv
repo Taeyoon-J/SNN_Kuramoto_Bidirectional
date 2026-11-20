@@ -1,0 +1,15 @@
+test,core,readout,evaluated_on,split,n,grid,protocol,core_seed,head_seeds,exposures,fg_ari,foreground_iou,matched_object_iou,fg_ari_headstd,fg_iou_headstd,obj_iou_headstd,mean_regions,pred_fg,truth_fg,note
+PV2_0137,253_clevr_10000x10,core_only,tetrominoes,test,320,64,patch,0,,100032,0.8580,0.7885,0.8173,,,,21.1,0.2842,0.2368,base
+PV2_0146,253_clevr_10000x10,head_recipe2,tetrominoes,test,320,64,patch,0,5,100032,0.8560,0.7888,0.8165,0.0033,0.0005,0.0016,,,,base + head
+PV2_0152,cont5000_tetrominoes,core_only,tetrominoes,test,320,64,patch,0,,150000,0.8675,0.8193,0.8213,,,,17.9,0.2661,0.2368,+5000x10 on tetrominoes
+PV2_0152,cont5000_tetrominoes,head_recipe2,tetrominoes,test,320,64,patch,0,5,150000,0.8665,0.8206,0.8235,0.0014,0.0008,0.0010,,,,+5000x10 on tetrominoes
+PV2_0137,253_clevr_10000x10,core_only,clevr,fixed320,320,64,patch,0,,100032,0.8421,0.7545,0.6410,,,,8.0,0.2001,0.2115,base
+PV2_0146,253_clevr_10000x10,head_recipe2,clevr,fixed320,320,64,patch,0,5,100032,0.8468,0.7575,0.6460,0.0004,0.0003,0.0005,,,,base + head
+PV2_0152,cont5000_tetrominoes,core_only,clevr,fixed320,320,64,patch,0,,150000,0.8505,0.7452,0.6207,,,,6.6,0.2033,0.2115,CLEVR after training elsewhere
+PV2_0152,cont5000_tetrominoes,head_recipe2,clevr,fixed320,320,64,patch,0,5,150000,0.8526,0.7468,0.6252,0.0008,0.0022,0.0024,,,,CLEVR after training elsewhere
+PV2_0152,DELTA_core,core_only,tetrominoes,test,320,64,patch,0,,,0.0095,0.0308,0.0041,,,,-3.2,,,all three up
+PV2_0152,DELTA_core,core_only,clevr,fixed320,320,64,patch,0,,,0.0085,-0.0093,-0.0203,,,,-1.4,,,FG-ARI up / FG-IoU and obj-IoU down
+PV2_0152,DELTA_head,head_recipe2,tetrominoes,test,320,64,patch,0,5,,0.0105,0.0318,0.0070,,,,,,,all three up
+PV2_0152,DELTA_head,head_recipe2,clevr,fixed320,320,64,patch,0,5,,0.0058,-0.0107,-0.0208,,,,,,,FG-ARI up / FG-IoU and obj-IoU down
+PV2_0152,cont5000_tetrominoes,core_only,tetrominoes,validation,160,64,patch,0,,150000,0.8877,0.8242,0.8369,,,,17.4,0.2654,0.2364,validation / selection split
+PV2_0137,253_clevr_10000x10,core_only,tetrominoes,validation,160,64,patch,0,,100032,0.8745,0.7914,0.8345,,,,21.7,0.2887,0.2364,validation / selection split

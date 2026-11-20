@@ -1,0 +1,97 @@
+--- /tmp/graph_generator.py.bak	2026-10-13 14:33:09.265344066 -0400
++++ snn_kuramoto_bidirectional/graph_generator.py	2026-10-13 14:33:09.316383161 -0400
+@@ -2,6 +2,7 @@
+ 
+ import torch
+ import torch.nn as nn
++import torch.utils.checkpoint
+ import torch.nn.functional as F
+ 
+ 
+@@ -59,6 +60,7 @@
+         geodesic_contrast=2.0,
+         geodesic_temperature=0.5,
+         geodesic_cap=16.0,
++        geodesic_chunk=0,
+         feedback_strength=0.0,
+         feedback_momentum=0.9,
+     ):
+@@ -109,6 +111,9 @@
+         self.geodesic_base = float(geodesic_base)
+         self.geodesic_temperature = float(geodesic_temperature)
+         self.geodesic_cap = float(geodesic_cap)
++        # rows of the relaxation formed at once; 0 keeps the
++        # original single-shot [B,N,N,N] tensor exactly as it was
++        self.geodesic_chunk = int(geodesic_chunk)
+         self.geodesic_contrast = nn.Parameter(
+             torch.tensor(_inverse_softplus(float(geodesic_contrast)))
+         ) if int(geodesic_steps) > 0 else None
+@@ -187,11 +192,40 @@
+         distance = step
+         for _ in range(int(self.geodesic_steps)):
+             # min over intermediate nodes, softened so the gradient survives
++            distance = torch.minimum(distance, self._relax(distance))
++        return distance.clamp(max=float(self.geodesic_cap))
++
++    def _relax(self, distance):
++        """One softened min-plus round, optionally a block of rows at a time.
++
++        The unchunked branch is the original expression, byte for byte. The chunked
++        branch reduces the same [B,N,N,N] sum over the same axis, formed
++        ``geodesic_chunk`` rows at a time, so the peak intermediate is B*m*N*N rather
++        than B*N^3 -- 68.7 GB at N=1024 batch 16 otherwise. Autograd would keep every
++        block, which defeats the point, so under grad each block is checkpointed and
++        recomputed in the backward pass at the cost of one extra forward.
++        """
++        rows = int(self.geodesic_chunk)
++        if rows <= 0 or rows >= distance.size(1):
+             through = distance.unsqueeze(2) + distance.unsqueeze(1)
+-            relaxed = -self.geodesic_temperature * torch.logsumexp(
++            return -self.geodesic_temperature * torch.logsumexp(
+                 -through / self.geodesic_temperature, dim=-1)
+-            distance = torch.minimum(distance, relaxed)
+-        return distance.clamp(max=float(self.geodesic_cap))
++
++        temperature = self.geodesic_temperature
++
++        def block(part, full):
++            through = part.unsqueeze(2) + full.unsqueeze(1)
++            return -temperature * torch.logsumexp(-through / temperature, dim=-1)
++
++        out = []
++        for start in range(0, distance.size(1), rows):
++            part = distance[:, start:start + rows]
++            if torch.is_grad_enabled() and distance.requires_grad:
++                out.append(torch.utils.checkpoint.checkpoint(
++                    block, part, distance, use_reentrant=False))
++            else:
++                out.append(block(part, distance))
++        return torch.cat(out, dim=1)
+ 
+     def initial_alignment(self, batch_size, num_nodes, device):
+         return torch.zeros(batch_size, num_nodes, num_nodes, device=device)
+--- hyperparameter.py ---
+    geodesic_temperature: float = 0.5
+    # Rows of the min-plus relaxation formed at once. 0 keeps the original single
+    # [B,N,N,N] intermediate, which is 34 GB at N=1024 batch 8 and OOMs; 32 needs
+    # 4.7 GB and is bit-identical, gradients included. See PV2_0088.
+    geodesic_chunk: int = 0
+
+--- s2net_cls.py ---
+                geodesic_contrast=float(getattr(hparams, "geodesic_contrast", 2.0)),
+                geodesic_temperature=float(getattr(hparams, "geodesic_temperature", 0.5)),
+                geodesic_chunk=int(getattr(hparams, "geodesic_chunk", 0)),
+                feedback_strength=float(getattr(hparams, "graph_feedback_strength", 0.0)),
+--- training/train_s2net_core.py (CLI) ---
+    parser.add_argument("--geodesic-chunk", type=int, default=0,
+                        help="rows of the min-plus relaxation formed at once. 0 "
+                             "keeps the original single [B,N,N,N] tensor, which "
+                             "needs 34 GB at N=1024 batch 8; 32 needs 4.7 GB and "
+                             "is bit-identical.")
+    parser.add_argument("--geodesic-radius", type=float, default=1.5)
+    parser.add_argument("--geodesic-contrast", type=float, default=2.0)
+--- training/train_s2net_core.py (call) ---
+        geodesic_steps=args.geodesic_steps,
+        geodesic_radius=args.geodesic_radius,
+        geodesic_chunk=args.geodesic_chunk,
+        geodesic_contrast=args.geodesic_contrast,

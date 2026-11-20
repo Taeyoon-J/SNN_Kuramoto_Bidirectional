@@ -1,0 +1,49 @@
+ORACLE DIAGNOSTIC -- uses ground truth, never a score.
+
+                                 fg_ari   fg_iou  obj_iou   groups
+  pub16_s1 as is                 0.7239   0.7251   0.4951     5.46
+  pub16_s1 merge only            0.7696   0.7251   0.5090     4.89
+  pub16_s1 merge + oracle drop   0.7696   0.7625   0.5090     4.17
+    foreground IoU preserved:  yes
+    fg_ari:                    merge +0.0457 | drop adds +0.0000
+
+[22:43] === PV2_0105: ceiling of a hierarchical readout (ORACLE, diagnostic only) ===
+[22:48]   saved frozen seed 0
+[22:53]   saved frozen seed 1
+[22:57]   saved frozen seed 2
+[22:58]   saved published 16x16
+[22:58] 
+[22:58] --- 32x32 frozen, contract v2 ---
+ORACLE DIAGNOSTIC -- uses ground truth, never a score (contract v1 section
+'Undefined scores' / oracle results are reported separately).
+
+                             fg_ari   fg_iou  obj_iou   groups
+  frz32_s0, as is            0.7699   0.7531   0.7017    15.84
+  frz32_s0, oracle-merged    0.8668   0.8674   0.7530     6.18
+    ceiling of merging:     +0.0969 fg_ari, +0.0513 obj_iou
+
+  frz32_s1, as is            0.6777   0.6895   0.6357    16.81
+  frz32_s1, oracle-merged    0.8013   0.7862   0.7048     6.17
+    ceiling of merging:     +0.1236 fg_ari, +0.0691 obj_iou
+
+  frz32_s2, as is            0.6853   0.6963   0.6390    16.86
+  frz32_s2, oracle-merged    0.8045   0.7913   0.7073     6.17
+    ceiling of merging:     +0.1193 fg_ari, +0.0682 obj_iou
+
+Reading: foreground IoU cannot change -- merging relabels groups and moves no
+patch in or out of foreground -- so any change there is a bug. The fg_ari gain
+is the whole of what a perfect label-free merging step could buy.
+[22:58] 
+[22:58] --- published 16x16, contract v1, same question ---
+ORACLE DIAGNOSTIC -- uses ground truth, never a score (contract v1 section
+'Undefined scores' / oracle results are reported separately).
+
+                             fg_ari   fg_iou  obj_iou   groups
+  pub16_s1, as is            0.7239   0.7251   0.4951     5.46
+  pub16_s1, oracle-merged    0.7696   0.7625   0.5090     4.17
+    ceiling of merging:     +0.0457 fg_ari, +0.0139 obj_iou
+
+Reading: foreground IoU cannot change -- merging relabels groups and moves no
+patch in or out of foreground -- so any change there is a bug. The fg_ari gain
+is the whole of what a perfect label-free merging step could buy.
+[22:59] === PV2_0105 DONE ===

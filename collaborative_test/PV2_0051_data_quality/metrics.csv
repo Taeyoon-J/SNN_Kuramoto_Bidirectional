@@ -1,0 +1,9 @@
+# ORACLE-GUIDED DIAGNOSTIC, not a score. Feature separation of the encoders that
+# PV2_0048 trained, measured on validation rows 6000-6999 (the rows gen_gamma.py
+# actually rewrites). Scale is removed per image by s2net_cls.py:413-416, so w/b is
+# the comparable quantity.
+features,train_images,epochs,within,between,w_over_b,fg_ari
+wm10k (bar),6000,40,0.4579,1.7881,0.2561,0.6779
+DS_20k,20000,12,0.0566,0.2377,0.2380,0.5983
+DS_40k,40000,6,0.0583,0.2354,0.2476,0.4790
+oracle,n/a,n/a,0.0000,3.9447,0.0000,0.9754

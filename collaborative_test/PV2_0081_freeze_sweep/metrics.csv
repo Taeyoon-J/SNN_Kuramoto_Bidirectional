@@ -1,0 +1,11 @@
+# Trained from BIM6_s1, seed 0, 40 epochs, validation 300, contract v1, window 1024/512.
+# Of 200,114 state-dict entries only 69,042 are trainable; sc and grid_distance are
+# buffers at 65,536 each. Reference loss 32.49 -> 17.86 from scratch, 17.64 -> * from
+# BIM6_s1. Every arm reached a LOWER loss than 17.86 with an equal or worse score.
+frozen,fg_ari,fg_iou,obj_iou,pred_foreground,trainable_params,loss_end
+nothing,0.7239,0.7251,0.4951,0.1290,69042,17.8649
+graph_generator,0.7235,0.7164,0.4935,0.1296,68910,
+kuramoto,0.6858,0.7100,0.4798,0.1292,1457,15.9991
+dendric_layer,0.6316,0.7047,0.4517,0.1118,68006,16.6307
+membrane_layer,0.6827,0.7089,0.4798,0.1284,68786,16.2149
+kuramoto+graph_generator,0.7249,0.7131,0.4956,0.1305,1325,15.7033

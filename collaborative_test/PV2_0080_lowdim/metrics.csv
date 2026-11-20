@@ -1,0 +1,11 @@
+# Trained runs, seed 0, 40 epochs, validation 300, contract v1, window 1024/512. Axes
+# varied separately: osc_dim at k 256, coupling at osc_dim 4. The bar's loss of 17.86 is
+# HIGHER than osc_dim 3's 16.21 and osc_dim 8's 14.19 while scoring better than both,
+# which is why the capacity explanation in PV2_0079 is withdrawn.
+osc_dim,k,fg_ari,fg_iou,obj_iou,pred_foreground,loss_end,note
+4,256,0.7239,0.7251,0.4951,0.1290,17.8649,bar -- highest loss of the three dims, best score
+3,256,0.6783,0.6892,0.4688,0.1412,16.2142,lower loss worse score (6th instance)
+2,256,0.0033,0.0000,0.0000,0.0000,86.1911,dead membrane regime
+8,256,0.5670,0.5719,0.4338,0.1810,14.1895,from PV2_0079, lower loss worse score
+4,128,0.4678,0.6197,0.3761,0.1069,17.0405,
+4,512,0.3694,0.1696,0.2334,0.2835,16.7137,

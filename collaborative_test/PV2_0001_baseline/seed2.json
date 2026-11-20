@@ -1,0 +1,30 @@
+{
+ "split": "test",
+ "images": 300,
+ "contract_version": 1,
+ "manifest_version": 1,
+ "checkpoint": "/work/USERS/tkim1/runs/D055_s2/core.pt",
+ "classifier": "spike_synchrony_components",
+ "background": "largest_component",
+ "foreground_threshold": 0.15,
+ "synchrony_threshold": 0.4,
+ "min_group_size": 2,
+ "metrics": {
+  "fg_ari": 0.5213291880492428,
+  "foreground_iou": 0.4129454753855459,
+  "matched_object_iou": 0.41913336244566324
+ },
+ "valid_count": {
+  "fg_ari": 300,
+  "foreground_iou": 300,
+  "matched_object_iou": 300
+ },
+ "diagnostics": {
+  "spike_rate": 0.3241160785158475,
+  "groups_per_image_mean": 8.223333333333333,
+  "images_with_no_group": 1,
+  "plv_mean": 0.3447592556476593,
+  "predicted_foreground_fraction": 0.2794661521911621,
+  "target_foreground_fraction": 0.1254947930574417
+ }
+}

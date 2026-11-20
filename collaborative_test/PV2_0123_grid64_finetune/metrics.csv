@@ -1,0 +1,24 @@
+=== PV2_0123: fine-tune the replicated grid-64 model, 30 validation images, contract v3 ===
+
+label                        fg_ari   fg_iou  obj_iou   groups  pred_fg
+replicated (no fine-tuning)  0.7066   0.7633   0.7188  19.7000   0.1257
+fine-tuned, 32 steps         0.7108   0.7552   0.7242  20.7333   0.1270
+parent, grid 32 (GC_w0)      0.7588   0.7629   0.7179  15.2667   0.1281
+
+GATE (registered before the run): both IoUs >= .7633 / .7188 AND fg_ari > .7066
+  fg_ari   0.7108  clears by +0.0042, not a movement
+  obj_iou  0.7242  clears
+  fg_iou   0.7552  FALLS from 0.7633                        -> GATE FAILED
+
+FALSIFIER (registered): fg_ari flat or an IoU falls -> the fine-tune is not repairing
+the split.  Both halves occurred.
+
+MECHANISM REFUTED: the fine-tune had to pull the group count from 19.70 toward the
+parent's 15.27. It went to 20.73 -- the wrong way.
+
+budget: 64 images, batch 2, 1 epoch = 32 steps, 74 min, collapse 2.734229
+  sized from SW_0192 (TRAIN64, 16 proposals) at the measured 8.90 GB for batch 2.
+  a first attempt at 1000 steps / batch 4 (17.52 GB) spent 10 hours thrashing on
+  expandable_segments OOM while sharing GPU 2 with Tier 1.
+  caveat: the peer's 16 proposals are MASK-SUPERVISED (SW_0227's lineage); ours are not,
+  so matching the step count does not match the work done.

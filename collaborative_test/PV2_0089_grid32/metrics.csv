@@ -1,0 +1,9 @@
+[02:16] === PV2_0089 diagnosis: why the 32x32 spike path died ===
+[02:16] label                                     fg_ari   fg_iou  obj_iou  pred_fg | spikes
+as trained (decay .35, absolute vth)     0.0000 0.0000 0.0000 0.0000  | spike_rate=0.0009 plv_mean=0.7101 
+A: population threshold k=1.0            -0.0008 0.0095 0.0103 0.0478  | spike_rate=0.0743 plv_mean=0.7101 
+A: population threshold k=0.5            0.0588 0.0508 0.0550 0.0828  | spike_rate=0.1580 plv_mean=0.7101 
+B: eval decay .175                       0.0000 0.0000 0.0000 0.0000  | spike_rate=0.0009 plv_mean=0.7101 
+A+B: decay .175 + population k=1.0       -0.0008 0.0095 0.0103 0.0478  | spike_rate=0.0743 plv_mean=0.7101 
+spectral k=14, population k=1.0          0.0485 0.1086 0.0271 0.4835  | spike_rate=0.0743 plv_mean=0.7101 
+[02:23] === PV2_0089 DIAG DONE ===

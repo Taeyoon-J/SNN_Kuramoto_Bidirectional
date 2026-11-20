@@ -1,0 +1,15 @@
+CLEVR fixed320, the unchanged 253 core, one seed. settle = T//2 at every T.
+T=1024 is the existing measurement; the rest are this sweep.
+
+    T     core fg_ari/fg_iou/obj_iou                +head (5 seeds)  regions  pred_fg
+ 1024           0.8421/0.7545/0.6410           0.8468/0.7575/0.6460      8.0   0.2001
+  512           0.8402/0.7594/0.6340           0.8437/0.7628/0.6387      9.8   0.1936
+  256           0.8159/0.7358/0.6084           0.8233/0.7473/0.6179     13.3   0.1851
+  128           0.5796/0.4988/0.3985           0.7326/0.7117/0.5298     12.5   0.1148
+
+delta against T=1024 (core alone):
+  T=512   -0.0019/+0.0049/-0.0070
+  T=256   -0.0262/-0.0187/-0.0326
+  T=128   -0.2625/-0.2557/-0.2425
+
+truth foreground on this split is 0.2115.

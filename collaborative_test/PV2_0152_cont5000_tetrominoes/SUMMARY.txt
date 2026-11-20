@@ -1,0 +1,20 @@
+cont5000 = CLEVR 10,000x10 core, then +5,000x10 on Tetrominoes. Head: fixed label-free
+recipe (local_rgb_trust, 2 epochs), 5 head seeds. Core alone is seed 0, one core.
+
+===== tetrominoes test 320
+metric                base core         base +head  cont core         cont +head    d core    d head
+fg_ari                   0.8580       0.8560+-0.0033     0.8675       0.8665+-0.0014   +0.0095   +0.0105
+foreground_iou           0.7885       0.7888+-0.0005     0.8193       0.8206+-0.0008   +0.0308   +0.0318
+matched_object_iou       0.8173       0.8165+-0.0016     0.8213       0.8235+-0.0010   +0.0041   +0.0070
+  mean regions 17.9   predicted fg 0.2661   truth fg 0.2368
+
+===== clevr fixed320
+metric                base core         base +head  cont core         cont +head    d core    d head
+fg_ari                   0.8421       0.8468+-0.0004     0.8505       0.8526+-0.0008   +0.0085   +0.0058
+foreground_iou           0.7545       0.7575+-0.0003     0.7452       0.7468+-0.0022   -0.0093   -0.0107
+matched_object_iou       0.6410       0.6460+-0.0005     0.6207       0.6252+-0.0024   -0.0203   -0.0208
+  mean regions 6.6   predicted fg 0.2033   truth fg 0.2115
+
+READ THIS WITH CARE: one core seed on each side. The +-values are HEAD re-initialisation
+variance only, with the core held fixed; they are not core seed variance and must not be
+quoted as an error bar on the core comparison.
