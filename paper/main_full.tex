@@ -419,6 +419,48 @@ Each mean includes only valid adjacent pairs in its direction. This term smooths
 \input{appendix_evaluation}
 \input{appendix_experiments}
 
+\subsection{H Qualitative Masks}
+Figure~\ref{fig:qualitative} shows one image end to end: the input, the ground truth on the
+patch grid, the predicted partition, and each predicted object on its own. It is a hand-picked
+example --- the image with the highest matched-object IoU among the reserved CLEVR images whose
+predicted object count equals the true count --- so it shows what a good case looks like, not
+the average case, which is the means in Table~\ref{tab:main}. The masks themselves read no
+ground truth; the ground truth scored the images and therefore chose which one is drawn.
+
+% The panels are produced by figs/qualitative_1579/qualitative.py from the cached rollout of the
+% same core Table 1 reports, then restyled by restyle.py so the selected object reads regardless
+% of its colour. selection.json in that folder records the image id and its three scores.
+\begin{figure*}[t]
+\centering
+\setlength{\tabcolsep}{2pt}
+\renewcommand{\arraystretch}{0.9}
+\begin{tabular}{@{}cccc@{}}
+\includegraphics[width=0.243\textwidth]{figs/qualitative_1579/01_original.png} &
+\includegraphics[width=0.243\textwidth]{figs/qualitative_1579/00_truth.png} &
+\includegraphics[width=0.243\textwidth]{figs/qualitative_1579/02_masks_only.png} &
+\includegraphics[width=0.243\textwidth]{figs/qualitative_1579/03_overlay_all.png} \\[-1pt]
+\footnotesize Input image & \footnotesize Ground truth, patch grid &
+\footnotesize Predicted masks & \footnotesize Predicted masks on the image \\[3pt]
+\includegraphics[width=0.243\textwidth]{figs/qualitative_1579/04_overlay_01.png} &
+\includegraphics[width=0.243\textwidth]{figs/qualitative_1579/04_overlay_02.png} &
+\includegraphics[width=0.243\textwidth]{figs/qualitative_1579/04_overlay_03.png} &
+\includegraphics[width=0.243\textwidth]{figs/qualitative_1579/04_overlay_04.png} \\[-1pt]
+\footnotesize Object 1 & \footnotesize Object 2 & \footnotesize Object 3 &
+\footnotesize Object 4 \\
+\end{tabular}
+\caption{One reserved CLEVR image (id 1579) through the whole readout. Top row: the
+$128\times128$ input, the ground truth quantised to the $64\times64$ patch grid, the predicted
+partition on that grid, and the predicted masks over the image. Bottom row: each predicted
+object alone, at full colour with the rest of the image dimmed, ordered by mask size. Label
+identities are arbitrary on both sides and the colours are not matched between the truth and
+the prediction. The readout is the published one --- the $8$-patch component floor and the
+minimum-region-size rule at $f=0.01$ --- and scores $.9628$ foreground ARI, $.9327$ foreground
+IoU and $.9337$ matched-object IoU here, against dataset means of $.8408$, $.7528$ and $.6387$.
+Four objects are predicted and four are present. Mask boundaries are blocky because they live
+on the patch grid and are never expanded to pixels.}
+\label{fig:qualitative}
+\end{figure*}
+
 \begin{table*}[t]
 \centering
 \begin{tabular}{@{}p{1.65in}p{1.1in}p{3.85in}@{}}
